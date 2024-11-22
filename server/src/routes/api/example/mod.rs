@@ -37,11 +37,12 @@ fn crud(app_state: common::repositories_types::server::routes::app_state::DynArc
         .route("/update_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::update_many_payload_example_route_logic))
         .route("/update_one", axum::routing::patch(common::repositories_types::server::routes::api::example::try_update_one_route_logic))
         .route("/update_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::update_one_payload_example_route_logic))
-        // .route("/delete_many", axum::routing::delete(common::repositories_types::server::routes::api::cats::try_delete_many_route_logic))
-        // .route("/delete_one", axum::routing::delete(common::repositories_types::server::routes::api::cats::try_delete_one_route_logic))
+        // .route("/delete_many", axum::routing::delete(common::repositories_types::server::routes::api::example::try_delete_many_route_logic))
+        .route("/delete_one", axum::routing::delete(common::repositories_types::server::routes::api::example::try_delete_one_route_logic))
+        .route("/delete_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::delete_one_payload_example_route_logic))
         //
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
-        //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
+        //     common::repositories_types::server::routes::api::example::ALLOW_METHODS,
         // ))
         // .route_layer(axum::middleware::from_fn_with_state(
         //     app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
