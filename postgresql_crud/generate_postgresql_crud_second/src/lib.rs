@@ -4743,17 +4743,17 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             },
             &operation,
         );
-        // let parameters_token_stream = generate_parameters_pattern_token_stream(
-        //     &operation,
-        //     generate_operation_payload_token_stream(
-        //         &operation,
-        //         &quote::quote! {
-        //             #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
-        //             #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
-        //         },
-        //     ),
-        // );
-        // // println!("{parameters_token_stream}");
+        let parameters_token_stream = generate_parameters_pattern_token_stream(
+            &operation,
+            generate_operation_payload_token_stream(
+                &operation,
+                &quote::quote! {
+                    #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
+                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
+                },
+            ),
+        );
+        // println!("{parameters_token_stream}");
         // let try_operation_route_logic_token_stream = {
         //     let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
         //         generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
@@ -5017,7 +5017,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         // // println!("{try_operation_token_stream}");
         (
             quote::quote! {
-                // #parameters_token_stream
+                #parameters_token_stream
                 // #try_operation_route_logic_token_stream
                 // #try_operation_token_stream
             },
