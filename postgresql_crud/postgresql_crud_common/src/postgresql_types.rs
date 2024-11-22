@@ -789,6 +789,40 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNul
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
+)]
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete(StdPrimitiveBool);
+impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_increment(&self.0, increment)
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+    }
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+}
+
 
 
 
@@ -1006,5 +1040,38 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    serde::Serialize,
+    serde::Deserialize,
+    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
+)]
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete(StdPrimitiveI64);
+impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_increment(&self.0, increment)
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+    }
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <StdPrimitiveI64 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
+    fn type_info() -> sqlx::postgres::PgTypeInfo {
+        <StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
