@@ -1623,7 +1623,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let response_snake_case = naming_conventions::ResponseSnakeCase;
     let status_code_snake_case = naming_conventions::StatusCodeSnakeCase;
     let body_snake_case = naming_conventions::BodySnakeCase;
-    let limit_and_offset_type_token_stream = quote::quote!{postgresql_crud::postgresql_types::StdPrimitiveI64};
+    let limit_and_offset_type_token_stream = quote::quote!{postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNull};
     // {
     //     let value = postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI64.get_inner_type_stringified("");
     //     value
