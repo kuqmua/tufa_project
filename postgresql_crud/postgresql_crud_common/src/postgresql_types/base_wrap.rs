@@ -7,6 +7,19 @@
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
+//
+impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBool {
+    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_increment(&self.0, increment)
+    }
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+    }
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+//
 ///////////////
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBool {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
@@ -50,7 +63,7 @@ impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaul
 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
-        "BOOL NOT NULL"
+        "BOOL"
     }
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBool {
@@ -70,12 +83,11 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool
 #[derive(
     Debug,
     Clone,
-    Copy,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolToCreate(crate::postgresql_types::base::StdPrimitiveBool);
+pub struct StdPrimitiveBoolAsPostgresqlBoolToCreate(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_increment(&self.0, increment)
@@ -89,7 +101,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+        match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(Self(value)),
             Err(error) => Err(error)
         }
@@ -97,7 +109,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCrea
 }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolToCreate {
@@ -109,12 +121,11 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 #[derive(
     Debug,
     Clone,
-    Copy,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolToRead(crate::postgresql_types::base::StdPrimitiveBool);
+pub struct StdPrimitiveBoolAsPostgresqlBoolToRead(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToRead {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_increment(&self.0, increment)
@@ -128,7 +139,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToRead {
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToRead {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+        match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(Self(value)),
             Err(error) => Err(error)
         }
@@ -136,7 +147,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToRead
 }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToRead {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolToRead {
@@ -147,13 +158,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolToUpdate(crate::postgresql_types::base::StdPrimitiveBool);
+pub struct StdPrimitiveBoolAsPostgresqlBoolToUpdate(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_increment(&self.0, increment)
@@ -177,7 +187,7 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+        match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(Self(value)),
             Err(error) => Err(error)
         }
@@ -185,7 +195,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToUpda
 }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
@@ -201,13 +211,12 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToUpda
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBoolToDelete(crate::postgresql_types::base::StdPrimitiveBool);
+pub struct StdPrimitiveBoolAsPostgresqlBoolToDelete(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
     fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_increment(&self.0, increment)
@@ -231,7 +240,7 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+        match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(Self(value)),
             Err(error) => Err(error)
         }
@@ -239,7 +248,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToDele
 }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolToDelete {
@@ -277,7 +286,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = crate::BindQuery::bind_value_to_query(self.value.0, query);
+        query = crate::BindQuery::bind_value_to_query(self.value, query);
         query
     }
 }

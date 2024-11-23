@@ -104,6 +104,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveBool {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveBool {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <std::option::Option<StdPrimitiveBool> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+}
 impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
