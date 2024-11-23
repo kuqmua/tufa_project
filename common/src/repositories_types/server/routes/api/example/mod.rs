@@ -52,7 +52,7 @@ pub struct Example {
     // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
 
     
-    pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_types::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+    pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
     // pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt,
     // pub std_primitive_i16_as_postgresql_small_int_not_null: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallIntNotNull,
@@ -74,7 +74,7 @@ pub struct Example {
     // pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
 
     #[generate_postgresql_crud_second_primary_key]
-    pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_types::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
     // pub std_primitive_i64_as_postgresql_big_int8: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8,
     // pub std_primitive_i64_as_postgresql_big_int8_not_null: postgresql_crud::StdPrimitiveI64AsPostgresqlInt8NotNull,
 
