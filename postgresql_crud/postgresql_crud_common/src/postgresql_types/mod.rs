@@ -1,3 +1,8 @@
+mod base;
+pub mod base_wrap;
+
+
+
 #[derive(
     Debug,
     Clone,
@@ -1106,3 +1111,25 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
+
+///////////////
+
+
+// #[derive(
+//     Debug,
+//     Clone,
+//     Copy,
+//     PartialEq,
+//     Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     postgresql_crud_types_macro_logic_reuse::GenerateImplPostgresqlJsonTypeStdOptionOptionFullTypePath,
+// )]
+// pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
+
+
+// #[derive(Debug, Clone)]
+// pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdOptionOptionStdPrimitiveBool);
