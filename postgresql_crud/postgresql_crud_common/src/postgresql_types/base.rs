@@ -99,6 +99,11 @@ impl sqlx::postgres::PgHasArrayType for StdPrimitiveBool {
 }
 #[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize, Eq)]
 pub(crate) struct StdOptionOptionStdPrimitiveBool(std::option::Option<StdPrimitiveBool>);
+impl sqlx::Encode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveBool {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
 impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
