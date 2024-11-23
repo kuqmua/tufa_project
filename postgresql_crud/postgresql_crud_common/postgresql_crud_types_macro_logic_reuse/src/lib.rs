@@ -673,3 +673,275 @@ pub fn generate_impl_postgresql_json_type_std_vec_vec_std_option_option_full_typ
 pub fn generate_impl_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_impl_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
+
+
+///////////////////////////////
+fn common_handle_second(
+    input: proc_macro::TokenStream,
+    where_ident_should_implement_eq: std::primitive::bool,
+    std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
+    where_std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
+) -> proc_macro::TokenStream {
+    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    // println!("{:#?}", syn_derive_input.data);
+    let ident = &syn_derive_input.ident;
+    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
+        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
+            match fields_unnamed.unnamed.len() {
+                1 => &fields_unnamed.unnamed[0],
+                _ => panic!("supports only syn::Fields::Unnamed with one field"),
+            }
+        } else {
+            panic!("supports only syn::Fields::Unnamed");
+        }
+    } else {
+        panic!("does work only on structs!");
+    };
+    let field_type = &field.ty;
+    let ident_where_token_stream = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let std_option_option_ident_upper_camel_case_token_stream = {
+        let value = format!("{}{ident}", naming_conventions::StdOptionOptionUpperCamelCase);
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_std_option_option_ident_upper_camel_case_token_stream = {
+        let value = format!("{}{}{ident}", naming_conventions::WhereUpperCamelCase, naming_conventions::StdOptionOptionUpperCamelCase);
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
+        quote::quote! {Eq,}
+    } else {
+        proc_macro2::TokenStream::new()
+    };
+    let std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if std_option_option_ident_upper_camel_case_should_implement_eq {
+        quote::quote! {Eq,}
+    } else {
+        proc_macro2::TokenStream::new()
+    };
+    let where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_upper_camel_case_should_implement_eq {
+        quote::quote! {Eq,}
+    } else {
+        proc_macro2::TokenStream::new()
+    };
+    let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
+    let generated = quote::quote! {
+        impl std::fmt::Display for #ident {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
+            }
+        }
+        impl error_occurence_lib::ToStdStringString for #ident {
+            fn to_std_string_string(&self) -> std::string::String {
+                format!("{self}")
+            }
+        }
+        impl #ident {
+            pub fn into_inner(self) -> #field_type {
+                self.0
+            }
+        }
+        impl std::convert::From<#ident> for #field_type {
+            fn from(value: #ident) -> Self {
+                value.0
+            }
+        }
+        impl sqlx::Type<sqlx::Postgres> for #ident {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
+        impl std::convert::From<#ident> for crate::SupportedSqlxPostgresType {
+            fn from(_value: #ident) -> Self {
+                Self::#ident
+            }
+        }
+        impl #ident {
+            pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
+                value.into_iter()
+                .map(Self::into_inner)
+                .collect()
+            }
+        }
+        impl crate::BindQuery<'_> for #ident {
+            fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                increment.checked_add(1).map_or_else(|| Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }), |incr| {
+                    *increment = incr;
+                    Ok(())
+                })
+            }
+            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                let mut increments = std::string::String::default();
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        increments.push_str(&format!("${increment}"));
+                    }
+                    None => {
+                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                Ok(increments)
+            }
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                query = query.bind(self.0);
+                query
+            }
+        }
+        impl sqlx::Encode<'_, sqlx::Postgres> for #ident {
+            fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+            }
+        }
+        impl sqlx::Decode<'_, sqlx::Postgres> for #ident {
+            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                    Ok(value) => Ok(Self(value)),
+                    Err(error) => Err(error)
+                }
+            }
+        }
+        impl sqlx::postgres::PgHasArrayType for #ident {
+            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+            }
+        }
+        impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
+            #[inline]
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(::core::default::Default::default())
+            }
+        }
+        //////////
+        #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
+        pub(crate) struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);
+        impl sqlx::Encode<'_, sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+            }
+        }
+        impl sqlx::Decode<'_, sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                match <std::option::Option<#ident> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                    Ok(value) => Ok(Self(value)),
+                    Err(error) => Err(error)
+                }
+            }
+        }
+        impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(
+                    formatter, "{:?}",
+                    match &self.0 {
+                        Some(value) => Some(&value.0),
+                        None => None
+                    }
+                )
+            }
+        }
+        impl #std_option_option_ident_upper_camel_case_token_stream {
+            pub fn into_inner(self) -> std::option::Option<#field_type> {
+                match self.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                }
+            }
+        }
+        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
+            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                match value.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                }
+            }
+        }
+        impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
+        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for crate::SupportedSqlxPostgresType {
+            fn from(_value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                crate::SupportedSqlxPostgresType::#ident
+            }
+        }
+        impl #std_option_option_ident_upper_camel_case_token_stream {
+            pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
+                value.into_iter()
+                .map(|element| element.into_inner())
+                .collect()
+            }
+        }
+        impl crate::BindQuery<'_> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn try_increment(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        Ok(())
+                    }
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                }
+            }
+            fn try_generate_bind_increments(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<std::string::String, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                let mut increments = std::string::String::default();
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        increments.push_str(&format!("${increment}"));
+                    }
+                    None => {
+                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                Ok(increments)
+            }
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                query = query.bind(match self.0 {
+                    Some(value) => Some(value.0),
+                    None => None
+                });
+                query
+            }
+        }
+        impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #std_option_option_ident_upper_camel_case_token_stream {
+            fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                Self(Some(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
+            }
+        }
+    };
+    generated.into()
+}
+
+#[proc_macro_derive(CommonWithEqImplSecond)] //todo check on postgresql max length value of type
+pub fn common_with_eq_impl_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_handle_second(input, true, true, true)
+}
+#[proc_macro_derive(CommonWithoutEqImplSecond)] //todo check on postgresql max length value of type
+pub fn common_without_eq_impl_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_handle(input, false, false, false)
+}
