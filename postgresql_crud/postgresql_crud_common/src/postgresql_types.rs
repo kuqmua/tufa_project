@@ -793,6 +793,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNul
     Debug,
     Clone,
     Copy,
+    PartialEq,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
@@ -807,6 +808,16 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
@@ -1050,6 +1061,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNo
     Debug,
     Clone,
     Copy,
+    PartialEq,
     serde::Serialize,
     serde::Deserialize,
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
@@ -1064,6 +1076,16 @@ impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelet
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(self.0, query)
+    }
+}
+impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
+    }
+}
+impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
