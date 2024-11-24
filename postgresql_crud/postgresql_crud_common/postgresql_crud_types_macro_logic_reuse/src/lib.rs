@@ -731,11 +731,6 @@ fn common_handle_second(
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
     let generated = quote::quote! {
-        impl #ident {
-            pub fn into_inner(self) -> #field_type {
-                self.0
-            }
-        }
         impl sqlx::Type<sqlx::Postgres> for #ident {
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                 <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -797,6 +792,16 @@ fn common_handle_second(
                 Self(::core::default::Default::default())
             }
         }
+        // impl #ident {
+        //     pub fn(crate) into_inner(self) -> #field_type {
+        //         self.0
+        //     }
+        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
+        //         value.into_iter()
+        //         .map(Self::into_inner)
+        //         .collect()
+        //     }
+        // }
         // impl std::fmt::Display for #ident {
         //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         //         write!(formatter, "{:?}", self.0)
@@ -807,23 +812,9 @@ fn common_handle_second(
         //         format!("{self}")
         //     }
         // }
-
         // impl std::convert::From<#ident> for #field_type {
         //     fn from(value: #ident) -> Self {
         //         value.0
-        //     }
-        // }
-
-        // impl std::convert::From<#ident> for crate::SupportedSqlxPostgresType {
-        //     fn from(_value: #ident) -> Self {
-        //         Self::#ident
-        //     }
-        // }
-        // impl #ident {
-        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
-        //         value.into_iter()
-        //         .map(Self::into_inner)
-        //         .collect()
         //     }
         // }
         //////////
@@ -901,6 +892,19 @@ fn common_handle_second(
                 Self(Some(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
             }
         }
+        // impl #std_option_option_ident_upper_camel_case_token_stream {
+        //     pub fn(crate) into_inner(self) -> std::option::Option<#field_type> {
+        //         match self.0 {
+        //             Some(value) => Some(value.0),
+        //             None => None
+        //         }
+        //     }
+        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
+        //         value.into_iter()
+        //         .map(|element| element.into_inner())
+        //         .collect()
+        //     }
+        // }
         // impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
         //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         //         write!(
@@ -912,12 +916,9 @@ fn common_handle_second(
         //         )
         //     }
         // }
-        // impl #std_option_option_ident_upper_camel_case_token_stream {
-        //     pub fn into_inner(self) -> std::option::Option<#field_type> {
-        //         match self.0 {
-        //             Some(value) => Some(value.0),
-        //             None => None
-        //         }
+        // impl error_occurence_lib::ToStdStringString for #std_option_option_ident_upper_camel_case_token_stream {
+        //     fn to_std_string_string(&self) -> std::string::String {
+        //         format!("{self}")
         //     }
         // }
         // impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
@@ -926,18 +927,6 @@ fn common_handle_second(
         //             Some(value) => Some(value.0),
         //             None => None
         //         }
-        //     }
-        // }
-        // impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for crate::SupportedSqlxPostgresType {
-        //     fn from(_value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-        //         crate::SupportedSqlxPostgresType::#ident
-        //     }
-        // }
-        // impl #std_option_option_ident_upper_camel_case_token_stream {
-        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
-        //         value.into_iter()
-        //         .map(|element| element.into_inner())
-        //         .collect()
         //     }
         // }
     };
