@@ -702,18 +702,8 @@ fn common_handle_second(
     let field_type = &field.ty;
     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
     let ident_where_token_stream = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let std_option_option_ident_upper_camel_case_token_stream = {
-        let value = format!("{}{ident}", naming_conventions::StdOptionOptionUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_upper_camel_case_token_stream = {
-        let value = format!("{}{}{ident}", naming_conventions::WhereUpperCamelCase, naming_conventions::StdOptionOptionUpperCamelCase);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let std_option_option_ident_upper_camel_case_token_stream = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let where_std_option_option_ident_upper_camel_case_token_stream = naming_conventions::WhereStdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
         quote::quote! {Eq,}
     } else {
