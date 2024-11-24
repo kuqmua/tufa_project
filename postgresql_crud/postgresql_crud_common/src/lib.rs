@@ -8193,3 +8193,8 @@ pub trait GeneratePostgresqlQueryPartToRead {
 pub trait CreateTableQueryPart {
     fn create_table_query_part() -> impl std::fmt::Display;
 }
+
+pub trait BindQuerySecond<'a> {
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
+    fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}

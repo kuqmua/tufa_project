@@ -518,6 +518,7 @@ pub use postgresql_crud_common::WhereStdOptionOptionSerdeJsonValue;
 //////////////////////////////
 pub use postgresql_crud_common::value::Value;
 pub use postgresql_crud_common::BindQuery;
+pub use postgresql_crud_common::BindQuerySecond;
 pub use postgresql_crud_common::Order;
 pub use postgresql_crud_common::OrderBy;
 pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;

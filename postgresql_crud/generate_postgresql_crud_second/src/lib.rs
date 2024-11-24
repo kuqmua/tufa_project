@@ -1608,9 +1608,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     );
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
     // //todo reuse BindQuery path
-    let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
-    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
-    let postgresql_crud_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_increment};
+    let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query};
+    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments};
+    let postgresql_crud_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuerySecond::try_increment};
     let increment_snake_case = naming_conventions::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
     let where_snake_case_qoutes_token_stream = generate_quotes::double_quotes_token_stream(&where_snake_case);
@@ -3131,7 +3131,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         // }
                         let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            match postgresql_crud::BindQuery::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                            match postgresql_crud::BindQuerySecond::try_generate_bind_increments(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => {
                                     #acc_snake_case.push_str(&format!("{value},"));
                                 },
@@ -3165,7 +3165,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     let query_bind_token_stream = fields_without_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
-                            #query_snake_case = #postgresql_crud_snake_case::BindQuery::bind_value_to_query(#element_snake_case.#field_ident, #query_snake_case);
+                            #query_snake_case = #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(#element_snake_case.#field_ident, #query_snake_case);
                         }
                     });
                     quote::quote! {
@@ -3414,7 +3414,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         // }
                         let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            match postgresql_crud::BindQuery::try_generate_bind_increments(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                            match postgresql_crud::BindQuerySecond::try_generate_bind_increments(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
                                     #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4393,13 +4393,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #acc_snake_case.push_str(&format!(
                                                 #when_primary_key_field_ident_equals_then_token_stream,
-                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
+                                                match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
                                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 },
-                                                match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut #increment_snake_case) {
+                                                match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut #increment_snake_case) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
                                                         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4426,7 +4426,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 {
                                     let mut #acc_snake_case = #std_string_string::default();
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                        match #postgresql_crud_snake_case::BindQuery::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
+                                        match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
                                             Ok(#value_snake_case) => {
                                                 #acc_snake_case.push_str(&format!("{value},"));
                                             },
@@ -4472,7 +4472,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                             #query_snake_case = #query_snake_case.bind(
                                                 #element_snake_case.#primary_key_field_ident
                                             );
-                                            #query_snake_case = #postgresql_crud_snake_case::BindQuery::bind_value_to_query(#value_snake_case.#value_snake_case.clone(), #query_snake_case);
+                                            #query_snake_case = #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(#value_snake_case.#value_snake_case.clone(), #query_snake_case);
                                         }
                                     }
                                 }
@@ -4743,7 +4743,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                #query_snake_case = #postgresql_crud_snake_case::BindQuery::bind_value_to_query(
+                                #query_snake_case = #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(
                                     #value_snake_case.#value_snake_case,
                                     #query_snake_case,
                                 );

@@ -8,15 +8,12 @@
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 //
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBool {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBool {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 //
@@ -88,15 +85,12 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolToCreate(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
@@ -126,15 +120,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolToRead(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToRead {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolToRead {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToRead {
@@ -164,15 +155,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolToUpdate(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolToUpdate {
@@ -217,15 +205,12 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToUpda
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolToDelete(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolToDelete {
@@ -266,16 +251,7 @@ impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolWhere {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
     }
 }
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolWhere {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        increment.checked_add(1).map_or_else(
-            || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            |incr| {
-                *increment = incr;
-                Ok(())
-            },
-        )
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
@@ -286,7 +262,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = crate::BindQuery::bind_value_to_query(self.value, query);
+        query = crate::BindQuerySecond::bind_value_to_query(self.value, query);
         query
     }
 }
@@ -382,15 +358,12 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate(crate::postgresql_types::base::StdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
@@ -421,15 +394,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToRead(crate::postgresql_types::base::StdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToRead {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToRead {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToRead {
@@ -460,15 +430,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate(crate::postgresql_types::base::StdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullToUpdate {
@@ -514,15 +481,12 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNul
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete(crate::postgresql_types::base::StdPrimitiveBool);
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
@@ -563,16 +527,7 @@ impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
     }
 }
-impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        increment.checked_add(1).map_or_else(
-            || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            |incr| {
-                *increment = incr;
-                Ok(())
-            },
-        )
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
@@ -583,7 +538,7 @@ impl crate::BindQuery<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = crate::BindQuery::bind_value_to_query(self.value.0, query);
+        query = crate::BindQuerySecond::bind_value_to_query(self.value.0, query);
         query
     }
 }
@@ -632,15 +587,12 @@ pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_types::
 
 
 //just for the limit and offset types. maybe refactor later
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
@@ -715,15 +667,12 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSe
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
@@ -755,15 +704,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToRead(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToRead {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToRead {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToRead {
@@ -795,15 +741,12 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate {
@@ -849,15 +792,12 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNo
     // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_increment(&self.0, increment)
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
@@ -898,16 +838,7 @@ impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
     }
 }
-impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::TryGenerateBindIncrementsErrorNamed> {
-        increment.checked_add(1).map_or_else(
-            || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            |incr| {
-                *increment = incr;
-                Ok(())
-            },
-        )
-    }
+impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
             || Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
@@ -918,7 +849,7 @@ impl crate::BindQuery<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
         )
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = crate::BindQuery::bind_value_to_query(self.value.0, query);
+        query = crate::BindQuerySecond::bind_value_to_query(self.value.0, query);
         query
     }
 }
