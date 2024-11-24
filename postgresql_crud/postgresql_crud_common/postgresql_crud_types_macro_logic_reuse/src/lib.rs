@@ -778,17 +778,40 @@ fn common_handle_second(
             generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&std_option_option_ident_upper_camel_case_token_stream)
         )
     };
+    let (
+        impl_sqlx_decode_sqlx_postgres_for_ident_token_stream,
+        impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream,
+    ) = {
+        let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |
+            ident_token_stream: &dyn quote::ToTokens,
+            field_type_token_stream: &dyn quote::ToTokens
+        |{
+            quote::quote! {
+                impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
+                    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                        match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                            Ok(value) => Ok(Self(value)),
+                            Err(error) => Err(error)
+                        }
+                    }
+                }
+            }
+        };
+        (
+            generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                &ident,
+                &field_type
+            ),
+            generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case_token_stream,
+                &quote::quote! {std::option::Option<#ident>}
+            )
+        )
+    };
     let generated = quote::quote! {
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
-        impl sqlx::Decode<'_, sqlx::Postgres> for #ident {
-            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                    Ok(value) => Ok(Self(value)),
-                    Err(error) => Err(error)
-                }
-            }
-        }
+        #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         impl sqlx::postgres::PgHasArrayType for #ident {
             fn array_type_info() -> sqlx::postgres::PgTypeInfo {
                 <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
@@ -834,14 +857,7 @@ fn common_handle_second(
         pub(crate) struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_std_option_option_ident_token_stream
-        impl sqlx::Decode<'_, sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                match <std::option::Option<#ident> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                    Ok(value) => Ok(Self(value)),
-                    Err(error) => Err(error)
-                }
-            }
-        }
+        #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
         impl sqlx::postgres::PgHasArrayType for #std_option_option_ident_upper_camel_case_token_stream {
             fn array_type_info() -> sqlx::postgres::PgTypeInfo {
                 <std::option::Option<#field_type> as sqlx::postgres::PgHasArrayType>::array_type_info()
