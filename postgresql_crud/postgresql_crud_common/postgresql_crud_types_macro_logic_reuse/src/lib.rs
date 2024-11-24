@@ -808,15 +808,38 @@ fn common_handle_second(
             )
         )
     };
+    let (
+        impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream,
+        impl_sqlx_postgres_pg_has_array_type_for_std_option_option_ident_token_stream,
+    ) = {
+        let generate_impl_sqlx_postgres_pg_has_array_type_for_tokens_token_stream = |
+            ident_token_stream: &dyn quote::ToTokens,
+            field_type_token_stream: &dyn quote::ToTokens
+        |{
+            quote::quote!{
+                impl sqlx::postgres::PgHasArrayType for #ident_token_stream {
+                    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                        <#field_type_token_stream as sqlx::postgres::PgHasArrayType>::array_type_info()
+                    }
+                }
+            }
+        };
+        (
+            generate_impl_sqlx_postgres_pg_has_array_type_for_tokens_token_stream(
+                &ident,
+                &field_type
+            ),
+            generate_impl_sqlx_postgres_pg_has_array_type_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case_token_stream,
+                &quote::quote! {std::option::Option<#field_type>}
+            )
+        )
+    };
     let generated = quote::quote! {
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
-        impl sqlx::postgres::PgHasArrayType for #ident {
-            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
-            }
-        }
+        #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
         impl crate::BindQuery<'_> for #ident {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
                 increment.checked_add(1).map_or_else(|| Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
@@ -858,11 +881,7 @@ fn common_handle_second(
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
-        impl sqlx::postgres::PgHasArrayType for #std_option_option_ident_upper_camel_case_token_stream {
-            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                <std::option::Option<#field_type> as sqlx::postgres::PgHasArrayType>::array_type_info()
-            }
-        }
+        #impl_sqlx_postgres_pg_has_array_type_for_std_option_option_ident_token_stream
         impl crate::BindQuery<'_> for #std_option_option_ident_upper_camel_case_token_stream {
             fn try_increment(
                 &self,
