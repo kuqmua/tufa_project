@@ -36,12 +36,12 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBool {
 }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBool {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBool {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
+        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
 //

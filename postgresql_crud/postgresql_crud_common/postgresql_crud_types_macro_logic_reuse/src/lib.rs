@@ -731,24 +731,9 @@ fn common_handle_second(
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
     let generated = quote::quote! {
-        impl std::fmt::Display for #ident {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "{:?}", self.0)
-            }
-        }
-        impl error_occurence_lib::ToStdStringString for #ident {
-            fn to_std_string_string(&self) -> std::string::String {
-                format!("{self}")
-            }
-        }
         impl #ident {
             pub fn into_inner(self) -> #field_type {
                 self.0
-            }
-        }
-        impl std::convert::From<#ident> for #field_type {
-            fn from(value: #ident) -> Self {
-                value.0
             }
         }
         impl sqlx::Type<sqlx::Postgres> for #ident {
@@ -759,16 +744,22 @@ fn common_handle_second(
                 <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
             }
         }
-        impl std::convert::From<#ident> for crate::SupportedSqlxPostgresType {
-            fn from(_value: #ident) -> Self {
-                Self::#ident
+        impl sqlx::Encode<'_, sqlx::Postgres> for #ident {
+            fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
             }
         }
-        impl #ident {
-            pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
-                value.into_iter()
-                .map(Self::into_inner)
-                .collect()
+        impl sqlx::Decode<'_, sqlx::Postgres> for #ident {
+            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                    Ok(value) => Ok(Self(value)),
+                    Err(error) => Err(error)
+                }
+            }
+        }
+        impl sqlx::postgres::PgHasArrayType for #ident {
+            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
             }
         }
         impl crate::BindQuery<'_> for #ident {
@@ -800,33 +791,52 @@ fn common_handle_second(
                 query
             }
         }
-        impl sqlx::Encode<'_, sqlx::Postgres> for #ident {
-            fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-            }
-        }
-        impl sqlx::Decode<'_, sqlx::Postgres> for #ident {
-            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                    Ok(value) => Ok(Self(value)),
-                    Err(error) => Err(error)
-                }
-            }
-        }
-        impl sqlx::postgres::PgHasArrayType for #ident {
-            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
-            }
-        }
         impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
             #[inline]
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                 Self(::core::default::Default::default())
             }
         }
+        // impl std::fmt::Display for #ident {
+        //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        //         write!(formatter, "{:?}", self.0)
+        //     }
+        // }
+        // impl error_occurence_lib::ToStdStringString for #ident {
+        //     fn to_std_string_string(&self) -> std::string::String {
+        //         format!("{self}")
+        //     }
+        // }
+
+        // impl std::convert::From<#ident> for #field_type {
+        //     fn from(value: #ident) -> Self {
+        //         value.0
+        //     }
+        // }
+
+        // impl std::convert::From<#ident> for crate::SupportedSqlxPostgresType {
+        //     fn from(_value: #ident) -> Self {
+        //         Self::#ident
+        //     }
+        // }
+        // impl #ident {
+        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
+        //         value.into_iter()
+        //         .map(Self::into_inner)
+        //         .collect()
+        //     }
+        // }
         //////////
         #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub(crate) struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);
+        impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
         impl sqlx::Encode<'_, sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
                 sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
@@ -840,51 +850,9 @@ fn common_handle_second(
                 }
             }
         }
-        impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
-            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(
-                    formatter, "{:?}",
-                    match &self.0 {
-                        Some(value) => Some(&value.0),
-                        None => None
-                    }
-                )
-            }
-        }
-        impl #std_option_option_ident_upper_camel_case_token_stream {
-            pub fn into_inner(self) -> std::option::Option<#field_type> {
-                match self.0 {
-                    Some(value) => Some(value.0),
-                    None => None
-                }
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
-            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                match value.0 {
-                    Some(value) => Some(value.0),
-                    None => None
-                }
-            }
-        }
-        impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
-            }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-            }
-        }
-        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for crate::SupportedSqlxPostgresType {
-            fn from(_value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
-                crate::SupportedSqlxPostgresType::#ident
-            }
-        }
-        impl #std_option_option_ident_upper_camel_case_token_stream {
-            pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
-                value.into_iter()
-                .map(|element| element.into_inner())
-                .collect()
+        impl sqlx::postgres::PgHasArrayType for #std_option_option_ident_upper_camel_case_token_stream {
+            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                <std::option::Option<#field_type> as sqlx::postgres::PgHasArrayType>::array_type_info()
             }
         }
         impl crate::BindQuery<'_> for #std_option_option_ident_upper_camel_case_token_stream {
@@ -933,6 +901,45 @@ fn common_handle_second(
                 Self(Some(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
             }
         }
+        // impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
+        //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        //         write!(
+        //             formatter, "{:?}",
+        //             match &self.0 {
+        //                 Some(value) => Some(&value.0),
+        //                 None => None
+        //             }
+        //         )
+        //     }
+        // }
+        // impl #std_option_option_ident_upper_camel_case_token_stream {
+        //     pub fn into_inner(self) -> std::option::Option<#field_type> {
+        //         match self.0 {
+        //             Some(value) => Some(value.0),
+        //             None => None
+        //         }
+        //     }
+        // }
+        // impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
+        //     fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+        //         match value.0 {
+        //             Some(value) => Some(value.0),
+        //             None => None
+        //         }
+        //     }
+        // }
+        // impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for crate::SupportedSqlxPostgresType {
+        //     fn from(_value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+        //         crate::SupportedSqlxPostgresType::#ident
+        //     }
+        // }
+        // impl #std_option_option_ident_upper_camel_case_token_stream {
+        //     pub(crate) fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
+        //         value.into_iter()
+        //         .map(|element| element.into_inner())
+        //         .collect()
+        //     }
+        // }
     };
     generated.into()
 }

@@ -40,6 +40,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_bool_as_postgresql_bool": null,
     "std_primitive_bool_as_postgresql_bool_not_null": false
+  },
+  {
+    "std_primitive_bool_as_postgresql_bool": null,
+    "std_primitive_bool_as_postgresql_bool_not_null": false
   }
 ]
 
