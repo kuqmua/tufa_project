@@ -676,12 +676,8 @@ pub fn generate_impl_postgresql_json_type_std_option_option_std_vec_vec_std_opti
 
 
 ///////////////////////////////
-fn common_handle_second(
-    input: proc_macro::TokenStream,
-    where_ident_should_implement_eq: std::primitive::bool,
-    std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
-    where_std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
-) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
+pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -704,21 +700,6 @@ fn common_handle_second(
     let ident_where_token_stream = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let std_option_option_ident_upper_camel_case_token_stream = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let where_std_option_option_ident_upper_camel_case_token_stream = naming_conventions::WhereStdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
-        quote::quote! {Eq,}
-    } else {
-        proc_macro2::TokenStream::new()
-    };
-    let std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if std_option_option_ident_upper_camel_case_should_implement_eq {
-        quote::quote! {Eq,}
-    } else {
-        proc_macro2::TokenStream::new()
-    };
-    let where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_upper_camel_case_should_implement_eq {
-        quote::quote! {Eq,}
-    } else {
-        proc_macro2::TokenStream::new()
-    };
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
     let (
@@ -932,7 +913,7 @@ fn common_handle_second(
             }
         }
         //////////
-        #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
+        #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
         pub(crate) struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_std_option_option_ident_token_stream
@@ -947,12 +928,9 @@ fn common_handle_second(
     };
     generated.into()
 }
-
-#[proc_macro_derive(CommonWithEqImplSecond)] //todo check on postgresql max length value of type
-pub fn common_with_eq_impl_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_handle_second(input, true, true, true)
-}
-#[proc_macro_derive(CommonWithoutEqImplSecond)] //todo check on postgresql max length value of type
-pub fn common_without_eq_impl_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    common_handle(input, false, false, false)
-}
+// #[proc_macro_derive(CommonWithoutEqImplSecond)] //todo check on postgresql max length value of type
+// pub fn common_without_eq_impl_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     common_handle(input
+//         // , false, false, false
+//     )
+// }
