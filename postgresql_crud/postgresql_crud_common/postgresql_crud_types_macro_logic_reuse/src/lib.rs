@@ -835,40 +835,105 @@ fn common_handle_second(
             )
         )
     };
+    let (
+        impl_crate_bind_query_for_ident_token_stream,
+        impl_crate_bind_query_for_std_option_option_ident_token_stream,
+    ) = {
+        let generate_impl_crate_bind_query_for_tokens_token_stream = |
+            ident_token_stream: &dyn quote::ToTokens,
+            try_increment_token_stream: &dyn quote::ToTokens,
+            try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
+            bind_value_to_query_token_stream: &dyn quote::ToTokens,
+        |{
+            quote::quote!{
+                impl crate::BindQuery<'_> for #ident_token_stream {
+                    fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                        #try_increment_token_stream
+                    }
+                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                        #try_generate_bind_increments_token_stream
+                    }
+                    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #bind_value_to_query_token_stream
+                    }
+                }
+            }
+        };
+        (
+            generate_impl_crate_bind_query_for_tokens_token_stream(
+                &ident,
+                &quote::quote! {
+                    increment.checked_add(1).map_or_else(|| Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }), |incr| {
+                        *increment = incr;
+                        Ok(())
+                    })
+                },
+                &quote::quote! {
+                    let mut increments = std::string::String::default();
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            increments.push_str(&format!("${increment}"));
+                        }
+                        None => {
+                            return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                    Ok(increments)
+                },
+                &quote::quote! {
+                    query = query.bind(self.0);
+                    query
+                }
+            ),
+            generate_impl_crate_bind_query_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case_token_stream,
+                &quote::quote! {
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            Ok(())
+                        }
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        }),
+                    }
+                },
+                &quote::quote! {
+                    let mut increments = std::string::String::default();
+                    match increment.checked_add(1) {
+                        Some(incr) => {
+                            *increment = incr;
+                            increments.push_str(&format!("${increment}"));
+                        }
+                        None => {
+                            return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                    Ok(increments)
+                },
+                &quote::quote! {
+                    query = query.bind(match self.0 {
+                        Some(value) => Some(value.0),
+                        None => None
+                    });
+                    query
+                }
+            )
+        )
+    };
     let generated = quote::quote! {
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
-        impl crate::BindQuery<'_> for #ident {
-            fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
-                increment.checked_add(1).map_or_else(|| Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                }), |incr| {
-                    *increment = incr;
-                    Ok(())
-                })
-            }
-            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
-                let mut increments = std::string::String::default();
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        increments.push_str(&format!("${increment}"));
-                    }
-                    None => {
-                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-                Ok(increments)
-            }
-            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                query = query.bind(self.0);
-                query
-            }
-        }
+        #impl_crate_bind_query_for_ident_token_stream
         impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
             #[inline]
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
@@ -882,47 +947,7 @@ fn common_handle_second(
         #impl_sqlx_encode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_std_option_option_ident_token_stream
-        impl crate::BindQuery<'_> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn try_increment(
-                &self,
-                increment: &mut std::primitive::u64,
-            ) -> Result<(), crate::#try_generate_bind_increments_error_named_upper_camel_case> {
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        Ok(())
-                    }
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                }
-            }
-            fn try_generate_bind_increments(
-                &self,
-                increment: &mut std::primitive::u64,
-            ) -> Result<std::string::String, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
-                let mut increments = std::string::String::default();
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        increments.push_str(&format!("${increment}"));
-                    }
-                    None => {
-                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-                Ok(increments)
-            }
-            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                query = query.bind(match self.0 {
-                    Some(value) => Some(value.0),
-                    None => None
-                });
-                query
-            }
-        }
+        #impl_crate_bind_query_for_std_option_option_ident_token_stream
         impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #std_option_option_ident_upper_camel_case_token_stream {
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                 Self(Some(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
