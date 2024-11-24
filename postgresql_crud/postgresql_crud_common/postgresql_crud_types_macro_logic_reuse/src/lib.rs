@@ -700,6 +700,7 @@ fn common_handle_second(
         panic!("does work only on structs!");
     };
     let field_type = &field.ty;
+    let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
     let ident_where_token_stream = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let std_option_option_ident_upper_camel_case_token_stream = {
         let value = format!("{}{ident}", naming_conventions::StdOptionOptionUpperCamelCase);
@@ -756,7 +757,7 @@ fn common_handle_second(
             ),
             generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                 &std_option_option_ident_upper_camel_case_token_stream,
-                &quote::quote!{std::option::Option<#field_type>}
+                &std_option_option_field_type_token_stream
             )
         )
     };
@@ -831,7 +832,7 @@ fn common_handle_second(
             ),
             generate_impl_sqlx_postgres_pg_has_array_type_for_tokens_token_stream(
                 &std_option_option_ident_upper_camel_case_token_stream,
-                &quote::quote! {std::option::Option<#field_type>}
+                &std_option_option_field_type_token_stream
             )
         )
     };
