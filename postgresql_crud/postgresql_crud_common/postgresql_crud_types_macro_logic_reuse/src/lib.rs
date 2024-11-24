@@ -730,15 +730,40 @@ fn common_handle_second(
     };
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
+    let (
+        impl_sqlx_type_sqlx_postgres_for_ident_token_stream,
+        impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
+    ) = {
+        let generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream = |
+            ident_token_stream: &dyn quote::ToTokens,
+            field_type_token_stream: &dyn quote::ToTokens
+        |{
+            quote::quote! {
+                impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
+                    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                        <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
+                    }
+                    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                        <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                    }
+                }
+            }
+        };
+        let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &ident,
+            &field_type
+        );
+        let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &std_option_option_ident_upper_camel_case_token_stream,
+            &quote::quote!{std::option::Option<#field_type>}
+        );
+        (
+            impl_sqlx_type_sqlx_postgres_for_ident_token_stream,
+            impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
+        )
+    };
     let generated = quote::quote! {
-        impl sqlx::Type<sqlx::Postgres> for #ident {
-            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
-            }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-            }
-        }
+        #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         impl sqlx::Encode<'_, sqlx::Postgres> for #ident {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
                 sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
@@ -820,14 +845,7 @@ fn common_handle_second(
         //////////
         #[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub(crate) struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#ident>);
-        impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
-            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
-            }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-            }
-        }
+        #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         impl sqlx::Encode<'_, sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
                 sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
