@@ -428,7 +428,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
     ["default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
     ["all", "enum", "variants", "array", "std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
-    ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"]
+    ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
+    ["generate", "postgresql", "query", "part"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
