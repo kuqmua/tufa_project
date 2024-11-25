@@ -7,17 +7,6 @@
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-//
-impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBool {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
-    }
-    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuerySecond::bind_value_to_query(self.0, query)
-    }
-}
-///////////////
-
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BOOL"
@@ -480,17 +469,6 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_types::base::StdPrimitiveI64);
 // #[derive(Debug, Clone, Copy, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 // pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey(pub StdPrimitiveI64);
-
-
-//just for the limit and offset types. maybe refactor later
-impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
-    }
-    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuerySecond::bind_value_to_query(self.0, query)
-    }
-}
 
 //exception for offset and limit for now
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {

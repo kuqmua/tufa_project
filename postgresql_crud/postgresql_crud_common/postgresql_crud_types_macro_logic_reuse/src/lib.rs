@@ -978,6 +978,19 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
+    let impl_crate_bind_query_for_ident_token_stream = {
+        //todo maybe not need it, maybe refactor later
+        quote::quote!{
+            impl crate::BindQuerySecond<'_> for #ident {
+                fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                    crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
+                }
+                fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    crate::BindQuerySecond::bind_value_to_query(self.0, query)
+                }
+            }
+        }
+    };
     let pub_struct_ident_column_token_stream = {
         quote::quote! {
             #[derive(
@@ -1007,6 +1020,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+        #impl_crate_bind_query_for_ident_token_stream
         #pub_struct_ident_column_token_stream
         #impl_crate_generate_postgresql_query_part_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
     };
