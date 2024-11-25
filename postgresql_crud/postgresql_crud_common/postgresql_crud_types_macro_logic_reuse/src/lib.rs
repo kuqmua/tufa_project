@@ -998,6 +998,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident,
         &quote::quote!{#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()}
     );
+    let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let generate_impl_crate_bind_query_for_tokens_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
         try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -1007,7 +1008,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         let try_generate_bind_increments_snake_case = naming_conventions::TryGenerateBindIncrementsSnakeCase;
         let bind_value_to_query_snake_case = naming_conventions::BindValueToQuerySnakeCase;
         let std_string_string_token_stream = token_patterns::StdStringString;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         quote::quote!{
             impl crate::BindQuerySecond<'_> for #ident_token_stream {
                 fn #try_generate_bind_increments_snake_case(&self, increment: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
@@ -1299,6 +1299,12 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
+    let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        &ident_where_upper_camel_case,
+        //todo maybe conjuctive operator and value must be generated here? not in the generate_postgresql_crud_second?
+        &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment)},
+        &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.value, query)},
+    );
     //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
@@ -1334,6 +1340,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_delete_token_stream
         #ident_where_token_stream
         #impl_std_fmt_display_for_ident_where_token_stream
+        #impl_crate_bind_query_for_ident_where_token_stream
     };
     generated.into()
 }
