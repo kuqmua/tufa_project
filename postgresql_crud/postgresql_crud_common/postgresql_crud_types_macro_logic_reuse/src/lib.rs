@@ -991,19 +991,33 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_crate_bind_query_for_ident_token_stream = {
-        //todo maybe not need it, maybe refactor later
+    let generate_impl_crate_bind_query_for_tokens_token_stream = |
+        ident_token_stream: &dyn quote::ToTokens,
+        try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
+        bind_value_to_query_token_stream: &dyn quote::ToTokens,
+    |{
+        let bind_query_upper_camel_case = naming_conventions::BindQueryUpperCamelCase;
+        let try_generate_bind_increments_snake_case = naming_conventions::TryGenerateBindIncrementsSnakeCase;
+        let bind_value_to_query_snake_case = naming_conventions::BindValueToQuerySnakeCase;
+        let std_string_string_token_stream = token_patterns::StdStringString;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         quote::quote!{
-            impl crate::BindQuerySecond<'_> for #ident {
-                fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                    crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
+            impl crate::BindQuerySecond<'_> for #ident_token_stream {
+                fn #try_generate_bind_increments_snake_case(&self, increment: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                    #try_generate_bind_increments_token_stream
                 }
-                fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    crate::BindQuerySecond::bind_value_to_query(self.0, query)
+                fn #bind_value_to_query_snake_case(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    #bind_value_to_query_token_stream
                 }
             }
         }
     };
+    //todo maybe not need it, maybe refactor later
+    let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)},
+        &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.0, query)},
+    );
     let pub_struct_ident_column_token_stream = {
         quote::quote! {
             #[derive(
@@ -1041,6 +1055,11 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             pub struct #ident_to_create_upper_camel_case(#field_type);
         }
     };
+    let impl_crate_bind_query_for_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        &ident_to_create_upper_camel_case,
+        &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)},
+        &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.0, query)},
+    );
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
@@ -1049,6 +1068,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #pub_struct_ident_column_token_stream
         #impl_crate_generate_postgresql_query_part_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
         #ident_to_create_token_stream
+        #impl_crate_bind_query_for_ident_to_create_token_stream
     };
     generated.into()
 }
