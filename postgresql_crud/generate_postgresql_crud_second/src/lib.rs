@@ -5410,11 +5410,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     };
     // println!("{generated}");
     // if ident == "" {
-    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        // &proc_macro_name_upper_camel_case,
-        "wtf",
-        &generated,
-    );
+    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &generated,
+    // );
     // }
     generated.into()
 }
