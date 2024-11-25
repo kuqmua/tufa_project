@@ -16,14 +16,7 @@ impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBool {
         crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
-//
 ///////////////
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBool {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
-//
 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
@@ -232,11 +225,6 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     }
 }
 ///////////////
-
-//////////////////////////////////
-
-// #[derive(Debug, Clone, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
-// pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdOptionOptionStdPrimitiveBool);
 #[derive(
     Debug,
     Clone,
@@ -246,12 +234,6 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base::StdPrimitiveBool);
-
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
 //
 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
@@ -507,11 +489,6 @@ impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull 
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuerySecond::bind_value_to_query(self.0, query)
-    }
-}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
 
