@@ -1109,6 +1109,18 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)},
         &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.0, query)},
     );
+    let impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream = {
+        quote::quote!{
+            impl sqlx::Decode<'_, sqlx::Postgres> for #ident_to_read_upper_camel_case {
+                fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                        Ok(value) => Ok(Self(value)),
+                        Err(error) => Err(error)
+                    }
+                }
+            }
+        }
+    };
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
@@ -1123,6 +1135,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
         #ident_to_read_token_stream
         #impl_crate_bind_query_for_ident_to_read_token_stream
+        #impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream
     };
     generated.into()
 }
