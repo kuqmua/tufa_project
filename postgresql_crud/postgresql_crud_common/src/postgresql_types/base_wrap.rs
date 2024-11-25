@@ -13,14 +13,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     }
 }
 
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error)
-        }
-    }
-}
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -212,14 +204,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     }
 }
 
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error)
-        }
-    }
-}
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -456,14 +440,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
     }
 }
 
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error)
-        }
-    }
-}
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
