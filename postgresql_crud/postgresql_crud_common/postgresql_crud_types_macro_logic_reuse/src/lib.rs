@@ -1174,6 +1174,18 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
+    let impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream = {
+        quote::quote!{
+            impl sqlx::Decode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
+                fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                        Ok(value) => Ok(Self(value)),
+                        Err(error) => Err(error)
+                    }
+                }
+            }
+        }
+    };
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
@@ -1195,6 +1207,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_crate_bind_query_for_ident_to_update_token_stream
         #impl_std_fmt_display_for_ident_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream
+        #impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream
     };
     generated.into()
 }
