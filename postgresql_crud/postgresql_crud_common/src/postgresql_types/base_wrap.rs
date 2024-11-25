@@ -23,11 +23,6 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBool {
-    fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-}
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBool {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
@@ -260,11 +255,6 @@ pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
@@ -541,14 +531,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNo
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
-
-
-
+//exception for offset and limit for now
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
+
+
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::postgres::PgHasArrayType>::array_type_info()
