@@ -678,10 +678,8 @@ pub fn generate_impl_postgresql_json_type_std_option_option_std_vec_vec_std_opti
 ///////////////////////////////
 #[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
 pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    // println!("{:#?}", syn_derive_input.data);
     let ident = &syn_derive_input.ident;
     let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
@@ -931,6 +929,31 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         #impl_sqlx_postgres_pg_has_array_type_for_std_option_option_ident_token_stream
         #impl_crate_bind_query_for_std_option_option_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+    };
+    generated.into()
+}
+
+#[proc_macro_derive(PostgresqlCrudBaseWrapTypeTokens)] //todo check on postgresql max length value of type
+pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let pub_struct_ident_column_token_stream = {
+        quote::quote! {
+            #[derive(
+                Debug,
+                Clone,
+                Copy,
+                serde::Serialize,
+                serde::Deserialize,
+                PartialEq,
+            )]
+            pub struct #ident_column_upper_camel_case;
+        }
+    };
+    let generated = quote::quote! {
+        #pub_struct_ident_column_token_stream
     };
     generated.into()
 }
