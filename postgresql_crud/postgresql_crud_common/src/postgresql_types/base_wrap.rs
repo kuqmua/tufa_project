@@ -13,11 +13,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     }
 }
 
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolToRead {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
 #[derive(
     Debug,
     Clone,
@@ -164,11 +159,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     }
 }
 
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNullToRead {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
 #[derive(
     Debug,
     Clone,
@@ -359,12 +349,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
     }
 }
 
-////////////
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNullToRead {
-    fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
 ///////////////////
 #[derive(
     Debug,
