@@ -1174,6 +1174,15 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
+    let impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream = {
+        quote::quote!{
+            impl sqlx::Encode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
+                fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                    sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+                }
+            }
+        }
+    };
     let impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream = {
         quote::quote!{
             impl sqlx::Decode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
@@ -1199,6 +1208,19 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident_to_update_upper_camel_case,
         &quote::quote!{#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()}
     );
+    let ident_to_delete_upper_camel_case = naming_conventions::SelfToDeleteUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_to_delete_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
+            pub struct #ident_to_delete_upper_camel_case(#field_type);
+        }
+    };
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
@@ -1220,9 +1242,11 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_crate_bind_query_for_ident_to_update_token_stream
         #impl_std_fmt_display_for_ident_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream
+        #impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream
         #impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_update_token_stream
+        #ident_to_delete_token_stream
     };
     generated.into()
 }
