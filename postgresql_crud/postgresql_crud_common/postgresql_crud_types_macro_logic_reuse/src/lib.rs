@@ -1186,6 +1186,15 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
+    let impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream = {
+        quote::quote!{
+            impl sqlx::Type<sqlx::Postgres> for #ident_to_update_upper_camel_case {
+                fn type_info() -> sqlx::postgres::PgTypeInfo {
+                    <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
+                }
+            }
+        }
+    };
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
@@ -1208,6 +1217,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_std_fmt_display_for_ident_to_update_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream
+        #impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream
     };
     generated.into()
 }
