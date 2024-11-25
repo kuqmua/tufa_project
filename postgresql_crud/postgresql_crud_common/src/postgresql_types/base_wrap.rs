@@ -43,21 +43,6 @@ impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBool {
 }
 //
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     PartialEq,
-// )]
-// pub struct StdPrimitiveBoolAsPostgresqlBoolColumn;
-impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolColumn {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![]
-    }
-}
-
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BOOL"
@@ -314,13 +299,6 @@ impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBoolNotNull 
     }
 }
 //
-
-
-impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNullColumn {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![]
-    }
-}
 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
@@ -609,13 +587,6 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull 
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::postgres::PgHasArrayType>::array_type_info()
-    }
-}
-
-
-impl crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI64AsPostgresqlBigSerialNotNullColumn {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![]
     }
 }
 
