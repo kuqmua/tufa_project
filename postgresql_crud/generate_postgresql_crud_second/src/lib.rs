@@ -2088,7 +2088,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         });
         quote::quote! {
             if let (#(#none_fields_named_excluding_primary_key_token_stream),*) = (#(#match_fields_named_excluding_primary_key_token_stream),*) {
-                let #error_0_token_stream = #source_token_stream.#primary_key_field_ident;
+                let #error_0_token_stream = #source_token_stream.#primary_key_field_ident.clone();
                 #no_payload_fields_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
             }
         }
@@ -2849,7 +2849,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 &value_snake_case,
                 &element_snake_case,
                 &element_snake_case,
-                &quote::quote! {*#element_snake_case},
+                &quote::quote! {#element_snake_case.clone()},
                 &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_primary_key_syn_variant_wrapper, file!(), line!(), column!()),
             );
             quote::quote! {
@@ -3858,7 +3858,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     let try_operation_error_named_upper_camel_case = naming_conventions::TrySelfErrorNamedUpperCamelCase::from_dyn_std_fmt_display(&operation);
                     let filter_not_unique_fields_token_stream = {
                         let filter_not_unique_primary_key_token_stream = {
-                            let filter_not_unique_token_stream = generate_filter_not_unique_token_stream(&value_snake_case, &element_snake_case, &element_snake_case, &quote::quote! {*#element_snake_case}, &{
+                            let filter_not_unique_token_stream = generate_filter_not_unique_token_stream(&value_snake_case, &element_snake_case, &element_snake_case, &quote::quote! {#element_snake_case.clone()}, &{
                                 let not_unique_primary_key_syn_variant_initialization_token_stream = generate_initialization_token_stream(&not_unique_primary_key_syn_variant_wrapper, file!(), line!(), column!());
                                 quote::quote! {
                                     return Err(#try_operation_error_named_upper_camel_case::#not_unique_primary_key_syn_variant_initialization_token_stream);
@@ -4337,7 +4337,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             &quote::quote! {&#value_snake_case.0},
                             &quote::quote! {&#element_snake_case.#primary_key_field_ident},
                             &quote::quote! {#element_snake_case.#primary_key_field_ident},
-                            &quote::quote! {#element_snake_case.#primary_key_field_ident},
+                            &quote::quote! {#element_snake_case.#primary_key_field_ident.clone()},
                             &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_primary_key_syn_variant_wrapper, file!(), line!(), column!()),
                         );
                         quote::quote! {{ #filter_not_unique_token_stream }}
@@ -4469,9 +4469,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 if #is_field_ident_update_exists_snake_case {
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
-                                            #query_snake_case = #query_snake_case.bind(
-                                                #element_snake_case.#primary_key_field_ident
-                                            );
+                                            #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.clone());
                                             #query_snake_case = #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(#value_snake_case.#value_snake_case.clone(), #query_snake_case);
                                         }
                                     }
@@ -4482,9 +4480,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     let primary_key_update_assignment_token_stream = quote::quote! {
                         {
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                #query_snake_case = #query_snake_case.bind(
-                                    #element_snake_case.#primary_key_field_ident
-                                );
+                                #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.clone());
                             }
                         }
                     };
@@ -4546,7 +4542,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         &quote::quote! {&#parameters_snake_case.#payload_snake_case.0},
                         &quote::quote! {&#element_snake_case.#primary_key_field_ident},
                         &quote::quote! {#element_snake_case.#primary_key_field_ident},
-                        &quote::quote! {#element_snake_case.#primary_key_field_ident},
+                        &quote::quote! {#element_snake_case.#primary_key_field_ident.clone()},
                         &{
                             let try_operation_error_named_upper_camel_case = naming_conventions::TrySelfErrorNamedUpperCamelCase::from_dyn_std_fmt_display(&operation);
                             let not_unique_primary_key_syn_variant_initialization_token_stream = generate_initialization_token_stream(&not_unique_primary_key_to_update_syn_variant_wrapper, file!(), line!(), column!());
@@ -5414,10 +5410,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     };
     // println!("{generated}");
     // if ident == "" {
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &generated,
-    // );
+    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        // &proc_macro_name_upper_camel_case,
+        "wtf",
+        &generated,
+    );
     // }
     generated.into()
 }
