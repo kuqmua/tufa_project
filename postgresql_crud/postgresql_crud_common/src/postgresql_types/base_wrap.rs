@@ -13,11 +13,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     }
 }
 
-impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolToDelete {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolToDelete {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
@@ -87,11 +82,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     }
 }
 
-impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBoolAsPostgresqlBoolNotNullToDelete {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <crate::postgresql_types::base::StdPrimitiveBool as sqlx::Decode<sqlx::Postgres>>::decode(value) {
@@ -204,11 +194,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
 }
 
 ///////////////////
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToDelete {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
