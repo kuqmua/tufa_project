@@ -13,11 +13,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     }
 }
 
-impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolWhere {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-    }
-}
 impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
@@ -59,11 +54,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     }
 }
 
-impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-    }
-}
 impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
@@ -148,11 +138,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
 }
 
 ///////////////////
-impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
-    }
-}
 impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         increment.checked_add(1).map_or_else(
