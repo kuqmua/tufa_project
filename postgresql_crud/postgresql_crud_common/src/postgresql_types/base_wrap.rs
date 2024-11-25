@@ -13,11 +13,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveBoolAsPostgresqlBoolWhere {
-    pub value: StdPrimitiveBoolAsPostgresqlBool,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
-}
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
@@ -64,11 +59,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
-    pub value: StdPrimitiveBoolAsPostgresqlBoolNotNull,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
-}
 impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
@@ -158,11 +148,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
 }
 
 ///////////////////
-#[derive(Debug, PartialEq, Clone, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    pub value: StdPrimitiveI64AsPostgresqlBigSerialNotNull,
-    pub conjuctive_operator: crate::ConjunctiveOperator,
-}
 impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)

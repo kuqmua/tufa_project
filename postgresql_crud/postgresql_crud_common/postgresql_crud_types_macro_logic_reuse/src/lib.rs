@@ -1273,6 +1273,23 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident_to_delete_upper_camel_case,
         &quote::quote!{#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()}
     );
+    let ident_where_upper_camel_case = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_where_token_stream = {
+        //todo maybe remove pub and make custom constructor? but why?
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize
+            )]
+            pub struct #ident_where_upper_camel_case {
+                pub value: #ident,
+                pub conjuctive_operator: crate::ConjunctiveOperator,
+            }
+        }
+    };
     //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
     let generated = quote::quote! {
         #impl_std_fmt_display_for_ident_token_stream
@@ -1306,6 +1323,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream
         #impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_delete_token_stream
+        #ident_where_token_stream
     };
     generated.into()
 }
