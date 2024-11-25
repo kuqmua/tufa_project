@@ -939,6 +939,28 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let impl_std_fmt_display_for_ident_token_stream = {
+        quote::quote!{
+            impl std::fmt::Display for #ident {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    write!(formatter, "{:?}", self.0)
+                }
+            }
+        }
+    };
+    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = {
+        let error_occurence_lib_snake_case = naming_conventions::ErrorOccurenceLibSnakeCase;
+        let to_std_string_string_upper_camel_case = naming_conventions::ToStdStringStringUpperCamelCase;
+        let to_std_string_string_snake_case = naming_conventions::ToStdStringStringSnakeCase;
+        let std_string_string_token_stream = token_patterns::StdStringString;
+        quote::quote!{
+            impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident {
+                fn #to_std_string_string_snake_case(&self) -> #std_string_string_token_stream {
+                    format!("{self}")
+                }
+            }
+        }
+    };
     let pub_struct_ident_column_token_stream = {
         quote::quote! {
             #[derive(
@@ -965,6 +987,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         }
     };
     let generated = quote::quote! {
+        #impl_std_fmt_display_for_ident_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
         #pub_struct_ident_column_token_stream
         #impl_crate_generate_postgresql_query_part_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream
     };

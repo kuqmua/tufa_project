@@ -45,16 +45,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
         "BOOL"
     }
 }
-impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBool {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBool {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
 
 
 
@@ -297,16 +287,6 @@ impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBoolNotNull 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BOOL NOT NULL"
-    }
-}
-impl std::fmt::Display for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl error_occurence_lib::ToStdStringString for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
     }
 }
 
@@ -584,16 +564,6 @@ impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotN
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BIGSERIAL"
-    }
-}
-impl std::fmt::Display for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:?}", self.0)
-    }
-}
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
     }
 }
 
