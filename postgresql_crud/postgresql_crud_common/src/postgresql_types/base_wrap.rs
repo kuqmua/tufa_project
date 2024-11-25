@@ -23,11 +23,6 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBool {
-    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
-    }
-}
 //
 
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
@@ -255,11 +250,6 @@ pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base
 impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
-impl sqlx::postgres::PgHasArrayType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-        <crate::postgresql_types::base::StdPrimitiveBool as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
 //
@@ -537,8 +527,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull 
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
-
-
+//exception for offset and limit for now
 impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
         <crate::postgresql_types::base::StdPrimitiveI64 as sqlx::postgres::PgHasArrayType>::array_type_info()
