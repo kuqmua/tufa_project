@@ -15,15 +15,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 
 
 
-//todo maybe refactor later
-#[derive(
-    Debug,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
-)]
-pub struct StdPrimitiveBoolAsPostgresqlBoolToCreate(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
@@ -233,16 +224,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
 
 
 
-//todo maybe refactor later
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    serde::Serialize,
-    serde::Deserialize,
-    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
-)]
-pub struct StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate(crate::postgresql_types::base::StdPrimitiveBool);
 impl crate::BindQuerySecond<'_> for StdPrimitiveBoolAsPostgresqlBoolNotNullToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
@@ -498,16 +479,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
 
 
 
-//todo maybe refactor later
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    serde::Serialize,
-    serde::Deserialize,
-    // postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon
-)]
-pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate(crate::postgresql_types::base::StdPrimitiveI64);
 impl crate::BindQuerySecond<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
