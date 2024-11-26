@@ -15,6 +15,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 #[derive(
     Debug,
     Clone,
+    Copy,
     PartialEq,
     serde::Serialize,
     serde::Deserialize,

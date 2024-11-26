@@ -695,9 +695,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     };
     let field_type = &field.ty;
     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
-    let ident_where_token_stream = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let std_option_option_ident_upper_camel_case_token_stream = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let where_std_option_option_ident_upper_camel_case_token_stream = naming_conventions::WhereStdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
     let (
@@ -979,7 +977,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         bind_value_to_query_token_stream: &dyn quote::ToTokens,
     |{
         let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let bind_query_upper_camel_case = naming_conventions::BindQueryUpperCamelCase;
         let std_string_string_token_stream = token_patterns::StdStringString;
         quote::quote!{
             impl #crate_bind_query_token_stream<'_> for #ident_token_stream {
@@ -1277,7 +1274,6 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
         bind_value_to_query_token_stream: &dyn quote::ToTokens,
     |{
         let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let bind_query_upper_camel_case = naming_conventions::BindQueryUpperCamelCase;
         let std_string_string_token_stream = token_patterns::StdStringString;
         quote::quote!{
             impl #crate_bind_query_token_stream<'_> for #ident_token_stream {

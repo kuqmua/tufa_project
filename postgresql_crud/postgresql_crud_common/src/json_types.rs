@@ -1140,27 +1140,27 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(::core::default::Default::default())
     }
 }
-impl UuidFieldReader {
-    fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
-        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
-    }
-}
+// impl UuidFieldReader {
+//     fn generate_postgresql_query_part_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
+//         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl UuidOptionToUpdate {
-    fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-            }
-            None => Err(UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-        }
-    }
-    fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self.0));
-        query
-    }
-}
+// impl UuidOptionToUpdate {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+//             }
+//             None => Err(UuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//         }
+//     }
+//     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(sqlx::types::Json(self.0));
+//         query
+//     }
+// }

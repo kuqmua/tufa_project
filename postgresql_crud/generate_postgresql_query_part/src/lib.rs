@@ -314,7 +314,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field|{
         generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty)
     };
-    let id_upper_camel_case = naming_conventions::IdUpperCamelCase;
     let id_snake_case = naming_conventions::IdSnakeCase;
     let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id_snake_case);
     let common_token_stream = {
@@ -2240,7 +2239,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     let field_ident_snake_case = naming_conventions::FieldIdentSnakeCase;
     let json_value_variants_token_stream = {
         let generate_generate_postgresql_query_part_to_read_content_token_stream = |
-            tokens_field_reader_token_stream: &dyn quote::ToTokens,
             contains_id: std::primitive::bool,
             format_handle_double_quotes_token_stream: &dyn quote::ToTokens,
         |{
@@ -2615,7 +2613,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{#to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case)},
                     &quote::quote!{#to_create_snake_case.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case)},
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
-                        &object_ident_field_reader_upper_camel_case_token_stream,
                         false,
                         &generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value',{{acc}}))"))
                     ),
@@ -2844,7 +2841,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #query_snake_case
                     },
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
-                        &std_option_option_object_ident_field_reader_upper_camel_case,
                         false,
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{{field_ident_snake_case}}}', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{{acc}}) end)")
@@ -4002,7 +3998,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #query_snake_case
                     },
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
-                        &std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
                         true,
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value',(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}})))")
@@ -4537,7 +4532,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #query_snake_case
                     },
                     &generate_generate_postgresql_query_part_to_read_content_token_stream(
-                        &std_option_option_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case,
                         true,
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}') = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}}) end))")
