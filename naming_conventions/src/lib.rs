@@ -434,7 +434,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["error", "occurence", "lib"],
     ["try", "generate", "bind", "increments"],
     ["bind", "value", "to", "query"],
-    ["conjunctive", "operator"]
+    ["conjunctive", "operator"],
+    ["pub"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
