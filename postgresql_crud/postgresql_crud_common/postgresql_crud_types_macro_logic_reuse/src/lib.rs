@@ -1029,16 +1029,16 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let crate_bind_query_second_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
-    let crate_bind_query_second_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
+    let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
+    let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
 
-    let crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_second_try_generate_bind_increments_token_stream(&self.0, increment)};
-    let crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_second_bind_value_to_query_token_stream(self.0, query)};
+    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.0, increment)};
+    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.0, query)};
     //todo maybe not need it, maybe refactor later
     let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident,
-        &crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream,
-        &crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream,
+        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
     let generate_pub_struct_tokens_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
@@ -1078,8 +1078,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     );
     let impl_crate_bind_query_for_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_create_upper_camel_case,
-        &crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream,
-        &crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream,
+        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
     let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
@@ -1115,8 +1115,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     );
     let impl_crate_bind_query_for_ident_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_read_upper_camel_case,
-        &crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream,
-        &crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream,
+        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
     let impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
     let impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
@@ -1131,8 +1131,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     );
     let impl_crate_bind_query_for_ident_to_update_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_update_upper_camel_case,
-        &crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream,
-        &crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream,
+        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
     let impl_std_fmt_display_for_ident_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_to_update_upper_camel_case,
@@ -1161,8 +1161,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     );
     let impl_crate_bind_query_for_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_delete_upper_camel_case,
-        &crate_bind_query_second_try_generate_bind_increments_self_zero_increment_token_stream,
-        &crate_bind_query_second_bind_value_to_query_self_zero_query_token_stream,
+        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
     let impl_std_fmt_display_for_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_to_delete_upper_camel_case,
@@ -1190,8 +1190,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_where_upper_camel_case,
         //todo maybe conjuctive operator and value must be generated here? not in the generate_postgresql_crud_second?
-        &quote::quote!{#crate_bind_query_second_try_generate_bind_increments_token_stream(&self.value, increment)},
-        &quote::quote!{#crate_bind_query_second_bind_value_to_query_token_stream(self.value, query)},
+        &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.value, increment)},
+        &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.value, query)},
     );
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_where_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_where_upper_camel_case,
