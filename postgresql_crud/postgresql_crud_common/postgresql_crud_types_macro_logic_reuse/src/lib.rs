@@ -962,8 +962,9 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
 
     let increment_snake_case = naming_conventions::IncrementSnakeCase;
     let query_snake_case = naming_conventions::QuerySnakeCase;
-    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.0, #increment_snake_case)};
-    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.0, #query_snake_case)};
+    let self_snake_case = naming_conventions::SelfSnakeCase;
+    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.0, #increment_snake_case)};
+    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.0, #query_snake_case)};
 
     let crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
         let generate_postgresql_query_part_snake_case = naming_conventions::GeneratePostgresqlQueryPartSnakeCase;
@@ -973,7 +974,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         }
     };
     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::DefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", self.0};
+    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_snake_case.0};
     let generate_impl_crate_bind_query_for_tokens_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
         try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -984,10 +985,10 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         let std_string_string_token_stream = token_patterns::StdStringString;
         quote::quote!{
             impl #crate_bind_query_token_stream<'_> for #ident_token_stream {
-                fn #try_generate_bind_increments_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+                fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
                     #try_generate_bind_increments_token_stream
                 }
-                fn #bind_value_to_query_snake_case(self, #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn #bind_value_to_query_snake_case(#self_snake_case, #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #bind_value_to_query_token_stream
                 }
             }
@@ -1011,7 +1012,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     |{
         quote::quote!{
             impl std::fmt::Display for #ident_token_stream {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                fn fmt(&#self_snake_case, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     write!(formatter, #content_token_stream)
                 }
             }
@@ -1022,10 +1023,11 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         let to_std_string_string_upper_camel_case = naming_conventions::ToStdStringStringUpperCamelCase;
         let to_std_string_string_snake_case = naming_conventions::ToStdStringStringSnakeCase;
         let std_string_string_token_stream = token_patterns::StdStringString;
+        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
         quote::quote!{
             impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_token_stream {
-                fn #to_std_string_string_snake_case(&self) -> #std_string_string_token_stream {
-                    format!("{self}")
+                fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
+                    format!(#format_handle_token_stream)
                 }
             }
         }
@@ -1189,8 +1191,8 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         let impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream = {
             quote::quote!{
                 impl sqlx::Encode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
-                    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+                    fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
                     }
                 }
             }
@@ -1264,14 +1266,14 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                     &format!("{value_snake_case}: {{}}, {conjunctive_operator_snake_case}: {{}}")
                 );
-                quote::quote!{#format_handle_token_stream, self.#value_snake_case, self.#conjunctive_operator_snake_case}
+                quote::quote!{#format_handle_token_stream, #self_snake_case.#value_snake_case, #self_snake_case.#conjunctive_operator_snake_case}
             }
         );
         let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
             &ident_where_upper_camel_case,
             //todo maybe conjunctive operator and value must be generated here? not in the generate_postgresql_crud_second?
-            &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.#value_snake_case, #increment_snake_case)},
-            &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.#value_snake_case, #query_snake_case)},
+            &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.#value_snake_case, #increment_snake_case)},
+            &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.#value_snake_case, #query_snake_case)},
         );
         let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_where_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
             &ident_where_upper_camel_case,
