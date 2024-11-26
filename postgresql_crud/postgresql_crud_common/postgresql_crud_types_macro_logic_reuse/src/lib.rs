@@ -754,6 +754,23 @@ fn generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(ident_token_s
         }
     }
 }
+fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+    ident_token_stream: &dyn quote::ToTokens,
+    field_type_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming_conventions::ValueSnakeCase;
+    let error_snake_case = naming_conventions::ErrorSnakeCase;
+    quote::quote! {
+        impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
+            fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
+                    Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                    Err(#error_snake_case) => Err(#error_snake_case)
+                }
+            }
+        }
+    }
+}
 
 #[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
 pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -787,36 +804,14 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     );
     let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
     let impl_sqlx_encode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&std_option_option_ident_upper_camel_case_token_stream);
-    let (
-        impl_sqlx_decode_sqlx_postgres_for_ident_token_stream,
-        impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream,
-    ) = {
-        let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |
-            ident_token_stream: &dyn quote::ToTokens,
-            field_type_token_stream: &dyn quote::ToTokens
-        |{
-            quote::quote! {
-                impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                        match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                            Ok(value) => Ok(Self(value)),
-                            Err(error) => Err(error)
-                        }
-                    }
-                }
-            }
-        };
-        (
-            generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                &ident,
-                &field_type
-            ),
-            generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                &std_option_option_ident_upper_camel_case_token_stream,
-                &quote::quote! {std::option::Option<#ident>}
-            )
-        )
-    };
+    let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+        &ident,
+        &field_type
+    );
+    let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+        &std_option_option_ident_upper_camel_case_token_stream,
+        &quote::quote! {std::option::Option<#ident>}
+    );
     let (
         impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream,
         impl_sqlx_postgres_pg_has_array_type_for_std_option_option_ident_token_stream,
@@ -1064,19 +1059,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     };
     let value_snake_case = naming_conventions::ValueSnakeCase;
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-    let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-        let error_snake_case = naming_conventions::ErrorSnakeCase;
-        quote::quote!{
-            impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                        Err(#error_snake_case) => Err(#error_snake_case)
-                    }
-                }
-            }
-        }
-    };
     let ident_to_create_token_stream = {
         let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let ident_to_create_token_stream = generate_pub_struct_tokens_token_stream(
@@ -1104,7 +1086,10 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             &ident_to_read_upper_camel_case,
             &field_type_struct_content_token_stream,
         );
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &ident_to_read_upper_camel_case,
+            &field_type
+        );
         let impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             &ident_to_read_upper_camel_case,
             &field_type
@@ -1268,22 +1253,12 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
     };
     let value_snake_case = naming_conventions::ValueSnakeCase;
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-    let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-        let error_snake_case = naming_conventions::ErrorSnakeCase;
-        quote::quote!{
-            impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                        Err(#error_snake_case) => Err(#error_snake_case)
-                    }
-                }
-            }
-        }
-    };
     let ident_to_create_token_stream = {
         let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_create_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &ident_to_create_upper_camel_case,
+            &field_type
+        );
         let impl_sqlx_type_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             &ident_to_create_upper_camel_case,
             &field_type
@@ -1317,7 +1292,10 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
         );
         let impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_update_upper_camel_case);
         let impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident_to_update_upper_camel_case);
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_update_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &ident_to_update_upper_camel_case,
+            &field_type
+        );
         let impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             &ident_to_update_upper_camel_case,
             &field_type
@@ -1346,7 +1324,10 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
         let impl_error_occurence_lib_to_std_string_string_for_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &ident_to_delete_upper_camel_case,
+            &field_type
+        );
         let impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             &ident_to_delete_upper_camel_case,
             &field_type
