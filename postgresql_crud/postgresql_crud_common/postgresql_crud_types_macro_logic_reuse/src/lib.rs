@@ -952,7 +952,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     };
     let field_type = &field.ty;
     let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let generate_impl_std_fmt_display_for_ident_token_stream = |
+    let generate_impl_std_fmt_display_for_tokens_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
         content_token_stream: &dyn quote::ToTokens
     |{
@@ -964,9 +964,10 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(
+    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", self.0};
+    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident,
-        &quote::quote!{"{:?}", self.0}
+        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
     );
     let generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
         let error_occurence_lib_snake_case = naming_conventions::ErrorOccurenceLibSnakeCase;
@@ -1127,9 +1128,9 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)},
         &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.0, query)},
     );
-    let impl_std_fmt_display_for_ident_to_update_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(
+    let impl_std_fmt_display_for_ident_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_to_update_upper_camel_case,
-        &quote::quote!{"{:?}", self.0}
+        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
     );
     let impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_update_upper_camel_case);
     let impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream = {
@@ -1157,9 +1158,9 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &quote::quote!{crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)},
         &quote::quote!{crate::BindQuerySecond::bind_value_to_query(self.0, query)},
     );
-    let impl_std_fmt_display_for_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(
+    let impl_std_fmt_display_for_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_to_delete_upper_camel_case,
-        &quote::quote!{"{:?}", self.0}
+        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
     );
     let impl_error_occurence_lib_to_std_string_string_for_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
     let impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
@@ -1176,7 +1177,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             pub conjuctive_operator: crate::ConjunctiveOperator,
         }},
     );
-    let impl_std_fmt_display_for_ident_where_token_stream = generate_impl_std_fmt_display_for_ident_token_stream(
+    let impl_std_fmt_display_for_ident_where_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_where_upper_camel_case,
         &quote::quote!{"value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator}
     );
