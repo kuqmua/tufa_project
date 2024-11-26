@@ -787,6 +787,21 @@ fn generate_pub_struct_tokens_token_stream(
         #maybe_pub_token_stream struct #ident_token_stream #content_token_stream
     }
 }
+fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let error_occurence_lib_snake_case = naming_conventions::ErrorOccurenceLibSnakeCase;
+    let to_std_string_string_upper_camel_case = naming_conventions::ToStdStringStringUpperCamelCase;
+    let to_std_string_string_snake_case = naming_conventions::ToStdStringStringSnakeCase;
+    let std_string_string_token_stream = token_patterns::StdStringString;
+    let self_snake_case = naming_conventions::SelfSnakeCase;
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
+    quote::quote!{
+        impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_token_stream {
+            fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
+                format!(#format_handle_token_stream)
+            }
+        }
+    }
+}
 
 #[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
 pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -994,20 +1009,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     };
     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::DefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
     let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-    let generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-        let error_occurence_lib_snake_case = naming_conventions::ErrorOccurenceLibSnakeCase;
-        let to_std_string_string_upper_camel_case = naming_conventions::ToStdStringStringUpperCamelCase;
-        let to_std_string_string_snake_case = naming_conventions::ToStdStringStringSnakeCase;
-        let std_string_string_token_stream = token_patterns::StdStringString;
-        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
-        quote::quote!{
-            impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_token_stream {
-                fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
-                    format!(#format_handle_token_stream)
-                }
-            }
-        }
-    };
     let crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
     };
@@ -1223,20 +1224,6 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
     };
     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::DefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
     let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-    let generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-        let error_occurence_lib_snake_case = naming_conventions::ErrorOccurenceLibSnakeCase;
-        let to_std_string_string_upper_camel_case = naming_conventions::ToStdStringStringUpperCamelCase;
-        let to_std_string_string_snake_case = naming_conventions::ToStdStringStringSnakeCase;
-        let std_string_string_token_stream = token_patterns::StdStringString;
-        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
-        quote::quote!{
-            impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_token_stream {
-                fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
-                    format!(#format_handle_token_stream)
-                }
-            }
-        }
-    };
     let crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
     };
