@@ -1072,9 +1072,10 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         }
     };
     let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
     let ident_to_create_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_to_create_upper_camel_case,
-        &quote::quote!{(#field_type);},
+        &field_type_struct_content_token_stream,
     );
     let impl_crate_bind_query_for_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_create_upper_camel_case,
@@ -1111,7 +1112,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let ident_to_read_upper_camel_case = naming_conventions::SelfToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_to_read_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_to_read_upper_camel_case,
-        &quote::quote!{(#field_type);},
+        &field_type_struct_content_token_stream,
     );
     let impl_crate_bind_query_for_ident_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_read_upper_camel_case,
@@ -1127,7 +1128,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let ident_to_update_upper_camel_case = naming_conventions::SelfToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_to_update_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_to_update_upper_camel_case,
-        &quote::quote!{(#field_type);},
+        &field_type_struct_content_token_stream,
     );
     let impl_crate_bind_query_for_ident_to_update_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_update_upper_camel_case,
@@ -1157,7 +1158,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let ident_to_delete_upper_camel_case = naming_conventions::SelfToDeleteUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_to_delete_upper_camel_case,
-        &quote::quote!{(#field_type);},
+        &field_type_struct_content_token_stream,
     );
     let impl_crate_bind_query_for_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_to_delete_upper_camel_case,
