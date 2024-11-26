@@ -23,8 +23,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base::StdPrimitiveBool);
-//
-
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
         "BOOL NOT NULL"
@@ -48,7 +46,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull
 }
 //exception for offset and limit for now
 const _: () = {
-    
     impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
         fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
             sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
