@@ -12,8 +12,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
         "BOOL"
     }
 }
-
-///////////////
 #[derive(
     Debug,
     Clone,
@@ -28,7 +26,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
         "BOOL NOT NULL"
     }
 }
-
 #[derive(
     Debug,
     Clone,
