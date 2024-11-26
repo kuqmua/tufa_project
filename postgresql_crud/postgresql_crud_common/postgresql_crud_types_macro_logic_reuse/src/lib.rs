@@ -933,7 +933,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     generated.into()
 }
 
-#[proc_macro_derive(PostgresqlCrudBaseWrapTypeTokens)] //todo check on postgresql max length value of type
+#[proc_macro_derive(PostgresqlCrudBaseWrapTypeTokens)]
 pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -1079,15 +1079,16 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_sqlx_type_sqlx_postgres_for_ident_to_create_token_stream = {
+    let generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
-            impl sqlx::Type<sqlx::Postgres> for #ident_to_create_upper_camel_case {
+            impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
                 fn type_info() -> sqlx::postgres::PgTypeInfo {
                     <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
                 }
             }
         }
     };
+    let impl_sqlx_type_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_create_upper_camel_case);
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_to_create_upper_camel_case,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
@@ -1121,15 +1122,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream = {
-        quote::quote!{
-            impl sqlx::Type<sqlx::Postgres> for #ident_to_read_upper_camel_case {
-                fn type_info() -> sqlx::postgres::PgTypeInfo {
-                    <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
-                }
-            }
-        }
-    };
+    let impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_read_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_to_read_upper_camel_case,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
@@ -1195,15 +1188,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream = {
-        quote::quote!{
-            impl sqlx::Type<sqlx::Postgres> for #ident_to_update_upper_camel_case {
-                fn type_info() -> sqlx::postgres::PgTypeInfo {
-                    <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
-                }
-            }
-        }
-    };
+    let impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_update_upper_camel_case);
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_update_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_to_update_upper_camel_case,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
@@ -1260,15 +1245,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             }
         }
     };
-    let impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream = {
-        quote::quote!{
-            impl sqlx::Type<sqlx::Postgres> for #ident_to_delete_upper_camel_case {
-                fn type_info() -> sqlx::postgres::PgTypeInfo {
-                    <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
-                }
-            }
-        }
-    };
+    let impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_to_delete_upper_camel_case,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
