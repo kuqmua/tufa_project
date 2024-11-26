@@ -714,9 +714,6 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
                     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                        #field_type_as_sqlx_type_sqlx_postgres_token_stream type_info()
                     }
-                    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                       #field_type_as_sqlx_type_sqlx_postgres_token_stream compatible(ty)
-                    }
                 }
             }
         };
