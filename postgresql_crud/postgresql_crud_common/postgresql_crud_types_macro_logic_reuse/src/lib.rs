@@ -1007,7 +1007,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
     );
-    let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let try_generate_bind_increments_snake_case = naming_conventions::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming_conventions::BindValueToQuerySnakeCase;
     let crate_bind_query_token_stream = quote::quote!{crate::BindQuerySecond::};
@@ -1016,6 +1015,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
         bind_value_to_query_token_stream: &dyn quote::ToTokens,
     |{
+        let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let bind_query_upper_camel_case = naming_conventions::BindQueryUpperCamelCase;
         let std_string_string_token_stream = token_patterns::StdStringString;
         quote::quote!{
