@@ -1082,13 +1082,15 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
         &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
     );
+    let value_snake_case = naming_conventions::ValueSnakeCase;
     let generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+        let error_snake_case = naming_conventions::ErrorSnakeCase;
         quote::quote!{
             impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                        Ok(value) => Ok(Self(value)),
-                        Err(error) => Err(error)
+                fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                    match <#field_type as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
+                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                        Err(#error_snake_case) => Err(#error_snake_case)
                     }
                 }
             }
@@ -1179,25 +1181,26 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let ident_where_upper_camel_case = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_where_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_where_upper_camel_case,
+        //todo maybe remove pub here?
         &quote::quote!{{
-            pub value: #ident,
+            pub #value_snake_case: #ident,
             pub conjuctive_operator: crate::ConjunctiveOperator,
         }},
     );
     let impl_std_fmt_display_for_ident_where_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_where_upper_camel_case,
-        &quote::quote!{"value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator}
+        &quote::quote!{"value: {}, conjuctive_operator: {}", self.#value_snake_case, self.conjuctive_operator}
     );
     let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_where_upper_camel_case,
         //todo maybe conjuctive operator and value must be generated here? not in the generate_postgresql_crud_second?
-        &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.value, increment)},
-        &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.value, query)},
+        &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.#value_snake_case, increment)},
+        &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.#value_snake_case, query)},
     );
     let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_where_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
         &ident_where_upper_camel_case,
         &quote::quote!{{
-            value: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+            #value_snake_case: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
             conjuctive_operator: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
         }}
     );
