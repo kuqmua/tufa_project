@@ -1189,7 +1189,12 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     );
     let impl_std_fmt_display_for_ident_where_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_where_upper_camel_case,
-        &quote::quote!{"value: {}, conjuctive_operator: {}", self.#value_snake_case, self.conjuctive_operator}
+        &{
+            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                &format!("{value_snake_case}: {{}}, conjuctive_operator: {{}}")
+            );
+            quote::quote!{#format_handle_token_stream, self.#value_snake_case, self.conjuctive_operator}
+        }
     );
     let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_where_upper_camel_case,
