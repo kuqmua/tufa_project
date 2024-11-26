@@ -771,6 +771,21 @@ fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
         }
     }
 }
+fn generate_pub_struct_tokens_token_stream(
+    ident_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    quote::quote! {
+        #[derive(
+            Debug,
+            Clone,
+            PartialEq,
+            serde::Serialize,
+            serde::Deserialize,
+        )]
+        pub struct #ident_token_stream #content_token_stream
+    }
+}
 
 #[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
 pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -1020,21 +1035,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             #impl_crate_bind_query_for_ident_token_stream
         }
     };
-    let generate_pub_struct_tokens_token_stream = |
-        ident_token_stream: &dyn quote::ToTokens,
-        content_token_stream: &dyn quote::ToTokens,
-    |{
-        quote::quote! {
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #ident_token_stream #content_token_stream
-        }
-    };
     let ident_column_token_stream = {
         let pub_struct_ident_column_token_stream = generate_pub_struct_tokens_token_stream(
             &ident_column_upper_camel_case,
@@ -1235,21 +1235,6 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
     };
     let braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         (#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-    };
-    let generate_pub_struct_tokens_token_stream = |
-        ident_token_stream: &dyn quote::ToTokens,
-        content_token_stream: &dyn quote::ToTokens,
-    |{
-        quote::quote! {
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #ident_token_stream #content_token_stream
-        }
     };
     let value_snake_case = naming_conventions::ValueSnakeCase;
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
