@@ -1131,10 +1131,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
         );
-        //here
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_create_upper_camel_case);
-        //here
-        let impl_sqlx_type_sqlx_postgres_for_ident_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_create_upper_camel_case);
         let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
             &ident_to_create_upper_camel_case,
             &braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1142,8 +1138,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         quote::quote! {
             #ident_to_create_token_stream
             #impl_crate_bind_query_for_ident_to_create_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_ident_to_create_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_ident_to_create_token_stream
             #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_create_token_stream
         }
     };
@@ -1153,25 +1147,12 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             &ident_to_read_upper_camel_case,
             &field_type_struct_content_token_stream,
         );
-        //here
-        let impl_crate_bind_query_for_ident_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &ident_to_read_upper_camel_case,
-            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-        );
         let impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
         let impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_read_upper_camel_case);
-        //here
-        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_read_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
-            &ident_to_read_upper_camel_case,
-            &braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-        );
         quote::quote! {
             #ident_to_read_token_stream
-            #impl_crate_bind_query_for_ident_to_read_token_stream
             #impl_sqlx_decode_sqlx_postgres_for_ident_to_read_token_stream
             #impl_sqlx_type_sqlx_postgres_for_ident_to_read_token_stream
-            #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_read_token_stream
         }
     };
     let ident_to_update_token_stream = {
@@ -1185,27 +1166,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
         );
-        //here
-        let impl_std_fmt_display_for_ident_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &ident_to_update_upper_camel_case,
-            &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-        );
-        //here
-        let impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_update_upper_camel_case);
-        //here
-        let impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream = {
-            quote::quote!{
-                impl sqlx::Encode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
-                    fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_dot_zero_token_stream, buf)
-                    }
-                }
-            }
-        };
-        //here
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_update_upper_camel_case);
-        //here
-        let impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_update_upper_camel_case);
         let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_update_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
             &ident_to_update_upper_camel_case,
             &braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1213,45 +1173,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         quote::quote! {
             #ident_to_update_token_stream
             #impl_crate_bind_query_for_ident_to_update_token_stream
-            #impl_std_fmt_display_for_ident_to_update_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_ident_to_update_token_stream
-            #impl_sqlx_encode_sqlx_postgres_for_ident_to_update_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_ident_to_update_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_ident_to_update_token_stream
             #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_update_token_stream
-        }
-    };
-    //here
-    let ident_to_delete_token_stream = {
-        let ident_to_delete_upper_camel_case = naming_conventions::SelfToDeleteUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-        let ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-            &ident_to_delete_upper_camel_case,
-            &field_type_struct_content_token_stream,
-        );
-        let impl_crate_bind_query_for_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &ident_to_delete_upper_camel_case,
-            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-        );
-        let impl_std_fmt_display_for_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &ident_to_delete_upper_camel_case,
-            &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-        );
-        let impl_error_occurence_lib_to_std_string_string_for_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
-        let impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
-        let impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&ident_to_delete_upper_camel_case);
-        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream(
-            &ident_to_delete_upper_camel_case,
-            &braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-        );
-        quote::quote!{
-            #ident_to_delete_token_stream
-            #impl_crate_bind_query_for_ident_to_delete_token_stream
-            #impl_std_fmt_display_for_ident_to_delete_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_ident_to_delete_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_ident_to_delete_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_ident_to_delete_token_stream
-            #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_to_delete_token_stream
         }
     };
     let ident_where_token_stream = {
@@ -1298,8 +1220,6 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         #ident_to_read_token_stream
 
         #ident_to_update_token_stream
-
-        #ident_to_delete_token_stream
 
         #ident_where_token_stream
     };
