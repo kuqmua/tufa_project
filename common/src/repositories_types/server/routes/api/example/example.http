@@ -194,7 +194,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "std_primitive_bool_as_postgresql_bool_not_null": [
     {
       "value": false,
-      "conjuctive_operator": "Or"
+      "conjunctive_operator": "Or"
     }
   ]
 }

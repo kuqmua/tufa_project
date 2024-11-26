@@ -164,11 +164,11 @@ fn common_handle(
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_ident_should_implement_eq_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
-            pub conjuctive_operator: ConjunctiveOperator,
+            pub conjunctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_ident_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+                write!(formatter, "value: {}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
             }
         }
         impl BindQuery<'_> for #where_ident_token_stream {
@@ -200,7 +200,7 @@ fn common_handle(
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                 Self {
                     value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjuctive_operator: ConjunctiveOperator::default(),
+                    conjunctive_operator: ConjunctiveOperator::default(),
                 }
             }
         }
@@ -308,14 +308,14 @@ fn common_handle(
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_upper_camel_case_token_stream ,
-            pub conjuctive_operator: ConjunctiveOperator,
+            pub conjunctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_std_option_option_ident_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(
                     formatter,
-                    "value: {}, conjuctive_operator: {}",
-                    self.value, self.conjuctive_operator
+                    "value: {}, conjunctive_operator: {}",
+                    self.value, self.conjunctive_operator
                 )
             }
         }
@@ -357,7 +357,7 @@ fn common_handle(
             fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                 Self {
                     value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjuctive_operator: ConjunctiveOperator::default(),
+                    conjunctive_operator: ConjunctiveOperator::default(),
                 }
             }
         }
@@ -1178,27 +1178,31 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident_to_delete_upper_camel_case,
         &quote::quote!{(#crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case())}
     );
+    let conjunctive_operator_snake_case = naming_conventions::ConjunctiveOperatorSnakeCase;
     let ident_where_upper_camel_case = naming_conventions::SelfWhereUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_where_token_stream = generate_pub_struct_tokens_token_stream(
         &ident_where_upper_camel_case,
-        //todo maybe remove pub here?
-        &quote::quote!{{
-            pub #value_snake_case: #ident,
-            pub conjuctive_operator: crate::ConjunctiveOperator,
-        }},
+        &{
+            let conjunctive_operator_upper_camel_case_case = naming_conventions::ConjunctiveOperatorUpperCamelCase;
+            //todo maybe remove pub here?
+            quote::quote!{{
+                pub #value_snake_case: #ident,
+                pub #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case_case,
+            }}
+        },
     );
     let impl_std_fmt_display_for_ident_where_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident_where_upper_camel_case,
         &{
             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                &format!("{value_snake_case}: {{}}, conjuctive_operator: {{}}")
+                &format!("{value_snake_case}: {{}}, {conjunctive_operator_snake_case}: {{}}")
             );
-            quote::quote!{#format_handle_token_stream, self.#value_snake_case, self.conjuctive_operator}
+            quote::quote!{#format_handle_token_stream, self.#value_snake_case, self.#conjunctive_operator_snake_case}
         }
     );
     let impl_crate_bind_query_for_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident_where_upper_camel_case,
-        //todo maybe conjuctive operator and value must be generated here? not in the generate_postgresql_crud_second?
+        //todo maybe conjunctive operator and value must be generated here? not in the generate_postgresql_crud_second?
         &quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&self.#value_snake_case, increment)},
         &quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(self.#value_snake_case, query)},
     );
@@ -1206,7 +1210,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         &ident_where_upper_camel_case,
         &quote::quote!{{
             #value_snake_case: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
-            conjuctive_operator: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+            #conjunctive_operator_snake_case: #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
         }}
     );
     //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key

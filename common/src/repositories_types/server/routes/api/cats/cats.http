@@ -646,7 +646,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     # "name":[
     #     {
     #         "regex":"^tesft_namfe$",
-    #         "conjuctive_operator":"Or"
+    #         "conjunctive_operator":"Or"
     #     }
     # ],
     "order_by": {
@@ -970,13 +970,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # "name":[
     #     {
     #         "regex":"first_test_name_create",
-    #         "conjuctive_operator":"Or"
+    #         "conjunctive_operator":"Or"
     #     }
     # ],
     # "color":[
     #     {
     #         "regex":"first_test_color_create",
-    #         "conjuctive_operator":"Or"
+    #         "conjunctive_operator":"Or"
     #     }
     # ]
 }
@@ -1184,7 +1184,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "std_primitive_bool_as_postgresql_bool_not_null": [
     {
       "value": false,
-      "conjuctive_operator": "Or"
+      "conjunctive_operator": "Or"
     }
   ]
 }

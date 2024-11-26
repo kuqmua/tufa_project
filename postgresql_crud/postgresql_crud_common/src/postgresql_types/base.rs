@@ -118,11 +118,11 @@ pub(crate) struct StdStringString(pub std::string::String);
 // pub(crate) struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
 // pub(crate) struct WhereSqlxTypesJson<T> {
 //     pub value: SqlxTypesJson<T>,
-//     pub conjuctive_operator: ConjunctiveOperator,
+//     pub conjunctive_operator: ConjunctiveOperator,
 // }
 // pub(crate) struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
 // pub(crate) struct WhereStdOptionOptionSqlxTypesJson<T> {
 //     pub value: StdOptionOptionSqlxTypesJson<T>,
-//     pub conjuctive_operator: ConjunctiveOperator,
+//     pub conjunctive_operator: ConjunctiveOperator,
 // }
 // pub(crate) struct SerdeJsonValue(pub serde_json::Value);

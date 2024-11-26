@@ -7820,14 +7820,14 @@ where
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesJson<T> {
     pub value: SqlxTypesJson<T>,
-    pub conjuctive_operator: ConjunctiveOperator,
+    pub conjunctive_operator: ConjunctiveOperator,
 }
 impl<T> std::fmt::Display for WhereSqlxTypesJson<T>
 where
     T: std::fmt::Debug,
 {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {:?}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+        write!(formatter, "value: {:?}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
     }
 }
 impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSqlxTypesJson<T> {
@@ -7865,7 +7865,7 @@ where
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjuctive_operator: ConjunctiveOperator::default(),
+            conjunctive_operator: ConjunctiveOperator::default(),
         }
     }
 }
@@ -7958,11 +7958,11 @@ where
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdOptionOptionSqlxTypesJson<T> {
     pub value: StdOptionOptionSqlxTypesJson<T>,
-    pub conjuctive_operator: ConjunctiveOperator,
+    pub conjunctive_operator: ConjunctiveOperator,
 }
 impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson<T> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+        write!(formatter, "value: {}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
     }
 }
 impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + sqlx::Encode<'a, sqlx::Postgres> + 'a> BindQuery<'a> for WhereStdOptionOptionSqlxTypesJson<T> {
@@ -8003,7 +8003,7 @@ where
     fn default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjuctive_operator: ConjunctiveOperator::default(),
+            conjunctive_operator: ConjunctiveOperator::default(),
         }
     }
 }

@@ -3660,7 +3660,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                                             #acc_snake_case.push_str(&handle);
                                                         },
                                                         false => {
-                                                            #acc_snake_case.push_str(&format!("{} {handle}", #element_snake_case.conjuctive_operator));
+                                                            #acc_snake_case.push_str(&format!("{} {handle}", #element_snake_case.conjunctive_operator));
                                                         },
                                                     }
                                                 },
