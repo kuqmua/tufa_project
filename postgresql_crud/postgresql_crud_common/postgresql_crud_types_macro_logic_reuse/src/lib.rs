@@ -963,8 +963,9 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     let increment_snake_case = naming_conventions::IncrementSnakeCase;
     let query_snake_case = naming_conventions::QuerySnakeCase;
     let self_snake_case = naming_conventions::SelfSnakeCase;
-    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.0, #increment_snake_case)};
-    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.0, #query_snake_case)};
+    let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
+    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
 
     let crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
         let generate_postgresql_query_part_snake_case = naming_conventions::GeneratePostgresqlQueryPartSnakeCase;
@@ -974,7 +975,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
         }
     };
     let default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming_conventions::DefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_snake_case.0};
+    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
     let generate_impl_crate_bind_query_for_tokens_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
         try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -1192,7 +1193,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
             quote::quote!{
                 impl sqlx::Encode<'_, sqlx::Postgres> for #ident_to_update_upper_camel_case {
                     fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
+                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_dot_zero_token_stream, buf)
                     }
                 }
             }
