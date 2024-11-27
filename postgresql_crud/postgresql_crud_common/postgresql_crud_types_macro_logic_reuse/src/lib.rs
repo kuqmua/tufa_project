@@ -918,6 +918,42 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
             )
         )
     };
+    let (
+        impl_crate_create_table_query_part_for_ident_token_stream,
+        impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
+    ) = {
+        let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
+            ident_token_stream: &dyn quote::ToTokens,
+            is_not_null: std::primitive::bool,
+        |{
+            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                "{{{value_snake_case}}}{}",
+                if is_not_null {
+                    " NOT NULL"
+                }
+                else {
+                    ""
+                }
+            ));
+            quote::quote!{
+                impl #ident_token_stream {
+                    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+                        format!(#format_handle_token_stream)
+                    }
+                }
+            }
+        };
+        (
+            generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+                &ident,
+                true,
+            ),
+            generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case,
+                false,
+            )
+        )
+    };
     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
         quote::quote!{
             impl PostgresqlCrudBaseTypeSelfType<'_> for #ident {}
@@ -936,12 +972,14 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         #impl_crate_bind_query_for_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+        #impl_crate_create_table_query_part_for_ident_token_stream
 
         #pub_crate_struct_std_option_option_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_crate_bind_query_for_std_option_option_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+        #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
         #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
         #impl_postgresql_crud_base_type_for_ident_token_stream

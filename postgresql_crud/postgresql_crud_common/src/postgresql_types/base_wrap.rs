@@ -86,7 +86,7 @@ pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
-        "BOOL"
+        crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool::create_table_query_part_handle(&"BOOL")
     }
 }
 #[derive(
@@ -100,7 +100,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base::StdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        "BOOL NOT NULL"
+        crate::postgresql_types::base::StdPrimitiveBool::create_table_query_part_handle(&"BOOL")
     }
 }
 
