@@ -49,10 +49,25 @@ pub(crate) trait PostgresqlCrudBaseWrapType<'a> {
     type SelfWhereType: PostgresqlCrudBaseTypeSelfToDeleteType<'a>;
 }
 pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
-    type SelfToCreate: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
-    type SelfToRead: PostgresqlCrudBaseTypeSelfToReadType<'a>;
-    type SelfToUpdate: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
-    type SelfToDelete: PostgresqlCrudBaseTypeSelfToDeleteType<'a>;
+    type SelfToCreate: PostgresqlCrudBaseTypeSelfToCreateType<'a>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>;
+    type SelfToRead: PostgresqlCrudBaseTypeSelfToReadType<'a>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfToUpdate: PostgresqlCrudBaseTypeSelfToUpdateType<'a>
+        + std::fmt::Display
+        + error_occurence_lib::ToStdStringString
+        + sqlx::Encode<'a, sqlx::Postgres>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>;
+    type SelfToDelete: PostgresqlCrudBaseTypeSelfToDeleteType<'a>
+        + crate::BindQuerySecond<'a>
+        + std::fmt::Display
+        + error_occurence_lib::ToStdStringString
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 
 #[derive(
