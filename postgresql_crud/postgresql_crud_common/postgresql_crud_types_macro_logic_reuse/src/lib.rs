@@ -972,9 +972,19 @@ pub fn postgresql_crud_base_type_tokens_primary_key(input: proc_macro::TokenStre
             }
         }
     };
+    let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
+        let std_option_option_ident_upper_camel_case = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+        quote::quote! {
+            impl PostgresqlCrudBaseTypePrimaryKey<'_> for #ident {
+                type SelfType = Self;
+                type StdOptionOptionType = #std_option_option_ident_upper_camel_case;
+            }
+        }
+    };
     let generated = quote::quote! {
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
+        #impl_postgresql_crud_base_type_primary_key_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
