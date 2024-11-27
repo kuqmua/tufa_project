@@ -925,14 +925,14 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     };
     let impl_postgresql_crud_base_type_std_option_option_type_for_std_option_option_ident_token_stream = {
         quote::quote!{
-            impl PostgresqlCrudBaseTypeStdOptionOptionType<'_> for #std_option_option_ident_upper_camel_case {}
+            impl PostgresqlCrudBaseTypeStdOptionOptionSelfType<'_> for #std_option_option_ident_upper_camel_case {}
         }
     };
     let impl_postgresql_crud_base_type_for_ident_token_stream = {
         quote::quote! {
             impl PostgresqlCrudBaseType<'_> for #ident {
                 type SelfType = Self;
-                type StdOptionOptionType = #std_option_option_ident_upper_camel_case;
+                type StdOptionOptionSelfType = #std_option_option_ident_upper_camel_case;
             }
         }
     };
@@ -977,7 +977,7 @@ pub fn postgresql_crud_base_type_tokens_primary_key(input: proc_macro::TokenStre
         quote::quote! {
             impl PostgresqlCrudBaseTypePrimaryKey<'_> for #ident {
                 type SelfType = Self;
-                type StdOptionOptionType = #std_option_option_ident_upper_camel_case;
+                type StdOptionOptionSelfType = #std_option_option_ident_upper_camel_case;
             }
         }
     };
