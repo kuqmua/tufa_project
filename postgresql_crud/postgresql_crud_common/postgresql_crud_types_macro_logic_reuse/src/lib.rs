@@ -923,11 +923,6 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
             impl PostgresqlCrudBaseTypeSelfType<'_> for #ident {}
         }
     };
-    let impl_postgresql_crud_base_type_std_option_option_type_for_std_option_option_ident_token_stream = {
-        quote::quote!{
-            impl PostgresqlCrudBaseTypeStdOptionOptionSelfType<'_> for #std_option_option_ident_upper_camel_case {}
-        }
-    };
     let impl_postgresql_crud_base_type_for_ident_token_stream = {
         quote::quote! {
             impl PostgresqlCrudBaseType<'_> for #ident {
@@ -949,7 +944,6 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
         
         #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-        #impl_postgresql_crud_base_type_std_option_option_type_for_std_option_option_ident_token_stream
         #impl_postgresql_crud_base_type_for_ident_token_stream
     };
     // if ident == "" {
@@ -973,18 +967,15 @@ pub fn postgresql_crud_base_type_tokens_primary_key(input: proc_macro::TokenStre
         }
     };
     let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
-        let std_option_option_ident_upper_camel_case = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote! {
             impl PostgresqlCrudBaseTypePrimaryKey<'_> for #ident {
                 type SelfType = Self;
-                type StdOptionOptionSelfType = #std_option_option_ident_upper_camel_case;
             }
         }
     };
     let generated = quote::quote! {
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
-        #impl_postgresql_crud_base_type_primary_key_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
@@ -1339,9 +1330,9 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
 
         #ident_to_delete_token_stream
     };
-    // if ident == "" {
-    //     println!("{generated}");
-    //     println!("----------------------");
-    // }
+    if ident == "" {
+        println!("{generated}");
+        println!("----------------------");
+    }
     generated.into()
 }

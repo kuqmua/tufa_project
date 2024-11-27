@@ -7,7 +7,9 @@ pub(crate) trait PostgresqlCrudBaseTypeSelfType<'a>: std::fmt::Debug
         + sqlx::Decode<'a, sqlx::Postgres>
         + crate::BindQuerySecond<'a>
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub(crate) trait PostgresqlCrudBaseTypeStdOptionOptionSelfType<'a>: std::fmt::Debug
+pub(crate) trait PostgresqlCrudBaseType<'a> {
+    type SelfType: PostgresqlCrudBaseTypeSelfType<'a>;
+    type StdOptionOptionSelfType: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
@@ -15,16 +17,12 @@ pub(crate) trait PostgresqlCrudBaseTypeStdOptionOptionSelfType<'a>: std::fmt::De
         + sqlx::Type<sqlx::Postgres>
         + sqlx::Decode<'a, sqlx::Postgres>
         + crate::BindQuerySecond<'a>
-        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub(crate) trait PostgresqlCrudBaseType<'a> {
-    type SelfType: PostgresqlCrudBaseTypeSelfType<'a>;
-    type StdOptionOptionSelfType: PostgresqlCrudBaseTypeStdOptionOptionSelfType<'a>;
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 pub(crate) trait PostgresqlCrudBaseTypePrimaryKey<'a> {
     type SelfType: PostgresqlCrudBaseTypeSelfType<'a>
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType;
-    type StdOptionOptionSelfType: PostgresqlCrudBaseTypeStdOptionOptionSelfType<'a>;
 }
 
 #[derive(
