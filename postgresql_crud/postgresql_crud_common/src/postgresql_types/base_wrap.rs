@@ -19,7 +19,7 @@ pub(crate) trait PostgresqlCrudBaseTypeSelfToUpdateType<'a>: std::fmt::Debug
     + serde::Deserialize<'a>
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub(crate) trait PostgresqlCrudBaseTypeSelfToDeleteType<'a>: std::fmt::Debug
+pub(crate) trait PostgresqlCrudBaseTypeSelfWhereType<'a>: std::fmt::Debug
     + Clone
     + PartialEq
     + serde::Serialize
@@ -46,7 +46,7 @@ pub(crate) trait PostgresqlCrudBaseWrapType<'a> {
     type SelfToCreateType: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
     type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
-    type SelfWhereType: PostgresqlCrudBaseTypeSelfToDeleteType<'a>;
+    type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
 }
 pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
     type SelfToCreate: PostgresqlCrudBaseTypeSelfToCreateType<'a>
@@ -61,7 +61,11 @@ pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::Decode<'a, sqlx::Postgres>
         + sqlx::Type<sqlx::Postgres>;
-    type SelfToDelete: PostgresqlCrudBaseTypeSelfToDeleteType<'a>
+    type SelfToDelete: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
         + crate::BindQuerySecond<'a>
         + std::fmt::Display
         + error_occurence_lib::ToStdStringString
