@@ -824,7 +824,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
-    let std_option_option_ident_upper_camel_case_token_stream = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let std_option_option_ident_upper_camel_case = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
@@ -832,7 +832,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         &field_type
     );
     let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case_token_stream,
+        &std_option_option_ident_upper_camel_case,
         &std_option_option_field_type_token_stream
     );
     let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
@@ -840,7 +840,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         &field_type
     );
     let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case_token_stream,
+        &std_option_option_ident_upper_camel_case,
         &quote::quote! {std::option::Option<#ident>}
     );
     let self_zero_token_stream = {
@@ -878,7 +878,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         }
     );
     let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case_token_stream,
+        &std_option_option_ident_upper_camel_case,
         &try_generate_bind_increments_token_stream,
         &quote::quote! {
             #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
@@ -890,7 +890,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     );
     let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
         &quote::quote!{pub(crate)},
-        &std_option_option_ident_upper_camel_case_token_stream,
+        &std_option_option_ident_upper_camel_case,
         &quote::quote!{(pub std::option::Option<#ident>);},
     );
     let (
@@ -909,7 +909,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
                 &quote::quote!{(::core::default::Default::default())},
             ),
             generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                &std_option_option_ident_upper_camel_case_token_stream,
+                &std_option_option_ident_upper_camel_case,
                 &quote::quote!{(
                     Some(
                         #crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
@@ -918,17 +918,27 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
             )
         )
     };
+    let impl_postgresql_crud_base_type_for_ident_token_stream = {
+        quote::quote! {
+            impl PostgresqlCrudBaseType<'_> for #ident {
+                type SelfStruct = Self;
+                type StdOptionOption = #std_option_option_ident_upper_camel_case;
+            }
+        }
+    };
     let generated = quote::quote! {
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         #impl_crate_bind_query_for_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
-        //////////
+
         #pub_crate_struct_std_option_option_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_crate_bind_query_for_std_option_option_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+        
+        #impl_postgresql_crud_base_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

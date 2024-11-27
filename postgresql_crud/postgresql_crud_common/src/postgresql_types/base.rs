@@ -29,10 +29,6 @@ pub(crate) trait PostgresqlCrudBaseType<'a> {
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokensPrimaryKey,
 )]
 pub(crate) struct StdPrimitiveI16(std::primitive::i16);
-impl PostgresqlCrudBaseType<'_> for StdPrimitiveI16 {
-    type SelfStruct = Self;
-    type StdOptionOption = StdOptionOptionStdPrimitiveI16;
-}
 #[derive(
     Debug,
     Clone,
