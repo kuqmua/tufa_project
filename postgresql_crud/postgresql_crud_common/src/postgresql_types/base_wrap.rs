@@ -130,7 +130,7 @@ const JSONB: &std::primitive::str = "JSONB";
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_query_part() -> impl std::fmt::Display {
-        crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool::create_table_query_part_handle(&"BOOL")
+        Self::create_table_query_part_handle(&BOOL)
     }
 }
 #[derive(
@@ -144,7 +144,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base::StdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        crate::postgresql_types::base::StdPrimitiveBool::create_table_query_part_handle(&"BOOL")
+        Self::create_table_query_part_handle(&BOOL)
     }
 }
 
@@ -160,7 +160,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -174,7 +174,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -188,7 +188,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull 
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -202,7 +202,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -216,7 +216,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNu
 pub struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -230,7 +230,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -244,7 +244,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
 pub struct StdPrimitiveI32AsPostgresqlInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -258,7 +258,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -272,7 +272,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
 pub struct StdPrimitiveI32AsPostgresqlSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -286,7 +286,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -300,7 +300,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
 pub struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -314,7 +314,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -328,7 +328,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
 pub struct StdPrimitiveI64AsPostgresqlBigInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -342,7 +342,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(crate::postgresql_types::base::StdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -356,7 +356,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -370,7 +370,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
 pub struct StdPrimitiveF32AsPostgresqlReal(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -384,7 +384,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(crate::postgresql_types::base::StdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -398,7 +398,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
 pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -412,7 +412,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(crate::postgresql_types::base::StdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -426,7 +426,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -440,7 +440,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision 
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(crate::postgresql_types::base::StdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -454,7 +454,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionN
 pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -468,7 +468,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(crate::postgresql_types::base::StdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -482,7 +482,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
 pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -496,7 +496,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
 pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -510,7 +510,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharN {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -524,7 +524,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharN {
 pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharNNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -538,7 +538,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharNNotNull {
 pub struct StdStringStringAsPostgresqlText(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -552,7 +552,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
 pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -566,7 +566,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
 pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiText {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 #[derive(
@@ -580,7 +580,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiText {
 pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
-        ""
+        Self::create_table_query_part_handle(&)
     }
 }
 ///////////////////////
