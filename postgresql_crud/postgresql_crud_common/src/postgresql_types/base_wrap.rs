@@ -75,6 +75,50 @@ pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 
+
+const BOOL: &std::primitive::str = "BOOL";
+const CHAR: &std::primitive::str = "CHAR";
+const SMALLINT: &std::primitive::str = "SMALLINT";
+const SMALLSERIAL: &std::primitive::str = "SMALLSERIAL";
+const INT2: &std::primitive::str = "INT2";
+const INT: &std::primitive::str = "INT";
+const SERIAL: &std::primitive::str = "SERIAL";
+const INT4: &std::primitive::str = "INT4";
+const BIGINT: &std::primitive::str = "BIGINT";
+const BIGSERIAL: &std::primitive::str = "BIGSERIAL";
+const INT8: &std::primitive::str = "INT8";
+const REAL: &std::primitive::str = "REAL";
+const FLOAT4: &std::primitive::str = "FLOAT4";
+const DOUBLE_PRECISION: &std::primitive::str = "DOUBLE PRECISION";
+const FLOAT8: &std::primitive::str = "FLOAT8";
+const VARCHAR: &std::primitive::str = "VARCHAR";
+const CHARN: &std::primitive::str = "CHAR(N)";
+const TEXT: &std::primitive::str = "TEXT";
+const CITEXT: &std::primitive::str = "CITEXT";
+const BYTEA: &std::primitive::str = "BYTEA";
+const INTERVAL: &std::primitive::str = "INTERVAL";
+const INT8RANGE: &std::primitive::str = "INT8RANGE";
+const INT4RANGE: &std::primitive::str = "INT4RANGE";
+const TSRANGE: &std::primitive::str = "TSRANGE";
+const TSTZRANGE: &std::primitive::str = "TSTZRANGE";
+const DATERANGE: &std::primitive::str = "DATERANGE";
+const NUMRANGE: &std::primitive::str = "NUMRANGE";
+const MONEY: &std::primitive::str = "MONEY";
+const NUMERIC: &std::primitive::str = "NUMERIC";
+const TIMESTAMPTZ: &std::primitive::str = "TIMESTAMPTZ";
+const DATE: &std::primitive::str = "DATE";
+const TIME: &std::primitive::str = "TIME";
+const TIMETZ: &std::primitive::str = "TIMETZ";
+const TIMESTAMP: &std::primitive::str = "TIMESTAMP";
+const UUID: &std::primitive::str = "UUID";
+const INET: &std::primitive::str = "INET";
+const CIDR: &std::primitive::str = "CIDR";
+const MACADDR: &std::primitive::str = "MACADDR";
+const BIT: &std::primitive::str = "BIT";
+const VARBIT: &std::primitive::str = "VARBIT";
+const JSON: &std::primitive::str = "JSON";
+const JSONB: &std::primitive::str = "JSONB";
+
 #[derive(
     Debug,
     Clone,
