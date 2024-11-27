@@ -1,22 +1,31 @@
-// pub(crate) trait PostgresqlCrudBaseTypeSelfType<'a>: std::fmt::Debug
-//         + Clone
-//         + PartialEq
-//         + serde::Serialize
-//         + serde::Deserialize<'a>
-//         + sqlx::Type<sqlx::Postgres>
-//         + sqlx::Decode<'a, sqlx::Postgres>
-//         + crate::BindQuerySecond<'a>
-//         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-// pub(crate) trait PostgresqlCrudBaseTypeStdOptionOptionType<'a>: std::fmt::Debug
-//         + Clone
-//         + PartialEq
-//         + serde::Serialize
-//         + serde::Deserialize<'a>
-//         + sqlx::Type<sqlx::Postgres>
-//         + sqlx::Decode<'a, sqlx::Postgres>
-//         + crate::BindQuerySecond<'a>
-//         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-
+pub(crate) trait PostgresqlCrudBaseTypeSelfToCreateType<'a>: std::fmt::Debug
+    + Clone
+    + PartialEq
+    + serde::Serialize
+    + serde::Deserialize<'a>
+    + crate::BindQuerySecond<'a>
+    + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
+pub(crate) trait PostgresqlCrudBaseTypeSelfToReadType<'a>: std::fmt::Debug
+    + Clone
+    + PartialEq
+    + serde::Serialize
+    + serde::Deserialize<'a>
+    + sqlx::Decode<'a, sqlx::Postgres>
+    + sqlx::Type<sqlx::Postgres> {}
+pub(crate) trait PostgresqlCrudBaseTypeSelfToUpdateType<'a>: std::fmt::Debug
+    + Clone
+    + PartialEq
+    + serde::Serialize
+    + serde::Deserialize<'a>
+    + crate::BindQuerySecond<'a>
+    + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
+pub(crate) trait PostgresqlCrudBaseTypeSelfToDeleteType<'a>: std::fmt::Debug
+    + Clone
+    + PartialEq
+    + serde::Serialize
+    + serde::Deserialize<'a>
+    + crate::BindQuerySecond<'a>
+    + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement{}
 
 pub(crate) trait PostgresqlCrudBaseWrapType<'a> {
     type SelfType: std::fmt::Debug
@@ -34,35 +43,32 @@ pub(crate) trait PostgresqlCrudBaseWrapType<'a> {
         + serde::Serialize
         + serde::Deserialize<'a>
         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelfToCreate: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + crate::BindQuerySecond<'a>
-        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelToRead: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + sqlx::Type<sqlx::Postgres>;
-    type SelfToUpdate: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + crate::BindQuerySecond<'a>
-        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelfWhere: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + crate::BindQuerySecond<'a>
-        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfToCreateType: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
+    type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
+    type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
+    type SelfWhereType: PostgresqlCrudBaseTypeSelfToDeleteType<'a>;
 }
+// pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
+//     type SelfToCreate: std::fmt::Debug
+//         + Clone
+//         + PartialEq
+//         + serde::Serialize
+//         + serde::Deserialize<'a>
+//         + sqlx::Decode<'a, sqlx::Postgres>
+//         + sqlx::Type<sqlx::Postgres>
+//         + crate::BindQuerySecond<'a>
+//         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+//     type SelfToRead
+//     type SelfToUpdate
+//     type SelfToDelete
+
+        
+        
+        
+        
+        
+//         ;
+// }
 
 #[derive(
     Debug,

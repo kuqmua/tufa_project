@@ -1330,9 +1330,9 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
 
         #ident_to_delete_token_stream
     };
-    if ident == "" {
-        println!("{generated}");
-        println!("----------------------");
-    }
+    // if ident == "" {
+    //     println!("{generated}");
+    //     println!("----------------------");
+    // }
     generated.into()
 }
