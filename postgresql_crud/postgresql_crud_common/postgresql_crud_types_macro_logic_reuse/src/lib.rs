@@ -835,8 +835,6 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         &std_option_option_ident_upper_camel_case_token_stream,
         &std_option_option_field_type_token_stream
     );
-    //here
-    let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
     let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
         &ident,
         &field_type
@@ -845,14 +843,6 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         &std_option_option_ident_upper_camel_case_token_stream,
         &quote::quote! {std::option::Option<#ident>}
     );
-    //here
-    let impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream = quote::quote!{
-        impl sqlx::postgres::PgHasArrayType for #ident {
-            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
-            }
-        }
-    };
     let self_zero_token_stream = {
         let self_snake_case = naming_conventions::SelfSnakeCase;
         quote::quote!{#self_snake_case.0}
@@ -930,9 +920,7 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
     };
     let generated = quote::quote! {
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
-        #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
-        #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
         #impl_crate_bind_query_for_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
         //////////
@@ -941,6 +929,30 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_crate_bind_query_for_std_option_option_ident_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+    };
+    // if ident == "" {
+    //     println!("{generated}");
+    // }
+    generated.into()
+}
+
+#[proc_macro_derive(PostgresqlCrudBaseTypeTokensPrimaryKey)]
+pub fn postgresql_crud_base_type_tokens_primary_key(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
+    let impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream = quote::quote!{
+        impl sqlx::postgres::PgHasArrayType for #ident {
+            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+            }
+        }
+    };
+    let generated = quote::quote! {
+        #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
+        #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
