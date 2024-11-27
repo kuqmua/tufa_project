@@ -1,3 +1,69 @@
+// pub(crate) trait PostgresqlCrudBaseTypeSelfType<'a>: std::fmt::Debug
+//         + Clone
+//         + PartialEq
+//         + serde::Serialize
+//         + serde::Deserialize<'a>
+//         + sqlx::Type<sqlx::Postgres>
+//         + sqlx::Decode<'a, sqlx::Postgres>
+//         + crate::BindQuerySecond<'a>
+//         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
+// pub(crate) trait PostgresqlCrudBaseTypeStdOptionOptionType<'a>: std::fmt::Debug
+//         + Clone
+//         + PartialEq
+//         + serde::Serialize
+//         + serde::Deserialize<'a>
+//         + sqlx::Type<sqlx::Postgres>
+//         + sqlx::Decode<'a, sqlx::Postgres>
+//         + crate::BindQuerySecond<'a>
+//         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
+
+
+pub(crate) trait PostgresqlCrudBaseWrapType<'a> {
+    type SelfType: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + std::fmt::Display
+        + error_occurence_lib::ToStdStringString
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        + crate::BindQuerySecond<'a>;
+    type SelfColumnType: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfToCreate: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelToRead: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>;
+    type SelfToUpdate: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfWhere: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+}
+
 #[derive(
     Debug,
     Clone,
