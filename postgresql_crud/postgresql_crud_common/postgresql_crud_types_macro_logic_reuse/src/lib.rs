@@ -870,14 +870,20 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
             )
         )
     };
+    let self_snake_case = naming_conventions::SelfSnakeCase;
+    let query_snake_case = naming_conventions::QuerySnakeCase;
+    let value_snake_case = naming_conventions::ValueSnakeCase;
+    let increment_snake_case = naming_conventions::IncrementSnakeCase;
+    let acc_snake_case = naming_conventions::AccSnakeCase;
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
     let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident,
         &quote::quote! {
-            let mut increments = std::string::String::default();
-            match increment.checked_add(1) {
-                Some(incr) => {
-                    *increment = incr;
-                    increments.push_str(&format!("${increment}"));
+            let mut #acc_snake_case = std::string::String::default();
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    #acc_snake_case.push_str(&format!(#format_handle_token_stream));
                 }
                 None => {
                     return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
@@ -885,21 +891,21 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
                     });
                 }
             }
-            Ok(increments)
+            Ok(#acc_snake_case)
         },
         &quote::quote! {
-            query = query.bind(self.0);
-            query
+            #query_snake_case = #query_snake_case.bind(#self_snake_case.0);
+            #query_snake_case
         }
     );
     let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &std_option_option_ident_upper_camel_case_token_stream,
         &quote::quote! {
-            let mut increments = std::string::String::default();
-            match increment.checked_add(1) {
-                Some(incr) => {
-                    *increment = incr;
-                    increments.push_str(&format!("${increment}"));
+            let mut #acc_snake_case = std::string::String::default();
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    #acc_snake_case.push_str(&format!(#format_handle_token_stream));
                 }
                 None => {
                     return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
@@ -907,14 +913,14 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
                     });
                 }
             }
-            Ok(increments)
+            Ok(#acc_snake_case)
         },
         &quote::quote! {
-            query = query.bind(match self.0 {
-                Some(value) => Some(value.0),
+            #query_snake_case = #query_snake_case.bind(match #self_snake_case.0 {
+                Some(#value_snake_case) => Some(#value_snake_case.0),
                 None => None
             });
-            query
+            #query_snake_case
         }
     );
     let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
