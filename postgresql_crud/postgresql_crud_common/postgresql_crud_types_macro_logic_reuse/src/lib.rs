@@ -802,16 +802,11 @@ fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_strea
         }
     }
 }
-
-#[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
-pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
+fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::DeriveInput) -> &'a syn::Type {
+    if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
             match fields_unnamed.unnamed.len() {
-                1 => &fields_unnamed.unnamed[0],
+                1 => &fields_unnamed.unnamed[0].ty,
                 _ => panic!("supports only syn::Fields::Unnamed with one field"),
             }
         } else {
@@ -819,8 +814,15 @@ pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_
         }
     } else {
         panic!("does work only on structs!");
-    };
-    let field_type = &field.ty;
+    }
+}
+
+#[proc_macro_derive(PostgresqlCrudBaseTypeTokens)] //todo check on postgresql max length value of type
+pub fn postgresql_crud_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
     let std_option_option_ident_upper_camel_case_token_stream = naming_conventions::StdOptionOptionSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let try_generate_bind_increments_error_named_upper_camel_case = naming_conventions::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
@@ -969,19 +971,7 @@ pub fn postgresql_crud_base_wrap_type_tokens(input: proc_macro::TokenStream) -> 
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
-            match fields_unnamed.unnamed.len() {
-                1 => &fields_unnamed.unnamed[0],
-                _ => panic!("supports only syn::Fields::Unnamed with one field"),
-            }
-        } else {
-            panic!("supports only syn::Fields::Unnamed");
-        }
-    } else {
-        panic!("does work only on structs!");
-    };
-    let field_type = &field.ty;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let ident_column_upper_camel_case = naming_conventions::SelfColumnUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let try_generate_bind_increments_snake_case = naming_conventions::TryGenerateBindIncrementsSnakeCase;
@@ -1187,19 +1177,7 @@ pub fn postgresql_crud_base_wrap_type_tokens_primary_key(input: proc_macro::Toke
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
-            match fields_unnamed.unnamed.len() {
-                1 => &fields_unnamed.unnamed[0],
-                _ => panic!("supports only syn::Fields::Unnamed with one field"),
-            }
-        } else {
-            panic!("supports only syn::Fields::Unnamed");
-        }
-    } else {
-        panic!("does work only on structs!");
-    };
-    let field_type = &field.ty;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let try_generate_bind_increments_snake_case = naming_conventions::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming_conventions::BindValueToQuerySnakeCase;
     let crate_bind_query_token_stream = quote::quote!{crate::BindQuerySecond::};
