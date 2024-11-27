@@ -10,7 +10,7 @@
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
 )]
-pub(crate) struct StdPrimitiveI16(pub std::primitive::i16);
+pub(crate) struct StdPrimitiveI16(std::primitive::i16);
 #[derive(
     Debug,
     Clone,
@@ -23,7 +23,7 @@ pub(crate) struct StdPrimitiveI16(pub std::primitive::i16);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
 )]
-pub(crate) struct StdPrimitiveI32(pub std::primitive::i32);
+pub(crate) struct StdPrimitiveI32(std::primitive::i32);
 #[derive(
     Debug,
     Clone,
@@ -47,7 +47,7 @@ pub(crate) struct StdPrimitiveI64(std::primitive::i64);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
 )]
-pub(crate) struct StdPrimitiveF32(pub std::primitive::f32);
+pub(crate) struct StdPrimitiveF32(std::primitive::f32);
 #[derive(
     Debug,
     Clone,
@@ -58,7 +58,7 @@ pub(crate) struct StdPrimitiveF32(pub std::primitive::f32);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
 )]
-pub(crate) struct StdPrimitiveF64(pub std::primitive::f64);
+pub(crate) struct StdPrimitiveF64(std::primitive::f64);
 #[derive(
     Debug,
     Clone,
@@ -81,7 +81,7 @@ pub(crate) struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it p
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
 )]
-pub(crate) struct StdStringString(pub std::string::String);
+pub(crate) struct StdStringString(std::string::String);
 //
 // // pub(crate) struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 // pub(crate) struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
