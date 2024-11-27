@@ -1,25 +1,42 @@
+pub(crate) trait PostgresqlCrudBaseType<'a> {
+    type SelfStruct: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Type<sqlx::Postgres>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type StdOptionOption: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Type<sqlx::Postgres>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + crate::BindQuerySecond<'a>
+        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+}
+/////////////////////////
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
-    Eq,
-    PartialOrd,
-    Ord,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokensPrimaryKey,
 )]
 pub(crate) struct StdPrimitiveI16(std::primitive::i16);
+impl PostgresqlCrudBaseType<'_> for StdPrimitiveI16 {
+    type SelfStruct = Self;
+    type StdOptionOption = StdOptionOptionStdPrimitiveI16;
+}
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
-    Eq,
-    PartialOrd,
-    Ord,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
@@ -29,11 +46,7 @@ pub(crate) struct StdPrimitiveI32(std::primitive::i32);
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
-    Eq,
-    PartialOrd,
-    Ord,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
@@ -43,9 +56,7 @@ pub(crate) struct StdPrimitiveI64(std::primitive::i64);
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
-    PartialOrd,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
@@ -54,9 +65,7 @@ pub(crate) struct StdPrimitiveF32(std::primitive::f32);
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
-    PartialOrd,
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
@@ -65,7 +74,6 @@ pub(crate) struct StdPrimitiveF64(std::primitive::f64);
 #[derive(
     Debug,
     Clone,
-    Copy,
     PartialEq,
     Eq,
     serde::Serialize,
