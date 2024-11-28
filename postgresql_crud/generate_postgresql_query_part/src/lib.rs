@@ -4630,17 +4630,101 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming_conventions::SqlxTypesJsonStdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionSqlxTypesJsonStdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #sqlx_types_json_object_ident_upper_camel_case(pub sqlx::types::Json<#object_ident_upper_camel_case>);
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #std_option_option_sqlx_types_json_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#object_ident_upper_camel_case>>);
 
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>);
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #std_option_option_sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>>);
 
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>);
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #std_option_option_sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>>);
 
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>);
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
             pub struct #std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>>);
+
+
+
+
+
+            // impl<'a> PostgresqlCrudBaseWrapType<'a> for #sqlx_types_json_object_ident_upper_camel_case {
+            //     type SelfType: std::fmt::Debug
+            //         + Clone
+            //         + PartialEq
+            //         + serde::Serialize
+            //         + serde::Deserialize<'a>
+            //         + std::fmt::Display
+            //         + error_occurence_lib::ToStdStringString
+            //         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+            //         + crate::BindQuerySecond<'a>
+            //         + crate::CreateTableQueryPart;
+            //     type SelfColumnType: std::fmt::Debug
+            //         + Clone
+            //         + PartialEq
+            //         + serde::Serialize
+            //         + serde::Deserialize<'a>
+            //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+            //     type SelfToCreateType: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
+            //     type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
+            //     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
+            //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
+            // }
+
         }
     };
     let generated = quote::quote! {
