@@ -50,11 +50,9 @@
 }]
 pub struct Example {
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveBoolAsPostgresqlBool,
-
-    
     pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
-    // pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI16AsPostgresqlSmallInt,
+    pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI16AsPostgresqlSmallInt,
     // pub std_primitive_i16_as_postgresql_small_int_not_null: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI16AsPostgresqlSmallIntNotNull,
     // pub std_primitive_i16_as_postgresql_small_serial: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI16AsPostgresqlSmallSerial,
     // pub std_primitive_i16_as_postgresql_small_serial_not_null: postgresql_crud::postgresql_types::base_wrap::StdPrimitiveI16AsPostgresqlSmallSerialNotNull,

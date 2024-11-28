@@ -147,8 +147,6 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
         Self::create_table_query_part_handle(&BOOL)
     }
 }
-
-///////////////////
 #[derive(
     Debug,
     Clone,
