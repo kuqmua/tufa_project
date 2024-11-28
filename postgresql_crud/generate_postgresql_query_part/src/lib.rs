@@ -4637,70 +4637,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 serde::Serialize,
                 serde::Deserialize,
             )]
-            pub struct #sqlx_types_json_object_ident_upper_camel_case(pub sqlx::types::Json<#object_ident_upper_camel_case>);
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #std_option_option_sqlx_types_json_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#object_ident_upper_camel_case>>);
-
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>);
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #std_option_option_sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>>);
-
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>);
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #std_option_option_sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>>);
-
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>);
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct #std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>>);
-
-
-
-
+            pub struct WtfSelfType(pub #object_ident_upper_camel_case);
+            impl std::fmt::Display for WtfSelfType {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    write!(formatter, "{self:?}")
+                }
+            }
+            impl error_occurence_lib::ToStdStringString for WtfSelfType {
+                fn to_std_string_string(&self) -> std::string::String {
+                    format!("{self:?}")
+                }
+            }
+            
 
             // impl<'a> PostgresqlCrudBaseWrapType<'a> for #sqlx_types_json_object_ident_upper_camel_case {
             //     type SelfType: std::fmt::Debug
@@ -4725,6 +4673,78 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
             // }
 
+
+
+
+
+
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #sqlx_types_json_object_ident_upper_camel_case(pub sqlx::types::Json<#object_ident_upper_camel_case>);
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #std_option_option_sqlx_types_json_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#object_ident_upper_camel_case>>);
+
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>);
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #std_option_option_sqlx_types_json_std_option_option_object_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_object_ident_upper_camel_case>>);
+
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>);
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #std_option_option_sqlx_types_json_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_vec_vec_object_with_id_ident_upper_camel_case>>);
+
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>);
+            // #[derive(
+            //     Debug,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub struct #std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case(pub std::option::Option<sqlx::types::Json<#std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case>>);
         }
     };
     let generated = quote::quote! {
