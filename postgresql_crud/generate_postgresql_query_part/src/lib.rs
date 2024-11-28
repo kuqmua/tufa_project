@@ -2638,6 +2638,38 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
                     #impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream
+
+                    // impl<'a> PostgresqlCrudBaseWrapType<'a> for #object_ident_upper_camel_case {
+                    //     type SelfType: #object_ident_upper_camel_case;
+                    //     type SelfColumnType: std::fmt::Debug
+                    //         + Clone
+                    //         + PartialEq
+                    //         + serde::Serialize
+                    //         + serde::Deserialize<'a>
+                    //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+                    //     type SelfToCreateType: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
+                    //     type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
+                    //     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
+                    //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
+                    // }
+                    // #[derive(
+                    //     Debug,
+                    //     Clone,
+                    //     PartialEq,
+                    //     serde::Serialize,
+                    //     serde::Deserialize,
+                    // )]
+                    // pub struct WtfSelfType(pub #object_ident_upper_camel_case);
+                    // impl std::fmt::Display for WtfSelfType {
+                    //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    //         write!(formatter, "{self}")
+                    //     }
+                    // }
+                    // impl error_occurence_lib::ToStdStringString for WtfSelfType {
+                    //     fn to_std_string_string(&self) -> std::string::String {
+                    //         format!("{self:?}")
+                    //     }
+                    // }
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
@@ -4634,26 +4666,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming_conventions::SqlxTypesJsonStdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         let std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionSqlxTypesJsonStdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                serde::Serialize,
-                serde::Deserialize,
-            )]
-            pub struct WtfSelfType(pub #object_ident_upper_camel_case);
-            impl std::fmt::Display for WtfSelfType {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    write!(formatter, "{self:?}")
-                }
-            }
-            impl error_occurence_lib::ToStdStringString for WtfSelfType {
-                fn to_std_string_string(&self) -> std::string::String {
-                    format!("{self:?}")
-                }
-            }
-            
-
             // impl<'a> PostgresqlCrudBaseWrapType<'a> for #sqlx_types_json_object_ident_upper_camel_case {
             //     type SelfType: std::fmt::Debug
             //         + Clone
