@@ -4603,6 +4603,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         }
     };
     
+
+// sqlx::types::Json
+
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+// pub struct SqlxTypesJson(pub sqlx::types::Json<T>);
+// #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+// pub struct StdOptionOptionSqlxTypesJson(pub std::option::Option<sqlx::types::Json<T>>);
+
+    // pub animal_sqlx_types_json_t_as_postgresql_json: AnimalSqlxTypesJsonAsPostgresqlJson,
+    // pub animal_sqlx_types_json_t_as_postgresql_json_not_null: AnimalSqlxTypesJsonAsPostgresqlJsonNotNull,
+    // pub animal_sqlx_types_json_t_as_postgresql_json_b: AnimalSqlxTypesJsonAsPostgresqlJsonB,
+    // pub animal_sqlx_types_json_t_as_postgresql_json_b_not_null: AnimalSqlxTypesJsonAsPostgresqlJsonBNotNull,
+
     let generated = quote::quote! {
         #common_token_stream
 
