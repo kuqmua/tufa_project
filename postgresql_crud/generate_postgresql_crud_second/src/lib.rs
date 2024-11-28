@@ -3598,7 +3598,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 //todo maybe but checks into constructor function and use it inside deserilizaton serde impl
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &{
                     let filter_not_unique_fields_token_stream = generate_filter_not_unique_fields_token_stream(&operation, &fields_without_primary_key);
-                    // println!("-------------");
                     let filter_not_unique_column_token_stream = generate_filter_not_unique_column_route_logic_token_stream(&operation);
                     quote::quote! {
                         #filter_not_unique_fields_token_stream
