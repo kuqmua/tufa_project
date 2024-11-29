@@ -316,29 +316,6 @@ impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsA
         ]
     }
 }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde ::Deserialize,
-)]
-pub struct ObjectAnimalToCreateHandle;
-impl<'a> postgresql_crud::BindQuerySecond<'a> for ObjectAnimalToCreateHandle {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
-    }
-    fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
-    }
-}
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ObjectAnimalToCreateHandle {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        todo!()
-    }
-}
-impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToCreateType<'_> for ObjectAnimalToCreateHandle {}
 
 #[derive(
     Debug,
@@ -416,7 +393,7 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfWhe
 impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_> for ObjectAnimal {
     type SelfType = ObjectAnimal;
     type SelfColumnType = ObjectAnimalColumnHandle;
-    type SelfToCreateType = ObjectAnimalToCreateHandle;
+    type SelfToCreateType = ObjectAnimalToCreate;
     type SelToReadType = ObjectAnimalToReadHandle;
     type SelfToUpdateType = ObjectAnimalToUpdateHandle;
     type SelfWhereType = ObjectAnimalWhereHandle;
