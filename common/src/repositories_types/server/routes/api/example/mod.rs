@@ -349,30 +349,6 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToR
     serde :: Serialize,
     serde ::Deserialize,
 )]
-pub struct ObjectAnimalToUpdateHandle;
-impl<'a> postgresql_crud::BindQuerySecond<'a> for ObjectAnimalToUpdateHandle {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
-    }
-    fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
-    }
-}
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ObjectAnimalToUpdateHandle {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        todo!()
-    }
-}
-impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToUpdateType<'_> for ObjectAnimalToUpdateHandle {}
-
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde ::Deserialize,
-)]
 pub struct ObjectAnimalWhereHandle;
 impl<'a> postgresql_crud::BindQuerySecond<'a> for ObjectAnimalWhereHandle {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
@@ -395,6 +371,6 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_
     type SelfColumnType = ObjectAnimalColumnHandle;
     type SelfToCreateType = ObjectAnimalToCreate;
     type SelToReadType = ObjectAnimalToReadHandle;
-    type SelfToUpdateType = ObjectAnimalToUpdateHandle;
+    type SelfToUpdateType = ObjectAnimalOptionToUpdate;
     type SelfWhereType = ObjectAnimalWhereHandle;
 }

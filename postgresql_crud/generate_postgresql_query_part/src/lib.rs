@@ -1994,6 +1994,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 false,
                 false,
             );
+            // println!("{ident_option_to_update_token_stream}");
             let impl_try_new_for_ident_option_to_update_token_stream = {
                 let fields_are_empty_upper_camel_case = naming_conventions::FieldsAreEmptyUpperCamelCase;
                 let try_new_error_named_token_stream = {
@@ -2297,6 +2298,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 },
             );
+            //integration with GeneratePostgresqlCrudSecond
+            let impl_postgresql_crud_bind_query_second_for_ident_option_to_update_token_stream = {
+                quote::quote!{
+                    impl<'a> postgresql_crud::BindQuerySecond<'a> for #ident_option_to_update_upper_camel_case {
+                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                            todo!()
+                        }
+                        fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            todo!()
+                        }
+                    }
+                }
+            };
+            let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_update_type_for_ident_option_to_update_token_stream = {
+                quote::quote!{
+                    impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToUpdateType<'_> for #ident_option_to_update_upper_camel_case {}
+                }
+            };
             quote::quote!{
                 #ident_option_to_update_token_stream
                 #impl_try_new_for_ident_option_to_update_token_stream
@@ -2304,6 +2323,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_option_to_update_token_stream
                 #ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                 #impl_ident_option_to_update_methods_token_stream
+
+                #impl_postgresql_crud_bind_query_second_for_ident_option_to_update_token_stream
+                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_update_type_for_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
