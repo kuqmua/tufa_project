@@ -317,30 +317,30 @@ impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsA
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde ::Deserialize,
-)]
-pub struct ObjectAnimalToReadHandle;
-impl sqlx::Decode<'_, sqlx::Postgres> for ObjectAnimalToReadHandle {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        // match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-        //     Ok(value) => Ok(Self(value)),
-        //     Err(error) => Err(error)
-        // }
-        todo!()
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for ObjectAnimalToReadHandle {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-    //    <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
-        todo!()
-    }
-}
-impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for ObjectAnimalToReadHandle {}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde :: Serialize,
+//     serde ::Deserialize,
+// )]
+// pub struct ObjectAnimalToReadHandle;
+// impl sqlx::Decode<'_, sqlx::Postgres> for ObjectAnimalToReadHandle {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         // match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//         //     Ok(value) => Ok(Self(value)),
+//         //     Err(error) => Err(error)
+//         // }
+//         todo!()
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for ObjectAnimalToReadHandle {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//     //    <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
+//         todo!()
+//     }
+// }
+// impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for ObjectAnimalToReadHandle {}
 
 #[derive(
     Debug,
@@ -370,7 +370,7 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_
     type SelfType = ObjectAnimal;
     type SelfColumnType = ObjectAnimalColumnHandle;
     type SelfToCreateType = ObjectAnimalToCreate;
-    type SelToReadType = ObjectAnimalToReadHandle;
+    type SelToReadType = ObjectAnimalOptionsToRead;//ObjectAnimalToReadHandle
     type SelfToUpdateType = ObjectAnimalOptionToUpdate;
     type SelfWhereType = ObjectAnimalWhereHandle;
 }
