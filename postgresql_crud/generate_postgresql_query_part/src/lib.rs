@@ -1536,21 +1536,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_with_id_token_stream
                     )
                 };
-                //integration with GeneratePostgresqlCrudSecond
-                // let (
-                //     impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_ident_field_to_read_without_id_token_stream,
-                //     impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_ident_field_to_read_with_id_token_stream
-                // ) = {
-                //     let generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-                //         quote::quote!{
-                //             impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for #ident_token_stream {}
-                //         }
-                //     };
-                //     (
-                //         generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_token_stream(&ident_field_to_read_without_id_upper_camel_case),
-                //         generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_token_stream(&ident_field_to_read_with_id_upper_camel_case)
-                //     )
-                // };
                 quote::quote!{
                     #ident_field_to_read_token_stream
                     #ident_with_id_field_to_read_token_stream
@@ -1573,9 +1558,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_without_id_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_options_to_read_with_id_token_stream
-
-                    // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_ident_field_to_read_without_id_token_stream
-                    // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_ident_field_to_read_with_id_token_stream
                 }
             };
             let update_token_stream = {
@@ -2812,6 +2794,47 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &naming_conventions::ObjectSelfReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident),
                         &object_ident_options_to_read_upper_camel_case
                     );
+                    //GeneratePostgresqlCrudSecond integration
+                    let object_ident_to_read_upper_camel_case = naming_conventions::ObjectSelfToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let object_ident_field_reader_upper_camel_case = naming_conventions::ObjectSelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+                    let object_ident_to_read_token_stream = {
+                        quote::quote!{
+                            #[derive(
+                                Debug,
+                                Clone,
+                                PartialEq,
+                                serde::Serialize,
+                                serde::Deserialize,
+                            )]
+                            pub struct #object_ident_to_read_upper_camel_case(sqlx::types::Json<#object_ident_field_reader_upper_camel_case>);
+                        }
+                    };
+                    let impl_sqlx_decode_sqlx_postgres_for_object_ident_to_read_token_stream = {
+                        quote::quote!{
+                            impl sqlx::Decode<'_, sqlx::Postgres> for #object_ident_to_read_upper_camel_case {
+                                fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                                    match <sqlx::types::Json<#object_ident_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                        Ok(value) => Ok(Self(value)),
+                                        Err(error) => Err(error)
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    let impl_sqlx_type_sqlx_postgres_for_object_ident_to_read_token_stream = {
+                        quote::quote!{
+                            impl sqlx::Type<sqlx::Postgres> for #object_ident_to_read_upper_camel_case {
+                                fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                                   <sqlx::types::Json<#object_ident_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()
+                                }
+                            }
+                        }
+                    };
+                    let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_object_ident_to_read_token_stream = {
+                        quote::quote!{
+                            impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for #object_ident_to_read_upper_camel_case {}
+                        }
+                    };
                     quote::quote!{
                         #object_ident_options_to_read_alias_token_stream
 
@@ -2820,8 +2843,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_ident_field_reader_token_stream
 
                         #object_ident_reader_token_stream
+
+                        #object_ident_to_read_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_object_ident_to_read_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_object_ident_to_read_token_stream
+                        #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_object_ident_to_read_token_stream
                     }
                 };
+                // if ident == "Animal" {
+                //     println!("{read_token_stream}");
+                // }
+                
                 let update_token_stream = {
                     let object_ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                         &object_ident_option_to_update_upper_camel_case, 
