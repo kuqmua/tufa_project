@@ -2884,7 +2884,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             pub struct #object_ident_column_upper_camel_case;
                         }
                     };
-                    //
                     let impl_sqlx_type_sqlx_postgres_for_object_ident_column_token_stream = {
                         quote::quote!{
                             impl sqlx::Type<sqlx::Postgres> for #object_ident_column_upper_camel_case {
@@ -2908,7 +2907,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     };
-                    //
                     let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_ident_column_token_stream = {
                         quote::quote!{
                             impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #object_ident_column_upper_camel_case {
