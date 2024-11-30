@@ -298,54 +298,11 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 /////////////////////////////////////////
-
-////////
-
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde ::Deserialize,
-)]
-pub struct ObjectAnimalColumnHandle;
-impl postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ObjectAnimalColumnHandle {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-
-        ]
-    }
-}
-
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde :: Serialize,
-    serde ::Deserialize,
-)]
-pub struct ObjectAnimalWhereHandle;
-impl<'a> postgresql_crud::BindQuerySecond<'a> for ObjectAnimalWhereHandle {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
-    }
-    fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
-    }
-}
-impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ObjectAnimalWhereHandle {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        todo!()
-    }
-}
-impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfWhereType<'_> for ObjectAnimalWhereHandle {}
-
 impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_> for ObjectAnimal {
     type SelfType = ObjectAnimal;
-    type SelfColumnType = ObjectAnimalColumnHandle;
+    type SelfColumnType = ObjectAnimalColumn;
     type SelfToCreateType = ObjectAnimalToCreate;
-    type SelToReadType = ObjectAnimalToRead;//ObjectAnimalToReadHandle
+    type SelToReadType = ObjectAnimalToRead;
     type SelfToUpdateType = ObjectAnimalOptionToUpdate;
-    type SelfWhereType = ObjectAnimalWhereHandle;
+    type SelfWhereType = ObjectAnimalWhere;
 }
