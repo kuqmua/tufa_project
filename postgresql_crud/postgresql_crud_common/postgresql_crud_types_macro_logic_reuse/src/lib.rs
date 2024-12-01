@@ -478,8 +478,8 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             }
         }
     };
-    let ident_to_create_upper_camel_case = naming_conventions::SelfToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_to_create_upper_camel_case, &ident);
+    let ident_postgresql_json_type_to_create_upper_camel_case = naming_conventions::SelfPostgresqlJsonTypeToCreateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_postgresql_json_type_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_postgresql_json_type_to_create_upper_camel_case, &ident);
     let ident_field_reader_upper_camel_case = naming_conventions::SelfFieldReaderUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let (
         ident_field_reader_token_stream,
@@ -559,7 +559,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
         &quote::quote!{crate::generate_postgresql_query_part::},
         &ident,
-        &ident_to_create_upper_camel_case,
+        &ident_postgresql_json_type_to_create_upper_camel_case,
         &{
             let crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{
                 crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
@@ -649,7 +649,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     let generated = quote::quote!{
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
 
-        #ident_to_create_alias_token_stream
+        #ident_postgresql_json_type_to_create_alias_token_stream
         #ident_field_reader_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_field_reader_token_stream
         #ident_options_to_read_alias_token_stream

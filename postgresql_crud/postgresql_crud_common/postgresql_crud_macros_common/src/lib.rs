@@ -1,7 +1,7 @@
 pub fn generate_postgresql_json_type_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
-    ident_to_create_token_stream: &dyn quote::ToTokens,
+    postgresql_json_type_ident_to_create_token_stream: &dyn quote::ToTokens,
     try_generate_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
     bind_value_to_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
     ident_field_reader: &dyn quote::ToTokens,
@@ -43,7 +43,7 @@ pub fn generate_postgresql_json_type_token_stream(
     //todo maybe reexport sqlx?
     quote::quote!{
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
-            type #postgresql_json_type_to_create_upper_camel_case<'a> = #ident_to_create_token_stream;
+            type #postgresql_json_type_to_create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
             fn #try_generate_postgresql_query_part_to_create_snake_case(
                 #postgresql_json_type_to_create_snake_case: &Self::#postgresql_json_type_to_create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
