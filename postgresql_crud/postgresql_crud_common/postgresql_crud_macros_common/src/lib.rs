@@ -5,7 +5,7 @@ pub fn generate_postgresql_json_type_token_stream(
     try_generate_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
     bind_value_to_postgresql_query_part_to_create_token_stream: &dyn quote::ToTokens,
     ident_postgresql_json_type_field_reader: &dyn quote::ToTokens,
-    ident_options_to_read: &dyn quote::ToTokens,
+    ident_postgresql_json_type_options_to_read: &dyn quote::ToTokens,
     generate_postgresql_query_part_to_read_token_stream: &dyn quote::ToTokens,
     ident_option_to_update: &dyn quote::ToTokens,
     ident_option_to_update_try_generate_postgresql_query_part_error_named: &dyn quote::ToTokens,
@@ -16,7 +16,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let postgresql_json_type_to_create_snake_case = naming_conventions::PostgresqlJsonTypeToCreateSnakeCase;
     let postgresql_json_type_field_reader_upper_camel_case = naming_conventions::PostgresqlJsonTypeFieldReaderUpperCamelCase;
     let postgresql_json_type_field_reader_snake_case = naming_conventions::PostgresqlJsonTypeFieldReaderSnakeCase;
-    let options_to_read_upper_camel_case = naming_conventions::OptionsToReadUpperCamelCase;
+    let postgresql_json_type_options_to_read_upper_camel_case = naming_conventions::PostgresqlJsonTypeOptionsToReadUpperCamelCase;
     let option_to_update_upper_camel_case = naming_conventions::OptionToUpdateUpperCamelCase;
     let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
     let option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
@@ -57,7 +57,7 @@ pub fn generate_postgresql_json_type_token_stream(
                 #bind_value_to_postgresql_query_part_to_create_token_stream
             }
             type #postgresql_json_type_field_reader_upper_camel_case<'a> = #ident_postgresql_json_type_field_reader;
-            type #options_to_read_upper_camel_case<'a> = #ident_options_to_read;
+            type #postgresql_json_type_options_to_read_upper_camel_case<'a> = #ident_postgresql_json_type_options_to_read;
             fn #generate_postgresql_query_part_to_read_snake_case(
                 #postgresql_json_type_field_reader_snake_case: &Self::#postgresql_json_type_field_reader_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,

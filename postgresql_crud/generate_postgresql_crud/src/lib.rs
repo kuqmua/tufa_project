@@ -566,7 +566,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    // let from_ident_for_ident_options_to_read_token_stream = {
+    // let from_ident_for_ident_postgresql_json_type_options_to_read_token_stream = {
     //     let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
     //         #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident.0)
     //     });
@@ -4707,7 +4707,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = quote::quote! {
         pub const TABLE_NAME: #ref_std_primitive_str = #table_name_double_quotes_token_stream;
         #struct_options_token_stream
-        // #from_ident_for_ident_options_to_read_token_stream
+        // #from_ident_for_ident_postgresql_json_type_options_to_read_token_stream
         #column_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream

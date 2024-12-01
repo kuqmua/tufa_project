@@ -436,7 +436,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["conjunctive", "operator"],
     ["pub"],
     ["postgresql", "json", "type", "to", "create"],
-    ["postgresql", "json", "type", "field", "reader"]
+    ["postgresql", "json", "type", "field", "reader"],
+    ["postgresql", "json", "type", "options", "to", "read"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -632,7 +633,14 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["object", "self", "postgresql", "json", "type", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
     ["std", "option", "option", "object", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
     ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"]
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
+    ["object", "self", "postgresql", "json", "type", "options", "to", "read"],
+    ["std", "option", "option", "object", "self", "postgresql", "json", "type", "options", "to", "read"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "options", "to", "read"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "options", "to", "read"],
+    ["self", "postgresql", "json", "type", "options", "to", "read"],
+    ["self", "postgresql", "json", "type", "options", "to", "read", "without", "id"],
+    ["self", "postgresql", "json", "type", "options", "to", "read", "with", "id"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {

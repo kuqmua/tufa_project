@@ -483,7 +483,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         // std_vec_vec_object_with_id: Some(postgresql_crud::Value { value: StdVecVecObjectWithIdDoggieOptionsToRead(vec![
         //     StdVecVecObjectWithIdDoggieOptionsToReadOrigin {
         //         id: Some(postgresql_crud::Value {
-        //             value: postgresql_crud::json_types::UuidOptionsToRead::default()
+        //             value: postgresql_crud::json_types::UuidPostgresqlJsonTypeOptionsToRead::default()
         //         }),
         //         std_primitive_i16: Some(postgresql_crud::Value {
         //             value: postgresql_crud::json_types::StdPrimitiveI16OptionsToRead(1)
@@ -493,7 +493,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
         std_option_option_std_vec_vec_object_with_id: Some(postgresql_crud::Value { value: StdOptionOptionStdVecVecObjectWithIdDoggieOptionsToRead(Some(vec![
             StdOptionOptionStdVecVecObjectWithIdDoggieOptionsToReadOrigin {
                 id: Some(postgresql_crud::Value {
-                    value: postgresql_crud::json_types::UuidOptionsToRead::default()
+                    value: postgresql_crud::json_types::UuidPostgresqlJsonTypeOptionsToRead::default()
                 }),
                 std_primitive_i16: Some(postgresql_crud::Value {
                     value: postgresql_crud::json_types::StdPrimitiveI16OptionsToRead(1)
