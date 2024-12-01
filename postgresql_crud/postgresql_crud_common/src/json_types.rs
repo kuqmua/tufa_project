@@ -1062,8 +1062,8 @@ impl schemars::JsonSchema for UuidOptionToUpdate {
 }
 //
 impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
-    type ToCreate<'a> = UuidToCreate;
-    fn try_generate_postgresql_query_part_to_create(_: &Self::ToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
+    type PostgresqlJsonTypeToCreate<'a> = UuidToCreate;
+    fn try_generate_postgresql_query_part_to_create(_: &Self::PostgresqlJsonTypeToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -1072,8 +1072,8 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
             None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_create<'a>(to_create: Self::ToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(to_create.0));
+    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_to_create: Self::PostgresqlJsonTypeToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(postgresql_json_type_to_create.0));
         query
     }
     type FieldReader<'a> = UuidFieldReader;

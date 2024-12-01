@@ -577,9 +577,9 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
             }
         },
         &{
-            let to_create_snake_case = naming_conventions::ToCreateSnakeCase;
+            let postgresql_json_type_to_create_snake_case = naming_conventions::PostgresqlJsonTypeToCreateSnakeCase;
             quote::quote!{
-                query = query.bind(sqlx::types::Json(#to_create_snake_case.0));
+                query = query.bind(sqlx::types::Json(#postgresql_json_type_to_create_snake_case.0));
                 query
             }
         },
