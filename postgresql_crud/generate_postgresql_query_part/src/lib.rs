@@ -2347,16 +2347,47 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         quote::quote!{#(#fields_token_stream),*}
     };
     let object_with_id_ident_upper_camel_case = naming_conventions::ObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let object_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
-        true,
-        &object_with_id_ident_upper_camel_case,
-        &{
-            quote::quote!{{
-                pub #id_snake_case: #postgresql_crud_uuid_option_to_update_token_stream,
-                #fields_token_stream
-            }}
+    let object_with_id_ident_token_stream = {
+        let object_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
+            true,
+            &object_with_id_ident_upper_camel_case,
+            &{
+                quote::quote!{{
+                    pub #id_snake_case: #postgresql_crud_uuid_option_to_update_token_stream,
+                    #fields_token_stream
+                }}
+            }
+        );
+        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream = {
+            let fields_token_stream = vec_syn_field.iter().map(|element| {
+                let field_ident = element
+                    .ident
+                    .as_ref()
+                    .unwrap_or_else(|| {
+                        panic!("{}", naming_conventions::FIELD_IDENT_IS_NONE);
+                    });
+                quote::quote!{
+                    #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                }
+            });
+            quote::quote!{
+                impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #object_with_id_ident_upper_camel_case {
+                    #[inline]
+                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self {
+                            #id_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            #(#fields_token_stream),*
+                        }
+                    }
+                }
+            }
+        };
+        quote::quote!{
+            #object_with_id_ident_token_stream
+            #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream
         }
-    );
+    };
+
     let field_reader_snake_case = naming_conventions::FieldReaderSnakeCase;
     let field_ident_snake_case = naming_conventions::FieldIdentSnakeCase;
 
@@ -4488,12 +4519,38 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
+                let postgresql_crud_second_token_stream = generate_postgresql_crud_second_token_stream(
+                    SupportedJsonValue::StdVecVecObjectWithIdIdent,
+
+                    &quote::quote!{write!(formatter, "{:?}", self)},
+                    &quote::quote!{format!("{self}")},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{"JSONB"},
+                    &quote::quote!{
+                        (vec![
+                            #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                        ])
+                    },
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{vec![]},
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                );
                 quote::quote!{
                     #std_vec_vec_object_with_id_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+
+                    #postgresql_crud_second_token_stream
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
