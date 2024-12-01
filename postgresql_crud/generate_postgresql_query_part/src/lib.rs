@@ -5105,12 +5105,38 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
+                let postgresql_crud_second_token_stream = generate_postgresql_crud_second_token_stream(
+                    SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent,
+
+                    &quote::quote!{write!(formatter, "{:?}", self)},
+                    &quote::quote!{format!("{self}")},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{"JSONB"},
+                    &quote::quote!{
+                        (Some(vec![
+                            #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                        ]))
+                    },
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{vec![]},
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                );
                 quote::quote!{
                     #std_option_option_std_vec_vec_object_with_id_ident_token_stream
 
                     #create_token_stream
                     #read_token_stream
                     #update_token_stream
+
+                    #postgresql_crud_second_token_stream
                 }
             };
             (

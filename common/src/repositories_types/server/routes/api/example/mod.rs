@@ -306,3 +306,4 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_
     type SelfToUpdateType = ObjectAnimalOptionToUpdate;
     type SelfWhereType = ObjectAnimalWhere;
 }
+
