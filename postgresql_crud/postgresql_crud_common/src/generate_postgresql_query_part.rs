@@ -39,7 +39,7 @@ pub trait PostgresqlJsonType {
         postgresql_json_type_to_create: Self::PostgresqlJsonTypeToCreate<'a>,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    type FieldReader<'a>: std::fmt::Debug
+    type PostgresqlJsonTypeFieldReader<'a>: std::fmt::Debug
         + Clone
         + PartialEq
         + Default
@@ -50,7 +50,7 @@ pub trait PostgresqlJsonType {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type OptionsToRead<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn generate_postgresql_query_part_to_read(
-        field_reader: &Self::FieldReader<'_>,
+        postgresql_json_type_field_reader: &Self::PostgresqlJsonTypeFieldReader<'_>,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
         //todo remove this coz its used properly now

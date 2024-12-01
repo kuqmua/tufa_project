@@ -435,7 +435,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["bind", "value", "to", "query"],
     ["conjunctive", "operator"],
     ["pub"],
-    ["postgresql", "json", "type", "to", "create"]
+    ["postgresql", "json", "type", "to", "create"],
+    ["postgresql", "json", "type", "field", "reader"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -621,7 +622,17 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["object", "self", "postgresql", "json", "type", "to", "create"],
     ["std", "option", "option", "object", "self", "postgresql", "json", "type", "to", "create"],
     ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "to", "create"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "to", "create"]
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "to", "create"],
+    ["self", "postgresql", "json", "type", "field", "reader"],
+    ["object", "self", "postgresql", "json", "type", "field", "reader"],
+    ["std", "option", "option", "object", "self", "postgresql", "json", "type", "field", "reader"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader"],
+    ["self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
+    ["object", "self", "postgresql", "json", "type", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
+    ["std", "option", "option", "object", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "field", "reader", "try", "new", "error", "named"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {

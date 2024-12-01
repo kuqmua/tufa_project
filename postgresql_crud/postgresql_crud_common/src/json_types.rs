@@ -1076,9 +1076,9 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
         query = query.bind(sqlx::types::Json(postgresql_json_type_to_create.0));
         query
     }
-    type FieldReader<'a> = UuidFieldReader;
+    type PostgresqlJsonTypeFieldReader<'a> = UuidPostgresqlJsonTypeFieldReader;
     type OptionsToRead<'a> = UuidOptionsToRead;
-    fn generate_postgresql_query_part_to_read(_: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
+    fn generate_postgresql_query_part_to_read(_: &Self::PostgresqlJsonTypeFieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
     type OptionToUpdate<'a> = UuidOptionToUpdate;
@@ -1127,8 +1127,8 @@ Deserialize,
     utoipa :: ToSchema,
     schemars :: JsonSchema,
 )]
-pub struct UuidFieldReader {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidFieldReader {
+pub struct UuidPostgresqlJsonTypeFieldReader {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeFieldReader {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
