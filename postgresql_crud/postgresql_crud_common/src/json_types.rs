@@ -994,13 +994,13 @@ impl error_occurence_lib::ToStdStringString for Uuid {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct UuidToCreate(pub uuid::Uuid);
-impl schemars::JsonSchema for UuidToCreate {
+pub struct UuidPostgresqlJsonTypeToCreate(pub uuid::Uuid);
+impl schemars::JsonSchema for UuidPostgresqlJsonTypeToCreate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("UuidToCreate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("UuidPostgresqlJsonTypeToCreate")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidToCreate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidPostgresqlJsonTypeToCreate")
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
         {
@@ -1062,7 +1062,7 @@ impl schemars::JsonSchema for UuidOptionToUpdate {
 }
 //
 impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
-    type PostgresqlJsonTypeToCreate<'a> = UuidToCreate;
+    type PostgresqlJsonTypeToCreate<'a> = UuidPostgresqlJsonTypeToCreate;
     fn try_generate_postgresql_query_part_to_create(_: &Self::PostgresqlJsonTypeToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
@@ -1109,7 +1109,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(::core::default::Default::default())
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidToCreate {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeToCreate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(::core::default::Default::default())
