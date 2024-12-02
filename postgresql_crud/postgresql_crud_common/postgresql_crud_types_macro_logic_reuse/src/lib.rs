@@ -1031,6 +1031,7 @@ pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -
     let generated = quote::quote! {
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
+        #impl_postgresql_crud_base_type_primary_key_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
