@@ -1,4 +1,4 @@
-pub mod self_constants;
+pub mod parameter;
 
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;

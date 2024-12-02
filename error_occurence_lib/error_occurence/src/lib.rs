@@ -16,7 +16,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_with_serialize_deserialize_upper_camel_case = naming_conventions::self_constants::SelfWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_with_serialize_deserialize_upper_camel_case = naming_conventions::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
         data_enum
     } else {
