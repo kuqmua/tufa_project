@@ -5192,7 +5192,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_option_option_sqlx_types_json_std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming_conventions::StdOptionOptionSqlxTypesJsonStdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
         quote::quote!{
             // impl<'a> PostgresqlCrudBaseWrapType<'a> for #sqlx_types_json_object_ident_upper_camel_case {
-            //     type SelfType: std::fmt::Debug
+            //     type PostgresqlTypeSelf: std::fmt::Debug
             //         + Clone
             //         + PartialEq
             //         + serde::Serialize

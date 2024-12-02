@@ -28,7 +28,7 @@ pub trait PostgresqlTypeSelfWhereTraits<'a>: std::fmt::Debug
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement{}
 
 pub trait PostgresqlType<'a> {
-    type SelfType: std::fmt::Debug
+    type PostgresqlTypeSelf: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
