@@ -971,12 +971,12 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
             impl #postgresql_crud_base_self_traits_upper_camel_case<'_> for #ident {}
         }
     };
-    let impl_postgresql_crud_base_type_for_ident_token_stream = {
-        let postgresql_crud_base_upper_camel_case = naming_conventions::PostgresqlCrudBaseUpperCamelCase;
+    let impl_postgresql_base_type_for_ident_token_stream = {
+        let postgresql_base_type_upper_camel_case = naming_conventions::PostgresqlBaseTypeUpperCamelCase;
         let postgresql_crud_base_self_upper_camel_case = naming_conventions::PostgresqlCrudBaseSelfUpperCamelCase;
         let postgresql_crud_base_std_option_option_self_upper_camel_case = naming_conventions::PostgresqlCrudBaseStdOptionOptionSelfUpperCamelCase;
         quote::quote! {
-            impl #postgresql_crud_base_upper_camel_case<'_> for #ident {
+            impl #postgresql_base_type_upper_camel_case<'_> for #ident {
                 type #postgresql_crud_base_self_upper_camel_case = Self;
                 type #postgresql_crud_base_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
             }
@@ -997,7 +997,7 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
         #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-        #impl_postgresql_crud_base_type_for_ident_token_stream
+        #impl_postgresql_base_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
