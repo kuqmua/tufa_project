@@ -300,7 +300,7 @@ pub struct Animal {
 /////////////////////////////////////////
 impl postgresql_crud::postgresql_types::base_wrap::PostgresqlType<'_> for ObjectAnimal {
     type PostgresqlTypeSelf = ObjectAnimal;
-    type SelfColumnType = ObjectAnimalColumn;
+    type PostgresqlTypeSelfColumn = ObjectAnimalColumn;
     type SelfToCreateType = ObjectAnimalPostgresqlJsonTypeToCreate;
     type SelToReadType = ObjectAnimalToRead;
     type SelfToUpdateType = ObjectAnimalPostgresqlJsonTypeOptionToUpdate;

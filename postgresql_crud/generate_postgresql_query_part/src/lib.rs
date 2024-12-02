@@ -5202,7 +5202,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
             //         + crate::BindQuerySecond<'a>
             //         + crate::CreateTableQueryPart;
-            //     type SelfColumnType: std::fmt::Debug
+            //     type PostgresqlTypeSelfColumn: std::fmt::Debug
             //         + Clone
             //         + PartialEq
             //         + serde::Serialize

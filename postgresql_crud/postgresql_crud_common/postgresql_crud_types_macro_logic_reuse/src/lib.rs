@@ -1256,7 +1256,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         quote::quote!{
             impl PostgresqlType<'_> for #ident {
                 type PostgresqlTypeSelf = Self;
-                type SelfColumnType = #ident_column_upper_camel_case;
+                type PostgresqlTypeSelfColumn = #ident_column_upper_camel_case;
                 type SelfToCreateType = #ident_to_create_upper_camel_case;
                 type SelToReadType = #ident_to_read_upper_camel_case;
                 type SelfToUpdateType = #ident_to_update_upper_camel_case;

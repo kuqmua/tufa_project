@@ -38,7 +38,7 @@ pub trait PostgresqlType<'a> {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
         + crate::BindQuerySecond<'a>
         + crate::CreateTableQueryPart;
-    type SelfColumnType: std::fmt::Debug
+    type PostgresqlTypeSelfColumn: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
