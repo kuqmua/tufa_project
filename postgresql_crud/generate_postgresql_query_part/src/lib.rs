@@ -654,14 +654,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_with_generated_id_token_stream,
                 impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_without_generated_id_token_stream
             ) = {
-                let generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                let generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToCreateType<'_> for #ident_token_stream {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToCreateTraits<'_> for #ident_token_stream {}
                     }
                 };
                 (
-                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_tokens_token_stream(&ident_to_create_with_generated_id_upper_camel_case),
-                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_tokens_token_stream(&ident_to_create_without_generated_id_upper_camel_case)
+                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_with_generated_id_upper_camel_case),
+                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_without_generated_id_upper_camel_case)
                 )
             };
             //////
@@ -2697,9 +2697,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &tokens_upper_camel_case,
                     &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
                 );
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_tokens_token_stream = {
+                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToCreateType<'_> for #tokens_upper_camel_case {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToCreateTraits<'_> for #tokens_upper_camel_case {}
                     }
                 };
                 quote::quote!{
@@ -2708,7 +2708,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
                     #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_tokens_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream
                 }
             };
             let tokens_column_token_stream = {
@@ -5208,7 +5208,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         + serde::Serialize
             //         + serde::Deserialize<'a>
             //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-            //     type SelfToCreateType: PostgresqlCrudBaseTypeSelfToCreateType<'a>;
+            //     type SelfToCreateType: PostgresqlTypeSelfToCreateTraits<'a>;
             //     type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
             //     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
             //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
