@@ -542,16 +542,16 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
     };
     let ident_postgresql_json_type_options_to_read_upper_camel_case = naming_conventions::SelfPostgresqlJsonTypeOptionsToReadUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let ident_postgresql_json_type_options_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_postgresql_json_type_options_to_read_upper_camel_case, &ident);
-    let ident_option_to_update_upper_camel_case = naming_conventions::SelfOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_option_to_update_upper_camel_case, &ident);
-    let ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::SelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_postgresql_json_type_option_to_update_upper_camel_case = naming_conventions::SelfPostgresqlJsonTypeOptionToUpdateUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_postgresql_json_type_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_postgresql_json_type_option_to_update_upper_camel_case, &ident);
+    let ident_postgresql_json_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::SelfPostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
 
     let checked_add_upper_camel_case = naming_conventions::CheckedAddUpperCamelCase;
 
-    let ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
+    let ident_postgresql_json_type_option_to_update_try_generate_bind_increments_error_named_token_stream = {
         quote::quote!{
             #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case {
+            pub enum #ident_postgresql_json_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case {
                 #checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
             }
         }
@@ -620,28 +620,28 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                 ),
             }
         },
-        &ident_option_to_update_upper_camel_case,
-        &ident_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
+        &ident_postgresql_json_type_option_to_update_upper_camel_case,
+        &ident_postgresql_json_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case,
         &{
             let jsonb_set_accumulator_snake_case = naming_conventions::JsonbSetAccumulatorSnakeCase;
             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})")
             );
-            let option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
+            let postgresql_json_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case = naming_conventions::PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamedUpperCamelCase;
             quote::quote!{
                 match increment.checked_add(1) {
                     Some(value) => {
                         *increment = value;
                         Ok(format!(#format_handle_token_stream))
                     }
-                    None => Err(Self::#option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                    None => Err(Self::#postgresql_json_type_option_to_update_try_generate_postgresql_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                 }
             }
         },
         &{
-            let option_to_update_snake_case = naming_conventions::OptionToUpdateSnakeCase;
+            let postgresql_json_type_option_to_update_snake_case = naming_conventions::PostgresqlJsonTypeOptionToUpdateSnakeCase;
             quote::quote!{
-                query = query.bind(sqlx::types::Json(#option_to_update_snake_case.0));
+                query = query.bind(sqlx::types::Json(#postgresql_json_type_option_to_update_snake_case.0));
                 query
             }
         }
@@ -653,8 +653,8 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         #ident_postgresql_json_type_field_reader_token_stream
         #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_postgresql_json_type_field_reader_token_stream
         #ident_postgresql_json_type_options_to_read_alias_token_stream
-        #ident_option_to_update_alias_token_stream
-        #ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+        #ident_postgresql_json_type_option_to_update_alias_token_stream
+        #ident_postgresql_json_type_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream
     };
     generated.into()

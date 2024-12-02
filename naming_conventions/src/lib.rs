@@ -437,7 +437,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["pub"],
     ["postgresql", "json", "type", "to", "create"],
     ["postgresql", "json", "type", "field", "reader"],
-    ["postgresql", "json", "type", "options", "to", "read"]
+    ["postgresql", "json", "type", "options", "to", "read"],
+    ["postgresql", "json", "type", "option", "to", "update"],
+    ["postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -640,7 +642,21 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "options", "to", "read"],
     ["self", "postgresql", "json", "type", "options", "to", "read"],
     ["self", "postgresql", "json", "type", "options", "to", "read", "without", "id"],
-    ["self", "postgresql", "json", "type", "options", "to", "read", "with", "id"]
+    ["self", "postgresql", "json", "type", "options", "to", "read", "with", "id"],
+    ["self", "postgresql", "json", "type", "option", "to", "update", "origin"],
+    ["self", "postgresql", "json", "type", "option", "to", "update"],
+    ["self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["self", "postgresql", "json", "type", "option", "to", "update", "try", "new", "error", "named"],
+    ["object", "self", "postgresql", "json", "type", "option", "to", "update"],
+    ["std", "option", "option", "object", "self", "postgresql", "json", "type", "option", "to", "update"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "option", "to", "update"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "option", "to","update"],
+    ["object", "self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["std", "option", "option", "object", "self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["object", "self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named", "with", "serialize", "deserialize"],
+    ["self", "postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named", "with", "serialize", "deserialize"]
 ]);
 
 pub trait SwaggerUrlPathSelfQuotesStringified {

@@ -56,7 +56,7 @@ pub trait PostgresqlJsonType {
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
     ) -> std::string::String;
-    type OptionToUpdate<'a>: std::fmt::Debug
+    type PostgresqlJsonTypeOptionToUpdate<'a>: std::fmt::Debug
         + Clone
         + PartialEq
         + Default
@@ -65,17 +65,17 @@ pub trait PostgresqlJsonType {
         + utoipa::ToSchema<'a>
         + schemars::JsonSchema
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed: std::fmt::Debug
+    type PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed: std::fmt::Debug
         + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
     fn try_generate_postgresql_query_part_to_update(
-        option_to_update: &Self::OptionToUpdate<'_>,
+        postgresql_json_type_option_to_update: &Self::PostgresqlJsonTypeOptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64
-    ) -> Result<std::string::String, Self::OptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed>;
+    ) -> Result<std::string::String, Self::PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed>;
     fn bind_value_to_postgresql_query_part_to_update<'a>(
-        option_to_update: Self::OptionToUpdate<'_>,
+        postgresql_json_type_option_to_update: Self::PostgresqlJsonTypeOptionToUpdate<'_>,
         query: sqlx::query::Query<'a, sqlx::Postgres,
         sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
