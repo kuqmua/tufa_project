@@ -53,7 +53,7 @@ pub(crate) trait PostgresqlTypePrimaryKey<'a> {
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
         + sqlx::Decode<'a, sqlx::Postgres>
         + sqlx::Type<sqlx::Postgres>;
-    type SelfToRead: PostgresqlTypeSelfToReadTraits<'a>
+    type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>
         + crate::BindQuerySecond<'a>
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type SelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>

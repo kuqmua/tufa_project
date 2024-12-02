@@ -1429,7 +1429,7 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
         quote::quote!{
             impl PostgresqlTypePrimaryKey<'_> for #ident {
                 type PostgresqlTypeSelfToCreate = #ident_to_create_upper_camel_case;
-                type SelfToRead = #ident_to_read_upper_camel_case;
+                type PostgresqlTypeSelfToRead = #ident_to_read_upper_camel_case;
                 type SelfToUpdate = #ident_to_update_upper_camel_case;
                 type SelfToDelete = #ident_to_delete_upper_camel_case;
             }
