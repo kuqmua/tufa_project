@@ -27,7 +27,7 @@ pub trait PostgresqlCrudBaseTypeSelfWhereType<'a>: std::fmt::Debug
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement{}
 
-pub trait PostgresqlCrudBaseWrapType<'a> {
+pub trait PostgresqlType<'a> {
     type SelfType: std::fmt::Debug
         + Clone
         + PartialEq

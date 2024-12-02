@@ -298,7 +298,7 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 /////////////////////////////////////////
-impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseWrapType<'_> for ObjectAnimal {
+impl postgresql_crud::postgresql_types::base_wrap::PostgresqlType<'_> for ObjectAnimal {
     type SelfType = ObjectAnimal;
     type SelfColumnType = ObjectAnimalColumn;
     type SelfToCreateType = ObjectAnimalPostgresqlJsonTypeToCreate;
