@@ -56,13 +56,13 @@ pub(crate) trait PostgresqlTypePrimaryKey<'a> {
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>
         + crate::BindQuerySecond<'a>
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>
+    type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>
         + std::fmt::Display
         + error_occurence_lib::ToStdStringString
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::Decode<'a, sqlx::Postgres>
         + sqlx::Type<sqlx::Postgres>;
-    type SelfToDelete: std::fmt::Debug
+    type PostgresqlTypeSelfToDelete: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
