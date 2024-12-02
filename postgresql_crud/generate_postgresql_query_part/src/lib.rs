@@ -5211,7 +5211,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
             //     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
             //     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;
-            //     type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
+            //     type PostgresqlTypeSelfWhere: PostgresqlTypeSelfWhereTraits<'a>;
             // }
 
 

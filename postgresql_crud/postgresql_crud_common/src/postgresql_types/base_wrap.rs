@@ -47,7 +47,7 @@ pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;
-    type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
+    type PostgresqlTypeSelfWhere: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
     type SelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
