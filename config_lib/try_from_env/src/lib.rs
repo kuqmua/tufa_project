@@ -3,7 +3,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_try_from_env_error_named_upper_camel_case = naming_conventions::SelfTryFromEnvErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let ident_try_from_env_error_named_upper_camel_case = naming_conventions::self_constants::SelfTryFromEnvErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
@@ -23,7 +23,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let variants_token_stream = fields_named.iter().map(|element| {
             let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
             let element_ident_upper_camel_case_token_stream = naming_conventions::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element_ident);
-            let try_from_std_env_var_ok_self_error_named_upper_camel_case = naming_conventions::TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&element_ident);
+            let try_from_std_env_var_ok_self_error_named_upper_camel_case = naming_conventions::self_constants::TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_dyn_quote_to_tokens(&element_ident);
             quote::quote! {
                 #element_ident_upper_camel_case_token_stream {
                     #element_ident: config_lib::#try_from_std_env_var_ok_self_error_named_upper_camel_case,
