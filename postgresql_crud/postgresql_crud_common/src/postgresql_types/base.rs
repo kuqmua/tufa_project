@@ -31,8 +31,8 @@ pub(crate) trait PostgresqlCrudBaseTypePrimaryKey<'a> {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
 )]
 pub(crate) struct StdPrimitiveI16(std::primitive::i16);
 #[derive(
@@ -41,8 +41,8 @@ pub(crate) struct StdPrimitiveI16(std::primitive::i16);
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
 )]
 pub(crate) struct StdPrimitiveI32(std::primitive::i32);
 #[derive(
@@ -51,8 +51,8 @@ pub(crate) struct StdPrimitiveI32(std::primitive::i32);
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
 )]
 pub(crate) struct StdPrimitiveI64(std::primitive::i64);
 #[derive(
@@ -61,7 +61,7 @@ pub(crate) struct StdPrimitiveI64(std::primitive::i64);
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
 )]
 pub(crate) struct StdPrimitiveF32(std::primitive::f32);
 #[derive(
@@ -70,7 +70,7 @@ pub(crate) struct StdPrimitiveF32(std::primitive::f32);
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
 )]
 pub(crate) struct StdPrimitiveF64(std::primitive::f64);
 #[derive(
@@ -81,7 +81,7 @@ pub(crate) struct StdPrimitiveF64(std::primitive::f64);
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
 )]
 pub(crate) struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 #[derive(
@@ -92,7 +92,7 @@ pub(crate) struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it p
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
 )]
 pub(crate) struct StdStringString(std::string::String);
 //
