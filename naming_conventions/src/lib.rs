@@ -444,7 +444,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "base", "type"],
     ["postgresql", "base", "type", "self"],
     ["postgresql", "base", "type", "primary", "key"],
-    ["postgresql", "crud", "base", "primary","key", "self"],
+    ["postgresql", "base", "type", "primary", "key", "self"],
     ["postgresql", "base", "type", "std", "option", "option", "self"],
     ["postgresql", "base", "type", "self", "traits"]
 ]);

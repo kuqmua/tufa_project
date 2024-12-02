@@ -1021,10 +1021,10 @@ pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -
     };
     let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
         let postgresql_base_type_primary_key_upper_camel_case = naming_conventions::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
-        let postgresql_crud_base_primary_key_self_upper_camel_case = naming_conventions::PostgresqlCrudBasePrimaryKeySelfUpperCamelCase;
+        let postgresql_base_type_primary_key_self_upper_camel_case = naming_conventions::PostgresqlBaseTypePrimaryKeySelfUpperCamelCase;
         quote::quote! {
             impl #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
-                type #postgresql_crud_base_primary_key_self_upper_camel_case = Self;
+                type #postgresql_base_type_primary_key_self_upper_camel_case = Self;
             }
         }
     };
