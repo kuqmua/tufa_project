@@ -1234,23 +1234,27 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
     let impl_postgresql_type_self_to_create_traits_for_ident_to_create_token_stream = {
+        let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
         quote::quote!{
-            impl PostgresqlTypeSelfToCreateTraits<'_> for #ident_to_create_upper_camel_case {}
+            impl #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #ident_to_create_upper_camel_case {}
         }
     };
     let impl_postgresql_type_self_to_read_traits_for_ident_to_read_token_stream = {
+        let postgresql_type_self_to_read_traits_upper_camel_case = naming::PostgresqlTypeSelfToReadTraitsUpperCamelCase;
         quote::quote!{
-            impl PostgresqlTypeSelfToReadTraits<'_> for #ident_to_read_upper_camel_case {}
+            impl #postgresql_type_self_to_read_traits_upper_camel_case<'_> for #ident_to_read_upper_camel_case {}
         }
     };
     let impl_postgresql_type_self_to_update_traits_for_ident_to_update_token_stream = {
+        let postgresql_type_self_to_update_traits_upper_camel_case = naming::PostgresqlTypeSelfToUpdateTraitsUpperCamelCase;
         quote::quote!{
-            impl PostgresqlTypeSelfToUpdateTraits<'_> for #ident_to_update_upper_camel_case {}
+            impl #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #ident_to_update_upper_camel_case {}
         }
     };
     let impl_postgresql_type_self_where_traits_for_ident_where_token_stream = {
+        let postgresql_type_self_where_traits_upper_camel_case = naming::PostgresqlTypeSelfWhereTraitsUpperCamelCase;
         quote::quote!{
-            impl PostgresqlTypeSelfWhereTraits<'_> for #ident_where_upper_camel_case {}
+            impl #postgresql_type_self_where_traits_upper_camel_case<'_> for #ident_where_upper_camel_case {}
         }
     };
     let impl_postgresql_type_for_ident_token_stream = {
