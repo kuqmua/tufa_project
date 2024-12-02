@@ -192,10 +192,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     fn wrap(value: &dyn std::fmt::Display) -> Self {
 //         Self(format!("Generic{value}FieldReader"))
 //     }
-//     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
+//     pub fn from_display(value: &dyn std::fmt::Display) -> Self {
 //         Self::wrap(&generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
 //     }
-//     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+//     pub fn from_tokens(value: &dyn quote::ToTokens) -> Self {
 //         Self::wrap(&generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
@@ -224,10 +224,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     fn wrap(value: &dyn std::fmt::Display) -> Self {
 //         Self(format!("generic_{value}_field_reader"))
 //     }
-//     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
+//     pub fn from_display(value: &dyn std::fmt::Display) -> Self {
 //         Self::wrap(&generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&value.to_string()))
 //     }
-//     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+//     pub fn from_tokens(value: &dyn quote::ToTokens) -> Self {
 //         Self::wrap(&generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);

@@ -228,17 +228,17 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                         fn format(value: &dyn std::fmt::Display) -> std::string::String {
                             format!(#elements_concat_value_case_double_quotes_token_stream)
                         }
-                        pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
+                        pub fn from_display(value: &dyn std::fmt::Display) -> Self {
                             Self::wrap(&#casing_token_stream(&value.to_string()))
                         }
-                        pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
+                        pub fn from_tokens(value: &dyn quote::ToTokens) -> Self {
                             Self::wrap(&#casing_token_stream(&{
                                 let mut tokens = proc_macro2::TokenStream::new();
                                 quote::ToTokens::to_tokens(&value, &mut tokens);
                                 tokens
                             }.to_string()))
                         }
-                        pub fn from_syn_type_path_last_segment(value: &syn::Type) -> Self {
+                        pub fn from_type_last_segment(value: &syn::Type) -> Self {
                             match value {
                                 syn::Type::Path(type_path) => {
                                     let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(std::string::String::from(""), |mut acc, elem| {

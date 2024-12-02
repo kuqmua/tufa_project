@@ -51,8 +51,8 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
-    let get_ident_upper_camel_case = naming::parameter::GetSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let get_ident_snake_case = naming::parameter::GetSelfSnakeCase::from_dyn_quote_to_tokens(&ident);
+    let get_ident_upper_camel_case = naming::parameter::GetSelfUpperCamelCase::from_tokens(&ident);
+    let get_ident_snake_case = naming::parameter::GetSelfSnakeCase::from_tokens(&ident);
     let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case {
             fn #get_ident_snake_case(&self) -> &#first_field_unnamed_type;
