@@ -974,11 +974,11 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
     let impl_postgresql_base_type_for_ident_token_stream = {
         let postgresql_base_type_upper_camel_case = naming_conventions::PostgresqlBaseTypeUpperCamelCase;
         let postgresql_base_type_self_upper_camel_case = naming_conventions::PostgresqlBaseTypeSelfUpperCamelCase;
-        let postgresql_crud_base_std_option_option_self_upper_camel_case = naming_conventions::PostgresqlCrudBaseStdOptionOptionSelfUpperCamelCase;
+        let postgresql_base_type_std_option_option_self_upper_camel_case = naming_conventions::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
         quote::quote! {
             impl #postgresql_base_type_upper_camel_case<'_> for #ident {
                 type #postgresql_base_type_self_upper_camel_case = Self;
-                type #postgresql_crud_base_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
+                type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
             }
         }
     };

@@ -9,7 +9,7 @@ pub(crate) trait PostgresqlBaseTypeSelfTraits<'a>: std::fmt::Debug
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
 pub(crate) trait PostgresqlBaseType<'a> {
     type PostgresqlBaseTypeSelf: PostgresqlBaseTypeSelfTraits<'a>;
-    type PostgresqlCrudBaseStdOptionOptionSelf: std::fmt::Debug
+    type PostgresqlBaseTypeStdOptionOptionSelf: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
