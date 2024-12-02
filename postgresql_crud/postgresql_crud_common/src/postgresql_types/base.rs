@@ -19,7 +19,7 @@ pub(crate) trait PostgresqlBaseType<'a> {
         + crate::BindQuerySecond<'a>
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
-pub(crate) trait PostgresqlCrudBasePrimaryKey<'a> {
+pub(crate) trait PostgresqlBaseTypePrimaryKey<'a> {
     type PostgresqlCrudBasePrimaryKeySelf: PostgresqlBaseTypeSelfTraits<'a>
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType;
