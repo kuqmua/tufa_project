@@ -967,7 +967,7 @@ pub fn postgresql_crud_base_tokens(input: proc_macro::TokenStream) -> proc_macro
     };
     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
         quote::quote!{
-            impl PostgresqlCrudBaseTypeSelfType<'_> for #ident {}
+            impl PostgresqlCrudBaseSelfTraits<'_> for #ident {}
         }
     };
     let impl_postgresql_crud_base_type_for_ident_token_stream = {
