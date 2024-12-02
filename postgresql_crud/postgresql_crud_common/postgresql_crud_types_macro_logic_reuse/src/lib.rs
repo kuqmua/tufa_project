@@ -966,15 +966,19 @@ pub fn postgresql_crud_base_tokens(input: proc_macro::TokenStream) -> proc_macro
         )
     };
     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
+        let postgresql_crud_base_self_traits_upper_camel_case = naming_conventions::PostgresqlCrudBaseSelfTraitsUpperCamelCase;
         quote::quote!{
-            impl PostgresqlCrudBaseSelfTraits<'_> for #ident {}
+            impl #postgresql_crud_base_self_traits_upper_camel_case<'_> for #ident {}
         }
     };
     let impl_postgresql_crud_base_type_for_ident_token_stream = {
+        let postgresql_crud_base_upper_camel_case = naming_conventions::PostgresqlCrudBaseUpperCamelCase;
+        let postgresql_crud_base_self_upper_camel_case = naming_conventions::PostgresqlCrudBaseSelfUpperCamelCase;
+        let postgresql_crud_base_std_option_option_self_upper_camel_case = naming_conventions::PostgresqlCrudBaseStdOptionOptionSelfUpperCamelCase;
         quote::quote! {
-            impl PostgresqlCrudBase<'_> for #ident {
-                type PostgresqlCrudBaseSelf = Self;
-                type PostgresqlCrudBaseStdOptionOptionSelf = #std_option_option_ident_upper_camel_case;
+            impl #postgresql_crud_base_upper_camel_case<'_> for #ident {
+                type #postgresql_crud_base_self_upper_camel_case = Self;
+                type #postgresql_crud_base_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
             }
         }
     };
@@ -1016,9 +1020,11 @@ pub fn postgresql_crud_base_primary_key_tokens(input: proc_macro::TokenStream) -
         }
     };
     let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
+        let postgresql_crud_base_primary_key_upper_camel_case = naming_conventions::PostgresqlCrudBasePrimaryKeyUpperCamelCase;
+        let postgresql_crud_base_primary_key_self_upper_camel_case = naming_conventions::PostgresqlCrudBasePrimaryKeySelfUpperCamelCase;
         quote::quote! {
-            impl PostgresqlCrudBasePrimaryKey<'_> for #ident {
-                type PostgresqlCrudBasePrimaryKeySelf = Self;
+            impl #postgresql_crud_base_primary_key_upper_camel_case<'_> for #ident {
+                type #postgresql_crud_base_primary_key_self_upper_camel_case = Self;
             }
         }
     };
