@@ -302,7 +302,7 @@ impl postgresql_crud::postgresql_types::base_wrap::PostgresqlType<'_> for Object
     type PostgresqlTypeSelf = ObjectAnimal;
     type PostgresqlTypeSelfColumn = ObjectAnimalColumn;
     type PostgresqlTypeSelfToCreate = ObjectAnimalPostgresqlJsonTypeToCreate;
-    type PostgresqlTypeSelfToCreateToRead = ObjectAnimalToRead;
+    type PostgresqlTypeSelfToRead = ObjectAnimalToRead;
     type SelfToUpdateType = ObjectAnimalPostgresqlJsonTypeOptionToUpdate;
     type SelfWhereType = ObjectAnimalWhere;
 }
