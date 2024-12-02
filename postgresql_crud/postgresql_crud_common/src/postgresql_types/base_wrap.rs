@@ -125,7 +125,7 @@ const JSONB: &std::primitive::str = "JSONB";
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
@@ -139,7 +139,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_types::base::StdPrimitiveBool);
 impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
@@ -153,7 +153,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
@@ -167,7 +167,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
@@ -181,7 +181,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull 
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
@@ -195,7 +195,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
@@ -209,7 +209,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNu
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
@@ -223,7 +223,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(crate::postgresql_types::base::StdPrimitiveI16);
 impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
@@ -237,7 +237,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
@@ -251,7 +251,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
@@ -265,7 +265,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
@@ -279,7 +279,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
@@ -293,7 +293,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
@@ -307,7 +307,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(crate::postgresql_types::base::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
@@ -321,7 +321,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
@@ -335,7 +335,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(crate::postgresql_types::base::StdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
@@ -349,7 +349,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
@@ -363,8 +363,8 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokensPrimaryKey,
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_types::base::StdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
@@ -396,7 +396,7 @@ const _: () = {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
@@ -410,8 +410,8 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokensPrimaryKey,
 )]
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(crate::postgresql_types::base::StdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNull {
@@ -425,7 +425,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF32AsPostgresqlReal(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
@@ -439,7 +439,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(crate::postgresql_types::base::StdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
@@ -453,7 +453,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
@@ -467,7 +467,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(crate::postgresql_types::base::StdPrimitiveF32);
 impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
@@ -481,7 +481,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision {
@@ -495,7 +495,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision 
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(crate::postgresql_types::base::StdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
@@ -509,7 +509,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionN
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
@@ -523,7 +523,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(crate::postgresql_types::base::StdPrimitiveF64);
 impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
@@ -537,7 +537,7 @@ impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
@@ -551,7 +551,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
@@ -565,7 +565,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 // )]
 // pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_types::base::StdOptionOptionStdStringString);
 // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharN {
@@ -579,7 +579,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 // )]
 // pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_types::base::StdStringString);
 // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharNNotNull {
@@ -593,7 +593,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdStringStringAsPostgresqlText(crate::postgresql_types::base::StdOptionOptionStdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
@@ -607,7 +607,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 )]
 pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_types::base::StdStringString);
 impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
@@ -621,7 +621,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 // )]
 // pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_types::base::StdOptionOptionStdStringString);
 // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiText {
@@ -635,7 +635,7 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTypeTokens
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseWrapTokens
 // )]
 // pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_types::base::StdStringString);
 // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
