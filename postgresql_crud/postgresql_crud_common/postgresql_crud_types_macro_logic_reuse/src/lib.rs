@@ -1253,16 +1253,23 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             impl PostgresqlTypeSelfWhereTraits<'_> for #ident_where_upper_camel_case {}
         }
     };
-    let impl_postgresql_crud_base_wrap_type_for_ident_token_stream = {
+    let impl_postgresql_type_for_ident_token_stream = {
+        let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+        let self_upper_camel_case = naming::SelfUpperCamelCase;
         let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
+        let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
+        let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
+        let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
+        let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+        let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
         quote::quote!{
-            impl PostgresqlType<'_> for #ident {
-                type #postgresql_type_self_upper_camel_case = Self;
-                type PostgresqlTypeSelfColumn = #ident_column_upper_camel_case;
-                type PostgresqlTypeSelfToCreate = #ident_to_create_upper_camel_case;
-                type PostgresqlTypeSelfToRead = #ident_to_read_upper_camel_case;
-                type PostgresqlTypeSelfToUpdate = #ident_to_update_upper_camel_case;
-                type PostgresqlTypeSelfWhere = #ident_where_upper_camel_case;
+            impl #postgresql_type_upper_camel_case<'_> for #ident {
+                type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
+                type #postgresql_type_self_column_upper_camel_case = #ident_column_upper_camel_case;
+                type #postgresql_type_self_to_create_upper_camel_case = #ident_to_create_upper_camel_case;
+                type #postgresql_type_self_to_read_upper_camel_case = #ident_to_read_upper_camel_case;
+                type #postgresql_type_self_to_update_upper_camel_case = #ident_to_update_upper_camel_case;
+                type #postgresql_type_self_where_upper_camel_case = #ident_where_upper_camel_case;
             }
         }
     };
@@ -1286,7 +1293,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_postgresql_type_self_to_read_traits_for_ident_to_read_token_stream
         #impl_postgresql_type_self_to_update_traits_for_ident_to_update_token_stream
         #impl_postgresql_type_self_where_traits_for_ident_where_token_stream
-        #impl_postgresql_crud_base_wrap_type_for_ident_token_stream
+        #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

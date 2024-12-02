@@ -449,7 +449,13 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "base", "type", "primary", "key", "self"],
     ["postgresql", "base", "type", "std", "option", "option", "self"],
     ["postgresql", "base", "type", "self", "traits"],
-    ["postgresql", "type", "self"]
+    ["postgresql", "type"],
+    ["postgresql", "type", "self"],
+    ["postgresql", "type", "self", "column"],
+    ["postgresql", "type", "self", "to", "create"],
+    ["postgresql", "type", "self", "to", "read"],
+    ["postgresql", "type", "self", "to", "update"],
+    ["postgresql", "type", "self", "where"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
