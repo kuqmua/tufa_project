@@ -46,7 +46,7 @@ pub trait PostgresqlType<'a> {
         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
-    type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
+    type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;
     type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
