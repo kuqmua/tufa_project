@@ -50,7 +50,7 @@ pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelfWhere: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
-    type SelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
+    type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
         + sqlx::Decode<'a, sqlx::Postgres>
         + sqlx::Type<sqlx::Postgres>;
     type SelfToRead: PostgresqlTypeSelfToReadTraits<'a>
