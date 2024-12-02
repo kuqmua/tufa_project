@@ -1,4 +1,4 @@
-pub(crate) trait PostgresqlCrudBaseSelfTraits<'a>: std::fmt::Debug
+pub(crate) trait PostgresqlBaseTypeSelfTraits<'a>: std::fmt::Debug
     + Clone
     + PartialEq
     + serde::Serialize
@@ -8,7 +8,7 @@ pub(crate) trait PostgresqlCrudBaseSelfTraits<'a>: std::fmt::Debug
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
 pub(crate) trait PostgresqlBaseType<'a> {
-    type PostgresqlCrudBaseSelf: PostgresqlCrudBaseSelfTraits<'a>;
+    type PostgresqlCrudBaseSelf: PostgresqlBaseTypeSelfTraits<'a>;
     type PostgresqlCrudBaseStdOptionOptionSelf: std::fmt::Debug
         + Clone
         + PartialEq
@@ -20,7 +20,7 @@ pub(crate) trait PostgresqlBaseType<'a> {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 pub(crate) trait PostgresqlCrudBasePrimaryKey<'a> {
-    type PostgresqlCrudBasePrimaryKeySelf: PostgresqlCrudBaseSelfTraits<'a>
+    type PostgresqlCrudBasePrimaryKeySelf: PostgresqlBaseTypeSelfTraits<'a>
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType;
 }

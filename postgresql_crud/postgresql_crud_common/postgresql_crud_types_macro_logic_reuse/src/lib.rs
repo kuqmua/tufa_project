@@ -966,9 +966,9 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         )
     };
     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-        let postgresql_crud_base_self_traits_upper_camel_case = naming_conventions::PostgresqlCrudBaseSelfTraitsUpperCamelCase;
+        let postgresql_base_type_self_traits_upper_camel_case = naming_conventions::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
         quote::quote!{
-            impl #postgresql_crud_base_self_traits_upper_camel_case<'_> for #ident {}
+            impl #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
         }
     };
     let impl_postgresql_base_type_for_ident_token_stream = {
