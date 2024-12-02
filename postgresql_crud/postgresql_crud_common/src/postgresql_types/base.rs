@@ -32,7 +32,7 @@ pub(crate) trait PostgresqlCrudBasePrimaryKey<'a> {
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBasePrimaryKeyTokens,
 )]
 pub(crate) struct StdPrimitiveI16(std::primitive::i16);
 #[derive(
@@ -42,7 +42,7 @@ pub(crate) struct StdPrimitiveI16(std::primitive::i16);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBasePrimaryKeyTokens,
 )]
 pub(crate) struct StdPrimitiveI32(std::primitive::i32);
 #[derive(
@@ -52,7 +52,7 @@ pub(crate) struct StdPrimitiveI32(std::primitive::i32);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBaseTokensPrimaryKey,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlCrudBasePrimaryKeyTokens,
 )]
 pub(crate) struct StdPrimitiveI64(std::primitive::i64);
 #[derive(
