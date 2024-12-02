@@ -1254,6 +1254,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
     let impl_postgresql_crud_base_wrap_type_for_ident_token_stream = {
+        let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
         quote::quote!{
             impl PostgresqlType<'_> for #ident {
                 type PostgresqlTypeSelf = Self;
