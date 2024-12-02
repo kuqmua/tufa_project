@@ -994,13 +994,13 @@ impl error_occurence_lib::ToStdStringString for Uuid {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct UuidPostgresqlJsonTypeToCreate(pub uuid::Uuid);
-impl schemars::JsonSchema for UuidPostgresqlJsonTypeToCreate {
+pub struct PostgresqlJsonTypeUuidToCreate(pub uuid::Uuid);
+impl schemars::JsonSchema for PostgresqlJsonTypeUuidToCreate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("UuidPostgresqlJsonTypeToCreate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidToCreate")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidPostgresqlJsonTypeToCreate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::PostgresqlJsonTypeUuidToCreate")
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
         {
@@ -1014,13 +1014,13 @@ impl schemars::JsonSchema for UuidPostgresqlJsonTypeToCreate {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct UuidPostgresqlJsonTypeOptionsToRead(pub uuid::Uuid);
-impl schemars::JsonSchema for UuidPostgresqlJsonTypeOptionsToRead {
+pub struct PostgresqlJsonTypeUuidOptionsToRead(pub uuid::Uuid);
+impl schemars::JsonSchema for PostgresqlJsonTypeUuidOptionsToRead {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("UuidPostgresqlJsonTypeOptionsToRead")
+        schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidOptionsToRead")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidPostgresqlJsonTypeOptionsToRead")
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::PostgresqlJsonTypeUuidOptionsToRead")
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
         {
@@ -1034,20 +1034,20 @@ impl schemars::JsonSchema for UuidPostgresqlJsonTypeOptionsToRead {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct UuidPostgresqlJsonTypeOptionToUpdate(pub uuid::Uuid);
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeOptionToUpdate {
+pub struct PostgresqlJsonTypeUuidOptionToUpdate(pub uuid::Uuid);
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidOptionToUpdate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         //maybe compile time uuid gen? not need to gen on runtime. if all different on compile time than its enough 
         Self(uuid::Uuid::new_v4())
     }
 }
-impl schemars::JsonSchema for UuidPostgresqlJsonTypeOptionToUpdate {
+impl schemars::JsonSchema for PostgresqlJsonTypeUuidOptionToUpdate {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("UuidPostgresqlJsonTypeOptionToUpdate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidOptionToUpdate")
     }
     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidPostgresqlJsonTypeOptionToUpdate")
+        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::PostgresqlJsonTypeUuidOptionToUpdate")
     }
     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
         {
@@ -1062,8 +1062,8 @@ impl schemars::JsonSchema for UuidPostgresqlJsonTypeOptionToUpdate {
 }
 //
 impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
-    type PostgresqlJsonTypeToCreate<'a> = UuidPostgresqlJsonTypeToCreate;
-    fn try_generate_postgresql_query_part_to_create(_: &Self::PostgresqlJsonTypeToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
+    type PostgresqlJsonTypeSelfToCreate<'a> = PostgresqlJsonTypeUuidToCreate;
+    fn try_generate_postgresql_query_part_to_create(_: &Self::PostgresqlJsonTypeSelfToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -1072,34 +1072,34 @@ impl crate::generate_postgresql_query_part::PostgresqlJsonType for Uuid {
             None => Err(crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_to_create: Self::PostgresqlJsonTypeToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(postgresql_json_type_to_create.0));
+    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(postgresql_json_type_self_to_create.0));
         query
     }
-    type PostgresqlJsonTypeFieldReader<'a> = UuidPostgresqlJsonTypeFieldReader;
-    type PostgresqlJsonTypeOptionsToRead<'a> = UuidPostgresqlJsonTypeOptionsToRead;
-    fn generate_postgresql_query_part_to_read(_: &Self::PostgresqlJsonTypeFieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
+    type PostgresqlJsonTypeSelfFieldReader<'a> = PostgresqlJsonTypeUuidFieldReader;
+    type PostgresqlJsonTypeSelfOptionsToRead<'a> = PostgresqlJsonTypeUuidOptionsToRead;
+    fn generate_postgresql_query_part_to_read(_: &Self::PostgresqlJsonTypeSelfFieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
-    type PostgresqlJsonTypeOptionToUpdate<'a> = UuidPostgresqlJsonTypeOptionToUpdate;
-    type PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = UuidPostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed;
+    type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeUuidOptionToUpdate;
+    type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed = PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed;
     fn try_generate_postgresql_query_part_to_update(
-        _: &Self::PostgresqlJsonTypeOptionToUpdate<'_>,
+        _: &Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         _: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
+    ) -> Result<std::string::String, Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
             }
-            None => Err(Self::PostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_option_to_update: Self::PostgresqlJsonTypeOptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(postgresql_json_type_option_to_update.0));
+    fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_self_option_to_update: Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(postgresql_json_type_self_option_to_update.0));
         query
     }
 }
@@ -1109,7 +1109,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
         Self(::core::default::Default::default())
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeToCreate {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidToCreate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(::core::default::Default::default())
@@ -1127,14 +1127,14 @@ Deserialize,
     utoipa :: ToSchema,
     schemars :: JsonSchema,
 )]
-pub struct UuidPostgresqlJsonTypeFieldReader {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeFieldReader {
+pub struct PostgresqlJsonTypeUuidFieldReader {}
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidFieldReader {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for UuidPostgresqlJsonTypeOptionsToRead {
+impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidOptionsToRead {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(::core::default::Default::default())
@@ -1146,17 +1146,17 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 //     }
 // }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum UuidPostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed {
+pub enum PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-// impl UuidPostgresqlJsonTypeOptionToUpdate {
-//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, UuidPostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
+// impl PostgresqlJsonTypeUuidOptionToUpdate {
+//     fn try_generate_postgresql_query_part_to_update(&self, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(value) => {
 //                 *increment = value;
 //                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
 //             }
-//             None => Err(UuidPostgresqlJsonTypeOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             None => Err(PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
 //         }
 //     }
 //     fn bind_value_to_postgresql_query_part_to_update<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

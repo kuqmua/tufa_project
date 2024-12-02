@@ -437,11 +437,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["bind", "value", "to", "query"],
     ["conjunctive", "operator"],
     ["pub"],
-    ["postgresql", "json", "type", "to", "create"],
-    ["postgresql", "json", "type", "field", "reader"],
-    ["postgresql", "json", "type", "options", "to", "read"],
-    ["postgresql", "json", "type", "option", "to", "update"],
-    ["postgresql", "json", "type", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
+    ["postgresql", "json", "type", "self", "to", "create"],
+    ["postgresql", "json", "type", "self", "field", "reader"],
+    ["postgresql", "json", "type", "self", "options", "to", "read"],
+    ["postgresql", "json", "type", "self", "option", "to", "update"],
+    ["postgresql", "json", "type", "self", "option", "to", "update", "try", "generate", "postgresql", "query", "part", "error", "named"],
     ["postgresql", "crud", "base", "self", "traits"],
     ["postgresql", "base", "type"],
     ["postgresql", "base", "type", "self"],
@@ -459,7 +459,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "type", "self", "to", "create", "traits"],
     ["postgresql", "type", "self", "to", "read", "traits"],
     ["postgresql", "type", "self", "to", "update", "traits"],
-    ["postgresql", "type", "self", "where", "traits"]
+    ["postgresql", "type", "self", "where", "traits"],
+    ["postgresql", "json", "type", "object", "self", "field", "reader"],
+    ["postgresql", "json", "type", "std", "option", "option", "object", "self", "field", "reader"],
+    ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader"],
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
