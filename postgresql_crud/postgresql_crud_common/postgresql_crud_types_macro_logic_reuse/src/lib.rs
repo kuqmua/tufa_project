@@ -972,7 +972,7 @@ pub fn postgresql_crud_base_tokens(input: proc_macro::TokenStream) -> proc_macro
     };
     let impl_postgresql_crud_base_type_for_ident_token_stream = {
         quote::quote! {
-            impl PostgresqlCrudBaseType<'_> for #ident {
+            impl PostgresqlCrudBase<'_> for #ident {
                 type SelfType = Self;
                 type StdOptionOptionSelfType = #std_option_option_ident_upper_camel_case;
             }
@@ -1017,7 +1017,7 @@ pub fn postgresql_crud_base_tokens_primary_key(input: proc_macro::TokenStream) -
     };
     let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
         quote::quote! {
-            impl PostgresqlCrudBaseTypePrimaryKey<'_> for #ident {
+            impl PostgresqlCrudBasePrimaryKey<'_> for #ident {
                 type SelfType = Self;
             }
         }

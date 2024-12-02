@@ -7,7 +7,7 @@ pub(crate) trait PostgresqlCrudBaseTypeSelfType<'a>: std::fmt::Debug
     + sqlx::Decode<'a, sqlx::Postgres>
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub(crate) trait PostgresqlCrudBaseType<'a> {
+pub(crate) trait PostgresqlCrudBase<'a> {
     type SelfType: PostgresqlCrudBaseTypeSelfType<'a>;
     type StdOptionOptionSelfType: std::fmt::Debug
         + Clone
