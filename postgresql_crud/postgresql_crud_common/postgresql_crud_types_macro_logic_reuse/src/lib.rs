@@ -828,8 +828,8 @@ fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::Der
     }
 }
 
-#[proc_macro_derive(PostgresqlCrudBaseTokens)]
-pub fn postgresql_crud_base_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypeTokens)]
+pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -1005,8 +1005,8 @@ pub fn postgresql_crud_base_tokens(input: proc_macro::TokenStream) -> proc_macro
     generated.into()
 }
 
-#[proc_macro_derive(PostgresqlCrudBasePrimaryKeyTokens)]
-pub fn postgresql_crud_base_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypePrimaryKeyTokens)]
+pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
