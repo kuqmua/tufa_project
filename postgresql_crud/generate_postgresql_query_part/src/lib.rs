@@ -5209,7 +5209,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         + serde::Deserialize<'a>
             //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
             //     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
-            //     type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
+            //     type PostgresqlTypeSelfToCreateToRead: PostgresqlTypeSelfToReadTraits<'a>;
             //     type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
             //     type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
             // }

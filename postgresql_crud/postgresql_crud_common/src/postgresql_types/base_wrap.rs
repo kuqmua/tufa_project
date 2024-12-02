@@ -45,7 +45,7 @@ pub trait PostgresqlType<'a> {
         + serde::Deserialize<'a>
         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
-    type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
+    type PostgresqlTypeSelfToCreateToRead: PostgresqlTypeSelfToReadTraits<'a>;
     type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
     type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
 }
