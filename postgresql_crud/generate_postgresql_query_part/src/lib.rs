@@ -2757,9 +2757,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_column_token_stream = {
+                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_tokens_column_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for #tokens_column_upper_camel_case {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToReadTraits<'_> for #tokens_column_upper_camel_case {}
                     }
                 };
                 quote::quote!{
@@ -2767,7 +2767,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_sqlx_type_sqlx_postgres_for_tokens_column_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_tokens_column_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_column_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_column_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_tokens_column_token_stream
                 }
             };
             //no need to have something for tokens_to_create_token_stream yet
@@ -2817,16 +2817,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_to_read_token_stream = {
+                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_tokens_to_read_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToReadType<'_> for #tokens_to_read_upper_camel_case {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToReadTraits<'_> for #tokens_to_read_upper_camel_case {}
                     }
                 };
                 quote::quote!{
                     #tokens_to_read_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_tokens_to_read_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_tokens_to_read_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_read_type_for_tokens_to_read_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_tokens_to_read_token_stream
                 }
             };
              //no need to have something for tokens_to_create_token_stream yet
@@ -5209,7 +5209,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         + serde::Deserialize<'a>
             //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
             //     type SelfToCreateType: PostgresqlTypeSelfToCreateTraits<'a>;
-            //     type SelToReadType: PostgresqlCrudBaseTypeSelfToReadType<'a>;
+            //     type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
             //     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
             //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
             // }
