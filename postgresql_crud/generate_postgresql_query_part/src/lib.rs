@@ -2321,9 +2321,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
-            let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_update_type_for_ident_postgresql_json_type_option_to_update_token_stream = {
+            let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_update_traits_for_ident_postgresql_json_type_option_to_update_token_stream = {
                 quote::quote!{
-                    impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfToUpdateType<'_> for #ident_postgresql_json_type_option_to_update_upper_camel_case {}
+                    impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToUpdateTraits<'_> for #ident_postgresql_json_type_option_to_update_upper_camel_case {}
                 }
             };
             quote::quote!{
@@ -2335,7 +2335,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_ident_postgresql_json_type_option_to_update_methods_token_stream
 
                 #impl_postgresql_crud_bind_query_second_for_ident_postgresql_json_type_option_to_update_token_stream
-                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_update_type_for_ident_postgresql_json_type_option_to_update_token_stream
+                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_update_traits_for_ident_postgresql_json_type_option_to_update_token_stream
             }
         };
         quote::quote!{
@@ -5210,7 +5210,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //         + crate::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
             //     type SelfToCreateType: PostgresqlTypeSelfToCreateTraits<'a>;
             //     type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
-            //     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
+            //     type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
             //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
             // }
 
