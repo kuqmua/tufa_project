@@ -2871,16 +2871,16 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_where_type_for_tokens_where_token_stream = {
+                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_where_traits_for_tokens_where_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlCrudBaseTypeSelfWhereType<'_> for #tokens_where_upper_camel_case {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfWhereTraits<'_> for #tokens_where_upper_camel_case {}
                     }
                 };
                 quote::quote!{
                     #tokens_where_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_where_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_where_with_content_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_where_type_for_tokens_where_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_where_traits_for_tokens_where_token_stream
                 }
             };
             quote::quote!{
@@ -5211,7 +5211,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             //     type SelfToCreateType: PostgresqlTypeSelfToCreateTraits<'a>;
             //     type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
             //     type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
-            //     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
+            //     type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
             // }
 
 

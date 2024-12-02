@@ -1247,9 +1247,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             impl PostgresqlTypeSelfToUpdateTraits<'_> for #ident_to_update_upper_camel_case {}
         }
     };
-    let impl_postgresql_crud_base_type_self_to_create_type_for_ident_where_token_stream = {
+    let impl_postgresql_type_self_where_traits_for_ident_where_token_stream = {
         quote::quote!{
-            impl PostgresqlCrudBaseTypeSelfWhereType<'_> for #ident_where_upper_camel_case {}
+            impl PostgresqlTypeSelfWhereTraits<'_> for #ident_where_upper_camel_case {}
         }
     };
     let impl_postgresql_crud_base_wrap_type_for_ident_token_stream = {
@@ -1283,7 +1283,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_postgresql_type_self_to_create_traits_for_ident_to_create_token_stream
         #impl_postgresql_type_self_to_read_traits_for_ident_to_read_token_stream
         #impl_postgresql_type_self_to_update_traits_for_ident_to_update_token_stream
-        #impl_postgresql_crud_base_type_self_to_create_type_for_ident_where_token_stream
+        #impl_postgresql_type_self_where_traits_for_ident_where_token_stream
         #impl_postgresql_crud_base_wrap_type_for_ident_token_stream
     };
     // if ident == "" {

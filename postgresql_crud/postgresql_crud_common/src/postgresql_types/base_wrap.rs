@@ -19,7 +19,7 @@ pub trait PostgresqlTypeSelfToUpdateTraits<'a>: std::fmt::Debug
     + serde::Deserialize<'a>
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub trait PostgresqlCrudBaseTypeSelfWhereType<'a>: std::fmt::Debug
+pub trait PostgresqlTypeSelfWhereTraits<'a>: std::fmt::Debug
     + Clone
     + PartialEq
     + serde::Serialize
@@ -47,7 +47,7 @@ pub trait PostgresqlType<'a> {
     type SelfToCreateType: PostgresqlTypeSelfToCreateTraits<'a>;
     type SelToReadType: PostgresqlTypeSelfToReadTraits<'a>;
     type SelfToUpdateType: PostgresqlTypeSelfToUpdateTraits<'a>;
-    type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
+    type SelfWhereType: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
     type SelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
