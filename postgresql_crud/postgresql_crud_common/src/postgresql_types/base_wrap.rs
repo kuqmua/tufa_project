@@ -49,7 +49,7 @@ pub trait PostgresqlType<'a> {
     type SelfToUpdateType: PostgresqlCrudBaseTypeSelfToUpdateType<'a>;
     type SelfWhereType: PostgresqlCrudBaseTypeSelfWhereType<'a>;
 }
-pub(crate) trait PostgresqlCrudBaseWrapTypePrimaryKey<'a> {
+pub(crate) trait PostgresqlTypePrimaryKey<'a> {
     type SelfToCreate: PostgresqlCrudBaseTypeSelfToCreateType<'a>
         + sqlx::Decode<'a, sqlx::Postgres>
         + sqlx::Type<sqlx::Postgres>;
