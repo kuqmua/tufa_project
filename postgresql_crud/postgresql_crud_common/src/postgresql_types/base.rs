@@ -20,7 +20,7 @@ pub(crate) trait PostgresqlBaseType<'a> {
         + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 pub(crate) trait PostgresqlBaseTypePrimaryKey<'a> {
-    type PostgresqlBaseTypePrimaryKeySelf: PostgresqlBaseTypeSelfTraits<'a>
+    type PostgresqlBaseTypeSelf: PostgresqlBaseTypeSelfTraits<'a>
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType;
 }
