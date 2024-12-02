@@ -20,7 +20,7 @@ schemars = {path = "../../schemars/schemars"}#todo migrate for newer version of 
 postgresql_crud_types_macro_logic_reuse = {path = "./postgresql_crud_types_macro_logic_reuse"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 enum_extension_lib = {path = "../../enum_extension_lib"}
-naming_conventions = {path = "../../naming_conventions"}
+naming = {path = "../../naming"}
 from_str = {path = "../../from_str"}
 
 [lints]

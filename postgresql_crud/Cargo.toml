@@ -15,7 +15,7 @@ generate_postgresql_query_part = {path = "./generate_postgresql_query_part"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}
 http_logic = {path = "../http_logic"}
-naming_conventions = {path = "../naming_conventions"}
+naming = {path = "../naming"}
 route_validators = {path = "../route_validators"}
 
 [lints]

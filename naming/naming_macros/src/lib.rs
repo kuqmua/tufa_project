@@ -16,12 +16,12 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input: p
                 }
             }
             let phrase_part_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
-                let element_upper_camel_case_stringified = naming_conventions_common::AsRefStrToUpperCamelCaseStringified::new(*&element);
+                let element_upper_camel_case_stringified = naming_common::AsRefStrToUpperCamelCaseStringified::new(*&element);
                 acc.push_str(&element_upper_camel_case_stringified);
                 acc
             });
             let phrase_part_snake_case_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
-                let element_snake_case_stringified = naming_conventions_common::AsRefStrToSnakeCaseStringified::new(*&element);
+                let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::new(*&element);
                 if index == 0 {
                     acc.push_str(&element_snake_case_stringified);
                 } else {
@@ -131,7 +131,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
                 let snake_case_upper_camel_case_stringified = "SnakeCase";
                 let elements_concat_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
-                    acc.push_str(&naming_conventions_common::AsRefStrToUpperCamelCaseStringified::new(element));
+                    acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::new(element));
                     acc
                 });
                 let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -140,7 +140,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                             acc.push_str("{value}");
                         }
                         else {
-                            acc.push_str(&naming_conventions_common::AsRefStrToUpperCamelCaseStringified::new(element));
+                            acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::new(element));
                         }
                         acc
                     })
@@ -153,7 +153,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                                 acc.push_str(&format!("{{value}}{symbol}"));
                             }
                             else {
-                                acc.push_str(&format!("{}{symbol}", naming_conventions_common::AsRefStrToSnakeCaseStringified::new(element)));
+                                acc.push_str(&format!("{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::new(element)));
                             }
                             acc
                         });
@@ -213,10 +213,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 };
                 let panic_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"));
                 let casing_token_stream = if is_upper_camel_case {
-                    quote::quote!{naming_conventions_common::AsRefStrToUpperCamelCaseStringified::new}
+                    quote::quote!{naming_common::AsRefStrToUpperCamelCaseStringified::new}
                 }
                 else {
-                    quote::quote!{naming_conventions_common::AsRefStrToSnakeCaseStringified::new}
+                    quote::quote!{naming_common::AsRefStrToSnakeCaseStringified::new}
                 };
                 quote::quote!{
                     #[derive(Debug)]
@@ -319,7 +319,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(input: p
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_upper_camel_case_stringified = naming_conventions_common::ToTokensToUpperCamelCaseStringified::new(&variant_ident);
+                let variant_ident_upper_camel_case_stringified = naming_common::ToTokensToUpperCamelCaseStringified::new(&variant_ident);
                 let variant_ident_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
             }
@@ -366,7 +366,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(input: proc_ma
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_snake_case_stringified = naming_conventions_common::ToTokensToSnakeCaseStringified::new(&variant_ident);
+                let variant_ident_snake_case_stringified = naming_common::ToTokensToSnakeCaseStringified::new(&variant_ident);
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
@@ -412,7 +412,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(inpu
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_snake_case_stringified = naming_conventions_common::ToTokensToScreamingSnakeCaseStringified::new(&variant_ident);
+                let variant_ident_snake_case_stringified = naming_common::ToTokensToScreamingSnakeCaseStringified::new(&variant_ident);
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
@@ -435,5 +435,5 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(inpu
 
 
 fn trait_path_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {naming_conventions}
+    quote::quote! {naming}
 }

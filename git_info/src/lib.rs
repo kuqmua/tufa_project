@@ -19,7 +19,7 @@ where
     T: GetGitCommitId, //todo wtf
 {
     fn get_git_commit_link(&self) -> std::string::String {
-        format!("{}/tree/{}", naming_conventions::GITHUB_URL, self.get_git_commit_id())
+        format!("{}/tree/{}", naming::GITHUB_URL, self.get_git_commit_id())
     }
 }
 

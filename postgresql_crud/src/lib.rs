@@ -531,8 +531,8 @@ pub use strum_macros::EnumIter;
 //todo move and reexport traits
 pub trait CombinationOfTraitsForPostgresqlCrudLogic: app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}
 
-pub use naming_conventions::CommitSnakeCase;
-pub use naming_conventions::CommitUpperCamelCase;
+pub use naming::CommitSnakeCase;
+pub use naming::CommitUpperCamelCase;
 
 pub use generate_postgresql_query_part::GeneratePostgresqlQueryPart;
 

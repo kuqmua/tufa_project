@@ -193,10 +193,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //         Self(format!("Generic{value}FieldReader"))
 //     }
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
+//         Self::wrap(&generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string()))
 //     }
 //     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&{
+//         Self::wrap(&generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
 //             tokens
@@ -225,10 +225,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //         Self(format!("generic_{value}_field_reader"))
 //     }
 //     pub fn from_dyn_std_fmt_display(value: &dyn std::fmt::Display) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&value.to_string()))
+//         Self::wrap(&generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&value.to_string()))
 //     }
 //     pub fn from_dyn_quote_to_tokens(value: &dyn quote::ToTokens) -> Self {
-//         Self::wrap(&generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&{
+//         Self::wrap(&generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&{
 //             let mut tokens = proc_macro2::TokenStream::new();
 //             quote::ToTokens::to_tokens(&value, &mut tokens);
 //             tokens
@@ -284,7 +284,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 // }
 // impl<T> GenericSelfFieldReaderUpperCamelCaseStringified for T
 // where
-//     T: generate_quotes::naming_conventions::ToUpperCamelCaseStringified,
+//     T: generate_quotes::naming::ToUpperCamelCaseStringified,
 // {
 //     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
 //         format!("Generic{}FieldReader", self.to_upper_camel_case_stringified(),)
@@ -295,7 +295,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 // }
 // impl<T> GenericSelfFieldReaderSnakeCaseStringified for T
 // where
-//     T: generate_quotes::naming_conventions::ToSnakeCaseStringified,
+//     T: generate_quotes::naming::ToSnakeCaseStringified,
 // {
 //     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
 //         format!("generic_{}_field_reader", self.to_snake_case_stringified(),)
@@ -333,7 +333,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
-//         format!("Generic{}FieldReader", generate_quotes::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
+//         format!("Generic{}FieldReader", generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified {
@@ -344,7 +344,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {
@@ -376,7 +376,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 // }
 // impl<T> GenericSelfFieldReaderUpperCamelCaseStringified for T
 // where
-//     T: generate_quotes::naming_conventions::ToUpperCamelCaseStringified,
+//     T: generate_quotes::naming::ToUpperCamelCaseStringified,
 // {
 //     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
 //         format!("Generic{}FieldReader", self.to_upper_camel_case_stringified(),)
@@ -387,7 +387,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 // }
 // impl<T> GenericSelfFieldReaderSnakeCaseStringified for T
 // where
-//     T: generate_quotes::naming_conventions::ToSnakeCaseStringified,
+//     T: generate_quotes::naming::ToSnakeCaseStringified,
 // {
 //     fn generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
 //         format!("generic_{}_field_reader", self.to_snake_case_stringified(),)
@@ -425,7 +425,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String {
-//         format!("Generic{}FieldReader", generate_quotes::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
+//         format!("Generic{}FieldReader", generate_quotes::naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderSnakeCaseStringified {
@@ -436,7 +436,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     T: quote::ToTokens,
 // {
 //     fn impl_quote_to_tokens_generic_self_field_reader_snake_case_stringified(&self) -> std::string::String {
-//         format!("generic_{}_field_reader", generate_quotes::naming_conventions::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
+//         format!("generic_{}_field_reader", generate_quotes::naming::AsRefStrToSnakeCaseStringified::new(&quote::quote! { #self }.to_string()),)
 //     }
 // }
 // pub trait ImplQuoteToTokensGenericSelfFieldReaderUpperCamelCaseTokenStream {

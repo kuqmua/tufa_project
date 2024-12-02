@@ -9,7 +9,7 @@ edition = "2021"
 serde = {version = "=1.0", features = ["derive"]}
 serde_derive = {version = "=1.0"}
 compile_time_git_info = {path = "./compile_time_git_info"}
-naming_conventions = {path = "../naming_conventions"}
+naming = {path = "../naming"}
 
 [lints]
 workspace = true

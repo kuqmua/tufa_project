@@ -12,7 +12,7 @@ strum_macros = {version = "=0.24.3"}
 token_patterns = {path = "../token_patterns"}
 generate_quotes = {path = "../generate_quotes"}
 constants = {path = "../constants"}
-naming_conventions = {path = "../naming_conventions"}
+naming = {path = "../naming"}
 
 [lints]
 workspace = true

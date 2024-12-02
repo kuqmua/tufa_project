@@ -37,9 +37,9 @@ members = [
   "impl_display_as_debug",
   "error_occurence_test",
   "token_patterns",
-  "naming_conventions",
-  "naming_conventions/naming_conventions_common",
-  "naming_conventions/naming_macros",
+  "naming",
+  "naming/naming_common",
+  "naming/naming_macros",
   "panic_location",
 ]
 exclude = [

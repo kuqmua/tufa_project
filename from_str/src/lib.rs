@@ -6,7 +6,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
         data_enum
     } else {
-        panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let variant_idents = data_enum
         .variants

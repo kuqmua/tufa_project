@@ -9,8 +9,8 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
     };
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, upper_camel_case_field_ident) = {
-            let field_ident = field.ident.as_ref().unwrap_or_else(|| panic!("{ident} {}", naming_conventions::FIELD_IDENT_IS_NONE));
-            (field_ident, naming_conventions::ToTokensToUpperCamelCaseStringified::new(&field_ident))
+            let field_ident = field.ident.as_ref().unwrap_or_else(|| panic!("{ident} {}", naming::FIELD_IDENT_IS_NONE));
+            (field_ident, naming::ToTokensToUpperCamelCaseStringified::new(&field_ident))
         };
         let field_type = field.ty;
         let path_trait_ident = format!("app_state::Get{upper_camel_case_field_ident}").parse::<proc_macro2::TokenStream>().expect("path_trait_ident parse failed");
@@ -51,8 +51,8 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
     let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
-    let get_ident_upper_camel_case = naming_conventions::parameter::GetSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
-    let get_ident_snake_case = naming_conventions::parameter::GetSelfSnakeCase::from_dyn_quote_to_tokens(&ident);
+    let get_ident_upper_camel_case = naming::parameter::GetSelfUpperCamelCase::from_dyn_quote_to_tokens(&ident);
+    let get_ident_snake_case = naming::parameter::GetSelfSnakeCase::from_dyn_quote_to_tokens(&ident);
     let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case {
             fn #get_ident_snake_case(&self) -> &#first_field_unnamed_type;

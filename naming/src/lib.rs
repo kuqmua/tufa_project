@@ -4,26 +4,26 @@ pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified;
 
-pub use naming_conventions_common::AsRefStrToUpperCamelCaseStringified;
-pub use naming_conventions_common::AsRefStrToUpperCamelCaseTokenStream;
-pub use naming_conventions_common::AsRefStrToSnakeCaseStringified;
-pub use naming_conventions_common::AsRefStrToSnakeCaseTokenStream;
-pub use naming_conventions_common::AsRefStrToScreamingSnakeCaseStringified;
-pub use naming_conventions_common::AsRefStrToScreamingSnakeCaseTokenStream;
+pub use naming_common::AsRefStrToUpperCamelCaseStringified;
+pub use naming_common::AsRefStrToUpperCamelCaseTokenStream;
+pub use naming_common::AsRefStrToSnakeCaseStringified;
+pub use naming_common::AsRefStrToSnakeCaseTokenStream;
+pub use naming_common::AsRefStrToScreamingSnakeCaseStringified;
+pub use naming_common::AsRefStrToScreamingSnakeCaseTokenStream;
 
-pub use naming_conventions_common::DisplayToUpperCamelCaseStringified;
-pub use naming_conventions_common::DisplayToUpperCamelCaseTokenStream;
-pub use naming_conventions_common::DisplayToSnakeCaseStringified;
-pub use naming_conventions_common::DisplayToSnakeCaseTokenStream;
-pub use naming_conventions_common::DisplayToScreamingSnakeCaseStringified;
-pub use naming_conventions_common::DisplayToScreamingSnakeCaseTokenStream;
+pub use naming_common::DisplayToUpperCamelCaseStringified;
+pub use naming_common::DisplayToUpperCamelCaseTokenStream;
+pub use naming_common::DisplayToSnakeCaseStringified;
+pub use naming_common::DisplayToSnakeCaseTokenStream;
+pub use naming_common::DisplayToScreamingSnakeCaseStringified;
+pub use naming_common::DisplayToScreamingSnakeCaseTokenStream;
 
-pub use naming_conventions_common::ToTokensToUpperCamelCaseStringified;
-pub use naming_conventions_common::ToTokensToUpperCamelCaseTokenStream;
-pub use naming_conventions_common::ToTokensToSnakeCaseStringified;
-pub use naming_conventions_common::ToTokensToSnakeCaseTokenStream;
-pub use naming_conventions_common::ToTokensToScreamingSnakeCaseStringified;
-pub use naming_conventions_common::ToTokensToScreamingSnakeCaseTokenStream;
+pub use naming_common::ToTokensToUpperCamelCaseStringified;
+pub use naming_common::ToTokensToUpperCamelCaseTokenStream;
+pub use naming_common::ToTokensToSnakeCaseStringified;
+pub use naming_common::ToTokensToSnakeCaseTokenStream;
+pub use naming_common::ToTokensToScreamingSnakeCaseStringified;
+pub use naming_common::ToTokensToScreamingSnakeCaseTokenStream;
 
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
@@ -487,7 +487,7 @@ pub trait SwaggerUrlPathSelfQuotesStringified {
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
-    T: naming_conventions_common::AsRefStrToSnakeCaseStringified,
+    T: naming_common::AsRefStrToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
         generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.new(),))
@@ -514,7 +514,7 @@ pub trait UrlHandleSelfSnakeCaseStringified {
 
 impl<T> UrlHandleSelfSnakeCaseStringified for T
 where
-    T: naming_conventions_common::AsRefStrToSnakeCaseStringified,
+    T: naming_common::AsRefStrToSnakeCaseStringified,
 {
     fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
         format!("\"{{}}/{}/{}\"", table_name_stringified, self.new())

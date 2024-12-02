@@ -9,11 +9,11 @@ impl SuportedEnumVariant {
         assert!(!data_enum.variants.is_empty(), "enum variants are empty");
         let error_message = format!(
             "{} enums where all variants are {}::{} or all variants are {}::{}",
-            naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
-            naming_conventions::SYN_FIELDS,
-            naming_conventions::SYN_FIELDS,
-            naming_conventions::NamedUpperCamelCase,
-            naming_conventions::UnnamedUpperCamelCase,
+            naming::SUPPORTS_ONLY_STRINGIFIED,
+            naming::SYN_FIELDS,
+            naming::SYN_FIELDS,
+            naming::NamedUpperCamelCase,
+            naming::UnnamedUpperCamelCase,
         );
         data_enum.variants.iter().for_each(|variant| match &variant.fields {
             syn::Fields::Named(_) => match &all_equal {
@@ -36,7 +36,7 @@ impl SuportedEnumVariant {
         });
         all_equal.map_or_else(
             || {
-                panic!("{} with enums where all variants are named or unnamed", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                panic!("{} with enums where all variants are named or unnamed", naming::SUPPORTS_ONLY_STRINGIFIED);
             },
             |supported_enum_variant| supported_enum_variant,
         )

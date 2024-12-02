@@ -18,7 +18,7 @@ constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 macros_helpers = {path = "../../macros_helpers"}
-naming_conventions = {path = "../../naming_conventions"}
+naming = {path = "../../naming"}
 token_patterns = {path = "../../token_patterns"}
 
 [lints]

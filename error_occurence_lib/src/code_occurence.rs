@@ -40,8 +40,8 @@ impl std::fmt::Display for CodeOccurence {
                     .as_ref()
                     .map_or_else(|| format!("{}:{}:{}", self.file, self.line, self.column), |value| format!("{}:{}:{} ({}:{}:{})", self.file, self.line, self.column, value.file, value.line, value.column)),
                 app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
-                    || format!("{}/blob/{}/{}#L{}", naming_conventions::GITHUB_URL, self.commit, self.file, self.line),
-                    |value| format!("{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})", naming_conventions::GITHUB_URL, self.commit, self.file, self.line, naming_conventions::GITHUB_URL, self.commit, value.file, value.line)
+                    || format!("{}/blob/{}/{}#L{}", naming::GITHUB_URL, self.commit, self.file, self.line),
+                    |value| format!("{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})", naming::GITHUB_URL, self.commit, self.file, self.line, naming::GITHUB_URL, self.commit, value.file, value.line)
                 ),
             },
             match (std::time::UNIX_EPOCH.checked_add(self.duration), chrono::FixedOffset::east_opt(10800)) {

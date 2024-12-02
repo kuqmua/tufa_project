@@ -4,7 +4,7 @@ pub mod value;
 pub mod postgresql_types;
 
 fn add_path(value: &str) -> std::string::String {
-    format!("{}::{value}", naming_conventions::PostgresqlCrudSnakeCase)
+    format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -285,7 +285,7 @@ impl PostgresqlTypeWithMetadata {
     }
 }
 
-#[derive(Debug, Clone, Copy, strum_macros::Display, strum_macros::EnumIter, naming_conventions::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+#[derive(Debug, Clone, Copy, strum_macros::Display, strum_macros::EnumIter, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
 pub enum SupportedSqlxPostgresType {
     StdPrimitiveBool,
     StdOptionOptionStdPrimitiveBool,
@@ -1128,7 +1128,7 @@ impl SupportedSqlxPostgresType {
     fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(self, generic_type_str: &str) -> std::string::String {
         match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
-            FromOrTryFrom::TryFrom => format!("{}{}{}", self.get_inner_type_handle_stringified(generic_type_str), naming_conventions::WithSerializeDeserializeUpperCamelCase, naming_conventions::ErrorNamedUpperCamelCase),
+            FromOrTryFrom::TryFrom => format!("{}{}{}", self.get_inner_type_handle_stringified(generic_type_str), naming::WithSerializeDeserializeUpperCamelCase, naming::ErrorNamedUpperCamelCase),
         }
     }
     fn get_where_with_serialize_deserialize_error_named_stringified(self, generic_type_str: &str) -> std::string::String {
@@ -1136,10 +1136,10 @@ impl SupportedSqlxPostgresType {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}{}",
-                naming_conventions::WhereUpperCamelCase,
+                naming::WhereUpperCamelCase,
                 self.get_inner_type_handle_stringified(generic_type_str),
-                naming_conventions::WithSerializeDeserializeUpperCamelCase,
-                naming_conventions::ErrorNamedUpperCamelCase
+                naming::WithSerializeDeserializeUpperCamelCase,
+                naming::ErrorNamedUpperCamelCase
             ),
         })
     }
@@ -2265,7 +2265,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         add_path(&SupportedSqlxPostgresType::from(&SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&SupportedSqlxPostgresType::from(self))).get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
     }
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        add_path(&format!("{}{}", naming_conventions::WhereUpperCamelCase, self.get_inner_type_handle_stringified(generic_type_str)))
+        add_path(&format!("{}{}", naming::WhereUpperCamelCase, self.get_inner_type_handle_stringified(generic_type_str)))
     }
     pub fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
         SupportedSqlxPostgresType::from(self).get_where_with_serialize_deserialize_error_named_stringified(generic_type_str)
@@ -8136,9 +8136,9 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Or => write!(formatter, "{}", naming_conventions::OrUpperCamelCase),
+            Self::Or => write!(formatter, "{}", naming::OrUpperCamelCase),
             Self::And => {
-                write!(formatter, "{}", naming_conventions::AndUpperCamelCase)
+                write!(formatter, "{}", naming::AndUpperCamelCase)
             }
         }
     }
@@ -8154,8 +8154,8 @@ pub enum Order {
 impl std::fmt::Display for Order {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Asc => write!(formatter, "{}", naming_conventions::AscUpperCamelCase),
-            Self::Desc => write!(formatter, "{}", naming_conventions::DescUpperCamelCase),
+            Self::Asc => write!(formatter, "{}", naming::AscUpperCamelCase),
+            Self::Desc => write!(formatter, "{}", naming::DescUpperCamelCase),
         }
     }
 }
@@ -8171,10 +8171,10 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 }
 impl Order {
     pub fn to_upper_camel_case_stringified(&self) -> std::string::String {
-        naming_conventions::DisplayToUpperCamelCaseStringified::new(&self)
+        naming::DisplayToUpperCamelCaseStringified::new(&self)
     }
     pub fn to_snake_case_stringified(&self) -> std::string::String {
-        naming_conventions::DisplayToSnakeCaseStringified::new(&self)
+        naming::DisplayToSnakeCaseStringified::new(&self)
     }
 }
 

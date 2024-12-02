@@ -1,5 +1,5 @@
 [package]
-name = "naming_conventions"
+name = "naming"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,7 +10,7 @@ syn = {version = "=2.0.60"}
 constants = {path = "../constants"}
 generate_quotes = {path = "../generate_quotes"}
 naming_macros = {path = "./naming_macros"}
-naming_conventions_common = {path = "./naming_conventions_common"}
+naming_common = {path = "./naming_common"}
 
 [lints]
 workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "naming_conventions_common"
+name = "naming_common"
 version = "0.1.0"
 edition = "2021"
 

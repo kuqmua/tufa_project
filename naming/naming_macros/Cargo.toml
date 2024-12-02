@@ -17,4 +17,4 @@ constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}
-naming_conventions_common = {path = "../naming_conventions_common"}
+naming_common = {path = "../naming_common"}

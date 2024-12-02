@@ -15,7 +15,7 @@ postgresql_crud_macros_common = {path = "../postgresql_crud_common/postgresql_cr
 constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
-naming_conventions = {path = "../../naming_conventions"}
+naming = {path = "../../naming"}
 macros_helpers = {path = "../../macros_helpers"}
 
 [lints]

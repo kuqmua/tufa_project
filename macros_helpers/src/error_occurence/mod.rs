@@ -67,7 +67,7 @@ impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
                 }
             } //other attributes are not for this proc_macro
         }
-        option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming_conventions::IS_NONE_STRINGIFIED))
+        option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming::IS_NONE_STRINGIFIED))
     }
 }
 impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
@@ -97,7 +97,7 @@ pub fn attribute_view(attribute: &str) -> std::string::String {
 
 pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
-    std_snake_case: &naming_conventions::StdSnakeCase,
+    std_snake_case: &naming::StdSnakeCase,
     std_string_string: &token_patterns::StdStringString,
 ) -> &'a syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
@@ -114,7 +114,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     }
     let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
     {
-        let collections_snake_case = naming_conventions::CollectionsSnakeCase;
+        let collections_snake_case = naming::CollectionsSnakeCase;
         assert!(
             second_segment.ident == &collections_snake_case.to_string(),
             "second_segment.ident != {collections_snake_case} {}",
@@ -127,7 +127,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     }
     let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
     {
-        let hashmap_upper_camel_case = naming_conventions::HashMapUpperCamelCase;
+        let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
         assert!(
             third_segment.ident == &hashmap_upper_camel_case.to_string(),
             "third_segment.ident != {hashmap_upper_camel_case} {}",
@@ -157,19 +157,19 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
     } else {
-        panic!("{} syn::Data::Enum", naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields
         .iter()
-        .filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming_conventions::CodeOccurenceSnakeCase.to_string())
+        .filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming::CodeOccurenceSnakeCase.to_string())
         .map(|element| {
             let element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
             let element_type_token_stream = {
                 let element_type = &element.ty;
                 quote::quote! {#element_type}
             };
-            let std_snake_case = naming_conventions::StdSnakeCase;
+            let std_snake_case = naming::StdSnakeCase;
             let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                     quote::quote! {
@@ -185,7 +185,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                                 let element_type = &element.ty;
                                 quote::quote! {#element_type}
                             },
-                            naming_conventions::WithSerializeDeserializeUpperCamelCase
+                            naming::WithSerializeDeserializeUpperCamelCase
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
@@ -215,7 +215,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     }
                     let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
                     {
-                        let vec_snake_case = naming_conventions::VecSnakeCase;
+                        let vec_snake_case = naming::VecSnakeCase;
                         assert!(second_segment.ident == &vec_snake_case.to_string(), "second_segment.ident != {vec_snake_case} {}", second_segment.ident);
                     };
                     match second_segment.arguments {
@@ -224,7 +224,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     }
                     let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
                     {
-                        let vec_upper_camel_case = naming_conventions::VecUpperCamelCase;
+                        let vec_upper_camel_case = naming::VecUpperCamelCase;
                         assert!(
                             third_segment.ident == &vec_upper_camel_case.to_string(),
                             "third_segment.ident != {vec_upper_camel_case} {}",
@@ -239,7 +239,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                                 let first_arg = args.iter().next().expect("args.iter().next() is None");
                                 quote::quote! {#first_arg}
                             },
-                            naming_conventions::WithSerializeDeserializeUpperCamelCase,
+                            naming::WithSerializeDeserializeUpperCamelCase,
                         );
                         value
                             .parse::<proc_macro2::TokenStream>()
@@ -264,7 +264,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                     let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                     let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
-                        let value = format!("{}{}", quote::quote! {#second_argument}, naming_conventions::WithSerializeDeserializeUpperCamelCase,);
+                        let value = format!("{}{}", quote::quote! {#second_argument}, naming::WithSerializeDeserializeUpperCamelCase,);
                         value
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -278,7 +278,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 #element_ident: #element_type_with_serialize_deserialize_token_stream,
             }
         });
-    let code_occurence_snake_case_token_stream = naming_conventions::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_token_stream = naming::CodeOccurenceSnakeCase;
     quote::quote! {
         #element_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*

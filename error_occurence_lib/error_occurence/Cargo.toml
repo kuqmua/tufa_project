@@ -16,7 +16,7 @@ constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}
-naming_conventions = {path = "../../naming_conventions"}
+naming = {path = "../../naming"}
 
 [lints]
 workspace = true
