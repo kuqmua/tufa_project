@@ -192,10 +192,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "std", "option", "option", "object", "self", "to", "read"],
     ["postgresql", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "read"],
     ["postgresql", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "to", "read"],
-    ["object", "self", "to", "update"],
-    ["std", "option", "option", "object", "self", "to", "update"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "to", "update"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"]
+    ["postgresql", "type", "object", "self", "to", "update"],
+    ["postgresql", "type", "std", "option", "option", "object", "self", "to", "update"],
+    ["postgresql", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"],
+    ["postgresql", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"]
 ]);
 
 ////////////////////////////////////////////////////

@@ -2646,10 +2646,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
 
-            pub_struct_tokens_to_update_declaration_token_stream: &dyn quote::ToTokens,
-            try_generate_bind_increments_content_for_tokens_to_update_token_stream: &dyn quote::ToTokens,
-            bind_value_to_query_content_for_tokens_to_update_token_stream: &dyn quote::ToTokens,
-            std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_tokens_to_update_token_stream: &dyn quote::ToTokens,
+            pub_struct_postgresql_type_tokens_to_update_declaration_token_stream: &dyn quote::ToTokens,
+            try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
+            bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
+            std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
 
             pub_struct_tokens_where_declaration_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_content_for_tokens_where_token_stream: &dyn quote::ToTokens,
@@ -2890,14 +2890,14 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream
                 }
             };
-            let tokens_to_update_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
-                SupportedJsonValue::ObjectIdent => &naming::parameter::ObjectSelfToUpdateUpperCamelCase::from_tokens(&ident),
-                SupportedJsonValue::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfToUpdateUpperCamelCase::from_tokens(&ident),
-                SupportedJsonValue::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfToUpdateUpperCamelCase::from_tokens(&ident),
-                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfToUpdateUpperCamelCase::from_tokens(&ident),
+            let postgresql_type_tokens_to_update_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
+                SupportedJsonValue::ObjectIdent => &naming::parameter::PostgresqlTypeObjectSelfToUpdateUpperCamelCase::from_tokens(&ident),
+                SupportedJsonValue::StdOptionOptionObjectIdent => &naming::parameter::PostgresqlTypeStdOptionOptionObjectSelfToUpdateUpperCamelCase::from_tokens(&ident),
+                SupportedJsonValue::StdVecVecObjectWithIdIdent => &naming::parameter::PostgresqlTypeStdVecVecObjectWithIdSelfToUpdateUpperCamelCase::from_tokens(&ident),
+                SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::PostgresqlTypeStdOptionOptionStdVecVecObjectWithIdSelfToUpdateUpperCamelCase::from_tokens(&ident),
             };
-            let tokens_to_update_token_stream = {
-                let tokens_to_update_token_stream = {
+            let postgresql_type_tokens_to_update_token_stream = {
+                let postgresql_type_tokens_to_update_token_stream = {
                     quote::quote!{
                         #[derive(
                             Debug,
@@ -2906,41 +2906,41 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             serde::Serialize,
                             serde::Deserialize,
                         )]
-                        pub struct #tokens_to_update_upper_camel_case #pub_struct_tokens_to_update_declaration_token_stream
+                        pub struct #postgresql_type_tokens_to_update_upper_camel_case #pub_struct_postgresql_type_tokens_to_update_declaration_token_stream
                     }
                 };
-                let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_update_token_stream = {
+                let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
                     quote::quote!{
-                        impl<'a> postgresql_crud::BindQuerySecond<'a> for #tokens_to_update_upper_camel_case {
+                        impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_type_tokens_to_update_upper_camel_case {
                             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-                                #try_generate_bind_increments_content_for_tokens_to_update_token_stream
+                                #try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream
                             }
                             fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                #bind_value_to_query_content_for_tokens_to_update_token_stream
+                                #bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream
                             }
                         }
                     }
                 };
-                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_update_token_stream = {
+                let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #tokens_to_update_upper_camel_case {
+                        impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_to_update_upper_camel_case {
                             #[inline]
                             fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_tokens_to_update_token_stream
+                                #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream
                             }
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_to_update_token_stream = {
+                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream = {
                     quote::quote!{
-                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToUpdateTraits<'_> for #tokens_to_update_upper_camel_case {}
+                        impl postgresql_crud::postgresql_types::base_wrap::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_type_tokens_to_update_upper_camel_case {}
                     }
                 };
                 quote::quote!{
-                    #tokens_to_update_token_stream
-                    #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_update_token_stream
-                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_to_update_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_to_update_token_stream
+                    #postgresql_type_tokens_to_update_token_stream
+                    #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
+                    #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream
                 }
             };
             let tokens_where_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -3026,7 +3026,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         type #postgresql_type_self_column_upper_camel_case = #postgresql_type_tokens_column_upper_camel_case;
                         type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                         type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
-                        type #postgresql_type_self_to_update_upper_camel_case = #tokens_to_update_upper_camel_case;
+                        type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
                         type #postgresql_type_self_where_upper_camel_case = #tokens_where_upper_camel_case;
                     }
                 }
@@ -3036,7 +3036,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #postgresql_type_tokens_column_token_stream
                 #postgresql_type_tokens_to_create_token_stream
                 #postgresql_type_tokens_to_read_token_stream
-                #tokens_to_update_token_stream
+                #postgresql_type_tokens_to_update_token_stream
                 #tokens_where_token_stream
                 #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream
             }
