@@ -139,10 +139,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "option", "option", "object", "self", "column"],
     ["std", "vec", "vec", "object", "with", "id", "self", "column"],
     ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "column"],
-    ["object", "self", "where"],
-    ["std", "option", "option", "object", "self", "where"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "where"],
-    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "where"],
     ["postgresql", "json", "type", "self", "to", "create"],
     ["postgresql", "json", "type", "object", "self", "to", "create"],
     ["postgresql", "json", "type", "std", "option", "option", "object", "self", "to", "create"],
@@ -195,7 +191,11 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "object", "self", "to", "update"],
     ["postgresql", "type", "std", "option", "option", "object", "self", "to", "update"],
     ["postgresql", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"],
-    ["postgresql", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"]
+    ["postgresql", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"],
+    ["postgresql", "type", "object", "self", "where"],
+    ["postgresql", "type", "std", "option", "option", "object", "self", "where"],
+    ["postgresql", "type", "std", "vec", "vec", "object", "with", "id", "self", "where"],
+    ["postgresql", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "where"]
 ]);
 
 ////////////////////////////////////////////////////
