@@ -3040,6 +3040,12 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #postgresql_type_tokens_where_token_stream
                 #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream
             }
+            // quote::quote!{
+            //     ObjectAnimalAsPostgresqlJson
+            //     ObjectAnimalAsPostgresqlJsonNotNull
+            //     ObjectAnimalAsPostgresqlJsonb
+            //     ObjectAnimalAsPostgresqlJsonNotNull
+            // }
         };
         //todo maybe different struct for json and jsonb
         let (
