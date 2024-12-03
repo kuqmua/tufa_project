@@ -3624,7 +3624,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_object_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_object_ident_token_stream
                 }
             };
             (
@@ -4744,7 +4744,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
@@ -5340,7 +5340,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
                 }
             };
             (
