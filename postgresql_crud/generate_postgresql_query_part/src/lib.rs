@@ -2646,6 +2646,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
 
+            pub_struct_postgresql_type_tokens_to_read_declaration_token_stream: &dyn quote::ToTokens,
+            decode_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
+            type_info_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
+
             pub_struct_postgresql_type_tokens_to_update_declaration_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
             bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
@@ -2854,17 +2858,18 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             serde::Serialize,
                             serde::Deserialize,
                         )]
-                        pub struct #postgresql_type_tokens_to_read_upper_camel_case(sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>);
+                        pub struct #postgresql_type_tokens_to_read_upper_camel_case #pub_struct_postgresql_type_tokens_to_read_declaration_token_stream//(sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>);
                     }
                 };
                 let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream = {
                     quote::quote!{
                         impl sqlx::Decode<'_, sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
                             fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                                match <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                                    Ok(value) => Ok(Self(value)),
-                                    Err(error) => Err(error)
-                                }
+                                // match <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                //     Ok(value) => Ok(Self(value)),
+                                //     Err(error) => Err(error)
+                                // }
+                                #decode_content_for_postgresql_type_tokens_to_read_token_stream
                             }
                         }
                     }
@@ -2873,7 +2878,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     quote::quote!{
                         impl sqlx::Type<sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
                             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                               <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()
+                            //    <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()
+                                #type_info_content_for_postgresql_type_tokens_to_read_token_stream
                             }
                         }
                     }
@@ -3255,6 +3261,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
                     &quote::quote!{;},
@@ -3610,6 +3620,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+
+                    &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
@@ -4736,6 +4750,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
+
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
                     &quote::quote!{;},
@@ -5329,6 +5347,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
+                    &quote::quote!{;},
+                    &quote::quote!{todo!()},
+                    &quote::quote!{todo!()},
+                    
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
