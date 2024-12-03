@@ -119,20 +119,20 @@ const VARBIT: &std::primitive::str = "VARBIT";
 const JSON: &std::primitive::str = "JSON";
 const JSONB: &std::primitive::str = "JSONB";
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
-impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&BOOL)
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_types::base::StdOptionOptionStdPrimitiveBool);
+// impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBool {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&BOOL)
+//     }
+// }
 #[derive(
     Debug,
     Clone,
@@ -147,216 +147,216 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
         Self::create_table_query_part_handle(&BOOL)
     }
 }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SMALLINT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(crate::postgresql_types::base::StdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SMALLINT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlSmallSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SMALLSERIAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_types::base::StdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SMALLSERIAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT2)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(crate::postgresql_types::base::StdPrimitiveI16);
-impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT2)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlIntNotNull(crate::postgresql_types::base::StdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SERIAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_types::base::StdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&SERIAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT4)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(crate::postgresql_types::base::StdPrimitiveI32);
-impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT4)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI64AsPostgresqlBigInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&BIGINT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&BIGINT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI64AsPostgresqlBigSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&BIGSERIAL)
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SMALLINT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(crate::postgresql_types::base::StdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SMALLINT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlSmallSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SMALLSERIAL)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_types::base::StdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SMALLSERIAL)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT2)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(crate::postgresql_types::base::StdPrimitiveI16);
+// impl crate::CreateTableQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT2)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlIntNotNull(crate::postgresql_types::base::StdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerial {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SERIAL)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_types::base::StdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&SERIAL)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT4)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(crate::postgresql_types::base::StdPrimitiveI32);
+// impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT4)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI64AsPostgresqlBigInt(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
+// impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigInt {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&BIGINT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(crate::postgresql_types::base::StdPrimitiveI64);
+// impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&BIGINT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveI64AsPostgresqlBigSerial(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
+// impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&BIGSERIAL)
+//     }
+// }
 #[derive(
     Debug,
     Clone,
@@ -390,175 +390,6 @@ const _: () = {
         }
     }
 };
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT8)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-)]
-pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(crate::postgresql_types::base::StdPrimitiveI64);
-impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&INT8)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF32AsPostgresqlReal(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
-impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&REAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF32AsPostgresqlRealNotNull(crate::postgresql_types::base::StdPrimitiveF32);
-impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&REAL)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
-impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&FLOAT4)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(crate::postgresql_types::base::StdPrimitiveF32);
-impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&FLOAT4)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
-impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&DOUBLE_PRECISION)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(crate::postgresql_types::base::StdPrimitiveF64);
-impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&DOUBLE_PRECISION)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
-impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&FLOAT8)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(crate::postgresql_types::base::StdPrimitiveF64);
-impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&FLOAT8)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_types::base::StdOptionOptionStdStringString);
-impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&VARCHAR)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_types::base::StdStringString);
-impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&VARCHAR)
-    }
-}
 // #[derive(
 //     Debug,
 //     Clone,
@@ -567,10 +398,25 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 // )]
-// pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_types::base::StdOptionOptionStdStringString);
-// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharN {
+// pub struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveI64);
+// impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
 //     fn create_table_query_part() -> impl std::fmt::Display {
-//         Self::create_table_query_part_handle(&CHARN)
+//         Self::create_table_query_part_handle(&INT8)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+// )]
+// pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(crate::postgresql_types::base::StdPrimitiveI64);
+// impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&INT8)
 //     }
 // }
 // #[derive(
@@ -581,52 +427,10 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 // )]
-// pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_types::base::StdStringString);
-// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharNNotNull {
+// pub struct StdPrimitiveF32AsPostgresqlReal(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
+// impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlReal {
 //     fn create_table_query_part() -> impl std::fmt::Display {
-//         Self::create_table_query_part_handle(&CHARN)
-//     }
-// }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdStringStringAsPostgresqlText(crate::postgresql_types::base::StdOptionOptionStdStringString);
-impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&TEXT)
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_types::base::StdStringString);
-impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&TEXT)
-    }
-}
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-// )]
-// pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_types::base::StdOptionOptionStdStringString);
-// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiText {
-//     fn create_table_query_part() -> impl std::fmt::Display {
-//         Self::create_table_query_part_handle(&CITEXT)
+//         Self::create_table_query_part_handle(&REAL)
 //     }
 // }
 // #[derive(
@@ -637,9 +441,205 @@ impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 // )]
-// pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_types::base::StdStringString);
-// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
+// pub struct StdPrimitiveF32AsPostgresqlRealNotNull(crate::postgresql_types::base::StdPrimitiveF32);
+// impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlRealNotNull {
 //     fn create_table_query_part() -> impl std::fmt::Display {
-//         Self::create_table_query_part_handle(&CITEXT)
+//         Self::create_table_query_part_handle(&REAL)
 //     }
 // }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF32);
+// impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&FLOAT4)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(crate::postgresql_types::base::StdPrimitiveF32);
+// impl crate::CreateTableQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&FLOAT4)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
+// impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecision {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&DOUBLE_PRECISION)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(crate::postgresql_types::base::StdPrimitiveF64);
+// impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&DOUBLE_PRECISION)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_types::base::StdOptionOptionStdPrimitiveF64);
+// impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&FLOAT8)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(crate::postgresql_types::base::StdPrimitiveF64);
+// impl crate::CreateTableQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&FLOAT8)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_types::base::StdOptionOptionStdStringString);
+// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarchar {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&VARCHAR)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_types::base::StdStringString);
+// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&VARCHAR)
+//     }
+// }
+// // #[derive(
+// //     Debug,
+// //     Clone,
+// //     PartialEq,
+// //     serde::Serialize,
+// //     serde::Deserialize,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// // )]
+// // pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_types::base::StdOptionOptionStdStringString);
+// // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharN {
+// //     fn create_table_query_part() -> impl std::fmt::Display {
+// //         Self::create_table_query_part_handle(&CHARN)
+// //     }
+// // }
+// // #[derive(
+// //     Debug,
+// //     Clone,
+// //     PartialEq,
+// //     serde::Serialize,
+// //     serde::Deserialize,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// // )]
+// // pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_types::base::StdStringString);
+// // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCharNNotNull {
+// //     fn create_table_query_part() -> impl std::fmt::Display {
+// //         Self::create_table_query_part_handle(&CHARN)
+// //     }
+// // }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdStringStringAsPostgresqlText(crate::postgresql_types::base::StdOptionOptionStdStringString);
+// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlText {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&TEXT)
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_types::base::StdStringString);
+// impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlTextNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&TEXT)
+//     }
+// }
+// // #[derive(
+// //     Debug,
+// //     Clone,
+// //     PartialEq,
+// //     serde::Serialize,
+// //     serde::Deserialize,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// // )]
+// // pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_types::base::StdOptionOptionStdStringString);
+// // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiText {
+// //     fn create_table_query_part() -> impl std::fmt::Display {
+// //         Self::create_table_query_part_handle(&CITEXT)
+// //     }
+// // }
+// // #[derive(
+// //     Debug,
+// //     Clone,
+// //     PartialEq,
+// //     serde::Serialize,
+// //     serde::Deserialize,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// // )]
+// // pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_types::base::StdStringString);
+// // impl crate::CreateTableQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
+// //     fn create_table_query_part() -> impl std::fmt::Display {
+// //         Self::create_table_query_part_handle(&CITEXT)
+// //     }
+// // }

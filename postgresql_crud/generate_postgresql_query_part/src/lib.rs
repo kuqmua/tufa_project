@@ -5409,7 +5409,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
         #older_aliases_token_stream
     };
-    // if ident == "" {
+    // if ident == "Animal" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlQueryPart",
     //         &generated,
