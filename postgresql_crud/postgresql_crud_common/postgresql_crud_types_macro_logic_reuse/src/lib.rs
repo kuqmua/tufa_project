@@ -1190,6 +1190,45 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream
         }
     };
+    let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_to_delete_token_stream = {
+        let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+            &pub_snake_case,
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &field_type_struct_content_token_stream,
+        );
+        let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+        );
+        let impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &braces_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+        );
+        let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+        );
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_ident_to_delete_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &field_type
+        );
+        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &field_type
+        );
+        quote::quote!{
+            #postgresql_type_ident_to_delete_token_stream
+            #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
+            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+            #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
+            #impl_crate_generate_postgresql_query_part_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
+        }
+    };
     let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_token_stream = {
         let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
@@ -1288,6 +1327,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #postgresql_type_ident_to_read_token_stream
 
         #postgresql_type_ident_to_update_token_stream
+
+        #postgresql_type_ident_to_delete_token_stream
 
         #postgresql_type_ident_where_token_stream
 
