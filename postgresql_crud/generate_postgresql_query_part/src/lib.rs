@@ -2666,6 +2666,29 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 PostgresqlJsonb,
                 PostgresqlJsonbNotNull,
             }
+            impl PostgresqlJsonVariant {
+                fn add_postfix(&self, value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                    match &self {
+                        //todo maybe refactor it somehow? fails with "creates a temporary value which is freed while still in use"
+                        PostgresqlJsonVariant::PostgresqlJson => {
+                            let value = naming::parameter::SelfPostgresqlJsonUpperCamelCase::from_tokens(&value);
+                            quote::quote!{#value}
+                        },
+                        PostgresqlJsonVariant::PostgresqlJsonNotNull => {
+                            let value = naming::parameter::SelfPostgresqlJsonNotNullUpperCamelCase::from_tokens(&value);
+                            quote::quote!{#value}
+                        },
+                        PostgresqlJsonVariant::PostgresqlJsonb => {
+                            let value = naming::parameter::SelfPostgresqlJsonbUpperCamelCase::from_tokens(&value);
+                            quote::quote!{#value}
+                        },
+                        PostgresqlJsonVariant::PostgresqlJsonbNotNull => {
+                            let value = naming::parameter::SelfPostgresqlJsonbNotNullUpperCamelCase::from_tokens(&value);
+                            quote::quote!{#value}
+                        },
+                    }
+                }
+            }
             let generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
                 postgresql_json_variant: PostgresqlJsonVariant,
 
@@ -2703,32 +2726,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
             |{
                 let tokens_upper_camel_case = {
-                    let tokens_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
+                    let value: &dyn quote::ToTokens = match &supported_json_value {
                         SupportedJsonValue::ObjectIdent => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
                         SupportedJsonValue::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
                         SupportedJsonValue::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
                         SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
                     };
-                    let tokens_upper_camel_case: proc_macro2::TokenStream = match &postgresql_json_variant {
-                        //todo maybe refactor it somehow? fails with "creates a temporary value which is freed while still in use"
-                        PostgresqlJsonVariant::PostgresqlJson => {
-                            let value = naming::parameter::SelfPostgresqlJsonUpperCamelCase::from_tokens(&tokens_upper_camel_case);
-                            quote::quote!{#value}
-                        },
-                        PostgresqlJsonVariant::PostgresqlJsonNotNull => {
-                            let value = naming::parameter::SelfPostgresqlJsonNotNullUpperCamelCase::from_tokens(&tokens_upper_camel_case);
-                            quote::quote!{#value}
-                        },
-                        PostgresqlJsonVariant::PostgresqlJsonb => {
-                            let value = naming::parameter::SelfPostgresqlJsonbUpperCamelCase::from_tokens(&tokens_upper_camel_case);
-                            quote::quote!{#value}
-                        },
-                        PostgresqlJsonVariant::PostgresqlJsonbNotNull => {
-                            let value = naming::parameter::SelfPostgresqlJsonbNotNullUpperCamelCase::from_tokens(&tokens_upper_camel_case);
-                            quote::quote!{#value}
-                        },
-                    };
-                    tokens_upper_camel_case
+                    postgresql_json_variant.add_postfix(value)
                 };
                 let tokens_tokens_stream = {
                     let impl_std_fmt_display_for_tokens_token_stream = {
