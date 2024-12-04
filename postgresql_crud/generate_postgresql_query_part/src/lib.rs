@@ -650,17 +650,17 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 )
             };
             let (
-                impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_with_generated_id_token_stream,
-                impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_without_generated_id_token_stream
+                impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_with_generated_id_token_stream,
+                impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_without_generated_id_token_stream
             ) = {
-                let generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToCreateTraits<'_> for #ident_token_stream {}
                     }
                 };
                 (
-                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_with_generated_id_upper_camel_case),
-                    generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_without_generated_id_upper_camel_case)
+                    generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_with_generated_id_upper_camel_case),
+                    generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream(&ident_to_create_without_generated_id_upper_camel_case)
                 )
             };
             //////
@@ -686,8 +686,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 // #impl_postgresql_crud_bind_query_second_for_ident_to_create_with_generated_id_token_stream,
                 #impl_postgresql_crud_bind_query_second_for_ident_to_create_without_generated_id_token_stream
 
-                // #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_with_generated_id_token_stream
-                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_without_generated_id_token_stream
+                // #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_with_generated_id_token_stream
+                #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_crud_base_type_self_to_create_type_for_ident_to_create_without_generated_id_token_stream
             }
         };
         let (
@@ -2320,7 +2320,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             };
-            let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream = {
+            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream = {
                 quote::quote!{
                     impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_json_type_ident_option_to_update_upper_camel_case {}
                 }
@@ -2334,7 +2334,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #impl_postgresql_json_type_ident_option_to_update_methods_token_stream
 
                 #impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream
-                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream
+                #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
@@ -2626,7 +2626,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             )
         };
         //GeneratePostgresqlCrudSecond integration
-        let generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream = |
+        let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             supported_json_value: SupportedJsonValue,
 
             std_fmt_display_for_tokens_tokens_stream: &dyn quote::ToTokens,
@@ -2710,7 +2710,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &tokens_upper_camel_case,
                     &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
                 );
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToCreateTraits<'_> for #tokens_upper_camel_case {}
                     }
@@ -2721,7 +2721,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
                     #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_tokens_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream
                 }
             };
             let postgresql_type_tokens_column_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -2770,7 +2770,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_column_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_column_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToReadTraits<'_> for #postgresql_type_tokens_column_upper_camel_case {}
                     }
@@ -2780,7 +2780,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_column_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_column_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_column_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_column_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_column_token_stream
                 }
             };
             let postgresql_type_tokens_to_create_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -2824,7 +2824,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_create_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_create_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToCreateTraits<'_> for #postgresql_type_tokens_to_create_upper_camel_case {}
                     }
@@ -2833,7 +2833,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #postgresql_type_tokens_to_create_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_create_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_create_token_stream
                 }
             };
             let postgresql_type_tokens_to_read_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -2884,7 +2884,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToReadTraits<'_> for #postgresql_type_tokens_to_read_upper_camel_case {}
                     }
@@ -2893,7 +2893,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #postgresql_type_tokens_to_read_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream
                 }
             };
             let postgresql_type_tokens_to_update_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -2937,7 +2937,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_type_tokens_to_update_upper_camel_case {}
                     }
@@ -2946,7 +2946,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #postgresql_type_tokens_to_update_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream
                 }
             };
             let postgresql_type_tokens_where_upper_camel_case: &dyn quote::ToTokens = match &supported_json_value {
@@ -2991,7 +2991,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_token_stream = {
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_token_stream = {
                     quote::quote!{
                         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfWhereTraits<'_> for #postgresql_type_tokens_where_upper_camel_case {}
                     }
@@ -3000,10 +3000,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #postgresql_type_tokens_where_token_stream
                     #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
                     #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_token_stream
                 }
             };
-            let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream = {
+            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = {
                 let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
                 let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
                 let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
@@ -3044,7 +3044,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 #postgresql_type_tokens_to_read_token_stream
                 #postgresql_type_tokens_to_update_token_stream
                 #postgresql_type_tokens_where_token_stream
-                #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream
+                #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
             }
             // quote::quote!{
             //     ObjectAnimalAsPostgresqlJson
@@ -3225,7 +3225,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_with_serialize_deserialize_alias_token_stream
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream(
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     SupportedJsonValue::ObjectIdent,
 
                     &quote::quote!{write!(formatter, "{:?}", self)},
@@ -3279,7 +3279,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_object_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream
                 }
             };
             // println!("{object_ident_token_stream}");
@@ -3601,7 +3601,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #postgresql_json_type_std_option_option_object_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream(
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     SupportedJsonValue::StdOptionOptionObjectIdent,
 
                     &quote::quote!{write!(formatter, "{:?}", self)},
@@ -3644,7 +3644,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_object_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream
                 }
             };
             (
@@ -4723,7 +4723,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream(
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     SupportedJsonValue::StdVecVecObjectWithIdIdent,
 
                     &quote::quote!{write!(formatter, "{:?}", self)},
@@ -4768,7 +4768,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream
                 }
             };
             //its for GeneratePostgresqlQueryPart (json logic)
@@ -5323,7 +5323,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_query_part_error_named_token_stream
                     }
                 };
-                let impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_tokens_token_stream(
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     SupportedJsonValue::StdOptionOptionStdVecVecObjectWithIdIdent,
 
                     &quote::quote!{write!(formatter, "{:?}", self)},
@@ -5368,7 +5368,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #read_token_stream
                     #update_token_stream
 
-                    #impl_postgresql_crud_postgresql_types_base_wrap_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
+                    #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
                 }
             };
             (
