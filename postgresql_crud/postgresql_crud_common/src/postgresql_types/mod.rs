@@ -1,2 +1,2 @@
-mod base;
-pub mod base_wrap;
+mod postgresql_base_type;
+pub mod postgresql_type;
