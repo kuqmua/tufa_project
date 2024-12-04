@@ -2561,9 +2561,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             pub_struct_postgresql_json_type_tokens_to_create_declaration_token_stream: &dyn quote::ToTokens,
             impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_content_token_stream: &dyn quote::ToTokens,
             pub_struct_postgresql_json_type_tokens_options_to_read_declaration_token_stream: &dyn quote::ToTokens,
-            postgresql_json_type_tokens_options_to_read_try_new_error_named_declaration_token_stream: &dyn quote::ToTokens,
-            postgresql_json_type_tokens_options_to_read_try_new_error_named_try_new_input_type_token_stream: &dyn quote::ToTokens,
-
+            impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_options_to_read_content_token_stream: &dyn quote::ToTokens,
+            impl_serde_deserialize_for_postgresql_json_type_tokens_options_to_read_token_stream: &dyn quote::ToTokens,
+            impl_serde_deserialize_for_postgresql_json_type_tokens_field_reader_token_stream: &dyn quote::ToTokens,
 
 
             try_generate_postgresql_query_part_to_create_content_token_stream: &dyn quote::ToTokens,
@@ -2612,45 +2612,149 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => naming::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
                 };
                 let read_token_stream = {
-                    let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_token_stream = generate_postgresql_json_type_tokens_options_to_read_token_stream(
+                    let postgresql_json_type_tokens_options_to_read_token_stream = generate_postgresql_json_type_tokens_options_to_read_token_stream(
                         &postgresql_json_type_tokens_options_to_read_upper_camel_case,
                         false,
                         &pub_struct_postgresql_json_type_tokens_options_to_read_declaration_token_stream,
                     );
                     //todo maybe all impl must be try_new ?
-                    let maybe_impl_try_new_for_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_token_stream = {
+                    let maybe_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream = {
                         let postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case = match &postgresql_json_type {
-                            SupportedJsonValue::Object => naming::PostgresqlJsonTypeObjectSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-                            SupportedJsonValue::StdOptionOptionObject => naming::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+                            SupportedJsonValue::Object |
+                            SupportedJsonValue::StdOptionOptionObject => todo!(),
                             SupportedJsonValue::StdVecVecObjectWithId => naming::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
                             SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => naming::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectSelfOptionsToReadTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
                         };
-                        let not_unique_id_upper_camel_case = naming::NotUniqueIdUpperCamelCase;
-                        let pub_enum_postgresql_json_type_tokens_options_to_read_try_new_error_named_token_stream = {
-                            quote::quote!{
-                                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                                pub enum #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case {
-                                    #postgresql_json_type_tokens_options_to_read_try_new_error_named_declaration_token_stream
-                                }
-                            }
-                        };
-                        let impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_pub_fn_try_new_token_stream = {
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("not unique {id_snake_case} {{}}"));
-                            quote::quote!{
-                                impl #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case {
-                                    pub fn try_new(value: #impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_try_new_input_type_token_stream) -> Result<Self, #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case> {
-                                        #postgresql_json_type_tokens_options_to_read_try_new_error_named_try_new_content_token_stream
+                        let generate_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream = |
+                            try_new_type_token_stream: &dyn quote::ToTokens,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |{
+                            let not_unique_id_upper_camel_case = naming::NotUniqueIdUpperCamelCase;
+                            let pub_enum_postgresql_json_type_tokens_options_to_read_try_new_error_named_token_stream = {
+                                quote::quote!{
+                                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                                    pub enum #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case {
+                                        #not_unique_id_upper_camel_case {
+                                            #[eo_to_std_string_string_serialize_deserialize]
+                                            error: std::string::String,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                        }
                                     }
                                 }
+                            };
+                            let impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_pub_fn_try_new_token_stream = {
+                                quote::quote!{
+                                    impl #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case {
+                                        pub fn try_new(value: #try_new_type_token_stream) -> Result<Self, #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case> {
+                                            #content_token_stream
+                                        }
+                                    }
+                                }
+                            };
+                            quote::quote!{
+                                #pub_enum_postgresql_json_type_tokens_options_to_read_try_new_error_named_token_stream
+                                #impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_pub_fn_try_new_token_stream
                             }
                         };
-                        quote::quote!{
-                            #pub_enum_postgresql_json_type_tokens_options_to_read_try_new_error_named_token_stream
-                            #impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_pub_fn_try_new_token_stream
+                        match &postgresql_json_type {
+                            SupportedJsonValue::Object |,
+                            SupportedJsonValue::StdOptionOptionObject => proc_macro2::TokenStream::new(),
+                            SupportedJsonValue::StdVecVecObjectWithId => generate_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream(
+                                &quote::quote!{std::vec::Vec<#postgresql_json_type_ident_options_to_read_with_id_upper_camel_case>},
+                                &{
+                                    let check_not_unique_id_token_stream = {
+                                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("not unique {id_snake_case} {{}}"));
+                                        quote::quote!{
+                                            {
+                                                let mut acc = vec![];
+                                                for element in &value {
+                                                    if let Some(value) = &element.#id_snake_case {
+                                                        if acc.contains(&&value.value) {
+                                                            return Err(#postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
+                                                                error: format!(#format_handle_token_stream, value.value.0),
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            });
+                                                        }
+                                                        else {
+                                                            acc.push(&value.value);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    };
+                                    quote::quote!{
+                                        #check_not_unique_id_token_stream
+                                        Ok(Self(value))
+                                    }
+                                },
+                            ),
+                            SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => generate_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream(
+                                &quote::quote!{std::option::Option<std::vec::Vec<#postgresql_json_type_ident_options_to_read_with_id_upper_camel_case>>},
+                                &{
+                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("not unique {id_snake_case} {{}}"));
+                                    quote::quote!{
+                                        match value {
+                                            Some(value) => {
+                                                let mut acc = vec![];
+                                                for element in &value {
+                                                    if let Some(value) = &element.#id_snake_case {
+                                                        if acc.contains(&&value.value) {
+                                                            return Err(#postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case::#not_unique_id_upper_camel_case {
+                                                                error: format!(#format_handle_token_stream, value.value.0),
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            });
+                                                        }
+                                                        else {
+                                                            acc.push(&value.value);
+                                                        }
+                                                    }
+                                                }
+                                                Ok(Self(Some(value)))
+                                            },
+                                            None => Ok(Self(None))
+                                        }
+                                    }
+                                },
+                            ),
                         }
                     };
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_options_to_read_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_json_type_tokens_options_to_read_upper_camel_case,
+                        &impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_options_to_read_content_token_stream,
+                    );
+                    let postgresql_json_type_tokens_field_reader_token_stream = generate_postgresql_json_type_tokens_field_reader_token_stream(&match &postgresql_json_type {
+                        SupportedJsonValue::Object => PostgresqlJsonTypeFieldReader::ObjectIdent,
+                        SupportedJsonValue::StdOptionOptionObject => PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent,
+                        SupportedJsonValue::StdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent,
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent,
+                    });
+                    let postgresql_json_type_tokens_field_reader_upper_camel_case: &quote::ToTokens = match &postgresql_json_type {
+                        SupportedJsonValue::Object => naming::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdOptionOptionObject => naming::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdVecVecObjectWithId => naming::PostgresqlJsonTypeStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => naming::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+                    };
+                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_field_reader_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_vec_postgresql_json_type_tokens_field_reader_token_stream(&postgresql_json_type_tokens_field_reader_upper_camel_case);
+                    let postgresql_json_type_tokens_reader_upper_camel_case: &quote::ToTokens = match &postgresql_json_type {
+                        SupportedJsonValue::Object => naming::PostgresqlJsonTypeObjectSelfReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdOptionOptionObject => naming::PostgresqlJsonTypeStdOptionOptionObjectSelfReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdVecVecObjectWithId => naming::PostgresqlJsonTypeStdVecVecObjectWithIdSelfReaderUpperCamelCase::from_tokens(&ident),
+                        SupportedJsonValue::StdOptionOptionStdVecVecObjectWithId => naming::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectSelfReaderUpperCamelCase::from_tokens(&ident),
+                    };
+                    let postgresql_json_type_tokens_reader_token_stream = generate_tokens_reader_alias_token_stream(
+                        &postgresql_json_type_tokens_reader_upper_camel_case,
+                        &postgresql_json_type_tokens_options_to_read_upper_camel_case
+                    );
                     quote::quote!{
-                        #postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_token_stream
+                        #postgresql_json_type_tokens_options_to_read_token_stream
+                        #maybe_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_options_to_read_token_stream
+                        #postgresql_json_type_tokens_field_reader_token_stream
+                        #impl_serde_deserialize_for_postgresql_json_type_tokens_options_to_read_token_stream
+                        #impl_serde_deserialize_for_postgresql_json_type_tokens_field_reader_token_stream
+                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_field_reader_token_stream
+                        #postgresql_json_type_tokens_reader_token_stream
                     }
                 };
                 let update_token_stream = {
