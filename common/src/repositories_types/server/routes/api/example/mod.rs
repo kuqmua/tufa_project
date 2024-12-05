@@ -201,7 +201,6 @@ pub struct Example {
     // pub animal_sqlx_types_json_t_as_postgresql_json_b: AnimalSqlxTypesJsonAsPostgresqlJsonB,
     // pub animal_sqlx_types_json_t_as_postgresql_json_b_not_null: AnimalSqlxTypesJsonAsPostgresqlJsonBNotNull,
 }
-
 //todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(

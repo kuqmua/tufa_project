@@ -3684,7 +3684,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
-                    &quote::quote!{;},
+                    &quote::quote!{{
+                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                    }},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
@@ -4197,7 +4199,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
-                    &quote::quote!{;},
+                    &quote::quote!{{
+                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                    }},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
@@ -5680,7 +5684,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
-                    &quote::quote!{;},
+                    &quote::quote!{{
+                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                    }},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
@@ -6657,7 +6663,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
 
-                    &quote::quote!{;},
+                    &quote::quote!{{
+                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                    }},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
