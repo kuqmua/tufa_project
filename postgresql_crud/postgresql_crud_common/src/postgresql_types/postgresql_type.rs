@@ -29,14 +29,14 @@ pub trait PostgresqlTypeSelfWhereTraits<'a>: std::fmt::Debug
 
 pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelf: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + std::fmt::Display
-        + error_occurence_lib::ToStdStringString
-        + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        + crate::BindQuerySecond<'a>
+        // + Clone
+        // + PartialEq
+        // + serde::Serialize
+        // + serde::Deserialize<'a>
+        // + std::fmt::Display
+        // + error_occurence_lib::ToStdStringString
+        // + crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        // + crate::BindQuerySecond<'a>
         + crate::CreateTableQueryPart;
     type PostgresqlTypeSelfColumn: std::fmt::Debug
         + Clone
