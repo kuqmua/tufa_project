@@ -3236,15 +3236,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream
                     }
                 };
-                let postgresql_type_tokens_where_upper_camel_case = {
-                    let value: &dyn quote::ToTokens = match &postgresql_json_type {
-                        PostgresqlJsonType::Object => &naming::parameter::PostgresqlTypeObjectSelfWhereUpperCamelCase::from_tokens(&ident),
-                        PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlTypeStdOptionOptionObjectSelfWhereUpperCamelCase::from_tokens(&ident),
-                        PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlTypeStdVecVecObjectWithIdSelfWhereUpperCamelCase::from_tokens(&ident),
-                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlTypeStdOptionOptionStdVecVecObjectWithIdSelfWhereUpperCamelCase::from_tokens(&ident),
-                    };
-                    postgresql_json_variant.add_postfix(value)
-                };
+                let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_json_variant.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_where_token_stream = {
                     let postgresql_type_tokens_where_token_stream = {
                         quote::quote!{
