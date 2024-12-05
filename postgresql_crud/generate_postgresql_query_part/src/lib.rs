@@ -2845,7 +2845,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             postgresql_json_type: PostgresqlJsonType,
 
-            pub_struct_postgresql_type_tokens_declaration_token_stream: &dyn quote::ToTokens,
+            pub_struct_tokens_as_postgresql_json_declaration_token_stream: &dyn quote::ToTokens,
             std_fmt_display_for_tokens_tokens_stream: &dyn quote::ToTokens,
             to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
@@ -2963,65 +2963,65 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 serde::Serialize,
                                 serde::Deserialize,
                             )]
-                            pub struct #tokens_upper_camel_case #pub_struct_postgresql_type_tokens_declaration_token_stream
+                            pub struct #tokens_upper_camel_case #pub_struct_tokens_as_postgresql_json_declaration_token_stream
                         }
                     };
-                    let impl_std_fmt_display_for_tokens_token_stream = {
-                        quote::quote!{
-                            impl std::fmt::Display for #tokens_upper_camel_case {
-                                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    #std_fmt_display_for_tokens_tokens_stream
-                                }
-                            }
-                        }
-                    };
-                    let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = {
-                        quote::quote!{
-                            impl error_occurence_lib::ToStdStringString for #tokens_upper_camel_case {
-                                fn to_std_string_string(&self) -> std::string::String {
-                                    #to_std_string_string_for_tokens_token_stream
-                                }
-                            }
-                        }
-                    };
-                    let impl_postgresql_crud_bind_query_second_for_tokens_token_stream = {
-                        quote::quote!{
-                            impl<'a> postgresql_crud::BindQuerySecond<'a> for #tokens_upper_camel_case {
-                                fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-                                    #try_generate_bind_increments_for_tokens_token_stream
-                                }
-                                fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                    #bind_value_to_query_for_tokens_token_stream
-                                }
-                            }
-                        }
-                    };
-                    let impl_postgresql_crud_create_table_query_part_for_tokens_token_stream = {
-                        quote::quote!{
-                            impl postgresql_crud::CreateTableQueryPart for #tokens_upper_camel_case {
-                                fn create_table_query_part() -> impl std::fmt::Display {
-                                    #create_table_query_part_for_tokens_token_stream
-                                }
-                            }
-                        }
-                    };
-                    let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &tokens_upper_camel_case,
-                        &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
-                    );
-                    let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream = {
-                        quote::quote!{
-                            impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToCreateTraits<'_> for #tokens_upper_camel_case {}
-                        }
-                    };
+                    // let impl_std_fmt_display_for_tokens_token_stream = {
+                    //     quote::quote!{
+                    //         impl std::fmt::Display for #tokens_upper_camel_case {
+                    //             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    //                 #std_fmt_display_for_tokens_tokens_stream
+                    //             }
+                    //         }
+                    //     }
+                    // };
+                    // let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = {
+                    //     quote::quote!{
+                    //         impl error_occurence_lib::ToStdStringString for #tokens_upper_camel_case {
+                    //             fn to_std_string_string(&self) -> std::string::String {
+                    //                 #to_std_string_string_for_tokens_token_stream
+                    //             }
+                    //         }
+                    //     }
+                    // };
+                    // let impl_postgresql_crud_bind_query_second_for_tokens_token_stream = {
+                    //     quote::quote!{
+                    //         impl<'a> postgresql_crud::BindQuerySecond<'a> for #tokens_upper_camel_case {
+                    //             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                    //                 #try_generate_bind_increments_for_tokens_token_stream
+                    //             }
+                    //             fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    //                 #bind_value_to_query_for_tokens_token_stream
+                    //             }
+                    //         }
+                    //     }
+                    // };
+                    // let impl_postgresql_crud_create_table_query_part_for_tokens_token_stream = {
+                    //     quote::quote!{
+                    //         impl postgresql_crud::CreateTableQueryPart for #tokens_upper_camel_case {
+                    //             fn create_table_query_part() -> impl std::fmt::Display {
+                    //                 #create_table_query_part_for_tokens_token_stream
+                    //             }
+                    //         }
+                    //     }
+                    // };
+                    // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    //     &tokens_upper_camel_case,
+                    //     &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
+                    // );
+                    // let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream = {
+                    //     quote::quote!{
+                    //         impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToCreateTraits<'_> for #tokens_upper_camel_case {}
+                    //     }
+                    // };
                     quote::quote!{
                         #postgresql_type_tokens_token_stream
-                        #impl_std_fmt_display_for_tokens_token_stream
-                        #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
-                        #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
-                        #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
-                        #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
-                        #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream
+                        // #impl_std_fmt_display_for_tokens_token_stream
+                        // #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
+                        // #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
+                        // #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
+                        // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
+                        // #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream
                     }
                 };
                 let postgresql_type_tokens_column_upper_camel_case = {
@@ -3366,7 +3366,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                 &postgresql_json_type,
 
-                &pub_struct_postgresql_type_tokens_declaration_token_stream,
+                &pub_struct_tokens_as_postgresql_json_declaration_token_stream,
                 &std_fmt_display_for_tokens_tokens_stream,
                 &to_std_string_string_for_tokens_token_stream,
                 &try_generate_bind_increments_for_tokens_token_stream,
