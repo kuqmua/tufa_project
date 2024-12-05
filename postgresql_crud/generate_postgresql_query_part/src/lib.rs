@@ -82,6 +82,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     }
 
     enum PostgresqlJsonTypeFieldReader {
+        //todo why Ident variant here? maybe remove it?
         Ident,
         ObjectIdent,
         StdOptionOptionObjectIdent,
@@ -99,6 +100,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
         let std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>};
         let field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
         let content_token_stream = match &postgresql_json_type_field_reader {
+            //todo option (null) must be an read option too
             PostgresqlJsonTypeFieldReader::Ident |
             PostgresqlJsonTypeFieldReader::ObjectIdent |
             PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream);},
@@ -2667,7 +2669,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             };
                             let impl_postgresql_json_type_tokens_options_to_read_try_new_error_named_pub_fn_try_new_token_stream = {
                                 quote::quote!{
-                                    impl #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case {
+                                    impl #postgresql_json_type_tokens_options_to_read_upper_camel_case {
                                         pub fn try_new(value: #try_new_type_token_stream) -> Result<Self, #postgresql_json_type_tokens_options_to_read_try_new_error_named_upper_camel_case> {
                                             #content_token_stream
                                         }
@@ -3541,8 +3543,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         },
 
-                        &quote::quote!{#postgresql_json_type_self_to_create_snake_case.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case)},
-                        &quote::quote!{#postgresql_json_type_self_to_create_snake_case.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case)},
+                        &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#try_generate_postgresql_query_part_to_create_snake_case(#increment_snake_case)},
+                        &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case)},
                         &generate_generate_postgresql_query_part_to_read_content_token_stream(
                             false,
                             &generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value',{{acc}}))"))
@@ -3767,7 +3769,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))},
                         &quote::quote!{(pub std::option::Option<#postgresql_json_type_ident_options_to_read_without_id_upper_camel_case>);},
                         &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))},
-                        &quote::quote!{(Some(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))},
+                        //todo optioon(null) must also be a read value
+                        &quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
                         true,
                         &proc_macro2::TokenStream::new(),
                         &{
@@ -5757,7 +5760,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         &quote::quote!{(std::option::Option<std::vec::Vec<#object_with_id_ident_upper_camel_case>>);},
                         &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>>);},
                         &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))},
-                        &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>>);},
+                        &quote::quote!{(pub std::option::Option<std::vec::Vec<#postgresql_json_type_ident_options_to_read_with_id_upper_camel_case>>);},
                         &quote::quote!{(Some(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream]))},
                         &quote::quote!{
                             {
