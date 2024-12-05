@@ -3363,8 +3363,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                 }
             };
-            let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                PostgresqlJsonVariant::PostgresqlJson,
+            let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
+                PostgresqlJsonVariant::PostgresqlJsonbNotNull,
 
                 &postgresql_json_type,
 
@@ -3401,10 +3401,10 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_where_token_stream,
             );
             quote::quote!{
-                #postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
+                // ObjectAnimalAsPostgresqlJson
                 // ObjectAnimalAsPostgresqlJsonNotNull
                 // ObjectAnimalAsPostgresqlJsonb
-                // ObjectAnimalAsPostgresqlJsonNotNull
+                #postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream
             }
         };
         let std_option_option_object_ident_to_create_origin_upper_camel_case = naming::parameter::StdOptionOptionObjectSelfToCreateOriginUpperCamelCase::from_tokens(&ident);
