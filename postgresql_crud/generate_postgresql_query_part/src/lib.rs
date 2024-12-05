@@ -2959,32 +2959,32 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{
                             #[derive(
                                 Debug,
-                                // Clone,
-                                // PartialEq,
+                                Clone,
+                                PartialEq,
                                 // serde::Serialize,
                                 // serde::Deserialize,
                             )]
                             pub struct #tokens_upper_camel_case #pub_struct_tokens_as_postgresql_json_declaration_token_stream
                         }
                     };
-                    // let impl_std_fmt_display_for_tokens_token_stream = {
-                    //     quote::quote!{
-                    //         impl std::fmt::Display for #tokens_upper_camel_case {
-                    //             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    //                 #std_fmt_display_for_tokens_tokens_stream
-                    //             }
-                    //         }
-                    //     }
-                    // };
-                    // let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = {
-                    //     quote::quote!{
-                    //         impl error_occurence_lib::ToStdStringString for #tokens_upper_camel_case {
-                    //             fn to_std_string_string(&self) -> std::string::String {
-                    //                 #to_std_string_string_for_tokens_token_stream
-                    //             }
-                    //         }
-                    //     }
-                    // };
+                    let impl_std_fmt_display_for_tokens_token_stream = {
+                        quote::quote!{
+                            impl std::fmt::Display for #tokens_upper_camel_case {
+                                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                    #std_fmt_display_for_tokens_tokens_stream
+                                }
+                            }
+                        }
+                    };
+                    let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = {
+                        quote::quote!{
+                            impl error_occurence_lib::ToStdStringString for #tokens_upper_camel_case {
+                                fn to_std_string_string(&self) -> std::string::String {
+                                    #to_std_string_string_for_tokens_token_stream
+                                }
+                            }
+                        }
+                    };
                     // let impl_postgresql_crud_bind_query_second_for_tokens_token_stream = {
                     //     quote::quote!{
                     //         impl<'a> postgresql_crud::BindQuerySecond<'a> for #tokens_upper_camel_case {
@@ -3017,8 +3017,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     // };
                     quote::quote!{
                         #postgresql_type_tokens_token_stream
-                        // #impl_std_fmt_display_for_tokens_token_stream
-                        // #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
+                        #impl_std_fmt_display_for_tokens_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
                         // #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
                         #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
                         // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
