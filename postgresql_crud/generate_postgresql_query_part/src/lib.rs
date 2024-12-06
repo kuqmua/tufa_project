@@ -2963,6 +2963,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 // serde::Serialize,
                                 // serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #tokens_upper_camel_case #pub_struct_tokens_as_postgresql_json_declaration_token_stream
                         }
@@ -3041,6 +3042,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 serde::Serialize,
                                 serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #postgresql_type_tokens_column_upper_camel_case #pub_struct_postgresql_type_tokens_column_declaration_token_stream
                         }
@@ -3095,6 +3097,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 serde::Serialize,
                                 serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #postgresql_type_tokens_to_create_upper_camel_case #pub_struct_postgresql_type_tokens_to_create_declaration_token_stream
                         }
@@ -3149,6 +3152,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 serde::Serialize,
                                 serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #postgresql_type_tokens_to_read_upper_camel_case #pub_struct_postgresql_type_tokens_to_read_declaration_token_stream//(sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>);
                         }
@@ -3198,6 +3202,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 serde::Serialize,
                                 serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #postgresql_type_tokens_to_update_upper_camel_case #pub_struct_postgresql_type_tokens_to_update_declaration_token_stream
                         }
@@ -3246,6 +3251,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 PartialEq,
                                 serde::Serialize,
                                 serde::Deserialize,
+                                schemars::JsonSchema,
                             )]
                             pub struct #postgresql_type_tokens_where_upper_camel_case #pub_struct_postgresql_type_tokens_where_declaration_token_stream
                         }

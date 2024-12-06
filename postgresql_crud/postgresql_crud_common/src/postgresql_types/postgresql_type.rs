@@ -147,6 +147,12 @@ impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
         Self::create_table_query_part_handle(&BOOL)
     }
 }
+impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} BOOL NOT NULL")
+    }
+}
+
 // #[derive(
 //     Debug,
 //     Clone,
@@ -370,6 +376,11 @@ pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_types::
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn create_table_query_part() -> impl std::fmt::Display {
         Self::create_table_query_part_handle(&BIGSERIAL)
+    }
+}
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} BIGSERIAL NOT NULL{}", crate::maybe_primary_key(is_primary_key))
     }
 }
 //todo exception for offset and limit for now

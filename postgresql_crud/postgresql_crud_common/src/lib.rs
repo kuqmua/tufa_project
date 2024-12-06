@@ -8118,7 +8118,7 @@ pub trait BindQuery<'a> {
     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
 pub enum ConjunctiveOperator {
     Or,
     And,
@@ -8192,6 +8192,17 @@ pub trait GeneratePostgresqlQueryPartToRead {
 
 pub trait CreateTableQueryPart {
     fn create_table_query_part() -> impl std::fmt::Display;
+}
+
+pub trait CreateTableColumnQueryPart {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display;
+}
+pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+    if is_primary_key {
+        " PRIMARY KEY"
+    } else {
+        ""
+    }
 }
 
 pub trait BindQuerySecond<'a> {
