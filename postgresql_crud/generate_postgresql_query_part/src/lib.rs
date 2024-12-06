@@ -327,6 +327,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
     };
     let id_snake_case = naming::IdSnakeCase;
     let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id_snake_case);
+    
+    let ident_to_create_origin_upper_camel_case = naming::parameter::SelfToCreateOriginUpperCamelCase::from_tokens(&ident);
+
     let common_token_stream = {
         let create_token_stream = {
             let fields_declaration_token_stream = {
@@ -344,7 +347,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 });
                 quote::quote!{#(#value),*}
             };
-            let ident_to_create_origin_upper_camel_case = naming::parameter::SelfToCreateOriginUpperCamelCase::from_tokens(&ident);
             let ident_to_create_origin_token_stream = generate_supported_generics_template_struct_token_stream(
                 false,
                 &ident_to_create_origin_upper_camel_case,
@@ -3650,7 +3652,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::Object,
 
-                    &quote::quote!{;},
+                    &quote::quote!{(#ident_to_create_origin_upper_camel_case);},
                     &quote::quote!{write!(formatter, "{:?}", self)},
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
