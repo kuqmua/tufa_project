@@ -3002,14 +3002,9 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     // };
                     let impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream = {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}})")
+                            &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
                         );
                         quote::quote!{
-                            // impl postgresql_crud::CreateTableQueryPart for #tokens_upper_camel_case {
-                            //     fn create_table_query_part() -> impl std::fmt::Display {
-                            //         #create_table_query_part_for_tokens_token_stream
-                            //     }
-                            // }
                             impl postgresql_crud::CreateTableColumnQueryPart for #tokens_upper_camel_case {
                                 fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
                                     format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#tokens_upper_camel_case)).unwrap())
@@ -3017,7 +3012,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     };
-                    println!("{impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream}");
                     // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     //     &tokens_upper_camel_case,
                     //     &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
