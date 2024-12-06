@@ -1364,18 +1364,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let pool_snake_case = naming::PoolSnakeCase;
         let create_table_if_not_exists_double_quotes_token_stream = {
             let acc = {
-                let generate_format_handle_stringified = |ident: &syn::Ident, is_primary_key: std::primitive::bool|{
-                    let maybe_primary_key = if is_primary_key {
-                        " PRIMARY KEY"//todo maybe add screaming snake case add reuse PRIMARY KEY naming?
-                    }
-                    else {
-                        ""
-                    };
-                    format!("{} {{}}{maybe_primary_key},", &ident)
-                };
-                let mut acc = generate_format_handle_stringified(&primary_key_field_ident, true);
-                fields_without_primary_key.iter().for_each(|element| {
-                    acc.push_str(&generate_format_handle_stringified(&element.field_ident, false));
+                let mut acc = std::string::String::new();
+                fields.iter().for_each(|element| {
+                    acc.push_str(&"{},");
                 });
                 let _ = acc.pop();
                 acc
@@ -1383,12 +1374,21 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             generate_quotes::double_quotes_token_stream(&format!("CREATE TABLE IF NOT EXISTS {ident_snake_case_stringified} ({acc})"))
         };
         let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
-            let generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream = |value: &syn::Type|{
-                quote::quote!{<#value as postgresql_crud::CreateTableQueryPart>::create_table_query_part()}
+            let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool|{
+                let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key {
+                    &naming::TrueSnakeCase
+                }
+                else {
+                    &naming::FalseSnakeCase
+                };
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                quote::quote!{
+                    <#field_type as postgresql_crud::CreateTableColumnQueryPart>::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
+                }
             };
-            let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty)];
+            let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty, &primary_key_field.field_ident, true)];
             fields_without_primary_key.iter().for_each(|element|{
-                acc.push(generate_field_type_as_postgresql_crud_create_table_query_part_create_table_query_part_token_stream(&element.syn_field.ty));
+                acc.push(generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&element.syn_field.ty, &element.field_ident, false));
             });
             acc
         };
@@ -5378,7 +5378,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             #allow_methods_token_stream
             #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
-            // #create_table_if_not_exists_function_token_stream
+            #create_table_if_not_exists_function_token_stream
 
             // #[cfg(test)]
             // mod test_try_create_many {

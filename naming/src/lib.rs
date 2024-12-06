@@ -463,7 +463,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "json", "type", "object", "self", "field", "reader"],
     ["postgresql", "json", "type", "std", "option", "option", "object", "self", "field", "reader"],
     ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader"],
-    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader"]
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader"],
+    ["true"],
+    ["false"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

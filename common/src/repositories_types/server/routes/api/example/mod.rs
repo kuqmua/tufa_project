@@ -297,19 +297,6 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 // /////////////////////////////////////////
-pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
-    let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-    println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
-    let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(pool).await.unwrap();
-    let create_table_if_not_exists_query_stringified = format!(
-        "CREATE TABLE IF NOT EXISTS example ({},{},{})",
-        <postgresql_crud::postgresql_types::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::CreateTableColumnQueryPart>::create_table_column_query_part(&"std_primitive_i64_as_postgresql_big_serial_not_null", true),
-        <postgresql_crud::postgresql_types::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull as postgresql_crud::CreateTableColumnQueryPart>::create_table_column_query_part(&"std_primitive_bool_as_postgresql_bool_not_null", false),
-        <ObjectAnimalAsPostgresqlJsonbNotNull as postgresql_crud::CreateTableColumnQueryPart>::create_table_column_query_part(&"object_animal_as_postgresql_jsonb_not_null", false)
-    );
-    println!("{create_table_if_not_exists_query_stringified}");
-    let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(pool).await.unwrap();
-}
 impl postgresql_crud::CreateTableColumnQueryPart for ObjectAnimalAsPostgresqlJsonbNotNull {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} JSONB NOT NULL check (jsonb_matches_schema('{}', {column}))", serde_json::to_string(&schemars::schema_for!(ObjectAnimalAsPostgresqlJsonbNotNull)).unwrap())
