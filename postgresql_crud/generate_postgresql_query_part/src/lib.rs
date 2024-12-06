@@ -2854,7 +2854,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
             bind_value_to_query_for_tokens_token_stream: &dyn quote::ToTokens,
-            create_table_query_part_for_tokens_token_stream: &dyn quote::ToTokens,
+            create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
 
             pub_struct_postgresql_type_tokens_column_declaration_token_stream: &dyn quote::ToTokens,
@@ -2920,7 +2920,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
                 try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
                 bind_value_to_query_for_tokens_token_stream: &dyn quote::ToTokens,
-                create_table_query_part_for_tokens_token_stream: &dyn quote::ToTokens,
+                create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
                 std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
 
                 pub_struct_postgresql_type_tokens_column_declaration_token_stream: &dyn quote::ToTokens,
@@ -3000,15 +3000,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     //         }
                     //     }
                     // };
-                    let impl_postgresql_crud_create_table_query_part_for_tokens_token_stream = {
+                    let impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream = {
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                            &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}})")
+                        );
                         quote::quote!{
-                            impl postgresql_crud::CreateTableQueryPart for #tokens_upper_camel_case {
-                                fn create_table_query_part() -> impl std::fmt::Display {
-                                    #create_table_query_part_for_tokens_token_stream
+                            // impl postgresql_crud::CreateTableQueryPart for #tokens_upper_camel_case {
+                            //     fn create_table_query_part() -> impl std::fmt::Display {
+                            //         #create_table_query_part_for_tokens_token_stream
+                            //     }
+                            // }
+                            impl postgresql_crud::CreateTableColumnQueryPart for #tokens_upper_camel_case {
+                                fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+                                    format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#tokens_upper_camel_case)).unwrap())
                                 }
                             }
                         }
                     };
+                    println!("{impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream}");
                     // let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     //     &tokens_upper_camel_case,
                     //     &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream
@@ -3023,7 +3032,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_std_fmt_display_for_tokens_token_stream
                         #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
                         // #impl_postgresql_crud_bind_query_second_for_tokens_token_stream
-                        #impl_postgresql_crud_create_table_query_part_for_tokens_token_stream
+                        #impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream
                         // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream
                         // #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_tokens_token_stream
                     }
@@ -3331,7 +3340,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 &to_std_string_string_for_tokens_token_stream,
                 &try_generate_bind_increments_for_tokens_token_stream,
                 &bind_value_to_query_for_tokens_token_stream,
-                &create_table_query_part_for_tokens_token_stream,
+                &create_table_query_part_for_tokens_stringified,
                 &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream,
 
                 &pub_struct_postgresql_type_tokens_column_declaration_token_stream,
@@ -3657,7 +3666,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
-                    &quote::quote!{"JSONB"},
+                    &"JSONB NOT NULL",//todo refactor
                     &{
                         let fields_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element
@@ -4183,7 +4192,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
-                    &quote::quote!{"JSONB"},
+                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
                     },
@@ -5666,7 +5675,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
-                    &quote::quote!{"JSONB"},
+                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (vec![
                             #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -6645,7 +6654,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
-                    &quote::quote!{"JSONB"},
+                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (Some(vec![
                             #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream

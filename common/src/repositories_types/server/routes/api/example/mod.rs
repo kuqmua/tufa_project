@@ -297,8 +297,8 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 // /////////////////////////////////////////
-impl postgresql_crud::CreateTableColumnQueryPart for ObjectAnimalAsPostgresqlJsonbNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} JSONB NOT NULL check (jsonb_matches_schema('{}', {column}))", serde_json::to_string(&schemars::schema_for!(ObjectAnimalAsPostgresqlJsonbNotNull)).unwrap())
-    }
-}
+// impl postgresql_crud::CreateTableColumnQueryPart for ObjectAnimalAsPostgresqlJsonbNotNull {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} JSONB NOT NULL check (jsonb_matches_schema('{}', {column}))", serde_json::to_string(&schemars::schema_for!(ObjectAnimalAsPostgresqlJsonbNotNull)).unwrap())
+//     }
+// }
