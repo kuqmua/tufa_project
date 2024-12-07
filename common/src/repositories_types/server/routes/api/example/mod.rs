@@ -290,25 +290,26 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub object: ObjectDoggie,
+    // pub object: ObjectDoggie,
     // pub std_option_option_object: StdOptionOptionObjectDoggie,
 
     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 // /////////////////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    postgresql_crud::GeneratePostgresqlQueryPart
-)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
-    pub std_option_option_std_primitive_i8: postgresql_crud::json_types::StdOptionOptionStdPrimitiveI8,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     postgresql_crud::GeneratePostgresqlQueryPart
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Doggie {
+//     pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
+//     pub std_option_option_std_primitive_i8: postgresql_crud::json_types::StdOptionOptionStdPrimitiveI8,
+// }
+/////////////////////////////////
