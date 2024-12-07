@@ -3154,6 +3154,43 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     };
                     let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = {
+                        //todo remove .unwrap()
+                        // let try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream = match (&postgresql_type, &postgresql_json_type) {
+                        //     (PostgresqlType::Json, PostgresqlJsonType::Object) |
+                        //     (PostgresqlType::Jsonb, PostgresqlJsonType::Object)
+                        //     => quote::quote!{Ok(self.0.try_generate_postgresql_query_part_to_create(increment: &mut std::primitive::u64).unwrap())},
+                        //     (PostgresqlType::Json, PostgresqlJsonType::StdOptionOptionObject) |
+                        //     (PostgresqlType::Jsonb, PostgresqlJsonType::StdOptionOptionObject)
+                        //     => quote::quote!{todo!()},
+                        //     (PostgresqlType::Json, PostgresqlJsonType::StdVecVecObjectWithId) |
+                        //     (PostgresqlType::Jsonb, PostgresqlJsonType::StdVecVecObjectWithId)
+                        //     => quote::quote!{todo!()},
+                        //     (PostgresqlType::Json, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId) |
+                        //     (PostgresqlType::Jsonb, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId)
+                        //     => quote::quote!{todo!()},
+                            
+                        //     (PostgresqlType::JsonNotNull, PostgresqlJsonType::Object) |
+                        //     (PostgresqlType::JsonbNotNull, PostgresqlJsonType::Object)
+                        //     => quote::quote!{todo!()},
+                        //     (PostgresqlType::JsonNotNull, PostgresqlJsonType::StdOptionOptionObject) |
+                        //     (PostgresqlType::JsonbNotNull, PostgresqlJsonType::StdOptionOptionObject)
+                        //     => quote::quote!{todo!()},
+                        //     (PostgresqlType::JsonNotNull, PostgresqlJsonType::StdVecVecObjectWithId) |
+                        //     (PostgresqlType::JsonbNotNull, PostgresqlJsonType::StdVecVecObjectWithId)
+                        //     => quote::quote!{todo!()},
+                        //     (PostgresqlType::JsonNotNull, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId) |
+                        //     (PostgresqlType::JsonbNotNull, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId)
+                        //     => quote::quote!{todo!()},
+                        // };
+
+    // fn try_generate_postgresql_query_part_to_create(
+    //     postgresql_json_type_self_to_create: &Self::PostgresqlJsonTypeSelfToCreate<'_>,
+    //     increment: &mut std::primitive::u64
+    // ) -> Result<std::string::String, PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed>;
+    // fn bind_value_to_postgresql_query_part_to_create<'a>(
+    //     postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>,
+    //     query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    // ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
                         quote::quote!{
                             impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_type_tokens_to_create_upper_camel_case {
                                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
