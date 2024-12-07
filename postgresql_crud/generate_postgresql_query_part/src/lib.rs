@@ -2924,42 +2924,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     }
                 }
             }
-            let generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
-                postgresql_type: PostgresqlType,
-
-                postgresql_json_type: &PostgresqlJsonType,
-
-                pub_struct_postgresql_type_tokens_declaration_token_stream: &dyn quote::ToTokens,
-                std_fmt_display_for_tokens_tokens_stream: &dyn quote::ToTokens,
-                to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
-                try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
-                bind_value_to_query_for_tokens_token_stream: &dyn quote::ToTokens,
-                create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
-                std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
-
-                pub_struct_postgresql_type_tokens_column_declaration_token_stream: &dyn quote::ToTokens,
-                type_info_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
-                decode_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
-                all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
-
-                try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
-                bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
-                std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
-
-                pub_struct_postgresql_type_tokens_to_read_declaration_token_stream: &dyn quote::ToTokens,
-                decode_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
-                type_info_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
-
-                pub_struct_postgresql_type_tokens_to_update_declaration_token_stream: &dyn quote::ToTokens,
-                try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-                bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-                std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-
-                pub_struct_postgresql_type_tokens_where_declaration_token_stream: &dyn quote::ToTokens,
-                try_generate_bind_increments_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
-                bind_value_to_query_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
-                std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
-            |{
+            let generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |postgresql_type: PostgresqlType|{
                 let tokens_upper_camel_case = {
                     let value: &dyn quote::ToTokens = match &postgresql_json_type {
                         PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
@@ -3407,42 +3372,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                 }
             };
-            let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                PostgresqlType::JsonbNotNull,
-
-                &postgresql_json_type,
-
-                &pub_struct_tokens_as_postgresql_json_declaration_token_stream,
-                &std_fmt_display_for_tokens_tokens_stream,
-                &to_std_string_string_for_tokens_token_stream,
-                &try_generate_bind_increments_for_tokens_token_stream,
-                &bind_value_to_query_for_tokens_token_stream,
-                &create_table_query_part_for_tokens_stringified,
-                &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream,
-
-                &pub_struct_postgresql_type_tokens_column_declaration_token_stream,
-                &type_info_content_for_postgresql_type_tokens_column_token_stream,
-                &decode_content_for_postgresql_type_tokens_column_token_stream,
-                &all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream,
-
-                &try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream,
-                &bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream,
-                &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream,
-
-                &pub_struct_postgresql_type_tokens_to_read_declaration_token_stream,
-                &decode_content_for_postgresql_type_tokens_to_read_token_stream,
-                &type_info_content_for_postgresql_type_tokens_to_read_token_stream,
-
-                &pub_struct_postgresql_type_tokens_to_update_declaration_token_stream,
-                &try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream,
-                &bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream,
-                &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream,
-
-                &pub_struct_postgresql_type_tokens_where_declaration_token_stream,
-                &try_generate_bind_increments_content_for_postgresql_type_tokens_where_token_stream,
-                &bind_value_to_query_content_for_postgresql_type_tokens_where_token_stream,
-                &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_where_token_stream,
-            );
+            let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlType::JsonbNotNull);
             quote::quote!{
                 // ObjectAnimalAsPostgresqlJson
                 // ObjectAnimalAsPostgresqlJsonNotNull
