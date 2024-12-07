@@ -2881,8 +2881,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             decode_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
             all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
 
-            std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream: &dyn quote::ToTokens,
-
             pub_struct_postgresql_type_tokens_to_read_declaration_token_stream: &dyn quote::ToTokens,
             decode_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
             type_info_content_for_postgresql_type_tokens_to_read_token_stream: &dyn quote::ToTokens,
@@ -3174,6 +3172,19 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     };
                     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = {
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb
+                            => quote::quote!{Self(Some(
+                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            ))},
+
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull
+                            => quote::quote!{Self(
+                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            )},
+                        };
                         quote::quote!{
                             impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_to_create_upper_camel_case {
                                 #[inline]
@@ -3700,8 +3711,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
-                    &quote::quote!{todo!()},
-
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
@@ -4212,8 +4221,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
-
-                    &quote::quote!{todo!()},
 
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
@@ -5696,8 +5703,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
-                    &quote::quote!{todo!()},
-
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
@@ -6672,8 +6677,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
-
-                    &quote::quote!{todo!()},
 
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
