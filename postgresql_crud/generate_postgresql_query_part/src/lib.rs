@@ -3140,7 +3140,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 let ok_as_postgresql_json_type_token_stream = generate_ok_as_postgresql_json_type_token_stream(&value_snake_case);
                                 quote::quote!{
                                     match &self.0 {
-                                        Some(#value_snake_case) => Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(value, increment).unwrap()),
+                                        Some(#value_snake_case) => #ok_as_postgresql_json_type_token_stream,
                                         None => match increment.checked_add(1) {
                                             Some(#value_snake_case) => {
                                                 *increment = #value_snake_case;
@@ -3165,7 +3165,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             (PostgresqlType::JsonbNotNull, PostgresqlJsonType::StdVecVecObjectWithId) |
                             (PostgresqlType::JsonNotNull, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId) |
                             (PostgresqlType::JsonbNotNull, PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId)
-                            => quote::quote!{Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_query_part_to_create(&self.0, increment).unwrap())},
+                            => generate_ok_as_postgresql_json_type_token_stream(&quote::quote!{&self.0})
                         };
     // fn bind_value_to_postgresql_query_part_to_create<'a>(
     //     postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>,
