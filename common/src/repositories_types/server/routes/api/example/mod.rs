@@ -290,26 +290,48 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::json_types::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub object_doggie: ObjectDoggie,
+    // pub object_doggie: ObjectDoggie,
     // pub std_option_option_object: StdOptionOptionObjectDoggie,
 
     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 // /////////////////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    postgresql_crud::GeneratePostgresqlQueryPart
-)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
-    pub std_option_option_std_primitive_i8: postgresql_crud::json_types::StdOptionOptionStdPrimitiveI8,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     postgresql_crud::GeneratePostgresqlQueryPart
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Doggie {
+//     pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
+//     pub std_option_option_std_primitive_i8: postgresql_crud::json_types::StdOptionOptionStdPrimitiveI8,
+// }
 /////////////////////////////////
+//old
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone)]
+// pub enum JsongenericColumn {
+//     #[serde(rename(serialize = "std_primitive_bool_as_postgresql_bool_not_null", deserialize = "std_primitive_bool_as_postgresql_bool_not_null"))]
+//     StdPrimitiveBoolAsPostgresqlBoolNotNull,
+//     #[serde(rename(serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key", deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"))]
+//     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+//     #[serde(rename(serialize = "sqlx_types_json_t_as_postgresql_json_b_not_null", deserialize = "sqlx_types_json_t_as_postgresql_json_b_not_null"))]
+//     SqlxTypesJsonTAsPostgresqlJsonBNotNull { filter: std::vec::Vec<SomethingFieldToRead> },
+// }
+////////////////
+//new
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone)]
+// pub enum PostgresqlTypeExampleColumn {
+//     #[serde(rename(serialize = "std_primitive_bool_as_postgresql_bool_not_null", deserialize = "std_primitive_bool_as_postgresql_bool_not_null"))]
+//     StdPrimitiveBoolAsPostgresqlBoolNotNull(std::vec::Vec<postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullColumn>),
+//     #[serde(rename(serialize = "std_primitive_i64_as_postgresql_big_serial_not_null", deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null"))]
+//     StdPrimitiveI64AsPostgresqlBigSerialNotNull(std::vec::Vec<postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullColumn>),
+//     #[serde(rename(serialize = "object_animal_as_postgresql_jsonb_not_null", deserialize = "object_animal_as_postgresql_jsonb_not_null"))]
+//     ObjectAnimalAsPostgresqlJsonbNotNull(std::vec::Vec<PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullColumn>),
+// }
+
