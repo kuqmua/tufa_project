@@ -2877,7 +2877,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
 
             pub_struct_postgresql_type_tokens_column_declaration_token_stream: &dyn quote::ToTokens,
-            type_info_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
             decode_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
             all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
 
@@ -3046,6 +3045,15 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     };
                     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_column_token_stream = {
+                        let type_info_content_for_postgresql_type_tokens_column_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb
+                            => quote::quote!{<std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
+
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull
+                            => quote::quote!{<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
+                        };
                         quote::quote!{
                             impl sqlx::Type<sqlx::Postgres> for #postgresql_type_tokens_column_upper_camel_case {
                                 fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -3717,7 +3725,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
@@ -4227,7 +4234,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
 
                     &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
@@ -5709,7 +5715,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 
                     &quote::quote!{;},
                     &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
@@ -6683,7 +6688,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     },
 
                     &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
