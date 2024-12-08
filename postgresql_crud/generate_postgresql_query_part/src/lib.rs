@@ -3281,8 +3281,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 // pub struct StdVecVecObjectWithIdSomethingOptionsToRead(std::vec::Vec<SomethingOptionsToReadWithId>);
 // pub struct StdOptionOptionStdVecVecObjectWithIdSomethingOptionsToRead(std::option::Option<std::vec::Vec<SomethingOptionsToReadWithId>>);
 
-
-
 // pub struct PostgresqlJsonTypeObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
 // pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
 // pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalFieldReader {
@@ -3294,14 +3292,20 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
 //     pagination: postgresql_crud::Pagination,
 // }
 
-
 // pub struct PostgresqlJsonTypeObjectAnimalOptionsToRead(pub PostgresqlJsonTypeAnimalOptionsToReadWithoutId);
 // pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalOptionsToRead(pub std::option::Option<PostgresqlJsonTypeAnimalOptionsToReadWithoutId>);
 // pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionsToRead(std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>);
 // pub struct PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionsToRead(pub std::option::Option<std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>>);
 
+                        let pub_struct_postgresql_type_tokens_to_read_declaration_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb
+                            => quote::quote!{std::option::Option<#postgresql_json_type_tokens_field_reader_upper_camel_case>},
 
-
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull
+                            => quote::quote!{#postgresql_json_type_tokens_field_reader_upper_camel_case},
+                        };
                         quote::quote!{
                             #[derive(
                                 Debug,
@@ -3311,7 +3315,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                                 serde::Deserialize,
                                 schemars::JsonSchema,
                             )]
-                            pub struct #postgresql_type_tokens_to_read_upper_camel_case #pub_struct_postgresql_type_tokens_to_read_declaration_token_stream//(sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>);
+                            pub struct #postgresql_type_tokens_to_read_upper_camel_case(#pub_struct_postgresql_type_tokens_to_read_declaration_token_stream);
                         }
                     };
                     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream = {
