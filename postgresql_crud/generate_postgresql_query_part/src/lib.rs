@@ -3318,6 +3318,24 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             pub struct #postgresql_type_tokens_to_read_upper_camel_case(#pub_struct_postgresql_type_tokens_to_read_declaration_token_stream);
                         }
                     };
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream = {
+                        let type_info_content_for_postgresql_type_tokens_to_read_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb
+                            => quote::quote!{<std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
+
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull
+                            => quote::quote!{<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
+                        };
+                        quote::quote!{
+                            impl sqlx::Type<sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
+                                fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                                    #type_info_content_for_postgresql_type_tokens_to_read_token_stream
+                                }
+                            }
+                        }
+                    };
                     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream = {
                         quote::quote!{
                             impl sqlx::Decode<'_, sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
@@ -3331,16 +3349,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                             }
                         }
                     };
-                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream = {
-                        quote::quote!{
-                            impl sqlx::Type<sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
-                                fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                //    <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()
-                                    #type_info_content_for_postgresql_type_tokens_to_read_token_stream
-                                }
-                            }
-                        }
-                    };
                     let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream = {
                         quote::quote!{
                             impl postgresql_crud::postgresql_types::postgresql_type::PostgresqlTypeSelfToReadTraits<'_> for #postgresql_type_tokens_to_read_upper_camel_case {}
@@ -3348,8 +3356,8 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                     };
                     quote::quote!{
                         #postgresql_type_tokens_to_read_token_stream
-                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream
                         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_to_read_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream
                     }
                 };
