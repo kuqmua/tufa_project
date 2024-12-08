@@ -4292,8 +4292,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
-                #parameters_token_stream
-                #try_operation_route_logic_token_stream
+                // #parameters_token_stream
+                // #try_operation_route_logic_token_stream
                 #try_operation_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 #operation_payload_example_route_logic_token_stream
