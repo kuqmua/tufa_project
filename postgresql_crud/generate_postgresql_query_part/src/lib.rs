@@ -3263,6 +3263,45 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                 let postgresql_type_tokens_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_read_token_stream = {
                     let postgresql_type_tokens_to_read_token_stream = {
+// impl postgresql_crud::PostgresqlJsonType for 
+
+// pub struct ObjectSomethingFieldReader(std::vec::Vec<SomethingFieldToReadWithoutId>);
+// pub struct StdOptionOptionObjectSomethingFieldReader(std::vec::Vec<SomethingFieldToReadWithoutId>);
+// pub struct StdVecVecObjectWithIdSomethingFieldReader {
+//     field_vec: std::vec::Vec<SomethingFieldToReadWithId>,
+//     pagination: postgresql_crud::Pagination,
+// }
+// pub struct StdOptionOptionStdVecVecObjectWithIdSomethingFieldReader {
+//     field_vec: std::vec::Vec<SomethingFieldToReadWithId>,
+//     pagination: postgresql_crud::Pagination,
+// }
+
+// pub type ObjectSomethingOptionsToRead = SomethingOptionsToReadWithoutId;
+// pub struct StdOptionOptionObjectSomethingOptionsToRead(pub std::option::Option<SomethingOptionsToReadWithoutId>);
+// pub struct StdVecVecObjectWithIdSomethingOptionsToRead(std::vec::Vec<SomethingOptionsToReadWithId>);
+// pub struct StdOptionOptionStdVecVecObjectWithIdSomethingOptionsToRead(std::option::Option<std::vec::Vec<SomethingOptionsToReadWithId>>);
+
+
+
+// pub struct PostgresqlJsonTypeObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
+// pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
+// pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalFieldReader {
+//     field_vec: std::vec::Vec<AnimalFieldToReadWithId>,
+//     pagination: postgresql_crud::Pagination,
+// }
+// pub struct PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalFieldReader {
+//     field_vec: std::vec::Vec<AnimalFieldToReadWithId>,
+//     pagination: postgresql_crud::Pagination,
+// }
+
+
+// pub struct PostgresqlJsonTypeObjectAnimalOptionsToRead(pub PostgresqlJsonTypeAnimalOptionsToReadWithoutId);
+// pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalOptionsToRead(pub std::option::Option<PostgresqlJsonTypeAnimalOptionsToReadWithoutId>);
+// pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionsToRead(std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>);
+// pub struct PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionsToRead(pub std::option::Option<std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>>);
+
+
+
                         quote::quote!{
                             #[derive(
                                 Debug,
