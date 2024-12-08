@@ -2876,8 +2876,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
             create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
 
-            pub_struct_postgresql_type_tokens_column_declaration_token_stream: &dyn quote::ToTokens,
-            decode_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
             all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
 
             pub_struct_postgresql_type_tokens_to_read_declaration_token_stream: &dyn quote::ToTokens,
@@ -3063,6 +3061,25 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         }
                     };
                     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_tokens_column_token_stream = {
+                        let decode_content_for_postgresql_type_tokens_column_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb
+                            => quote::quote!{
+                                match <std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                    Ok(value) => Ok(Self(value.0)),
+                                    Err(error) => Err(error),
+                                }
+                            },
+
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull
+                            => quote::quote!{
+                                match <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                    Ok(value) => Ok(Self(value.0)),
+                                    Err(error) => Err(error),
+                                }
+                            },
+                        };
                         quote::quote!{
                             impl sqlx::Decode<'_, sqlx::Postgres> for #postgresql_type_tokens_column_upper_camel_case {
                                 fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
@@ -3723,8 +3740,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         quote::quote!{{#(#fields_token_stream),*}}
                     },
 
-                    &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
@@ -4233,8 +4248,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         (Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
                     },
 
-                    &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
@@ -5713,8 +5726,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ])
                     },
 
-                    &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
@@ -6687,8 +6698,6 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         ]))
                     },
 
-                    &quote::quote!{;},
-                    &quote::quote!{todo!()},
                     &quote::quote!{vec![]},
 
                     &quote::quote!{;},
