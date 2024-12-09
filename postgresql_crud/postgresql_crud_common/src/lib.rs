@@ -2,6 +2,7 @@ pub mod json_types;
 pub mod generate_postgresql_query_part;
 pub mod value;
 pub mod postgresql_type;
+pub mod postgresql_json_type;
 
 fn add_path(value: &str) -> std::string::String {
     format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
