@@ -1822,6 +1822,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     };
     let generate_postgresql_json_type_to_read_snake_case = naming::GeneratePostgresqlJsonTypeToReadSnakeCase;
     let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
+    let column_name_and_maybe_field_getter_handle_snake_case = naming::ColumnNameAndMaybeFieldGetterHandleSnakeCase;
     let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
     let postgresql_json_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
     //its for GeneratePostgresqlCrud
@@ -2501,7 +2502,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 proc_macro2::TokenStream::new()
             };
             let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}'")
+                &format!("{{{column_name_and_maybe_field_getter_handle_snake_case}}}'{{{field_ident_snake_case}}}'")
             );
             let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}")
@@ -2606,6 +2607,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             try_generate_postgresql_json_type_to_update_content_token_stream: &dyn quote::ToTokens,
             bind_value_to_postgresql_query_part_to_update_content_token_stream: &dyn quote::ToTokens,
         |{
+            // println!("{}", quote::quote!{#generate_postgresql_json_type_to_read_content_token_stream});
+            // println!("-----");
             let postgresql_json_type_tokens_token_stream = {
                 let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
                     PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
@@ -2858,6 +2861,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &try_generate_postgresql_json_type_to_update_content_token_stream,
                     &bind_value_to_postgresql_query_part_to_update_content_token_stream,
                 );
+                // println!(" {postgresql_json_type_token_stream}");
                 quote::quote!{
                     #tokens_token_stream
 
@@ -3266,6 +3270,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 };
                 let postgresql_type_tokens_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_read_token_stream = {
+                    let postgresql_json_type_tokens_options_to_read_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
+                        PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                        PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                        PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                    };
                     let postgresql_type_tokens_to_read_token_stream = {
 // impl postgresql_crud::PostgresqlJsonType for 
 
@@ -3304,11 +3314,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let pub_struct_postgresql_type_tokens_to_read_declaration_token_stream = match &postgresql_type {
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb
-                            => quote::quote!{std::option::Option<#postgresql_json_type_tokens_field_reader_upper_camel_case>},
+                            => quote::quote!{std::option::Option<#postgresql_json_type_tokens_options_to_read_upper_camel_case>},
 
                             PostgresqlType::JsonNotNull |
                             PostgresqlType::JsonbNotNull
-                            => quote::quote!{#postgresql_json_type_tokens_field_reader_upper_camel_case},
+                            => quote::quote!{#postgresql_json_type_tokens_options_to_read_upper_camel_case},
                         };
                         quote::quote!{
                             #[derive(
@@ -3326,11 +3336,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let type_info_content_for_postgresql_type_tokens_to_read_token_stream = match &postgresql_type {
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb
-                            => quote::quote!{<std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
+                            => quote::quote!{<std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_options_to_read_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
 
                             PostgresqlType::JsonNotNull |
                             PostgresqlType::JsonbNotNull
-                            => quote::quote!{<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
+                            => quote::quote!{<sqlx::types::Json<#postgresql_json_type_tokens_options_to_read_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
                         };
                         quote::quote!{
                             impl sqlx::Type<sqlx::Postgres> for #postgresql_type_tokens_to_read_upper_camel_case {
@@ -3345,7 +3355,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb
                             => quote::quote!{
-                                match <std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                match <std::option::Option<sqlx::types::Json<#postgresql_json_type_tokens_options_to_read_upper_camel_case>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
                                     Ok(value) => Ok(Self(value.0)),
                                     Err(error) => Err(error),
                                 }
@@ -3354,7 +3364,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlType::JsonNotNull |
                             PostgresqlType::JsonbNotNull
                             => quote::quote!{
-                                match <sqlx::types::Json<#postgresql_json_type_tokens_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                                match <sqlx::types::Json<#postgresql_json_type_tokens_options_to_read_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
                                     Ok(value) => Ok(Self(value.0)),
                                     Err(error) => Err(error),
                                 }
@@ -3499,7 +3509,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(
                                         &#postgresql_type_self_column_snake_case.0,
                                         &column,
-                                        &column,
+                                        // "",
+                                        // &column,
+                                        "",
                                         &column
                                     )
                                 )
@@ -3689,9 +3701,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         },
                         &quote::quote!{#postgresql_json_type_self_option_to_update_snake_case.#bind_value_to_postgresql_query_part_to_update_snake_case(#query_snake_case)},
                     );
+                    // println!("{impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream}");
                     quote::quote!{
                         // #object_ident_token_stream
-                        #impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream
+
+
+
+                        // #impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream
                     }
                 };
                 // let create_token_stream = {
@@ -4047,7 +4063,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &generate_generate_postgresql_json_type_to_read_content_token_stream(
                             false,
                             &generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{{acc}}) end)")
+                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', case when jsonb_typeof({{{column_name_and_maybe_field_getter_handle_snake_case}}}'{{{field_ident_snake_case}}}') = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{{acc}}) end)")
                             )
                         ),
                         &{
@@ -5323,7 +5339,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &generate_generate_postgresql_json_type_to_read_content_token_stream(
                             true,
                             &generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value',(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}})))")
+                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value',(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_handle_snake_case}}}'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}})))")
                             )
                         ),
                         &quote::quote!{
@@ -6266,7 +6282,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &generate_generate_postgresql_json_type_to_read_content_token_stream(
                             true,
                             &generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}') = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}}) end))")
+                                &format!("jsonb_build_object('{{{field_ident_snake_case}}}', jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_handle_snake_case}}}'{{{field_ident_snake_case}}}') = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_handle_snake_case}}}'{{{field_ident_snake_case}}}')) with ordinality where ordinality between {{start}} and {{end}}) end))")
                             )
                         ),
                         &{

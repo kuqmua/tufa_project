@@ -64,6 +64,12 @@ pub fn generate_postgresql_json_type_token_stream(
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream
             ) -> #std_string_string_token_stream {
+                let column_name_and_maybe_field_getter_handle = if column_name_and_maybe_field_getter.is_empty() {
+                    column_name_and_maybe_field_getter.to_string()
+                }
+                else {
+                    format!("{column_name_and_maybe_field_getter}->")
+                };
                 #generate_postgresql_json_type_to_read_token_stream
             }
             type #postgresql_json_type_self_option_to_update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;

@@ -657,6 +657,10 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream
     };
+    // if ident == "StdOptionOptionStdPrimitiveI8" {
+    //     println!("{generated}");
+    //     println!("-------");
+    // }
     generated.into()
 }
 
