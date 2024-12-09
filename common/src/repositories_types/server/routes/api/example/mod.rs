@@ -442,9 +442,18 @@ pub async fn try_read_one_route_logic(app_state: axum::extract::State<crate::rep
         let mut value = std::string::String::default();
         for element in &parameters.payload.select {
             value.push_str(&match element {
-                PostgresqlTypeExampleColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull(_) => "std_primitive_bool_as_postgresql_bool_not_null".to_string(),
-                PostgresqlTypeExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(_) => "std_primitive_i64_as_postgresql_big_serial_not_null".to_string(),
-                PostgresqlTypeExampleColumn::ObjectAnimalAsPostgresqlJsonbNotNull(_) => "object_animal_as_postgresql_jsonb_not_null".to_string(),
+                PostgresqlTypeExampleColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull(value) => 
+                //here
+<postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(value, "std_primitive_bool_as_postgresql_bool_not_null"),
+
+                PostgresqlTypeExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(value) => 
+<postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(value, "std_primitive_i64_as_postgresql_big_serial_not_null"),
+                
+                PostgresqlTypeExampleColumn::ObjectAnimalAsPostgresqlJsonbNotNull(value) => 
+<ObjectAnimalAsPostgresqlJsonbNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(value, "object_animal_as_postgresql_jsonb_not_null"),
+
+
+
             });
             value.push_str(",");
         }
