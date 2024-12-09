@@ -1045,10 +1045,16 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             //     }
             // };
             {
+                let field_type = &element.syn_field.ty;
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                quote::quote! {=> #field_ident_string_double_quotes_token_stream.to_string()}
+                quote::quote! {
+                    => <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(
+                        value,
+                        #field_ident_string_double_quotes_token_stream
+                    )
+                }
             };
-            quote::quote! {#postgresql_type_ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) #initialization_token_stream}
+            quote::quote! {#postgresql_type_ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
             {
@@ -4292,8 +4298,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         (
             quote::quote! {
-                // #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #parameters_token_stream
+                #try_operation_route_logic_token_stream
                 #try_operation_token_stream
                 #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
                 #operation_payload_example_route_logic_token_stream
