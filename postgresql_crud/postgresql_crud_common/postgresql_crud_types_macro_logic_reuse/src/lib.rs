@@ -1314,11 +1314,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_where_traits_upper_camel_case<'_> for #postgresql_type_ident_where_upper_camel_case {}
         }
     };
+    let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
+    let postgresql_type_self_column_query_part_token_stream = {
+        let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
+        quote::quote!{
+            fn postgresql_type_self_column_query_part(
+                #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
+                column: &std::primitive::str,
+            ) -> std::string::String {
+                column.to_string()
+            }
+        }
+    };
     let impl_postgresql_type_for_ident_token_stream = {
         let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;
         let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
-        let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
         let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
         let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
         let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
@@ -1327,6 +1338,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #ident {
                 type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                 type #postgresql_type_self_column_upper_camel_case = #postgresql_type_ident_column_upper_camel_case;
+                #postgresql_type_self_column_query_part_token_stream
                 type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_ident_to_create_upper_camel_case;
                 type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
                 type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;

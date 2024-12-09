@@ -27,6 +27,7 @@ pub trait PostgresqlTypeSelfWhereTraits<'a>: std::fmt::Debug
     + crate::BindQuerySecond<'a>
     + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement{}
 
+//maybe put analog\copy of BindQuerySecond inside this trait?
 pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelf: std::fmt::Debug
         // + Clone
@@ -43,8 +44,12 @@ pub trait PostgresqlType<'a> {
         + PartialEq
         + serde::Serialize
         + serde::Deserialize<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        ;
+        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    //maybe move it into own trait?
+    fn postgresql_type_self_column_query_part(
+        postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn,
+        column: &std::primitive::str,
+    ) -> std::string::String;
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;

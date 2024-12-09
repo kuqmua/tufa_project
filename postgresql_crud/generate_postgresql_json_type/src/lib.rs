@@ -2925,13 +2925,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 }
             }
+            let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
+                PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
+            };
             let generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |postgresql_type: PostgresqlType|{
-                let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
-                    PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
-                    PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
-                    PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
-                };
                 let tokens_as_postgresql_postfix_type_upper_camel_case = {
                     postgresql_type.add_postfix(tokens_upper_camel_case)
                 };
@@ -3487,10 +3487,30 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
                     let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
                     let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
+                    let postgresql_type_self_column_query_part_token_stream = {
+                        let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
+                        quote::quote!{
+                            fn postgresql_type_self_column_query_part(
+                                #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
+                                column: &std::primitive::str,
+                            ) -> std::string::String {
+                                format!(
+                                    "{} as {column}",
+                                    <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(
+                                        &#postgresql_type_self_column_snake_case.0,
+                                        &column,
+                                        &column,
+                                        &column
+                                    )
+                                )
+                            }
+                        }
+                    };
                     quote::quote!{
                         impl postgresql_crud::postgresql_type::postgresql_type_trait::#postgresql_type_upper_camel_case<'_> for #tokens_as_postgresql_postfix_type_upper_camel_case {
                             type #postgresql_type_self_upper_camel_case = #tokens_as_postgresql_postfix_type_upper_camel_case;
                             type #postgresql_type_self_column_upper_camel_case = #postgresql_type_tokens_column_upper_camel_case;
+                            #postgresql_type_self_column_query_part_token_stream
                             type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                             type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
                             type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
