@@ -1141,7 +1141,7 @@ impl PostgresqlJsonType for Uuid {
                 *increment = incr;
                 Ok(format!("${increment}"))
             }
-            None => Err(crate::json_types::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

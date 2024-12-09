@@ -1,0 +1,1 @@
+pub mod postgresql_json_type;

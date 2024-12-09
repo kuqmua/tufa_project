@@ -557,12 +557,12 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         }
     };
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-        &quote::quote!{crate::json_types::},
+        &quote::quote!{crate::postgresql_json_type::postgresql_json_type::},
         &ident,
         &postgresql_json_type_ident_to_create_upper_camel_case,
         &{
             let crate_json_types_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{
-                crate::json_types::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
+                crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
             };
             quote::quote!{
                 match increment.checked_add(1) {
