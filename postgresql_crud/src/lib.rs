@@ -538,8 +538,9 @@ pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
 
 pub use postgresql_crud_common::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 pub use postgresql_crud_common::GeneratePostgresqlJsonTypeToRead;
-pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed;
-pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamedWithSerializeDeserialize;
+pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType;
+pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed;
+pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamedWithSerializeDeserialize;
 pub use postgresql_crud_common::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 
 // pub use postgresql_crud_common::generate_postgresql_json_type::CheckIdExistsInJsonGeneric;
@@ -563,12 +564,9 @@ pub use postgresql_crud_common::generate_postgresql_json_type::Pagination;
 
 pub use postgresql_crud_common::generate_postgresql_json_type::wrap_into_jsonb_build_object;
 
-
 pub use postgresql_crud_common::ConjunctiveOperator;
 
 pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type;
-
-pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonType;
 
 ////////////
 pub use generate_postgresql_crud_second::GeneratePostgresqlCrudSecond;
