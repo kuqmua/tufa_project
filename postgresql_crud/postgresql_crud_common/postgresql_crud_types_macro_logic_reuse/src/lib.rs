@@ -977,7 +977,7 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
         let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
         quote::quote!{
-            impl #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
+            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
         }
     };
     let impl_postgresql_base_type_for_ident_token_stream = {
@@ -985,7 +985,7 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
         let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
         quote::quote! {
-            impl #postgresql_base_type_upper_camel_case<'_> for #ident {
+            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #ident {
                 type #postgresql_base_type_self_upper_camel_case = Self;
                 type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
             }
@@ -1032,7 +1032,7 @@ pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -
         let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
         let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
         quote::quote! {
-            impl #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
+            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
                 type #postgresql_base_type_self_upper_camel_case = Self;
             }
         }
