@@ -1953,7 +1953,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 value,
                                 #field_ident_double_quotes_token_stream,
                                 #column_name_and_maybe_field_getter_snake_case,
-                                #column_name_and_maybe_field_getter_for_error_message_snake_case
+                                #column_name_and_maybe_field_getter_for_error_message_snake_case,
+                                false,
                             )
                         }
                     });
@@ -2437,7 +2438,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         value,
                         #field_ident_double_quotes_token_stream,
                         #column_name_and_maybe_field_getter_token_stream,
-                        &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case
+                        &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
+                        false,
                     )
                 }
             };
@@ -2507,8 +2509,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}")
             );
-            quote::quote!{
+            let f = quote::quote!{
                 let mut acc = std::string::String::default();
+                let #column_name_and_maybe_field_getter_handle_snake_case = if column_name_and_maybe_field_getter.is_empty() {
+                    column_name_and_maybe_field_getter.to_string()
+                } else {
+                    format!("{column_name_and_maybe_field_getter}->")
+                };
                 let #column_name_and_maybe_field_getter_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_format_handle_token_stream);
                 let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
                 for element in &#postgresql_json_type_self_field_reader_snake_case.#self_field_vec_token_stream {
@@ -2524,7 +2531,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let _ = acc.pop();
                 #maybe_pagination_start_end_initialization_token_stream
                 format!(#format_handle_double_quotes_token_stream)
-            }
+            };
+            // println!("--------------------------");
+            // println!("{f}");
+            f
         };
         //
         let postgresql_json_type_object_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfToCreateUpperCamelCase::from_tokens(&ident);
@@ -3512,7 +3522,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         // "",
                                         // &column,
                                         "",
-                                        &column
+                                        &column,
+                                        true
                                     )
                                 )
                             }
@@ -3704,10 +3715,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     // println!("{impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream}");
                     quote::quote!{
                         // #object_ident_token_stream
-
-
-
-                        // #impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream
+                        #impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream
                     }
                 };
                 // let create_token_stream = {

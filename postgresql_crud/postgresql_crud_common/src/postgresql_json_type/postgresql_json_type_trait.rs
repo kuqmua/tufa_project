@@ -43,7 +43,8 @@ pub trait PostgresqlJsonType {
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
         //todo remove this coz its used properly now
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+        is_postgresql_type: std::primitive::bool,
     ) -> std::string::String;
     type PostgresqlJsonTypeSelfOptionToUpdate<'a>: std::fmt::Debug
         + Clone
