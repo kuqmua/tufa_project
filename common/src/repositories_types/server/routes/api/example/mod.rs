@@ -212,7 +212,7 @@ pub struct Example {
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    postgresql_crud::GeneratePostgresqlQueryPart
+    postgresql_crud::GeneratePostgresqlJsonType
 )] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -306,7 +306,7 @@ pub struct Animal {
 //     serde::Deserialize,
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
-//     postgresql_crud::GeneratePostgresqlQueryPart
+//     postgresql_crud::GeneratePostgresqlJsonType
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Doggie {
 //     pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,

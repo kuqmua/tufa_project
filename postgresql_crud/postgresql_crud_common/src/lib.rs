@@ -1,4 +1,4 @@
-pub mod generate_postgresql_query_part;
+pub mod generate_postgresql_json_type;
 pub mod value;
 pub mod postgresql_type;
 pub mod postgresql_json_type;
@@ -3978,7 +3978,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
     }
 }
 impl Default for TestNewType
-// crate::generate_postgresql_query_part::Something>
+// crate::generate_postgresql_json_type::Something>
 {
     fn default() -> Self {
         //todo unwraps
@@ -4124,26 +4124,26 @@ impl Default for TestNewType
             std_primitive_u8_handle,
         ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
-        // let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_query_part::Something {
-        //     std_string_string: generate_postgresql_query_part::StdStringString(std_string_string_handle),
-        //     std_vec_vec_std_primitive_bool: generate_postgresql_query_part::StdVecVecStdPrimitiveBool(vec![true, false]),
-        //     generic: generate_postgresql_query_part::Generic(crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        // let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(crate::generate_postgresql_json_type::Something {
+        //     std_string_string: generate_postgresql_json_type::StdStringString(std_string_string_handle),
+        //     std_vec_vec_std_primitive_bool: generate_postgresql_json_type::StdVecVecStdPrimitiveBool(vec![true, false]),
+        //     generic: generate_postgresql_json_type::Generic(crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     }),
-        //     std_option_option_generic: generate_postgresql_query_part::StdOptionOptionGeneric(Some(crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     std_option_option_generic: generate_postgresql_json_type::StdOptionOptionGeneric(Some(crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     })),
-        //     std_vec_vec_generic: generate_postgresql_query_part::StdVecVecGeneric(vec![crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     std_vec_vec_generic: generate_postgresql_json_type::StdVecVecGeneric(vec![crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     }]),
-        //     std_option_option_std_vec_vec_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecGeneric(Some(vec![crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     std_option_option_std_vec_vec_generic: generate_postgresql_json_type::StdOptionOptionStdVecVecGeneric(Some(vec![crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     }])),
-        //     std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdVecVecStdOptionOptionGeneric(vec![Some(crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     std_vec_vec_std_option_option_generic: generate_postgresql_json_type::StdVecVecStdOptionOptionGeneric(vec![Some(crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     })]),
-        //     std_option_option_std_vec_vec_std_option_option_generic: generate_postgresql_query_part::StdOptionOptionStdVecVecStdOptionOptionGeneric(Some(vec![Some(crate::generate_postgresql_query_part::Doggie {
-        //         std_string_string: generate_postgresql_query_part::StdStringString(std::string::String::from("gav"))
+        //     std_option_option_std_vec_vec_std_option_option_generic: generate_postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionGeneric(Some(vec![Some(crate::generate_postgresql_json_type::Doggie {
+        //         std_string_string: generate_postgresql_json_type::StdStringString(std::string::String::from("gav"))
         //     })])),
         // }));
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
@@ -4391,7 +4391,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgInterval {
@@ -4495,7 +4495,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -4598,7 +4598,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     }
 }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -4798,7 +4798,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoDat
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -4998,7 +4998,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoDat
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -5198,7 +5198,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffse
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -5398,7 +5398,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoNai
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -5598,7 +5598,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimi
     }
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -5798,7 +5798,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoNai
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -5998,7 +5998,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate 
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -6198,7 +6198,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesBigDecima
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -6398,7 +6398,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
@@ -6466,7 +6466,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
     }
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgMoney {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgMoney {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgMoney(::core::default::Default::default()))
@@ -6864,7 +6864,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgTimeTz {
     }
 }
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgTimeTz {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgTimeTz {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgTimeTz {
@@ -7027,7 +7027,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimePrimitiveDateTime {
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimePrimitiveDateTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimePrimitiveDateTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::time::PrimitiveDateTime::MIN)
@@ -7102,7 +7102,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
     }
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeOffsetDateTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeOffsetDateTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::time::OffsetDateTime::UNIX_EPOCH)
@@ -7294,7 +7294,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeDate {
 }
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeDate {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeDate {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::time::Date::MIN)
@@ -7486,7 +7486,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeTime {
 }
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeTime {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeTime {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::time::Time::MIDNIGHT)
@@ -7567,7 +7567,7 @@ impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesIpnetworkIpNetwork {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesIpnetworkIpNetwork {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, ::core::default::Default::default()).unwrap()))
@@ -7578,7 +7578,7 @@ impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionI
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdNetIpAddr {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdNetIpAddr {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED))
@@ -7805,14 +7805,14 @@ impl<'a, T: serde::Serialize + std::marker::Send + BindQuery<'a> + 'a> BindQuery
         query
     }
 }
-impl<T> crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesJson<T>
+impl<T> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesJson<T>
 where
-    T: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
+    T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::Json(
-            crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         ))
     }
 }
@@ -7857,14 +7857,14 @@ impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSq
         query
     }
 }
-impl<T> crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereSqlxTypesJson<T>
+impl<T> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereSqlxTypesJson<T>
 where
-    T: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
+    T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: ConjunctiveOperator::default(),
         }
     }
@@ -7943,14 +7943,14 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         query
     }
 }
-impl<T> crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionSqlxTypesJson<T>
+impl<T> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionSqlxTypesJson<T>
 where
-    T: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
+    T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(Some(sqlx::types::Json(
-            crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         )))
     }
 }
@@ -7995,14 +7995,14 @@ impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + 
         query
     }
 }
-impl<T> crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdOptionOptionSqlxTypesJson<T>
+impl<T> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for WhereStdOptionOptionSqlxTypesJson<T>
 where
-    T: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
+    T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement,
 {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            value: crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: ConjunctiveOperator::default(),
         }
     }
@@ -8104,11 +8104,11 @@ pub trait AsPostgresqlJsonB {}
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-//todo add another error variant instead for PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
-impl std::convert::From<crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed> for TryGenerateBindIncrementsErrorNamed {
-    fn from(value: crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed) -> Self {
+//todo add another error variant instead for PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+impl std::convert::From<crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed> for TryGenerateBindIncrementsErrorNamed {
+    fn from(value: crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed) -> Self {
         match value {
-            crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
+            crate::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
         }
     }
 }
@@ -8128,7 +8128,7 @@ impl std::default::Default for ConjunctiveOperator {
         Self::Or
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ConjunctiveOperator {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ConjunctiveOperator {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
@@ -8164,7 +8164,7 @@ impl Default for Order {
         Self::Asc
     }
 }
-impl crate::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Order {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Order {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
@@ -8184,8 +8184,8 @@ pub struct OrderBy<ColumnGeneric> {
     pub order: Option<Order>,
 }
 
-pub trait GeneratePostgresqlQueryPartToRead {
-    fn generate_postgresql_query_part_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
+pub trait GeneratePostgresqlJsonTypeToRead {
+    fn generate_postgresql_json_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
     where
         Self: Sized;
 }

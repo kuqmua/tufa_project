@@ -17,7 +17,7 @@ members = [
   "postgresql_crud",
   "postgresql_crud/generate_postgresql_crud",
   "postgresql_crud/generate_postgresql_crud_second",
-  "postgresql_crud/generate_postgresql_query_part",
+  "postgresql_crud/generate_postgresql_json_type",
   "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_common/postgresql_crud_macros_common",
   "postgresql_crud/postgresql_crud_common/postgresql_crud_types_macro_logic_reuse",

@@ -534,34 +534,34 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic: app_state::GetSourcePlaceTy
 pub use naming::CommitSnakeCase;
 pub use naming::CommitUpperCamelCase;
 
-pub use generate_postgresql_query_part::GeneratePostgresqlQueryPart;
+pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-pub use postgresql_crud_common::GeneratePostgresqlQueryPartToRead;
-pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed;
-pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamedWithSerializeDeserialize;
-pub use postgresql_crud_common::generate_postgresql_query_part::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+pub use postgresql_crud_common::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+pub use postgresql_crud_common::GeneratePostgresqlJsonTypeToRead;
+pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed;
+pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamedWithSerializeDeserialize;
+pub use postgresql_crud_common::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonGeneric;
-// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionGeneric;
+// pub use postgresql_crud_common::generate_postgresql_json_type::CheckIdExistsInJsonGeneric;
+// pub use postgresql_crud_common::generate_postgresql_json_type::CheckIdExistsInJsonStdOptionOptionGeneric;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId;
-// pub use postgresql_crud_common::generate_postgresql_query_part::CheckIdExistsInJsonStdVecVecGenericWithId;
+// pub use postgresql_crud_common::generate_postgresql_json_type::CheckIdExistsInJsonStdOptionOptionStdVecVecGenericWithId;
+// pub use postgresql_crud_common::generate_postgresql_json_type::CheckIdExistsInJsonStdVecVecGenericWithId;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed;
-// pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamedWithSerializeDeserialize;
-// pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed;
-// pub use postgresql_crud_common::generate_postgresql_query_part::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamedWithSerializeDeserialize;
+// pub use postgresql_crud_common::generate_postgresql_json_type::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamed;
+// pub use postgresql_crud_common::generate_postgresql_json_type::TryGenerateJsonArrayElementCreateBindIncrementsErrorNamedWithSerializeDeserialize;
+// pub use postgresql_crud_common::generate_postgresql_json_type::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamed;
+// pub use postgresql_crud_common::generate_postgresql_json_type::TryGenerateJsonArrayElementDeleteBindIncrementsErrorNamedWithSerializeDeserialize;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementBindQuery;
+// pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementBindQuery;
 
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementUpdateBindQuery;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementDeleteBindQuery;
-// pub use postgresql_crud_common::generate_postgresql_query_part::JsonArrayElementCreateBindQuery;
+// pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementUpdateBindQuery;
+// pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementDeleteBindQuery;
+// pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementCreateBindQuery;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::Pagination;
+pub use postgresql_crud_common::generate_postgresql_json_type::Pagination;
 
-pub use postgresql_crud_common::generate_postgresql_query_part::wrap_into_jsonb_build_object;
+pub use postgresql_crud_common::generate_postgresql_json_type::wrap_into_jsonb_build_object;
 
 
 pub use postgresql_crud_common::ConjunctiveOperator;

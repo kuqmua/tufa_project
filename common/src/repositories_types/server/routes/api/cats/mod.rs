@@ -221,7 +221,7 @@ pub struct Jsongeneric {
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
 //     //
-//     postgresql_crud::GeneratePostgresqlQueryPart
+//     postgresql_crud::GeneratePostgresqlJsonType
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Something {
 //     // pub id: postgresql_crud::json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -317,7 +317,7 @@ pub struct Jsongeneric {
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
 //     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
+//     postgresql_crud::GeneratePostgresqlJsonType,
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Doggie {
 //     pub std_primitive_i8: postgresql_crud::json_types::StdPrimitiveI8,
@@ -341,7 +341,7 @@ pub struct Jsongeneric {
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
 //     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
+//     postgresql_crud::GeneratePostgresqlJsonType,
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Cat {
 //     // pub id: postgresql_crud::json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -366,7 +366,7 @@ pub struct Jsongeneric {
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
 //     //
-//     postgresql_crud::GeneratePostgresqlQueryPart,
+//     postgresql_crud::GeneratePostgresqlJsonType,
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Bird {
 //     // pub id: postgresql_crud::json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -385,7 +385,7 @@ pub struct Jsongeneric {
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
 //     //
-//     // postgresql_crud::GeneratePostgresqlQueryPart,
+//     // postgresql_crud::GeneratePostgresqlJsonType,
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Mouse {
 //     // pub id: postgresql_crud::json_types::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -664,7 +664,7 @@ fn test_default_but_std_option_option_is_always_some_and_std_vec_vec_always_cont
 //             // }
 
 //             query.push_str("sqlx_types_json_t_as_postgresql_json_b_not_null = ");
-//             match value.value.0.0.try_generate_postgresql_query_part_to_update(
+//             match value.value.0.0.try_generate_postgresql_json_type_to_update(
 //                 "sqlx_types_json_t_as_postgresql_json_b_not_null",
 //                 "sqlx_types_json_t_as_postgresql_json_b_not_null", //sqlx_types_json_t_as_postgresql_json_b_not_null->'std_vec_vec_object'->0->'object'
 //                 "",                                                //{std_vec_vec_object,0}
