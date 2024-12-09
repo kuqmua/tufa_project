@@ -2664,6 +2664,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         impl_serde_deserialize_macro_for_postgresql_json_type_tokens_options_to_read,
                         &pub_struct_postgresql_json_type_tokens_options_to_read_declaration_token_stream,
                     );
+                    // println!("{postgresql_json_type_tokens_options_to_read_token_stream}");
                     //todo maybe all impl must be try_new ?
                     let maybe_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream = {
                         let generate_impl_try_new_for_postgresql_json_type_tokens_options_to_read_token_stream = |
@@ -2815,6 +2816,13 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #postgresql_json_type_tokens_reader_token_stream
                     }
                 };
+                // if ident == "Animal" {
+                //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+                //         "read_token_stream",
+                //         &read_token_stream,
+                //     );
+                // }
+
                 // let update_token_stream = {
                 //     quote::quote!{
                         
@@ -3372,6 +3380,7 @@ pub fn generate_postgresql_query_part(input: proc_macro::TokenStream) -> proc_ma
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_read_traits_for_postgresql_type_tokens_to_read_token_stream
                     }
                 };
+                // println!("{postgresql_type_tokens_to_read_token_stream}");
                 let postgresql_type_tokens_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_update_token_stream = {
                     let postgresql_type_tokens_to_update_token_stream = {

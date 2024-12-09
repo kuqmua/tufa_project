@@ -557,12 +557,12 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
         }
     };
     let impl_crate_generate_postgresql_query_part_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-        &quote::quote!{crate::generate_postgresql_query_part::},
+        &quote::quote!{crate::json_types::},
         &ident,
         &postgresql_json_type_ident_to_create_upper_camel_case,
         &{
-            let crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{
-                crate::generate_postgresql_query_part::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
+            let crate_json_types_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream = quote::quote!{
+                crate::json_types::PostgresqlJsonTypeTryGeneratePostgresqlQueryPartToCreateErrorNamed
             };
             quote::quote!{
                 match increment.checked_add(1) {
@@ -570,7 +570,7 @@ fn generate_impl_postgresql_json_type_token_stream(input: proc_macro::TokenStrea
                         *increment = incr;
                         Ok(format!("${increment}"))
                     }
-                    None => Err(#crate_generate_postgresql_query_part_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream::#checked_add_upper_camel_case {
+                    None => Err(#crate_json_types_postgresql_json_type_try_generate_postgresql_query_part_to_create_error_named_token_stream::#checked_add_upper_camel_case {
                         code_occurence: error_occurence_lib::code_occurence!()
                     }),
                 }
