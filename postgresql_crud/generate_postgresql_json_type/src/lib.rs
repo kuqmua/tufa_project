@@ -2936,11 +2936,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
         //GeneratePostgresqlCrudSecond integration
-        let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
-            postgresql_json_type: PostgresqlJsonType,
-
-            pub_struct_postgresql_type_tokens_where_declaration_token_stream: &dyn quote::ToTokens,
-        |{
+        let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |postgresql_json_type: PostgresqlJsonType|{
             enum PostgresqlType {
                 Json,
                 JsonNotNull,
@@ -3501,6 +3497,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_where_token_stream = {
                     let postgresql_type_tokens_where_token_stream = {
+                        let conjective_operator_struct_declaration_token_stream = quote::quote!{{
+                            conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                        }};
+                        let pub_struct_postgresql_type_tokens_where_declaration_token_stream = match &postgresql_json_type {
+                            PostgresqlJsonType::Object => &conjective_operator_struct_declaration_token_stream,
+                            PostgresqlJsonType::StdOptionOptionObject => &conjective_operator_struct_declaration_token_stream,
+                            PostgresqlJsonType::StdVecVecObjectWithId => &conjective_operator_struct_declaration_token_stream,
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &conjective_operator_struct_declaration_token_stream,
+                        };
                         quote::quote!{
                             #[derive(
                                 Debug,
@@ -3911,13 +3916,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 //         #postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_with_serialize_deserialize_alias_token_stream
                 //     }
                 // };
-                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                    PostgresqlJsonType::Object,
-
-                    &quote::quote!{{
-                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
-                    }},
-                );
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlJsonType::Object);
                 quote::quote!{
                     #object_ident_token_stream
 
@@ -4390,13 +4389,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 //         #postgresql_json_type_std_option_option_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
                 //     }
                 // };
-                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                    PostgresqlJsonType::StdOptionOptionObject,
-
-                    &quote::quote!{{
-                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
-                    }},
-                );
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlJsonType::StdOptionOptionObject);
                 quote::quote!{
                     #std_option_option_object_ident_token_stream
 
@@ -5837,13 +5830,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 //         #postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
                 //     }
                 // };
-                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                    PostgresqlJsonType::StdVecVecObjectWithId,
-
-                    &quote::quote!{{
-                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
-                    }},
-                );
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlJsonType::StdVecVecObjectWithId);
                 quote::quote!{
                     #std_vec_vec_object_with_id_ident_token_stream
 
@@ -6778,13 +6765,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 //         #postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
                 //     }
                 // };
-                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
-
-                    &quote::quote!{{
-                        conjunctive_operator: postgresql_crud::ConjunctiveOperator,
-                    }},
-                );
+                let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId);
                 quote::quote!{
                     #std_option_option_std_vec_vec_object_with_id_ident_token_stream
 
