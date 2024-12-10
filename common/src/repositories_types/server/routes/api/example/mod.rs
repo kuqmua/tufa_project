@@ -197,7 +197,9 @@ pub struct Example {
     // pub sqlx_types_bit_vec_as_postgresql_var_bit_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarBitNotNull,
 
     pub object_animal_as_postgresql_jsonb_not_null: ObjectAnimalAsPostgresqlJsonbNotNull,
-    // pub std_option_option_object_animal_as_postgresql_jsonb_not_null: StdOptionOptionObjectAnimalAsPostgresqlJsonbNotNull,
+    pub std_option_option_object_animal_as_postgresql_jsonb_not_null: StdOptionOptionObjectAnimalAsPostgresqlJsonbNotNull,
+    pub std_vec_vec_object_with_id_animal_as_postgresql_jsonb_not_null: StdVecVecObjectWithIdAnimalAsPostgresqlJsonbNotNull,
+    pub std_option_option_std_vec_vec_object_with_id_animal_as_postgresql_jsonb_not_null: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonbNotNull,
     // pub animal_sqlx_types_json_t_as_postgresql_json_not_null: AnimalSqlxTypesJsonAsPostgresqlJsonNotNull,
     // pub animal_sqlx_types_json_t_as_postgresql_json_b: AnimalSqlxTypesJsonAsPostgresqlJsonB,
     // pub animal_sqlx_types_json_t_as_postgresql_json_b_not_null: AnimalSqlxTypesJsonAsPostgresqlJsonBNotNull,
