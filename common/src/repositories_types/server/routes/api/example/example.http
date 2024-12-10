@@ -41,7 +41,19 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "std_primitive_bool_as_postgresql_bool_not_null": false,
     "object_animal_as_postgresql_jsonb_not_null": {
       "std_primitive_i8": 0,
-      "std_option_option_std_primitive_i8": 0
+      "std_option_option_std_primitive_i8": 0,
+      "std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ]
     }
   }
 ]
@@ -62,7 +74,19 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
   "std_primitive_bool_as_postgresql_bool_not_null": false,
   "object_animal_as_postgresql_jsonb_not_null": {
     "std_primitive_i8": 0,
-    "std_option_option_std_primitive_i8": 0
+    "std_option_option_std_primitive_i8": 0,
+    "std_vec_vec_std_primitive_i8": [
+      0
+    ],
+    "std_option_option_std_vec_vec_std_primitive_i8": [
+      0
+    ],
+    "std_vec_vec_std_option_option_std_primitive_i8": [
+      0
+    ],
+    "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+      0
+    ]
   }
 }
 
@@ -134,6 +158,38 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         },
         {
           "std_option_option_std_primitive_i8": {}
+        },
+        {
+          "std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
         }
       ]
     }
