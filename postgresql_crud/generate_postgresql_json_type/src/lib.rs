@@ -3303,40 +3303,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
                     };
                     let postgresql_type_tokens_to_read_token_stream = {
-// impl postgresql_crud::PostgresqlJsonType for 
-
-// pub struct ObjectSomethingFieldReader(std::vec::Vec<SomethingFieldToReadWithoutId>);
-// pub struct StdOptionOptionObjectSomethingFieldReader(std::vec::Vec<SomethingFieldToReadWithoutId>);
-// pub struct StdVecVecObjectWithIdSomethingFieldReader {
-//     field_vec: std::vec::Vec<SomethingFieldToReadWithId>,
-//     pagination: postgresql_crud::Pagination,
-// }
-// pub struct StdOptionOptionStdVecVecObjectWithIdSomethingFieldReader {
-//     field_vec: std::vec::Vec<SomethingFieldToReadWithId>,
-//     pagination: postgresql_crud::Pagination,
-// }
-
-// pub type ObjectSomethingOptionsToRead = SomethingOptionsToReadWithoutId;
-// pub struct StdOptionOptionObjectSomethingOptionsToRead(pub std::option::Option<SomethingOptionsToReadWithoutId>);
-// pub struct StdVecVecObjectWithIdSomethingOptionsToRead(std::vec::Vec<SomethingOptionsToReadWithId>);
-// pub struct StdOptionOptionStdVecVecObjectWithIdSomethingOptionsToRead(std::option::Option<std::vec::Vec<SomethingOptionsToReadWithId>>);
-
-// pub struct PostgresqlJsonTypeObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
-// pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalFieldReader(std::vec::Vec<AnimalFieldToReadWithoutId>);
-// pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalFieldReader {
-//     field_vec: std::vec::Vec<AnimalFieldToReadWithId>,
-//     pagination: postgresql_crud::Pagination,
-// }
-// pub struct PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalFieldReader {
-//     field_vec: std::vec::Vec<AnimalFieldToReadWithId>,
-//     pagination: postgresql_crud::Pagination,
-// }
-
-// pub struct PostgresqlJsonTypeObjectAnimalOptionsToRead(pub PostgresqlJsonTypeAnimalOptionsToReadWithoutId);
-// pub struct PostgresqlJsonTypeStdOptionOptionObjectAnimalOptionsToRead(pub std::option::Option<PostgresqlJsonTypeAnimalOptionsToReadWithoutId>);
-// pub struct PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionsToRead(std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>);
-// pub struct PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionsToRead(pub std::option::Option<std::vec::Vec<PostgresqlJsonTypeAnimalOptionsToReadWithId>>);
-
                         let pub_struct_postgresql_type_tokens_to_read_declaration_token_stream = match &postgresql_type {
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb
@@ -3420,19 +3386,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let postgresql_type_tokens_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_update_token_stream = {
                     let postgresql_type_tokens_to_update_token_stream = {
-                        //
-                        // PostgresqlJsonTypeObjectAnimalOptionToUpdate
-                        // PostgresqlJsonTypeStdOptionOptionObjectAnimalOptionToUpdate
-                        // PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionToUpdate
-                        // PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionToUpdate
-                        //
-                        // let postgresql_json_type_tokens_option_to_update_upper_camel_case
-                        let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = match &postgresql_json_type {
-                            //todo
-                            PostgresqlJsonType::Object => quote::quote!{;},
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{;},
-                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{;},
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{;},
+                        let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = {
+                            let postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type);
+                            quote::quote!{(#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream);}
                         };
                         quote::quote!{
                             #[derive(
