@@ -2555,20 +2555,24 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else {acc_format_handle} end"),
                             wrap_into_jsonb_build_object_field_ident(&{
                                 let jsonb_build_object_value_null = wrap_into_jsonb_build_object_value(&null_snake_case);
-                                format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {jsonb_build_object_value_null} else jsonb_build_object('value',{{acc}}) end")
+                                format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {jsonb_build_object_value_null} else {jsonb_build_object_value_acc_format_handle} end")
                             })
                         )
                     },
                     PostgresqlJsonType::StdVecVecObjectWithId => {
+                        let format_handle = format!("(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}})");
                         (
-                            format!("(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}})"),
-                            wrap_into_jsonb_build_object_field_ident(&format!("jsonb_build_object('value',(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}))"))
+                            format_handle.clone(),
+                            wrap_into_jsonb_build_object_field_ident(&wrap_into_jsonb_build_object_value(&format_handle))
                         )
                     },
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
+                        let format_handle = format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else (select jsonb_agg({acc_format_handle}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}) end");
                         (
-                            format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}) end"),
-                            wrap_into_jsonb_build_object_field_ident(&format!("jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then null else (select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}) end)"))
+                            format_handle.clone(),
+                            wrap_into_jsonb_build_object_field_ident(&
+                                wrap_into_jsonb_build_object_value(&format_handle)
+                            )
                         )
                     },
                 }
