@@ -2421,7 +2421,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             StdVecVecObjectWithId,
             StdOptionOptionStdVecVecObjectWithId,
         }
-        let generate_postgresql_json_type_to_create_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
+        let generate_postgresql_json_type_tokens_to_create_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
             let value: &dyn quote::ToTokens = match &postgresql_json_type {
                 PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfToCreateUpperCamelCase::from_tokens(&ident),
                 PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfToCreateUpperCamelCase::from_tokens(&ident),
@@ -2430,7 +2430,28 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{#value}
         };
-        let generate_generate_postgresql_json_type_to_read_content_token_stream = |postgresql_json_type: PostgresqlJsonType|{
+        //
+        // let generate_postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
+        //     let value: &dyn quote::ToTokens = match &postgresql_json_type {
+        //         PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_display(&ident),
+        //         PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+        //         PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+        //         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+        //     };
+        //     quote::quote!{#value}
+        // };
+        //
+        let generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
+            let value: &dyn quote::ToTokens = match &postgresql_json_type {
+                PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
+                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
+            };
+            quote::quote!{#value}
+        };
+
+        let generate_generate_postgresql_json_type_to_read_content_token_stream = |postgresql_json_type: &PostgresqlJsonType|{
             let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
             let generate_acc_push_str_variant_logic_token_stream = |
                 variant_name_token_stream: &dyn quote::ToTokens,
@@ -2602,11 +2623,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
 
-        let postgresql_json_type_object_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfToCreateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_object_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfToCreateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_vec_vec_object_with_id_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfToCreateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfToCreateUpperCamelCase::from_tokens(&ident);
-
         let postgresql_json_type_object_ident_field_reader_upper_camel_case_token_stream = naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_display(&ident);
         let postgresql_json_type_std_option_option_object_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident);
@@ -2616,11 +2632,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let postgresql_json_type_std_option_option_object_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
-
-        let postgresql_json_type_object_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_object_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
 
         let postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_std_option_option_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -2645,7 +2656,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             )
         };
         let generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
-            postgresql_json_type: PostgresqlJsonType,
+            postgresql_json_type: &PostgresqlJsonType,
 
             pub_struct_tokens_declaration_token_stream: &dyn quote::ToTokens,
             pub_struct_postgresql_json_type_tokens_to_create_declaration_token_stream: &dyn quote::ToTokens,
@@ -2692,7 +2703,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 };
                 //here
                 // println!("{tokens_token_stream}");
-                let postgresql_json_type_tokens_to_create_upper_camel_case = generate_postgresql_json_type_to_create_token_stream(&postgresql_json_type);
+                let postgresql_json_type_tokens_to_create_upper_camel_case = generate_postgresql_json_type_tokens_to_create_upper_camel_case_token_stream(&postgresql_json_type);
                 let create_token_stream = {
                     let postgresql_json_type_tokens_to_create_token_stream = generate_supported_generics_template_struct_token_stream(
                         true,
@@ -2899,15 +2910,18 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &postgresql_json_type_tokens_field_reader_upper_camel_case,
                     &postgresql_json_type_tokens_options_to_read_upper_camel_case,
                     &generate_postgresql_json_type_to_read_content_token_stream,
-                    &{
-                        let postgresql_json_type_tokens_ident_option_to_update_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
-                            PostgresqlJsonType::Object => &postgresql_json_type_object_ident_option_to_update_upper_camel_case,
-                            PostgresqlJsonType::StdOptionOptionObject => &postgresql_json_type_std_option_option_object_ident_option_to_update_upper_camel_case,
-                            PostgresqlJsonType::StdVecVecObjectWithId => &postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
-                        };
-                        postgresql_json_type_tokens_ident_option_to_update_token_stream
-                    },
+                    &
+                    generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type)
+                    // {
+                    //     let postgresql_json_type_tokens_ident_option_to_update_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
+                    //         PostgresqlJsonType::Object => &postgresql_json_type_object_ident_option_to_update_upper_camel_case,
+                    //         PostgresqlJsonType::StdOptionOptionObject => &postgresql_json_type_std_option_option_object_ident_option_to_update_upper_camel_case,
+                    //         PostgresqlJsonType::StdVecVecObjectWithId => &postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                    //         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                    //     };
+                    //     postgresql_json_type_tokens_ident_option_to_update_token_stream
+                    // }
+                    ,
                     &{
                         let postgresql_json_type_tokens_ident_option_to_update_try_generate_bind_increments_error_named_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
                             PostgresqlJsonType::Object => &postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case,
@@ -3153,7 +3167,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 };
                 let postgresql_type_tokens_to_create_token_stream = {
-                    let postgresql_json_type_tokens_to_create_upper_camel_case = generate_postgresql_json_type_to_create_token_stream(&postgresql_json_type);
+                    let postgresql_json_type_tokens_to_create_upper_camel_case = generate_postgresql_json_type_tokens_to_create_upper_camel_case_token_stream(&postgresql_json_type);
                     let postgresql_type_tokens_to_create_token_stream = {
                         //todo maybe std_option_option_object use nullable_object
                         //todo maybe remove options for postgresql nullable and nullable json
@@ -3419,6 +3433,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         // PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionToUpdate
                         // PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionToUpdate
                         //
+                        // let postgresql_json_type_tokens_option_to_update_upper_camel_case
                         let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = match &postgresql_json_type {
                             //todo
                             PostgresqlJsonType::Object => quote::quote!{;},
@@ -3655,8 +3670,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     //     &object_ident_upper_camel_case,
                     //     &quote::quote!{{#fields_token_stream}}
                     // );
+                    let postgresql_json_type = PostgresqlJsonType::Object;
                     let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
-                        PostgresqlJsonType::Object,
+                        &postgresql_json_type,
 
                         &quote::quote!{{#fields_token_stream}},
                         &quote::quote!{(pub #ident_to_create_without_generated_id_upper_camel_case);},
@@ -3751,7 +3767,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         },
                         &{
                             let postgresql_json_type_object_ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                                &postgresql_json_type_object_ident_option_to_update_upper_camel_case, 
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type), 
                                 &postgresql_json_type_ident_option_to_update_upper_camel_case
                             );
                             let postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
@@ -3771,7 +3787,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
                         &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#try_generate_postgresql_json_type_to_create_snake_case(#increment_snake_case)},
                         &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case)},
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(PostgresqlJsonType::Object),
+                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &quote::quote!{
                             #postgresql_json_type_self_option_to_update_snake_case.#try_generate_postgresql_json_type_to_update_snake_case(
                                 #jsonb_set_accumulator_snake_case,
@@ -3935,8 +3951,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     //     &std_option_option_object_ident_upper_camel_case,
                     //     &quote::quote!{(pub std::option::Option<#object_ident_upper_camel_case>);}
                     // );
+                    let postgresql_json_type = PostgresqlJsonType::StdOptionOptionObject;
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
-                        PostgresqlJsonType::StdOptionOptionObject,
+                        &postgresql_json_type,
 
                         &{
                             let object_ident_upper_camel_case = naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident);
@@ -4041,13 +4058,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         },
                         &{
                             let postgresql_json_type_std_option_option_object_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
-                                &postgresql_json_type_std_option_option_object_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &quote::quote!{pub std::option::Option<#postgresql_json_type_ident_option_to_update_upper_camel_case>},
                                 true,
                                 false,
                             );
                             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_object_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                                &postgresql_json_type_std_option_option_object_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                             );
 
@@ -4101,7 +4118,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                             #query_snake_case
                         },
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(PostgresqlJsonType::StdOptionOptionObject),
+                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &{
                             let std_option_option_object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
                             let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -4950,8 +4967,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     //     &std_vec_vec_object_with_id_ident_upper_camel_case,
                     //     &quote::quote!{(std::vec::Vec<#object_with_id_ident_upper_camel_case>);}
                     // );
+                    let postgresql_json_type = PostgresqlJsonType::StdVecVecObjectWithId;
                     let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
-                        PostgresqlJsonType::StdVecVecObjectWithId,
+                        &postgresql_json_type,
 
                         &quote::quote!{(std::vec::Vec<#object_with_id_ident_upper_camel_case>);},
                         &quote::quote!{(pub std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>);},
@@ -5295,14 +5313,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             );
 
                             let postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
-                                &postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case,
                                 true,
                                 true,
                             );
 
                             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_token_stream =      generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                                &postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &quote::quote!{(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
                             );
                             let postgresql_json_type_std_vec_vec_object_with_id_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
@@ -5346,7 +5364,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                             #query_snake_case
                         },
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(PostgresqlJsonType::StdVecVecObjectWithId),
+                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &quote::quote!{
                             match #postgresql_json_type_self_option_to_update_snake_case.0.#try_generate_postgresql_json_type_to_update_snake_case(
                                 #jsonb_set_accumulator_snake_case,
@@ -5849,8 +5867,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     //     &std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case,
                     //     &quote::quote!{(std::option::Option<std::vec::Vec<#object_with_id_ident_upper_camel_case>>);}
                     // );
+                    let postgresql_json_type = PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId;
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
-                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
+                        &postgresql_json_type,
 
                         &quote::quote!{(std::option::Option<std::vec::Vec<#object_with_id_ident_upper_camel_case>>);},
                         &quote::quote!{(pub std::option::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>>);},
@@ -6196,14 +6215,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 true,
                             );
                             let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
-                                &postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &quote::quote!{std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>},
                                 true,
                                 true,
                             );
 
                             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                                &postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_option_to_update_upper_camel_case,
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                                 &quote::quote!{(Some(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream))}
                             );
 
@@ -6256,7 +6275,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                             #query_snake_case
                         },
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId),
+                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &{
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
                             quote::quote!{
