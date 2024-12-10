@@ -2939,7 +2939,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             postgresql_json_type: PostgresqlJsonType,
 
-            pub_struct_tokens_as_postgresql_json_declaration_token_stream: &dyn quote::ToTokens,
             std_fmt_display_for_tokens_tokens_stream: &dyn quote::ToTokens,
             to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
@@ -3000,6 +2999,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 };
                 let tokens_tokens_stream = {
                     let postgresql_type_tokens_token_stream = {
+                        let pub_struct_tokens_as_postgresql_json_declaration_token_stream = match &postgresql_json_type {
+                            //todo
+                            PostgresqlJsonType::Object => quote::quote!{(#ident_to_create_origin_upper_camel_case);},
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{;},
+                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{;},
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{;},
+                        };
                         quote::quote!{
                             #[derive(
                                 Debug,
@@ -3894,7 +3900,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::Object,
 
-                    &quote::quote!{(#ident_to_create_origin_upper_camel_case);},
                     &quote::quote!{write!(formatter, "{:?}", self)},
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
@@ -4404,7 +4409,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionObject,
 
-                    &quote::quote!{;},
                     &quote::quote!{write!(formatter, "{:?}", self)},
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
@@ -5871,7 +5875,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdVecVecObjectWithId,
 
-                    &quote::quote!{;},
                     &quote::quote!{write!(formatter, "{:?}", self)},
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
@@ -6834,7 +6837,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
 
-                    &quote::quote!{;},
                     &quote::quote!{write!(formatter, "{:?}", self)},
                     &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
