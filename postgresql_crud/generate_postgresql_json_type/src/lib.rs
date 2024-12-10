@@ -2939,8 +2939,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             postgresql_json_type: PostgresqlJsonType,
 
-            std_fmt_display_for_tokens_tokens_stream: &dyn quote::ToTokens,
-            to_std_string_string_for_tokens_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_for_tokens_token_stream: &dyn quote::ToTokens,
             bind_value_to_query_for_tokens_token_stream: &dyn quote::ToTokens,
             create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
@@ -3022,7 +3020,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         quote::quote!{
                             impl std::fmt::Display for #tokens_as_postgresql_postfix_type_upper_camel_case {
                                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    #std_fmt_display_for_tokens_tokens_stream
+                                    write!(formatter, "{:?}", self)
                                 }
                             }
                         }
@@ -3031,7 +3029,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         quote::quote!{
                             impl error_occurence_lib::ToStdStringString for #tokens_as_postgresql_postfix_type_upper_camel_case {
                                 fn to_std_string_string(&self) -> std::string::String {
-                                    #to_std_string_string_for_tokens_token_stream
+                                    format!("{self}")
                                 }
                             }
                         }
@@ -3900,8 +3898,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::Object,
 
-                    &quote::quote!{write!(formatter, "{:?}", self)},
-                    &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                     &"JSONB NOT NULL",//todo refactor
@@ -4409,8 +4405,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionObject,
 
-                    &quote::quote!{write!(formatter, "{:?}", self)},
-                    &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                      &"JSONB NOT NULL",//todo refactor
@@ -5875,8 +5869,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdVecVecObjectWithId,
 
-                    &quote::quote!{write!(formatter, "{:?}", self)},
-                    &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                      &"JSONB NOT NULL",//todo refactor
@@ -6837,8 +6829,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
 
-                    &quote::quote!{write!(formatter, "{:?}", self)},
-                    &quote::quote!{format!("{self}")},
                     &quote::quote!{todo!()},
                     &quote::quote!{todo!()},
                      &"JSONB NOT NULL",//todo refactor
