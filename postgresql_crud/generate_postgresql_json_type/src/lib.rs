@@ -2939,7 +2939,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             postgresql_json_type: PostgresqlJsonType,
 
-            create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display,
             std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_self_content_for_tokens_token_stream: &dyn quote::ToTokens,
 
             all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream: &dyn quote::ToTokens,
@@ -3033,6 +3032,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream = {
+                        let create_table_query_part_for_tokens_stringified = match &postgresql_type {
+                            PostgresqlType::Json => "JSON",
+                            PostgresqlType::Jsonb => "JSONB",
+                            PostgresqlType::JsonNotNull => "JSON NOT NULL",
+                            PostgresqlType::JsonbNotNull => "JSONB NOT NULL",
+                        };
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
                         );
@@ -3872,7 +3877,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::Object,
 
-                    &"JSONB NOT NULL",//todo refactor
                     &{
                         let fields_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element
@@ -4377,7 +4381,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionObject,
 
-                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (Some(postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
                     },
@@ -5839,7 +5842,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdVecVecObjectWithId,
 
-                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (vec![
                             #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -6797,7 +6799,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
 
-                     &"JSONB NOT NULL",//todo refactor
                     &quote::quote!{
                         (Some(vec![
                             #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
