@@ -2430,7 +2430,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{#value}
         };
-        //
         let generate_postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
             let value: &dyn quote::ToTokens = match &postgresql_json_type {
                 PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_display(&ident),
@@ -2440,7 +2439,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{#value}
         };
-        //
         let generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
             let value: &dyn quote::ToTokens = match &postgresql_json_type {
                 PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
@@ -2622,11 +2620,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             }
         };
-
-        // let postgresql_json_type_object_ident_field_reader_upper_camel_case_token_stream = naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_display(&ident);
-        // let postgresql_json_type_std_option_option_object_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
-        // let postgresql_json_type_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident);
-        // let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident);
 
         let postgresql_json_type_object_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_std_option_option_object_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
