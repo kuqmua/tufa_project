@@ -2939,10 +2939,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = |
             postgresql_json_type: PostgresqlJsonType,
 
-            try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-            bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-            std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream: &dyn quote::ToTokens,
-
             pub_struct_postgresql_type_tokens_where_declaration_token_stream: &dyn quote::ToTokens,
             try_generate_bind_increments_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
             bind_value_to_query_content_for_postgresql_type_tokens_where_token_stream: &dyn quote::ToTokens,
@@ -3451,6 +3447,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
+                        let try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
+                            //todo
+                            PostgresqlJsonType::Object => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
+                        };
+                        let bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
+                            //todo
+                            PostgresqlJsonType::Object => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
+                        };
                         quote::quote!{
                             impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_type_tokens_to_update_upper_camel_case {
                                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
@@ -3463,6 +3473,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
+                            //todo
+                            PostgresqlJsonType::Object => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
+                        };
                         quote::quote!{
                             impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_to_update_upper_camel_case {
                                 #[inline]
@@ -3878,10 +3895,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 // };
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::Object,
-
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
 
                     &quote::quote!{{
                         conjunctive_operator: postgresql_crud::ConjunctiveOperator,
@@ -4364,10 +4377,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 // };
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionObject,
-
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
 
                     &quote::quote!{{
                         conjunctive_operator: postgresql_crud::ConjunctiveOperator,
@@ -5819,10 +5828,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdVecVecObjectWithId,
 
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
-
                     &quote::quote!{{
                         conjunctive_operator: postgresql_crud::ConjunctiveOperator,
                     }},
@@ -6766,10 +6771,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 // };
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId,
-
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
-                    &quote::quote!{todo!()},
 
                     &quote::quote!{{
                         conjunctive_operator: postgresql_crud::ConjunctiveOperator,
