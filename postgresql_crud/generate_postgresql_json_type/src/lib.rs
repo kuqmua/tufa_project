@@ -2533,19 +2533,30 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| {
                     format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})")
                 };
+                let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| {
+                    let value_snake_case = naming::ValueSnakeCase;
+                    format!("jsonb_build_object('{value_snake_case}',{value})")
+                };
+                let acc_format_handle = {
+                    let acc_snake_case = naming::AccSnakeCase;
+                    format!("{{{acc_snake_case}}}")
+                };
+                let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
+                let null_snake_case = naming::NullSnakeCase;
                 match postgresql_json_type {
                     PostgresqlJsonType::Object => {
-                        let acc_snake_case = naming::AccSnakeCase;
-                        let object_format_handle = format!("{{{acc_snake_case}}}");
                         (
-                            object_format_handle,
-                            wrap_into_jsonb_build_object_field_ident(&format!("jsonb_build_object('value',{{acc}})"))
+                            acc_format_handle.clone(),
+                            wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle)
                         )
                     },
                     PostgresqlJsonType::StdOptionOptionObject => {
                         (
-                            format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then null else {{acc}} end"),
-                            wrap_into_jsonb_build_object_field_ident(&format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then jsonb_build_object('value', null) else jsonb_build_object('value',{{acc}}) end"))
+                            format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else {acc_format_handle} end"),
+                            wrap_into_jsonb_build_object_field_ident(&{
+                                let jsonb_build_object_value_null = wrap_into_jsonb_build_object_value(&null_snake_case);
+                                format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {jsonb_build_object_value_null} else jsonb_build_object('value',{{acc}}) end")
+                            })
                         )
                     },
                     PostgresqlJsonType::StdVecVecObjectWithId => {
