@@ -3413,6 +3413,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let postgresql_type_tokens_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_update_token_stream = {
                     let postgresql_type_tokens_to_update_token_stream = {
+                        //
+                        // PostgresqlJsonTypeObjectAnimalOptionToUpdate
+                        // PostgresqlJsonTypeStdOptionOptionObjectAnimalOptionToUpdate
+                        // PostgresqlJsonTypeStdVecVecObjectWithIdAnimalOptionToUpdate
+                        // PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdAnimalOptionToUpdate
+                        //
                         let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = match &postgresql_json_type {
                             //todo
                             PostgresqlJsonType::Object => quote::quote!{;},
