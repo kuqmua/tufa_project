@@ -502,6 +502,12 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             let mut fields_without_primary_key = vec![];
             for element in &fields_named.named {
                 let field_ident = element.ident.clone().unwrap();
+                let field_ident_len = field_ident.to_string().len();
+                let max_postgresql_column_length = 63;
+                //todo write runtime check
+                if field_ident_len > max_postgresql_column_length {
+                    panic!("Postgresql truncates column names to {max_postgresql_column_length} characters, this is more: {field_ident} ({field_ident_len} characters)");
+                }
                 fields.push(SynFieldWrapper {
                     syn_field: element.clone(),
                     field_ident: field_ident.clone(),
