@@ -5263,21 +5263,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let impl_postgresql_crud_bind_query_for_postgresql_type_tokens_to_update_token_stream = {
-                        let try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
-                            //todo
-                            PostgresqlJsonType::Object => quote::quote!{
-                                // Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
-                                //     &self.0,
-                                //     "",
-                                //     "",
-                                //     "",
-                                //     increment,
-                                // ).unwrap())
-                                todo!()
-                            },
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{
-                                //here
-                                todo!()
+                        let try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb => quote::quote!{
                                 // match &self.0 {
                                 //     Some(value) => Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
                                 //         &value,
@@ -5298,31 +5286,30 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 //         ,
                                 //     }
                                 // }
-                            },
-                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
                                 todo!()
                             },
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
-                                todo!()
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull => quote::quote!{
+                                Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
+                                    &self.0,
+                                    "",
+                                    "",
+                                    "",
+                                    increment,
+                                ).unwrap())
                             },
                         };
-                        let bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
-                            //todo
-                            PostgresqlJsonType::Object => quote::quote!{
-                                // <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(
-                                //     self.0,
-                                //     query
-                                // )
+                        let bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb => quote::quote!{
                                 todo!()
                             },
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{
-                                todo!()
-                            },
-                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                                todo!()
-                            },
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
-                                todo!()
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull => quote::quote!{
+                                <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(
+                                    self.0,
+                                    query
+                                )
                             },
                         };
                         quote::quote!{
