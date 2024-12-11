@@ -2678,7 +2678,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
             postgresql_json_type: &PostgresqlJsonType,
 
-            generate_postgresql_json_type_to_read_content_token_stream: &dyn quote::ToTokens,
             try_generate_postgresql_json_type_to_update_content_token_stream: &dyn quote::ToTokens,
             bind_value_to_postgresql_query_part_to_update_content_token_stream: &dyn quote::ToTokens,
         |{
@@ -4535,7 +4534,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     },
                     &postgresql_json_type_tokens_field_reader_upper_camel_case,
                     &postgresql_json_type_tokens_options_to_read_upper_camel_case,
-                    &generate_postgresql_json_type_to_read_content_token_stream,
+                    &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                     &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                     &generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream(&postgresql_json_type),
                     &try_generate_postgresql_json_type_to_update_content_token_stream,
@@ -5239,7 +5238,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &{
                             let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
                             let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -5480,7 +5478,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &{
                             let std_option_option_object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
                             let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -5801,7 +5798,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &quote::quote!{
                             match #postgresql_json_type_self_option_to_update_snake_case.0.#try_generate_postgresql_json_type_to_update_snake_case(
                                 #jsonb_set_accumulator_snake_case,
@@ -6311,7 +6307,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
                         &{
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
                             quote::quote!{
