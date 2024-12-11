@@ -1312,6 +1312,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #postgresql_type_ident_to_update_upper_camel_case {}
         }
     };
+
+    // let postgresql_type_ident_to_update_upper_camel_case
+
     let impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream = {
         let postgresql_type_self_where_traits_upper_camel_case = naming::PostgresqlTypeSelfWhereTraitsUpperCamelCase;
         quote::quote!{
@@ -1337,6 +1340,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
         let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
         let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+
+        // let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
+
         let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
         quote::quote!{
             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #ident {
@@ -1346,6 +1352,18 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_ident_to_create_upper_camel_case;
                 type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
                 type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;
+
+
+                // type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case: std::fmt::Debug
+                //     + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
+                // fn postgresql_type_self_to_update_query_part(
+                //     postgresql_json_type_self_option_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
+                //     jsonb_set_accumulator: &std::primitive::str,
+                //     jsonb_set_target: &std::primitive::str,
+                //     jsonb_set_path: &std::primitive::str,
+                //     increment: &mut std::primitive::u64
+                // ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed>;
+
                 type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
             }
         }

@@ -53,6 +53,15 @@ pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;
+    // type PostgresqlTypeSelfToUpdateQueryPartErrorNamed: std::fmt::Debug
+    //     + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
+    // fn postgresql_type_self_to_update_query_part(
+    //     postgresql_json_type_self_option_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
+    //     jsonb_set_accumulator: &std::primitive::str,
+    //     jsonb_set_target: &std::primitive::str,
+    //     jsonb_set_path: &std::primitive::str,
+    //     increment: &mut std::primitive::u64
+    // ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed>;
     type PostgresqlTypeSelfWhere: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {

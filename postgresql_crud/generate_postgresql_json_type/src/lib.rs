@@ -5259,6 +5259,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             pub struct #postgresql_type_tokens_to_update_upper_camel_case #pub_struct_postgresql_type_tokens_to_update_declaration_token_stream
                         }
                     };
+                    //todo no need for BindQuery impl. use different
                     let impl_postgresql_crud_bind_query_for_postgresql_type_tokens_to_update_token_stream = {
                         let try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream = {
                             //todo refactor all "first_argument_token_stream" parameters. it must be bool or enum, remove : &dyn quote::ToTokens type
@@ -5271,6 +5272,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         "",
                                         "",
                                         increment,
+                                    //
+                // "sqlx_types_json_t_as_postgresql_json_b_not_null",
+                // "sqlx_types_json_t_as_postgresql_json_b_not_null",
+                // "",
+                // &mut increment,
+                                    //
                                     ).unwrap())
                                 }
                             };
