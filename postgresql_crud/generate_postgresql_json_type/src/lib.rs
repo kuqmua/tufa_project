@@ -3717,37 +3717,136 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         },
                         &{
-                            let postgresql_json_type_object_ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type), 
-                                &postgresql_json_type_ident_option_to_update_upper_camel_case
+                            let postgresql_json_type_object_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
+                                &quote::quote!{pub #postgresql_json_type_ident_option_to_update_upper_camel_case},
+                                true,
+                                false,
                             );
-                            let postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+
+                            let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_object_ident_option_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                                &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
+                                &quote::quote!{(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
+                            );
+                            let postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
                                 &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
-                                &postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case
-                            );
-                            let postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_with_serialize_deserialize_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                                &naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident),
-                                &naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident)
+                                &{
+                                    let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                        let field_ident_stringified = element
+                                            .ident
+                                            .as_ref()
+                                            .unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            })
+                                            .to_string();
+                                        let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                        let postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_type_last_segment(&element.ty);
+                                        quote::quote!{
+                                            #variant_ident_upper_camel_case_token_stream {
+                                                #[eo_error_occurence]
+                                                error: #postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case,
+                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                            }
+                                        }
+                                    });
+                                    quote::quote!{
+                                        #checked_add_variant_declaration_token_stream,
+                                        #(#variants_token_stream),*
+                                    }
+                                }
                             );
                             quote::quote!{
-                                #postgresql_json_type_object_ident_option_to_update_alias_token_stream
-                                #postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_alias_token_stream
-                                #postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_with_serialize_deserialize_alias_token_stream
+                                #postgresql_json_type_object_ident_option_to_update_token_stream
+
+                                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_object_ident_option_to_update_token_stream
+                                #postgresql_json_type_object_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
                             }
                         },
 
                         &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#try_generate_postgresql_json_type_to_create_snake_case(#increment_snake_case)},
                         &quote::quote!{#postgresql_json_type_self_to_create_snake_case.0.#bind_value_to_postgresql_query_part_to_create_snake_case(#query_snake_case)},
                         &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
-                        &quote::quote!{
-                            #postgresql_json_type_self_option_to_update_snake_case.#try_generate_postgresql_json_type_to_update_snake_case(
-                                #jsonb_set_accumulator_snake_case,
-                                #jsonb_set_target_snake_case,
-                                #jsonb_set_path_snake_case,
-                                #increment_snake_case,
-                            )
+                        &{
+                            let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
+                            let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})")
+                            );
+                            let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
+                                let field_ident_stringified = element
+                                    .ident
+                                    .as_ref()
+                                    .unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    })
+                                    .to_string();
+                                let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(&element);
+                                let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
+                                quote::quote!{
+                                    #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
+                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_update_snake_case(
+                                            &value.value,
+                                            &#object_acc_snake_case,
+                                            &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
+                                            #field_ident_double_quotes_token_stream,
+                                            #increment_snake_case,
+                                        ) {
+                                            Ok(value) => {
+                                                #object_acc_snake_case = value;
+                                            }
+                                            Err(error) => {
+                                                return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#variant_ident_upper_camel_case_token_stream {
+                                                    error,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            let some_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                                &format!("case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end")
+                            );
+                            let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})")
+                            );
+                            quote::quote!{
+                                let mut #object_acc_snake_case = format!(#some_format_handle_token_stream);
+                                #generate_jsonb_set_target_token_stream
+                                for element in &#postgresql_json_type_self_option_to_update_snake_case.0.0 {
+                                    match element {
+                                        #(#try_generate_bind_increments_variants_token_stream),*
+                                    }
+                                }
+                                Ok(format!(#std_option_option_object_acc_jsonb_set_double_quotes_token_stream))
+                            }
                         },
-                        &quote::quote!{#postgresql_json_type_self_option_to_update_snake_case.#bind_value_to_postgresql_query_part_to_update_snake_case(#query_snake_case)},
+                        &{
+                            let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
+                                let field_ident_stringified = element
+                                    .ident
+                                    .as_ref()
+                                    .unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    })
+                                    .to_string();
+                                let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
+                                quote::quote!{
+                                    #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
+                                        #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_update_snake_case(value.value, #query_snake_case);
+                                    }
+                                }
+                            });
+                            quote::quote!{
+                                for element in #postgresql_json_type_self_option_to_update_snake_case.0.0 {
+                                    match element {
+                                        #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
+                                    }
+                                }
+                                #query_snake_case
+                            }
+                        }
                     );
                     // println!("{impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream}");
                     quote::quote!{
