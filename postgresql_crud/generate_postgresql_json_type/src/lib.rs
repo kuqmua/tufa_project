@@ -5240,9 +5240,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 // println!("{postgresql_type_tokens_to_read_token_stream}");
                 let postgresql_type_tokens_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                 let postgresql_type_tokens_to_update_token_stream = {
+                    let postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type);
                     let postgresql_type_tokens_to_update_token_stream = {
                         let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = {
-                            let postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type);
                             match &postgresql_type {
                                 PostgresqlType::Json |
                                 PostgresqlType::Jsonb => quote::quote!{(std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>);},
@@ -5266,27 +5266,25 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let try_generate_bind_increments_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb => quote::quote!{
-                                // match &self.0 {
-                                //     Some(value) => Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
-                                //         &value,
-                                //         "",
-                                //         "",
-                                //         "",
-                                //         increment,
-                                //     ).unwrap()),
-                                //     None => match increment.checked_add(1) {
-                                //         Some(value) => {
-                                //             *increment = value;
-                                //             Ok(format!("${increment}"))
-                                //         },
-                                //         None => Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                                //             code_occurence: error_occurence_lib::code_occurence!()
-                                //         })
-                                //         // todo!() //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
-                                //         ,
-                                //     }
-                                // }
-                                todo!()
+                                match &self.0 {
+                                    Some(value) => Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
+                                        &value,
+                                        "",
+                                        "",
+                                        "",
+                                        increment,
+                                    ).unwrap()),
+                                    None => match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            Ok(format!("${increment}"))
+                                        },
+                                        //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                                        None => Err(postgresql_crud::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        })
+                                    }
+                                }
                             },
                             PostgresqlType::JsonNotNull |
                             PostgresqlType::JsonbNotNull => quote::quote!{
@@ -5302,7 +5300,16 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let bind_value_to_query_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
                             PostgresqlType::Json |
                             PostgresqlType::Jsonb => quote::quote!{
-                                todo!()
+                                query = match self.0 {
+                                    Some(value) => <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(
+                                        self.0,
+                                        query
+                                    ),
+                                    None => {
+                                        #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>>))
+                                    }
+                                };
+                                query
                             },
                             PostgresqlType::JsonNotNull |
                             PostgresqlType::JsonbNotNull => quote::quote!{
