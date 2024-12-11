@@ -2659,8 +2659,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         let generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |
             postgresql_json_type: &PostgresqlJsonType,
 
-            //todo refactor - instead of bool and impl serde deserialize token stream maybe use enum 
-            impl_serde_deserialize_macro_for_postgresql_json_type_tokens_options_to_read: std::primitive::bool,
             impl_serde_deserialize_for_postgresql_json_type_tokens_options_to_read_token_stream: &dyn quote::ToTokens,
             impl_serde_deserialize_for_postgresql_json_type_tokens_field_reader_token_stream: &dyn quote::ToTokens,
             update_token_stream: &dyn quote::ToTokens,
@@ -2751,7 +2749,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 let read_token_stream = {
                     let postgresql_json_type_tokens_options_to_read_token_stream = generate_postgresql_json_type_tokens_options_to_read_token_stream(
                         &postgresql_json_type_tokens_options_to_read_upper_camel_case,
-                        impl_serde_deserialize_macro_for_postgresql_json_type_tokens_options_to_read,
+                        //todo refactor - instead of bool and impl serde deserialize token stream maybe use enum 
+                        match &postgresql_json_type {
+                            PostgresqlJsonType::Object => true,
+                            PostgresqlJsonType::StdOptionOptionObject => true,
+                            PostgresqlJsonType::StdVecVecObjectWithId => false,
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => false,
+                        },
                         &match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{(pub #postgresql_json_type_ident_options_to_read_without_id_upper_camel_case);},
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote!{(pub std::option::Option<#postgresql_json_type_ident_options_to_read_without_id_upper_camel_case>);},
@@ -3667,7 +3671,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        true,
                         &proc_macro2::TokenStream::new(),//todo impl_serde_deserialize
                         &{
                             let postgresql_json_type_object_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
@@ -4041,7 +4044,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        true,
                         &proc_macro2::TokenStream::new(),
                         &{
                             let postgresql_json_type_std_option_option_object_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
@@ -5048,7 +5050,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        false,
                         &{
                             let tuple_struct_postgresql_json_type_std_vec_vec_object_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream);
                             let tuple_struct_postgresql_json_type_std_vec_vec_object_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream);
@@ -5939,7 +5940,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(
                         &postgresql_json_type,
 
-                        false,
                         &{
                             let tuple_struct_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream);
                             let tuple_struct_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_options_to_read_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream);
