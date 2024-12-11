@@ -294,30 +294,30 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
-    pub object_doggie: ObjectDoggie,
-    pub std_option_option_object: StdOptionOptionObjectDoggie,
-    pub std_vec_vec_object: StdVecVecObjectWithIdDoggie,
-    pub std_option_option_std_vec_vec_object: StdOptionOptionStdVecVecObjectWithIdDoggie,
+    // pub object_doggie: ObjectDoggie,
+    // pub std_option_option_object: StdOptionOptionObjectDoggie,
+    // pub std_vec_vec_object: StdVecVecObjectWithIdDoggie,
+    // pub std_option_option_std_vec_vec_object: StdOptionOptionStdVecVecObjectWithIdDoggie,
 
     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 }
 // /////////////////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    postgresql_crud::GeneratePostgresqlJsonType
-)] //user type must implement utoipa::ToSchema trait
-pub struct Doggie {
-    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
-    pub std_option_option_std_primitive_i8: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI8,
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     postgresql_crud::GeneratePostgresqlJsonType
+// )] //user type must implement utoipa::ToSchema trait
+// pub struct Doggie {
+//     pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
+//     pub std_option_option_std_primitive_i8: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI8,
+// }
 /////////////////////////////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct UpdateOnePayload {
@@ -860,3 +860,4 @@ pub async fn try_update_one_route_logic(app_state: axum::extract::State<crate::r
     *response.status_mut() = axum::http::StatusCode::OK;
     return response;
 }
+//////////////
