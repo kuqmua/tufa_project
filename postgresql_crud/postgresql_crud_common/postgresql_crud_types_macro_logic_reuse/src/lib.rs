@@ -1105,11 +1105,21 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
         );
+        let impl_ident_create_table_query_part_handle_token_stream = {
+            quote::quote!{
+                impl #ident {
+                    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+                        #field_type::create_table_query_part_handle(value)
+                    }
+                }
+            }
+        };
         quote::quote!{
             #impl_std_fmt_display_for_ident_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
             #impl_crate_bind_query_for_ident_token_stream
+            #impl_ident_create_table_query_part_handle_token_stream
         }
     };
     let pub_snake_case = naming::PubSnakeCase;
@@ -1153,10 +1163,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &postgresql_type_ident_to_create_upper_camel_case,
             &braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
         );
+        let impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream = {
+            let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_ident_to_create_upper_camel_case {}
+            }
+        };
         quote::quote! {
             #postgresql_type_ident_to_create_token_stream
             #impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream
+            #impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream
         }
     };
     let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident);
@@ -1175,10 +1192,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &postgresql_type_ident_to_read_upper_camel_case,
             &field_type
         );
+        let impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream = {
+            let postgresql_type_self_to_read_traits_upper_camel_case = naming::PostgresqlTypeSelfToReadTraitsUpperCamelCase;
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_read_traits_upper_camel_case<'_> for #postgresql_type_ident_to_read_upper_camel_case {}
+            }
+        };
         quote::quote! {
             #postgresql_type_ident_to_read_token_stream
             #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
             #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
+            #impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream
         }
     };
     let postgresql_type_ident_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_tokens(&ident);
@@ -1198,10 +1222,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &postgresql_type_ident_to_update_upper_camel_case,
             &braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
         );
+        let impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream = {
+            let postgresql_type_self_to_update_traits_upper_camel_case = naming::PostgresqlTypeSelfToUpdateTraitsUpperCamelCase;
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #postgresql_type_ident_to_update_upper_camel_case {}
+            }
+        };
         quote::quote! {
             #postgresql_type_ident_to_update_token_stream
             #impl_crate_bind_query_for_postgresql_type_ident_to_update_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream
+            #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
         }
     };
     let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident);
@@ -1279,48 +1310,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #conjunctive_operator_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
             }}
         );
+        let impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream = {
+            let postgresql_type_self_where_traits_upper_camel_case = naming::PostgresqlTypeSelfWhereTraitsUpperCamelCase;
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_where_traits_upper_camel_case<'_> for #postgresql_type_ident_where_upper_camel_case {}
+            }
+        };
         quote::quote!{
             #postgresql_type_ident_where_token_stream
             #impl_crate_bind_query_for_postgresql_type_ident_where_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_token_stream
-        }
-    };
-    let impl_ident_create_table_query_part_handle_token_stream = {
-        quote::quote!{
-            impl #ident {
-                pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-                    #field_type::create_table_query_part_handle(value)
-                }
-            }
-        }
-    };
-    let impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream = {
-        let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_ident_to_create_upper_camel_case {}
-        }
-    };
-    let impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream = {
-        let postgresql_type_self_to_read_traits_upper_camel_case = naming::PostgresqlTypeSelfToReadTraitsUpperCamelCase;
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_read_traits_upper_camel_case<'_> for #postgresql_type_ident_to_read_upper_camel_case {}
-        }
-    };
-    let impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream = {
-        let postgresql_type_self_to_update_traits_upper_camel_case = naming::PostgresqlTypeSelfToUpdateTraitsUpperCamelCase;
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #postgresql_type_ident_to_update_upper_camel_case {}
+            #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream
         }
     };
 
     // let postgresql_type_ident_to_update_upper_camel_case
 
-    let impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream = {
-        let postgresql_type_self_where_traits_upper_camel_case = naming::PostgresqlTypeSelfWhereTraitsUpperCamelCase;
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_where_traits_upper_camel_case<'_> for #postgresql_type_ident_where_upper_camel_case {}
-        }
-    };
     let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
     let postgresql_type_self_column_query_part_token_stream = {
         let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
@@ -1384,12 +1389,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #postgresql_type_ident_where_token_stream
 
-        #impl_ident_create_table_query_part_handle_token_stream
-
-        #impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream
-        #impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream
-        #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
-        #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream
         #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
