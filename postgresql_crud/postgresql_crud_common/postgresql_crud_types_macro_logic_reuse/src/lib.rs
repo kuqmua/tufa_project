@@ -1235,6 +1235,36 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
         }
     };
+
+    // let postgresql_type_ident_to_update_query_part_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateQueryPartErrorNamedToUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_to_update_query_part_error_named_token_stream = {
+        quote::quote!{
+            // #[derive(
+            //     Debug,
+            //     Default,
+            //     Clone,
+            //     PartialEq,
+            //     serde::Serialize,
+            //     serde::Deserialize,
+            // )]
+            // pub enum #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case {
+            //     Todo
+            // }
+        }
+    };
+    let postgresql_type_self_to_update_query_part_token_stream = {
+        // let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
+        quote::quote!{
+            // fn postgresql_type_self_to_update_query_part(
+            //     postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
+            //     jsonb_set_accumulator: &std::primitive::str,
+            //     jsonb_set_target: &std::primitive::str,
+            //     jsonb_set_path: &std::primitive::str,
+            //     increment: &mut std::primitive::u64
+            // ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed>;
+        }
+    };
+
     let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_delete_token_stream = {
         let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
@@ -1323,9 +1353,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream
         }
     };
-
-    // let postgresql_type_ident_to_update_upper_camel_case
-
     let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
     let postgresql_type_self_column_query_part_token_stream = {
         let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
@@ -1358,16 +1385,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
                 type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;
 
-
-                // type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case: std::fmt::Debug
-                //     + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
-                // fn postgresql_type_self_to_update_query_part(
-                //     postgresql_json_type_self_option_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
-                //     jsonb_set_accumulator: &std::primitive::str,
-                //     jsonb_set_target: &std::primitive::str,
-                //     jsonb_set_path: &std::primitive::str,
-                //     increment: &mut std::primitive::u64
-                // ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed>;
+                // type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case: #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case;
+                // #postgresql_type_self_to_update_query_part_token_stream
 
                 type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
             }
@@ -1384,6 +1403,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #postgresql_type_ident_to_read_token_stream
 
         #postgresql_type_ident_to_update_token_stream
+
+        #postgresql_type_ident_to_update_query_part_error_named_token_stream
 
         #postgresql_type_ident_to_delete_token_stream
 

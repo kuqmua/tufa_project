@@ -467,7 +467,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["true"],
     ["false"],
     ["column", "name", "and", "maybe", "field", "getter", "handle"],
-    ["null"]
+    ["null"],
+    ["postgresql", "type", "self", "to", "update", "query", "part"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

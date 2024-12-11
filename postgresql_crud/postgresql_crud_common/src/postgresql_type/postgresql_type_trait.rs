@@ -56,12 +56,17 @@ pub trait PostgresqlType<'a> {
     // type PostgresqlTypeSelfToUpdateQueryPartErrorNamed: std::fmt::Debug
     //     + std::error::Error;//thiserror::Error + error_occurence_lib::ErrorOccurence
     // fn postgresql_type_self_to_update_query_part(
-    //     postgresql_json_type_self_option_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
+    //     postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate<'_>,
     //     jsonb_set_accumulator: &std::primitive::str,
     //     jsonb_set_target: &std::primitive::str,
     //     jsonb_set_path: &std::primitive::str,
     //     increment: &mut std::primitive::u64
     // ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed>;
+    // fn postgresql_type_self_to_update_bind_query_part<'a>(
+    //     postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate<'_>,
+    //     query: sqlx::query::Query<'a, sqlx::Postgres,
+    //     sqlx::postgres::PgArguments>
+    // ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type PostgresqlTypeSelfWhere: PostgresqlTypeSelfWhereTraits<'a>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
