@@ -1265,9 +1265,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #jsonb_set_path_snake_case: &std::primitive::str,
                 #increment_snake_case: &mut std::primitive::u64
             ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
-                        //     &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-        //     &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                todo!()
+                //todo remove .unwrap()
+                Ok(#crate_bind_query_try_generate_bind_increments_token_stream(&#postgresql_type_self_to_update_snake_case.0, #increment_snake_case).unwrap())
             }
         }
     };
@@ -1279,7 +1278,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
                 query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                todo!()
+                #crate_bind_query_bind_value_to_query_token_stream(#postgresql_type_self_to_update_snake_case.0, #query_snake_case)
             }
         }
     };
