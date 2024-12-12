@@ -4398,6 +4398,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         let when_primary_key_field_ident_equals_then_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!("{} {primary_key_field_ident} = {{}} {} {{}} ", naming::WhenSnakeCase, naming::ThenSnakeCase)
                         );
+                        let field_type = &element.syn_field.ty;
+                        let primary_key_field_type = &primary_key_field.syn_field.ty;
+                        let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
                         quote::quote! {
                             {
                                 let mut #is_field_ident_update_exists_snake_case = false;
@@ -4413,18 +4416,59 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #acc_snake_case.push_str(&format!(
                                                 #when_primary_key_field_ident_equals_then_token_stream,
-                                                match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
+                                                match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
+                                                    &#element_snake_case.#primary_key_field_ident,
+                                                    &"",
+                                                    &"",
+                                                    &"",
+                                                    &mut #increment_snake_case,
+
+                                                    // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                                    // jsonb_set_accumulator: &std::primitive::str,
+                                                    // jsonb_set_target: &std::primitive::str,
+                                                    // jsonb_set_path: &std::primitive::str,
+                                                    // increment: &mut std::primitive::u64
+                                                ) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
-                                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                                    }
-                                                },
-                                                match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut #increment_snake_case) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
-                                                    Err(#error_0_token_stream) => {
-                                                        #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                        // #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                        todo!()
                                                     }
                                                 }
+                                                // match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#element_snake_case.#primary_key_field_ident, &mut #increment_snake_case) {
+                                                //     Ok(#value_snake_case) => #value_snake_case,
+                                                //     Err(#error_0_token_stream) => {
+                                                //         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                //     }
+                                                // }
+                                                
+                                                ,
+
+                                               match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
+                                                    &#value_snake_case.#value_snake_case,
+                                                    &"",
+                                                    &"",
+                                                    &"",
+                                                    &mut #increment_snake_case,
+
+                                                    // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                                    // jsonb_set_accumulator: &std::primitive::str,
+                                                    // jsonb_set_target: &std::primitive::str,
+                                                    // jsonb_set_path: &std::primitive::str,
+                                                    // increment: &mut std::primitive::u64
+                                                ) {
+                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Err(#error_0_token_stream) => {
+                                                        // #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                        todo!()
+                                                    }
+                                                }
+                                                // match #postgresql_crud_snake_case::BindQuerySecond::try_generate_bind_increments(&#value_snake_case.#value_snake_case, &mut #increment_snake_case) {
+                                                //     Ok(#value_snake_case) => #value_snake_case,
+                                                //     Err(#error_0_token_stream) => {
+                                                //         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                //     }
+                                                // }
                                             ));
                                         }
                                     }
@@ -4474,8 +4518,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
+                    let postgresql_type_self_to_update_bind_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
                     let fields_named_excluding_primary_key_update_assignment_token_stream = fields_without_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let field_type = &element.syn_field.ty;
                         let is_field_ident_update_exists_snake_case = naming::parameter::IsSelfUpdateExistSnakeCase::from_tokens(&field_ident);
                         quote::quote! {
                             {
@@ -4490,17 +4536,30 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.clone());
-                                            #query_snake_case = #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(#value_snake_case.#value_snake_case.clone(), #query_snake_case);
+                                            #query_snake_case = 
+                                            // #postgresql_crud_snake_case::BindQuerySecond::bind_value_to_query(#value_snake_case.#value_snake_case.clone(), #query_snake_case)
+                                            <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_bind_query_part_snake_case(
+                                                #value_snake_case.#value_snake_case.clone(),
+                                                #query_snake_case,
+                                            );
                                         }
                                     }
                                 }
                             }
                         }
                     });
+                    let primary_key_field_type = &primary_key_field.syn_field.ty;
                     let primary_key_update_assignment_token_stream = quote::quote! {
                         {
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                #query_snake_case = #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.clone());
+                                #query_snake_case = 
+                                // #query_snake_case.bind(#element_snake_case.#primary_key_field_ident.clone())
+                                <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_bind_query_part_snake_case(
+                                    #element_snake_case.#primary_key_field_ident.clone(),
+                                    #query_snake_case,
+                                )
+
+                                ;
                             }
                         }
                     };
@@ -4671,10 +4730,11 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             quote::quote! {}, // try_operation_test_token_stream,
         )
     };
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &update_many_token_stream,
-    // );
+    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        // &proc_macro_name_upper_camel_case,
+        "update_many",
+        &update_many_token_stream,
+    );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let (update_one_token_stream, update_one_test_token_stream) = {
         let operation = Operation::UpdateOne;
