@@ -1213,11 +1213,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &field_type_struct_content_token_stream,
             false,
         );
-        let impl_crate_bind_query_for_postgresql_type_ident_to_update_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_to_update_upper_camel_case,
-            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-        );
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_ident_to_update_upper_camel_case,
             &braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1230,7 +1225,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         };
         quote::quote! {
             #postgresql_type_ident_to_update_token_stream
-            #impl_crate_bind_query_for_postgresql_type_ident_to_update_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream
             #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
         }
@@ -1271,6 +1265,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #jsonb_set_path_snake_case: &std::primitive::str,
                 #increment_snake_case: &mut std::primitive::u64
             ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
+                        //     &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+        //     &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
                 todo!()
             }
         }
