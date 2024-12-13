@@ -601,6 +601,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // let primary_key_field = &primary_key_syn_field_with_additional_info.field;
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&primary_key_field_ident);
+    let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
     // let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
     // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
@@ -2297,7 +2298,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         ok_token_stream: &dyn quote::ToTokens,
         err_token_stream: &dyn quote::ToTokens
     | {
-        let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
         quote::quote! {
             match #sqlx_row::try_get::<
                 // #primary_key_original_type_token_stream,
@@ -4389,6 +4389,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                     let fields_named_excluding_primary_key_update_assignment_token_stream = fields_without_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let field_ident_double_quotes_token_stream =  generate_quotes::double_quotes_token_stream(&field_ident);
                         let is_field_ident_update_exists_snake_case = naming::parameter::IsSelfUpdateExistSnakeCase::from_tokens(&field_ident);
                         let case_snake_case = naming::CaseSnakeCase;
                         let field_ident_equals_case_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {case_snake_case} "));
@@ -4418,9 +4419,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                                 #when_primary_key_field_ident_equals_then_token_stream,
                                                 match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                                     &#element_snake_case.#primary_key_field_ident,
-                                                    &"",
-                                                    &"",
-                                                    &"",
+                                                    &#primary_key_field_ident_double_quotes_token_stream,
+                                                    &#primary_key_field_ident_double_quotes_token_stream,
+                                                    &#primary_key_field_ident_double_quotes_token_stream,
                                                     &mut #increment_snake_case,
 
                                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4446,9 +4447,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
 
                                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                                     &#value_snake_case.#value_snake_case,
-                                                    &"",
-                                                    &"",
-                                                    &"",
+                                                    &#field_ident_double_quotes_token_stream,
+                                                    &#field_ident_double_quotes_token_stream,
+                                                    &#field_ident_double_quotes_token_stream,
                                                     &mut #increment_snake_case,
 
                                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4503,9 +4504,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         //
                                         match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                             &#element_snake_case.#primary_key_field_ident,
-                                            &"",
-                                            &"",
-                                            &"",
+                                            &#primary_key_field_ident_double_quotes_token_stream,
+                                            &#primary_key_field_ident_double_quotes_token_stream,
+                                            &#primary_key_field_ident_double_quotes_token_stream,
                                             &mut #increment_snake_case,
 
                                             // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4796,6 +4797,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
                     let additional_parameters_modification_token_stream = fields_without_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let field_ident_double_quotes_token_stream =  generate_quotes::double_quotes_token_stream(&field_ident);
                         let field_ident_equals_dollar_increment_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
                         let field_type = &element.syn_field.ty;
                         quote::quote! {
@@ -4813,9 +4815,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                     &#value_snake_case.#value_snake_case,
-                                    &"",
-                                    &"",
-                                    &"",
+                                    &#field_ident_double_quotes_token_stream,
+                                    &#field_ident_double_quotes_token_stream,
+                                    &#field_ident_double_quotes_token_stream,
                                     &mut #increment_snake_case,
 
                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4849,9 +4851,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             // }
                             match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                                &"",
-                                &"",
-                                &"",
+                                &#primary_key_field_ident_double_quotes_token_stream,
+                                &#primary_key_field_ident_double_quotes_token_stream,
+                                &#primary_key_field_ident_double_quotes_token_stream,
                                 &mut #increment_snake_case,
 
                                 // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
