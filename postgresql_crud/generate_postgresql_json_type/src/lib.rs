@@ -5260,12 +5260,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
-                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_json_type {
-                            //todo
-                            PostgresqlJsonType::Object => quote::quote!{todo!()},
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
-                            PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
+                            PostgresqlType::Json |
+                            PostgresqlType::Jsonb => quote::quote!{Self(Some(
+                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            ))},
+                            PostgresqlType::JsonNotNull |
+                            PostgresqlType::JsonbNotNull => quote::quote!{Self(
+                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            )},
                         };
                         quote::quote!{
                             impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_to_update_upper_camel_case {
