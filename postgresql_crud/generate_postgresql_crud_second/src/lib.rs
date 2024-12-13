@@ -4421,7 +4421,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                                     &#element_snake_case.#primary_key_field_ident,
                                                     &#primary_key_field_ident_double_quotes_token_stream,
                                                     &#primary_key_field_ident_double_quotes_token_stream,
-                                                    &#primary_key_field_ident_double_quotes_token_stream,
+                                                    &"",
                                                     &mut #increment_snake_case,
 
                                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4449,7 +4449,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                                     &#value_snake_case.#value_snake_case,
                                                     &#field_ident_double_quotes_token_stream,
                                                     &#field_ident_double_quotes_token_stream,
-                                                    &#field_ident_double_quotes_token_stream,
+                                                    &"",
                                                     &mut #increment_snake_case,
 
                                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4506,7 +4506,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                             &#element_snake_case.#primary_key_field_ident,
                                             &#primary_key_field_ident_double_quotes_token_stream,
                                             &#primary_key_field_ident_double_quotes_token_stream,
-                                            &#primary_key_field_ident_double_quotes_token_stream,
+                                            &"",
                                             &mut #increment_snake_case,
 
                                             // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4817,7 +4817,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                     &#value_snake_case.#value_snake_case,
                                     &#field_ident_double_quotes_token_stream,
                                     &#field_ident_double_quotes_token_stream,
-                                    &#field_ident_double_quotes_token_stream,
+                                    &"",
                                     &mut #increment_snake_case,
 
                                     // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
@@ -4853,7 +4853,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                                 &#primary_key_field_ident_double_quotes_token_stream,
                                 &#primary_key_field_ident_double_quotes_token_stream,
-                                &#primary_key_field_ident_double_quotes_token_stream,
+                                &"",
                                 &mut #increment_snake_case,
 
                                 // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
