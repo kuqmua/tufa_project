@@ -4534,7 +4534,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &match &postgresql_json_type {
                         PostgresqlJsonType::Object => {
                             let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
-                            let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})")
                             );
                             let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -4584,12 +4584,17 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         #(#try_generate_bind_increments_variants_token_stream),*
                                     }
                                 }
-                                Ok(format!(#std_option_option_object_acc_jsonb_set_double_quotes_token_stream))
+                                if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
+                                    Ok(#object_acc_snake_case)
+                                }
+                                else {
+                                    Ok(format!(#format_handle_token_stream))
+                                }
                             }
                         },
                         PostgresqlJsonType::StdOptionOptionObject => {
                             let std_option_option_object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
-                            let std_option_option_object_acc_jsonb_set_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{std_option_option_object_acc_snake_case}}})")
                             );
                             let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -4641,7 +4646,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                 #(#try_generate_bind_increments_variants_token_stream),*
                                             }
                                         }
-                                        format!(#std_option_option_object_acc_jsonb_set_double_quotes_token_stream)
+                                        if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
+                                            Ok(#std_option_option_object_acc_snake_case)
+                                        }
+                                        else {
+                                            Ok(format!(#format_handle_token_stream))
+                                        }
                                     },
                                     None => match #increment_snake_case.checked_add(1) {
                                         Some(value) => {
@@ -4694,7 +4704,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     None => match #increment_snake_case.checked_add(1) {
                                         Some(value) => {
                                             *#increment_snake_case = value;
-                                            Ok(format!(#format_handle_token_stream))
+                                            if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
+                                                Ok(format!("${increment}"))
+                                            }
+                                            else {
+                                                Ok(format!(#format_handle_token_stream))
+                                            }
                                         }
                                         None => {
                                             return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
