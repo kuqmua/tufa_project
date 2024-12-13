@@ -4419,7 +4419,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                                 #when_primary_key_field_ident_equals_then_token_stream,
                                                 match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                                     &#element_snake_case.#primary_key_field_ident,
-                                                    &#primary_key_field_ident_double_quotes_token_stream,
+                                                    // &#primary_key_field_ident_double_quotes_token_stream,
+                                                    &"",
                                                     &#primary_key_field_ident_double_quotes_token_stream,
                                                     &"",
                                                     &mut #increment_snake_case,
@@ -4447,7 +4448,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
 
                                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                                     &#value_snake_case.#value_snake_case,
-                                                    &#field_ident_double_quotes_token_stream,
+                                                    // &#field_ident_double_quotes_token_stream,
+                                                    &"",
                                                     &#field_ident_double_quotes_token_stream,
                                                     &"",
                                                     &mut #increment_snake_case,
@@ -4504,7 +4506,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         //
                                         match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                             &#element_snake_case.#primary_key_field_ident,
-                                            &#primary_key_field_ident_double_quotes_token_stream,
+                                            // &#primary_key_field_ident_double_quotes_token_stream,
+                                            &"",
                                             &#primary_key_field_ident_double_quotes_token_stream,
                                             &"",
                                             &mut #increment_snake_case,
@@ -4815,7 +4818,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                     &#value_snake_case.#value_snake_case,
-                                    &#field_ident_double_quotes_token_stream,
+                                    // &#field_ident_double_quotes_token_stream,
+                                    &"",
                                     &#field_ident_double_quotes_token_stream,
                                     &"",
                                     &mut #increment_snake_case,
@@ -4851,7 +4855,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                             // }
                             match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_self_to_update_query_part_snake_case(
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                                &#primary_key_field_ident_double_quotes_token_stream,
+                                // &#primary_key_field_ident_double_quotes_token_stream,
+                                &"",
                                 &#primary_key_field_ident_double_quotes_token_stream,
                                 &"",
                                 &mut #increment_snake_case,
