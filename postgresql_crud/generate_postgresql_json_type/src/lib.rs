@@ -2656,9 +2656,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             }
         };
-
-        let postgresql_json_type_self_to_create_snake_case = naming::PostgresqlJsonTypeSelfToCreateSnakeCase;
-        let postgresql_json_type_self_option_to_update_snake_case = naming::PostgresqlJsonTypeSelfOptionToUpdateSnakeCase;
         let generate_postgresql_type_traits_token_stream = |postgresql_json_type: &PostgresqlJsonType, need_to_generate_postgresql_crud_logic: bool|{
             let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
                 let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
@@ -4364,6 +4361,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_option_to_update_token_stream
                     }
                 };
+                let postgresql_json_type_self_to_create_snake_case = naming::PostgresqlJsonTypeSelfToCreateSnakeCase;
+                let postgresql_json_type_self_option_to_update_snake_case = naming::PostgresqlJsonTypeSelfOptionToUpdateSnakeCase;
                 let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                     &postgresql_crud_path_token_stream,
                     &tokens_upper_camel_case,
