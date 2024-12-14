@@ -2431,8 +2431,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     // let std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident);
 
     let field0_field1_token_stream = quote::quote!{__field0, __field1};
-
-    let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
     let json_value_variants_token_stream = {
         enum PostgresqlJsonType {
             Object,
@@ -4287,6 +4285,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 )
                             }
                         };
+                        let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                         let value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
                         let (
                             maybe_id_variant_token_stream,
