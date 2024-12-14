@@ -4279,10 +4279,42 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             };
             let update_token_stream = {
-                let postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = match &postgresql_json_type {
-                    PostgresqlJsonType::Object => generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
-                        &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
-                        &{
+                let postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = {
+                    let generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                        generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
+                            &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
+                            &content_token_stream
+                        )
+                    };
+                    // let content_token_stream = {
+
+                    // };
+                    match &postgresql_json_type {
+                        PostgresqlJsonType::Object => generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream(&{
+                             let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                 let field_ident_stringified = element
+                                     .ident
+                                     .as_ref()
+                                     .unwrap_or_else(|| {
+                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                     })
+                                     .to_string();
+                                 let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                 let postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_type_last_segment(&element.ty);
+                                 quote::quote!{
+                                     #variant_ident_upper_camel_case_token_stream {
+                                         #[eo_error_occurence]
+                                         error: #postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case,
+                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                     }
+                                 }
+                             });
+                             quote::quote!{
+                                //  #checked_add_variant_declaration_token_stream,
+                                 #(#variants_token_stream),*
+                             }
+                         }),
+                        PostgresqlJsonType::StdOptionOptionObject => generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream(&{
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
@@ -4305,38 +4337,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #checked_add_variant_declaration_token_stream,
                                 #(#variants_token_stream),*
                             }
-                        }
-                    ),
-                    PostgresqlJsonType::StdOptionOptionObject => generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
-                        &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
-                        &{
-                            let variants_token_stream = vec_syn_field.iter().map(|element| {
-                                let field_ident_stringified = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
-                                let postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_type_last_segment(&element.ty);
-                                quote::quote!{
-                                    #variant_ident_upper_camel_case_token_stream {
-                                        #[eo_error_occurence]
-                                        error: #postgresql_json_type_element_type_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    }
-                                }
-                            });
-                            quote::quote!{
-                                #checked_add_variant_declaration_token_stream,
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    ),
-                    PostgresqlJsonType::StdVecVecObjectWithId => generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
-                        &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
-                        &{
+                        }),
+                        PostgresqlJsonType::StdVecVecObjectWithId => generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream(&{
                             quote::quote!{
                                 #ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case {
                                     #[eo_error_occurence]
@@ -4344,21 +4346,18 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             }
-                        }
-                    ),
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(
-                        &postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream,
-                        &{
+                        }),
+                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_token_stream(&{
                             quote::quote!{
                                 #checked_add_variant_declaration_token_stream,
-                                JsonArrayChange {
+                                #ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case {
                                     #[eo_error_occurence]
                                     error: #ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             }
-                        }
-                    ),
+                        })
+                    }
                 };
                 let handle_token_stream = match &postgresql_json_type {
                     PostgresqlJsonType::Object => {
@@ -4636,7 +4635,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})")
                         );
                         quote::quote!{
-                            Ok(match &#postgresql_json_type_self_option_to_update_snake_case.0 {
+                            match &#postgresql_json_type_self_option_to_update_snake_case.0 {
                                 Some(value) => {
                                     let mut #std_option_option_object_acc_snake_case = format!(#some_format_handle_token_stream);
                                     #generate_jsonb_set_target_token_stream
@@ -4655,13 +4654,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 None => match #increment_snake_case.checked_add(1) {
                                     Some(value) => {
                                         *#increment_snake_case = value;
-                                        format!(#none_format_handle_token_stream)
+                                        Ok(format!(#none_format_handle_token_stream))
                                     },
-                                    None => {
-                                        return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream);
-                                    }
+                                    None => Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#checked_add_variant_initialization_token_stream)
                                 }
-                            })
+                            }
                         }
                     },
                     PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
@@ -4672,12 +4669,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #increment_snake_case,
                         ) {
                             Ok(value) => Ok(value),
-                            Err(error) => {
-                                return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case {
-                                    error,
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
-                            }
+                            Err(error) => Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case {
+                                error,
+                                code_occurence: error_occurence_lib::code_occurence!()
+                            })
                         }
                     },
                     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
@@ -4693,7 +4688,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     ) {
                                         Ok(value) => Ok(value),
                                         Err(error) => {
-                                            return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::JsonArrayChange {
+                                            return Err(#postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream::#ident_json_array_change_try_generate_postgresql_json_type_error_named_upper_camel_case {
                                                 error,
                                                 code_occurence: error_occurence_lib::code_occurence!()
                                             });
@@ -5760,10 +5755,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     // );
                     let postgresql_json_type = PostgresqlJsonType::StdOptionOptionObject;
                     let postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream(&postgresql_json_type);
-                    // let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
+                    let impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
                     quote::quote!{
                         // #std_option_option_object_ident_token_stream
-                        // #impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream
+                        #impl_postgresql_crud_postgresql_json_type_for_std_option_option_object_ident_token_stream
                     }
                 };
                 // let create_token_stream = {
@@ -5976,10 +5971,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_json_type = PostgresqlJsonType::StdVecVecObjectWithId;
                     let postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream(&postgresql_json_type);
                     let postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream(&postgresql_json_type);
-                    // let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
+                    let impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
                     quote::quote!{
                         // #std_vec_vec_object_with_id_ident_token_stream
-                        // #impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream
+                        #impl_postgresql_crud_postgresql_json_type_for_std_vec_vec_object_with_id_ident_token_stream
                     }
                 };
                 // let create_token_stream = {
@@ -6462,10 +6457,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream(&postgresql_json_type);
                     let postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream(&postgresql_json_type);
                     let postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream(&postgresql_json_type);
-                    // let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
+                    let impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&postgresql_json_type);
                     quote::quote!{
                         // #std_option_option_std_vec_vec_object_with_id_ident_token_stream
-                        // #impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
+                        #impl_postgresql_crud_postgresql_json_type_for_std_option_option_std_vec_vec_object_with_id_ident_token_stream
                     }
                 };
                 // let create_token_stream = {
