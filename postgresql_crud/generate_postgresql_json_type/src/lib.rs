@@ -2485,177 +2485,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{#value}
         };
-
-        let generate_generate_postgresql_json_type_to_read_content_token_stream = |postgresql_json_type: &PostgresqlJsonType|{
-            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
-            let generate_acc_push_str_variant_logic_token_stream = |
-                variant_name_token_stream: &dyn quote::ToTokens,
-                field_ident_double_quotes_token_stream: &dyn quote::ToTokens,
-                column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens,
-                element_type: &dyn quote::ToTokens,
-            |{
-                let tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
-                    PostgresqlJsonType::Object |
-                    PostgresqlJsonType::StdOptionOptionObject => &ident_field_to_read_without_id_upper_camel_case,
-                    PostgresqlJsonType::StdVecVecObjectWithId |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &ident_field_to_read_with_id_upper_camel_case
-                };
-                let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
-                quote::quote!{
-                    #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_json_type_to_read_snake_case(
-                        value,
-                        #field_ident_double_quotes_token_stream,
-                        #column_name_and_maybe_field_getter_token_stream,
-                        &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
-                        false,
-                    )
-                }
-            };
-            let value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
-            let (
-                maybe_id_variant_token_stream,
-                variants_token_stream
-            ) = {
-                let maybe_id_variant_token_stream = match &postgresql_json_type {
-                    PostgresqlJsonType::Object |
-                    PostgresqlJsonType::StdOptionOptionObject => proc_macro2::TokenStream::new(),
-                    PostgresqlJsonType::StdVecVecObjectWithId |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
-                        let id_upper_camel_case = naming::IdUpperCamelCase;
-                        let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&naming::IdSnakeCase);
-                        let value = generate_acc_push_str_variant_logic_token_stream(
-                            &quote::quote!{#id_upper_camel_case},
-                            &id_snake_case_double_quotes_token_stream,
-                            &value_snake_case_double_quotes_token_stream,
-                            &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::Uuid},
-                        );
-                        quote::quote!{#value,}
-                    }
-                };
-                let variants_token_stream = vec_syn_field.iter().map(|element| {
-                    let field_ident_stringified = element
-                        .ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                        })
-                        .to_string();
-                    generate_acc_push_str_variant_logic_token_stream(
-                        &naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified),
-                        &generate_quotes::double_quotes_token_stream(&field_ident_stringified),
-                        &match &postgresql_json_type {
-                            PostgresqlJsonType::Object |
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{&#column_name_and_maybe_field_getter_field_ident_snake_case},
-                            PostgresqlJsonType::StdVecVecObjectWithId |
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{#value_snake_case_double_quotes_token_stream}
-                        },
-                        &{
-                            let element_type = &element.ty;
-                            quote::quote!{#element_type}
-                        }
-                    )
-                });
-                (
-                    maybe_id_variant_token_stream,
-                    variants_token_stream
-                )
-            };
-            let self_field_vec_token_stream = match &postgresql_json_type {
-                PostgresqlJsonType::Object |
-                PostgresqlJsonType::StdOptionOptionObject => quote::quote!{0},
-                PostgresqlJsonType::StdVecVecObjectWithId |
-                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{field_vec}
-            };
-            let maybe_pagination_start_end_initialization_token_stream = match &postgresql_json_type {
-                PostgresqlJsonType::Object |
-                PostgresqlJsonType::StdOptionOptionObject => proc_macro2::TokenStream::new(),
-                PostgresqlJsonType::StdVecVecObjectWithId |
-                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming::PostgresqlJsonTypeSelfFieldReaderSnakeCase)
-            };
-            let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}'")
-            );
-            let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                &format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}")
-            );
-            let (
-                if_postgresql_type_is_true_format_handle_double_quotes_token_stream,
-                if_postgresql_type_is_false_format_handle_double_quotes_token_stream
-            ) = {
-                let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| {
-                    format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})")
-                };
-                let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| {
-                    format!("jsonb_build_object('{value_snake_case}',{value})")
-                };
-                let acc_format_handle = {
-                    let acc_snake_case = naming::AccSnakeCase;
-                    format!("{{{acc_snake_case}}}")
-                };
-                let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
-                let null_snake_case = naming::NullSnakeCase;
-                match postgresql_json_type {
-                    PostgresqlJsonType::Object => {
-                        (
-                            acc_format_handle.clone(),
-                            wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle)
-                        )
-                    },
-                    PostgresqlJsonType::StdOptionOptionObject => {
-                        (
-                            format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else {acc_format_handle} end"),
-                            wrap_into_jsonb_build_object_field_ident(&{
-                                let jsonb_build_object_value_null = wrap_into_jsonb_build_object_value(&null_snake_case);
-                                format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {jsonb_build_object_value_null} else {jsonb_build_object_value_acc_format_handle} end")
-                            })
-                        )
-                    },
-                    PostgresqlJsonType::StdVecVecObjectWithId => {
-                        let format_handle = format!("(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}})");
-                        (
-                            format_handle.clone(),
-                            wrap_into_jsonb_build_object_field_ident(&wrap_into_jsonb_build_object_value(&format_handle))
-                        )
-                    },
-                    PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
-                        let format_handle = format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else (select jsonb_agg({acc_format_handle}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}) end");
-                        (
-                            format_handle.clone(),
-                            wrap_into_jsonb_build_object_field_ident(&
-                                wrap_into_jsonb_build_object_value(&format_handle)
-                            )
-                        )
-                    },
-                }
-            };
-            quote::quote!{
-                let mut acc = std::string::String::default();
-                let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
-                    column_name_and_maybe_field_getter.to_string()
-                } else {
-                    format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
-                };
-                let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
-                for element in &#postgresql_json_type_self_field_reader_snake_case.#self_field_vec_token_stream {
-                    acc.push_str(&format!(
-                        "{}||",
-                        match element {
-                            #maybe_id_variant_token_stream
-                            #(#variants_token_stream),*
-                        }
-                    ));
-                }
-                let _ = acc.pop();
-                let _ = acc.pop();
-                #maybe_pagination_start_end_initialization_token_stream
-                if is_postgresql_type {
-                    format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
-                }
-                else {
-                    format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
-                }
-            }
-        };
         let generate_postgresql_type_traits_token_stream = |postgresql_json_type: &PostgresqlJsonType, need_to_generate_postgresql_crud_logic: bool|{
             let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
                 let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
@@ -4440,7 +4269,176 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     },
                     &postgresql_json_type_tokens_field_reader_upper_camel_case,
                     &postgresql_json_type_tokens_options_to_read_upper_camel_case,
-                    &generate_generate_postgresql_json_type_to_read_content_token_stream(&postgresql_json_type),
+                    &{
+                        let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
+                        let generate_acc_push_str_variant_logic_token_stream = |
+                            variant_name_token_stream: &dyn quote::ToTokens,
+                            field_ident_double_quotes_token_stream: &dyn quote::ToTokens,
+                            column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens,
+                            element_type: &dyn quote::ToTokens,
+                        |{
+                            let tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
+                                PostgresqlJsonType::Object |
+                                PostgresqlJsonType::StdOptionOptionObject => &ident_field_to_read_without_id_upper_camel_case,
+                                PostgresqlJsonType::StdVecVecObjectWithId |
+                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &ident_field_to_read_with_id_upper_camel_case
+                            };
+                            let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
+                            quote::quote!{
+                                #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_json_type_to_read_snake_case(
+                                    value,
+                                    #field_ident_double_quotes_token_stream,
+                                    #column_name_and_maybe_field_getter_token_stream,
+                                    &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
+                                    false,
+                                )
+                            }
+                        };
+                        let value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
+                        let (
+                            maybe_id_variant_token_stream,
+                            variants_token_stream
+                        ) = {
+                            let maybe_id_variant_token_stream = match &postgresql_json_type {
+                                PostgresqlJsonType::Object |
+                                PostgresqlJsonType::StdOptionOptionObject => proc_macro2::TokenStream::new(),
+                                PostgresqlJsonType::StdVecVecObjectWithId |
+                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
+                                    let id_upper_camel_case = naming::IdUpperCamelCase;
+                                    let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&naming::IdSnakeCase);
+                                    let value = generate_acc_push_str_variant_logic_token_stream(
+                                        &quote::quote!{#id_upper_camel_case},
+                                        &id_snake_case_double_quotes_token_stream,
+                                        &value_snake_case_double_quotes_token_stream,
+                                        &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::Uuid},
+                                    );
+                                    quote::quote!{#value,}
+                                }
+                            };
+                            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                let field_ident_stringified = element
+                                    .ident
+                                    .as_ref()
+                                    .unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    })
+                                    .to_string();
+                                generate_acc_push_str_variant_logic_token_stream(
+                                    &naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified),
+                                    &generate_quotes::double_quotes_token_stream(&field_ident_stringified),
+                                    &match &postgresql_json_type {
+                                        PostgresqlJsonType::Object |
+                                        PostgresqlJsonType::StdOptionOptionObject => quote::quote!{&#column_name_and_maybe_field_getter_field_ident_snake_case},
+                                        PostgresqlJsonType::StdVecVecObjectWithId |
+                                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{#value_snake_case_double_quotes_token_stream}
+                                    },
+                                    &{
+                                        let element_type = &element.ty;
+                                        quote::quote!{#element_type}
+                                    }
+                                )
+                            });
+                            (
+                                maybe_id_variant_token_stream,
+                                variants_token_stream
+                            )
+                        };
+                        let self_field_vec_token_stream = match &postgresql_json_type {
+                            PostgresqlJsonType::Object |
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote!{0},
+                            PostgresqlJsonType::StdVecVecObjectWithId |
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{field_vec}
+                        };
+                        let maybe_pagination_start_end_initialization_token_stream = match &postgresql_json_type {
+                            PostgresqlJsonType::Object |
+                            PostgresqlJsonType::StdOptionOptionObject => proc_macro2::TokenStream::new(),
+                            PostgresqlJsonType::StdVecVecObjectWithId |
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming::PostgresqlJsonTypeSelfFieldReaderSnakeCase)
+                        };
+                        let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                            &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}'")
+                        );
+                        let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                            &format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}")
+                        );
+                        let (
+                            if_postgresql_type_is_true_format_handle_double_quotes_token_stream,
+                            if_postgresql_type_is_false_format_handle_double_quotes_token_stream
+                        ) = {
+                            let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| {
+                                format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})")
+                            };
+                            let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| {
+                                format!("jsonb_build_object('{value_snake_case}',{value})")
+                            };
+                            let acc_format_handle = {
+                                let acc_snake_case = naming::AccSnakeCase;
+                                format!("{{{acc_snake_case}}}")
+                            };
+                            let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
+                            let null_snake_case = naming::NullSnakeCase;
+                            match postgresql_json_type {
+                                PostgresqlJsonType::Object => {
+                                    (
+                                        acc_format_handle.clone(),
+                                        wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle)
+                                    )
+                                },
+                                PostgresqlJsonType::StdOptionOptionObject => {
+                                    (
+                                        format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else {acc_format_handle} end"),
+                                        wrap_into_jsonb_build_object_field_ident(&{
+                                            let jsonb_build_object_value_null = wrap_into_jsonb_build_object_value(&null_snake_case);
+                                            format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {jsonb_build_object_value_null} else {jsonb_build_object_value_acc_format_handle} end")
+                                        })
+                                    )
+                                },
+                                PostgresqlJsonType::StdVecVecObjectWithId => {
+                                    let format_handle = format!("(select jsonb_agg({{acc}}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}})");
+                                    (
+                                        format_handle.clone(),
+                                        wrap_into_jsonb_build_object_field_ident(&wrap_into_jsonb_build_object_value(&format_handle))
+                                    )
+                                },
+                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
+                                    let format_handle = format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_field_ident_snake_case}}}) = 'null' then {null_snake_case} else (select jsonb_agg({acc_format_handle}) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_field_ident_snake_case}}})) with ordinality where ordinality between {{start}} and {{end}}) end");
+                                    (
+                                        format_handle.clone(),
+                                        wrap_into_jsonb_build_object_field_ident(&
+                                            wrap_into_jsonb_build_object_value(&format_handle)
+                                        )
+                                    )
+                                },
+                            }
+                        };
+                        quote::quote!{
+                            let mut acc = std::string::String::default();
+                            let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
+                                column_name_and_maybe_field_getter.to_string()
+                            } else {
+                                format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
+                            };
+                            let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
+                            for element in &#postgresql_json_type_self_field_reader_snake_case.#self_field_vec_token_stream {
+                                acc.push_str(&format!(
+                                    "{}||",
+                                    match element {
+                                        #maybe_id_variant_token_stream
+                                        #(#variants_token_stream),*
+                                    }
+                                ));
+                            }
+                            let _ = acc.pop();
+                            let _ = acc.pop();
+                            #maybe_pagination_start_end_initialization_token_stream
+                            if is_postgresql_type {
+                                format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
+                            }
+                            else {
+                                format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
+                            }
+                        }
+                    },
                     &generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream(&postgresql_json_type),
                     &generate_postgresql_json_type_tokens_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case_token_stream(&postgresql_json_type),
                     &match &postgresql_json_type {
