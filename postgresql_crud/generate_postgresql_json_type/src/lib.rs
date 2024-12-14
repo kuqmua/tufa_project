@@ -2752,9 +2752,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &postgresql_json_type_tokens_options_to_read_upper_camel_case,
                     //todo refactor - instead of bool and impl serde deserialize token stream maybe use enum 
                     match &postgresql_json_type {
-                        PostgresqlJsonType::Object => true,
+                        PostgresqlJsonType::Object |
                         PostgresqlJsonType::StdOptionOptionObject => true,
-                        PostgresqlJsonType::StdVecVecObjectWithId => false,
+                        PostgresqlJsonType::StdVecVecObjectWithId |
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => false,
                     },
                     &match &postgresql_json_type {
