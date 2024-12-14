@@ -79,9 +79,33 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
   "object_animal_as_postgres": {
     "std_primitive_i8": 0,
     "std_option_option_std_primitive_i8": 0,
+    "std_vec_vec_std_primitive_i8": [
+      0
+    ],
+    "std_option_option_std_vec_vec_std_primitive_i8": [
+      0
+    ],
+    "std_vec_vec_std_option_option_std_primitive_i8": [
+      0
+    ],
+    "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+      0
+    ],
     "object_doggie": {
       "std_primitive_i8": 0,
-      "std_option_option_std_primitive_i8": 0
+      "std_option_option_std_primitive_i8": 0,
+      "std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ]
     }
   }
 }
@@ -156,12 +180,76 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
           "std_option_option_std_primitive_i8": {}
         },
         {
+          "std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
           "object_doggie": [
             {
               "std_primitive_i8": {}
             },
             {
               "std_option_option_std_primitive_i8": {}
+            },
+            {
+              "std_vec_vec_std_primitive_i8": {
+                "pagination": {
+                  "limit": 1,
+                  "offset": 0
+                }
+              }
+            },
+            {
+              "std_option_option_std_vec_vec_std_primitive_i8": {
+                "pagination": {
+                  "limit": 1,
+                  "offset": 0
+                }
+              }
+            },
+            {
+              "std_vec_vec_std_option_option_std_primitive_i8": {
+                "pagination": {
+                  "limit": 1,
+                  "offset": 0
+                }
+              }
+            },
+            {
+              "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+                "pagination": {
+                  "limit": 1,
+                  "offset": 0
+                }
+              }
             }
           ]
         }
@@ -227,16 +315,72 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         }
       },
       {
+        "std_vec_vec_std_primitive_i8": {
+          "value": [
+            3
+          ]
+        }
+      },
+      {
+        "std_option_option_std_vec_vec_std_primitive_i8": {
+          "value": [
+            4
+          ]
+        }
+      },
+      {
+        "std_vec_vec_std_option_option_std_primitive_i8": {
+          "value": [
+            5
+          ]
+        }
+      },
+      {
+        "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+          "value": [
+            6
+          ]
+        }
+      },
+      {
         "object_doggie": {
           "value": [
             {
               "std_primitive_i8": {
-                "value": 3
+                "value": 7
               }
             },
             {
               "std_option_option_std_primitive_i8": {
-                "value": 4
+                "value": 8
+              }
+            },
+            {
+              "std_vec_vec_std_primitive_i8": {
+                "value": [
+                  9
+                ]
+              }
+            },
+            {
+              "std_option_option_std_vec_vec_std_primitive_i8": {
+                "value": [
+                  10
+                ]
+              }
+            },
+            {
+              "std_vec_vec_std_option_option_std_primitive_i8": {
+                "value": [
+                  11
+                ]
+              }
+            },
+            {
+              "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+                "value": [
+                  12
+                ]
               }
             }
           ]
