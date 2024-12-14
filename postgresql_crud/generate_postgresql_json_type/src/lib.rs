@@ -2674,7 +2674,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 },
             )
         };
-        let generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = |postgresql_json_type: &PostgresqlJsonType, need_to_generate_postgresql_crud_logic: bool|{
+        let generate_postgresql_type_traits_token_stream = |postgresql_json_type: &PostgresqlJsonType, need_to_generate_postgresql_crud_logic: bool|{
             let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
                 let tokens_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
                     PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
@@ -5515,10 +5515,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #generate_postgresql_crud_temporary_handle
             }
         };
-        let object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&PostgresqlJsonType::Object, true);
-        let std_option_option_object_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&PostgresqlJsonType::StdOptionOptionObject, false);
-        let std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&PostgresqlJsonType::StdVecVecObjectWithId, false);
-        let std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream(&PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId, false);
+        let object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::Object, true);
+        let std_option_option_object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionObject, false);
+        let std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdVecVecObjectWithId, false);
+        let std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId, false);
         quote::quote!{
             #object_ident_token_stream
             #std_option_option_object_ident_token_stream
