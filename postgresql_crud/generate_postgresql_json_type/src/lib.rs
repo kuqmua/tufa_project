@@ -2458,15 +2458,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{#value}
         };
-        let generate_postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
-            let value: &dyn quote::ToTokens = match &postgresql_json_type {
-                PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-            };
-            quote::quote!{#value}
-        };
         let generate_postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = |postgresql_json_type: &PostgresqlJsonType| {
             let value: &dyn quote::ToTokens = match &postgresql_json_type {
                 PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
@@ -2699,7 +2690,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         PostgresqlJsonType::StdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent,
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent,
                     });
-                    let postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream = generate_postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream(&postgresql_json_type);
+                    let postgresql_json_type_tokens_options_to_read_upper_camel_case_token_stream = {
+                        let value: &dyn quote::ToTokens = match &postgresql_json_type {
+                            PostgresqlJsonType::Object => &naming::parameter::PostgresqlJsonTypeObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                            PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                            PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
+                        };
+                        quote::quote!{#value}
+                    };
                     let impl_serde_deserialize_for_postgresql_json_type_tokens_options_to_read_token_stream = match &postgresql_json_type {
                         //todo impl_serde_deserialize
                         PostgresqlJsonType::Object => proc_macro2::TokenStream::new(),
