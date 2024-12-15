@@ -5288,7 +5288,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
                         let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
                         let postgresql_type_self_to_update_bind_query_part_content_token_stream = {
-                            let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |first_argument_token_stream: &dyn quote::ToTokens|{
+                            let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
+                                let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
+                                    &quote::quote!{#postgresql_type_self_to_update_snake_case.0}
+                                }
+                                else {
+                                    &value_snake_case
+                                };
                                 quote::quote!{
                                     <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_update(
                                         #first_argument_token_stream,
@@ -5299,7 +5305,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             match &postgresql_type {
                                 PostgresqlType::Json |
                                 PostgresqlType::Jsonb => {
-                                    let bind_value_to_postgresql_query_part_to_update_token_stream = generate_bind_value_to_postgresql_query_part_to_update_token_stream(&value_snake_case);
+                                    let bind_value_to_postgresql_query_part_to_update_token_stream = generate_bind_value_to_postgresql_query_part_to_update_token_stream(false);
                                     quote::quote!{
                                         query = match #postgresql_type_self_to_update_snake_case.0 {
                                             Some(#value_snake_case) => #bind_value_to_postgresql_query_part_to_update_token_stream,
@@ -5311,7 +5317,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     }
                                 },
                                 PostgresqlType::JsonNotNull |
-                                PostgresqlType::JsonbNotNull => generate_bind_value_to_postgresql_query_part_to_update_token_stream(&quote::quote!{#postgresql_type_self_to_update_snake_case.0}),
+                                PostgresqlType::JsonbNotNull => generate_bind_value_to_postgresql_query_part_to_update_token_stream(true),
                             }
                         };
                         quote::quote!{
