@@ -2421,15 +2421,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream
         }
     };
-
-    let postgresql_json_type_self_field_reader_snake_case = naming::PostgresqlJsonTypeSelfFieldReaderSnakeCase;
-    let field_ident_snake_case = naming::FieldIdentSnakeCase;
-
-    // let object_ident_upper_camel_case = naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident);
-    // let std_option_option_object_ident_upper_camel_case = naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident);
-    // let std_vec_vec_object_with_id_ident_upper_camel_case = naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident);
-    // let std_option_option_std_vec_vec_object_with_id_ident_upper_camel_case = naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident);
-
     let json_value_variants_token_stream = {
         enum PostgresqlJsonType {
             Object,
@@ -4185,6 +4176,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 };
                 let postgresql_json_type_self_to_create_snake_case = naming::PostgresqlJsonTypeSelfToCreateSnakeCase;
                 let postgresql_json_type_self_option_to_update_snake_case = naming::PostgresqlJsonTypeSelfOptionToUpdateSnakeCase;
+                let field_ident_snake_case = naming::FieldIdentSnakeCase;
                 let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                     &postgresql_crud_path_token_stream,
                     &tokens_upper_camel_case,
@@ -4405,6 +4397,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 },
                             }
                         };
+                        let postgresql_json_type_self_field_reader_snake_case = naming::PostgresqlJsonTypeSelfFieldReaderSnakeCase;
                         quote::quote!{
                             let mut acc = std::string::String::default();
                             let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
