@@ -2421,7 +2421,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream
         }
     };
-    let json_value_variants_token_stream = {
+    let postgresql_type_traits_token_stream = {
         enum PostgresqlJsonType {
             Object,
             StdOptionOptionObject,
@@ -5484,15 +5484,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #generate_postgresql_crud_temporary_handle
             }
         };
-        let object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::Object, true);
-        let std_option_option_object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionObject, false);
-        let std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdVecVecObjectWithId, false);
-        let std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId, false);
+        let postgresql_type_traits_object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::Object, true);
+        let postgresql_type_traits_std_option_option_object_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionObject, false);
+        let postgresql_type_traits_std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdVecVecObjectWithId, false);
+        let postgresql_type_traits_std_option_option_std_vec_vec_object_with_id_ident_token_stream = generate_postgresql_type_traits_token_stream(&PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId, false);
         quote::quote!{
-            #object_ident_token_stream
-            #std_option_option_object_ident_token_stream
-            #std_vec_vec_object_with_id_ident_token_stream
-            #std_option_option_std_vec_vec_object_with_id_ident_token_stream
+            #postgresql_type_traits_object_ident_token_stream
+            #postgresql_type_traits_std_option_option_object_ident_token_stream
+            #postgresql_type_traits_std_vec_vec_object_with_id_ident_token_stream
+            #postgresql_type_traits_std_option_option_std_vec_vec_object_with_id_ident_token_stream
         }
     };
     let generated = quote::quote! {
@@ -5502,7 +5502,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
         #object_with_id_ident_token_stream
 
-        #json_value_variants_token_stream
+        #postgresql_type_traits_token_stream
     };
     // if ident == "Animal" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
