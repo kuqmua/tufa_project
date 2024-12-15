@@ -42,25 +42,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "object_animal_as_postgres": {
       "std_primitive_i8": 0,
       "std_option_option_std_primitive_i8": 0
-    },
-    "std_option_option_object_animal_as_postgres": {
-      "std_primitive_i8": 0,
-      "std_option_option_std_primitive_i8": 0
-    },
-    "std_vec_vec_object_with_id_animal_as_postgres": [
-      {
-        "std_primitive_i8": 0,
-        "std_option_option_std_primitive_i8": 0
-      }
-    ],
-    "std_option_option_std_vec_vec_object_with_id_animal_as_postgres": [
-      {
-        "std_primitive_i8": 0,
-        "std_option_option_std_primitive_i8": 0
-      }
-    ]
+    }
   }
 ]
+
 
 ###
  
@@ -170,18 +155,27 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "std_primitive_i64_as_postgresql_big_serial_not_null": 3,
+    "std_primitive_i64_as_postgresql_big_serial_not_null": 1,
     "std_primitive_bool_as_postgresql_bool_not_null": {
-      "value": true
-    }
-  },
-  {
-    "std_primitive_i64_as_postgresql_big_serial_not_null": 4,
-    "std_primitive_bool_as_postgresql_bool_not_null": {
-      "value": true
+      "value": false
+    },
+    "object_animal_as_postgres": {
+      "value": [
+        {
+          "std_primitive_i8": {
+            "value": 0
+          }
+        },
+        {
+          "std_option_option_std_primitive_i8": {
+            "value": 0
+          }
+        }
+      ]
     }
   }
 ]
+
 
 ###
 
