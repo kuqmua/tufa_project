@@ -4986,25 +4986,31 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             };
                             let bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream = {
                                 let query_snake_case = naming::QuerySnakeCase;
-                                let generate_bind_value_to_postgresql_query_part_to_create_token_stream = |first_argument_token_stream: &dyn quote::ToTokens|{
+                                let generate_bind_value_to_postgresql_query_part_to_create_token_stream = |is_self_zero: std::primitive::bool|{
+                                    let first_argument_token_stream: &dyn quote::ToTokens = if is_self_zero {
+                                        &quote::quote!{self.0}
+                                    }
+                                    else {
+                                        &value_snake_case
+                                    };
                                     quote::quote!{<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::bind_value_to_postgresql_query_part_to_create(#first_argument_token_stream, #query_snake_case)}
                                 };
                                 match &postgresql_type {
                                     PostgresqlType::Json |
                                     PostgresqlType::Jsonb
                                     => {
-                                        let bind_value_to_postgresql_query_part_to_create_token_stream = generate_bind_value_to_postgresql_query_part_to_create_token_stream(&value_snake_case);
+                                        let bind_value_to_postgresql_query_part_to_create_token_stream = generate_bind_value_to_postgresql_query_part_to_create_token_stream(false);
                                         quote::quote!{
                                             #query_snake_case = match self.0 {
                                                 Some(#value_snake_case) => #bind_value_to_postgresql_query_part_to_create_token_stream,
-                                                None => query.bind(std::option::Option<#postgresql_json_type_tokens_to_create_upper_camel_case>::None)
+                                                None => #query_snake_case.bind(std::option::Option<#postgresql_json_type_tokens_to_create_upper_camel_case>::None)
                                             };
-                                            query
+                                            #query_snake_case
                                         }
                                     },
                                     PostgresqlType::JsonNotNull |
                                     PostgresqlType::JsonbNotNull
-                                    => generate_bind_value_to_postgresql_query_part_to_create_token_stream(&quote::quote!{self.0})
+                                    => generate_bind_value_to_postgresql_query_part_to_create_token_stream(true)
                                 }
                             };
                             quote::quote!{
