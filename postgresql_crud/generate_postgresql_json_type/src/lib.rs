@@ -5500,21 +5500,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             #std_option_option_std_vec_vec_object_with_id_ident_token_stream
         }
     };
-    //backwards compatibility with GeneratePostgresqlCrud(older version)
-    let older_aliases_token_stream = {
-        let ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&ident),
-            &postgresql_json_type_ident_to_create_upper_camel_case
-        );
-        let ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &naming::parameter::SelfOptionToUpdateUpperCamelCase::from_tokens(&ident),
-            &postgresql_json_type_ident_option_to_update_upper_camel_case
-        );
-        quote::quote!{
-            #ident_to_create_alias_token_stream
-            #ident_option_to_update_alias_token_stream
-        }
-    };
     let generated = quote::quote! {
         #common_token_stream
 
@@ -5523,8 +5508,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         #object_with_id_ident_token_stream
 
         #json_value_variants_token_stream
-
-        #older_aliases_token_stream
     };
     // if ident == "Animal" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
