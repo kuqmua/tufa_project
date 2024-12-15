@@ -326,7 +326,7 @@ pub struct Animal {
 /////////////////////////////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadManyPayload {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null: std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull>>,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null: std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>>,
     pub std_primitive_bool_as_postgresql_bool_not_null: std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>>,
     pub select: std::vec::Vec<PostgresqlTypeExampleColumn>,
     pub order_by: postgresql_crud::OrderBy<PostgresqlTypeExampleColumn>,
@@ -679,7 +679,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
-            query = query.bind(value.into_iter().map(|element| element.clone()).collect::<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull>>());
+            query = query.bind(value.into_iter().map(|element| element.clone()).collect::<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>>());
         }
         if let Some(value) = parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
             for value in value {
