@@ -5229,8 +5229,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
                         let increment_snake_case = naming::IncrementSnakeCase;
                         let postgresql_type_self_to_update_query_part_content_token_stream = {
-                            //todo refactor all "first_argument_token_stream" parameters. it must be bool or enum, remove : &dyn quote::ToTokens type
-                            let generate_ok_try_generate_postgresql_json_type_to_update_token_stream = |first_argument_token_stream: &dyn quote::ToTokens|{
+                            let generate_ok_try_generate_postgresql_json_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
+                                let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
+                                    &quote::quote!{&#postgresql_type_self_to_update_snake_case.0}
+                                }
+                                else {
+                                    &value_snake_case
+                                };
                                 //todo proper error handling - remove .unwrap()
                                 quote::quote!{
                                     Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
@@ -5239,14 +5244,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         #jsonb_set_target_snake_case,
                                         #jsonb_set_path_snake_case,
                                         #increment_snake_case,
-                                    //
                                     ).unwrap())
                                 }
                             };
                             match &postgresql_type {
                                 PostgresqlType::Json |
                                 PostgresqlType::Jsonb => {
-                                    let ok_try_generate_postgresql_json_type_to_update_token_stream = generate_ok_try_generate_postgresql_json_type_to_update_token_stream(&value_snake_case);
+                                    let ok_try_generate_postgresql_json_type_to_update_token_stream = generate_ok_try_generate_postgresql_json_type_to_update_token_stream(false);
                                     quote::quote!{
                                         match &#postgresql_type_self_to_update_snake_case.0 {
                                             Some(#value_snake_case) => #ok_try_generate_postgresql_json_type_to_update_token_stream,
@@ -5264,7 +5268,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     }
                                 },
                                 PostgresqlType::JsonNotNull |
-                                PostgresqlType::JsonbNotNull => generate_ok_try_generate_postgresql_json_type_to_update_token_stream(&quote::quote!{&#postgresql_type_self_to_update_snake_case.0}),
+                                PostgresqlType::JsonbNotNull => generate_ok_try_generate_postgresql_json_type_to_update_token_stream(true),
                             }
                         };
                         quote::quote!{
