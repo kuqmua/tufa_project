@@ -80,28 +80,27 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i64_as_postgresql_big_serial_not_null": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-  ],
-  "std_primitive_bool_as_postgresql_bool_not_null": null,
+  # "std_primitive_i64_as_postgresql_big_serial_not_null": [
+  #   0
+  # ],
+  # "std_primitive_bool_as_postgresql_bool_not_null": [
+  #   {
+  #     "conjunctive_operator": "Or"
+  #   }
+  # ],
   "select": [
     {
-      "std_primitive_bool_as_postgresql_bool_not_null": []
+      "std_primitive_bool_as_postgresql_bool_not_null": null
     },
     {
-      "std_primitive_i64_as_postgresql_big_serial_not_null": []
+      "std_primitive_i64_as_postgresql_big_serial_not_null": null
     }
   ],
   "order_by": {
     "column": {
-      "std_primitive_i64_as_postgresql_big_serial_not_null": []
+      "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
-    "order": "desc"
+    "order": "asc"
   },
   "limit": 10,
   "offset": 0

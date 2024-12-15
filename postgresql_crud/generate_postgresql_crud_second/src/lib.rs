@@ -4062,7 +4062,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         )
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     // &proc_macro_name_upper_camel_case,
+    //     "read_many",
     //     &read_many_token_stream,
     // );
     let (read_one_token_stream, read_one_http_request_test_expect_success_token_stream, read_one_http_request_test_expect_fail_token_stream) = {
@@ -5571,7 +5572,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
 
             #create_many_token_stream
             #create_one_token_stream
-            #read_many_token_stream
+            // #read_many_token_stream
             #read_one_token_stream
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
