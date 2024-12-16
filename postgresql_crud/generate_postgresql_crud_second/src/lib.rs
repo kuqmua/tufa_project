@@ -1952,11 +1952,15 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         &syn_derive_input.attrs,
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute()
     );
+    let generate_fields_named_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
+        let fields_token_stream = fields_without_primary_key.iter().map(function);
+        quote::quote! {#(#fields_token_stream),*}
+    };
     let generate_fields_named_excluding_primary_key_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_token_stream = fields_without_primary_key.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
     };
-    let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+    let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
         let field_ident = &element.field_ident;
         // let where_inner_type_with_generic_token_stream = &element.where_inner_type_with_generic_token_stream;
         let postgresql_type_field_type_where_upper_camel_case = &naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
@@ -1972,10 +1976,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     let generate_primary_key_inner_type_handle_token_stream = |is_original: bool| match is_original {
         true => &primary_key_inner_type_token_stream,
         false => &primary_key_inner_type_token_stream,
-    };
-    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = {
-        let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(true);
-        quote::quote! {pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_handle_token_stream>>}
     };
     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
         quote::quote! {pub #select_snake_case: std::vec::Vec<#postgresql_type_ident_column_upper_camel_case>}
@@ -3590,8 +3590,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &quote::quote! {
-                    #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
+                &quote::quote! {    
                     #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
                     #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
                     pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#postgresql_type_ident_column_upper_camel_case>,
@@ -5049,16 +5048,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             &operation,
             generate_operation_payload_token_stream(
                 &operation,
-                &{
-                    let primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream = {
-                        // let primary_key_inner_type_handle_token_stream = generate_primary_key_inner_type_handle_token_stream(true);
-                        quote::quote! {pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#postgresql_type_primary_key_field_type_to_delete_upper_camel_case>>}
-                    };
-                    quote::quote! {
-                        #primary_key_field_ident_std_option_option_std_vec_vec_primary_key_inner_type_handle_token_stream,
-                        #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
-                    }
-                }
+                &pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
             ),
         );
         // println!("{parameters_token_stream}");
@@ -5577,7 +5567,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
             #update_one_token_stream
-            #delete_many_token_stream
+            // #delete_many_token_stream
             #delete_one_token_stream
         // // }
     };
