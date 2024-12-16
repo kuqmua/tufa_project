@@ -80,7 +80,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   ],
   "std_primitive_i64_as_postgresql_big_serial_not_null": [
     {
-      "value": 1,
+      "value": 2,
       "conjunctive_operator": "Or"
     }
   ],
