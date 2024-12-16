@@ -715,12 +715,16 @@ pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
 }
 impl crate::BindQuerySecond<'_> for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        // println!("1");
+        // todo!()
+        Ok("HERE".to_string())
     }
     fn bind_value_to_query(self, 
         // mut 
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        // println!("2");
+        // todo!()
+        query
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
@@ -893,12 +897,16 @@ pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
 }
 impl crate::BindQuerySecond<'_> for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        // println!("3");
+        // todo!()
+        Ok("HERE".to_string())
     }
     fn bind_value_to_query(self, 
         // mut
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        // println!("4");
+        // todo!()
+        query
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {

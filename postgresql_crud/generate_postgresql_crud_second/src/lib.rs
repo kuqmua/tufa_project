@@ -3619,32 +3619,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     }
                 });
                 let query_string_token_stream = {
-                    let additional_parameters_primary_key_modification_token_stream = {
-                        let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}} {primary_key_field_ident} {in_snake_case} ({select_snake_case} {unnest_snake_case}(${{}}))"));
-                        let checked_add_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
-                        quote::quote! {
-                            if let Some(_) = &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                                let prefix = match additional_parameters.is_empty() {
-                                    true => #where_snake_case_qoutes_token_stream,
-                                    false => #space_and_double_quotes_token_stream,
-                                };
-                                match #increment_snake_case.checked_add(1) {
-                                    Some(#value_snake_case) => {
-                                        #increment_snake_case = #value_snake_case;
-                                    },
-                                    None => {
-                                        #checked_add_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                                    },
-                                }
-                                additional_parameters.push_str(&format!(
-                                    #handle_token_stream,
-                                    prefix,
-                                    #increment_snake_case
-                                ));
-                            }
-                        }
-                    };
-                    let additional_parameters_modification_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} ~ {{value}} "));
                         let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
@@ -3716,7 +3691,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 {
                                     #increment_initialization_token_stream
                                     let mut additional_parameters = #std_string_string::default();
-                                    #additional_parameters_primary_key_modification_token_stream
                                     #(#additional_parameters_modification_token_stream)*
                                     {
                                         #prefix_to_additional_parameters_token_stream

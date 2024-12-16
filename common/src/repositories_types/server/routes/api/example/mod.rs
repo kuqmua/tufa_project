@@ -519,38 +519,9 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                 value
             },
             {
+                println!("1#");
                 let mut increment: std::primitive::u64 = 0;
                 let mut additional_parameters = std::string::String::default();
-                if let Some(_) = &parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
-                    let prefix = match additional_parameters.is_empty() {
-                        true => "where",
-                        false => " and",
-                    };
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            increment = value;
-                        }
-                        None => {
-                            let error = TryReadManyRouteLogicErrorNamed::CheckedAdd {
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                        line: 3624,
-                                        column: 268,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
-                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                            return response;
-                        }
-                    }
-                    additional_parameters.push_str(&format!("{} std_primitive_i64_as_postgresql_big_serial_not_null in (select unnest(${}))", prefix, increment));
-                }
                 if let Some(value) = &parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
                     additional_parameters.push_str(&format!(
                         "{} {}",
@@ -561,6 +532,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                         {
                             let mut acc = std::string::String::default();
                             for (index, element) in value.iter().enumerate() {
+                                println!("1,2#");
                                 match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
                                     Ok(value) => {
                                         let handle = format!("std_primitive_bool_as_postgresql_bool_not_null ~ {value} ");
@@ -582,7 +554,58 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                                 column!(),
                                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                                    line: 3650,
+                                                    line: 3625,
+                                                    column: 266,
+                                                }),
+                                            ),
+                                        };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                }
+                                println!("1,5#");
+                            }
+                            if let false = acc.is_empty() {
+                                let _ = acc.pop();
+                            }
+                            acc
+                        }
+                    ));
+                }
+                if let Some(value) = &parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
+                    additional_parameters.push_str(&format!(
+                        "{} {}",
+                        match additional_parameters.is_empty() {
+                            true => "where",
+                            false => " and",
+                        },
+                        {
+                            let mut acc = std::string::String::default();
+                            for (index, element) in value.iter().enumerate() {
+                                match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
+                                    Ok(value) => {
+                                        let handle = format!("std_primitive_i64_as_postgresql_big_serial_not_null ~ {value} ");
+                                        match index == 0 {
+                                            true => {
+                                                acc.push_str(&handle);
+                                            }
+                                            false => {
+                                                acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                                            }
+                                        }
+                                    }
+                                    Err(error_0) => {
+                                        let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                                            bind_query: error_0,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                file!().to_owned(),
+                                                line!(),
+                                                column!(),
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                                                    line: 3625,
                                                     column: 266,
                                                 }),
                                             ),
@@ -629,7 +652,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                        line: 3698,
+                                        line: 3673,
                                         column: 168,
                                     }),
                                 ),
@@ -658,7 +681,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                        line: 3700,
+                                        line: 3675,
                                         column: 168,
                                     }),
                                 ),
@@ -822,7 +845,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                line: 3810,
+                                line: 3784,
                                 column: 169,
                             }),
                         ),
