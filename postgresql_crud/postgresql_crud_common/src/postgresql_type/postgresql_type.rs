@@ -711,25 +711,31 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
+    value: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
     pub conjunctive_operator: crate::ConjunctiveOperator,
 }
 impl crate::BindQuerySecond<'_> for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         // println!("1");
         // todo!()
-        Ok("HERE".to_string())
+        // Ok("HERE".to_string())
+        match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
+            Ok(value) => Ok(format!("= {value}")),
+            Err(error) => Err(error)
+        }
     }
     fn bind_value_to_query(self, 
         // mut 
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         // println!("2");
         // todo!()
-        query
+        crate::BindQuerySecond::bind_value_to_query(self.value, query)
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
+            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
@@ -893,25 +899,32 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
+    value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI64,
     pub conjunctive_operator: crate::ConjunctiveOperator,
 }
 impl crate::BindQuerySecond<'_> for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         // println!("3");
         // todo!()
-        Ok("HERE".to_string())
+        // Ok("HERE".to_string())
+        match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
+            Ok(value) => Ok(format!("= {value}")),
+            Err(error) => Err(error)
+        }
     }
     fn bind_value_to_query(self, 
         // mut
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         // println!("4");
         // todo!()
-        query
+        // query
+        crate::BindQuerySecond::bind_value_to_query(self.value, query)
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
+            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }

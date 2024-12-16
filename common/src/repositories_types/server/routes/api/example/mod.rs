@@ -535,7 +535,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                 println!("1,2#");
                                 match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
                                     Ok(value) => {
-                                        let handle = format!("std_primitive_bool_as_postgresql_bool_not_null ~ {value} ");
+                                        let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
                                         match index == 0 {
                                             true => {
                                                 acc.push_str(&handle);
@@ -586,7 +586,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                             for (index, element) in value.iter().enumerate() {
                                 match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
                                     Ok(value) => {
-                                        let handle = format!("std_primitive_i64_as_postgresql_big_serial_not_null ~ {value} ");
+                                        let handle = format!("std_primitive_i64_as_postgresql_big_serial_not_null {value} ");
                                         match index == 0 {
                                             true => {
                                                 acc.push_str(&handle);
