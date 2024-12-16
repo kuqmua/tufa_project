@@ -50,8 +50,8 @@ pub trait PostgresqlType<'a> {
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::fmt::bool,
-    ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
+        is_need_to_add_conjunctive_operator: std::primitive::bool,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
     fn postgresql_type_self_where_bind_value_to_query(
         postgresql_type_self_where: Self::PostgresqlTypeSelfWhere,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
