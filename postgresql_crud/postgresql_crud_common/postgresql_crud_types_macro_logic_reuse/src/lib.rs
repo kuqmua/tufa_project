@@ -1405,6 +1405,21 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_self_to_update_bind_query_part_token_stream
 
                 type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
+
+                fn postgresql_type_self_where_try_generate_bind_increments(
+                    postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+                    increment: &mut std::primitive::u64,
+                    column: &dyn std::fmt::Display,
+                    is_need_to_add_conjunctive_operator: std::primitive::bool,
+                ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                    todo!()
+                }
+                fn postgresql_type_self_where_bind_value_to_query<'a>(
+                    postgresql_type_self_where: Self::PostgresqlTypeSelfWhere,
+                    query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    todo!()
+                }
             }
         }
     };
