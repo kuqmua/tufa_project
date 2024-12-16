@@ -1953,7 +1953,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute()
     );
     let generate_fields_named_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
-        let fields_token_stream = fields_without_primary_key.iter().map(function);
+        let fields_token_stream = fields.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
     };
     let generate_fields_named_excluding_primary_key_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
@@ -3774,19 +3774,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    let binded_query_primary_key_modification_token_stream = quote::quote! {
-                        if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                            #query_snake_case = #query_snake_case.bind(
-                                #value_snake_case
-                                .into_iter().map(|#element_snake_case|
-                                    #element_snake_case
-                                    // .into_inner()
-                                    .clone()
-                                ).collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
-                            );
-                        }
-                    };
-                    let binded_query_modifications_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
@@ -3800,7 +3788,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     });
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                        #binded_query_primary_key_modification_token_stream
                         #(#binded_query_modifications_token_stream)*
                         #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
                             #parameters_snake_case.#payload_snake_case.#limit_snake_case,
