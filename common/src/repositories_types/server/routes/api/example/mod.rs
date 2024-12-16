@@ -519,7 +519,6 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                 value
             },
             {
-                println!("1#");
                 let mut increment: std::primitive::u64 = 0;
                 let mut additional_parameters = std::string::String::default();
                 if let Some(value) = &parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
@@ -532,7 +531,6 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                         {
                             let mut acc = std::string::String::default();
                             for (index, element) in value.iter().enumerate() {
-                                println!("1,2#");
                                 match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
                                     Ok(value) => {
                                         let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
@@ -565,7 +563,6 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                         return response;
                                     }
                                 }
-                                println!("1,5#");
                             }
                             if let false = acc.is_empty() {
                                 let _ = acc.pop();
