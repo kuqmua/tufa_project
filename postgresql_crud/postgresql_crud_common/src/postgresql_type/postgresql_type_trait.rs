@@ -7,7 +7,7 @@ pub trait PostgresqlTypeSelfToUpdateTraits<'a>:
     + serde::Serialize
     + serde::Deserialize<'a>
     + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub trait PostgresqlTypeSelfWhereTraits<'a>: std::fmt::Debug
+pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     + Clone
     + PartialEq
     + serde::Serialize
@@ -45,7 +45,7 @@ pub trait PostgresqlType<'a> {
         postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    type PostgresqlTypeSelfWhereElement: PostgresqlTypeSelfWhereTraits<'a>;
+    type PostgresqlTypeSelfWhereElement: PostgresqlTypeSelfWhereElementTraits<'a>;
     type PostgresqlTypeSelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn postgresql_type_self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,

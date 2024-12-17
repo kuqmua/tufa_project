@@ -222,8 +222,8 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "self", "as", "postgresql", "json", "to", "update", "query", "part", "error", "named"],
     ["postgresql", "type", "self", "as", "postgresql", "jsonb", "to", "update", "query", "part", "error", "named"],
     ["postgresql", "type", "self", "as", "postgresql", "json", "not", "null", "to", "update", "query", "part", "error", "named"],
-    ["postgresql", "type", "self", "as", "postgresql", "jsonb", "not", "null", "to", "update", "query", "part", "error", "named"]
-
+    ["postgresql", "type", "self", "as", "postgresql", "jsonb", "not", "null", "to", "update", "query", "part", "error", "named"],
+    ["postgresql", "type", "self", "where", "element"]
 ]);
 
 ////////////////////////////////////////////////////
