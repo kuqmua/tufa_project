@@ -5392,7 +5392,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_element_token_stream
                         }
                     };
-                    let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
+                    let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_token_stream = {
                         let postgresql_type_tokens_where_token_stream = {
                             quote::quote!{
@@ -5525,6 +5525,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #postgresql_type_tokens_to_read_token_stream
                         #postgresql_type_tokens_to_update_token_stream
                         #postgresql_type_tokens_to_update_query_part_error_named_token_stream
+                        #postgresql_type_tokens_where_element_token_stream
                         #postgresql_type_tokens_where_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }
