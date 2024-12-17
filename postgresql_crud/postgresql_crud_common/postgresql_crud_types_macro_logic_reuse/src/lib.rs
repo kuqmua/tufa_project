@@ -1372,6 +1372,32 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream
         }
     };
+    let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
+    let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
+    let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
+        let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
+        quote::quote!{
+            fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
+                #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
+                increment: &mut std::primitive::u64,
+                column: &dyn std::fmt::Display,
+                is_need_to_add_conjunctive_operator: std::primitive::bool,
+            ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                todo!()
+            }
+        }
+    };
+    let postgresql_type_self_where_bind_value_to_query_token_stream = {
+        let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
+        quote::quote!{
+            fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
+                #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
+                query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                todo!()
+            }
+        }
+    };
     let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
     let postgresql_type_self_column_query_part_token_stream = {
         let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
@@ -1390,7 +1416,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
         let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
         let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
-        let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
         quote::quote!{
             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #ident {
                 type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
@@ -1405,21 +1430,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_self_to_update_bind_query_part_token_stream
 
                 type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
-
-                fn postgresql_type_self_where_try_generate_bind_increments(
-                    postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
-                    increment: &mut std::primitive::u64,
-                    column: &dyn std::fmt::Display,
-                    is_need_to_add_conjunctive_operator: std::primitive::bool,
-                ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                    todo!()
-                }
-                fn postgresql_type_self_where_bind_value_to_query<'a>(
-                    postgresql_type_self_where: Self::PostgresqlTypeSelfWhere,
-                    query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    todo!()
-                }
+                #postgresql_type_self_where_try_generate_bind_increments_token_stream
+                #postgresql_type_self_where_bind_value_to_query_token_stream
             }
         }
     };

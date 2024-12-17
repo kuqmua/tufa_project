@@ -5404,7 +5404,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
-                                postgresql_type_self_where: &Self::#postgresql_type_self_where_upper_camel_case,
+                                #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
                                 is_need_to_add_conjunctive_operator: std::primitive::bool,
@@ -5423,7 +5423,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
-                                postgresql_type_self_where: Self::#postgresql_type_self_where_upper_camel_case,
+                                #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
                                 query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #postgresql_type_self_where_bind_value_to_query_content_token_stream
