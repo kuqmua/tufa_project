@@ -1161,6 +1161,18 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream
         }
     };
+    let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
+    let postgresql_type_self_column_query_part_token_stream = {
+        let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
+        quote::quote!{
+            fn postgresql_type_self_column_query_part(
+                #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
+                column: &std::primitive::str,
+            ) -> std::string::String {
+                column.to_string()
+            }
+        }
+    };
     let value_snake_case = naming::ValueSnakeCase;
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
     let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
@@ -1356,19 +1368,19 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             },
             false,
         );
-        let impl_crate_bind_query_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_where_element_upper_camel_case,
-            //todo maybe conjunctive operator and value must be generated here? not in the generate_postgresql_crud_second?
-            &quote::quote!{
-                match #crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.#value_snake_case, #increment_snake_case) {
-                    Ok(value) => Ok(format!("= {value}")),
-                    Err(error) => Err(error)
-                }
-            },
-            &quote::quote!{
-                #crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.#value_snake_case, #query_snake_case)
-            },
-        );
+        // let impl_crate_bind_query_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        //     &postgresql_type_ident_where_element_upper_camel_case,
+        //     //todo maybe conjunctive operator and value must be generated here? not in the generate_postgresql_crud_second?
+        //     &quote::quote!{
+        //         match #crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.#value_snake_case, #increment_snake_case) {
+        //             Ok(value) => Ok(format!("= {value}")),
+        //             Err(error) => Err(error)
+        //         }
+        //     },
+        //     &quote::quote!{
+        //         #crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.#value_snake_case, #query_snake_case)
+        //     },
+        // );
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_ident_where_element_upper_camel_case,
             &quote::quote!{{
@@ -1384,15 +1396,43 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         };
         quote::quote!{
             #postgresql_type_ident_where_element_token_stream
-            #impl_crate_bind_query_for_postgresql_type_ident_where_element_token_stream
+            // #impl_crate_bind_query_for_postgresql_type_ident_where_element_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream
             #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_element_token_stream
         }
     };
     let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_token_stream = {
+        let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
+        let postgresql_type_ident_where_token_stream = generate_pub_struct_tokens_token_stream(
+            Visibility::Private,
+            &postgresql_type_ident_where_upper_camel_case,
+            &quote::quote!{(std::vec::Vec<#postgresql_type_ident_where_element_upper_camel_case>);},
+            false,
+        );
+        // let impl_crate_bind_query_for_postgresql_type_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        //     &postgresql_type_ident_where_upper_camel_case,
+        //     //todo maybe conjunctive operator and value must be generated here? not in the generate_postgresql_crud_second?
+        //     &quote::quote!{
+        //         match #crate_bind_query_try_generate_bind_increments_token_stream(&#self_snake_case.#value_snake_case, #increment_snake_case) {
+        //             Ok(value) => Ok(format!("= {value}")),
+        //             Err(error) => Err(error)
+        //         }
+        //     },
+        //     &quote::quote!{
+        //         #crate_bind_query_bind_value_to_query_token_stream(#self_snake_case.#value_snake_case, #query_snake_case)
+        //     },
+        // );
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            &postgresql_type_ident_where_element_upper_camel_case,
+            &quote::quote!{(vec![
+                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            ])}
+        );
         quote::quote!{
-            
+            #postgresql_type_ident_where_token_stream
+            // #impl_crate_bind_query_for_postgresql_type_ident_where_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_token_stream
         }
     };
     let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
@@ -1419,18 +1459,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 todo!()
-            }
-        }
-    };
-    let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
-    let postgresql_type_self_column_query_part_token_stream = {
-        let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
-        quote::quote!{
-            fn postgresql_type_self_column_query_part(
-                #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
-                column: &std::primitive::str,
-            ) -> std::string::String {
-                column.to_string()
             }
         }
     };
