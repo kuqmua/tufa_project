@@ -786,8 +786,25 @@ fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
         }
     }
 }
+enum Visibility {
+    Pub,
+    PubCrate,
+    Private
+}
+impl quote::ToTokens for Visibility {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let pub_snake_case = naming::PubSnakeCase;
+        let crate_snake_case = naming::CrateSnakeCase;
+        match &self {
+            Visibility::Pub => naming::PubSnakeCase.to_tokens(tokens),
+            Visibility::PubCrate => quote::quote!{#pub_snake_case(#crate_snake_case)}.to_tokens(tokens),
+            Visibility::Private => (),
+        }
+        
+    }
+}
 fn generate_pub_struct_tokens_token_stream(
-    maybe_pub_token_stream: &dyn quote::ToTokens,
+    visibility: Visibility,
     ident_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
     impl_default: std::primitive::bool,
@@ -807,7 +824,7 @@ fn generate_pub_struct_tokens_token_stream(
             serde::Serialize,
             serde::Deserialize,
         )]
-        #maybe_pub_token_stream struct #ident_token_stream #content_token_stream
+        #visibility struct #ident_token_stream #content_token_stream
     }
 }
 fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -912,7 +929,7 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         }
     );
     let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
-        &quote::quote!{pub(crate)},
+        Visibility::PubCrate,
         &std_option_option_ident_upper_camel_case,
         &quote::quote!{(pub std::option::Option<#ident>);},
         false,
@@ -1125,7 +1142,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let pub_snake_case = naming::PubSnakeCase;
     let postgresql_type_ident_column_token_stream = {
         let pub_struct_postgresql_type_ident_column_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_column_upper_camel_case,
             &quote::quote!{;},
             true,
@@ -1149,7 +1166,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_create_token_stream = {
         let postgresql_type_ident_to_create_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_to_create_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
@@ -1179,7 +1196,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_read_token_stream = {
         let postgresql_type_ident_to_read_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_to_read_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
@@ -1208,7 +1225,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_type_ident_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_update_token_stream = {
         let postgresql_type_ident_to_update_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_to_update_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
@@ -1286,7 +1303,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_delete_token_stream = {
         let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_to_delete_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
@@ -1327,7 +1344,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_type_ident_where_token_stream = {
         let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
         let postgresql_type_ident_where_token_stream = generate_pub_struct_tokens_token_stream(
-            &pub_snake_case,
+            Visibility::Pub,
             &postgresql_type_ident_where_upper_camel_case,
             &{
                 let conjunctive_operator_upper_camel_case_case = naming::ConjunctiveOperatorUpperCamelCase;
@@ -1372,6 +1389,12 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_token_stream
         }
     };
+    let postgresql_type_ident_where_token_stream = {
+        quote::quote!{
+            
+        }
+    };
+    let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
     let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
     let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
     let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
@@ -1424,12 +1447,11 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_ident_to_create_upper_camel_case;
                 type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
                 type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;
-
                 type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case;
                 #postgresql_type_self_to_update_query_part_token_stream
                 #postgresql_type_self_to_update_bind_query_part_token_stream
-
-                type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
+                type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
+                // type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
                 #postgresql_type_self_where_try_generate_bind_increments_token_stream
                 #postgresql_type_self_where_bind_value_to_query_token_stream
             }
@@ -1557,7 +1579,7 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_to_delete_token_stream = {
         let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-            &naming::PubSnakeCase,
+            Visibility::Pub,
             &postgresql_type_ident_to_delete_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
