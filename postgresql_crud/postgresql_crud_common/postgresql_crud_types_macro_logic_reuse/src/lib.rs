@@ -1568,7 +1568,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #postgresql_type_ident_to_delete_token_stream
 
-        #postgresql_type_ident_where_element_token_stream
+        // #postgresql_type_ident_where_element_token_stream
 
         #postgresql_type_ident_where_token_stream
 
