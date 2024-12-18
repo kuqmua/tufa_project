@@ -578,7 +578,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                         &value,
                         &mut increment,
                         &"std_primitive_bool_as_postgresql_bool_not_null",
-                        true,//todo generate is in proc macro (first element ignore)
+                        false,//todo generate is in proc macro (first element ignore)
                     ) {
                         Ok(value) => {
                             additional_parameters.push_str(&value);
@@ -658,7 +658,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                         &value,
                         &mut increment,
                         &"std_primitive_i64_as_postgresql_big_serial_not_null",
-                        false,//todo generate is in proc macro (first element ignore)
+                        true,//todo generate is in proc macro (first element ignore)
                     ) {
                         Ok(value) => {
                             additional_parameters.push_str(&value);

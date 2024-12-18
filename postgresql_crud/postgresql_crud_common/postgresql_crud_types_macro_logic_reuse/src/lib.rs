@@ -1462,6 +1462,57 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 column: &dyn std::fmt::Display,
                 is_need_to_add_conjunctive_operator: std::primitive::bool,
             ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                // Ok(format!(
+                //     "{}({})",
+                //     if is_need_to_add_conjunctive_operator {
+                //         format!("{} ", #postgresql_type_self_where_snake_case.#conjunctive_operator_snake_case.to_string())
+                //     }
+                //     else {
+                //         std::string::String::default()
+                //     },
+                //     {
+                //         let mut acc = std::string::String::default();
+                //         for (index, element) in value.iter().enumerate() {
+                //             match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
+                //                 Ok(value) => {
+                //                     let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
+                //                     match index == 0 {
+                //                         true => {
+                //                             acc.push_str(&handle);
+                //                         }
+                //                         false => {
+                //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                //                         }
+                //                     }
+                //                 }
+                //                 Err(error_0) => {
+                //                     // let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                //                     //     bind_query: error_0,
+                //                     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                     //         file!().to_owned(),
+                //                     //         line!(),
+                //                     //         column!(),
+                //                     //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                //                     //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                //                     //             line: 3625,
+                //                     //             column: 266,
+                //                     //         }),
+                //                     //     ),
+                //                     // };
+                //                     // eprintln!("{error}");
+                //                     // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                //                     // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                //                     // return response;
+                //                     todo!()
+                //                 }
+                //             }
+                //         }
+                //         if let false = acc.is_empty() {
+                //             let _ = acc.pop();
+                //         }
+                //         acc
+                //     }
+                // ))
                 todo!()
             }
         }
