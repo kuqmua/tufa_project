@@ -8122,10 +8122,10 @@ pub trait BindQuery<'a> {
 pub enum ConjunctiveOperator {
     Or,
     And,
-    //todo
-    // OrNot,
-    // AndNot,
+    OrNot,
+    AndNot,
 }
+//todo remove Default impl?
 impl std::default::Default for ConjunctiveOperator {
     fn default() -> Self {
         Self::Or
@@ -8139,10 +8139,10 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Or => write!(formatter, "{}", naming::OrUpperCamelCase),
-            Self::And => {
-                write!(formatter, "{}", naming::AndUpperCamelCase)
-            }
+            Self::Or => write!(formatter, "OR"),
+            Self::And => write!(formatter, "AND"),
+            Self::OrNot => write!(formatter, "OR NOT"),
+            Self::AndNot => write!(formatter, "AND NOT"),
         }
     }
 }

@@ -584,11 +584,7 @@ const _: () = {
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereNotEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereLessThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereBetween {
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
