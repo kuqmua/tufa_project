@@ -326,8 +326,12 @@ pub struct Animal {
 /////////////////////////////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadManyPayload {
-    pub std_primitive_bool_as_postgresql_bool_not_null: std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>>,
-    pub std_primitive_i64_as_postgresql_big_serial_not_null: std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>>,
+    pub std_primitive_bool_as_postgresql_bool_not_null: 
+    // std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>>,
+    std::option::Option<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null: 
+    // std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>>,
+    std::option::Option<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>,
     pub select: std::vec::Vec<PostgresqlTypeExampleColumn>,
     pub order_by: postgresql_crud::OrderBy<PostgresqlTypeExampleColumn>,
     pub limit: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
@@ -498,7 +502,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
     println!("{:#?}", parameters);
     let query_string = {
         format!(
-            "select {} from example {}",
+            "select {} from example where {}",
             {
                 let mut value = std::string::String::default();
                 for element in &parameters.payload.select {
@@ -522,104 +526,164 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                 let mut increment: std::primitive::u64 = 0;
                 let mut additional_parameters = std::string::String::default();
                 if let Some(value) = &parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
-                    additional_parameters.push_str(&format!(
-                        "{} {}",
-                        match additional_parameters.is_empty() {
-                            true => "where",
-                            false => " and",
-                        },
-                        {
-                            let mut acc = std::string::String::default();
-                            for (index, element) in value.iter().enumerate() {
-                                match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
-                                    Ok(value) => {
-                                        let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
-                                        match index == 0 {
-                                            true => {
-                                                acc.push_str(&handle);
-                                            }
-                                            false => {
-                                                acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
-                                            }
-                                        }
-                                    }
-                                    Err(error_0) => {
-                                        let error = TryReadManyRouteLogicErrorNamed::BindQuery {
-                                            bind_query: error_0,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                file!().to_owned(),
-                                                line!(),
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                                    line: 3625,
-                                                    column: 266,
-                                                }),
-                                            ),
-                                        };
-                                        eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
-                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                        return response;
-                                    }
-                                }
-                            }
-                            if let false = acc.is_empty() {
-                                let _ = acc.pop();
-                            }
-                            acc
+                    // additional_parameters.push_str(&format!(
+                    //     "{} {}",
+                    //     match additional_parameters.is_empty() {
+                    //         true => "where",
+                    //         false => " and",
+                    //     },
+                    //     {
+                    //         let mut acc = std::string::String::default();
+                    //         for (index, element) in value.iter().enumerate() {
+                    //             match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
+                    //                 Ok(value) => {
+                    //                     let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
+                    //                     match index == 0 {
+                    //                         true => {
+                    //                             acc.push_str(&handle);
+                    //                         }
+                    //                         false => {
+                    //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 Err(error_0) => {
+                    //                     let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                    //                         bind_query: error_0,
+                    //                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    //                             file!().to_owned(),
+                    //                             line!(),
+                    //                             column!(),
+                    //                             Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    //                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                    //                                 line: 3625,
+                    //                                 column: 266,
+                    //                             }),
+                    //                         ),
+                    //                     };
+                    //                     eprintln!("{error}");
+                    //                     let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                    //                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    //                     return response;
+                    //                 }
+                    //             }
+                    //         }
+                    //         if let false = acc.is_empty() {
+                    //             let _ = acc.pop();
+                    //         }
+                    //         acc
+                    //     }
+                    // ));
+                    match <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
+                        &value,
+                        &mut increment,
+                        &"std_primitive_bool_as_postgresql_bool_not_null",
+                        true,//todo generate is in proc macro (first element ignore)
+                    ) {
+                        Ok(value) => {
+                            additional_parameters.push_str(&value);
                         }
-                    ));
+                        Err(error_0) => {
+                            // let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                            //     bind_query: error_0,
+                            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            //         file!().to_owned(),
+                            //         line!(),
+                            //         column!(),
+                            //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                            //             line: 3625,
+                            //             column: 266,
+                            //         }),
+                            //     ),
+                            // };
+                            // eprintln!("{error}");
+                            // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                            // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            // return response;
+                            todo!()
+                        }
+                    }
                 }
                 if let Some(value) = &parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
-                    additional_parameters.push_str(&format!(
-                        "{} {}",
-                        match additional_parameters.is_empty() {
-                            true => "where",
-                            false => " and",
-                        },
-                        {
-                            let mut acc = std::string::String::default();
-                            for (index, element) in value.iter().enumerate() {
-                                match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
-                                    Ok(value) => {
-                                        let handle = format!("std_primitive_i64_as_postgresql_big_serial_not_null {value} ");
-                                        match index == 0 {
-                                            true => {
-                                                acc.push_str(&handle);
-                                            }
-                                            false => {
-                                                acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
-                                            }
-                                        }
-                                    }
-                                    Err(error_0) => {
-                                        let error = TryReadManyRouteLogicErrorNamed::BindQuery {
-                                            bind_query: error_0,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                file!().to_owned(),
-                                                line!(),
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                                                    line: 3625,
-                                                    column: 266,
-                                                }),
-                                            ),
-                                        };
-                                        eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
-                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                        return response;
-                                    }
-                                }
-                            }
-                            if let false = acc.is_empty() {
-                                let _ = acc.pop();
-                            }
-                            acc
+                    // additional_parameters.push_str(&format!(
+                    //     "{} {}",
+                    //     match additional_parameters.is_empty() {
+                    //         true => "where",
+                    //         false => " and",
+                    //     },
+                    //     {
+                    //         let mut acc = std::string::String::default();
+                    //         for (index, element) in value.iter().enumerate() {
+                    //             match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
+                    //                 Ok(value) => {
+                    //                     let handle = format!("std_primitive_i64_as_postgresql_big_serial_not_null {value} ");
+                    //                     match index == 0 {
+                    //                         true => {
+                    //                             acc.push_str(&handle);
+                    //                         }
+                    //                         false => {
+                    //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 Err(error_0) => {
+                    //                     let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                    //                         bind_query: error_0,
+                    //                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    //                             file!().to_owned(),
+                    //                             line!(),
+                    //                             column!(),
+                    //                             Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    //                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                    //                                 line: 3625,
+                    //                                 column: 266,
+                    //                             }),
+                    //                         ),
+                    //                     };
+                    //                     eprintln!("{error}");
+                    //                     let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                    //                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    //                     return response;
+                    //                 }
+                    //             }
+                    //         }
+                    //         if let false = acc.is_empty() {
+                    //             let _ = acc.pop();
+                    //         }
+                    //         acc
+                    //     }
+                    // ));
+                    match <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
+                        &value,
+                        &mut increment,
+                        &"std_primitive_i64_as_postgresql_big_serial_not_null",
+                        false,//todo generate is in proc macro (first element ignore)
+                    ) {
+                        Ok(value) => {
+                            additional_parameters.push_str(&value);
                         }
-                    ));
+                        Err(error_0) => {
+                            // let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                            //     bind_query: error_0,
+                            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            //         file!().to_owned(),
+                            //         line!(),
+                            //         column!(),
+                            //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                            //             line: 3625,
+                            //             column: 266,
+                            //         }),
+                            //     ),
+                            // };
+                            // eprintln!("{error}");
+                            // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                            // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            // return response;
+                            todo!()
+                        }
+                    }
                 }
                 {
                     let prefix = match additional_parameters.is_empty() {
@@ -699,14 +763,14 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
         if let Some(value) = parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
-            for value in value {
-                query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
-            }
+            // for value in value {
+            //     query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
+            // }
         }
         if let Some(value) = parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
-            for value in value {
-                query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
-            }
+            // for value in value {
+            //     query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
+            // }
         }
         query = postgresql_crud::BindQuerySecond::bind_value_to_query(parameters.payload.limit, query);
         query = postgresql_crud::BindQuerySecond::bind_value_to_query(parameters.payload.offset, query);
@@ -1047,12 +1111,12 @@ pub async fn try_read_many(server_location: &std::primitive::str, parameters: Re
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ReadManyPayload {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            std_primitive_bool_as_postgresql_bool_not_null: Some(vec![
+            std_primitive_bool_as_postgresql_bool_not_null: Some(
                 postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            ]),
-            std_primitive_i64_as_postgresql_big_serial_not_null: Some(vec![
+            ),
+            std_primitive_i64_as_postgresql_big_serial_not_null: Some(
                 postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            ]),
+            ),
             select: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             order_by: postgresql_crud::OrderBy {
                 column: PostgresqlTypeExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(
