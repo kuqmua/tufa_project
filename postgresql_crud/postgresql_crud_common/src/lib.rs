@@ -8122,6 +8122,9 @@ pub trait BindQuery<'a> {
 pub enum ConjunctiveOperator {
     Or,
     And,
+    //todo
+    // OrNot,
+    // AndNot,
 }
 impl std::default::Default for ConjunctiveOperator {
     fn default() -> Self {

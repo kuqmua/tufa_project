@@ -580,7 +580,74 @@ const _: () = {
 
 
 
+/////////////////////////////////////////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereNotEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereLessThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereBetween {
+    start: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
+    end: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveBool>);
 
+// In PostgreSQL, the WHERE clause can include a variety of expressions to filter records based on specific conditions. Here’s a comprehensive list of expressions that can be used in a WHERE clause:
+
+// 1. Comparison Expressions
+// Equal to: column_name = value
+// Not equal to: column_name <> value or column_name != value
+// Greater than: column_name > value
+// Less than: column_name < value
+// Greater than or equal to: column_name >= value
+// Less than or equal to: column_name <= value
+// 2. BETWEEN Expression
+// Between: column_name BETWEEN value1 AND value2
+// 3. LIKE and ILIKE Expressions
+// Like: column_name LIKE 'pattern'
+// Case-insensitive Like: column_name ILIKE 'pattern'
+// 4. IN Expression
+// In: column_name IN (value1, value2, ...)
+// 5. NULL Checks
+// Is Null: column_name IS NULL
+// Is Not Null: column_name IS NOT NULL
+// 6. Boolean Expressions
+// Boolean Conditions: column_name = TRUE, column_name = FALSE
+// Logical Operators:
+// AND: condition1 AND condition2
+// OR: condition1 OR condition2
+// NOT: NOT condition
+// 7. Subquery Expressions
+// Exists: EXISTS (subquery)
+// Any / Some: column_name > ANY (subquery)
+// All: column_name > ALL (subquery)
+// 8. String Functions
+// String Functions: You can use string functions in the WHERE clause, such as:
+// LENGTH(column_name) > 5
+// UPPER(column_name) = 'VALUE'
+// 9. Date and Time Functions
+// Date Functions: You can use date functions, such as:
+// column_name > CURRENT_DATE
+// column_name BETWEEN '2023-01-01' AND '2023-12-31'
+// 10. JSON and Array Expressions
+// JSON Operators: For querying JSON data types:
+// json_column ->> 'key' = 'value'
+// Array Operators: For querying array data types:
+// column_name @> ARRAY[value1, value2] (contains)
+// column_name && ARRAY[value1, value2] (overlaps)
+// 11. Full-Text Search
+// Full-Text Search: Using @@ for full-text search:
+// to_tsvector(column_name) @@ to_tsquery('search_term')
+// 12. Custom Functions
+// You can also use custom functions in the WHERE clause:
+// custom_function(column_name) = value
+// Summary
+// These expressions can be combined in various ways to create complex filtering conditions in your SQL queries. Always ensure that the data types of the columns and values being compared are compatible to avoid errors. The flexibility of the WHERE clause allows for powerful querying capabilities in PostgreSQL.
 
 
 
@@ -599,6 +666,22 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
