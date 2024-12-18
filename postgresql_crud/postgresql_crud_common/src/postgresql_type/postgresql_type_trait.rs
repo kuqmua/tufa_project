@@ -46,7 +46,9 @@ pub trait PostgresqlType<'a> {
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type PostgresqlTypeSelfWhereElement: PostgresqlTypeSelfWhereElementTraits<'a>;
-    type PostgresqlTypeSelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type PostgresqlTypeSelfWhere: std::fmt::Debug 
+        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        + crate::GetConjunctiveOperator;
     fn postgresql_type_self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
         increment: &mut std::primitive::u64,

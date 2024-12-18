@@ -8143,6 +8143,9 @@ impl std::fmt::Display for ConjunctiveOperator {
         }
     }
 }
+pub trait GetConjunctiveOperator {
+    fn get_conjunctive_operator(&self) -> &ConjunctiveOperator;
+}
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum Order {

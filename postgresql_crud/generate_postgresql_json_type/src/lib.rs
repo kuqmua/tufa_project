@@ -5394,7 +5394,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_token_stream = {
+                        let conjunctive_operator_upper_camel_case = naming::ConjunctiveOperatorUpperCamelCase;
+                        let conjunctive_operator_snake_case = naming::ConjunctiveOperatorUpperCamelCase;
                         let postgresql_type_tokens_where_token_stream = {
+                            let value_snake_case = naming::ValueSnakeCase;
                             quote::quote!{
                                 #[derive(
                                     Debug,
@@ -5404,7 +5407,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     serde::Deserialize,
                                     schemars::JsonSchema,
                                 )]
-                                pub struct #postgresql_type_tokens_where_upper_camel_case(pub std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>);
+                                pub struct #postgresql_type_tokens_where_upper_camel_case {
+                                    #conjunctive_operator_snake_case: postgresql_crud::#conjunctive_operator_upper_camel_case,
+                                    #value_snake_case: std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>
+                                }
                             }
                         };
                         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = {
@@ -5412,9 +5418,23 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_where_upper_camel_case {
                                     #[inline]
                                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        Self(vec![
-                                            #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                        ])
+                                        Self {
+                                            #conjunctive_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                            #value_snake_case: vec![
+                                                #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        let impl_postgresql_crud_get_conjunctive_operator_for_postgresql_type_tokens_where_token_stream = {
+                            let get_conjunctive_operator_upper_camel_case = naming::GetConjunctiveOperatorUpperCamelCase;
+                            let get_conjunctive_operator_snake_case = naming::GetConjunctiveOperatorSnakeCase;
+                            quote::quote!{
+                                impl postgresql_crud::#get_conjunctive_operator_upper_camel_case for #postgresql_type_tokens_where_upper_camel_case {
+                                    fn #get_conjunctive_operator_snake_case(&self) -> &postgresql_crud::#conjunctive_operator_upper_camel_case {
+                                        &self.#conjunctive_operator_snake_case
                                     }
                                 }
                             }
@@ -5422,6 +5442,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         quote::quote!{
                             #postgresql_type_tokens_where_token_stream
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
+                            #impl_postgresql_crud_get_conjunctive_operator_for_postgresql_type_tokens_where_token_stream
                         }
                     };
                     let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
