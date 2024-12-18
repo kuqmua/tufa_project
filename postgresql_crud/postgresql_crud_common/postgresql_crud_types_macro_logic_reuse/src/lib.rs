@@ -1352,20 +1352,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
         }
     };
+    let conjunctive_operator_upper_camel_case_case = naming::ConjunctiveOperatorUpperCamelCase;
     let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_element_token_stream = {
         let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
         let postgresql_type_ident_where_element_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::Pub,
             &postgresql_type_ident_where_element_upper_camel_case,
-            &{
-                let conjunctive_operator_upper_camel_case_case = naming::ConjunctiveOperatorUpperCamelCase;
-                //todo maybe remove pub here?
-                quote::quote!{{
-                    pub #value_snake_case: #field_type,
-                    pub #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case_case,
-                }}
-            },
+            &quote::quote!{{
+                pub #value_snake_case: #field_type,
+                pub #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case_case,
+            }},
             false,
         );
         // let impl_crate_bind_query_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
@@ -1407,7 +1404,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         let postgresql_type_ident_where_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::Pub,
             &postgresql_type_ident_where_upper_camel_case,
-            &quote::quote!{(pub std::vec::Vec<#postgresql_type_ident_where_element_upper_camel_case>);},
+            &quote::quote!{{
+                #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case_case,
+                #value_snake_case: std::vec::Vec<#postgresql_type_ident_where_element_upper_camel_case>
+            }},
             false,
         );
         // let impl_crate_bind_query_for_postgresql_type_ident_where_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
@@ -1425,9 +1425,12 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         // );
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_ident_where_upper_camel_case,
-            &quote::quote!{(vec![
-                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            ])}
+            &quote::quote!{{
+                #conjunctive_operator_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                #value_snake_case: vec![
+                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                ]
+            }}
         );
         quote::quote!{
             #postgresql_type_ident_where_token_stream
