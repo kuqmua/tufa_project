@@ -624,20 +624,18 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(format!("{column} > ${increment}"))
+        match crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment) {
+            Ok(value) => {
+                Ok(format!("{column} > ${value}"))
             }
-            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            Err(error) => Err(error),//todo another checked add? 
         }
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(
         self,
-        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self.0));
-        query
+        crate::BindQuerySecond::bind_value_to_query(self.0, query)
     }
 }
 
