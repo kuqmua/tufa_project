@@ -15,7 +15,7 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     // + crate::BindQuerySecond<'a>
     // + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement 
     + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
-    {}
+    + crate::GetEquivalence {}
 //todo maybe add another trait without "is_need_to_add_conjunctive_operator: std::primitive::bool"
 pub trait PostgresqlTypeSelfWhereFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
@@ -63,7 +63,8 @@ pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelfWhereElement: PostgresqlTypeSelfWhereElementTraits<'a>;
     type PostgresqlTypeSelfWhere: std::fmt::Debug 
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        + crate::GetConjunctiveOperator;
+        + crate::GetConjunctiveOperator
+        + crate::GetEquivalence;
     fn postgresql_type_self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
         increment: &mut std::primitive::u64,

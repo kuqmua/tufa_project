@@ -5343,14 +5343,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_tokens_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_element_token_stream = {
                         let postgresql_type_tokens_where_element_token_stream = {
-                            let conjective_operator_struct_declaration_token_stream = quote::quote!{{
+                            let struct_declaration_token_stream = quote::quote!{{
+                                equivalence: postgresql_crud::Equivalence,
                                 conjunctive_operator: postgresql_crud::ConjunctiveOperator,
                             }};
                             let pub_struct_postgresql_type_tokens_where_element_declaration_token_stream = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => &conjective_operator_struct_declaration_token_stream,
-                                PostgresqlJsonType::StdOptionOptionObject => &conjective_operator_struct_declaration_token_stream,
-                                PostgresqlJsonType::StdVecVecObjectWithId => &conjective_operator_struct_declaration_token_stream,
-                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &conjective_operator_struct_declaration_token_stream,
+                                PostgresqlJsonType::Object => &struct_declaration_token_stream,
+                                PostgresqlJsonType::StdOptionOptionObject => &struct_declaration_token_stream,
+                                PostgresqlJsonType::StdVecVecObjectWithId => &struct_declaration_token_stream,
+                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &struct_declaration_token_stream,
                             };
                             quote::quote!{
                                 #[derive(
@@ -5386,10 +5387,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
                             }
                         };
+                        let impl_postgresql_crud_get_equivalence_for_postgresql_type_tokens_where_element_token_stream = {
+                            quote::quote!{
+                                impl postgresql_crud::GetEquivalence for #postgresql_type_tokens_where_element_upper_camel_case {
+                                    fn get_equivalence(&self) -> &postgresql_crud::Equivalence {
+                                        &self.equivalence
+                                    }
+                                }
+                            }
+                        };
                         quote::quote!{
                             #postgresql_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_element_token_stream
+                            #impl_postgresql_crud_get_equivalence_for_postgresql_type_tokens_where_element_token_stream
                         }
                     };
                     let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = {
@@ -5428,6 +5439,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     schemars::JsonSchema,
                                 )]
                                 pub struct #postgresql_type_tokens_where_upper_camel_case {
+                                    equivalence: postgresql_crud::Equivalence,
                                     #conjunctive_operator_snake_case: postgresql_crud::#conjunctive_operator_upper_camel_case,
                                     #value_snake_case: std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>
                                 }
@@ -5439,6 +5451,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #[inline]
                                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                                         Self {
+                                            equivalence: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                                             #conjunctive_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                                             #value_snake_case: vec![
                                                 #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -5459,10 +5472,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
+                        let impl_postgresql_crud_get_equivalence_for_postgresql_type_tokens_where_token_stream = {
+                            quote::quote!{
+                                impl postgresql_crud::GetEquivalence for #postgresql_type_tokens_where_upper_camel_case {
+                                    fn get_equivalence(&self) -> &postgresql_crud::Equivalence {
+                                        &self.equivalence
+                                    }
+                                }
+                            }
+                        };
                         quote::quote!{
                             #postgresql_type_tokens_where_token_stream
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
                             #impl_postgresql_crud_get_conjunctive_operator_for_postgresql_type_tokens_where_token_stream
+                            #impl_postgresql_crud_get_equivalence_for_postgresql_type_tokens_where_token_stream
                         }
                     };
                     let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
