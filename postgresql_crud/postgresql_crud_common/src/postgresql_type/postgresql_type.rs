@@ -859,9 +859,31 @@ pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {
 //     }
 // }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {}
-
-
-
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        &self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+            &self.value,
+            increment,
+            column,
+        ) {
+            Ok(value) => Ok(format!(" {} ({value}) ", &self.conjunctive_operator)),
+            Err(error) => Err(error),//todo
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        self,
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+            self.value,
+            query
+        )
+    }
+}
 
 
 
