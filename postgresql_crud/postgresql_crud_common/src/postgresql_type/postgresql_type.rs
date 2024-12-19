@@ -862,7 +862,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    pub equivalence: crate::Equivalence,
+    pub equal: crate::Equal,
     pub conjunctive_operator: crate::ConjunctiveOperator,
     pub value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter,
 }
@@ -882,7 +882,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         ) {
             Ok(value) => {
                 let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-                    format!("{}{} ", &self.conjunctive_operator, &self.equivalence)
+                    format!("{}{} ", &self.conjunctive_operator, &self.equal)
                 }
                 else {
                     std::string::String::default()
@@ -902,9 +902,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         )
     }
 }
-impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    fn get_equivalence(&self) -> &crate::Equivalence {
-        &self.equivalence
+impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+    fn get_equal(&self) -> &crate::Equal {
+        &self.equal
     }
 }
 
@@ -924,7 +924,7 @@ impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNo
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
-    pub equivalence: crate::Equivalence,
+    pub equal: crate::Equal,
     pub conjunctive_operator: crate::ConjunctiveOperator,
     pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI64,
 }
@@ -945,9 +945,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         todo!()
     }
 }
-impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
-    fn get_equivalence(&self) -> &crate::Equivalence {
-        &self.equivalence
+impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
+    fn get_equal(&self) -> &crate::Equal {
+        &self.equal
     }
 }
 
@@ -960,39 +960,39 @@ impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSeria
 ////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    pub equivalence: crate::Equivalence,
+    pub equal: crate::Equal,
     pub conjunctive_operator: crate::ConjunctiveOperator,
     pub value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,//todo check if not empty
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             value: vec![
                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::Equal(
                         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                     ),
                 },
                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::GreaterThan(
                         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                     ),
                 },
                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::Between(
                         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                     ),
                 },
                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::In(
                         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
@@ -1007,9 +1007,9 @@ impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI32AsPostgresql
         &self.conjunctive_operator
     }
 }
-impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    fn get_equivalence(&self) -> &crate::Equivalence {
-        &self.equivalence
+impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
+    fn get_equal(&self) -> &crate::Equal {
+        &self.equal
     }
 }
 
@@ -1022,14 +1022,14 @@ impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNo
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    pub equivalence: crate::Equivalence,
+    pub equal: crate::Equal,
     pub conjunctive_operator: crate::ConjunctiveOperator,
     pub value: std::vec::Vec<PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement>,//todo check if not empty
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            equivalence: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             value: vec![]
         }
@@ -1040,9 +1040,9 @@ impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI64AsPostgresql
         &self.conjunctive_operator
     }
 }
-impl crate::GetEquivalence for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    fn get_equivalence(&self) -> &crate::Equivalence {
-        &self.equivalence
+impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
+    fn get_equal(&self) -> &crate::Equal {
+        &self.equal
     }
 }
 
@@ -1099,7 +1099,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         }
         let _ = acc.pop();
         let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-            format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equivalence)
+            format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
         }
         else {
             std::string::String::default()

@@ -8146,30 +8146,29 @@ pub trait GetConjunctiveOperator {
     fn get_conjunctive_operator(&self) -> &ConjunctiveOperator;
 }
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
-pub enum Equivalence {
-    Equal,
-    NotEqual,
-}
-impl std::default::Default for Equivalence {
+pub struct Equal(pub std::primitive::bool);
+impl std::default::Default for Equal {
     fn default() -> Self {
-        Self::NotEqual
+        Self(false)
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Equivalence {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Equal {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
 }
-impl std::fmt::Display for Equivalence {
+impl std::fmt::Display for Equal {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::Equal => write!(formatter, ""),
-            Self::NotEqual => write!(formatter, " {}", naming::NotSnakeCase),
+        if self.0 {
+            write!(formatter, "")
+        }
+        else {
+            write!(formatter, " {}", naming::NotSnakeCase)
         }
     }
 }
-pub trait GetEquivalence {
-    fn get_equivalence(&self) -> &Equivalence;
+pub trait GetEqual {
+    fn get_equal(&self) -> &Equal;
 }
 
 

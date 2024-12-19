@@ -83,24 +83,24 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # }
       # ,
-      {
-        "equivalence": "NotEqual",
-        "conjunctive_operator": "Or",
-        "value": {
-          "GreaterThan": 3
-        }
-      }
-      # ,
       # {
       #   "equivalence": "NotEqual",
       #   "conjunctive_operator": "Or",
       #   "value": {
-      #     "Between": {
-      #       "start": 2,
-      #       "end": 4
-      #     }
+      #     "GreaterThan": 3
       #   }
       # }
+      # ,
+      {
+        "equivalence": "NotEqual",
+        "conjunctive_operator": "Or",
+        "value": {
+          "Between": {
+            "start": 2,
+            "end": 4
+          }
+        }
+      }
       # ,
       # {
       #   "equivalence": "NotEqual",
