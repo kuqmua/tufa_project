@@ -20,6 +20,7 @@ pub trait PostgresqlTypeSelfWhereFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
     fn postgresql_type_self_where_bind_value_to_query<'a>(
         self,

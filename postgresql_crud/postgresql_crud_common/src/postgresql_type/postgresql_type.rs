@@ -592,11 +592,12 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
-                Ok(format!("${increment}"))
+                Ok(format!("{column} = ${increment}"))
             }
             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
