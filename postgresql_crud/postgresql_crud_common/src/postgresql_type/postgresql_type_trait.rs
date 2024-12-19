@@ -13,7 +13,8 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     + serde::Serialize
     + serde::Deserialize<'a>
     // + crate::BindQuerySecond<'a>
-    + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
+    // + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement 
+    {}
 
 //maybe put analog\copy of BindQuerySecond inside this trait?
 pub trait PostgresqlType<'a> {
