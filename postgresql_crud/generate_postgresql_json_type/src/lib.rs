@@ -5392,6 +5392,25 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_element_token_stream
                         }
                     };
+                    let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = {
+                        quote::quote!{
+                            impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_tokens_where_element_upper_camel_case {
+                                fn postgresql_type_self_where_try_generate_bind_increments(
+                                    &self,
+                                    increment: &mut std::primitive::u64,
+                                    column: &dyn std::fmt::Display,
+                                ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    todo!()
+                                }
+                                fn postgresql_type_self_where_bind_value_to_query<'a>(
+                                    self,
+                                    query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                                ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    todo!()
+                                }
+                            }
+                        }
+                    };
                     let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_token_stream = {
                         let conjunctive_operator_upper_camel_case = naming::ConjunctiveOperatorUpperCamelCase;
@@ -5547,6 +5566,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #postgresql_type_tokens_to_update_token_stream
                         #postgresql_type_tokens_to_update_query_part_error_named_token_stream
                         #postgresql_type_tokens_where_element_token_stream
+                        #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
                         #postgresql_type_tokens_where_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }

@@ -914,7 +914,21 @@ pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement
 //     }
 // }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {}
-
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        &self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        todo!()
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        self,
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        todo!()
+    }
+}
 
 
 
@@ -1041,12 +1055,67 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         column: &dyn std::fmt::Display,
         is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        let mut acc = std::string::String::default();
+        for element in &postgresql_type_self_where.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                element,
+                increment,
+                column,
+            ) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                },
+                Err(error) => {
+                    return Err(error);//todo
+                },
+            }
+        }
+        let _ = acc.pop();
+        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
+            format!("{} ", &postgresql_type_self_where.conjunctive_operator)  
+        }
+        else {
+            std::string::String::default()
+        };
+        Ok(format!("{maybe_conjunctive_operator}({acc})"))
     }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in postgresql_type_self_where.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                element,
+                query
+            );
+        }
+        query
     }
 }
+
+    // conjunctive_operator: crate::ConjunctiveOperator,
+    // value: std::vec::Vec<PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement>,
+
+
+    // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {
+    // fn postgresql_type_self_where_try_generate_bind_increments(
+    //     &self,
+    //     increment: &mut std::primitive::u64,
+    //     column: &dyn std::fmt::Display,
+    // ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    //     match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+    //         &self.value,
+    //         increment,
+    //         column,
+    //     ) {
+    //         Ok(value) => Ok(format!(" {} ({value}) ", &self.conjunctive_operator)),
+    //         Err(error) => Err(error),//todo
+    //     }
+    // }
+    // fn postgresql_type_self_where_bind_value_to_query<'a>(
+    //     self,
+    //     query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    // ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+
+
+
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     type PostgresqlTypeSelf = Self;
     type PostgresqlTypeSelfColumn = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullColumn;

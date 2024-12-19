@@ -14,6 +14,7 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     + serde::Deserialize<'a>
     // + crate::BindQuerySecond<'a>
     // + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement 
+    + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
     {}
 
 pub trait PostgresqlTypeSelfWhereFilter {
