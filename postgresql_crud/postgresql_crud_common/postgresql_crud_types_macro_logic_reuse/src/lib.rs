@@ -566,8 +566,8 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
             };
             quote::quote!{
                 match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
+                    Some(value) => {
+                        *increment = value;
                         Ok(format!("${increment}"))
                     }
                     None => Err(#crate_json_types_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream::#checked_add_upper_camel_case {
@@ -646,6 +646,27 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
             }
         }
     );
+    let impl_crate_bind_query_for_token_stream = {
+        quote::quote!{
+            impl crate::BindQuerySecond<'_> for #ident {
+                fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("${increment}"))
+                        }
+                        None => Err(crate::TryGenerateBindIncrementsErrorNamed::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        }),
+                    }
+                }
+                fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                    query = query.bind(sqlx::types::Json(self.0));
+                    query
+                }
+            }
+        }
+    };
     //todo maybe impl Encode instead of just wrap into sqlx::types::Json
     let generated = quote::quote!{
         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
@@ -657,6 +678,8 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
         #postgresql_json_type_ident_option_to_update_alias_token_stream
         #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream
+
+        #impl_crate_bind_query_for_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

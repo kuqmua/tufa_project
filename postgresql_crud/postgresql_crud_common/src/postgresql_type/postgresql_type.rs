@@ -620,6 +620,31 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementGreaterThan {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        &self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(format!("{column} > ${increment}"))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self.0));
+        query
+    }
+}
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementBetween {
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
@@ -633,6 +658,39 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementBetween {
+//     fn postgresql_type_self_where_try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//         column: &dyn std::fmt::Display,
+//     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(first_increment) => {
+//                 *increment = first_increment;
+//                 match increment.checked_add(1) {
+//                     Some(second_increment) => {
+//                         *increment = second_increment;
+//                         let between_snake_case = naming::BetweenSnakeCase;
+//                         let and_snake_case = naming::AndSnakeCase;
+//                         Ok(format!("{column} {between_snake_case} ${first_increment} {and_snake_case} ${second_increment}"))
+//                     }
+//                     None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//                 }
+//             }
+//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//         }
+//     }
+//     fn postgresql_type_self_where_bind_value_to_query<'a>(
+//         self,
+//         mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(sqlx::types::Json(self.0));
+//         query
+//     }
+// }
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveBool>);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementIn {
