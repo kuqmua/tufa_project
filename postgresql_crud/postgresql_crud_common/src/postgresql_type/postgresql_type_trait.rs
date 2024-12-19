@@ -18,12 +18,11 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
 
 pub trait PostgresqlTypeSelfWhereFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self,
+        &self,
         increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
     fn postgresql_type_self_where_bind_value_to_query<'a>(
-        postgresql_type_self_where: Self,
+        self,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }

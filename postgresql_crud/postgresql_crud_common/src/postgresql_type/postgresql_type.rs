@@ -590,17 +590,23 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementEqual {
     fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self,
+        &self,
         increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        match increment.checked_add(1) {
+            Some(incr) => {
+                *increment = incr;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(
-        postgresql_type_self_where: Self,
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        query = query.bind(sqlx::types::Json(self.0));
+        query
     }
 }
 

@@ -646,6 +646,7 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
             }
         }
     );
+    //todo maybe impl Encode instead of just wrap into sqlx::types::Json
     let generated = quote::quote!{
         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
 
@@ -657,7 +658,7 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
         #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
         #impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream
     };
-    // if ident == "StdOptionOptionStdPrimitiveI8" {
+    // if ident == "" {
     //     println!("{generated}");
     //     println!("-------");
     // }
