@@ -5399,6 +5399,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     &self,
                                     increment: &mut std::primitive::u64,
                                     column: &dyn std::fmt::Display,
+                                    is_need_to_add_conjunctive_operator: std::primitive::bool,
                                 ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                     todo!()
                                 }

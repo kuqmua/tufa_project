@@ -8124,6 +8124,7 @@ pub enum ConjunctiveOperator {
     And,
     OrNot,
     AndNot,
+    //todo different type for and+or and equals+not equals
 }
 //todo remove Default impl?
 impl std::default::Default for ConjunctiveOperator {

@@ -50,7 +50,7 @@
 }]
 pub struct Example {
     // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBool,
-    pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+    // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
     // pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlSmallInt,
     // pub std_primitive_i16_as_postgresql_small_int_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlSmallIntNotNull,
@@ -62,7 +62,7 @@ pub struct Example {
     // pub std_primitive_i32_as_postgresql_int: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt,
     // pub std_primitive_i32_as_postgresql_int_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlIntNotNull,
     // pub std_primitive_i32_as_postgresql_serial: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerial,
-    // pub std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
+    pub std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
     // pub std_primitive_i32_as_postgresql_int4: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4,
     // pub std_primitive_i32_as_postgresql_int4_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4NotNull,
 
@@ -326,9 +326,9 @@ pub struct Animal {
 /////////////////////////////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ReadManyPayload {
-    pub std_primitive_bool_as_postgresql_bool_not_null: 
-    // std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>>,
-    std::option::Option<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere>,
+    pub std_primitive_i32_as_postgresql_serial_not_null: 
+    // std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere>>,
+    std::option::Option<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere>,
     pub std_primitive_i64_as_postgresql_big_serial_not_null: 
     // std::option::Option<std::vec::Vec<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>>,
     std::option::Option<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere>,
@@ -375,8 +375,8 @@ pub enum TryReadManyRouteLogicResponseVariants {
         not_unique_column: PostgresqlTypeExampleColumn,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
-        std_primitive_bool_as_postgresql_bool_not_null: std::string::String,
+    NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
+        std_primitive_i32_as_postgresql_serial_not_null: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -391,11 +391,11 @@ impl std::convert::From<TryReadManyRouteLogicErrorNamed> for TryReadManyRouteLog
             TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery { bind_query, code_occurence } => Self::BindQuery { bind_query, code_occurence },
             TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniquePrimaryKey { not_unique_primary_key, code_occurence } => Self::NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
             TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueColumn { not_unique_column, code_occurence } => Self::NotUniqueColumn { not_unique_column, code_occurence },
-            TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
-                std_primitive_bool_as_postgresql_bool_not_null,
+            TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
+                std_primitive_i32_as_postgresql_serial_not_null,
                 code_occurence,
-            } => Self::NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
-                std_primitive_bool_as_postgresql_bool_not_null,
+            } => Self::NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
+                std_primitive_i32_as_postgresql_serial_not_null,
                 code_occurence,
             },
         }
@@ -441,9 +441,9 @@ pub enum TryReadManyRouteLogicErrorNamed {
         not_unique_column: PostgresqlTypeExampleColumn,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
+    NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
         #[eo_to_std_string_string]
-        std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+        std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -502,13 +502,13 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
     println!("{:#?}", parameters);
     let query_string = {
         format!(
-            "select {} from example where {}",
+            "select {} from example {}",
             {
                 let mut value = std::string::String::default();
                 for element in &parameters.payload.select {
                     value.push_str(&match element {
-                        PostgresqlTypeExampleColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull(value) => {
-                            <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(value, "std_primitive_bool_as_postgresql_bool_not_null")
+                        PostgresqlTypeExampleColumn::StdPrimitiveI32AsPostgresqlSerialNotNull(value) => {
+                            <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(value, "std_primitive_i32_as_postgresql_serial_not_null")
                         }
                         PostgresqlTypeExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(value) => {
                             <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(
@@ -524,8 +524,8 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
             },
             {
                 let mut increment: std::primitive::u64 = 0;
-                let mut additional_parameters = std::string::String::default();
-                if let Some(value) = &parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
+                let mut additional_parameters = std::string::String::from("where");
+                if let Some(value) = &parameters.payload.std_primitive_i32_as_postgresql_serial_not_null {
                     // additional_parameters.push_str(&format!(
                     //     "{} {}",
                     //     match additional_parameters.is_empty() {
@@ -537,7 +537,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                     //         for (index, element) in value.iter().enumerate() {
                     //             match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
                     //                 Ok(value) => {
-                    //                     let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
+                    //                     let handle = format!("std_primitive_i32_as_postgresql_serial_not_null {value} ");
                     //                     match index == 0 {
                     //                         true => {
                     //                             acc.push_str(&handle);
@@ -574,10 +574,10 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                     //         acc
                     //     }
                     // ));
-                    match <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
-                        &value,
+                    match <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
+                        value,
                         &mut increment,
-                        &"std_primitive_bool_as_postgresql_bool_not_null",
+                        &"std_primitive_i32_as_postgresql_serial_not_null",
                         false,//todo generate is in proc macro (first element ignore)
                     ) {
                         Ok(value) => {
@@ -655,7 +655,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                     //     }
                     // ));
                     match <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
-                        &value,
+                        value,
                         &mut increment,
                         &"std_primitive_i64_as_postgresql_big_serial_not_null",
                         true,//todo generate is in proc macro (first element ignore)
@@ -762,15 +762,23 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
     println!("{}", query_string);
     let binded_query = {
         let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-        if let Some(value) = parameters.payload.std_primitive_bool_as_postgresql_bool_not_null {
+        if let Some(value) = parameters.payload.std_primitive_i32_as_postgresql_serial_not_null {
             // for value in value {
             //     query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
             // }
+            query = <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_bind_value_to_query(
+                value,
+                query
+            );
         }
         if let Some(value) = parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null {
             // for value in value {
             //     query = postgresql_crud::BindQuerySecond::bind_value_to_query(value, query);
             // }
+            query = <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_bind_value_to_query(
+                value,
+                query
+            );
         }
         query = postgresql_crud::BindQuerySecond::bind_value_to_query(parameters.payload.limit, query);
         query = postgresql_crud::BindQuerySecond::bind_value_to_query(parameters.payload.offset, query);
@@ -833,7 +841,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                 Ok(value) => match value {
                     Some(value) => Some({
                         let mut std_primitive_i64_as_postgresql_big_serial_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToRead>> = None;
-                        let mut std_primitive_bool_as_postgresql_bool_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullToRead>> = None;
+                        let mut std_primitive_i32_as_postgresql_serial_not_null: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToRead>> = None;
                         for element in &parameters.payload.select {
                             match element {
                                 PostgresqlTypeExampleColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNull(_) => {
@@ -862,10 +870,10 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                                         }
                                     }
                                 }
-                                PostgresqlTypeExampleColumn::StdPrimitiveBoolAsPostgresqlBoolNotNull(_) => {
-                                    match sqlx::Row::try_get::<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullToRead, &std::primitive::str>(&value, "std_primitive_bool_as_postgresql_bool_not_null") {
+                                PostgresqlTypeExampleColumn::StdPrimitiveI32AsPostgresqlSerialNotNull(_) => {
+                                    match sqlx::Row::try_get::<postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToRead, &std::primitive::str>(&value, "std_primitive_i32_as_postgresql_serial_not_null") {
                                         Ok(value) => {
-                                            std_primitive_bool_as_postgresql_bool_not_null = Some(postgresql_crud::Value { value: value });
+                                            std_primitive_i32_as_postgresql_serial_not_null = Some(postgresql_crud::Value { value: value });
                                         }
                                         Err(error_0) => {
                                             let error = TryReadManyRouteLogicErrorNamed::Postgresql {
@@ -891,7 +899,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                             }
                         }
                         ExampleOptions {
-                            std_primitive_bool_as_postgresql_bool_not_null,
+                            std_primitive_i32_as_postgresql_serial_not_null,
                             std_primitive_i64_as_postgresql_big_serial_not_null,
                         }
                     }),
@@ -964,9 +972,9 @@ pub enum TryReadManyErrorNamed {
         not_unique_primary_key: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
+    NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
         #[eo_to_std_string_string]
-        std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+        std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUniqueColumn {
@@ -1086,11 +1094,11 @@ pub async fn try_read_many(server_location: &std::primitive::str, parameters: Re
         TryReadManyRouteLogicResponseVariants::BindQuery { bind_query, code_occurence } => TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery { bind_query, code_occurence },
         TryReadManyRouteLogicResponseVariants::NotUniquePrimaryKey { not_unique_primary_key, code_occurence } => TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
         TryReadManyRouteLogicResponseVariants::NotUniqueColumn { not_unique_column, code_occurence } => TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueColumn { not_unique_column, code_occurence },
-        TryReadManyRouteLogicResponseVariants::NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
-            std_primitive_bool_as_postgresql_bool_not_null,
+        TryReadManyRouteLogicResponseVariants::NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
+            std_primitive_i32_as_postgresql_serial_not_null,
             code_occurence,
-        } => TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueStdPrimitiveBoolAsPostgresqlBoolNotNull {
-            std_primitive_bool_as_postgresql_bool_not_null,
+        } => TryReadManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniqueStdPrimitiveI32AsPostgresqlSerialNotNull {
+            std_primitive_i32_as_postgresql_serial_not_null,
             code_occurence,
         },
     };
@@ -1111,11 +1119,15 @@ pub async fn try_read_many(server_location: &std::primitive::str, parameters: Re
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ReadManyPayload {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            std_primitive_bool_as_postgresql_bool_not_null: Some(
+            std_primitive_i32_as_postgresql_serial_not_null: Some(
+                // vec![
                 postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                // ]
             ),
             std_primitive_i64_as_postgresql_big_serial_not_null: Some(
+                // vec![
                 postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                // ]
             ),
             select: postgresql_crud::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             order_by: postgresql_crud::OrderBy {
