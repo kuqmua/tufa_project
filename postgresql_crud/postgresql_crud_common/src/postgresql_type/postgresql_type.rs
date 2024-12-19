@@ -693,7 +693,37 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         ])
     }
 }
-
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementIn {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        &self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        for element in &self.0 {
+            match crate::BindQuerySecond::try_generate_bind_increments(element, increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("${value},"));
+                }
+                Err(error) => {
+                    return Err(error);//todo another checked add? 
+                },
+            }
+        }
+        let _ = acc.pop();
+        let in_snake_case = naming::InSnakeCase;
+        Ok(format!("{column} {in_snake_case} (acc)"))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        self,
+        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            query = crate::BindQuerySecond::bind_value_to_query(element, query);
+        }
+        query
+    }
+}
 
 
 
