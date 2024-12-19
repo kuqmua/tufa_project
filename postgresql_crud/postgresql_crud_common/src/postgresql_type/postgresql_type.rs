@@ -582,16 +582,24 @@ const _: () = {
 
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereBetween {
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementBetween {
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
     end: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveBool>);
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveBool>);
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementFilter {
+    Equal(PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementEqual),
+    GreaterThan(PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementGreaterThan),
+    Between(PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementBetween),
+    In(PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementIn)
+}
 
 // In PostgreSQL, the WHERE clause can include a variety of expressions to filter records based on specific conditions. Here’s a comprehensive list of expressions that can be used in a WHERE clause:
 
@@ -650,7 +658,8 @@ pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereIn(std::vec
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {
-    pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
+    // pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveBool,
+    pub value: PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementFilter,
     pub conjunctive_operator: crate::ConjunctiveOperator,
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement {
@@ -695,3 +704,54 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {}
+
+
+
+
+
+
+
+
+
+////////////////////////////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
+    conjunctive_operator: crate::ConjunctiveOperator,
+    value: std::vec::Vec<PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElement>,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: vec![crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
+        }
+    }
+}
+impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhere {
+    fn get_conjunctive_operator(&self) -> &crate::ConjunctiveOperator {
+        &self.conjunctive_operator
+    }
+}
+
+
+
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
+    conjunctive_operator: crate::ConjunctiveOperator,
+    value: std::vec::Vec<PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement>,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: vec![crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
+        }
+    }
+}
+impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
+    fn get_conjunctive_operator(&self) -> &crate::ConjunctiveOperator {
+        &self.conjunctive_operator
+    }
+}
