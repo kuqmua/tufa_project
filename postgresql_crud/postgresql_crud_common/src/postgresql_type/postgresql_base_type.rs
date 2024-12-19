@@ -7,7 +7,7 @@
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
 )]
-pub struct StdPrimitiveI16(std::primitive::i16);
+pub struct StdPrimitiveI16(pub std::primitive::i16);
 #[derive(
     Debug,
     Clone,
@@ -17,7 +17,7 @@ pub struct StdPrimitiveI16(std::primitive::i16);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
 )]
-pub struct StdPrimitiveI32(std::primitive::i32);
+pub struct StdPrimitiveI32(pub std::primitive::i32);
 #[derive(
     Debug,
     Clone,
@@ -27,7 +27,7 @@ pub struct StdPrimitiveI32(std::primitive::i32);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
 )]
-pub struct StdPrimitiveI64(std::primitive::i64);
+pub struct StdPrimitiveI64(pub std::primitive::i64);
 #[derive(
     Debug,
     Clone,
@@ -36,7 +36,7 @@ pub struct StdPrimitiveI64(std::primitive::i64);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
 )]
-pub struct StdPrimitiveF32(std::primitive::f32);
+pub struct StdPrimitiveF32(pub std::primitive::f32);
 #[derive(
     Debug,
     Clone,
@@ -45,7 +45,7 @@ pub struct StdPrimitiveF32(std::primitive::f32);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
 )]
-pub struct StdPrimitiveF64(std::primitive::f64);
+pub struct StdPrimitiveF64(pub std::primitive::f64);
 #[derive(
     Debug,
     Clone,
@@ -56,7 +56,7 @@ pub struct StdPrimitiveF64(std::primitive::f64);
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
 )]
-pub struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
+pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 #[derive(
     Debug,
     Clone,
@@ -67,7 +67,7 @@ pub struct StdPrimitiveBool(std::primitive::bool); //todo maybe make it private?
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
 )]
-pub struct StdStringString(std::string::String);
+pub struct StdStringString(pub std::string::String);
 //
 // // pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 // pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);

@@ -589,7 +589,7 @@ const _: () = {
 
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
@@ -620,7 +620,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
@@ -654,6 +654,30 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
     end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
+}
+#[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed {
+    StartMoreOrEqualToEnd {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+    fn try_new(
+        start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
+        end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
+    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed> {
+        if start.0 > end.0 {
+            Ok(Self {
+                start,
+                end
+            })
+        }
+        else {
+            Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
