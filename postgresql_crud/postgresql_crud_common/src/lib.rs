@@ -8164,7 +8164,7 @@ impl std::fmt::Display for Equivalence {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Equal => write!(formatter, ""),
-            Self::NotEqual => write!(formatter, "{}", naming::NotSnakeCase),
+            Self::NotEqual => write!(formatter, " {}", naming::NotSnakeCase),
         }
     }
 }
