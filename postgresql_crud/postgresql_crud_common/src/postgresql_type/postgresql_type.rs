@@ -588,6 +588,24 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        postgresql_type_self_where: &Self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        todo!()
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        postgresql_type_self_where: Self,
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        todo!()
+    }
+}
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementGreaterThan(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveBoolAsPostgresqlBoolNotNullWhereElementGreaterThan {
