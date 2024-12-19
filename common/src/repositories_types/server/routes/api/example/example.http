@@ -72,49 +72,47 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
   "std_primitive_i32_as_postgresql_serial_not_null": {
-    "equivalence": "NotEqual",
+    "equal": false,
     "conjunctive_operator": "Or",
     "value": [
-      # {
-      #   "equivalence": "NotEqual",
-      #   "conjunctive_operator": "Or",
-      #   "value": {
-      #     "Equal": 1
-      #   }
-      # }
-      # ,
-      # {
-      #   "equivalence": "NotEqual",
-      #   "conjunctive_operator": "Or",
-      #   "value": {
-      #     "GreaterThan": 3
-      #   }
-      # }
-      # ,
       {
-        "equivalence": "NotEqual",
+        "equal": false,
+        "conjunctive_operator": "Or",
+        "value": {
+          "Equal": 0
+        }
+      },
+      {
+        "equal": false,
+        "conjunctive_operator": "Or",
+        "value": {
+          "GreaterThan": 0
+        }
+      },
+      {
+        "equal": false,
         "conjunctive_operator": "Or",
         "value": {
           "Between": {
-            "start": 2,
-            "end": 4
+            "start": 1,
+            "end": 8
           }
         }
       }
-      # ,
-      # {
-      #   "equivalence": "NotEqual",
-      #   "conjunctive_operator": "Or",
-      #   "value": {
-      #     "In": [
-      #       0,1,2
-      #     ]
-      #   }
-      # }
+      ,
+      {
+        "equal": false,
+        "conjunctive_operator": "Or",
+        "value": {
+          "In": [
+            0
+          ]
+        }
+      }
     ]
   },
   # "std_primitive_i64_as_postgresql_big_serial_not_null": {
-  #   "equivalence": "NotEqual",
+  #   "equal": false,
   #   "conjunctive_operator": "Or",
   #   "value": []
   # },

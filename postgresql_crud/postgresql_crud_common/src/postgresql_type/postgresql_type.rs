@@ -887,7 +887,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
                 else {
                     std::string::String::default()
                 };
-                Ok(format!(" {maybe_conjunctive_operator}({value}) "))
+                Ok(format!("{maybe_conjunctive_operator}({value})"))
             },
             Err(error) => Err(error),//todo
         }
