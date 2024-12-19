@@ -16,6 +16,18 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     // + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement 
     {}
 
+pub trait PostgresqlTypeSelfWhereFilter {
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        postgresql_type_self_where: &Self,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
+    fn postgresql_type_self_where_bind_value_to_query<'a>(
+        postgresql_type_self_where: Self,
+        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}
+
 //maybe put analog\copy of BindQuerySecond inside this trait?
 pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelf: std::fmt::Debug
