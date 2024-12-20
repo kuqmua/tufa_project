@@ -589,11 +589,11 @@ const _: () = {
 
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual{
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual{
     pub logical_operator: crate::LogicalOperator,
     pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -601,7 +601,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -626,11 +626,11 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan{
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan{
     pub logical_operator: crate::LogicalOperator,
     pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -638,7 +638,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -665,23 +665,23 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 #[derive(Debug, Clone, PartialEq, serde :: Serialize,
      serde :: Deserialize
     )]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     logical_operator: crate::LogicalOperator,
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
     end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
 }
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed {
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed {
     StartMoreOrEqualToEnd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     fn try_new(
         logical_operator: crate::LogicalOperator,
         start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
         end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
-    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed> {
+    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed> {
         if start.0 < end.0 {
             Ok(Self {
                 logical_operator,
@@ -690,13 +690,13 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
             })
         }
         else {
-            Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+            Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
     }
 }
-// impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
+// impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
 //     fn deserialize<__D>(
 //         __deserializer: __D,
 //     ) -> serde::__private::Result<Self, __D::Error>
@@ -780,19 +780,19 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
 //         #[doc(hidden)]
 //         struct __Visitor<'de> {
 //             marker: serde::__private::PhantomData<
-//                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween,
+//                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween,
 //             >,
 //             lifetime: serde::__private::PhantomData<&'de ()>,
 //         }
 //         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-//             type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween;
+//             type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween;
 //             fn expecting(
 //                 &self,
 //                 __formatter: &mut serde::__private::Formatter<'_>,
 //             ) -> serde::__private::fmt::Result {
 //                 serde::__private::Formatter::write_str(
 //                     __formatter,
-//                     "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween",
+//                     "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween",
 //                 )
 //             }
 //             #[inline]
@@ -811,7 +811,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
 //                         return serde::__private::Err(
 //                             serde::de::Error::invalid_length(
 //                                 0usize,
-//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween with 2 elements",
+//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween with 2 elements",
 //                             ),
 //                         );
 //                     }
@@ -824,12 +824,12 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
 //                         return serde::__private::Err(
 //                             serde::de::Error::invalid_length(
 //                                 1usize,
-//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween with 2 elements",
+//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween with 2 elements",
 //                             ),
 //                         );
 //                     }
 //                 };
-//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween::try_new(__field0, __field1) {
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
 //                     Ok(value) => serde::__private::Ok(value),
 //                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
 //                 }
@@ -891,7 +891,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
 //                         serde::__private::de::missing_field("end")?
 //                     }
 //                 };
-//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween::try_new(__field0, __field1) {
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
 //                     Ok(value) => serde::__private::Ok(value),
 //                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
 //                 }
@@ -901,18 +901,18 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
 //         const FIELDS: &'static [&'static str] = &["start", "end"];
 //         serde::Deserializer::deserialize_struct(
 //             __deserializer,
-//             "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween",
+//             "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween",
 //             FIELDS,
 //             __Visitor {
 //                 marker: serde::__private::PhantomData::<
-//                     PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween,
+//                     PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween,
 //                 >,
 //                 lifetime: serde::__private::PhantomData,
 //             },
 //         )
 //     }
 // }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -921,7 +921,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -955,12 +955,12 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 #[derive(Debug, Clone, PartialEq, serde :: Serialize,
      serde :: Deserialize
     )]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn{
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn{
     logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>
 }
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed {
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed {
     IsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -970,13 +970,13 @@ pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilte
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
     fn try_new(
         logical_operator: crate::LogicalOperator,
         value: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>
-    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed> {
+    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed> {
         if value.is_empty() {
-            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed::IsEmpty {
+            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::IsEmpty {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
@@ -986,7 +986,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
                 if !acc.contains(&element) {
                     acc.push(element);
                 } else {
-                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed::NotUnique {
+                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::NotUnique {
                         value: element.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -999,7 +999,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
         })
     }
 }
-// impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
+// impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
 //     fn deserialize<__D>(
 //         __deserializer: __D,
 //     ) -> serde::__private::Result<Self, __D::Error>
@@ -1009,19 +1009,19 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
 //         #[doc(hidden)]
 //         struct __Visitor<'de> {
 //             marker: serde::__private::PhantomData<
-//                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn,
+//                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
 //             >,
 //             lifetime: serde::__private::PhantomData<&'de ()>,
 //         }
 //         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-//             type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn;
+//             type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn;
 //             fn expecting(
 //                 &self,
 //                 __formatter: &mut serde::__private::Formatter<'_>,
 //             ) -> serde::__private::fmt::Result {
 //                 serde::__private::Formatter::write_str(
 //                     __formatter,
-//                     "tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn",
+//                     "tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
 //                 )
 //             }
 //             #[inline]
@@ -1035,7 +1035,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
 //                 let __field0: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32> = <std::vec::Vec<
 //                     crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
 //                 > as serde::Deserialize>::deserialize(__e)?;
-//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn::try_new(__field0) {
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
 //                     Ok(value) => serde::__private::Ok(value),
 //                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
 //                 }
@@ -1056,12 +1056,12 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
 //                         return serde::__private::Err(
 //                             serde::de::Error::invalid_length(
 //                                 0usize,
-//                                 &"tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn with 1 element",
+//                                 &"tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn with 1 element",
 //                             ),
 //                         );
 //                     }
 //                 };
-//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn::try_new(__field0) {
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
 //                     Ok(value) => serde::__private::Ok(value),
 //                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
 //                 }
@@ -1069,17 +1069,17 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn 
 //         }
 //         serde::Deserializer::deserialize_newtype_struct(
 //             __deserializer,
-//             "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn",
+//             "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
 //             __Visitor {
 //                 marker: serde::__private::PhantomData::<
-//                     PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn,
+//                     PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
 //                 >,
 //                 lifetime: serde::__private::PhantomData,
 //             },
 //         )
 //     }
 // }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -1089,7 +1089,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -1126,13 +1126,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
-    Equal(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual),
-    GreaterThan(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan),
-    Between(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween),
-    In(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn)
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+    Equal(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual),
+    GreaterThan(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan),
+    Between(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween),
+    In(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn)
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -1188,6 +1188,12 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
                 query
             ),
         }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
     }
 }
 
@@ -1246,58 +1252,58 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 /////////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    pub equal: crate::Equal,
-    pub conjunctive_operator: crate::ConjunctiveOperator,
-    pub value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter,
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    fn postgresql_type_self_where_try_generate_bind_increments(
-        &self,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-            &self.value,
-            increment,
-            column,
-            is_need_to_add_conjunctive_operator
-        ) {
-            Ok(value) => {
-                let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-                    format!("{}{} ", &self.conjunctive_operator, &self.equal)
-                }
-                else {
-                    std::string::String::default()
-                };
-                Ok(format!("{maybe_conjunctive_operator}({value})"))
-            },
-            Err(error) => Err(error),//todo
-        }
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(
-        self,
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-            self.value,
-            query
-        )
-    }
-}
-impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    fn get_equal(&self) -> &crate::Equal {
-        &self.equal
-    }
-}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+//     pub equal: crate::Equal,
+//     pub conjunctive_operator: crate::ConjunctiveOperator,
+//     pub value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+//     fn postgresql_type_self_where_try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//         column: &dyn std::fmt::Display,
+//         is_need_to_add_conjunctive_operator: std::primitive::bool,
+//     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+//             &self.value,
+//             increment,
+//             column,
+//             is_need_to_add_conjunctive_operator
+//         ) {
+//             Ok(value) => {
+//                 let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
+//                     format!("{}{} ", &self.conjunctive_operator, &self.equal)
+//                 }
+//                 else {
+//                     std::string::String::default()
+//                 };
+//                 Ok(format!("{maybe_conjunctive_operator}({value})"))
+//             },
+//             Err(error) => Err(error),//todo
+//         }
+//     }
+//     fn postgresql_type_self_where_bind_value_to_query<'a>(
+//         self,
+//         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+//     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+//             self.value,
+//             query
+//         )
+//     }
+// }
+// impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+//     fn get_equal(&self) -> &crate::Equal {
+//         &self.equal
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self:#?}")
+//     }
+// }
 
 
 
@@ -1677,35 +1683,36 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self {
             equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            // todo!()
             value: vec![
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::Equal(
-                        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ),
-                },
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::GreaterThan(
-                        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ),
-                },
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::Between(
-                        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ),
-                },
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-                    equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter::In(
-                        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    ),
-                }
+                // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+                //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::Equal(
+                //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                //     ),
+                // },
+                // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+                //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::GreaterThan(
+                //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                //     ),
+                // },
+                // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+                //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::Between(
+                //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                //     ),
+                // },
+                // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+                //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::In(
+                //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                //     ),
+                // }
             ]
         }
     }
