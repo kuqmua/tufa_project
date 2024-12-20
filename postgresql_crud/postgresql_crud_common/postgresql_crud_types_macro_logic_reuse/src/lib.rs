@@ -1744,3 +1744,19 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     // }
     generated.into()
 }
+
+#[proc_macro_derive(PostgresqlTypeTokensWhereElementInt)]
+pub fn postgresql_type_tokens_where_element_int(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = quote::quote! {
+       
+    };
+    // if ident == "" {
+    //     println!("{generated}");
+    //     println!("----------------------");
+    // }
+    generated.into()
+}
