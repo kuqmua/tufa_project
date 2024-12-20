@@ -1294,11 +1294,6 @@ impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsP
 //         )
 //     }
 // }
-// impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
-//     fn get_equal(&self) -> &crate::Equal {
-//         &self.equal
-//     }
-// }
 // impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
 //     fn to_std_string_string(&self) -> std::string::String {
 //         format!("{self:#?}")
