@@ -17,17 +17,6 @@ pub trait PostgresqlTypeSelfWhereElementTraits<'a>: std::fmt::Debug
     + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
     + crate::GetEqual {}
 //todo maybe add another trait without "is_need_to_add_conjunctive_operator: std::primitive::bool"
-pub trait PostgresqlTypeSelfWhereFilterValue {
-    fn postgresql_type_self_where_try_generate_bind_increments(
-        &self,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
-    fn postgresql_type_self_where_bind_value_to_query<'a>(
-        self,
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-}
 pub trait PostgresqlTypeSelfWhereFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
