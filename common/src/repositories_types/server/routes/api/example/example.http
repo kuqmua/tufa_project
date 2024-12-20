@@ -72,49 +72,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
   "std_primitive_i32_as_postgresql_serial_not_null": {
-    "equal": false,
     "logical_operator": "Or",
     "value": [
       # {
-      #   "equal": false,
-      #   "logical_operator": "Or",
-      #   "value": {
-      #     "Equal": 7
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": 0
       #   }
-      # }
-      # ,
-      # {
-      #   "equal": false,
-      #   "logical_operator": "Or",
-      #   "value": {
-      #     "GreaterThan": 7
-      #   }
-      # }
-      # ,
-      # {
-      #   "equal": false,
-      #   "logical_operator": "Or",
-      #   "value": {
-      #     "Between": {
-      #       "start": 3,
-      #       "end": 7
-      #     }
-      #   }
-      # }
-      # ,
+      # },
       {
-        "equal": false,
-        "logical_operator": "Or",
-        "value": {
-          "In": [
-            0, 2
-          ]
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 3
         }
       }
+      ,
+      {
+        "Between": {
+          "logical_operator": "AndNot",
+          "start": 3,
+          "end": 5
+        }
+      }
+      # ,
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
     ]
   },
   # "std_primitive_i64_as_postgresql_big_serial_not_null": {
-  #   "equal": false,
   #   "logical_operator": "Or",
   #   "value": []
   # },
