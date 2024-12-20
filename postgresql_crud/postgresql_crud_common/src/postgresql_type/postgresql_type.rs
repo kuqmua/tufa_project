@@ -1341,12 +1341,6 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         todo!()
     }
 }
-impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
-    fn get_equal(&self) -> &crate::Equal {
-        &self.equal
-    }
-}
-
 
 
 
@@ -1722,11 +1716,6 @@ impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI32AsPostgresql
         &self.conjunctive_operator
     }
 }
-impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    fn get_equal(&self) -> &crate::Equal {
-        &self.equal
-    }
-}
 
 
 
@@ -1753,10 +1742,5 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn get_conjunctive_operator(&self) -> &crate::ConjunctiveOperator {
         &self.conjunctive_operator
-    }
-}
-impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    fn get_equal(&self) -> &crate::Equal {
-        &self.equal
     }
 }

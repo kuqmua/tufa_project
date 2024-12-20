@@ -567,7 +567,6 @@ pub use postgresql_crud_common::generate_postgresql_json_type::wrap_into_jsonb_b
 pub use postgresql_crud_common::ConjunctiveOperator;
 pub use postgresql_crud_common::GetConjunctiveOperator;
 pub use postgresql_crud_common::Equal;
-pub use postgresql_crud_common::GetEqual;
 
 pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type;
 

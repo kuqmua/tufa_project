@@ -8167,9 +8167,6 @@ impl std::fmt::Display for Equal {
         }
     }
 }
-pub trait GetEqual {
-    fn get_equal(&self) -> &Equal;
-}
 
 #[derive(Debug, Default, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
 pub struct LogicalOperator {
