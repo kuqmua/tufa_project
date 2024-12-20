@@ -1776,13 +1776,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
             }
         }
         let _ = acc.pop();
-        let maybe_logical_operator = if is_need_to_add_logical_operator {
-            // format!("{}{} ", &postgresql_type_self_where.logical_operator, &postgresql_type_self_where.equal)
-            todo!()
-        } else {
-            std::string::String::default()
-        };
-        Ok(format!("{maybe_logical_operator}({acc})"))
+        Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in postgresql_type_self_where.value {
