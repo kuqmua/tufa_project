@@ -595,12 +595,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment) {
             Ok(value) => {
@@ -626,12 +625,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment) {
             Ok(value) => {
@@ -905,12 +903,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.start, increment) {
             Ok(first_value) => match crate::BindQuerySecond::try_generate_bind_increments(&self.end, increment) {
@@ -1061,12 +1058,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         ])
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
         for element in &self.0 {
@@ -1104,37 +1100,32 @@ pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilte
     Between(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween),
     In(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn)
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match &self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator
             ),
-            Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+            Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator
             ),
-            Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+            Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator
             ),
-            Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+            Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator
             ),
         }
     }
@@ -1143,19 +1134,19 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_bind_value_to_query(
                 value,
                 query
             ),
-            Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+            Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_bind_value_to_query(
                 value,
                 query
             ),
-            Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+            Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_bind_value_to_query(
                 value,
                 query
             ),
-            Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+            Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_bind_value_to_query(
                 value,
                 query
             ),
@@ -1232,11 +1223,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         column: &dyn std::fmt::Display,
         is_need_to_add_conjunctive_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_try_generate_bind_increments(
             &self.value,
             increment,
             column,
-            is_need_to_add_conjunctive_operator
         ) {
             Ok(value) => {
                 let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
@@ -1254,7 +1244,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         self,
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue::postgresql_type_self_where_bind_value_to_query(
             self.value,
             query
         )
