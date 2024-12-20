@@ -167,11 +167,11 @@ fn common_handle(
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_ident_should_implement_eq_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
-            pub conjunctive_operator: ConjunctiveOperator,
+            pub logical_operator: LogicalOperator,
         }
         impl std::fmt::Display for #where_ident_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "value: {}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
+                write!(formatter, "value: {}, logical_operator: {}", self.value, self.logical_operator)
             }
         }
         impl BindQuery<'_> for #where_ident_token_stream {
@@ -202,8 +202,8 @@ fn common_handle(
         impl crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case for #where_ident_token_stream {
             fn #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Self {
                 Self {
+                    logical_operator: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
                     value: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
-                    conjunctive_operator: ConjunctiveOperator::default(),
                 }
             }
         }
@@ -311,14 +311,14 @@ fn common_handle(
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_upper_camel_case_token_stream ,
-            pub conjunctive_operator: ConjunctiveOperator,
+            pub logical_operator: LogicalOperator,
         }
         impl std::fmt::Display for #where_std_option_option_ident_upper_camel_case_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(
                     formatter,
-                    "value: {}, conjunctive_operator: {}",
-                    self.value, self.conjunctive_operator
+                    "value: {}, logical_operator: {}",
+                    self.value, self.logical_operator
                 )
             }
         }
@@ -360,7 +360,7 @@ fn common_handle(
             fn #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Self {
                 Self {
                     value: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
-                    conjunctive_operator: ConjunctiveOperator::default(),
+                    logical_operator: LogicalOperator::default(),
                 }
             }
         }
@@ -1399,16 +1399,16 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
         }
     };
-    let conjunctive_operator_upper_camel_case = naming::ConjunctiveOperatorUpperCamelCase;
+    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
     let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_element_token_stream = {
-        let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
+        let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
         let postgresql_type_ident_where_element_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::Pub,
             &postgresql_type_ident_where_element_upper_camel_case,
             &quote::quote!{{
                 pub equal: crate::Equal,
-                pub #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case,
+                pub #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
                 pub #value_snake_case: #field_type,
             }},
             false,
@@ -1427,13 +1427,13 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     };
     let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_token_stream = {
-        let conjunctive_operator_snake_case = naming::ConjunctiveOperatorSnakeCase;
+        let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
         let postgresql_type_ident_where_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::Pub,
             &postgresql_type_ident_where_upper_camel_case,
             &quote::quote!{{
                 equal: crate::Equal,
-                #conjunctive_operator_snake_case: crate::#conjunctive_operator_upper_camel_case,
+                #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
                 #value_snake_case: std::vec::Vec<#postgresql_type_ident_where_element_upper_camel_case>
             }},
             false,
@@ -1459,7 +1459,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &postgresql_type_ident_where_upper_camel_case,
             &quote::quote!{{
                 equal: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                #conjunctive_operator_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                #logical_operator_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                 #value_snake_case: vec![
                     #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                 ]
@@ -1482,20 +1482,20 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
                 increment: &mut std::primitive::u64,
                 column: &dyn std::fmt::Display,
-                is_need_to_add_conjunctive_operator: std::primitive::bool,
+                is_need_to_add_logical_operator: std::primitive::bool,
             ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                 let mut acc = std::string::String::default();
-                let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+                let mut is_need_to_add_logical_operator_inner_handle = false;
                 for element in &#postgresql_type_self_where_snake_case.value {
                     match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                         element,
                         increment,
                         column,
-                        is_need_to_add_conjunctive_operator_inner_handle,
+                        is_need_to_add_logical_operator_inner_handle,
                     ) {
                         Ok(value) => {
                             acc.push_str(&format!("{value} "));
-                            is_need_to_add_conjunctive_operator_inner_handle = true;
+                            is_need_to_add_logical_operator_inner_handle = true;
                         },
                         Err(error) => {
                             return Err(error);//todo
@@ -1503,13 +1503,13 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                     }
                 }
                 let _ = acc.pop();
-                let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-                    format!("{}{} ", &#postgresql_type_self_where_snake_case.conjunctive_operator, &#postgresql_type_self_where_snake_case.equal)
+                let maybe_logical_operator = if is_need_to_add_logical_operator {
+                    format!("{}{} ", &#postgresql_type_self_where_snake_case.logical_operator, &#postgresql_type_self_where_snake_case.equal)
                 }
                 else {
                     std::string::String::default()
                 };
-                Ok(format!("{maybe_conjunctive_operator}({acc})"))
+                Ok(format!("{maybe_logical_operator}({acc})"))
             }
         }
     };

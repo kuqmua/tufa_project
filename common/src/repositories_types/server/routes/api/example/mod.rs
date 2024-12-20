@@ -543,7 +543,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                     //                             acc.push_str(&handle);
                     //                         }
                     //                         false => {
-                    //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                    //                             acc.push_str(&format!("{} {handle}", element.logical_operator));
                     //                         }
                     //                     }
                     //                 }
@@ -623,7 +623,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                     //                             acc.push_str(&handle);
                     //                         }
                     //                         false => {
-                    //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
+                    //                             acc.push_str(&format!("{} {handle}", element.logical_operator));
                     //                         }
                     //                     }
                     //                 }

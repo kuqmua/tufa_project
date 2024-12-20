@@ -5344,7 +5344,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_tokens_where_element_token_stream = {
                         let postgresql_type_tokens_where_element_token_stream = {
                             let struct_declaration_token_stream = quote::quote!{{
-                                conjunctive_operator: postgresql_crud::ConjunctiveOperator,
+                                logical_operator: postgresql_crud::LogicalOperator,
                             }};
                             let pub_struct_postgresql_type_tokens_where_element_declaration_token_stream = match &postgresql_json_type {
                                 PostgresqlJsonType::Object => &struct_declaration_token_stream,
@@ -5399,7 +5399,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     &self,
                                     increment: &mut std::primitive::u64,
                                     column: &dyn std::fmt::Display,
-                                    is_need_to_add_conjunctive_operator: std::primitive::bool,
+                                    is_need_to_add_logical_operator: std::primitive::bool,
                                 ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                     todo!()
                                 }
@@ -5414,8 +5414,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_token_stream = {
-                        let conjunctive_operator_upper_camel_case = naming::ConjunctiveOperatorUpperCamelCase;
-                        let conjunctive_operator_snake_case = naming::ConjunctiveOperatorUpperCamelCase;
+                        let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
+                        let logical_operator_snake_case = naming::LogicalOperatorUpperCamelCase;
                         let postgresql_type_tokens_where_token_stream = {
                             let value_snake_case = naming::ValueSnakeCase;
                             quote::quote!{
@@ -5428,7 +5428,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     schemars::JsonSchema,
                                 )]
                                 pub struct #postgresql_type_tokens_where_upper_camel_case {
-                                    #conjunctive_operator_snake_case: postgresql_crud::#conjunctive_operator_upper_camel_case,
+                                    #logical_operator_snake_case: postgresql_crud::#logical_operator_upper_camel_case,
                                     #value_snake_case: std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>
                                 }
                             }
@@ -5439,7 +5439,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #[inline]
                                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                                         Self {
-                                            #conjunctive_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                            #logical_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                                             #value_snake_case: vec![
                                                 #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                             ]
@@ -5469,7 +5469,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
-                                is_need_to_add_conjunctive_operator: std::primitive::bool,
+                                is_need_to_add_logical_operator: std::primitive::bool,
                             ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                 #postgresql_type_self_where_try_generate_bind_increments_content_token_stream
                             }

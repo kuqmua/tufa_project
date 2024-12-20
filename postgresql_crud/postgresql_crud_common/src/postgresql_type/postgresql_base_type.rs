@@ -104,11 +104,11 @@ pub struct StdStringString(pub std::string::String);
 // pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
 // pub struct WhereSqlxTypesJson<T> {
 //     pub value: SqlxTypesJson<T>,
-//     pub conjunctive_operator: ConjunctiveOperator,
+//     pub logical_operator: LogicalOperator,
 // }
 // pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
 // pub struct WhereStdOptionOptionSqlxTypesJson<T> {
 //     pub value: StdOptionOptionSqlxTypesJson<T>,
-//     pub conjunctive_operator: ConjunctiveOperator,
+//     pub logical_operator: LogicalOperator,
 // }
 // pub struct SerdeJsonValue(pub serde_json::Value);

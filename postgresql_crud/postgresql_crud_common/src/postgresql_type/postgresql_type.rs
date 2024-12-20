@@ -606,7 +606,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
             Ok(value) => {
@@ -643,7 +643,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
             Ok(value) => {
@@ -926,7 +926,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.start, increment) {
             Ok(first_value) => match crate::BindQuerySecond::try_generate_bind_increments(&self.end, increment) {
@@ -1094,7 +1094,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
         for element in &self.value {
@@ -1137,32 +1137,32 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match &self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator,
+                is_need_to_add_logical_operator,
             ),
             Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator,
+                is_need_to_add_logical_operator,
             ),
             Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator,
+                is_need_to_add_logical_operator,
             ),
             Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                 value,
                 increment,
                 column,
-                is_need_to_add_conjunctive_operator,
+                is_need_to_add_logical_operator,
             ),
         }
     }
@@ -1255,7 +1255,7 @@ impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsP
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 // pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
 //     pub equal: crate::Equal,
-//     pub conjunctive_operator: crate::ConjunctiveOperator,
+//     pub logical_operator: crate::LogicalOperator,
 //     pub value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
 // }
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {}
@@ -1264,22 +1264,22 @@ impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsP
 //         &self,
 //         increment: &mut std::primitive::u64,
 //         column: &dyn std::fmt::Display,
-//         is_need_to_add_conjunctive_operator: std::primitive::bool,
+//         is_need_to_add_logical_operator: std::primitive::bool,
 //     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
 //         match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
 //             &self.value,
 //             increment,
 //             column,
-//             is_need_to_add_conjunctive_operator
+//             is_need_to_add_logical_operator
 //         ) {
 //             Ok(value) => {
-//                 let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-//                     format!("{}{} ", &self.conjunctive_operator, &self.equal)
+//                 let maybe_logical_operator = if is_need_to_add_logical_operator {
+//                     format!("{}{} ", &self.logical_operator, &self.equal)
 //                 }
 //                 else {
 //                     std::string::String::default()
 //                 };
-//                 Ok(format!("{maybe_conjunctive_operator}({value})"))
+//                 Ok(format!("{maybe_logical_operator}({value})"))
 //             },
 //             Err(error) => Err(error),//todo
 //         }
@@ -1324,7 +1324,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         &self,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         todo!()
     }
@@ -1441,7 +1441,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //             {
 //                 match __value {
 //                     "equal" => serde::__private::Ok(__Field::__field0),
-//                     "conjunctive_operator" => {
+//                     "logical_operator" => {
 //                         serde::__private::Ok(__Field::__field1)
 //                     }
 //                     "value" => serde::__private::Ok(__Field::__field2),
@@ -1457,7 +1457,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //             {
 //                 match __value {
 //                     b"equal" => serde::__private::Ok(__Field::__field0),
-//                     b"conjunctive_operator" => {
+//                     b"logical_operator" => {
 //                         serde::__private::Ok(__Field::__field1)
 //                     }
 //                     b"value" => serde::__private::Ok(__Field::__field2),
@@ -1519,7 +1519,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //                     }
 //                 };
 //                 let __field1 = match serde::de::SeqAccess::next_element::<
-//                     crate::ConjunctiveOperator,
+//                     crate::LogicalOperator,
 //                 >(&mut __seq)? {
 //                     serde::__private::Some(__value) => __value,
 //                     serde::__private::None => {
@@ -1561,7 +1561,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //             {
 //                 let mut __field0: serde::__private::Option<crate::Equal> = serde::__private::None;
 //                 let mut __field1: serde::__private::Option<
-//                     crate::ConjunctiveOperator,
+//                     crate::LogicalOperator,
 //                 > = serde::__private::None;
 //                 let mut __field2: serde::__private::Option<
 //                     std::vec::Vec<
@@ -1588,13 +1588,13 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //                             if serde::__private::Option::is_some(&__field1) {
 //                                 return serde::__private::Err(
 //                                     <__A::Error as serde::de::Error>::duplicate_field(
-//                                         "conjunctive_operator",
+//                                         "logical_operator",
 //                                     ),
 //                                 );
 //                             }
 //                             __field1 = serde::__private::Some(
 //                                 serde::de::MapAccess::next_value::<
-//                                     crate::ConjunctiveOperator,
+//                                     crate::LogicalOperator,
 //                                 >(&mut __map)?,
 //                             );
 //                         }
@@ -1628,7 +1628,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //                 let __field1 = match __field1 {
 //                     serde::__private::Some(__field1) => __field1,
 //                     serde::__private::None => {
-//                         serde::__private::de::missing_field("conjunctive_operator")?
+//                         serde::__private::de::missing_field("logical_operator")?
 //                     }
 //                 };
 //                 let __field2 = match __field2 {
@@ -1646,7 +1646,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
 //         #[doc(hidden)]
 //         const FIELDS: &'static [&'static str] = &[
 //             "equal",
-//             "conjunctive_operator",
+//             "logical_operator",
 //             "value",
 //         ];
 //         serde::Deserializer::deserialize_struct(
@@ -1671,28 +1671,28 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
             value: vec![
                 // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
                 //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                 //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::Equal(
                 //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                 //     ),
                 // },
                 // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
                 //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                 //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::GreaterThan(
                 //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                 //     ),
                 // },
                 // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
                 //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                 //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::Between(
                 //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                 //     ),
                 // },
                 // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
                 //     equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                //     conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                //     logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
                 //     value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement::In(
                 //         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                 //     ),
@@ -1762,15 +1762,15 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
-        let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+        let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &postgresql_type_self_where.value {
-            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_conjunctive_operator_inner_handle) {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
                     acc.push_str(&format!("{value} "));
-                    is_need_to_add_conjunctive_operator_inner_handle = true;
+                    is_need_to_add_logical_operator_inner_handle = true;
                 }
                 Err(error) => {
                     return Err(error);
@@ -1778,13 +1778,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
             }
         }
         let _ = acc.pop();
-        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-            // format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
+        let maybe_logical_operator = if is_need_to_add_logical_operator {
+            // format!("{}{} ", &postgresql_type_self_where.logical_operator, &postgresql_type_self_where.equal)
             todo!()
         } else {
             std::string::String::default()
         };
-        Ok(format!("{maybe_conjunctive_operator}({acc})"))
+        Ok(format!("{maybe_logical_operator}({acc})"))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in postgresql_type_self_where.value {
@@ -1821,15 +1821,15 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
+        is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
-        let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+        let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &postgresql_type_self_where.value {
-            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_conjunctive_operator_inner_handle) {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
                     acc.push_str(&format!("{value} "));
-                    is_need_to_add_conjunctive_operator_inner_handle = true;
+                    is_need_to_add_logical_operator_inner_handle = true;
                 }
                 Err(error) => {
                     return Err(error);
@@ -1837,13 +1837,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
             }
         }
         let _ = acc.pop();
-        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-            // format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
+        let maybe_logical_operator = if is_need_to_add_logical_operator {
+            // format!("{}{} ", &postgresql_type_self_where.logical_operator, &postgresql_type_self_where.equal)
             todo!()
         } else {
             std::string::String::default()
         };
-        Ok(format!("{maybe_conjunctive_operator}({acc})"))
+        Ok(format!("{maybe_logical_operator}({acc})"))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in postgresql_type_self_where.value {

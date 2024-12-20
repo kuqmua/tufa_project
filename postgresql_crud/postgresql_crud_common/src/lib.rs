@@ -7820,14 +7820,14 @@ where
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesJson<T> {
     pub value: SqlxTypesJson<T>,
-    pub conjunctive_operator: ConjunctiveOperator,
+    pub logical_operator: LogicalOperator,
 }
 impl<T> std::fmt::Display for WhereSqlxTypesJson<T>
 where
     T: std::fmt::Debug,
 {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {:?}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
+        write!(formatter, "value: {:?}, logical_operator: {}", self.value, self.logical_operator)
     }
 }
 impl<'a, T: serde::Serialize + std::marker::Send + 'a> BindQuery<'a> for WhereSqlxTypesJson<T> {
@@ -7865,7 +7865,7 @@ where
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjunctive_operator: ConjunctiveOperator::default(),
+            logical_operator: LogicalOperator::default(),
         }
     }
 }
@@ -7958,11 +7958,11 @@ where
 #[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdOptionOptionSqlxTypesJson<T> {
     pub value: StdOptionOptionSqlxTypesJson<T>,
-    pub conjunctive_operator: ConjunctiveOperator,
+    pub logical_operator: LogicalOperator,
 }
 impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson<T> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "value: {}, conjunctive_operator: {}", self.value, self.conjunctive_operator)
+        write!(formatter, "value: {}, logical_operator: {}", self.value, self.logical_operator)
     }
 }
 impl<'a, T: serde::Serialize + std::marker::Send + sqlx::Type<sqlx::Postgres> + sqlx::Encode<'a, sqlx::Postgres> + 'a> BindQuery<'a> for WhereStdOptionOptionSqlxTypesJson<T> {
@@ -8003,7 +8003,7 @@ where
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjunctive_operator: ConjunctiveOperator::default(),
+            logical_operator: LogicalOperator::default(),
         }
     }
 }
@@ -8119,31 +8119,6 @@ pub trait BindQuery<'a> {
 }
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
-pub enum ConjunctiveOperator {
-    Or,
-    And,
-}
-//todo remove Default impl?
-impl std::default::Default for ConjunctiveOperator {
-    fn default() -> Self {
-        Self::Or
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for ConjunctiveOperator {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        ::core::default::Default::default()
-    }
-}
-impl std::fmt::Display for ConjunctiveOperator {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::Or => write!(formatter, "{}", naming::OrSnakeCase),
-            Self::And => write!(formatter, "{}", naming::AndSnakeCase),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
 pub enum LogicalOperator {
     And,
     Or,
@@ -8151,9 +8126,9 @@ pub enum LogicalOperator {
     OrNot,
 }
 impl LogicalOperator {
-    pub fn to_query_part(&self, is_need_to_add_conjunctive_operator: std::primitive::bool) -> std::string::String {
+    pub fn to_query_part(&self, is_need_to_add_logical_operator: std::primitive::bool) -> std::string::String {
         let not_space = format!("{} ", naming::NotSnakeCase);
-        if is_need_to_add_conjunctive_operator {
+        if is_need_to_add_logical_operator {
             let and_space = format!("{} ", naming::AndSnakeCase);
             let or_space = format!("{} ", naming::OrSnakeCase);
             match &self {
@@ -8173,9 +8148,19 @@ impl LogicalOperator {
         }
     }
 }
+impl std::fmt::Display for LogicalOperator {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{self:?}")
+    }
+}
+impl Default for LogicalOperator {
+    fn default() -> Self {
+        Self::Or
+    }
+}
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for LogicalOperator {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self::Or
+        ::core::default::Default::default()
     }
 }
 

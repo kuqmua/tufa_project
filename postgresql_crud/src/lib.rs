@@ -564,7 +564,7 @@ pub use postgresql_crud_common::generate_postgresql_json_type::Pagination;
 
 pub use postgresql_crud_common::generate_postgresql_json_type::wrap_into_jsonb_build_object;
 
-pub use postgresql_crud_common::ConjunctiveOperator;
+pub use postgresql_crud_common::LogicalOperator;
 
 pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type;
 

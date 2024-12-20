@@ -435,7 +435,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["error", "occurence", "lib"],
     ["try", "generate", "bind", "increments"],
     ["bind", "value", "to", "query"],
-    ["conjunctive", "operator"],
+    ["logical", "operator"],
     ["pub"],
     ["postgresql", "json", "type", "self", "to", "create"],
     ["postgresql", "json", "type", "self", "field", "reader"],
@@ -476,7 +476,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["crate"],
     ["postgresql", "type", "self", "where", "element"],
     ["postgresql", "type", "self", "where", "element", "traits"],
-    ["get", "conjunctive", "operator"],
     ["between"]
 ]);
 
