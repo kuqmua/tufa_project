@@ -8171,6 +8171,44 @@ pub trait GetEqual {
     fn get_equal(&self) -> &Equal;
 }
 
+#[derive(Debug, Default, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
+pub struct LogicalOperator {
+    conjunctive_operator: crate::ConjunctiveOperator,
+    equal: std::primitive::bool,
+}
+impl LogicalOperator {
+    pub fn new(conjunctive_operator: crate::ConjunctiveOperator, equal: std::primitive::bool) -> Self {
+        Self { conjunctive_operator, equal }
+    }
+    pub fn to_query_part(&self, is_need_to_add_conjunctive_operator: std::primitive::bool) -> std::string::String {
+        let conjunctive_operator_part = if is_need_to_add_conjunctive_operator {
+            let value: &dyn std::fmt::Display = match &self.conjunctive_operator {
+                crate::ConjunctiveOperator::Or => &naming::OrSnakeCase,
+                crate::ConjunctiveOperator::And => &naming::AndSnakeCase,
+            };
+            format!("{value} ")
+        }
+        else {
+            std::string::String::default()
+        };
+        let equal_part = if self.equal {
+            std::string::String::default()
+        }
+        else {
+            format!("{} ", naming::NotSnakeCase)
+        };
+        format!("{conjunctive_operator_part}{equal_part}")
+    }
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for LogicalOperator {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
+pub trait GetLogicalOperator {
+    fn get_logical_operator(&self) -> &LogicalOperator;
+}
+
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum Order {
