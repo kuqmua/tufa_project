@@ -1496,58 +1496,32 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 column: &dyn std::fmt::Display,
                 is_need_to_add_conjunctive_operator: std::primitive::bool,
             ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                // Ok(format!(
-                //     "{}({})",
-                //     if is_need_to_add_conjunctive_operator {
-                //         format!("{} ", #postgresql_type_self_where_snake_case.#conjunctive_operator_snake_case.to_string())
-                //     }
-                //     else {
-                //         std::string::String::default()
-                //     },
-                //     {
-                //         let mut acc = std::string::String::default();
-                //         for (index, element) in value.iter().enumerate() {
-                //             match postgresql_crud::BindQuerySecond::try_generate_bind_increments(element, &mut increment) {
-                //                 Ok(value) => {
-                //                     let handle = format!("std_primitive_bool_as_postgresql_bool_not_null {value} ");
-                //                     match index == 0 {
-                //                         true => {
-                //                             acc.push_str(&handle);
-                //                         }
-                //                         false => {
-                //                             acc.push_str(&format!("{} {handle}", element.conjunctive_operator));
-                //                         }
-                //                     }
-                //                 }
-                //                 Err(error_0) => {
-                //                     // let error = TryReadManyRouteLogicErrorNamed::BindQuery {
-                //                     //     bind_query: error_0,
-                //                     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                //                     //         file!().to_owned(),
-                //                     //         line!(),
-                //                     //         column!(),
-                //                     //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                //                     //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
-                //                     //             line: 3625,
-                //                     //             column: 266,
-                //                     //         }),
-                //                     //     ),
-                //                     // };
-                //                     // eprintln!("{error}");
-                //                     // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
-                //                     // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                //                     // return response;
-                //                     todo!()
-                //                 }
-                //             }
-                //         }
-                //         if let false = acc.is_empty() {
-                //             let _ = acc.pop();
-                //         }
-                //         acc
-                //     }
-                // ))
-                todo!()
+                let mut acc = std::string::String::default();
+                let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+                for element in &#postgresql_type_self_where_snake_case.value {
+                    match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                        element,
+                        increment,
+                        column,
+                        is_need_to_add_conjunctive_operator_inner_handle,
+                    ) {
+                        Ok(value) => {
+                            acc.push_str(&format!("{value} "));
+                            is_need_to_add_conjunctive_operator_inner_handle = true;
+                        },
+                        Err(error) => {
+                            return Err(error);//todo
+                        },
+                    }
+                }
+                let _ = acc.pop();
+                let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
+                    format!("{}{} ", &#postgresql_type_self_where_snake_case.conjunctive_operator, &#postgresql_type_self_where_snake_case.equal)
+                }
+                else {
+                    std::string::String::default()
+                };
+                Ok(format!("{maybe_conjunctive_operator}({acc})"))
             }
         }
     };
@@ -1556,9 +1530,15 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         quote::quote!{
             fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
                 #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
-                query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                todo!()
+                for element in postgresql_type_self_where.value {
+                    query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                        element,
+                        query
+                    );
+                }
+                query
             }
         }
     };
@@ -1586,6 +1566,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+    // println!("{impl_postgresql_type_for_ident_token_stream}");
     //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
     let generated = quote::quote! {
         #self_token_stream
@@ -1606,7 +1587,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         // #postgresql_type_ident_where_token_stream
 
-        // #impl_postgresql_type_for_ident_token_stream
+        #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

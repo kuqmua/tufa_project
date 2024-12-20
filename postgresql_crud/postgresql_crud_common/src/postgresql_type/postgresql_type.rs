@@ -55,25 +55,25 @@ const JSONB: &std::primitive::str = "JSONB";
 //         Self::create_table_query_part_handle(&BOOL)
 //     }
 // }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
-impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn create_table_query_part() -> impl std::fmt::Display {
-        Self::create_table_query_part_handle(&BOOL)
-    }
-}
-impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} BOOL NOT NULL")
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+// )]
+// pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+// impl crate::CreateTableQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+//     fn create_table_query_part() -> impl std::fmt::Display {
+//         Self::create_table_query_part_handle(&BOOL)
+//     }
+// }
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} BOOL NOT NULL")
+//     }
+// }
 
 // #[derive(
 //     Debug,
@@ -666,7 +666,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBet
         start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
         end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
     ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed> {
-        if start.0 > end.0 {
+        if start.0 < end.0 {
             Ok(Self {
                 start,
                 end
@@ -1713,121 +1713,5 @@ impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI64AsPostgresql
 impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn get_equal(&self) -> &crate::Equal {
         &self.equal
-    }
-}
-
-
-
-////////////////////////////
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI32AsPostgresqlSerialNotNull {
-    type PostgresqlTypeSelf = Self;
-    type PostgresqlTypeSelfColumn = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullColumn;
-    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
-        column.to_string()
-    }
-    type PostgresqlTypeSelfToCreate = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToCreate;
-    type PostgresqlTypeSelfToRead = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToRead;
-    type PostgresqlTypeSelfToUpdate = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToUpdate;
-    type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToUpdateQueryPartErrorNamed;
-    fn postgresql_type_self_to_update_query_part(
-        postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
-        Ok(crate::BindQuerySecond::try_generate_bind_increments(&postgresql_type_self_to_update.0, increment).unwrap())
-    }
-    fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuerySecond::bind_value_to_query(postgresql_type_self_to_update.0, query)
-    }
-    type PostgresqlTypeSelfWhereElement = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement;
-    type PostgresqlTypeSelfWhere = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere;
-    fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        let mut acc = std::string::String::default();
-        let mut is_need_to_add_conjunctive_operator_inner_handle = false;
-        for element in &postgresql_type_self_where.value {
-            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                element,
-                increment,
-                column,
-                is_need_to_add_conjunctive_operator_inner_handle,
-            ) {
-                Ok(value) => {
-                    acc.push_str(&format!("{value} "));
-                    is_need_to_add_conjunctive_operator_inner_handle = true;
-                },
-                Err(error) => {
-                    return Err(error);//todo
-                },
-            }
-        }
-        let _ = acc.pop();
-        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
-            format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
-        }
-        else {
-            std::string::String::default()
-        };
-        Ok(format!("{maybe_conjunctive_operator}({acc})"))
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in postgresql_type_self_where.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-                element,
-                query
-            );
-        }
-        query
-    }
-}
-
-
-
-
-
-
-
-
-
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    type PostgresqlTypeSelf = Self;
-    type PostgresqlTypeSelfColumn = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullColumn;
-    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
-        column.to_string()
-    }
-    type PostgresqlTypeSelfToCreate = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate;
-    type PostgresqlTypeSelfToRead = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToRead;
-    type PostgresqlTypeSelfToUpdate = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate;
-    type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdateQueryPartErrorNamed;
-    fn postgresql_type_self_to_update_query_part(
-        postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
-        Ok(crate::BindQuerySecond::try_generate_bind_increments(&postgresql_type_self_to_update.0, increment).unwrap())
-    }
-    fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuerySecond::bind_value_to_query(postgresql_type_self_to_update.0, query)
-    }
-    type PostgresqlTypeSelfWhereElement = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement;
-    type PostgresqlTypeSelfWhere = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere;
-    fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_conjunctive_operator: std::primitive::bool,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
     }
 }
