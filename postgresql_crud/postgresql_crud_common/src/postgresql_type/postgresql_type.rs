@@ -1255,7 +1255,11 @@ impl crate::GetEqual for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullW
         &self.equal
     }
 }
-
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
 
 
 
@@ -1308,10 +1312,55 @@ impl crate::GetEqual for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNu
 ////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    pub equal: crate::Equal,
-    pub conjunctive_operator: crate::ConjunctiveOperator,
-    pub value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,//todo check if not empty
+    equal: crate::Equal,
+    conjunctive_operator: crate::ConjunctiveOperator,
+    value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,//todo check if not empty
 }
+//here
+#[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed {
+    IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUnique {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
+    fn try_new(
+        equal: crate::Equal,
+        conjunctive_operator: crate::ConjunctiveOperator,
+        value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,
+    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed> {
+        if value.is_empty() {
+            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed::IsEmpty {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        {
+            //todo maybe not correct?
+            let mut acc = vec![];
+            for element in &value {
+                if !acc.contains(&element) {
+                    acc.push(element);
+                } else {
+                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed::NotUnique {
+                        value: element.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self {
+            equal,
+            conjunctive_operator,
+            value,
+        })
+    }
+}
+//
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
