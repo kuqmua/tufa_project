@@ -589,13 +589,13 @@ const _: () = {
 
 /////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -619,13 +619,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan(pub crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -651,21 +651,21 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 #[derive(Debug, Clone, PartialEq, serde :: Serialize,
     //  serde :: Deserialize
     )]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
     start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
     end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
 }
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed {
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed {
     StartMoreOrEqualToEnd {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
     fn try_new(
         start: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
         end: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
-    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed> {
+    ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed> {
         if start.0 > end.0 {
             Ok(Self {
                 start,
@@ -673,13 +673,13 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
             })
         }
         else {
-            Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+            Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
     }
 }
-impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
     fn deserialize<__D>(
         __deserializer: __D,
     ) -> serde::__private::Result<Self, __D::Error>
@@ -763,19 +763,19 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
         #[doc(hidden)]
         struct __Visitor<'de> {
             marker: serde::__private::PhantomData<
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween,
+                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween,
             >,
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween;
+            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween;
             fn expecting(
                 &self,
                 __formatter: &mut serde::__private::Formatter<'_>,
             ) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(
                     __formatter,
-                    "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween",
+                    "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween",
                 )
             }
             #[inline]
@@ -794,7 +794,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 0usize,
-                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween with 2 elements",
+                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween with 2 elements",
                             ),
                         );
                     }
@@ -807,12 +807,12 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 1usize,
-                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween with 2 elements",
+                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween with 2 elements",
                             ),
                         );
                     }
                 };
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -874,7 +874,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         serde::__private::de::missing_field("end")?
                     }
                 };
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -884,18 +884,18 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
         const FIELDS: &'static [&'static str] = &["start", "end"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
-            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween",
+            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween",
             FIELDS,
             __Visitor {
                 marker: serde::__private::PhantomData::<
-                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween,
+                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween,
                 >,
                 lifetime: serde::__private::PhantomData,
             },
         )
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             start: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -903,7 +903,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -936,9 +936,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 #[derive(Debug, Clone, PartialEq, serde :: Serialize,
     //  serde :: Deserialize
     )]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>);
+pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>);
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed {
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed {
     IsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -948,10 +948,10 @@ pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTry
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
-    fn try_new(value: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed> {
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
+    fn try_new(value: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed> {
         if value.is_empty() {
-            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::IsEmpty {
+            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed::IsEmpty {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
@@ -961,7 +961,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
                 if !acc.contains(&element) {
                     acc.push(element);
                 } else {
-                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::NotUnique {
+                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterInTryNewErrorNamed::NotUnique {
                         value: element.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -971,7 +971,7 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
         Ok(Self(value))
     }
 }
-impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
     fn deserialize<__D>(
         __deserializer: __D,
     ) -> serde::__private::Result<Self, __D::Error>
@@ -981,19 +981,19 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
         #[doc(hidden)]
         struct __Visitor<'de> {
             marker: serde::__private::PhantomData<
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
+                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn,
             >,
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn;
+            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn;
             fn expecting(
                 &self,
                 __formatter: &mut serde::__private::Formatter<'_>,
             ) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(
                     __formatter,
-                    "tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
+                    "tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn",
                 )
             }
             #[inline]
@@ -1007,7 +1007,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                 let __field0: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32> = <std::vec::Vec<
                     crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
                 > as serde::Deserialize>::deserialize(__e)?;
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn::try_new(__field0) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -1028,12 +1028,12 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         return serde::__private::Err(
                             serde::de::Error::invalid_length(
                                 0usize,
-                                &"tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn with 1 element",
+                                &"tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn with 1 element",
                             ),
                         );
                     }
                 };
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn::try_new(__field0) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                 }
@@ -1041,24 +1041,24 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
         }
         serde::Deserializer::deserialize_newtype_struct(
             __deserializer,
-            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
+            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn",
             __Visitor {
                 marker: serde::__private::PhantomData::<
-                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
+                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn,
                 >,
                 lifetime: serde::__private::PhantomData,
             },
         )
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(vec![
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         ])
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn {
     fn postgresql_type_self_where_try_generate_bind_increments(
         &self,
         increment: &mut std::primitive::u64,
@@ -1095,10 +1095,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
-    Equal(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual),
-    GreaterThan(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan),
-    Between(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween),
-    In(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn)
+    Equal(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterEqual),
+    GreaterThan(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterGreaterThan),
+    Between(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterBetween),
+    In(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilterIn)
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilterValue for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementFilter {
     fn postgresql_type_self_where_try_generate_bind_increments(
