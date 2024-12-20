@@ -1318,7 +1318,6 @@ pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
     conjunctive_operator: crate::ConjunctiveOperator,
     value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,//todo check if not empty
 }
-//here
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed {
     IsEmpty {
