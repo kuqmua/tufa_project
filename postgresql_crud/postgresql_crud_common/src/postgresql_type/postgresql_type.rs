@@ -814,10 +814,10 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         );
                     }
                 };
-                serde::__private::Ok(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
-                    start: __field0,
-                    end: __field1,
-                })
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+                }
             }
             #[inline]
             fn visit_map<__A>(
@@ -876,10 +876,10 @@ impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlS
                         serde::__private::de::missing_field("end")?
                     }
                 };
-                serde::__private::Ok(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween {
-                    start: __field0,
-                    end: __field1,
-                })
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementBetween::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+                }
             }
         }
         #[doc(hidden)]
