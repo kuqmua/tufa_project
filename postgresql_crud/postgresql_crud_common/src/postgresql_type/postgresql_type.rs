@@ -936,9 +936,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+#[derive(Debug, Clone, PartialEq, serde :: Serialize,
+    //  serde :: Deserialize
+    )]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>);
-//todo not empty and unique
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed {
     IsEmpty {
@@ -971,6 +972,86 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
             }
         }
         Ok(Self(value))
+    }
+}
+impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+    fn deserialize<__D>(
+        __deserializer: __D,
+    ) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<
+                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
+            >,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn;
+            fn expecting(
+                &self,
+                __formatter: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(
+                    __formatter,
+                    "tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
+                )
+            }
+            #[inline]
+            fn visit_newtype_struct<__E>(
+                self,
+                __e: __E,
+            ) -> serde::__private::Result<Self::Value, __E::Error>
+            where
+                __E: serde::Deserializer<'de>,
+            {
+                let __field0: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32> = <std::vec::Vec<
+                    crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
+                > as serde::Deserialize>::deserialize(__e)?;
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+                }
+            }
+            #[inline]
+            fn visit_seq<__A>(
+                self,
+                mut __seq: __A,
+            ) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<
+                    std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>,
+                >(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &"tuple struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn with 1 element",
+                            ),
+                        );
+                    }
+                };
+                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+                }
+            }
+        }
+        serde::Deserializer::deserialize_newtype_struct(
+            __deserializer,
+            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn",
+            __Visitor {
+                marker: serde::__private::PhantomData::<
+                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn,
+                >,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
