@@ -1465,23 +1465,11 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 ]
             }}
         );
-        let impl_crate_get_conjunctive_operator_for_postgresql_type_ident_where_token_stream = {
-            let get_conjunctive_operator_upper_camel_case = naming::GetConjunctiveOperatorUpperCamelCase;
-            let get_conjunctive_operator_snake_case = naming::GetConjunctiveOperatorSnakeCase;
-            quote::quote!{
-                impl crate::#get_conjunctive_operator_upper_camel_case for #postgresql_type_ident_where_upper_camel_case {
-                    fn #get_conjunctive_operator_snake_case(&self) -> &crate::#conjunctive_operator_upper_camel_case {
-                        &self.#conjunctive_operator_snake_case
-                    }
-                }
-            }
-        };
         quote::quote!{
             #postgresql_type_ident_where_token_stream
             #postgresql_type_ident_where_try_new_error_named_token_stream
             
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_token_stream
-            #impl_crate_get_conjunctive_operator_for_postgresql_type_ident_where_token_stream
         }
     };
     let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
@@ -1586,7 +1574,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         // #postgresql_type_ident_where_token_stream
 
-        #impl_postgresql_type_for_ident_token_stream
+        // #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

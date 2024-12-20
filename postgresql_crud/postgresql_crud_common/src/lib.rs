@@ -8145,28 +8145,6 @@ impl std::fmt::Display for ConjunctiveOperator {
 pub trait GetConjunctiveOperator {
     fn get_conjunctive_operator(&self) -> &ConjunctiveOperator;
 }
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
-pub struct Equal(pub std::primitive::bool);
-impl std::default::Default for Equal {
-    fn default() -> Self {
-        Self(false)
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Equal {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        ::core::default::Default::default()
-    }
-}
-impl std::fmt::Display for Equal {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.0 {
-            write!(formatter, "")
-        }
-        else {
-            write!(formatter, " {}", naming::NotSnakeCase)
-        }
-    }
-}
 
 #[derive(Debug, Default, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
 pub struct LogicalOperator {
@@ -8201,9 +8179,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
-}
-pub trait GetLogicalOperator {
-    fn get_logical_operator(&self) -> &LogicalOperator;
 }
 
 

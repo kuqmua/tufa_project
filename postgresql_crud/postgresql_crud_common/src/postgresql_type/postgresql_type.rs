@@ -1320,8 +1320,7 @@ impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI32AsP
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {
-    pub equal: crate::Equal,
-    pub conjunctive_operator: crate::ConjunctiveOperator,
+    pub logical_operator: crate::LogicalOperator,
     pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI64,
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement {}
@@ -1349,11 +1348,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 ////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize,
-    //  serde :: Deserialize
+     serde :: Deserialize
     )]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    equal: crate::Equal,
-    conjunctive_operator: crate::ConjunctiveOperator,
+    logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,//todo check if not empty
 }
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -1369,8 +1367,7 @@ pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorN
 }
 impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
     fn try_new(
-        equal: crate::Equal,
-        conjunctive_operator: crate::ConjunctiveOperator,
+        logical_operator: crate::LogicalOperator,
         value: std::vec::Vec<PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement>,
     ) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereTryNewErrorNamed> {
         if value.is_empty() {
@@ -1393,290 +1390,288 @@ impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
             }
         }
         Ok(Self {
-            equal,
-            conjunctive_operator,
+            logical_operator,
             value,
         })
     }
 }
-impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    fn deserialize<__D>(
-        __deserializer: __D,
-    ) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[allow(non_camel_case_types)]
-        #[doc(hidden)]
-        enum __Field {
-            __field0,
-            __field1,
-            __field2,
-            __ignore,
-        }
-        #[doc(hidden)]
-        struct __FieldVisitor;
-        impl serde::de::Visitor<'_> for __FieldVisitor {
-            type Value = __Field;
-            fn expecting(
-                &self,
-                __formatter: &mut serde::__private::Formatter<'_>,
-            ) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(
-                    __formatter,
-                    "field identifier",
-                )
-            }
-            fn visit_u64<__E>(
-                self,
-                __value: u64,
-            ) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
-                    2u64 => serde::__private::Ok(__Field::__field2),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-            fn visit_str<__E>(
-                self,
-                __value: &str,
-            ) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    "equal" => serde::__private::Ok(__Field::__field0),
-                    "conjunctive_operator" => {
-                        serde::__private::Ok(__Field::__field1)
-                    }
-                    "value" => serde::__private::Ok(__Field::__field2),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-            fn visit_bytes<__E>(
-                self,
-                __value: &[u8],
-            ) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    b"equal" => serde::__private::Ok(__Field::__field0),
-                    b"conjunctive_operator" => {
-                        serde::__private::Ok(__Field::__field1)
-                    }
-                    b"value" => serde::__private::Ok(__Field::__field2),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-        }
-        impl<'de> serde::Deserialize<'de> for __Field {
-            #[inline]
-            fn deserialize<__D>(
-                __deserializer: __D,
-            ) -> serde::__private::Result<Self, __D::Error>
-            where
-                __D: serde::Deserializer<'de>,
-            {
-                serde::Deserializer::deserialize_identifier(
-                    __deserializer,
-                    __FieldVisitor,
-                )
-            }
-        }
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<
-                PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere,
-            >,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere;
-            fn expecting(
-                &self,
-                __formatter: &mut serde::__private::Formatter<'_>,
-            ) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(
-                    __formatter,
-                    "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere",
-                )
-            }
-            #[inline]
-            fn visit_seq<__A>(
-                self,
-                mut __seq: __A,
-            ) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<
-                    crate::Equal,
-                >(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                0usize,
-                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match serde::de::SeqAccess::next_element::<
-                    crate::ConjunctiveOperator,
-                >(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                1usize,
-                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
-                            ),
-                        );
-                    }
-                };
-                let __field2 = match serde::de::SeqAccess::next_element::<
-                    std::vec::Vec<
-                        PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
-                    >,
-                >(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(
-                            serde::de::Error::invalid_length(
-                                2usize,
-                                &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
-                            ),
-                        );
-                    }
-                };
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere::try_new(__field0, __field1, __field2) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                }
-            }
-            #[inline]
-            fn visit_map<__A>(
-                self,
-                mut __map: __A,
-            ) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::MapAccess<'de>,
-            {
-                let mut __field0: serde::__private::Option<crate::Equal> = serde::__private::None;
-                let mut __field1: serde::__private::Option<
-                    crate::ConjunctiveOperator,
-                > = serde::__private::None;
-                let mut __field2: serde::__private::Option<
-                    std::vec::Vec<
-                        PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
-                    >,
-                > = serde::__private::None;
-                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
-                    __Field,
-                >(&mut __map)? {
-                    match __key {
-                        __Field::__field0 => {
-                            if serde::__private::Option::is_some(&__field0) {
-                                return serde::__private::Err(
-                                    <__A::Error as serde::de::Error>::duplicate_field("equal"),
-                                );
-                            }
-                            __field0 = serde::__private::Some(
-                                serde::de::MapAccess::next_value::<
-                                    crate::Equal,
-                                >(&mut __map)?,
-                            );
-                        }
-                        __Field::__field1 => {
-                            if serde::__private::Option::is_some(&__field1) {
-                                return serde::__private::Err(
-                                    <__A::Error as serde::de::Error>::duplicate_field(
-                                        "conjunctive_operator",
-                                    ),
-                                );
-                            }
-                            __field1 = serde::__private::Some(
-                                serde::de::MapAccess::next_value::<
-                                    crate::ConjunctiveOperator,
-                                >(&mut __map)?,
-                            );
-                        }
-                        __Field::__field2 => {
-                            if serde::__private::Option::is_some(&__field2) {
-                                return serde::__private::Err(
-                                    <__A::Error as serde::de::Error>::duplicate_field("value"),
-                                );
-                            }
-                            __field2 = serde::__private::Some(
-                                serde::de::MapAccess::next_value::<
-                                    std::vec::Vec<
-                                        PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
-                                    >,
-                                >(&mut __map)?,
-                            );
-                        }
-                        _ => {
-                            let _ = serde::de::MapAccess::next_value::<
-                                serde::de::IgnoredAny,
-                            >(&mut __map)?;
-                        }
-                    }
-                }
-                let __field0 = match __field0 {
-                    serde::__private::Some(__field0) => __field0,
-                    serde::__private::None => {
-                        serde::__private::de::missing_field("equal")?
-                    }
-                };
-                let __field1 = match __field1 {
-                    serde::__private::Some(__field1) => __field1,
-                    serde::__private::None => {
-                        serde::__private::de::missing_field("conjunctive_operator")?
-                    }
-                };
-                let __field2 = match __field2 {
-                    serde::__private::Some(__field2) => __field2,
-                    serde::__private::None => {
-                        serde::__private::de::missing_field("value")?
-                    }
-                };
-                match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere::try_new(__field0, __field1, __field2) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                }
-            }
-        }
-        #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &[
-            "equal",
-            "conjunctive_operator",
-            "value",
-        ];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<
-                    PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere,
-                >,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
+// impl<'de> serde::Deserialize<'de> for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
+//     fn deserialize<__D>(
+//         __deserializer: __D,
+//     ) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[allow(non_camel_case_types)]
+//         #[doc(hidden)]
+//         enum __Field {
+//             __field0,
+//             __field1,
+//             __field2,
+//             __ignore,
+//         }
+//         #[doc(hidden)]
+//         struct __FieldVisitor;
+//         impl serde::de::Visitor<'_> for __FieldVisitor {
+//             type Value = __Field;
+//             fn expecting(
+//                 &self,
+//                 __formatter: &mut serde::__private::Formatter<'_>,
+//             ) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(
+//                     __formatter,
+//                     "field identifier",
+//                 )
+//             }
+//             fn visit_u64<__E>(
+//                 self,
+//                 __value: u64,
+//             ) -> serde::__private::Result<Self::Value, __E>
+//             where
+//                 __E: serde::de::Error,
+//             {
+//                 match __value {
+//                     0u64 => serde::__private::Ok(__Field::__field0),
+//                     1u64 => serde::__private::Ok(__Field::__field1),
+//                     2u64 => serde::__private::Ok(__Field::__field2),
+//                     _ => serde::__private::Ok(__Field::__ignore),
+//                 }
+//             }
+//             fn visit_str<__E>(
+//                 self,
+//                 __value: &str,
+//             ) -> serde::__private::Result<Self::Value, __E>
+//             where
+//                 __E: serde::de::Error,
+//             {
+//                 match __value {
+//                     "equal" => serde::__private::Ok(__Field::__field0),
+//                     "conjunctive_operator" => {
+//                         serde::__private::Ok(__Field::__field1)
+//                     }
+//                     "value" => serde::__private::Ok(__Field::__field2),
+//                     _ => serde::__private::Ok(__Field::__ignore),
+//                 }
+//             }
+//             fn visit_bytes<__E>(
+//                 self,
+//                 __value: &[u8],
+//             ) -> serde::__private::Result<Self::Value, __E>
+//             where
+//                 __E: serde::de::Error,
+//             {
+//                 match __value {
+//                     b"equal" => serde::__private::Ok(__Field::__field0),
+//                     b"conjunctive_operator" => {
+//                         serde::__private::Ok(__Field::__field1)
+//                     }
+//                     b"value" => serde::__private::Ok(__Field::__field2),
+//                     _ => serde::__private::Ok(__Field::__ignore),
+//                 }
+//             }
+//         }
+//         impl<'de> serde::Deserialize<'de> for __Field {
+//             #[inline]
+//             fn deserialize<__D>(
+//                 __deserializer: __D,
+//             ) -> serde::__private::Result<Self, __D::Error>
+//             where
+//                 __D: serde::Deserializer<'de>,
+//             {
+//                 serde::Deserializer::deserialize_identifier(
+//                     __deserializer,
+//                     __FieldVisitor,
+//                 )
+//             }
+//         }
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<
+//                 PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere,
+//             >,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere;
+//             fn expecting(
+//                 &self,
+//                 __formatter: &mut serde::__private::Formatter<'_>,
+//             ) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(
+//                     __formatter,
+//                     "struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere",
+//                 )
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(
+//                 self,
+//                 mut __seq: __A,
+//             ) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<
+//                     crate::Equal,
+//                 >(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(
+//                             serde::de::Error::invalid_length(
+//                                 0usize,
+//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
+//                             ),
+//                         );
+//                     }
+//                 };
+//                 let __field1 = match serde::de::SeqAccess::next_element::<
+//                     crate::ConjunctiveOperator,
+//                 >(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(
+//                             serde::de::Error::invalid_length(
+//                                 1usize,
+//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
+//                             ),
+//                         );
+//                     }
+//                 };
+//                 let __field2 = match serde::de::SeqAccess::next_element::<
+//                     std::vec::Vec<
+//                         PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
+//                     >,
+//                 >(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(
+//                             serde::de::Error::invalid_length(
+//                                 2usize,
+//                                 &"struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere with 3 elements",
+//                             ),
+//                         );
+//                     }
+//                 };
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere::try_new(__field0, __field1, __field2) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+//                 }
+//             }
+//             #[inline]
+//             fn visit_map<__A>(
+//                 self,
+//                 mut __map: __A,
+//             ) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::MapAccess<'de>,
+//             {
+//                 let mut __field0: serde::__private::Option<crate::Equal> = serde::__private::None;
+//                 let mut __field1: serde::__private::Option<
+//                     crate::ConjunctiveOperator,
+//                 > = serde::__private::None;
+//                 let mut __field2: serde::__private::Option<
+//                     std::vec::Vec<
+//                         PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
+//                     >,
+//                 > = serde::__private::None;
+//                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
+//                     __Field,
+//                 >(&mut __map)? {
+//                     match __key {
+//                         __Field::__field0 => {
+//                             if serde::__private::Option::is_some(&__field0) {
+//                                 return serde::__private::Err(
+//                                     <__A::Error as serde::de::Error>::duplicate_field("equal"),
+//                                 );
+//                             }
+//                             __field0 = serde::__private::Some(
+//                                 serde::de::MapAccess::next_value::<
+//                                     crate::Equal,
+//                                 >(&mut __map)?,
+//                             );
+//                         }
+//                         __Field::__field1 => {
+//                             if serde::__private::Option::is_some(&__field1) {
+//                                 return serde::__private::Err(
+//                                     <__A::Error as serde::de::Error>::duplicate_field(
+//                                         "conjunctive_operator",
+//                                     ),
+//                                 );
+//                             }
+//                             __field1 = serde::__private::Some(
+//                                 serde::de::MapAccess::next_value::<
+//                                     crate::ConjunctiveOperator,
+//                                 >(&mut __map)?,
+//                             );
+//                         }
+//                         __Field::__field2 => {
+//                             if serde::__private::Option::is_some(&__field2) {
+//                                 return serde::__private::Err(
+//                                     <__A::Error as serde::de::Error>::duplicate_field("value"),
+//                                 );
+//                             }
+//                             __field2 = serde::__private::Some(
+//                                 serde::de::MapAccess::next_value::<
+//                                     std::vec::Vec<
+//                                         PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement,
+//                                     >,
+//                                 >(&mut __map)?,
+//                             );
+//                         }
+//                         _ => {
+//                             let _ = serde::de::MapAccess::next_value::<
+//                                 serde::de::IgnoredAny,
+//                             >(&mut __map)?;
+//                         }
+//                     }
+//                 }
+//                 let __field0 = match __field0 {
+//                     serde::__private::Some(__field0) => __field0,
+//                     serde::__private::None => {
+//                         serde::__private::de::missing_field("equal")?
+//                     }
+//                 };
+//                 let __field1 = match __field1 {
+//                     serde::__private::Some(__field1) => __field1,
+//                     serde::__private::None => {
+//                         serde::__private::de::missing_field("conjunctive_operator")?
+//                     }
+//                 };
+//                 let __field2 = match __field2 {
+//                     serde::__private::Some(__field2) => __field2,
+//                     serde::__private::None => {
+//                         serde::__private::de::missing_field("value")?
+//                     }
+//                 };
+//                 match PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere::try_new(__field0, __field1, __field2) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+//                 }
+//             }
+//         }
+//         #[doc(hidden)]
+//         const FIELDS: &'static [&'static str] = &[
+//             "equal",
+//             "conjunctive_operator",
+//             "value",
+//         ];
+//         serde::Deserializer::deserialize_struct(
+//             __deserializer,
+//             "PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere",
+//             FIELDS,
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<
+//                     PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere,
+//                 >,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
 //
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             // todo!()
             value: vec![
                 // PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement {
@@ -1711,11 +1706,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere {
-    fn get_conjunctive_operator(&self) -> &crate::ConjunctiveOperator {
-        &self.conjunctive_operator
-    }
-}
 
 
 
@@ -1726,21 +1716,144 @@ impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI32AsPostgresql
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    pub equal: crate::Equal,
-    pub conjunctive_operator: crate::ConjunctiveOperator,
+    pub logical_operator: crate::LogicalOperator,
     pub value: std::vec::Vec<PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement>,//todo check if not empty
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            equal: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            conjunctive_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             value: vec![]
         }
     }
 }
-impl crate::GetConjunctiveOperator for PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere {
-    fn get_conjunctive_operator(&self) -> &crate::ConjunctiveOperator {
-        &self.conjunctive_operator
+
+
+
+
+
+
+
+
+
+
+
+///////////////////
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI32AsPostgresqlSerialNotNull {
+    type PostgresqlTypeSelf = Self;
+    type PostgresqlTypeSelfColumn = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullColumn;
+    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
+        column.to_string()
+    }
+    type PostgresqlTypeSelfToCreate = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToCreate;
+    type PostgresqlTypeSelfToRead = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToRead;
+    type PostgresqlTypeSelfToUpdate = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToUpdate;
+    type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullToUpdateQueryPartErrorNamed;
+    fn postgresql_type_self_to_update_query_part(
+        postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
+        Ok(crate::BindQuerySecond::try_generate_bind_increments(&postgresql_type_self_to_update.0, increment).unwrap())
+    }
+    fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuerySecond::bind_value_to_query(postgresql_type_self_to_update.0, query)
+    }
+    type PostgresqlTypeSelfWhereElement = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElement;
+    type PostgresqlTypeSelfWhere = PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhere;
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_conjunctive_operator: std::primitive::bool,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+        for element in &postgresql_type_self_where.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_conjunctive_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_conjunctive_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
+            // format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
+            todo!()
+        } else {
+            std::string::String::default()
+        };
+        Ok(format!("{maybe_conjunctive_operator}({acc})"))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in postgresql_type_self_where.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
+    type PostgresqlTypeSelf = Self;
+    type PostgresqlTypeSelfColumn = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullColumn;
+    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
+        column.to_string()
+    }
+    type PostgresqlTypeSelfToCreate = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToCreate;
+    type PostgresqlTypeSelfToRead = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToRead;
+    type PostgresqlTypeSelfToUpdate = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdate;
+    type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullToUpdateQueryPartErrorNamed;
+    fn postgresql_type_self_to_update_query_part(
+        postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
+        Ok(crate::BindQuerySecond::try_generate_bind_increments(&postgresql_type_self_to_update.0, increment).unwrap())
+    }
+    fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuerySecond::bind_value_to_query(postgresql_type_self_to_update.0, query)
+    }
+    type PostgresqlTypeSelfWhereElement = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhereElement;
+    type PostgresqlTypeSelfWhere = PostgresqlTypeStdPrimitiveI64AsPostgresqlBigSerialNotNullWhere;
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_conjunctive_operator: std::primitive::bool,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_conjunctive_operator_inner_handle = false;
+        for element in &postgresql_type_self_where.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_conjunctive_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_conjunctive_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        let maybe_conjunctive_operator = if is_need_to_add_conjunctive_operator {
+            // format!("{}{} ", &postgresql_type_self_where.conjunctive_operator, &postgresql_type_self_where.equal)
+            todo!()
+        } else {
+            std::string::String::default()
+        };
+        Ok(format!("{maybe_conjunctive_operator}({acc})"))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in postgresql_type_self_where.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
     }
 }

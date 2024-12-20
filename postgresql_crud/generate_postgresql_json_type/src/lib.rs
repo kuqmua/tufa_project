@@ -5344,7 +5344,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_tokens_where_element_token_stream = {
                         let postgresql_type_tokens_where_element_token_stream = {
                             let struct_declaration_token_stream = quote::quote!{{
-                                equal: postgresql_crud::Equal,
                                 conjunctive_operator: postgresql_crud::ConjunctiveOperator,
                             }};
                             let pub_struct_postgresql_type_tokens_where_element_declaration_token_stream = match &postgresql_json_type {
@@ -5429,7 +5428,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     schemars::JsonSchema,
                                 )]
                                 pub struct #postgresql_type_tokens_where_upper_camel_case {
-                                    equal: postgresql_crud::Equal,
                                     #conjunctive_operator_snake_case: postgresql_crud::#conjunctive_operator_upper_camel_case,
                                     #value_snake_case: std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>
                                 }
@@ -5441,7 +5439,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #[inline]
                                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                                         Self {
-                                            equal: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                                             #conjunctive_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                                             #value_snake_case: vec![
                                                 #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
