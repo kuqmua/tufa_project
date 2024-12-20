@@ -609,9 +609,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
-            Ok(value) => {
-                Ok(format!("{column} = {value}"))
-            }
+            Ok(value) => Ok(format!("{}({column} = {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator))),
             Err(error) => Err(error),//todo another checked add? 
         }
     }
@@ -647,7 +645,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
             Ok(value) => {
-                Ok(format!("{column} > {value}"))
+                Ok(format!("{}({column} > {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
             }
             Err(error) => Err(error),//todo another checked add? 
         }
@@ -933,7 +931,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
                 Ok(second_value) => {
                     let between_snake_case = naming::BetweenSnakeCase;
                     let and_snake_case = naming::AndSnakeCase;
-                    Ok(format!("{column} {between_snake_case} {first_value} {and_snake_case} {second_value}"))
+                    Ok(format!("{}({column} {between_snake_case} {first_value} {and_snake_case} {second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                 },
                 Err(error) => Err(error),
             },
@@ -1109,7 +1107,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
         let _ = acc.pop();
         let in_snake_case = naming::InSnakeCase;
-        Ok(format!("{column} {in_snake_case} ({acc})"))
+        Ok(format!("{}({column} {in_snake_case} ({acc}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(
         self,
