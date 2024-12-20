@@ -1751,12 +1751,66 @@ pub fn postgresql_type_tokens_where_element_int(input: proc_macro::TokenStream) 
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let postgresql_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_where_element_equal_token_stream = {
+        let postgresql_type_ident_where_element_equal_token_stream = {
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+                pub struct #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    pub logical_operator: crate::LogicalOperator,
+                    pub value: #field_type
+                }
+            }
+        };
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = {
+            quote::quote!{
+                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self {
+                            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                        }
+                    }
+                }
+            }
+        };
+        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream = {
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    fn postgresql_type_self_where_try_generate_bind_increments(
+                        &self,
+                        increment: &mut std::primitive::u64,
+                        column: &dyn std::fmt::Display,
+                        is_need_to_add_logical_operator: std::primitive::bool,
+                    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                        match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
+                            Ok(value) => Ok(format!("{}({column} = {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator))),
+                            Err(error) => Err(error),//todo another checked add? 
+                        }
+                    }
+                    fn postgresql_type_self_where_bind_value_to_query<'a>(
+                        self,
+                        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        crate::BindQuerySecond::bind_value_to_query(self.value, query)
+                    }
+                }
+            }
+        };
+        quote::quote!{
+            #postgresql_type_ident_where_element_equal_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream
+            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream
+        }
+    };
     let generated = quote::quote! {
-       
+       #postgresql_type_ident_where_element_equal_token_stream
+
     };
     // if ident == "" {
     //     println!("{generated}");
     //     println!("----------------------");
     // }
     generated.into()
+
 }

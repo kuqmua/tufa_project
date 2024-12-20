@@ -207,7 +207,8 @@ const JSONB: &std::primitive::str = "JSONB";
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
 )]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::CreateTableQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
@@ -300,6 +301,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotN
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
 impl crate::CreateTableQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
@@ -588,41 +590,6 @@ const _: () = {
 
 
 /////////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual{
-    pub logical_operator: crate::LogicalOperator,
-    pub value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        }
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementEqual {
-    fn postgresql_type_self_where_try_generate_bind_increments(
-        &self,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: std::primitive::bool,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
-            Ok(value) => Ok(format!("{}({column} = {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator))),
-            Err(error) => Err(error),//todo another checked add? 
-        }
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(
-        self,
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuerySecond::bind_value_to_query(self.value, query)
-    }
-}
-
-
-
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementGreaterThan{
     pub logical_operator: crate::LogicalOperator,
