@@ -938,6 +938,41 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn(std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>);
+//todo not empty and unique
+#[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed {
+    IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUnique {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: crate::postgresql_type::postgresql_base_type::StdPrimitiveI32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
+    fn try_new(value: std::vec::Vec<crate::postgresql_type::postgresql_base_type::StdPrimitiveI32>) -> Result<Self, PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed> {
+        if value.is_empty() {
+            return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::IsEmpty {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        {
+            let mut acc = vec![];
+            for element in &value {
+                if !acc.contains(&element) {
+                    acc.push(element);
+                } else {
+                    return Err(PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementInTryNewErrorNamed::NotUnique {
+                        value: element.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self(value))
+    }
+}
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32AsPostgresqlSerialNotNullWhereElementIn {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(vec![

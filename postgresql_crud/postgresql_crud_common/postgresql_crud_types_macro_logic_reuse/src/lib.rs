@@ -891,6 +891,15 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
     let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = {
+        quote::quote!{
+            impl error_occurence_lib::ToStdStringString for #ident {
+                fn to_std_string_string(&self) -> std::string::String {
+                    format!("{self:#?}")
+                }
+            }
+        }
+    };
     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
         &ident,
         &field_type
@@ -1037,6 +1046,7 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         }
     };
     let generated = quote::quote! {
+        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         #impl_crate_bind_query_for_ident_token_stream
