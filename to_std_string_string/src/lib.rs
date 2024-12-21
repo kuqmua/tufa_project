@@ -6,6 +6,41 @@ impl ToStdStringString for std::string::String {
         self.clone()
     }
 }
+impl ToStdStringString for std::primitive::i8 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::i16 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::i32 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::i64 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::u8 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::u16 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::u32 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
 impl ToStdStringString for std::primitive::u64 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
