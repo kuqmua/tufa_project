@@ -1401,30 +1401,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     };
     let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
     let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-    // let postgresql_type_ident_where_element_token_stream = {
-    //     let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
-    //     let postgresql_type_ident_where_element_token_stream = generate_pub_struct_tokens_token_stream(
-    //         Visibility::Pub,
-    //         &postgresql_type_ident_where_element_upper_camel_case,
-    //         &quote::quote!{{
-    //             pub equal: crate::Equal,
-    //             pub #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
-    //             pub #value_snake_case: #field_type,
-    //         }},
-    //         false,
-    //         true,
-    //     );
-    //     let impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_element_token_stream = {
-    //         let postgresql_type_self_where_element_traits_upper_camel_case = naming::PostgresqlTypeSelfWhereElementTraitsUpperCamelCase;
-    //         quote::quote!{
-    //             impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_where_element_traits_upper_camel_case<'_> for #postgresql_type_ident_where_element_upper_camel_case {}
-    //         }
-    //     };
-    //     quote::quote!{
-    //         #postgresql_type_ident_where_element_token_stream
-    //         #impl_postgresql_type_self_where_traits_for_postgresql_type_ident_where_element_token_stream
-    //     }
-    // };
     let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_token_stream = {
         let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
@@ -1836,8 +1812,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #postgresql_type_ident_to_update_query_part_error_named_token_stream
 
         #postgresql_type_ident_to_delete_token_stream
-
-        // #postgresql_type_ident_where_element_token_stream
 
         #postgresql_type_ident_where_token_stream
 

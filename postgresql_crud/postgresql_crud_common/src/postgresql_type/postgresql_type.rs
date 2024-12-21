@@ -83,7 +83,8 @@ const NOT_NULL: &std::primitive::str = "NOT NULL";
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
 // )]
 // pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveI16);
 // impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
