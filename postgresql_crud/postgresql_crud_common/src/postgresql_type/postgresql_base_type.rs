@@ -116,30 +116,6 @@ pub struct StdStringString(pub std::string::String);
 
 
 ////////////////////////////////////////
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-// pub struct PostgresqlTypeStdPrimitiveI16WhereElementGreaterThan {
-//     pub logical_operator: crate::LogicalOperator,
-//     pub value: std::primitive::i16,
-// }
-// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16WhereElementGreaterThan {
-//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//         }
-//     }
-// }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16WhereElementGreaterThan {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         match crate::BindQuerySecond::try_generate_bind_increments(&self.value, increment) {
-//             Ok(value) => Ok(format!("{}({column} > {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator))),
-//             Err(error) => Err(error),
-//         }
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         crate::BindQuerySecond::bind_value_to_query(self.value, query)
-//     }
-// }
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
 // pub struct PostgresqlTypeStdPrimitiveI16WhereElementBetween {
 //     logical_operator: crate::LogicalOperator,
