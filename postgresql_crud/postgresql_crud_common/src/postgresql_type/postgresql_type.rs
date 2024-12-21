@@ -84,7 +84,6 @@ const NOT_NULL: &std::primitive::str = "NOT NULL";
 //     serde::Serialize,
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
 // )]
 // pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveI16);
 // impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
@@ -99,7 +98,7 @@ const NOT_NULL: &std::primitive::str = "NOT NULL";
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
@@ -128,7 +127,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallIntNo
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
@@ -157,7 +156,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSeria
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
@@ -186,7 +185,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNul
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull {
@@ -215,7 +214,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlIntNotNull
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
@@ -244,7 +243,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotN
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNull {
@@ -273,7 +272,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlInt4NotNul
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotNull {
@@ -303,7 +302,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigIntNotN
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
@@ -351,7 +350,7 @@ const _: () = {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 )]
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNull {
