@@ -8211,10 +8211,6 @@ pub trait GeneratePostgresqlJsonTypeToRead {
         Self: Sized;
 }
 
-pub trait CreateTableQueryPart {
-    fn create_table_query_part() -> impl std::fmt::Display;
-}
-
 pub trait CreateTableColumnQueryPart {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display;
 }

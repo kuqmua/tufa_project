@@ -573,7 +573,5 @@ pub use generate_postgresql_crud_second::GeneratePostgresqlCrudSecond;
 
 pub use postgresql_crud_common::postgresql_type;
 
-//todo maybe remove CreateTableQueryPart
-pub use postgresql_crud_common::CreateTableQueryPart;
 pub use postgresql_crud_common::CreateTableColumnQueryPart;
 pub use postgresql_crud_common::maybe_primary_key;
