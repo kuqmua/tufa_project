@@ -39,6 +39,24 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "std_primitive_i32_as_postgresql_serial_not_null": 0
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 1
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 2
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 3
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 4
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 5
+  },
+  {
+    "std_primitive_i32_as_postgresql_serial_not_null": 6
   }
 ]
 
