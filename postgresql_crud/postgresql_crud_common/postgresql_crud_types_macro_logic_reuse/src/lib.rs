@@ -1768,29 +1768,18 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 let mut acc = std::string::String::default();
                 let mut is_need_to_add_logical_operator_inner_handle = false;
                 for element in &#postgresql_type_self_where_snake_case.value {
-                    match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                        element,
-                        increment,
-                        column,
-                        is_need_to_add_logical_operator_inner_handle,
-                    ) {
+                    match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                         Ok(value) => {
                             acc.push_str(&format!("{value} "));
                             is_need_to_add_logical_operator_inner_handle = true;
-                        },
+                        }
                         Err(error) => {
-                            return Err(error);//todo
-                        },
+                            return Err(error);
+                        }
                     }
                 }
                 let _ = acc.pop();
-                let maybe_logical_operator = if is_need_to_add_logical_operator {
-                    format!("{}{} ", &#postgresql_type_self_where_snake_case.logical_operator, &#postgresql_type_self_where_snake_case.equal)
-                }
-                else {
-                    std::string::String::default()
-                };
-                Ok(format!("{maybe_logical_operator}({acc})"))
+                Ok(format!("{}({acc})", &#postgresql_type_self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
             }
         }
     };
@@ -1802,10 +1791,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 for element in postgresql_type_self_where.value {
-                    query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-                        element,
-                        query
-                    );
+                    query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
                 }
                 query
             }
@@ -1855,7 +1841,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #postgresql_type_ident_where_token_stream
 
-        // #impl_postgresql_type_for_ident_token_stream
+        #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");

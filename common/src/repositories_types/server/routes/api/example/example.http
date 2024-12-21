@@ -80,20 +80,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 0
       #   }
       # },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": 5
-        }
-      }
-      # ,
       # {
-      #   "Between": {
+      #   "GreaterThan": {
       #     "logical_operator": "Or",
-      #     "start": 3,
-      #     "end": 5
+      #     "value": 5
       #   }
       # }
+      # ,
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": 3,
+          "end": 5
+        }
+      }
       # ,
       # {
       #   "In": {
