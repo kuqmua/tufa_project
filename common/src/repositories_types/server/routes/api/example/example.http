@@ -55,7 +55,7 @@ content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
-  "std_primitive_i32_as_postgresql_serial_not_null": 5
+  "std_primitive_i32_as_postgresql_serial_not_null": 6
 }
 
 ###
@@ -83,17 +83,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       {
         "GreaterThan": {
           "logical_operator": "Or",
-          "value": 3
+          "value": 5
         }
       }
-      ,
-      {
-        "Between": {
-          "logical_operator": "AndNot",
-          "start": 3,
-          "end": 5
-        }
-      }
+      # ,
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 3,
+      #     "end": 5
+      #   }
+      # }
       # ,
       # {
       #   "In": {
