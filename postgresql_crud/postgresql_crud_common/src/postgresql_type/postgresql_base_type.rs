@@ -735,49 +735,49 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32WhereElementEqual {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 Ok(format!("{}({column} = ${increment})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator),))
-//             }
-//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.value);
-//         query
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-// pub struct PostgresqlTypeStdPrimitiveI32WhereElementGreaterThan {
-//     pub logical_operator: crate::LogicalOperator,
-//     pub value: std::primitive::i32,
-// }
-// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI32WhereElementGreaterThan {
-//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             value: ::core::default::Default::default(),
-//         }
-//     }
-// }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI32WhereElementGreaterThan {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 Ok(format!("{}({column} > ${increment})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator),))
-//             }
-//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.value);
-//         query
-//     }
-// }
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdOptionOptionStdPrimitiveI32WhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({column} = ${increment})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator),))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value);
+        query
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdOptionOptionStdPrimitiveI32WhereElementGreaterThan {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: std::primitive::i32,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdOptionOptionStdPrimitiveI32WhereElementGreaterThan {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: ::core::default::Default::default(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdOptionOptionStdPrimitiveI32WhereElementGreaterThan {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({column} > ${increment})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator),))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value);
+        query
+    }
+}
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
 // pub struct PostgresqlTypeStdPrimitiveI32WhereElementBetween {
 //     logical_operator: crate::LogicalOperator,
@@ -1008,11 +1008,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 //         query
 //     }
 // }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
-// pub struct PostgresqlTypeStdPrimitiveI32WhereElementIn {
-//     logical_operator: crate::LogicalOperator,
-//     value: std::vec::Vec<std::primitive::i32>,
-// }
+#[derive(Debug, Clone, PartialEq, serde :: Serialize)]
+pub struct PostgresqlTypeStdOptionOptionStdPrimitiveI32WhereElementIn {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<std::option::Option<std::primitive::i32>>,
+}
 // #[derive(
 //     Debug,
 //     Clone,
