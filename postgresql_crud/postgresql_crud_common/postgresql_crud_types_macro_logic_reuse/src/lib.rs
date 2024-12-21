@@ -3120,6 +3120,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
     };
 
     //
+    // let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
 
     // let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
     //     Visibility::PubCrate,
