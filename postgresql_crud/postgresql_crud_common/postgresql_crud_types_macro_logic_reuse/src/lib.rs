@@ -2722,7 +2722,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut _serde::__private::Formatter,
+                                    __formatter: &mut _serde::__private::Formatter<'_>,
                                 ) -> _serde::__private::fmt::Result {
                                     _serde::__private::Formatter::write_str(
                                         __formatter,
@@ -2794,7 +2794,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                                 type Value = #postgresql_type_ident_where_element_in_upper_camel_case;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut _serde::__private::Formatter,
+                                    __formatter: &mut _serde::__private::Formatter<'_>,
                                 ) -> _serde::__private::fmt::Result {
                                     _serde::__private::Formatter::write_str(
                                         __formatter,
@@ -3118,6 +3118,16 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
             #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream
         }
     };
+
+    //
+
+    // let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
+    //     Visibility::PubCrate,
+    //     &std_option_option_ident_upper_camel_case,
+    //     &quote::quote!{(pub std::option::Option<#ident>);},
+    //     false,
+    //     true,
+    // );
     let generated = quote::quote! {
        #postgresql_type_ident_where_element_equal_token_stream
        #postgresql_type_ident_where_element_greater_than_token_stream
