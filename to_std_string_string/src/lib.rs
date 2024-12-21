@@ -46,6 +46,46 @@ impl ToStdStringString for std::primitive::u64 {
         self.to_string()
     }
 }
+impl ToStdStringString for std::option::Option<std::primitive::i8> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::i16> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::i32> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::i64> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::u8> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::u16> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::u32> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::u64> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
 impl ToStdStringString for tracing::dispatcher::SetGlobalDefaultError {
     fn to_std_string_string(&self) -> std::string::String {
         std::string::String::from("tracing::dispatcher::SetGlobalDefaultError")
