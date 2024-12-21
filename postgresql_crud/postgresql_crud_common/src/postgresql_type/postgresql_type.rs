@@ -83,7 +83,8 @@ const NOT_NULL: &std::primitive::str = "NOT NULL";
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensNotNullWhereElementInt,
 // )]
 // pub struct StdPrimitiveI16AsPostgresqlSmallInt(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveI16);
 // impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallInt {
@@ -638,3 +639,5 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNul
 // custom_function(column_name) = value
 // Summary
 // These expressions can be combined in various ways to create complex filtering conditions in your SQL queries. Always ensure that the data types of the columns and values being compared are compatible to avoid errors. The flexibility of the WHERE clause allows for powerful querying capabilities in PostgreSQL.
+
+////////////////////////////////////////////////////////

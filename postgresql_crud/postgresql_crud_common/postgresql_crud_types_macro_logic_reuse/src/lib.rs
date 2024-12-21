@@ -1818,8 +1818,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_postgresql_type_for_ident_token_stream
     };
     // if ident == "" {
-    //     println!("{generated}");
-    //     println!("----------------------");
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlTypeTokens",
+    //         &generated,
+    //     );
     // }
     generated.into()
 }
@@ -2984,8 +2986,10 @@ pub fn postgresql_type_tokens_not_null_where_element_int(input: proc_macro::Toke
        #postgresql_type_ident_where_element_token_stream
     };
     // if ident == "" {
-    //     println!("{generated}");
-    //     println!("----------------------");
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlTypeTokensNotNullWhereElementInt",
+    //         &generated,
+    //     );
     // }
     generated.into()
 }
