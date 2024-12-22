@@ -3150,23 +3150,34 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                 let acc_snake_case = naming::AccSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                 quote::quote! {
-                    match #increment_snake_case.checked_add(1) {
-                        Some(value) => {
-                            *#increment_snake_case = value;
-                            Ok(format!(
-                                "{}({column} = ${increment})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
+                    let generate_query_part = |value: std::option::Option<std::primitive::u64>|{
+                        let query_part = match value {
+                            Some(value) => format!("= ${value}"),
+                            None => "is null".to_string()
+                        };
+                        format!("{}({column} {query_part})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator))
+                    };
+                    if (&self.value).is_some() {
+                        match #increment_snake_case.checked_add(1) {
+                            Some(value) => {
+                                *#increment_snake_case = value;
+                                Ok(generate_query_part(Some(value)))
+                            },
+                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    }
+                    else {
+                        Ok(generate_query_part(None))
                     }
                 }
             };
             let postgresql_type_self_where_bind_value_to_query_token_stream = {
                 quote::quote!{
-                    query = query.bind(self.value);
+                    if let Some(value) = self.value {
+                        query = query.bind(value);
+                    }
                     query
                 }
             };

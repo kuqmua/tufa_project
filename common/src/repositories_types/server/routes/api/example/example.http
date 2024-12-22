@@ -87,17 +87,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "std_primitive_i32_as_postgresql_int4": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": null
-      #   }
-      # }
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": null
+        }
+      }
       # ,
       # {
       #   "GreaterThan": {
       #     "logical_operator": "Or",
-      #     "value": 2
+      #     "value": 0
       #   }
       # }
       # ,
@@ -109,14 +109,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # }
       # ,
-      {
-        "In": {
-          "logical_operator": "Or",
-          "value": [
-            1,2,3
-          ]
-        }
-      }
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       1,2,3
+      #     ]
+      #   }
+      # }
     ]
   },
   # "std_primitive_i32_as_postgresql_int4_not_null": {
