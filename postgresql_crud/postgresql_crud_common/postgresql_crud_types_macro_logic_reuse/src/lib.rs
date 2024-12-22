@@ -3194,6 +3194,80 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
             #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_equal_token_stream
         }
     };
+    let postgresql_type_std_option_option_ident_where_element_greater_than_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementGreaterThanUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_std_option_option_ident_where_element_greater_than_token_stream = {
+        let postgresql_type_std_option_option_ident_where_element_greater_than_token_stream = {
+            quote::quote! {
+                #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+                pub struct #postgresql_type_std_option_option_ident_where_element_greater_than_upper_camel_case {
+                    pub logical_operator: crate::LogicalOperator,
+                    pub value: #field_type
+                }
+            }
+        };
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_greater_than_token_stream = {
+            quote::quote! {
+                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_std_option_option_ident_where_element_greater_than_upper_camel_case {
+                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self {
+                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            value: ::core::default::Default::default(),
+                        }
+                    }
+                }
+            }
+        };
+        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_greater_than_token_stream = {
+            let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let acc_snake_case = naming::AccSnakeCase;
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                quote::quote! {
+                    match #increment_snake_case.checked_add(1) {
+                        Some(value) => {
+                            *#increment_snake_case = value;
+                            Ok(format!(
+                                "{}({column} > ${increment})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                }
+            };
+            let postgresql_type_self_where_bind_value_to_query_token_stream = {
+                quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            };
+            quote::quote! {
+                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_std_option_option_ident_where_element_greater_than_upper_camel_case {
+                    fn postgresql_type_self_where_try_generate_bind_increments(
+                        &self,
+                        increment: &mut std::primitive::u64,
+                        column: &dyn std::fmt::Display,
+                        is_need_to_add_logical_operator: std::primitive::bool,
+                    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                        #postgresql_type_self_where_try_generate_bind_increments_token_stream
+                    }
+                    fn postgresql_type_self_where_bind_value_to_query<'a>(
+                        self,
+                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #postgresql_type_self_where_bind_value_to_query_token_stream
+                    }
+                }
+            }
+        };
+        quote::quote! {
+            #postgresql_type_std_option_option_ident_where_element_greater_than_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_greater_than_token_stream
+            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_greater_than_token_stream
+        }
+    };
     let generated = quote::quote! {
        #postgresql_type_ident_where_element_equal_token_stream
        #postgresql_type_ident_where_element_greater_than_token_stream
@@ -3202,6 +3276,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
        #postgresql_type_ident_where_element_token_stream
 
        #postgresql_type_std_option_option_ident_where_element_equal_token_stream
+       #postgresql_type_std_option_option_ident_where_element_greater_than_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
