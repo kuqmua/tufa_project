@@ -2071,6 +2071,80 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
     };
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let postgresql_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_where_element_equal_token_stream = {
+        let postgresql_type_ident_where_element_equal_token_stream = {
+            quote::quote!{
+                #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+                pub struct #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    pub logical_operator: crate::LogicalOperator,
+                    pub value: #field_type
+                }
+            }
+        };
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = {
+            quote::quote!{
+                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self {
+                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            value: ::core::default::Default::default()
+                        }
+                    }
+                }
+            }
+        };
+        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream = {
+            let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let acc_snake_case = naming::AccSnakeCase;
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                quote::quote! {
+                    match #increment_snake_case.checked_add(1) {
+                        Some(value) => {
+                            *#increment_snake_case = value;
+                            Ok(format!(
+                                "{}({column} = ${increment})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                }
+            };
+            let postgresql_type_self_where_bind_value_to_query_token_stream = {
+                quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            };
+            quote::quote!{
+                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_ident_where_element_equal_upper_camel_case {
+                    fn postgresql_type_self_where_try_generate_bind_increments(
+                        &self,
+                        increment: &mut std::primitive::u64,
+                        column: &dyn std::fmt::Display,
+                        is_need_to_add_logical_operator: std::primitive::bool,
+                    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                        #postgresql_type_self_where_try_generate_bind_increments_token_stream
+                    }
+                    fn postgresql_type_self_where_bind_value_to_query<'a>(
+                        self,
+                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #postgresql_type_self_where_bind_value_to_query_token_stream
+                    }
+                }
+            }
+        };
+        quote::quote!{
+            #postgresql_type_ident_where_element_equal_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream
+            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream
+        }
+    };
     let postgresql_type_ident_where_element_greater_than_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementGreaterThanUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_where_element_greater_than_token_stream = {
         let postgresql_type_ident_where_element_greater_than_token_stream = {
@@ -2931,6 +3005,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
             quote::quote! {
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                 pub enum #postgresql_type_ident_where_element_upper_camel_case {
+                    Equal(#postgresql_type_ident_where_element_equal_upper_camel_case),
                     GreaterThan(#postgresql_type_ident_where_element_greater_than_upper_camel_case),
                     Between(#postgresql_type_ident_where_element_between_upper_camel_case),
                     In(#postgresql_type_ident_where_element_in_upper_camel_case)
@@ -2947,6 +3022,12 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                         is_need_to_add_logical_operator: std::primitive::bool,
                     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                         match &self {
+                            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                                value,
+                                increment,
+                                column,
+                                is_need_to_add_logical_operator,
+                            ),
                             Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                                 value,
                                 increment,
@@ -2972,6 +3053,10 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         match self {
+                            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                                value,
+                                query
+                            ),
                             Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
                                 value,
                                 query
@@ -3008,6 +3093,9 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                 impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_ident_where_element_upper_camel_case {
                     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
                         vec![
+                            Self::Equal(
+                                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            ),
                             Self::GreaterThan(
                                 #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                             ),
@@ -3042,6 +3130,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
     //     true,
     // );
     let generated = quote::quote! {
+       #postgresql_type_ident_where_element_equal_token_stream
        #postgresql_type_ident_where_element_greater_than_token_stream
        #postgresql_type_ident_where_element_between_token_stream
        #postgresql_type_ident_where_element_in_token_stream
