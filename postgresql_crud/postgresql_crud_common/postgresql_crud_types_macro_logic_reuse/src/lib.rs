@@ -2949,6 +2949,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                     for element in &self.value {
                         match #increment_snake_case.checked_add(1) {
                             Some(value) => {
+                                *#increment_snake_case = value;
                                 acc.push_str(&format!("${value},"));
                             },
                             None => {
