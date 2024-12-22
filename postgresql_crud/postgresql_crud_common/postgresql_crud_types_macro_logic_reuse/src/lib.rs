@@ -2575,7 +2575,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
                                     *#increment_snake_case = second_value;
                                     let between_snake_case = naming::BetweenSnakeCase;
                                     let and_snake_case = naming::AndSnakeCase;
-                                    Ok(format!("{}({column} {between_snake_case} {first_value} {and_snake_case} {second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                    Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                                 },
                                 None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!(),

@@ -38,25 +38,20 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i32_as_postgresql_serial_not_null": 0
+    "std_primitive_i32_as_postgresql_int4": 1,
+    "std_primitive_i32_as_postgresql_int4_not_null": 1
   },
   {
-    "std_primitive_i32_as_postgresql_serial_not_null": 1
+    "std_primitive_i32_as_postgresql_int4": null,
+    "std_primitive_i32_as_postgresql_int4_not_null": 2
   },
   {
-    "std_primitive_i32_as_postgresql_serial_not_null": 2
+    "std_primitive_i32_as_postgresql_int4": 3,
+    "std_primitive_i32_as_postgresql_int4_not_null": 3
   },
   {
-    "std_primitive_i32_as_postgresql_serial_not_null": 3
-  },
-  {
-    "std_primitive_i32_as_postgresql_serial_not_null": 4
-  },
-  {
-    "std_primitive_i32_as_postgresql_serial_not_null": 5
-  },
-  {
-    "std_primitive_i32_as_postgresql_serial_not_null": 6
+    "std_primitive_i32_as_postgresql_int4": null,
+    "std_primitive_i32_as_postgresql_int4_not_null": 4
   }
 ]
 
@@ -89,38 +84,74 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i32_as_postgresql_serial_not_null": {
+  "std_primitive_i32_as_postgresql_int4": {
     "logical_operator": "Or",
     "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": null
+      #   }
+      # }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 2
+      #   }
+      # }
+      # ,
       {
         "Between": {
           "logical_operator": "Or",
-          "start": 0,
-          "end": 10
-        }
-      },
-      {
-        "In": {
-          "logical_operator": "Or",
-          "value": [
-            0
-          ]
+          "start": 1,
+          "end": 4
         }
       }
+      # ,
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
     ]
   },
+  # "std_primitive_i32_as_postgresql_int4_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 2
+  #       }
+  #     }
+  #     # ,
+  #     # {
+  #     #   "GreaterThan": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": 0
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "Between": {
+  #     #     "logical_operator": "Or",
+  #     #     "start": 0,
+  #     #     "end": 10
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "In": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": [
+  #     #       0
+  #     #     ]
+  #     #   }
+  #     # }
+  #   ]
+  # },
   # "std_primitive_i64_as_postgresql_big_serial_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -155,7 +186,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   # },
   "select": [
     {
-      "std_primitive_i32_as_postgresql_serial_not_null": null
+      "std_primitive_i32_as_postgresql_int4": null
+    },
+    {
+      "std_primitive_i32_as_postgresql_int4_not_null": null
     },
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
@@ -167,7 +201,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     "order": "asc"
   },
-  "limit": 10,
+  "limit": 100,
   "offset": 0
 }
 
