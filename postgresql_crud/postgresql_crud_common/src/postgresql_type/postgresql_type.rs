@@ -136,7 +136,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8NotNul
 )]
 pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveF32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT4}")
     }
 }
@@ -150,7 +150,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
 )]
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveF32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT4} {NOT_NULL}")
     }
 }
@@ -164,7 +164,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4NotN
 )]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveF64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT8}")
     }
 }
@@ -178,7 +178,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
 )]
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveF64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT8} {NOT_NULL}")
     }
 }
@@ -246,34 +246,34 @@ const _: () = {
         }
     }
 };
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-// )]
-// pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveBool);
-// impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {BOOL}")
-//     }
-// }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-// )]
-// pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
-// impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {BOOL} {NOT_NULL}")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdPrimitiveBool);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {BOOL}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {BOOL} {NOT_NULL}")
+    }
+}
 // #[derive(
 //     Debug,
 //     Clone,
@@ -284,7 +284,7 @@ const _: () = {
 // )]
 // pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlVarchar {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         VARCHAR)
 //     }
 // }
@@ -298,7 +298,7 @@ const _: () = {
 // )]
 // pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         VARCHAR)
 //     }
 // }
@@ -312,7 +312,7 @@ const _: () = {
 // // )]
 // // pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
-// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         CHARN)
 // //     }
 // // }
@@ -326,7 +326,7 @@ const _: () = {
 // // )]
 // // pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharNNotNull {
-// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         CHARN)
 // //     }
 // // }
@@ -340,7 +340,7 @@ const _: () = {
 // )]
 // pub struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         TEXT)
 //     }
 // }
@@ -354,7 +354,7 @@ const _: () = {
 // )]
 // pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlTextNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         TEXT)
 //     }
 // }
@@ -368,7 +368,7 @@ const _: () = {
 // // )]
 // // pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCiText {
-// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         CITEXT)
 // //     }
 // // }
@@ -382,7 +382,7 @@ const _: () = {
 // // )]
 // // pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
-// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         CITEXT)
 // //     }
 // // }

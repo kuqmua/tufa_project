@@ -60,6 +60,7 @@ pub struct StdPrimitiveF64(pub std::primitive::f64);
     serde::Deserialize,
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementBool,
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 #[derive(
