@@ -1965,7 +1965,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         // let where_inner_type_with_generic_token_stream = &element.where_inner_type_with_generic_token_stream;
         let postgresql_type_field_type_where_upper_camel_case = &naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
         quote::quote! {
-            pub #field_ident: std::option::Option<std::vec::Vec<#postgresql_type_field_type_where_upper_camel_case>>
+            pub #field_ident: std::option::Option<#postgresql_type_field_type_where_upper_camel_case>
         }
     });
     let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
@@ -3621,46 +3621,44 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 let query_string_token_stream = {
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let field_type = &element.syn_field.ty;
                         let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} {{value}} "));
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                         let index_snake_case = naming::IndexSnakeCase;
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                additional_parameters.push_str(&format!(
-                                    "{} {}",
-                                    match additional_parameters.is_empty() {
-                                        true => #where_snake_case_qoutes_token_stream,
-                                        false => #space_and_double_quotes_token_stream,
-                                    },
-                                    {
-                                        let mut #acc_snake_case = #std_string_string::default();
-                                        for (#index_snake_case, #element_snake_case) in #value_snake_case.iter().enumerate() {
-                                            match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                                #element_snake_case,
-                                                &mut #increment_snake_case
-                                            ) {
-                                                Ok(#value_snake_case) => {
-                                                    let handle = format!(#handle_token_stream);
-                                                    match #index_snake_case == 0 {
-                                                        true => {
-                                                            #acc_snake_case.push_str(&handle);
-                                                        },
-                                                        false => {
-                                                            #acc_snake_case.push_str(&format!("{} {handle}", #element_snake_case.logical_operator));
-                                                        },
-                                                    }
-                                                },
-                                                Err(#error_0_token_stream) => {
-                                                    #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
-                                                },
-                                            }
-                                        }
-                                        if let false = #acc_snake_case.is_empty() {
-                                            let _ = #acc_snake_case.pop();
-                                        }
-                                        #acc_snake_case
+                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
+                                    value,
+                                    &mut increment,
+                                    &#field_ident_double_quotes_token_stream,
+                                    is_first_push_to_additional_parameters_already_happend,//todo generate is in proc macro (first element ignore)
+                                ) {
+                                    Ok(value) => {
+                                        additional_parameters.push_str(&value);
+                                        is_first_push_to_additional_parameters_already_happend = true;
                                     }
-                                ));
+                                    Err(error_0) => {
+                                        // let error = TryReadManyRouteLogicErrorNamed::BindQuery {
+                                        //     bind_query: error_0,
+                                        //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        //         file!().to_owned(),
+                                        //         line!(),
+                                        //         column!(),
+                                        //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                                        //             line: 3625,
+                                        //             column: 266,
+                                        //         }),
+                                        //     ),
+                                        // };
+                                        // eprintln!("{error}");
+                                        // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryReadManyRouteLogicResponseVariants::from(error)));
+                                        // *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        // return response;
+                                        todo!()
+                                    }
+                                }
                             }
                         }
                     });
@@ -3690,7 +3688,8 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 #query_vec_column_token_stream,
                                 {
                                     #increment_initialization_token_stream
-                                    let mut additional_parameters = #std_string_string::default();
+                                    let mut additional_parameters = #std_string_string::from("where");
+                                    let mut is_first_push_to_additional_parameters_already_happend = false;
                                     #(#additional_parameters_modification_token_stream)*
                                     {
                                         #prefix_to_additional_parameters_token_stream
@@ -3750,13 +3749,13 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let field_type = &element.syn_field.ty;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                for #value_snake_case in #value_snake_case {
-                                    #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
-                                        #value_snake_case, #query_snake_case,
-                                    );
-                                }
+                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_bind_value_to_query(
+                                    value,
+                                    query
+                                );
                             }
                         }
                     });
@@ -3983,9 +3982,9 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                 let fields_token_stream = fields.iter().map(|element|{
                     let field_ident = &element.field_ident;
                     quote::quote!{
-                        #field_ident: Some(vec![
+                        #field_ident: Some(
                             #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                        ]),
+                        ),
                     }
                 });
                 quote::quote!{
@@ -5523,7 +5522,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
 
             #create_many_token_stream
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             #read_one_token_stream
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream

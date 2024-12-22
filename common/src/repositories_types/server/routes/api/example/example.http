@@ -93,30 +93,30 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "value": null
         }
       }
-      # ,
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # }
-      # ,
-      # {
-      #   "Between": {
-      #     "logical_operator": "Or",
-      #     "start": 1,
-      #     "end": 4
-      #   }
-      # }
-      # ,
-      # {
-      #   "In": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       1,2,3
-      #     ]
-      #   }
-      # }
+      ,
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 3
+        }
+      }
+      ,
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": 1,
+          "end": 4
+        }
+      }
+      ,
+      {
+        "In": {
+          "logical_operator": "Or",
+          "value": [
+            1,2,3
+          ]
+        }
+      }
     ]
   },
   # "std_primitive_i32_as_postgresql_int4_not_null": {
