@@ -6,6 +6,7 @@
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
 )]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 #[derive(
