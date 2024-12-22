@@ -6,7 +6,7 @@
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 #[derive(
@@ -17,7 +17,7 @@ pub struct StdPrimitiveI16(pub std::primitive::i16);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 #[derive(
@@ -28,7 +28,7 @@ pub struct StdPrimitiveI32(pub std::primitive::i32);
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 #[derive(
@@ -38,7 +38,7 @@ pub struct StdPrimitiveI64(pub std::primitive::i64);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 #[derive(
@@ -48,7 +48,7 @@ pub struct StdPrimitiveF32(pub std::primitive::f32);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 #[derive(
