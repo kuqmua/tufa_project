@@ -3277,6 +3277,11 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
         &postgresql_type_std_option_option_ident_where_element_between_upper_camel_case, 
         &postgresql_type_ident_where_element_between_upper_camel_case
     );
+    let postgresql_type_std_option_option_ident_where_element_in_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementInUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_std_option_option_ident_where_element_in_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+        &postgresql_type_std_option_option_ident_where_element_in_upper_camel_case, 
+        &postgresql_type_ident_where_element_in_upper_camel_case
+    );
     let generated = quote::quote! {
        #postgresql_type_ident_where_element_equal_token_stream
        #postgresql_type_ident_where_element_greater_than_token_stream
@@ -3287,6 +3292,7 @@ pub fn postgresql_base_type_tokens_where_element_int(input: proc_macro::TokenStr
        #postgresql_type_std_option_option_ident_where_element_equal_token_stream
        #postgresql_type_std_option_option_ident_where_element_greater_than_alias_token_stream
        #postgresql_type_std_option_option_ident_where_element_between_alias_token_stream
+       #postgresql_type_std_option_option_ident_where_element_in_alias_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
