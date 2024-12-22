@@ -46,6 +46,16 @@ impl ToStdStringString for std::primitive::u64 {
         self.to_string()
     }
 }
+impl ToStdStringString for std::primitive::f32 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl ToStdStringString for std::primitive::f64 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
 impl ToStdStringString for std::option::Option<std::primitive::i8> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
@@ -82,6 +92,16 @@ impl ToStdStringString for std::option::Option<std::primitive::u32> {
     }
 }
 impl ToStdStringString for std::option::Option<std::primitive::u64> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::f32> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl ToStdStringString for std::option::Option<std::primitive::f64> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }

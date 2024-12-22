@@ -38,6 +38,7 @@ pub struct StdPrimitiveI64(pub std::primitive::i64);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
 )]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 #[derive(
@@ -47,6 +48,7 @@ pub struct StdPrimitiveF32(pub std::primitive::f32);
     serde::Serialize,
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementInt,
 )]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 #[derive(
