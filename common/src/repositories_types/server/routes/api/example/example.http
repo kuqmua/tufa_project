@@ -38,60 +38,16 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i16_as_postgresql_small_int2": 0,
-    "std_primitive_i16_as_postgresql_small_int2_not_null": 0,
-    "std_primitive_i32_as_postgresql_int4": 0,
-    "std_primitive_i32_as_postgresql_int4_not_null": 0,
-    "std_primitive_i64_as_postgresql_big_int8": 0,
-    "std_primitive_i64_as_postgresql_big_int8_not_null": 0,
-    "std_primitive_f32_as_postgresql_float4": 0.0,
-    "std_primitive_f32_as_postgresql_float4_not_null": 0.0,
-    "std_primitive_f64_as_postgresql_float8": 0.0,
-    "std_primitive_f64_as_postgresql_float8_not_null": 0.0,
-    "std_primitive_bool_as_postgresql_bool": false,
+    "second_std_primitive_i64_as_postgresql_big_serial_not_null": 2,
     "std_primitive_bool_as_postgresql_bool_not_null": false
   },
   {
-    "std_primitive_i16_as_postgresql_small_int2": 1,
-    "std_primitive_i16_as_postgresql_small_int2_not_null": 1,
-    "std_primitive_i32_as_postgresql_int4": 1,
-    "std_primitive_i32_as_postgresql_int4_not_null": 1,
-    "std_primitive_i64_as_postgresql_big_int8": 1,
-    "std_primitive_i64_as_postgresql_big_int8_not_null": 1,
-    "std_primitive_f32_as_postgresql_float4": 1.1,
-    "std_primitive_f32_as_postgresql_float4_not_null": 1.1,
-    "std_primitive_f64_as_postgresql_float8": 1.1,
-    "std_primitive_f64_as_postgresql_float8_not_null": 1.1,
-    "std_primitive_bool_as_postgresql_bool": true,
-    "std_primitive_bool_as_postgresql_bool_not_null": true
-  },
-  {
-    "std_primitive_i16_as_postgresql_small_int2": 2,
-    "std_primitive_i16_as_postgresql_small_int2_not_null": 2,
-    "std_primitive_i32_as_postgresql_int4": 2,
-    "std_primitive_i32_as_postgresql_int4_not_null": 2,
-    "std_primitive_i64_as_postgresql_big_int8": 2,
-    "std_primitive_i64_as_postgresql_big_int8_not_null": 2,
-    "std_primitive_f32_as_postgresql_float4": 2.2,
-    "std_primitive_f32_as_postgresql_float4_not_null": 2.2,
-    "std_primitive_f64_as_postgresql_float8": 2.2,
-    "std_primitive_f64_as_postgresql_float8_not_null": 2.2,
-    "std_primitive_bool_as_postgresql_bool": null,
+    "second_std_primitive_i64_as_postgresql_big_serial_not_null": 6,
     "std_primitive_bool_as_postgresql_bool_not_null": false
   },
   {
-    "std_primitive_i16_as_postgresql_small_int2": 3,
-    "std_primitive_i16_as_postgresql_small_int2_not_null": 3,
-    "std_primitive_i32_as_postgresql_int4": 3,
-    "std_primitive_i32_as_postgresql_int4_not_null": 3,
-    "std_primitive_i64_as_postgresql_big_int8": 3,
-    "std_primitive_i64_as_postgresql_big_int8_not_null": 3,
-    "std_primitive_f32_as_postgresql_float4": 3.3,
-    "std_primitive_f32_as_postgresql_float4_not_null": 3.3,
-    "std_primitive_f64_as_postgresql_float8": 3.3,
-    "std_primitive_f64_as_postgresql_float8_not_null": 3.3,
-    "std_primitive_bool_as_postgresql_bool": null,
-    "std_primitive_bool_as_postgresql_bool_not_null": true
+    "second_std_primitive_i64_as_postgresql_big_serial_not_null": 10,
+    "std_primitive_bool_as_postgresql_bool_not_null": false
   }
 ]
 

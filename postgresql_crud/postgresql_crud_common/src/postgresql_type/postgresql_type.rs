@@ -285,7 +285,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlVarchar {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         VARCHAR)
+//         format!("{column} {VARCHAR}")
 //     }
 // }
 // #[derive(
@@ -299,7 +299,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // pub struct StdStringStringAsPostgresqlVarcharNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlVarcharNotNull {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         VARCHAR)
+//         format!("{column} {VARCHAR} {NOT_NULL}")
 //     }
 // }
 // // #[derive(
@@ -313,7 +313,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // // pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-// //         CHARN)
+// //         format!("{column} {CHARN}")
 // //     }
 // // }
 // // #[derive(
@@ -327,7 +327,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // // pub struct StdStringStringAsPostgresqlCharNNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharNNotNull {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-// //         CHARN)
+// //         format!("{column} {CHARN} {NOT_NULL}")
 // //     }
 // // }
 // #[derive(
@@ -341,7 +341,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // pub struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         TEXT)
+//         format!("{column} {TEXT}")
 //     }
 // }
 // #[derive(
@@ -355,7 +355,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlTextNotNull {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         TEXT)
+//         format!("{column} {TEXT} {NOT_NULL}")
 //     }
 // }
 // // #[derive(
@@ -369,7 +369,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // // pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCiText {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-// //         CITEXT)
+// //         format!("{column} {CITEXT}")
 // //     }
 // // }
 // // #[derive(
@@ -383,7 +383,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // // pub struct StdStringStringAsPostgresqlCiTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCiTextNotNull {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-// //         CITEXT)
+// //         format!("{column} {CITEXT} {NOT_NULL}")
 // //     }
 // // }
 
