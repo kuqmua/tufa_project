@@ -1441,18 +1441,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         };
         let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
             &postgresql_type_ident_where_element_upper_camel_case,
-            &quote::quote!{
-                crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                    &self.0,
-                    increment,
-                    column,
-                    is_need_to_add_logical_operator,
-                )
+            &{
+                let column_snake_case = naming::ColumnSnakeCase;
+                let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+                quote::quote!{
+                    crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                        &self.0,
+                        #increment_snake_case,
+                        #column_snake_case,
+                        #is_need_to_add_logical_operator_snake_case,
+                    )
+                }
             },
             &quote::quote!{
                 crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
                     self.0,
-                    query
+                    #query_snake_case
                 )
             }
         );
@@ -2083,6 +2087,8 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);    
     let generate_postgresql_type_tokens_where_element_token_stream = |is_option: std::primitive::bool|{
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let acc_snake_case = naming::AccSnakeCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2131,9 +2137,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_equal_upper_camel_case,
                 &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     if is_option {
                         quote::quote! {
                             let generate_query_part = |value: std::option::Option<std::primitive::u64>|{
@@ -2237,23 +2240,18 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             };
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_greater_than_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_greater_than_upper_camel_case,
-                &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    quote::quote! {
-                        match #increment_snake_case.checked_add(1) {
-                            Some(value) => {
-                                *#increment_snake_case = value;
-                                Ok(format!(
-                                    "{}({column} > ${increment})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                ))
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
+                &quote::quote! {
+                    match #increment_snake_case.checked_add(1) {
+                        Some(value) => {
+                            *#increment_snake_case = value;
+                            Ok(format!(
+                                "{}({column} > ${increment})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
                     }
                 },
                 &quote::quote!{
@@ -2624,30 +2622,25 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             };
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_between_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_between_upper_camel_case,
-                &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    quote::quote! {
-                        match #increment_snake_case.checked_add(1) {
-                            Some(first_value) => {
-                                *#increment_snake_case = first_value;
-                                match #increment_snake_case.checked_add(1) {
-                                    Some(second_value) => {
-                                        *#increment_snake_case = second_value;
-                                        let between_snake_case = naming::BetweenSnakeCase;
-                                        let and_snake_case = naming::AndSnakeCase;
-                                        Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                                    },
-                                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
+                &quote::quote! {
+                    match #increment_snake_case.checked_add(1) {
+                        Some(first_value) => {
+                            *#increment_snake_case = first_value;
+                            match #increment_snake_case.checked_add(1) {
+                                Some(second_value) => {
+                                    *#increment_snake_case = second_value;
+                                    let between_snake_case = naming::BetweenSnakeCase;
+                                    let and_snake_case = naming::AndSnakeCase;
+                                    Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                },
+                                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                })
+                            }
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
                     }
                 },
                 &quote::quote!{
@@ -2996,29 +2989,24 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             };
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_in_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_in_upper_camel_case,
-                &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    quote::quote! {
-                        let mut acc = std::string::String::default();
-                        for element in &self.value {
-                            match #increment_snake_case.checked_add(1) {
-                                Some(value) => {
-                                    *#increment_snake_case = value;
-                                    acc.push_str(&format!("${value},"));
-                                },
-                                None => {
-                                    return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
+                &quote::quote! {
+                    let mut acc = std::string::String::default();
+                    for element in &self.value {
+                        match #increment_snake_case.checked_add(1) {
+                            Some(value) => {
+                                *#increment_snake_case = value;
+                                acc.push_str(&format!("${value},"));
+                            },
+                            None => {
+                                return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
                             }
                         }
-                        let _ = acc.pop();
-                        let in_snake_case = naming::InSnakeCase;
-                        Ok(format!("{}({column} {in_snake_case} ({acc}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                     }
+                    let _ = acc.pop();
+                    let in_snake_case = naming::InSnakeCase;
+                    Ok(format!("{}({column} {in_snake_case} ({acc}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                 },
                 &quote::quote!{
                     for element in self.value {
@@ -3182,6 +3170,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);    
     let generate_postgresql_type_tokens_where_element_token_stream = |is_option: std::primitive::bool|{
+        let increment_snake_case = naming::IncrementSnakeCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -3230,9 +3219,6 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_equal_upper_camel_case,
                 &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     if is_option {
                         quote::quote! {
                             let generate_query_part = |value: std::option::Option<std::primitive::u64>|{
@@ -3398,6 +3384,7 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_option: std::primitive::bool|{
+        let increment_snake_case = naming::IncrementSnakeCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -3446,9 +3433,6 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case,
                 &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     if is_option {
                         quote::quote! {
                             let generate_query_part = |value: std::option::Option<std::primitive::u64>|{
@@ -3557,9 +3541,6 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case,
                 &{
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     if is_option {
                         quote::quote! {
                             let generate_query_part = |value: std::option::Option<std::primitive::u64>|{
