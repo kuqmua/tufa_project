@@ -1,3 +1,19 @@
+fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let error_occurence_lib_snake_case = naming::ErrorOccurenceLibSnakeCase;
+    let to_std_string_string_upper_camel_case = naming::ToStdStringStringUpperCamelCase;
+    let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;
+    let std_string_string_token_stream = token_patterns::StdStringString;
+    let self_snake_case = naming::SelfSnakeCase;
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
+    quote::quote!{
+        impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident {
+            fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
+                #content_token_stream
+            }
+        }
+    }
+}
+
 fn common_handle(
     input: proc_macro::TokenStream,
     where_ident_should_implement_eq: std::primitive::bool,
@@ -61,17 +77,17 @@ fn common_handle(
     let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
     let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
     let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+    let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{format!("{self}")},
+    );
     let generated = quote::quote! {
         impl std::fmt::Display for #ident {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "{:?}", self.0)
             }
         }
-        impl error_occurence_lib::ToStdStringString for #ident {
-            fn to_std_string_string(&self) -> std::string::String {
-                format!("{self}")
-            }
-        }
+        #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
         impl #ident {
             pub fn into_inner(self) -> #field_type {
                 self.0
@@ -849,21 +865,6 @@ fn generate_pub_struct_tokens_token_stream(
         #visibility struct #ident_token_stream #content_token_stream
     }
 }
-fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let error_occurence_lib_snake_case = naming::ErrorOccurenceLibSnakeCase;
-    let to_std_string_string_upper_camel_case = naming::ToStdStringStringUpperCamelCase;
-    let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;
-    let std_string_string_token_stream = token_patterns::StdStringString;
-    let self_snake_case = naming::SelfSnakeCase;
-    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{self_snake_case}}}"));
-    quote::quote!{
-        impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_token_stream {
-            fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
-                format!(#format_handle_token_stream)
-            }
-        }
-    }
-}
 fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::DeriveInput) -> &'a syn::Type {
     if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
@@ -889,15 +890,10 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
     let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = {
-        quote::quote!{
-            impl error_occurence_lib::ToStdStringString for #ident {
-                fn to_std_string_string(&self) -> std::string::String {
-                    format!("{self:#?}")
-                }
-            }
-        }
-    };
+    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{format!("{self:#?}")},
+    );
     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
         &ident,
         &field_type
@@ -1187,7 +1183,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &ident,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident);
+        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &ident,
+            &quote::quote!{format!("{self}")}
+        );
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
             &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1409,7 +1408,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             &postgresql_type_ident_to_delete_upper_camel_case,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_ident_to_delete_upper_camel_case);
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &quote::quote!{format!("{self}")}
+        );
         let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
             &postgresql_type_ident_to_delete_upper_camel_case,
             &field_type
@@ -1465,15 +1467,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_ident_where_element_upper_camel_case {}
             }
         };
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream = {
-            quote::quote!{
-                impl error_occurence_lib::ToStdStringString for #postgresql_type_ident_where_element_upper_camel_case {
-                    fn to_std_string_string(&self) -> std::string::String {
-                        format!("{self:#?}")
-                    }
-                }
-            }
-        };
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_where_element_upper_camel_case,
+            &quote::quote!{format!("{self:#?}")},
+        );
         let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_ident_where_element_upper_camel_case,
             &quote::quote!{
@@ -1989,7 +1986,10 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
             &postgresql_type_ident_to_update_upper_camel_case,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_ident_to_update_upper_camel_case);
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_to_update_upper_camel_case,
+            &quote::quote!{format!("{self}")}
+        );
         let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_to_update_upper_camel_case);
         let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
             &postgresql_type_ident_to_update_upper_camel_case,
@@ -2025,7 +2025,10 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
             &postgresql_type_ident_to_delete_upper_camel_case,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_ident_to_delete_upper_camel_case);
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_to_delete_upper_camel_case,
+            &quote::quote!{format!("{self}")}
+        );
         let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
             &postgresql_type_ident_to_delete_upper_camel_case,
             &field_type
@@ -3088,15 +3091,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
                 }
             };
-            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl error_occurence_lib::ToStdStringString for #postgresql_type_tokens_where_element_upper_camel_case {
-                        fn to_std_string_string(&self) -> std::string::String {
-                            format!("{self:#?}")
-                        }
-                    }
-                }
-            };
+            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote!{format!("{self:#?}")},
+            );
             let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &{
@@ -3326,15 +3324,10 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
                 }
             };
-            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl error_occurence_lib::ToStdStringString for #postgresql_type_tokens_where_element_upper_camel_case {
-                        fn to_std_string_string(&self) -> std::string::String {
-                            format!("{self:#?}")
-                        }
-                    }
-                }
-            };
+            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote!{format!("{self:#?}")},
+            );
             let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &{
@@ -3675,15 +3668,10 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
                     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
                 }
             };
-            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl error_occurence_lib::ToStdStringString for #postgresql_type_tokens_where_element_upper_camel_case {
-                        fn to_std_string_string(&self) -> std::string::String {
-                            format!("{self:#?}")
-                        }
-                    }
-                }
-            };
+            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote!{format!("{self:#?}")},
+            );
             let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &{
