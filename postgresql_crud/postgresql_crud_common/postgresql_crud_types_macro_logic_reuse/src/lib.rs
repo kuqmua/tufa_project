@@ -3270,32 +3270,46 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             &postgresql_type_ident_where_element_upper_camel_case
         };
         let postgresql_type_tokens_where_element_token_stream = {
+            let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let postgresql_type_tokens_where_element_token_stream = {
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub enum #postgresql_type_tokens_where_element_upper_camel_case {
-                        Equal(#postgresql_type_tokens_where_element_equal_upper_camel_case),
+                        #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case),
                     }
                 }
             };
+            let variants_array:[&dyn quote::ToTokens;1] = [
+                &equal_upper_camel_case,
+            ];
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
-                &quote::quote!{
-                    match &self {
-                        Self::Equal(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                &{
+                    let variants_token_stream = variants_array.iter().map(|element|quote::quote!{
+                        Self::#element(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
                             #value_snake_case,
                             #increment_snake_case,
                             #column_snake_case,
                             #is_need_to_add_logical_operator_snake_case,
-                        ),
+                        )
+                    });
+                    quote::quote!{
+                        match &self {
+                            #(#variants_token_stream),*
+                        }
                     }
                 },
-                &quote::quote!{
-                    match self {
-                        Self::Equal(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                &{
+                    let variants_token_stream = variants_array.iter().map(|element|quote::quote!{
+                        Self::#element(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
                             #value_snake_case,
                             #query_snake_case
-                        ),
+                        )
+                    });
+                    quote::quote!{
+                        match self {
+                            #(#variants_token_stream),*
+                        }
                     }
                 }
             );
@@ -3314,14 +3328,15 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                 }
             };
             let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = {
+                let variants_token_stream = variants_array.iter().map(|element|quote::quote!{
+                    Self::#element(
+                        #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    )
+                });
                 quote::quote!{
                     impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_where_element_upper_camel_case {
                         fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-                            vec![
-                                Self::Equal(
-                                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                ),
-                            ]
+                            vec![#(#variants_token_stream),*]
                         }
                     }
                 }
