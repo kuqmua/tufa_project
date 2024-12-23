@@ -3633,20 +3633,24 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
             };
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
-                &quote::quote!{
-                    match &self {
-                        Self::CaseSensitiveRegularExpression(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                            #value_snake_case,
-                            #increment_snake_case,
-                            #column_snake_case,
-                            #is_need_to_add_logical_operator_snake_case,
-                        ),
-                        Self::CaseInsensitiveRegularExpression(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                            #value_snake_case,
-                            #increment_snake_case,
-                            #column_snake_case,
-                            #is_need_to_add_logical_operator_snake_case,
-                        ),
+                &{
+                    let variants_token_stream = ([
+                        &naming::CaseSensitiveRegularExpressionUpperCamelCase, 
+                        &naming::CaseInsensitiveRegularExpressionUpperCamelCase
+                    ] as [&dyn quote::ToTokens;2]).into_iter().map(|element|{
+                        quote::quote!{
+                            Self::#element(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                                #value_snake_case,
+                                #increment_snake_case,
+                                #column_snake_case,
+                                #is_need_to_add_logical_operator_snake_case,
+                            )
+                        }
+                    });
+                    quote::quote!{
+                        match &self {
+                            #(#variants_token_stream),*
+                        }
                     }
                 },
                 &quote::quote!{
