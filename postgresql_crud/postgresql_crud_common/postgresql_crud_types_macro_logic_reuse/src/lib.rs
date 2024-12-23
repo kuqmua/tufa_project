@@ -1141,6 +1141,10 @@ fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std
     }
 }
 
+fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #ident {}}
+}
+
 #[proc_macro_derive(PostgresqlTypeTokens)]
 pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -1462,11 +1466,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 )
             }
         );
-        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream = {
-            quote::quote!{
-                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_ident_where_element_upper_camel_case {}
-            }
-        };
+        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+            &postgresql_type_ident_where_element_upper_camel_case
+        );
         let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
             &postgresql_type_ident_where_element_upper_camel_case,
             &quote::quote!{format!("{self:#?}")},
@@ -3086,11 +3088,9 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     }
                 }
             );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
-                }
-            };
+            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case
+            );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &quote::quote!{format!("{self:#?}")},
@@ -3319,11 +3319,9 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                     }
                 }
             );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
-                }
-            };
+            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case
+            );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &quote::quote!{format!("{self:#?}")},
@@ -3663,11 +3661,9 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
                     }
                 }
             );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = {
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
-                }
-            };
+            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case
+            );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &quote::quote!{format!("{self:#?}")},
