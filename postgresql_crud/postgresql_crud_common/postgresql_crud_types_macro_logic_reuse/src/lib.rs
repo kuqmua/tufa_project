@@ -2082,6 +2082,15 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     generated.into()
 }
 
+fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {
+        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+        pub enum #ident {
+            #content_token_stream
+        }
+    }
+}
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3040,17 +3049,15 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
             let between_upper_camel_case = naming::BetweenUpperCamelCase;
             let in_upper_camel_case = naming::InUpperCamelCase;
-            let postgresql_type_tokens_where_element_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub enum #postgresql_type_tokens_where_element_upper_camel_case {
-                        #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case),
-                        #greater_than_upper_camel_case(#postgresql_type_tokens_where_element_greater_than_upper_camel_case),
-                        #between_upper_camel_case(#postgresql_type_tokens_where_element_between_upper_camel_case),
-                        #in_upper_camel_case(#postgresql_type_tokens_where_element_in_upper_camel_case)
-                    }
+            let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote!{
+                    #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case),
+                    #greater_than_upper_camel_case(#postgresql_type_tokens_where_element_greater_than_upper_camel_case),
+                    #between_upper_camel_case(#postgresql_type_tokens_where_element_between_upper_camel_case),
+                    #in_upper_camel_case(#postgresql_type_tokens_where_element_in_upper_camel_case)
                 }
-            };
+            );
             let variants_array:[&dyn quote::ToTokens;4] = [
                 &equal_upper_camel_case, 
                 &greater_than_upper_camel_case,
@@ -3277,14 +3284,12 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         };
         let postgresql_type_tokens_where_element_token_stream = {
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
-            let postgresql_type_tokens_where_element_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub enum #postgresql_type_tokens_where_element_upper_camel_case {
-                        #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case),
-                    }
+            let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote! {
+                    #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case)
                 }
-            };
+            );
             let variants_array:[&dyn quote::ToTokens;1] = [
                 &equal_upper_camel_case,
             ];
@@ -3617,15 +3622,13 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
         let postgresql_type_tokens_where_element_token_stream = {
             let case_sensitive_regular_expression_upper_camel_case = naming::CaseSensitiveRegularExpressionUpperCamelCase;
             let case_insensitive_regular_expression_upper_camel_case = naming::CaseInsensitiveRegularExpressionUpperCamelCase;
-            let postgresql_type_tokens_where_element_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub enum #postgresql_type_tokens_where_element_upper_camel_case {
-                        #case_sensitive_regular_expression_upper_camel_case(#postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case),
-                        #case_insensitive_regular_expression_upper_camel_case(#postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case),
-                    }
+            let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
+                &postgresql_type_tokens_where_element_upper_camel_case,
+                &quote::quote! {
+                    #case_sensitive_regular_expression_upper_camel_case(#postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case),
+                    #case_insensitive_regular_expression_upper_camel_case(#postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case),
                 }
-            };
+            );
             let variants_array:[&dyn quote::ToTokens;2] = [
                 &case_sensitive_regular_expression_upper_camel_case, 
                 &case_insensitive_regular_expression_upper_camel_case,
