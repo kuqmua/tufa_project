@@ -1116,19 +1116,23 @@ fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_sel
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
     quote::quote!{
         impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #ident {
             fn postgresql_type_self_where_try_generate_bind_increments(
                 &self,
-                increment: &mut std::primitive::u64,
-                column: &dyn std::fmt::Display,
-                is_need_to_add_logical_operator: std::primitive::bool,
+                #increment_snake_case: &mut std::primitive::u64,
+                #column_snake_case : &dyn std::fmt::Display,
+                #is_need_to_add_logical_operator_snake_case: std::primitive::bool,
             ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                 #postgresql_type_self_where_try_generate_bind_increments_token_stream
             }
             fn postgresql_type_self_where_bind_value_to_query<'a>(
                 self,
-                mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #postgresql_type_self_where_bind_value_to_query_token_stream
             }
