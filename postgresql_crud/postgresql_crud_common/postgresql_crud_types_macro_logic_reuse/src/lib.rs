@@ -3020,22 +3020,26 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &postgresql_type_ident_where_element_upper_camel_case
         };
         let postgresql_type_tokens_where_element_token_stream = {
+            let equal_upper_camel_case = naming::EqualUpperCamelCase;
+            let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
+            let between_upper_camel_case = naming::BetweenUpperCamelCase;
+            let in_upper_camel_case = naming::InUpperCamelCase;
             let postgresql_type_tokens_where_element_token_stream = {
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub enum #postgresql_type_tokens_where_element_upper_camel_case {
-                        Equal(#postgresql_type_tokens_where_element_equal_upper_camel_case),
-                        GreaterThan(#postgresql_type_tokens_where_element_greater_than_upper_camel_case),
-                        Between(#postgresql_type_tokens_where_element_between_upper_camel_case),
-                        In(#postgresql_type_tokens_where_element_in_upper_camel_case)
+                        #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case),
+                        #greater_than_upper_camel_case(#postgresql_type_tokens_where_element_greater_than_upper_camel_case),
+                        #between_upper_camel_case(#postgresql_type_tokens_where_element_between_upper_camel_case),
+                        #in_upper_camel_case(#postgresql_type_tokens_where_element_in_upper_camel_case)
                     }
                 }
             };
             let variants_array:[&dyn quote::ToTokens;4] = [
-                &naming::EqualUpperCamelCase, 
-                &naming::GreaterThanUpperCamelCase,
-                &naming::BetweenUpperCamelCase,
-                &naming::InUpperCamelCase,
+                &equal_upper_camel_case, 
+                &greater_than_upper_camel_case,
+                &between_upper_camel_case,
+                &in_upper_camel_case,
             ];
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
@@ -3083,23 +3087,15 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 }
             };
             let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = {
+                let variants_token_stream = variants_array.iter().map(|element|quote::quote!{
+                    Self::#element(
+                        #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    )
+                });
                 quote::quote!{
                     impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_type_tokens_where_element_upper_camel_case {
                         fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-                            vec![
-                                Self::Equal(
-                                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                ),
-                                Self::GreaterThan(
-                                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                ),
-                                Self::Between(
-                                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                ),
-                                Self::In(
-                                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                ),
-                            ]
+                            vec![#(#variants_token_stream),*]
                         }
                     }
                 }
