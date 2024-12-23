@@ -2320,16 +2320,15 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             )
         }
         else {
-            let postgresql_type_ident_where_element_between_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize)]
-                    pub struct #postgresql_type_ident_where_element_between_upper_camel_case {
-                        logical_operator: crate::LogicalOperator,
-                        start: #field_type,
-                        end: #field_type
-                    }
+            let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_ident_where_element_between_upper_camel_case,
+                false,
+                false,
+                &quote::quote!{
+                    start: #field_type,
+                    end: #field_type
                 }
-            };
+            );
             let postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
             let postgresql_type_ident_where_element_between_try_new_error_named_token_stream = {
                 quote::quote! {
@@ -2708,15 +2707,12 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             )
         }
         else {
-            let postgresql_type_ident_where_element_in_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize)]
-                    pub struct #postgresql_type_ident_where_element_in_upper_camel_case {
-                        logical_operator: crate::LogicalOperator,
-                        value: std::vec::Vec<#field_type>
-                    }
-                }
-            };
+            let postgresql_type_ident_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_ident_where_element_in_upper_camel_case,
+                false,
+                false,
+                &quote::quote!{value: std::vec::Vec<#field_type>}
+            );
             let postgresql_type_ident_where_element_in_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementInTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
             let postgresql_type_ident_where_element_in_try_new_error_named_token_stream = {
                 quote::quote! {
