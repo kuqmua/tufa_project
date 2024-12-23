@@ -81,6 +81,8 @@ fn common_handle(
         &ident,
         &quote::quote!{format!("{self}")},
     );
+    let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
+    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
     let generated = quote::quote! {
         impl std::fmt::Display for #ident {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -183,11 +185,11 @@ fn common_handle(
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, #where_ident_should_implement_eq_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
-            pub logical_operator: LogicalOperator,
+            pub #logical_operator_snake_case: #logical_operator_upper_camel_case,
         }
         impl std::fmt::Display for #where_ident_token_stream {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, "value: {}, logical_operator: {}", self.value, self.logical_operator)
+                write!(formatter, "value: {}, logical_operator: {}", self.value, self.#logical_operator_snake_case)
             }
         }
         impl BindQuery<'_> for #where_ident_token_stream {
@@ -1520,7 +1522,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             quote::quote!{
                 impl #postgresql_type_ident_where_upper_camel_case {
                     fn try_new(
-                        logical_operator: crate::LogicalOperator,
+                        #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
                         value: std::vec::Vec<#postgresql_type_ident_where_element_upper_camel_case>,
                     ) -> Result<Self, #postgresql_type_ident_where_try_new_error_named_upper_camel_case> {
                         if value.is_empty() {
@@ -1543,7 +1545,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                             }
                         }
                         Ok(Self {
-                            logical_operator,
+                            #logical_operator_snake_case,
                             value,
                         })
                     }
