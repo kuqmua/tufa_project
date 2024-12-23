@@ -68,14 +68,14 @@ pub struct Example {
     pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
 
     // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBool,
-    pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
+    // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
     // pub std_string_string_as_postgresql_varchar: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarchar,
     // pub std_string_string_as_postgresql_varchar_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull,
     // // pub std_string_string_as_postgresql_char_n: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharN,
     // // pub std_string_string_as_postgresql_char_n_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNotNull,
-    // pub std_string_string_as_postgresql_text: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlText,
-    // pub std_string_string_as_postgresql_text_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlTextNotNull,
+    pub std_string_string_as_postgresql_text: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlText,
+    pub std_string_string_as_postgresql_text_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlTextNotNull,
     // // pub std_string_string_as_postgresql_ci_text: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCiText,
     // // pub std_string_string_as_postgresql_ci_text_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCiTextNotNull,
 

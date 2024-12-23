@@ -330,34 +330,34 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBoolNotNu
 // //         format!("{column} {CHARN} {NOT_NULL}")
 // //     }
 // // }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-// )]
-// pub struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
-// impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {TEXT}")
-//     }
-// }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-// )]
-// pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
-// impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlTextNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {TEXT} {NOT_NULL}")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdStringString);
+impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {TEXT}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdStringStringAsPostgresqlTextNotNull(crate::postgresql_type::postgresql_base_type::StdStringString);
+impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlTextNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {TEXT} {NOT_NULL}")
+    }
+}
 // // #[derive(
 // //     Debug,
 // //     Clone,
