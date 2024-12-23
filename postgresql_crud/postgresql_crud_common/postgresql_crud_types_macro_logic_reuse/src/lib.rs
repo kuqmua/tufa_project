@@ -2092,6 +2092,34 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &d
         }
     }
 }
+fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
+    ident: &dyn quote::ToTokens,
+    should_be_public: std::primitive::bool,
+    should_impl_serde_deserialize: std::primitive::bool,
+    additional_type_declaration_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
+    let maybe_pub_token_stream: &dyn quote::ToTokens = if should_impl_serde_deserialize {
+        &naming::PubSnakeCase
+    }
+    else {
+        &proc_macro2::TokenStream::new()
+    };
+    let maybe_impl_serde_deserialize_token_stream = if should_impl_serde_deserialize {
+        quote::quote! {serde::Deserialize, }
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
+    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
+    quote::quote! {
+        #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream)]
+        pub struct #ident {
+            #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
+            #additional_type_declaration_token_stream
+        }
+    }
+}
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -2119,21 +2147,17 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
         };
         let postgresql_type_tokens_where_element_equal_token_stream = {
-            let postgresql_type_tokens_where_element_equal_token_stream = {
-                let value_type_token_stream: &dyn quote::ToTokens = if is_option {
-                    &quote::quote!{std::option::Option<#field_type>}
+            let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_tokens_where_element_equal_upper_camel_case,
+                true,
+                true,
+                &if is_option {
+                    quote::quote!{pub value: std::option::Option<#field_type>}
                 }
                 else {
-                    &field_type
-                };
-                quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #postgresql_type_tokens_where_element_equal_upper_camel_case {
-                        pub logical_operator: crate::LogicalOperator,
-                        pub value: #value_type_token_stream
-                    }
+                    quote::quote!{pub value: std::option::Option<#field_type>}
                 }
-            };
+            );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_equal_upper_camel_case,
                 &{
@@ -2239,15 +2263,12 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             )
         }
         else {
-            let postgresql_type_ident_where_element_greater_than_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #postgresql_type_ident_where_element_greater_than_upper_camel_case {
-                        pub logical_operator: crate::LogicalOperator,
-                        pub #value_snake_case: #field_type
-                    }
-                }
-            };
+            let postgresql_type_ident_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_ident_where_element_greater_than_upper_camel_case,
+                true,
+                true,
+                &quote::quote!{pub value: #field_type}
+            );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_greater_than_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_greater_than_upper_camel_case,
                 &quote::quote! {Self {
@@ -3171,21 +3192,17 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
         };
         let postgresql_type_tokens_where_element_equal_token_stream = {
-            let postgresql_type_tokens_where_element_equal_token_stream = {
-                let value_type_token_stream: &dyn quote::ToTokens = if is_option {
-                    &quote::quote!{std::option::Option<#field_type>}
+            let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_tokens_where_element_equal_upper_camel_case,
+                true,
+                true,
+                &if is_option {
+                    quote::quote!{pub value: std::option::Option<#field_type>}
                 }
                 else {
-                    &field_type
-                };
-                quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #postgresql_type_tokens_where_element_equal_upper_camel_case {
-                        pub logical_operator: crate::LogicalOperator,
-                        pub value: #value_type_token_stream
-                    }
+                    quote::quote!{pub value: #field_type}
                 }
-            };
+            );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_equal_upper_camel_case,
                 &{
@@ -3396,21 +3413,17 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
             &naming::parameter::PostgresqlTypeSelfWhereElementCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident)
         };
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = {
-            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = {
-                let value_type_token_stream: &dyn quote::ToTokens = if is_option {
-                    &quote::quote!{std::option::Option<#field_type>}
+            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case,
+                true,
+                true,
+                &if is_option {
+                    quote::quote!{pub value: std::option::Option<#field_type>}
                 }
                 else {
-                    &field_type
-                };
-                quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case {
-                        pub logical_operator: crate::LogicalOperator,
-                        pub value: #value_type_token_stream
-                    }
+                    quote::quote!{pub value: #field_type}
                 }
-            };
+            );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case,
                 &{
@@ -3508,21 +3521,17 @@ pub fn postgresql_base_type_tokens_where_element_text(input: proc_macro::TokenSt
             &naming::parameter::PostgresqlTypeSelfWhereElementCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident)
         };
         let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = {
-            let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = {
-                let value_type_token_stream: &dyn quote::ToTokens = if is_option {
-                    &quote::quote!{std::option::Option<#field_type>}
+            let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case,
+                true,
+                true,
+                &if is_option {
+                    quote::quote!{pub value: std::option::Option<#field_type>}
                 }
                 else {
-                    &field_type
-                };
-                quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case {
-                        pub logical_operator: crate::LogicalOperator,
-                        pub value: #value_type_token_stream
-                    }
+                    quote::quote!{pub value: #field_type}
                 }
-            };
+            );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case,
                 &{
