@@ -59,7 +59,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   # },
   {
     "std_string_string_as_postgresql_text": null,
-    "std_string_string_as_postgresql_text_not_null": "PostgreSQL provides both the negation"
+    "std_string_string_as_postgresql_text_not_null": "PostgreSQL provides both the negation sdsadfsffd"
   },
   {
     "std_string_string_as_postgresql_text": null,
@@ -128,41 +128,42 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "std_string_string_as_postgresql_text": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "CaseSensitiveRegularExpression": {
-          "logical_operator": "Or",
-          "value": ""
-        }
-      },
-      {
-        "CaseInsensitiveRegularExpression": {
-          "logical_operator": "Or",
-          "value": ""
-        }
-      }
-    ]
-  },
-  # "std_string_string_as_postgresql_text_not_null": {
+  # "std_string_string_as_postgresql_text": {
   #   "logical_operator": "Or",
   #   "value": [
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": null
+  #       }
+  #     }
+  #     # ,
   #     # {
-  #     #   "CaseSensitiveRegularExpression": {
+  #     #   "CaseInsensitiveRegularExpression": {
   #     #     "logical_operator": "Or",
   #     #     "value": ""
   #     #   }
   #     # }
-  #     # ,
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": "cat"
-  #       }
-  #     }
   #   ]
   # },
+  "std_string_string_as_postgresql_text_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "CaseSensitiveRegularExpression": {
+      #     "logical_operator": "Or",
+      #     "value": ""
+      #   }
+      # }
+      # ,
+      {
+        "CaseInsensitiveRegularExpression": {
+          "logical_operator": "Or",
+          "value": "^(?!.*ostgre).*"
+        }
+      }
+    ]
+  },
   "select": [
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
