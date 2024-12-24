@@ -144,7 +144,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            value: ::core::default::Default::default(),
+            value: vec![::core::default::Default::default()],
         }
     }
 }
@@ -153,7 +153,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
-                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                Ok(format!("{}({} = E${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
             }
             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
@@ -164,7 +164,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
     }
 }
 //
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+#[derive(Debug, Clone, PartialEq, serde :: Serialize)]
 pub struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
     logical_operator: crate::LogicalOperator,
     length: std::primitive::i32,
@@ -196,6 +196,232 @@ impl PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
         }
     }
 }
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de>
+    for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "field identifier",
+                    )
+                }
+                fn visit_u64<__E>(
+                    self,
+                    __value: u64,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => _serde::__private::Ok(__Field::__field0),
+                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(
+                    self,
+                    __value: &str,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        "length" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(
+                    self,
+                    __value: &[u8],
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        b"length" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(
+                        __deserializer,
+                        __FieldVisitor,
+                    )
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<
+                    PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength,
+                >,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength",
+                    )
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        crate::LogicalOperator,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength with 2 elements",
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::i32,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &"struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength with 2 elements",
+                                ),
+                            );
+                        }
+                    };
+                    match PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength::try_new(__field0, __field1) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(
+                    self,
+                    mut __map: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<
+                        crate::LogicalOperator,
+                    > = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                        __Field,
+                    >(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                            "logical_operator",
+                                        ),
+                                    );
+                                }
+                                __field0 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<
+                                        crate::LogicalOperator,
+                                    >(&mut __map)?,
+                                );
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("length"),
+                                    );
+                                }
+                                __field1 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::i32,
+                                    >(&mut __map)?,
+                                );
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<
+                                    _serde::de::IgnoredAny,
+                                >(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("logical_operator")?
+                        }
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("length")?
+                        }
+                    };
+                    match PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength::try_new(__field0, __field1) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["logical_operator", "length"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<
+                        PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength,
+                    >,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
 
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
@@ -221,7 +447,34 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
     }
 }
 //
-
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEncode {
+//     pub logical_operator: crate::LogicalOperator,
+//     pub value: std::string::String,
+// }
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEncode {
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self {
+//             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+//             value: ::core::default::Default::default(),
+//         }
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEqual {
+//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 Ok(format!("{}({} = E${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+//             }
+//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//         }
+//     }
+//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.value);
+//         query
+//     }
+// }
 
 
 
@@ -240,7 +493,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
         }
     }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
         }
@@ -327,7 +580,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
         }
     }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
         }
