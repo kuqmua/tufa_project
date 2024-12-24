@@ -4230,11 +4230,58 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_encode_token_stream
             }
         };
+
+        let postgresql_type_ident_where_element_binary_pattern_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBinaryPatternUpperCamelCase::from_tokens(&ident);
+        let postgresql_type_std_option_option_ident_where_element_binary_pattern_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementBinaryPatternUpperCamelCase::from_tokens(&ident);
+        let postgresql_type_tokens_where_element_binary_pattern_upper_camel_case: &dyn quote::ToTokens = if is_option {
+            &postgresql_type_std_option_option_ident_where_element_binary_pattern_upper_camel_case
+        }
+        else {
+            &postgresql_type_ident_where_element_binary_pattern_upper_camel_case
+        };
+        let postgresql_type_tokens_where_element_binary_pattern_token_stream = if is_option {
+            macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_std_option_option_ident_where_element_binary_pattern_upper_camel_case, 
+                &postgresql_type_ident_where_element_binary_pattern_upper_camel_case
+            )
+        }
+        else {
+            let postgresql_type_ident_where_element_binary_pattern_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_ident_where_element_binary_pattern_upper_camel_case,
+                true,
+                true,
+                &quote::quote!{pub value: std::vec::Vec<std::primitive::u8>,}
+            );
+            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_binary_pattern_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                &postgresql_type_ident_where_element_binary_pattern_upper_camel_case,
+                &quote::quote! {Self {
+                    logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    value: vec![::core::default::Default::default()]
+                }},
+            );
+            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_binary_pattern_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                &postgresql_type_ident_where_element_binary_pattern_upper_camel_case,
+                &quote::quote! {
+                    match #increment_snake_case.checked_add(1) {
+                        Some(#value_snake_case) => {
+                            *#increment_snake_case = #value_snake_case;
+                            Ok(format!("{}({} @> E'${}')", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
+                        }
+                        None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                    #query_snake_case
+                }
+            );
+            quote::quote! {
+                #postgresql_type_ident_where_element_binary_pattern_token_stream
+                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_binary_pattern_token_stream
+                #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_binary_pattern_token_stream
+            }
+        };
         ////
-
-
-
-
 
         let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
