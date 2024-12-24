@@ -75,18 +75,18 @@ pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it priv
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdStringString,
 )]
 pub struct StdStringString(pub std::string::String);
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementText,
-// )]
-// pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8,
+)]
+pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 
 
 
@@ -134,99 +134,215 @@ pub struct StdStringString(pub std::string::String);
 // pub struct SerdeJsonValue(pub serde_json::Value);
 
 
-/////////////////////////
-// When using the WHERE clause in PostgreSQL with a TEXT column type, you can apply a variety of operations and expressions to filter the results based on the content of the text data. Here are some common operations that can be used with TEXT columns:
+///////////////////////////////////////////////////////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEqual {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: std::vec::Vec<std::primitive::u8>,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEqual {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: ::core::default::Default::default(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value);
+        query
+    }
+}
+//
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
+    logical_operator: crate::LogicalOperator,
+    length: std::primitive::i32,
+}
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLengthTryNewErrorNamed {
+    LengthIsNegative {
+        #[eo_to_std_string_string_serialize_deserialize]
+        length: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
+    fn try_new(
+        logical_operator: crate::LogicalOperator,
+        length: std::primitive::i32,
+    ) -> Result<Self, PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLengthTryNewErrorNamed> {
+        if length >= 0 {
+            Ok(Self{
+                logical_operator,
+                length
+            })
+        }
+        else {
+            Err(PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLengthTryNewErrorNamed::LengthIsNegative {
+                length,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 
-// 1. Comparison Operators
-// You can use standard comparison operators to compare text values:
-
-// Equal to: =
-// Not equal to: <> or !=
-// Greater than: >
-// Greater than or equal to: >=
-// Less than: <
-// Less than or equal to: <=
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE title = 'PostgreSQL Basics';
-// 2. LIKE Operator
-// The LIKE operator is used for pattern matching in text comparisons. You can use % as a wildcard for zero or more characters and _ for a single character.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE title LIKE 'Post%';  -- Titles starting with 'Post'
-// 3. ILIKE Operator
-// The ILIKE operator is similar to LIKE, but it is case-insensitive.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE title ILIKE '%postgresql%';  -- Titles containing 'postgresql' regardless of case
-// 4. IN Operator
-// You can use the IN operator to check if a TEXT column matches any value in a specified list.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE author IN ('Alice', 'Bob', 'Charlie');
-// 5. BETWEEN Operator
-// While BETWEEN is typically used for numeric or date ranges, you can use it with TEXT for lexicographical comparisons.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE title BETWEEN 'A' AND 'M';  -- Titles that start with letters A to M
-// 6. IS NULL and IS NOT NULL
-// You can check for NULL values in a TEXT column.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE summary IS NULL;  -- Articles with no summary
-// 7. Regular Expressions
-// PostgreSQL supports regular expressions, allowing for complex pattern matching with the ~ (matches) and !~ (does not match) operators.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE title ~ '^[A-Z].*';  -- Titles starting with an uppercase letter
-// 8. String Functions
-// You can use string functions in the WHERE clause to manipulate or evaluate text data. For example, you can use LENGTH, UPPER, LOWER, etc.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE LENGTH(title) > 50;  -- Articles with titles longer than 50 characters
-// 9. Subqueries
-// You can use subqueries in the WHERE clause to filter results based on the results of another query.
-
-// Example:
-
-// sql
-
-// Копировать код
-// SELECT * FROM articles WHERE author_id IN (SELECT id FROM authors WHERE name LIKE 'J%');
-// Summary
-// When working with TEXT columns in PostgreSQL, you have a wide range of operations available in the WHERE clause, including comparison operators, pattern matching with LIKE and ILIKE, regular expressions, and string functions. These capabilities allow you to filter and manipulate text data effectively in your queries.
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            length: ::core::default::Default::default(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementLength {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(length) => {
+                *increment = length;
+                Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.length);
+        query
+    }
+}
+//
 
 
 
-//////////////////////////////
+
+
+
+
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlTypeStdVecVecStdPrimitiveU8WhereElement {
+    Equal(PostgresqlTypeStdVecVecStdPrimitiveU8WhereElementEqual),
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdVecVecStdPrimitiveU8WhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![Self::Equal(
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        )]
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElementEqual {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: std::option::Option<std::vec::Vec<std::primitive::u8>>,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElementEqual {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: Some(::core::default::Default::default()),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let generate_query_part = |value: std::option::Option<std::primitive::u64>| {
+            let value = match value {
+                Some(value) => format!("= ${}", value),
+                None => "is null".to_string(),
+            };
+            format!("{}({} {})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, value)
+        };
+        if (&self.value).is_some() {
+            match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(generate_query_part(Some(value)))
+                }
+                None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            }
+        } else {
+            Ok(generate_query_part(None))
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        if let Some(value) = self.value {
+            query = query.bind(value);
+        }
+        query
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElement {
+    Equal(PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElementEqual),
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdOptionOptionStdVecVecStdPrimitiveU8WhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![Self::Equal(
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        )]
+    }
+}
