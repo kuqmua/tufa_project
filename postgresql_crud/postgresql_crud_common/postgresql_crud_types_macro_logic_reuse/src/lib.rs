@@ -2121,7 +2121,7 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     }
 }
 
-fn generate_postgresql_type_tokens_where_element_token_stream(
+fn generate_postgresql_type_tokens_where_element_handle_token_stream(
     is_option: std::primitive::bool,
     ident: &dyn quote::ToTokens,
     variants: &[&dyn quote::ToTokens]
@@ -3147,7 +3147,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_in_token_stream
             }
         };
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_handle_token_stream(
             is_option,
             &ident,
             &[
@@ -3306,7 +3306,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             }
         };
 
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_handle_token_stream(
             is_option,
             &ident,
             &[&naming::EqualUpperCamelCase]
@@ -3564,7 +3564,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
             }
         };
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_handle_token_stream(
             is_option,
             &ident,
             &[
@@ -4157,7 +4157,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_binary_pattern_token_stream
             }
         };
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_handle_token_stream(
             is_option,
             &ident,
             &[
