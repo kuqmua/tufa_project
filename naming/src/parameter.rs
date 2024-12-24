@@ -240,7 +240,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "self", "where", "element", "case", "sensitive", "regular", "expression"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "case", "sensitive", "regular", "expression"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "case", "insensitive", "regular", "expression"],
-    ["postgresql", "type", "self","where", "element", "case", "insensitive", "regular", "expression"]
+    ["postgresql", "type", "self","where", "element", "case", "insensitive", "regular", "expression"],
+    ["postgresql", "type", "std", "option", "option", "self", "where","element", "hexadecimal", "notation", "equal"],
+    ["postgresql", "type", "self", "where","element", "hexadecimal", "notation", "equal"]
 ]);
 
 ////////////////////////////////////////////////////

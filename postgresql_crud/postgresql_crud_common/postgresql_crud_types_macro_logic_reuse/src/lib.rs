@@ -3734,15 +3734,15 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
+        let postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case: &dyn quote::ToTokens = if is_option {
+            &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementHexadecimalNotationEqualUpperCamelCase::from_tokens(&ident)
         }
         else {
-            &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
+            &naming::parameter::PostgresqlTypeSelfWhereElementHexadecimalNotationEqualUpperCamelCase::from_tokens(&ident)
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = {
-            let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
+        let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = {
+            let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                &postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case,
                 true,
                 true,
                 &if is_option {
@@ -3752,8 +3752,8 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     quote::quote!{pub value: #field_type}
                 }
             );
-            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
+            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case,
                 &{
                     let value_initialization_token_stream: &dyn quote::ToTokens = if is_option {
                         &quote::quote!{Some(::core::default::Default::default())}
@@ -3767,8 +3767,8 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     }}
                 },
             );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
+            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                &postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case,
                 &{
                     if is_option {
                         quote::quote! {
@@ -3837,11 +3837,17 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 }
             );
             quote::quote!{
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream
-                #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream
+                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream
+                #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream
             }
         };
+
+
+
+
+
+
         let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
@@ -3851,15 +3857,15 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             &postgresql_type_ident_where_element_upper_camel_case
         };
         let postgresql_type_tokens_where_element_token_stream = {
-            let equal_upper_camel_case = naming::EqualUpperCamelCase;
+            let hexadecimal_notation_equal_upper_camel_case = naming::HexadecimalNotationEqualUpperCamelCase;
             let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
                 &quote::quote! {
-                    #equal_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case)
+                    #hexadecimal_notation_equal_upper_camel_case(#postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case)
                 }
             );
             let variants_array:[&dyn quote::ToTokens;1] = [
-                &equal_upper_camel_case,
+                &hexadecimal_notation_equal_upper_camel_case,
             ];
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
@@ -3919,7 +3925,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             }
         };
         quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };
