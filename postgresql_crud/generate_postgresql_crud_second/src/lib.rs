@@ -3688,6 +3688,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                 #query_vec_column_token_stream,
                                 {
                                     #increment_initialization_token_stream
+                                    //todo is all None then do not start with "where"
                                     let mut additional_parameters = #std_string_string::from("where");
                                     let mut is_first_push_to_additional_parameters_already_happend = false;
                                     #(#additional_parameters_modification_token_stream)*
