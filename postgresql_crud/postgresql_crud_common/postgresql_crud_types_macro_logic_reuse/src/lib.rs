@@ -3055,15 +3055,13 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_in_token_stream
             }
         };
-        let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &postgresql_type_std_option_option_ident_where_element_upper_camel_case
-        }
-        else {
-            &postgresql_type_ident_where_element_upper_camel_case
-        };
         let postgresql_type_tokens_where_element_token_stream = {
+            let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            }
+            else {
+                &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            };
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
             let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -3288,15 +3286,13 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream
             }
         };
-        let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &postgresql_type_std_option_option_ident_where_element_upper_camel_case
-        }
-        else {
-            &postgresql_type_ident_where_element_upper_camel_case
-        };
         let postgresql_type_tokens_where_element_token_stream = {
+            let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            }
+            else {
+                &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            };
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
                 &postgresql_type_tokens_where_element_upper_camel_case,
@@ -3617,15 +3613,13 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
             }
         };
-        let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &postgresql_type_std_option_option_ident_where_element_upper_camel_case
-        }
-        else {
-            &postgresql_type_ident_where_element_upper_camel_case
-        };
         let postgresql_type_tokens_where_element_token_stream = {
+            let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            }
+            else {
+                &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            };
             let case_sensitive_regular_expression_upper_camel_case = naming::CaseSensitiveRegularExpressionUpperCamelCase;
             let case_insensitive_regular_expression_upper_camel_case = naming::CaseInsensitiveRegularExpressionUpperCamelCase;
             let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
@@ -4282,15 +4276,13 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             }
         };
 
-        let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &postgresql_type_std_option_option_ident_where_element_upper_camel_case
-        }
-        else {
-            &postgresql_type_ident_where_element_upper_camel_case
-        };
         let postgresql_type_tokens_where_element_token_stream = {
+            let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = if is_option {
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            }
+            else {
+                &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            };
             let hexadecimal_notation_equal_upper_camel_case = naming::HexadecimalNotationEqualUpperCamelCase;
             let length_upper_camel_case = naming::LengthUpperCamelCase;
             let encode_upper_camel_case = naming::EncodeUpperCamelCase;
