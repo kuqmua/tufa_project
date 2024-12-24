@@ -72,11 +72,24 @@ pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it priv
     serde::Deserialize,
     utoipa::ToSchema,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementText,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdStringString,
 )]
 pub struct StdStringString(pub std::string::String);
-//
-// // pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Eq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementText,
+// )]
+// pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+
+
+
 // pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(pub sqlx::postgres::types::PgRange<std::primitive::i64>);
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(pub sqlx::postgres::types::PgRange<std::primitive::i32>);
