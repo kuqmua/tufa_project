@@ -386,7 +386,34 @@ impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlTextNotNul
 // //         format!("{column} {CITEXT} {NOT_NULL}")
 // //     }
 // // }
-
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdVecVecStdPrimitiveU8);
+impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlBytea {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {BYTEA}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(crate::postgresql_type::postgresql_base_type::StdVecVecStdPrimitiveU8);
+impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {BYTEA} {NOT_NULL}")
+    }
+}
 
 
 

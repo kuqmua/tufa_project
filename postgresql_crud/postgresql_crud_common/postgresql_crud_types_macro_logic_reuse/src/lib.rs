@@ -3774,7 +3774,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                         quote::quote! {
                             let generate_query_part = |#value_snake_case: std::option::Option<std::primitive::u64>|{
                                 let #value_snake_case = match #value_snake_case {
-                                    Some(#value_snake_case) => format!("= E'${}'", #value_snake_case),
+                                    Some(#value_snake_case) => format!("= ${}", #value_snake_case),
                                     None => "is null".to_string()
                                 };
                                 format!(
@@ -3806,7 +3806,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                                 Some(#value_snake_case) => {
                                     *#increment_snake_case = #value_snake_case;
                                     Ok(format!(
-                                        "{}({} = E'${}')",
+                                        "{}({} = ${})",
                                         &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #column_snake_case,
                                         #increment_snake_case

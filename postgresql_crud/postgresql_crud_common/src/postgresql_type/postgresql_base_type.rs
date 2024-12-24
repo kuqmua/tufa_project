@@ -83,7 +83,7 @@ pub struct StdStringString(pub std::string::String);
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8,
 )]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
