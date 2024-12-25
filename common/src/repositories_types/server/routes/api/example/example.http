@@ -38,22 +38,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea": null,
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [
-      72,
-      101,
-      108,
-      108,
-      111,
-      32,
-      87,
-      111,
-      114,
-      108,
-      100,
-      33
-    ] 
-    #[1,3,5,7,5]
+    "std_vec_vec_std_primitive_u8_as_postgresql_bytea": [],
+    "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [],
+    "sqlx_postgres_types_pg_interval_as_postgresql_interval": null,
+    "sqlx_postgres_types_pg_interval_as_postgresql_interval_not_null": {
+      "months": 100,
+      "days": 10,
+      "microseconds": 1110
+    }
   }
 ]
 
@@ -118,31 +110,32 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "std_vec_vec_std_primitive_u8_as_postgresql_bytea": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "HexadecimalNotationEqual": {
-          "logical_operator": "Or",
-          "value": null
-        }
-      }
-      # ,
-      # {
-      #   "LengthMoreThan": {
-      #     "logical_operator": "Or",
-      #     "length_more_than": 0
-      #   }
-      # },
-      # {
-      #   "EqualToEncodedStringRepresentation": {
-      #     "logical_operator": "Or",
-      #     "encode_format": "Base64",
-      #     "encoded_string_representation": ""
-      #   }
-      # }
-    ]
-  },
+  # "std_vec_vec_std_primitive_u8_as_postgresql_bytea": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "HexadecimalNotationEqual": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "LengthMoreThan": {
+  #         "logical_operator": "Or",
+  #         "length_more_than": 0
+  #       }
+  #     },
+  #     {
+  #       "EqualToEncodedStringRepresentation": {
+  #         "logical_operator": "Or",
+  #         "encode_format": "Base64",
+  #         "encoded_string_representation": ""
+  #       }
+  #     }
+  #   ]
+  # },
   # "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -169,6 +162,32 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
+  "sqlx_postgres_types_pg_interval_as_postgresql_interval": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": null
+        }
+      }
+    ]
+  },
+  # "sqlx_postgres_types_pg_interval_as_postgresql_interval_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "months": 100,
+  #           "days": 10,
+  #           "microseconds": 1110
+  #         }
+  #       }
+  #     }
+  #   ]
+  # },
   "select": [
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
@@ -178,6 +197,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     {
       "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": null
+    },
+    {
+      "sqlx_postgres_types_pg_interval_as_postgresql_interval": null
+    },
+    {
+      "sqlx_postgres_types_pg_interval_as_postgresql_interval_not_null": null
     }
   ],
   "order_by": {
@@ -186,7 +211,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     "order": "asc"
   },
-  "limit": 100,
+  "limit": 10,
   "offset": 0
 }
 
