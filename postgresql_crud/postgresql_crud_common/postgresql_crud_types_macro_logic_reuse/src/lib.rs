@@ -3202,13 +3202,13 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = if is_option {
-            &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
-        }
-        else {
-            &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
-        };
         let postgresql_type_tokens_where_element_equal_token_stream = {
+            let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = if is_option {
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
+            }
+            else {
+                &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
+            };
             let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_equal_upper_camel_case,
                 true,
