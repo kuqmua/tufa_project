@@ -4078,7 +4078,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 true,
                 &quote::quote!{
                     pub encode_format: EncodeFormat,
-                    pub value: std::string::String,
+                    pub encoded_string_representation: std::string::String,
                 }
             );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4086,7 +4086,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 &quote::quote! {Self {
                     logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     encode_format: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    value: ::core::default::Default::default(),
+                    encoded_string_representation: ::core::default::Default::default(),
                 }},
             );
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
@@ -4101,7 +4101,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     }
                 },
                 &quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                    #query_snake_case = #query_snake_case.bind(self.encoded_string_representation);
                     #query_snake_case
                 }
             );
