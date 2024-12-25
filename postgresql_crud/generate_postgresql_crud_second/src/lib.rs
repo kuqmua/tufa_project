@@ -1380,7 +1380,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
         let create_table_if_not_exists_double_quotes_token_stream = {
             let acc = {
                 let mut acc = std::string::String::new();
-                fields.iter().for_each(|element| {
+                fields.iter().for_each(|_| {
                     acc.push_str(&"{},");
                 });
                 let _ = acc.pop();
@@ -3625,7 +3625,6 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                         let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} {{value}} "));
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
-                        let index_snake_case = naming::IndexSnakeCase;
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
