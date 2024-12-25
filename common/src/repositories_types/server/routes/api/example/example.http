@@ -38,7 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea": [1,2,3],
+    "std_vec_vec_std_primitive_u8_as_postgresql_bytea": null,
     "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [
       72,
       101,
@@ -118,7 +118,32 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "std_vec_vec_std_primitive_u8_as_postgresql_bytea": {
+  "std_vec_vec_std_primitive_u8_as_postgresql_bytea": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "HexadecimalNotationEqual": {
+          "logical_operator": "Or",
+          "value": null
+        }
+      }
+      # ,
+      # {
+      #   "LengthMoreThan": {
+      #     "logical_operator": "Or",
+      #     "length_more_than": 0
+      #   }
+      # },
+      # {
+      #   "EqualToEncodedStringRepresentation": {
+      #     "logical_operator": "Or",
+      #     "encode_format": "Base64",
+      #     "encoded_string_representation": ""
+      #   }
+      # }
+    ]
+  },
+  # "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -141,52 +166,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "encode_format": "Base64",
   #         "encoded_string_representation": ""
   #       }
-  #     },
-  #     {
-  #       "BinaryPattern": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
   #     }
   #   ]
   # },
-  "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      # {
-      #   "HexadecimalNotationEqual": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "LengthMoreThan": {
-      #     "logical_operator": "Or",
-      #     "length_more_than": 0
-      #   }
-      # },
-      {
-        "EqualToEncodedStringRepresentation": {
-          "logical_operator": "Or",
-          "encode_format": "Base64",
-          "encoded_string_representation": "SGVsbG8gV29ybGQh"
-        }
-      }
-      # ,
-      # {
-      #   "BinaryPattern": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
-    ]
-  },
   "select": [
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null

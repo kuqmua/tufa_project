@@ -484,8 +484,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["greater", "than"],
     ["hexadecimal", "notation", "equal"],
     ["length", "more", "than"],
-    ["equal", "to", "encoded", "string", "representation"],
-    ["binary", "pattern"]
+    ["equal", "to", "encoded", "string", "representation"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
