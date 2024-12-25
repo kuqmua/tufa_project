@@ -136,7 +136,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
-  #       "Encode": {
+  #       "EqualToEncodedStringRepresentation": {
   #         "logical_operator": "Or",
   #         "encode_format": "Base64",
   #         "value": ""
@@ -155,36 +155,35 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "HexadecimalNotationEqual": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # },
+      {
+        "HexadecimalNotationEqual": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
+        }
+      },
       {
         "LengthMoreThan": {
           "logical_operator": "Or",
-          "length_more_than": 3
+          "length_more_than": 0
+        }
+      },
+      {
+        "EqualToEncodedStringRepresentation": {
+          "logical_operator": "Or",
+          "encode_format": "Base64",
+          "value": ""
+        }
+      },
+      {
+        "BinaryPattern": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
         }
       }
-      # ,
-      # {
-      #   "Encode": {
-      #     "logical_operator": "Or",
-      #     "encode_format": "Base64",
-      #     "value": ""
-      #   }
-      # },
-      # {
-      #   "BinaryPattern": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
     ]
   },
   "select": [
@@ -204,7 +203,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     "order": "asc"
   },
-  "limit": 10,
+  "limit": 100,
   "offset": 0
 }
 
