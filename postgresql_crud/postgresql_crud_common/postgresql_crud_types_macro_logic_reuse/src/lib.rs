@@ -3711,16 +3711,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
 
         let postgresql_type_tokens_where_element_length_more_than_token_stream = {
             let postgresql_type_ident_where_element_length_more_than_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident);
-            let postgresql_type_std_option_option_ident_where_element_length_more_than_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident);
-            let postgresql_type_tokens_where_element_length_more_than_upper_camel_case: &dyn quote::ToTokens = if is_option {
-                &postgresql_type_std_option_option_ident_where_element_length_more_than_upper_camel_case
-            }
-            else {
-                &postgresql_type_ident_where_element_length_more_than_upper_camel_case
-            };
             if is_option {
                 macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                    &postgresql_type_std_option_option_ident_where_element_length_more_than_upper_camel_case, 
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident), 
                     &postgresql_type_ident_where_element_length_more_than_upper_camel_case
                 )
             }
@@ -4051,16 +4044,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
 
         let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = {
             let postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualToEncodedStringRepresentationUpperCamelCase::from_tokens(&ident);
-            let postgresql_type_std_option_option_ident_where_element_equal_to_encoded_string_representation_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualToEncodedStringRepresentationUpperCamelCase::from_tokens(&ident);
-            let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_upper_camel_case: &dyn quote::ToTokens = if is_option {
-                &postgresql_type_std_option_option_ident_where_element_equal_to_encoded_string_representation_upper_camel_case
-            }
-            else {
-                &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case
-            };
             if is_option {
                 macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                    &postgresql_type_std_option_option_ident_where_element_equal_to_encoded_string_representation_upper_camel_case, 
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualToEncodedStringRepresentationUpperCamelCase::from_tokens(&ident), 
                     &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case
                 )
             }
