@@ -201,16 +201,16 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
         deserializer.deserialize_struct("SqlxPostgresTypesPgInterval", FIELDS, SqlxPostgresTypesPgIntervalVisitor)
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(sqlx::postgres::types::PgInterval {
-            months: ::core::default::Default::default(),
-            days: ::core::default::Default::default(),
-            microseconds: ::core::default::Default::default(),
-        })
-    }
-}
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
+//     #[inline]
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(sqlx::postgres::types::PgInterval {
+//             months: ::core::default::Default::default(),
+//             days: ::core::default::Default::default(),
+//             microseconds: ::core::default::Default::default(),
+//         })
+//     }
+// }
 //////////////////
 
 impl std::fmt::Display for SqlxPostgresTypesPgInterval {
@@ -218,24 +218,39 @@ impl std::fmt::Display for SqlxPostgresTypesPgInterval {
         write!(formatter, "{:?}", self.0)
     }
 }
-// impl error_occurence_lib::ToStdStringString for SqlxPostgresTypesPgInterval {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
-//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-//     }
-// }
-// impl crate::BindQuerySecond<'_> for SqlxPostgresTypesPgInterval {
-//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         crate::BindQuerySecond::try_generate_bind_increments(&self.0, increment)
-//     }
-//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         crate::BindQuerySecond::bind_value_to_query(self.0, query)
-//     }
-// }
+impl error_occurence_lib::ToStdStringString for SqlxPostgresTypesPgInterval {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgInterval {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        //here
+        Self(sqlx::postgres::types::PgInterval {
+            months: ::core::default::Default::default(),
+            days: ::core::default::Default::default(),
+            microseconds: ::core::default::Default::default(),
+        })
+    }
+}
+impl crate::BindQuerySecond<'_> for SqlxPostgresTypesPgInterval {
+    //here
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            }),
+        }
+    }
+    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.0);
+        query
+    }
+}
 // impl SqlxPostgresTypesPgInterval {
 //     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
 //         sqlx::postgres::types::PgInterval::create_table_query_part_handle(value)
