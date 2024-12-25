@@ -4090,7 +4090,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     match #increment_snake_case.checked_add(1) {
                         Some(#value_snake_case) => {
                             *#increment_snake_case = #value_snake_case;
-                            Ok(format!("{}(({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, &self.encode_format, #increment_snake_case))
+                            Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, &self.encode_format, #increment_snake_case))
                         }
                         None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
@@ -4126,7 +4126,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 &postgresql_type_ident_where_element_binary_pattern_upper_camel_case,
                 true,
                 true,
-                &quote::quote!{pub value: std::vec::Vec<std::primitive::u8>,}
+                &quote::quote!{pub value: #field_type,}
             );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_binary_pattern_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_binary_pattern_upper_camel_case,

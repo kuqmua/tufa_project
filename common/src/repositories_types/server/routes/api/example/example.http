@@ -39,7 +39,21 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "std_vec_vec_std_primitive_u8_as_postgresql_bytea": [1,2,3],
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [1,3,5,7,5]
+    "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [
+      72,
+      101,
+      108,
+      108,
+      111,
+      32,
+      87,
+      111,
+      114,
+      108,
+      100,
+      33
+    ] 
+    #[1,3,5,7,5]
   }
 ]
 
@@ -91,7 +105,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       "Between": {
   #         "logical_operator": "Or",
   #         "start": 0,
-  #         "end": 10
+  #         "end": 0
   #       }
   #     },
   #     {
@@ -145,7 +159,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "HexadecimalNotationEqual": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       1,2,3
+      #       0
       #     ]
       #   }
       # }
@@ -153,23 +167,23 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       # {
       #   "Length": {
       #     "logical_operator": "Or",
-      #     "length": 4
+      #     "length": 0
       #   }
       # }
       # ,
-      # {
-      #   "Encode": {
-      #     "logical_operator": "Or",
-      #     "encode_format": "Base64",
-      #     "value": ""
-      #   }
-      # }
+      {
+        "Encode": {
+          "logical_operator": "Or",
+          "encode_format": "Base64",
+          "value": "SGVsbG8gV29ybGQh"
+        }
+      }
       # ,
       # {
       #   "BinaryPattern": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       1,2,3
+      #       0
       #     ]
       #   }
       # }
@@ -179,9 +193,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
-    {
-      "std_vec_vec_std_primitive_u8_as_postgresql_bytea": null
-    },
+    # {
+    #   "std_vec_vec_std_primitive_u8_as_postgresql_bytea": null
+    # },
     {
       "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": null
     }
@@ -209,7 +223,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "std_primitive_i64_as_postgresql_big_serial_not_null": 1,
+  "std_primitive_i64_as_postgresql_big_serial_not_null": 8,
   "select": [
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
