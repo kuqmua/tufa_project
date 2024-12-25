@@ -3588,6 +3588,13 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
     generated.into()
 }
 
+#[proc_macro_derive(PostgresqlBaseTypeTokensStdVecVecStdPrimitiveU8)]
+pub fn postgresql_base_type_tokens_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{vec![::core::default::Default::default()]}
+    )
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8)]
 pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
