@@ -305,6 +305,149 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 }
 
 
+
+
+// In PostgreSQL, INT8RANGE is a range type that is used to represent a range of 64-bit integers (BIGINT). The range types in PostgreSQL can be used with various operations that allow you to filter, compare, and manipulate the ranges. Below is a comprehensive list of WHERE operations that you can use with the INT8RANGE type.
+
+// 1. Checking if a value is contained within a range
+// You can use the @> (contains) operator to check if a value is contained within an INT8RANGE.
+
+// sql
+// Копировать код
+// WHERE range_column @> 10
+// This will return rows where the range contains the value 10.
+
+// 2. Checking if a range contains another range
+// You can use the @> operator to check if one range contains another.
+
+// sql
+// Копировать код
+// WHERE range_column @> '[5, 15]'
+// This will return rows where range_column contains the range [5, 15].
+
+// 3. Checking if a value is strictly inside a range (not touching boundaries)
+// You can use the << (strictly contained by) operator to check if a value is strictly inside the range.
+
+// sql
+// Копировать код
+// WHERE 10 << range_column
+// This will return rows where range_column does not include the boundaries and strictly contains the value 10.
+
+// 4. Checking if a range is strictly contained by another range
+// You can use the << operator to check if one range is strictly contained within another range.
+
+// sql
+// Копировать код
+// WHERE range_column << '[5, 15]'
+// This will return rows where range_column is strictly contained within [5, 15].
+
+// 5. Checking if a range overlaps with another range
+// You can use the && (overlaps) operator to check if two ranges overlap.
+
+// sql
+// Копировать код
+// WHERE range_column && '[10, 20]'
+// This will return rows where range_column overlaps with the range [10, 20].
+
+// 6. Checking if a range does not overlap with another range
+// You can use the && operator in a negation form to check if two ranges do not overlap.
+
+// sql
+// Копировать код
+// WHERE NOT (range_column && '[10, 20]')
+// This will return rows where range_column does not overlap with the range [10, 20].
+
+// 7. Checking if a range is left of another range (non-overlapping)
+// You can use the &< (left of) operator to check if one range is entirely to the left of another.
+
+// sql
+// Копировать код
+// WHERE range_column &< '[5, 15]'
+// This will return rows where range_column is completely to the left of the range [5, 15].
+
+// 8. Checking if a range is right of another range (non-overlapping)
+// You can use the &> (right of) operator to check if one range is entirely to the right of another.
+
+// sql
+// Копировать код
+// WHERE range_column &> '[5, 15]'
+// This will return rows where range_column is completely to the right of the range [5, 15].
+
+// 9. Checking if a range is equal to another range
+// You can use the = (equal) operator to check if two ranges are equal.
+
+// sql
+// Копировать код
+// WHERE range_column = '[5, 15]'
+// This will return rows where range_column is exactly equal to [5, 15].
+
+// 10. Checking if a range is not equal to another range
+// You can use the <> (not equal) operator to check if two ranges are not equal.
+
+// sql
+// Копировать код
+// WHERE range_column <> '[5, 15]'
+// This will return rows where range_column is not equal to [5, 15].
+
+// 11. Checking if a range is empty
+// You can use the IS EMPTY condition to check if the range is empty.
+
+// sql
+// Копировать код
+// WHERE range_column IS EMPTY
+// This will return rows where range_column is an empty range.
+
+// 12. Checking if a range is not empty
+// You can use the IS NOT EMPTY condition to check if the range is not empty.
+
+// sql
+// Копировать код
+// WHERE range_column IS NOT EMPTY
+// This will return rows where range_column is not an empty range.
+
+// 13. Checking if a range is unbounded (lower bound or upper bound is open)
+// You can check for unbounded ranges by testing for -infinity or infinity.
+
+// sql
+// Копировать код
+// WHERE range_column LOWER = '-infinity'
+// This will return rows where the lower bound of range_column is unbounded.
+
+// sql
+// Копировать код
+// WHERE range_column UPPER = 'infinity'
+// This will return rows where the upper bound of range_column is unbounded.
+
+// 14. Checking if a range is not unbounded
+// Similarly, you can check if a range is bounded by comparing it to -infinity or infinity.
+
+// sql
+// Копировать код
+// WHERE range_column LOWER <> '-infinity'
+// This will return rows where the lower bound of range_column is bounded.
+
+// sql
+// Копировать код
+// WHERE range_column UPPER <> 'infinity'
+// This will return rows where the upper bound of range_column is bounded.
+
+// 15. Checking for the lower bound of a range
+// You can access the lower bound of the range using the LOWER function.
+
+// sql
+// Копировать код
+// WHERE LOWER(range_column) = 10
+// This will return rows where the lower bound of range_column is 10.
+
+// 16. Checking for the upper bound of a range
+// You can access the upper bound of the range using the UPPER function.
+
+// sql
+// Копировать код
+// WHERE UPPER(range_column) = 20
+// This will return rows where the upper bound of range_column is 20.
+
+
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(pub sqlx::postgres::types::PgRange<std::primitive::i32>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
