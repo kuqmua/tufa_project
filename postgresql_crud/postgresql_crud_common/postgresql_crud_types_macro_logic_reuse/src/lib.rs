@@ -2099,17 +2099,19 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &d
         }
     }
 }
+enum ShouldLogicalOperatorBePublic {
+    True,
+    False
+}
 fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     ident: &dyn quote::ToTokens,
-    should_be_public: std::primitive::bool,
+    should_logical_operator_be_public: ShouldLogicalOperatorBePublic,
     should_impl_serde_deserialize: std::primitive::bool,
     additional_type_declaration_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
-    let maybe_pub_token_stream: &dyn quote::ToTokens = if should_impl_serde_deserialize {
-        &naming::PubSnakeCase
-    }
-    else {
-        &proc_macro2::TokenStream::new()
+    let maybe_pub_token_stream: &dyn quote::ToTokens = match should_logical_operator_be_public {
+        ShouldLogicalOperatorBePublic::True => &naming::PubSnakeCase,
+        ShouldLogicalOperatorBePublic::False => &proc_macro2::TokenStream::new()
     };
     let maybe_impl_serde_deserialize_token_stream = if should_impl_serde_deserialize {
         quote::quote! {serde::Deserialize, }
@@ -2144,7 +2146,7 @@ impl IsNullable {
                 let postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementIsNullUpperCamelCase::from_tokens(&ident);
                 let postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                     &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
-                    true,
+                    ShouldLogicalOperatorBePublic::True,
                     true,
                     &proc_macro2::TokenStream::new()
                 );
@@ -2311,7 +2313,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #field_type}
                     );
@@ -2363,7 +2365,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_greater_than_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #field_type}
                     );
@@ -2415,7 +2417,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        false,
+                        ShouldLogicalOperatorBePublic::False,
                         false,
                         &quote::quote!{
                             start: #field_type,
@@ -2797,7 +2799,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_in_upper_camel_case,
-                        false,
+                        ShouldLogicalOperatorBePublic::False,
                         false,
                         &quote::quote!{value: std::vec::Vec<#field_type>}
                     );
@@ -3209,7 +3211,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #field_type}
                     );
@@ -3305,7 +3307,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             };
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case,
-                true,
+                ShouldLogicalOperatorBePublic::True,
                 true,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
@@ -3399,7 +3401,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             };
             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case,
-                true,
+                ShouldLogicalOperatorBePublic::True,
                 true,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
@@ -3550,7 +3552,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             };
             let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case,
-                true,
+                ShouldLogicalOperatorBePublic::True,
                 true,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
@@ -3649,7 +3651,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
                     let postgresql_type_ident_where_element_length_more_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        false,
+                        ShouldLogicalOperatorBePublic::False,
                         false,
                         &quote::quote!{length_more_than: #std_primitive_i32_token_stream,}
                     );
@@ -3981,7 +3983,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{
                             pub encode_format: EncodeFormat,
@@ -4095,7 +4097,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #ident}
                     );
@@ -4147,7 +4149,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_greater_than_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #ident}
                     );
@@ -4199,7 +4201,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        false,
+                        ShouldLogicalOperatorBePublic::False,
                         false,
                         &quote::quote!{
                             start: #ident,
@@ -4650,7 +4652,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #ident}
                     );
@@ -4703,7 +4705,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                     let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
                     let postgresql_type_ident_where_element_value_is_contained_within_range_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_value_is_contained_within_range_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #std_primitive_i64_token_stream}
                     );
@@ -4756,7 +4758,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                     let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
                     let postgresql_type_ident_where_element_contains_another_range_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_contains_another_range_upper_camel_case,
-                        true,
+                        ShouldLogicalOperatorBePublic::True,
                         true,
                         &quote::quote!{pub value: #std_primitive_i64_token_stream}
                     );
