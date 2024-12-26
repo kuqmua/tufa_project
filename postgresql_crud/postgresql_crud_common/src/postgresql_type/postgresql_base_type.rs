@@ -203,8 +203,108 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
 }
 ////////////////////////////////////////////////////////////
 
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    //todo utoipa::ToSchema,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI64,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64,
+)]
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(pub sqlx::postgres::types::PgRange<std::primitive::i64>);
+impl serde::Serialize for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut serde_state = serde::Serializer::serialize_struct(serializer, "SqlxPostgresTypesPgRangeStdPrimitiveI64", false as usize + 1 + 1)?;
+        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+        serde::ser::SerializeStruct::end(serde_state)
+    }
+}
+impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        enum Field {
+            Start,
+            End,
+        }
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct FieldVisitor;
+                impl serde::de::Visitor<'_> for FieldVisitor {
+                    type Value = Field;
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        formatter.write_str("`start` or `end`")
+                    }
+                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "start" => Ok(Field::Start),
+                            "end" => Ok(Field::End),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(FieldVisitor)
+            }
+        }
+        struct SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor;
+        impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor {
+            type Value = SqlxPostgresTypesPgRangeStdPrimitiveI64;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI64")
+            }
+            fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+            where
+                V: serde::de::SeqAccess<'de>,
+            {
+                let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+            }
+            fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut start = None;
+                let mut end = None;
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        Field::Start => {
+                            if start.is_some() {
+                                return Err(serde::de::Error::duplicate_field("start"));
+                            }
+                            start = Some(map.next_value()?);
+                        }
+                        Field::End => {
+                            if end.is_some() {
+                                return Err(serde::de::Error::duplicate_field("end"));
+                            }
+                            end = Some(map.next_value()?);
+                        }
+                    }
+                }
+                let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
+                let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
+                Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+            }
+        }
+        const FIELDS: &[&str] = &["start", "end"];
+        deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI64", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor)
+    }
+}
 
-// pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(pub sqlx::postgres::types::PgRange<std::primitive::i64>);
+
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(pub sqlx::postgres::types::PgRange<std::primitive::i32>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
