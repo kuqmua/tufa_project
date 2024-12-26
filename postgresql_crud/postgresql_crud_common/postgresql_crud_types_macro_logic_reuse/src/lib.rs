@@ -2099,38 +2099,6 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &d
         }
     }
 }
-enum ShouldLogicalOperatorBePublic {
-    True,
-    False
-}
-enum ShouldImplSerdeDeserialize {
-    True,
-    False
-}
-fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    should_logical_operator_be_public: ShouldLogicalOperatorBePublic,
-    should_impl_serde_deserialize: ShouldImplSerdeDeserialize,
-    additional_type_declaration_token_stream: &dyn quote::ToTokens
-) -> proc_macro2::TokenStream {
-    let maybe_pub_token_stream: &dyn quote::ToTokens = match should_logical_operator_be_public {
-        ShouldLogicalOperatorBePublic::True => &naming::PubSnakeCase,
-        ShouldLogicalOperatorBePublic::False => &proc_macro2::TokenStream::new()
-    };
-    let maybe_impl_serde_deserialize_token_stream = match should_impl_serde_deserialize {
-        ShouldImplSerdeDeserialize::True => quote::quote! {serde::Deserialize, },
-        ShouldImplSerdeDeserialize::False => proc_macro2::TokenStream::new()
-    };
-    let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
-    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
-    quote::quote! {
-        #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream)]
-        pub struct #ident {
-            #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
-            #additional_type_declaration_token_stream
-        }
-    }
-}
 
 enum IsNullable {
     True,
@@ -2186,6 +2154,105 @@ impl IsNullable {
         }
         else {
             variants.clone()
+        }
+    }
+}
+enum ShouldLogicalOperatorBePublic {
+    True,
+    False
+}
+enum ShouldImplSerdeDeserialize {
+    True,
+    False
+}
+fn generate_postgresql_type_tokens_where_element_variant_token_stream(
+    ident: &dyn quote::ToTokens,
+    postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    is_nullable: IsNullable,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
+    let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
+        let value = format!("{prefix}{postfix}");
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let postgresql_type_ident_where_element_tokens_upper_camel_case = generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+    );
+    match &is_nullable {
+        IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+            &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+                &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+            ),
+            &postgresql_type_ident_where_element_equal_upper_camel_case
+        ),
+        IsNullable::False => {
+            // let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+            //     &postgresql_type_ident_where_element_equal_upper_camel_case,
+            //     ShouldLogicalOperatorBePublic::True,
+            //     ShouldImplSerdeDeserialize::True,
+            //     &quote::quote!{pub value: #field_type}
+            // );
+            // let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            //     &postgresql_type_ident_where_element_equal_upper_camel_case,
+            //     &quote::quote! {Self {
+            //         logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+            //         #value_snake_case: ::core::default::Default::default(),
+            //     }},
+            // );
+            // let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+            //     &postgresql_type_ident_where_element_equal_upper_camel_case,
+            //     &quote::quote! {
+            //         match #increment_snake_case.checked_add(1) {
+            //             Some(#value_snake_case) => {
+            //                 *#increment_snake_case = #value_snake_case;
+            //                 Ok(format!(
+            //                     "{}({} = ${})",
+            //                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+            //                     #column_snake_case,
+            //                     #increment_snake_case
+            //                 ))
+            //             },
+            //             None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+            //                 code_occurence: error_occurence_lib::code_occurence!(),
+            //             })
+            //         }
+            //     },
+            //     &quote::quote!{
+            //         #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+            //         #query_snake_case
+            //     }
+            // );
+            // quote::quote! {
+            //     #postgresql_type_ident_where_element_equal_token_stream
+            //     #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream
+            //     #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream
+            // }
+            todo!()
+        }
+    }
+}
+fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
+    ident: &dyn quote::ToTokens,
+    should_logical_operator_be_public: ShouldLogicalOperatorBePublic,
+    should_impl_serde_deserialize: ShouldImplSerdeDeserialize,
+    additional_type_declaration_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
+    let maybe_pub_token_stream: &dyn quote::ToTokens = match should_logical_operator_be_public {
+        ShouldLogicalOperatorBePublic::True => &naming::PubSnakeCase,
+        ShouldLogicalOperatorBePublic::False => &proc_macro2::TokenStream::new()
+    };
+    let maybe_impl_serde_deserialize_token_stream = match should_impl_serde_deserialize {
+        ShouldImplSerdeDeserialize::True => quote::quote! {serde::Deserialize, },
+        ShouldImplSerdeDeserialize::False => proc_macro2::TokenStream::new()
+    };
+    let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
+    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
+    quote::quote! {
+        #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream)]
+        pub struct #ident {
+            #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
+            #additional_type_declaration_token_stream
         }
     }
 }
