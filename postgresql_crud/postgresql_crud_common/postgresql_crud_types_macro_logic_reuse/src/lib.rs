@@ -2132,7 +2132,7 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
     is_option: std::primitive::bool,
     ident: &dyn quote::ToTokens,
-    variants: &[&dyn quote::ToTokens]
+    variants: &std::vec::Vec<&dyn quote::ToTokens>
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -2223,6 +2223,43 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
         #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
         #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+    }
+}
+
+fn generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let column_snake_case = naming::ColumnSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    };
+    let postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementIsNullUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+        &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
+        true,
+        true,
+        &proc_macro2::TokenStream::new()
+    );
+    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+        &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
+        &quote::quote! {Self {
+            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+        }},
+    );
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+        &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
+        &quote::quote! {
+            Ok(format!(
+                "{}({} is null)",
+                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                #column_snake_case,
+            ))
+        },
+        &query_snake_case
+    );
+    quote::quote! {
+        #postgresql_type_std_option_option_ident_where_element_is_null_token_stream
+        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream
+        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream
     }
 }
 
@@ -3147,7 +3184,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[
+            &vec![
                 &naming::EqualUpperCamelCase,
                 &naming::GreaterThanUpperCamelCase,
                 &naming::BetweenUpperCamelCase,
@@ -3305,7 +3342,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[&naming::EqualUpperCamelCase]
+            &vec![&naming::EqualUpperCamelCase]
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
@@ -3562,7 +3599,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[
+            &vec![
                 &naming::CaseSensitiveRegularExpressionUpperCamelCase,
                 &naming::CaseInsensitiveRegularExpressionUpperCamelCase
             ]
@@ -4106,7 +4143,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[
+            &vec![
                 &naming::HexadecimalNotationEqualUpperCamelCase,
                 &naming::LengthMoreThanUpperCamelCase,
                 &naming::EqualToEncodedStringRepresentationUpperCamelCase,
@@ -4715,7 +4752,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[
+            &vec![
                 &naming::EqualUpperCamelCase,
                 &naming::GreaterThanUpperCamelCase,
                 &naming::BetweenUpperCamelCase,
@@ -4759,7 +4796,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);    
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_option: std::primitive::bool|{
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4770,6 +4807,14 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = if is_option {
+            generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident)
+        }
+        else {
+            proc_macro2::TokenStream::new()
+        };
+        
         let postgresql_type_tokens_where_element_equal_token_stream = {
             let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = if is_option {
                 &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
@@ -4990,13 +5035,25 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
             &ident,
-            &[
-                &naming::EqualUpperCamelCase,
-                &naming::ValueIsContainedWithinRangeUpperCamelCase,
-                &naming::ContainsAnotherRangeUpperCamelCase,
-            ]
+            &if is_option {
+                vec![
+                    &naming::EqualUpperCamelCase,
+                    &naming::ValueIsContainedWithinRangeUpperCamelCase,
+                    &naming::ContainsAnotherRangeUpperCamelCase,
+                    &naming::IsNullUpperCamelCase,
+                ]
+            }
+            else {
+                vec![
+                    &naming::EqualUpperCamelCase,
+                    &naming::ValueIsContainedWithinRangeUpperCamelCase,
+                    &naming::ContainsAnotherRangeUpperCamelCase,
+                ]
+            }
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
             #postgresql_type_tokens_where_element_contains_another_range_token_stream

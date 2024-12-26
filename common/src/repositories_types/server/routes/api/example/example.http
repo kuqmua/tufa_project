@@ -38,14 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "pg_range_std_primitive_i64_as_postgresql_int8_range": {
-      "start": {
-        "Included": 10
-      },
-      "end": {
-        "Included": 500
-      }
-    },
+    "pg_range_std_primitive_i64_as_postgresql_int8_range": null,
     "pg_range_std_primitive_i64_as_postgresql_int8_range_not_null": {
       "start": {
         "Included": 10
@@ -118,7 +111,42 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "pg_range_std_primitive_i64_as_postgresql_int8_range": {
+  "pg_range_std_primitive_i64_as_postgresql_int8_range": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Included": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "ValueIsContainedWithinRange": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "ContainsAnotherRange": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      {
+        "IsNull": {
+          "logical_operator": "Or"
+        }
+      }
+    ]
+  },
+  # "pg_range_std_primitive_i64_as_postgresql_int8_range_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -139,34 +167,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": 0
   #       }
+  #     },
+  #     {
+  #       "ContainsAnotherRange": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
   #     }
   #   ]
   # },
-  "pg_range_std_primitive_i64_as_postgresql_int8_range_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Included": 0
-      #       }
-      #     }
-      #   }
-      # }
-      # ,
-      {
-        "ValueIsContainedWithinRange": {
-          "logical_operator": "Or",
-          "value": 500
-        }
-      }
-    ]
-  },
   "select": [
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
