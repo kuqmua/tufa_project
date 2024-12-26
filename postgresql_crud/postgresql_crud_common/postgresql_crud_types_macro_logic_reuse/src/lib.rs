@@ -2298,6 +2298,9 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = {
             let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
                 IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident),
@@ -3195,6 +3198,8 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             ]
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -3233,6 +3238,9 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = {
             let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
                 IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident),
@@ -3334,6 +3342,8 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             &vec![&naming::EqualUpperCamelCase]
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
@@ -3369,6 +3379,9 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = {
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
                 IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
@@ -3566,6 +3579,8 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             ]
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_token_stream
@@ -3609,6 +3624,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+
         let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = {
             let postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
                 IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementHexadecimalNotationEqualUpperCamelCase::from_tokens(&ident),
@@ -4097,6 +4115,8 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             ]
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream
             #postgresql_type_tokens_where_element_length_more_than_token_stream
             #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
@@ -4146,6 +4166,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = {
             let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
                 IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident),
@@ -4692,6 +4715,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             ]
         );
         quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
