@@ -2172,6 +2172,9 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
     should_logical_operator_be_public: ShouldLogicalOperatorBePublic,
     should_impl_serde_deserialize: ShouldImplSerdeDeserialize,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
+    postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream: &dyn quote::ToTokens,
+    impl_postgresql_type_ident_where_element_tokens_try_new_token_stream: &dyn quote::ToTokens,
+    impl_serde_deserialize_for_postgresql_type_ident_where_element_tokens_token_stream: &dyn quote::ToTokens,
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
@@ -2217,6 +2220,9 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
             );
             quote::quote! {
                 #postgresql_type_ident_where_element_tokens_token_stream
+                #postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream
+                #impl_postgresql_type_ident_where_element_tokens_try_new_token_stream
+                #impl_serde_deserialize_for_postgresql_type_ident_where_element_tokens_token_stream
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream
             }
