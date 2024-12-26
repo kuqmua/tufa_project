@@ -98,7 +98,7 @@ pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgInterval,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgInterval,
 )]
-pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);//why does not impl PartialOrd
 impl serde::Serialize for SqlxPostgresTypesPgInterval {
     fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
     where

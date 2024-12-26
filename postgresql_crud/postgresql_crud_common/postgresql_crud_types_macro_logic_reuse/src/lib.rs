@@ -4325,6 +4325,393 @@ pub fn postgresql_base_type_tokens_where_element_SqlxPostgresTypesPgInterval(inp
                 }
             }
         };
+        let postgresql_type_tokens_where_element_between_token_stream = {
+            let postgresql_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
+            if is_option {
+                macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident), 
+                    &postgresql_type_ident_where_element_between_upper_camel_case
+                )
+            }
+            else {
+                let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                    &postgresql_type_ident_where_element_between_upper_camel_case,
+                    false,
+                    false,
+                    &quote::quote!{
+                        start: #ident,
+                        end: #ident
+                    }
+                );
+                let postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+                let postgresql_type_ident_where_element_between_try_new_error_named_token_stream = {
+                    quote::quote! {
+                        #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        pub enum #postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case {
+                            StartIsEqualToEnd {
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            }
+                        }
+                    }
+                };
+                let impl_postgresql_type_ident_where_element_between_try_new_token_stream = {
+                    quote::quote! {
+                        impl #postgresql_type_ident_where_element_between_upper_camel_case {
+                            fn try_new(
+                                logical_operator: crate::LogicalOperator,
+                                start: #ident,
+                                end: #ident
+                            ) -> Result<Self, #postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case> {
+                                //todo maybe add check start < end if inner type will impl PartialOrd inn the future
+                                if start != end {
+                                    Ok(Self {
+                                        logical_operator,
+                                        start,
+                                        end
+                                    })
+                                }
+                                else {
+                                    Err(#postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case::StartIsEqualToEnd {
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            }
+                        }
+                    }
+                };
+                let impl_serde_deserialize_for_postgresql_type_ident_where_element_between_token_stream = {
+                    let struct_postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "struct {postgresql_type_ident_where_element_between_upper_camel_case}"
+                        )
+                    );
+                    let struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!(
+                            "struct {postgresql_type_ident_where_element_between_upper_camel_case} with 3 elements"
+                        )
+                    );
+                    let postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                        &postgresql_type_ident_where_element_between_upper_camel_case
+                    );
+                    quote::quote! {
+                        const _: () = {
+                            #[allow(unused_extern_crates, clippy::useless_attribute)]
+                            extern crate serde as _serde;
+                            #[automatically_derived]
+                            impl<'de> _serde::Deserialize<'de> for #postgresql_type_ident_where_element_between_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> _serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: _serde::Deserializer<'de>,
+                                {
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __field2,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
+                                        }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                                2u64 => _serde::__private::Ok(__Field::__field2),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                                "start" => _serde::__private::Ok(__Field::__field1),
+                                                "end" => _serde::__private::Ok(__Field::__field2),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                                b"start" => _serde::__private::Ok(__Field::__field1),
+                                                b"end" => _serde::__private::Ok(__Field::__field2),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            _serde::Deserializer::deserialize_identifier(
+                                                __deserializer,
+                                                __FieldVisitor,
+                                            )
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<
+                                            #postgresql_type_ident_where_element_between_upper_camel_case,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #postgresql_type_ident_where_element_between_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #struct_postgresql_type_ident_where_element_between_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                crate::LogicalOperator,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                #ident,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &#struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field2 = match _serde::de::SeqAccess::next_element::<
+                                                #ident,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            2usize,
+                                                            &#struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            match #postgresql_type_ident_where_element_between_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<
+                                                crate::LogicalOperator,
+                                            > = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<
+                                                #ident,
+                                            > = _serde::__private::None;
+                                            let mut __field2: _serde::__private::Option<
+                                                #ident,
+                                            > = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                                                    "logical_operator",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field0 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                crate::LogicalOperator,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                            );
+                                                        }
+                                                        __field1 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                #ident,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field2 => {
+                                                        if _serde::__private::Option::is_some(&__field2) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                            );
+                                                        }
+                                                        __field2 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                #ident,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<
+                                                            _serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("logical_operator")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("start")?
+                                                }
+                                            };
+                                            let __field2 = match __field2 {
+                                                _serde::__private::Some(__field2) => __field2,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("end")?
+                                                }
+                                            };
+                                            match #postgresql_type_ident_where_element_between_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                                            }
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &[
+                                        "logical_operator",
+                                        "start",
+                                        "end",
+                                    ];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        #postgresql_type_ident_where_element_between_double_quotes_token_stream,
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<
+                                                #postgresql_type_ident_where_element_between_upper_camel_case,
+                                            >,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            }
+                        };
+                    }
+                };
+                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_between_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_ident_where_element_between_upper_camel_case,
+                    &quote::quote! {Self {
+                        logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        start: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        end: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    }},
+                );
+                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_between_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                    &postgresql_type_ident_where_element_between_upper_camel_case,
+                    &quote::quote! {
+                        match #increment_snake_case.checked_add(1) {
+                            Some(first_value) => {
+                                *#increment_snake_case = first_value;
+                                match #increment_snake_case.checked_add(1) {
+                                    Some(second_value) => {
+                                        *#increment_snake_case = second_value;
+                                        let between_snake_case = naming::BetweenSnakeCase;
+                                        let and_snake_case = naming::AndSnakeCase;
+                                        Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                    },
+                                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    },
+                    &quote::quote!{
+                        #query_snake_case = #query_snake_case.bind(self.start.0);
+                        #query_snake_case = #query_snake_case.bind(self.end.0);
+                        #query_snake_case
+                    }
+                );
+                quote::quote! {
+                    #postgresql_type_ident_where_element_between_token_stream
+                    #postgresql_type_ident_where_element_between_try_new_error_named_token_stream
+                    #impl_postgresql_type_ident_where_element_between_try_new_token_stream
+                    #impl_serde_deserialize_for_postgresql_type_ident_where_element_between_token_stream
+                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_between_token_stream
+                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_between_token_stream
+                }
+            }
+        };
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_option,
@@ -4332,11 +4719,13 @@ pub fn postgresql_base_type_tokens_where_element_SqlxPostgresTypesPgInterval(inp
             &[
                 &naming::EqualUpperCamelCase,
                 &naming::GreaterThanUpperCamelCase,
+                &naming::BetweenUpperCamelCase,
             ]
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };

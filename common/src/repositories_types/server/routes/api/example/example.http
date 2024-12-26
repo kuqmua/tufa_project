@@ -192,6 +192,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #           "microseconds": 0
   #         }
   #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": {
+  #           "months": 0,
+  #           "days": 0,
+  #           "microseconds": 0
+  #         },
+  #         "end": {
+  #           "months": 0,
+  #           "days": 0,
+  #           "microseconds": 0
+  #         }
+  #       }
   #     }
   #   ]
   # },
@@ -208,13 +223,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "months": 0,
+      #       "days": 0,
+      #       "microseconds": 0
+      #     }
+      #   }
+      # },
       {
-        "GreaterThan": {
+        "Between": {
           "logical_operator": "Or",
-          "value": {
-            "months": 13,
-            "days": 3,
-            "microseconds": 3
+          "start": {
+            "months": 9,
+            "days": 9,
+            "microseconds": 9
+          },
+          "end": {
+            "months": 14,
+            "days": 14,
+            "microseconds": 14
           }
         }
       }
