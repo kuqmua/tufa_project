@@ -2302,97 +2302,55 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
         let postgresql_type_tokens_where_element_equal_token_stream = {
-            let postgresql_type_tokens_where_element_equal_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
-                IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident),
-                IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident)
-            };
-            let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
-                true,
-                true,
-                &match &is_nullable {
-                    IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
-                    IsNullable::False => quote::quote!{pub value: #field_type}
-                }
-            );
-            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
-                &{
-                    let value_initialization_token_stream: &dyn quote::ToTokens = match &is_nullable {
-                        IsNullable::True => &quote::quote!{Some(::core::default::Default::default())},
-                        IsNullable::False => &quote::quote!{::core::default::Default::default()}
-                    };
-                    quote::quote!{Self {
-                        logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                        #value_snake_case: #value_initialization_token_stream
-                    }}
-                },
-            );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                &postgresql_type_tokens_where_element_equal_upper_camel_case,
-                &match &is_nullable {
-                    IsNullable::True => quote::quote! {
-                        let generate_query_part = |#value_snake_case: std::option::Option<std::primitive::u64>|{
-                            let #value_snake_case = match #value_snake_case {
-                                Some(#value_snake_case) => format!("= ${}", #value_snake_case),
-                                None => "is null".to_string()
-                            };
-                            format!(
-                                "{}({} {})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                #value_snake_case
-                            )
-                        };
-                        if (&self.#value_snake_case).is_some() {
+            let postgresql_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
+            match &is_nullable {
+                IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualUpperCamelCase::from_tokens(&ident), 
+                    &postgresql_type_ident_where_element_equal_upper_camel_case
+                ),
+                IsNullable::False => {
+                    let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+                        &postgresql_type_ident_where_element_equal_upper_camel_case,
+                        true,
+                        true,
+                        &quote::quote!{pub value: #field_type}
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_equal_upper_camel_case,
+                        &quote::quote! {Self {
+                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            #value_snake_case: ::core::default::Default::default(),
+                        }},
+                    );
+                    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_equal_upper_camel_case,
+                        &quote::quote! {
                             match #increment_snake_case.checked_add(1) {
                                 Some(#value_snake_case) => {
                                     *#increment_snake_case = #value_snake_case;
-                                    Ok(generate_query_part(Some(#value_snake_case)))
+                                    Ok(format!(
+                                        "{}({} = ${})",
+                                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #column_snake_case,
+                                        #increment_snake_case
+                                    ))
                                 },
                                 None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 })
                             }
+                        },
+                        &quote::quote!{
+                            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                            #query_snake_case
                         }
-                        else {
-                            Ok(generate_query_part(None))
-                        }
-                    },
-                    IsNullable::False => quote::quote! {
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                Ok(format!(
-                                    "{}({} = ${})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
-                                    #increment_snake_case
-                                ))
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    }
-                },
-                &match &is_nullable {
-                    IsNullable::True => quote::quote!{
-                        if let Some(#value_snake_case) = self.#value_snake_case {
-                            #query_snake_case = #query_snake_case.bind(#value_snake_case);
-                        }
-                        #query_snake_case
-                    },
-                    IsNullable::False => quote::quote!{
-                        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                        #query_snake_case
+                    );
+                    quote::quote! {
+                        #postgresql_type_ident_where_element_equal_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream
+                        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_token_stream
                     }
                 }
-            );
-            quote::quote!{
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_equal_token_stream
-                #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_equal_token_stream
             }
         };
         let postgresql_type_tokens_where_element_greater_than_token_stream = {
