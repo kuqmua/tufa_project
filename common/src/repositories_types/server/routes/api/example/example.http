@@ -178,6 +178,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "GreaterThanLowerBound": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "start": {
+  #             "Included": 0
+  #           },
+  #           "end": {
+  #             "Included": 0
+  #           }
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -243,12 +256,24 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": 0
       #   }
-      # }
-      # ,
+      # },
+      # {
+      #   "UpperBound": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
       {
-        "UpperBound": {
+        "GreaterThanLowerBound": {
           "logical_operator": "Or",
-          "value": 21
+          "value": {
+            "start": {
+              "Included": 7
+            },
+            "end": {
+              "Included": 50
+            }
+          }
         }
       }
     ]
