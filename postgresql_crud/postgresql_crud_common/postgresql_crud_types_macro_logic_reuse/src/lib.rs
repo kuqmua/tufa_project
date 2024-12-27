@@ -3444,65 +3444,44 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 #query_snake_case
             }
         );
-
         let postgresql_type_tokens_where_element_length_more_than_token_stream = {
-            let postgresql_type_ident_where_element_length_more_than_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident);
-            match &is_nullable {
-                IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident), 
-                    &postgresql_type_ident_where_element_length_more_than_upper_camel_case
-                ),
-                IsNullable::False => {
-                    let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
-                    let postgresql_type_ident_where_element_length_more_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-                        &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        &ShouldWhereElementFieldsBePublic::False {
-                            ident: &ident,
-                            postfix: &naming::FalseUpperCamelCase,
-                            try_new_error_named_variants_token_stream: &quote::quote!{},
-                            try_new_additional_input_parameters_token_stream: &quote::quote!{},
-                            try_new_content_token_stream: &quote::quote!{},
-                            impl_deserialize_token_stream: &quote::quote!{},
+            let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
+            generate_postgresql_type_tokens_where_element_variant_token_stream(
+                &ident,
+                &naming::LengthMoreThanUpperCamelCase,
+                &is_nullable,
+                ShouldWhereElementFieldsBePublic::False {
+                    ident: &ident,
+                    postfix: &naming::LengthMoreThanUpperCamelCase,
+                    try_new_error_named_variants_token_stream: &quote::quote!{
+                        LengthIsNegative {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            length_more_than: #std_primitive_i32_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        &quote::quote!{length_more_than: #std_primitive_i32_token_stream,}
-                    );
-                    let postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-                    let postgresql_type_ident_where_element_length_more_than_try_new_error_named_token_stream = {
-                        quote::quote! {
-                            #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case {
-                                LengthIsNegative {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    length_more_than: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
+                    },
+                    try_new_additional_input_parameters_token_stream: &quote::quote!{
+                        length_more_than: #std_primitive_i32_token_stream,
+                    },
+                    try_new_content_token_stream: &{
+                        let postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+                        quote::quote!{
+                            if length_more_than >= 0 {
+                                Ok(Self{
+                                    logical_operator,
+                                    length_more_than
+                                })
+                            }
+                            else {
+                                Err(#postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case::LengthIsNegative {
+                                    length_more_than,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                })
                             }
                         }
-                    };
-                    let impl_postgresql_type_ident_where_element_length_more_than_try_new_token_stream = {
-                        quote::quote! {
-                            impl #postgresql_type_ident_where_element_length_more_than_upper_camel_case {
-                                fn try_new(
-                                    logical_operator: crate::LogicalOperator,
-                                    length_more_than: #std_primitive_i32_token_stream,
-                                ) -> Result<Self, #postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case> {
-                                    if length_more_than >= 0 {
-                                        Ok(Self{
-                                            logical_operator,
-                                            length_more_than
-                                        })
-                                    }
-                                    else {
-                                        Err(#postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case::LengthIsNegative {
-                                            length_more_than,
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        })
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    let impl_serde_deserialize_for_postgresql_type_ident_where_element_length_more_than_token_stream = {
+                    },
+                    impl_deserialize_token_stream: &{
+                        let postgresql_type_ident_where_element_length_more_than_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident);
                         let struct_postgresql_type_ident_where_element_length_more_than_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!(
                                 "struct {postgresql_type_ident_where_element_length_more_than_upper_camel_case}"
@@ -3748,40 +3727,24 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                                 }
                             };
                         }
-                    };
-                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_length_more_than_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        &quote::quote! {Self {
-                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                            length_more_than: ::core::default::Default::default()
-                        }},
-                    );
-                    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_length_more_than_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                        &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        &quote::quote! {
-                            match #increment_snake_case.checked_add(1) {
-                                Some(#value_snake_case) => {
-                                    *#increment_snake_case = #value_snake_case;
-                                    Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
-                                }
-                                None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                            }
-                        },
-                        &quote::quote!{
-                            #query_snake_case = #query_snake_case.bind(self.length_more_than);
-                            #query_snake_case
+                    },
+                },
+                &quote::quote!{length_more_than: #std_primitive_i32_token_stream,},
+                &quote::quote!{length_more_than: ::core::default::Default::default()},
+                &quote::quote!{
+                    match #increment_snake_case.checked_add(1) {
+                        Some(#value_snake_case) => {
+                            *#increment_snake_case = #value_snake_case;
+                            Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
                         }
-                    );
-                    quote::quote! {
-                        #postgresql_type_ident_where_element_length_more_than_token_stream
-                        #postgresql_type_ident_where_element_length_more_than_try_new_error_named_token_stream
-                        #impl_postgresql_type_ident_where_element_length_more_than_try_new_token_stream
-                        #impl_serde_deserialize_for_postgresql_type_ident_where_element_length_more_than_token_stream
-                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_length_more_than_token_stream
-                        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_length_more_than_token_stream
+                        None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
+                },
+                &quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(self.length_more_than);
+                    #query_snake_case
                 }
-            }
+            )
         };
 
         let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = {
