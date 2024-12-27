@@ -2116,7 +2116,7 @@ impl IsNullable {
                 let postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementIsNullUpperCamelCase::from_tokens(&ident);
                 let postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                     &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
-                    ShouldWhereElementFieldsBePublic::True,
+                    &ShouldWhereElementFieldsBePublic::True,
                     &proc_macro2::TokenStream::new()
                 );
                 let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -2168,7 +2168,7 @@ enum ShouldWhereElementFieldsBePublic<'a> {
     }
 }
 impl ShouldWhereElementFieldsBePublic<'_> {
-    fn maybe_try_new_error_named_and_try_new_and_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
+    fn maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
             Self::True => proc_macro2::TokenStream::new(),
             Self::False {
@@ -2260,9 +2260,10 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
         IsNullable::False => {
             let postgresql_type_ident_where_element_tokens_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_ident_where_element_tokens_upper_camel_case,
-                should_where_element_fields_be_public,
+                &should_where_element_fields_be_public,
                 &additional_type_declaration_token_stream,
             );
+            let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream();
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_ident_where_element_tokens_upper_camel_case,
                 &{
@@ -2282,9 +2283,7 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
             );
             quote::quote! {
                 #postgresql_type_ident_where_element_tokens_token_stream
-                #postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream
-                #impl_postgresql_type_ident_where_element_tokens_try_new_token_stream
-                #impl_serde_deserialize_for_postgresql_type_ident_where_element_tokens_token_stream
+                #maybe_try_new_error_named_and_try_new_and_deserialize_token_stream
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream
             }
@@ -2293,7 +2292,7 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
 }
 fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     ident: &dyn quote::ToTokens,
-    should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
+    should_where_element_fields_be_public: &ShouldWhereElementFieldsBePublic,
     additional_type_declaration_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
     let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
@@ -2551,7 +2550,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False {
+                        &ShouldWhereElementFieldsBePublic::False {
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -2939,7 +2938,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_in_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False {
+                        &ShouldWhereElementFieldsBePublic::False {
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -3357,7 +3356,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #field_type}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -3452,7 +3451,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             };
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_sensitive_regular_expression_upper_camel_case,
-                ShouldWhereElementFieldsBePublic::True,
+                &ShouldWhereElementFieldsBePublic::True,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
                     IsNullable::False => quote::quote!{pub value: #field_type}
@@ -3545,7 +3544,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             };
             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_case_insensitive_regular_expression_upper_camel_case,
-                ShouldWhereElementFieldsBePublic::True,
+                &ShouldWhereElementFieldsBePublic::True,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
                     IsNullable::False => quote::quote!{pub value: #field_type}
@@ -3695,7 +3694,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             };
             let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                 &postgresql_type_tokens_where_element_hexadecimal_notation_equal_upper_camel_case,
-                ShouldWhereElementFieldsBePublic::True,
+                &ShouldWhereElementFieldsBePublic::True,
                 &match &is_nullable {
                     IsNullable::True => quote::quote!{pub value: std::option::Option<#field_type>},
                     IsNullable::False => quote::quote!{pub value: #field_type}
@@ -3793,7 +3792,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
                     let postgresql_type_ident_where_element_length_more_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False {
+                        &ShouldWhereElementFieldsBePublic::False {
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -4131,7 +4130,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{
                             pub encode_format: EncodeFormat,
                             pub encoded_string_representation: std::string::String,
@@ -4244,7 +4243,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #ident}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4295,7 +4294,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_greater_than_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #ident}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_greater_than_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4346,7 +4345,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False {
+                        &ShouldWhereElementFieldsBePublic::False {
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -4803,7 +4802,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_equal_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #ident}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4855,7 +4854,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                     let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
                     let postgresql_type_ident_where_element_value_is_contained_within_range_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_value_is_contained_within_range_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #std_primitive_i64_token_stream}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_value_is_contained_within_range_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4907,7 +4906,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                     let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
                     let postgresql_type_ident_where_element_contains_another_range_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_contains_another_range_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::True,
+                        &ShouldWhereElementFieldsBePublic::True,
                         &quote::quote!{pub value: #std_primitive_i64_token_stream}
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_contains_another_range_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
