@@ -306,27 +306,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 
 /////////
 
-
-
-// In PostgreSQL, INT8RANGE is a range type that is used to represent a range of 64-bit integers (BIGINT). The range types in PostgreSQL can be used with various operations that allow you to filter, compare, and manipulate the ranges. Below is a comprehensive list of WHERE operations that you can use with the INT8RANGE type.
-
-// 15. Checking for the lower bound of a range
-// You can access the lower bound of the range using the LOWER function.
-
-// sql
-// Копировать код
-// WHERE LOWER(range_column) = 10
-// This will return rows where the lower bound of range_column is 10.
-
-// 16. Checking for the upper bound of a range
-// You can access the upper bound of the range using the UPPER function.
-
-// sql
-// Копировать код
-// WHERE UPPER(range_column) = 20
-// This will return rows where the upper bound of range_column is 20.
-
-
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(pub sqlx::postgres::types::PgRange<std::primitive::i32>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);

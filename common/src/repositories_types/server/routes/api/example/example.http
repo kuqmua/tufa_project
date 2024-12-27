@@ -172,6 +172,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "UpperBound": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -231,12 +237,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     }
       #   }
+      # },
+      # {
+      #   "LowerBound": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
       # }
       # ,
       {
-        "LowerBound": {
+        "UpperBound": {
           "logical_operator": "Or",
-          "value": 1
+          "value": 21
         }
       }
     ]
