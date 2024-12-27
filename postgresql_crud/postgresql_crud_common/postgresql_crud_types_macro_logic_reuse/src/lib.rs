@@ -2159,7 +2159,6 @@ impl IsNullable {
 enum ShouldWhereElementFieldsBePublic<'a> {
     True,
     False {
-        elements_length: std::primitive::u64,
         ident: &'a dyn quote::ToTokens,
         postfix: &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
         try_new_error_named_variants_token_stream: &'a dyn quote::ToTokens,
@@ -2173,7 +2172,6 @@ impl ShouldWhereElementFieldsBePublic<'_> {
         match &self {
             Self::True => proc_macro2::TokenStream::new(),
             Self::False {
-                elements_length,
                 ident,
                 postfix,
                 try_new_error_named_variants_token_stream,
@@ -2181,7 +2179,48 @@ impl ShouldWhereElementFieldsBePublic<'_> {
                 try_new_content_token_stream,
                 impl_deserialize_token_stream,
             } => {
-                proc_macro2::TokenStream::new()
+                let postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case = {
+                    let value = format!(
+                        "{}{postfix}{}",
+                        naming::parameter::PostgresqlTypeSelfWhereElementNamedUpperCamelCase::from_tokens(&ident),
+                        naming::TryNewErrorNamedUpperCamelCase
+                    );
+                    value.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream = {
+                    quote::quote! {
+                        #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        pub enum #postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case {
+                            #try_new_error_named_variants_token_stream
+                        }
+                    }
+                };
+                let postgresql_type_ident_where_element_tokens_upper_camel_case = {
+                    let value = format!(
+                        "{}{postfix}",
+                        naming::parameter::PostgresqlTypeSelfWhereElementNamedUpperCamelCase::from_tokens(&ident),
+                    );
+                    value.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let impl_postgresql_type_ident_where_element_tokens_try_new_token_stream = {
+                    quote::quote! {
+                        impl #postgresql_type_ident_where_element_tokens_upper_camel_case {
+                            fn try_new(
+                                logical_operator: crate::LogicalOperator,
+                                #try_new_additional_input_parameters_token_stream
+                            ) -> Result<Self, #postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case> {
+                                #try_new_content_token_stream
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream
+                    #impl_postgresql_type_ident_where_element_tokens_try_new_token_stream
+                    #impl_deserialize_token_stream
+                }
             }
         }
     }
@@ -2260,7 +2299,6 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
         ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
         ShouldWhereElementFieldsBePublic::False {
-            elements_length: _,
             ident: _,
             postfix: _,
             try_new_error_named_variants_token_stream: _,
@@ -2272,7 +2310,6 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
         ShouldWhereElementFieldsBePublic::True => quote::quote! {serde::Deserialize, },
         ShouldWhereElementFieldsBePublic::False {
-            elements_length: _,
             ident: _,
             postfix: _,
             try_new_error_named_variants_token_stream: _,
@@ -2515,7 +2552,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
                         ShouldWhereElementFieldsBePublic::False {
-                            elements_length: ::core::default::Default::default(),
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -2904,7 +2940,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     let postgresql_type_ident_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_in_upper_camel_case,
                         ShouldWhereElementFieldsBePublic::False {
-                            elements_length: ::core::default::Default::default(),
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -3759,7 +3794,6 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     let postgresql_type_ident_where_element_length_more_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
                         ShouldWhereElementFieldsBePublic::False {
-                            elements_length: ::core::default::Default::default(),
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
@@ -4313,7 +4347,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
                         ShouldWhereElementFieldsBePublic::False {
-                            elements_length: ::core::default::Default::default(),
                             ident: &ident,
                             postfix: &naming::FalseUpperCamelCase,
                             try_new_error_named_variants_token_stream: &quote::quote!{},
