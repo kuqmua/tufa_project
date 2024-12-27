@@ -2466,7 +2466,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &equal_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: #field_type},
+            &quote::quote!{pub #value_snake_case: #field_type},
             &quote::quote!{#value_snake_case: ::core::default::Default::default(),},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -2521,6 +2521,8 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = {
             let start_more_or_equal_to_end_upper_camel_case = naming::StartMoreOrEqualToEndUpperCamelCase;
+            let start_snake_case = naming::StartSnakeCase;
+            let end_snake_case = naming::EndSnakeCase;
             generate_postgresql_type_tokens_where_element_variant_token_stream(
                 &ident,
                 &between_upper_camel_case,
@@ -2534,17 +2536,17 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                         }
                     },
                     try_new_additional_input_parameters_token_stream: &quote::quote!{
-                        start: #field_type,
-                        end: #field_type
+                        #start_snake_case: #field_type,
+                        #end_snake_case: #field_type
                     },
                     try_new_content_token_stream: &{
                         let postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                         quote::quote!{
-                            if start < end {
+                            if #start_snake_case < #end_snake_case {
                                 Ok(Self {
                                     logical_operator,
-                                    start,
-                                    end
+                                    #start_snake_case,
+                                    #end_snake_case
                                 })
                             }
                             else {
@@ -2831,12 +2833,12 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     },
                 },
                 &quote::quote!{
-                    start: #field_type,
-                    end: #field_type
+                    #start_snake_case: #field_type,
+                    #end_snake_case: #field_type
                 },
                 &quote::quote!{
-                    start: ::core::default::Default::default(),
-                    end: ::core::default::Default::default(),
+                    #start_snake_case: ::core::default::Default::default(),
+                    #end_snake_case: ::core::default::Default::default(),
                 },
                 &quote::quote!{
                     match #increment_snake_case.checked_add(1) {
@@ -2860,8 +2862,8 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     }
                 },
                 &quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.start);
-                    #query_snake_case = #query_snake_case.bind(self.end);
+                    #query_snake_case = #query_snake_case.bind(self.#start_snake_case);
+                    #query_snake_case = #query_snake_case.bind(self.#end_snake_case);
                     #query_snake_case
                 }
             )
@@ -2884,29 +2886,29 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                         },
                         #not_unique_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
-                            value: #field_type,
+                            #value_snake_case: #field_type,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                     },
                     try_new_additional_input_parameters_token_stream: &quote::quote!{
-                        value: std::vec::Vec<#field_type>
+                        #value_snake_case: std::vec::Vec<#field_type>
                     },
                     try_new_content_token_stream: &{
                         let postgresql_type_ident_where_element_in_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementInTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                         quote::quote!{
-                            if value.is_empty() {
+                            if #value_snake_case.is_empty() {
                                 return Err(#postgresql_type_ident_where_element_in_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
                             {
                                 let mut acc = vec![];
-                                for element in &value {
+                                for element in &#value_snake_case {
                                     if !acc.contains(&element) {
                                         acc.push(element);
                                     } else {
                                         return Err(#postgresql_type_ident_where_element_in_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                                            value: element.clone(),
+                                            #value_snake_case: element.clone(),
                                             code_occurence: error_occurence_lib::code_occurence!(),
                                         });
                                     }
