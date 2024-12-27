@@ -204,6 +204,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "AdjacentWithRange": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "start": {
+  #             "Included": 0
+  #           },
+  #           "end": {
+  #             "Included": 0
+  #           }
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -289,15 +302,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "OverlapWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Included": 0
+      #       }
+      #     }
+      #   }
+      # },
       {
-        "OverlapWithRange": {
+        "AdjacentWithRange": {
           "logical_operator": "Or",
           "value": {
             "start": {
-              "Included": 5
+              "Included": 0
             },
             "end": {
-              "Included": 10
+              "Included": 5
             }
           }
         }
