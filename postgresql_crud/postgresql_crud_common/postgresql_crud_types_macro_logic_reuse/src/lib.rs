@@ -2225,6 +2225,30 @@ impl ShouldWhereElementFieldsBePublic<'_> {
         }
     }
 }
+fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::u64, postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens) -> (
+    proc_macro2::TokenStream,
+    proc_macro2::TokenStream,
+    proc_macro2::TokenStream
+) {
+    let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+        &format!(
+            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case}"
+        )
+    );
+    let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+        &format!(
+            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"
+        )
+    );
+    let postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+        &postgresql_type_ident_where_element_tokens_upper_camel_case
+    );
+    (
+        struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream,
+        struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream,
+        postgresql_type_ident_where_element_tokens_double_quotes_token_stream
+    )
+}
 fn generate_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
     postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -2532,19 +2556,11 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     },
                     impl_deserialize_token_stream: &{
                         let postgresql_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
-                        let struct_postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_between_upper_camel_case}"
-                            )
-                        );
-                        let struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_between_upper_camel_case} with 3 elements"
-                            )
-                        );
-                        let postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &postgresql_type_ident_where_element_between_upper_camel_case
-                        );
+                        let (
+                            struct_postgresql_type_ident_where_element_between_double_quotes_token_stream,
+                            struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
+                            postgresql_type_ident_where_element_between_double_quotes_token_stream
+                        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_between_upper_camel_case, 3, &between_upper_camel_case);
                         quote::quote! {
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2904,19 +2920,11 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                     },
                     impl_deserialize_token_stream: &{
                         let postgresql_type_ident_where_element_in_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementInUpperCamelCase::from_tokens(&ident);
-                        let struct_postgresql_type_ident_where_element_in_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_in_upper_camel_case}"
-                            )
-                        );
-                        let struct_postgresql_type_ident_where_element_in_with_2_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_in_upper_camel_case} with 2 elements"
-                            )
-                        );
-                        let postgresql_type_ident_where_element_in_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &postgresql_type_ident_where_element_in_upper_camel_case
-                        );
+                        let (
+                            struct_postgresql_type_ident_where_element_in_double_quotes_token_stream,
+                            struct_postgresql_type_ident_where_element_in_with_2_elements_double_quotes_token_stream,
+                            postgresql_type_ident_where_element_in_double_quotes_token_stream
+                        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_in_upper_camel_case, 2, &in_upper_camel_case);
                         quote::quote! {
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3503,19 +3511,11 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     },
                     impl_deserialize_token_stream: &{
                         let postgresql_type_ident_where_element_length_more_than_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident);
-                        let struct_postgresql_type_ident_where_element_length_more_than_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_length_more_than_upper_camel_case}"
-                            )
-                        );
-                        let struct_postgresql_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_length_more_than_upper_camel_case} with 2 elements"
-                            )
-                        );
-                        let postgresql_type_ident_where_element_length_more_than_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &postgresql_type_ident_where_element_length_more_than_upper_camel_case
-                        );
+                        let (
+                            struct_postgresql_type_ident_where_element_length_more_than_double_quotes_token_stream,
+                            struct_postgresql_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
+                            postgresql_type_ident_where_element_length_more_than_double_quotes_token_stream
+                        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_length_more_than_upper_camel_case, 2, &length_more_than_upper_camel_case);
                         quote::quote! {
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3964,19 +3964,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                     },
                     impl_deserialize_token_stream: &{
                         let postgresql_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
-                        let struct_postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_between_upper_camel_case}"
-                            )
-                        );
-                        let struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &format!(
-                                "struct {postgresql_type_ident_where_element_between_upper_camel_case} with 3 elements"
-                            )
-                        );
-                        let postgresql_type_ident_where_element_between_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-                            &postgresql_type_ident_where_element_between_upper_camel_case
-                        );
+                        let (
+                            struct_postgresql_type_ident_where_element_between_double_quotes_token_stream,
+                            struct_postgresql_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
+                            postgresql_type_ident_where_element_between_double_quotes_token_stream
+                        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_between_upper_camel_case, 3, &between_upper_camel_case);
                         quote::quote! {
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
