@@ -4356,7 +4356,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
             &equal_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: #ident},
+            &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
@@ -4390,7 +4390,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                 &value_is_contained_within_range_upper_camel_case,
                 &is_nullable,
                 ShouldWhereElementFieldsBePublic::True,
-                &quote::quote!{pub value: #std_primitive_i64_token_stream},
+                &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
                 &quote::quote!{#value_snake_case: ::core::default::Default::default()},
                 &quote::quote!{
                     match #increment_snake_case.checked_add(1) {
@@ -4423,7 +4423,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                 &contains_another_range_upper_camel_case,
                 &is_nullable,
                 ShouldWhereElementFieldsBePublic::True,
-                &quote::quote!{pub value: #std_primitive_i64_token_stream},
+                &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
                 &quote::quote!{#value_snake_case: ::core::default::Default::default()},
                 &quote::quote!{
                     match #increment_snake_case.checked_add(1) {
