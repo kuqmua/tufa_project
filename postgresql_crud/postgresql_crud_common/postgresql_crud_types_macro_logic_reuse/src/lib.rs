@@ -2231,13 +2231,6 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
     is_nullable: &IsNullable,
     should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
-
-
-    postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream: &dyn quote::ToTokens,
-    impl_postgresql_type_ident_where_element_tokens_try_new_token_stream: &dyn quote::ToTokens,
-    impl_serde_deserialize_for_postgresql_type_ident_where_element_tokens_token_stream: &dyn quote::ToTokens,
-
-    
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
@@ -2449,9 +2442,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
             &quote::quote!{#value_snake_case: ::core::default::Default::default(),},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -2480,9 +2470,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -2505,42 +2492,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #query_snake_case
             }
         );
-        let postgresql_type_tokens_where_element_between_token_stream = 
-        
-        
-        // {
-        //     let postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-        //     generate_postgresql_type_tokens_where_element_variant_token_stream(
-        //         &ident,
-        //         &naming::BetweenUpperCamelCase,
-        //         &is_nullable,
-        //         ShouldWhereElementFieldsBePublic::False,
-        //         &quote::quote!{
-        //             start: #field_type,
-        //             end: #field_type
-        //         },
-        //         &quote::quote!{
-
-        //         },
-        //         &quote::quote!{
-
-        //         },
-        //         &quote::quote!{
-
-        //         },
-        //         &quote::quote!{},
-        //         &quote::quote!{
-
-        //         },
-        //         &quote::quote!{
-
-        //         }
-        //     )
-        // };
-        
-        
-        
-        {
+        let postgresql_type_tokens_where_element_between_token_stream = {
             let postgresql_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
             match &is_nullable {
                 IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
