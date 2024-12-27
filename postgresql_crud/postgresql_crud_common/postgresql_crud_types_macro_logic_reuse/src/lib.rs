@@ -3232,9 +3232,10 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::EqualUpperCamelCase,
+            &equal_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -3264,7 +3265,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
-            &vec![&naming::EqualUpperCamelCase]
+            &vec![&equal_upper_camel_case]
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
