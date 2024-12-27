@@ -2436,9 +2436,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::EqualUpperCamelCase,
+            &equal_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -2464,9 +2465,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #query_snake_case
             }
         );
+        let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
         let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::GreaterThanUpperCamelCase,
+            &greater_than_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #field_type},
@@ -2492,13 +2494,14 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #query_snake_case
             }
         );
+        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::BetweenUpperCamelCase,
+            &between_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
-                postfix: &naming::BetweenUpperCamelCase,
+                postfix: &between_upper_camel_case,
                 try_new_error_named_variants_token_stream: &quote::quote!{
                     StartMoreOrEqualToEnd {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -2844,13 +2847,14 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 #query_snake_case
             }
         );
+        let in_upper_camel_case = naming::InUpperCamelCase;
         let postgresql_type_tokens_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::InUpperCamelCase,
+            &in_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
-                postfix: &naming::InUpperCamelCase,
+                postfix: &in_upper_camel_case,
                 try_new_error_named_variants_token_stream: &quote::quote!{
                     IsEmpty {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -3178,10 +3182,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             is_nullable,
             &ident,
             &vec![
-                &naming::EqualUpperCamelCase,
-                &naming::GreaterThanUpperCamelCase,
-                &naming::BetweenUpperCamelCase,
-                &naming::InUpperCamelCase,
+                &equal_upper_camel_case,
+                &greater_than_upper_camel_case,
+                &between_upper_camel_case,
+                &in_upper_camel_case,
             ]
         );
         quote::quote! {
