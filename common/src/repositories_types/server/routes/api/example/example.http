@@ -153,6 +153,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "StrictlyToRightOfRange": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "start": {
+  #             "Included": 0
+  #           },
+  #           "end": {
+  #             "Included": 0
+  #           }
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -186,17 +199,30 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": 0
       #   }
+      # },
+      # {
+      #   "StrictlyToLeftOfRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Included": 0
+      #       }
+      #     }
+      #   }
       # }
       # ,
       {
-        "StrictlyToLeftOfRange": {
+        "StrictlyToRightOfRange": {
           "logical_operator": "Or",
           "value": {
             "start": {
-              "Included": 100
+              "Included": 500
             },
             "end": {
-              "Included": 150
+              "Included": 5000
             }
           }
         }
