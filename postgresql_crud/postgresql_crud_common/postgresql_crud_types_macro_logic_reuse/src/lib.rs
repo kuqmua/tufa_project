@@ -3308,9 +3308,10 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::CaseSensitiveRegularExpressionUpperCamelCase,
+            &case_sensitive_regular_expression_upper_camel_sase,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -3336,9 +3337,11 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
                 #query_snake_case
             }
         );
+
+        let case_insensitive_regular_expression_upper_camel_case = naming::CaseInsensitiveRegularExpressionUpperCamelCase;
         let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::CaseInsensitiveRegularExpressionUpperCamelCase,
+            &case_insensitive_regular_expression_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -3368,8 +3371,8 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             is_nullable,
             &ident,
             &vec![
-                &naming::CaseSensitiveRegularExpressionUpperCamelCase,
-                &naming::CaseInsensitiveRegularExpressionUpperCamelCase
+                &case_sensitive_regular_expression_upper_camel_sase,
+                &case_insensitive_regular_expression_upper_camel_case
             ]
         );
         quote::quote! {
