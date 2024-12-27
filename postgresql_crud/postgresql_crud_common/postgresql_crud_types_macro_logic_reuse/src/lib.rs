@@ -3747,54 +3747,33 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             )
         };
 
-        let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = {
-            let postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementEqualToEncodedStringRepresentationUpperCamelCase::from_tokens(&ident);
-            match &is_nullable {
-                IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementEqualToEncodedStringRepresentationUpperCamelCase::from_tokens(&ident), 
-                    &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case
-                ),
-                IsNullable::False => {
-                    let postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-                        &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case,
-                        &ShouldWhereElementFieldsBePublic::True,
-                        &quote::quote!{
-                            pub encode_format: EncodeFormat,
-                            pub encoded_string_representation: std::string::String,
-                        }
-                    );
-                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case,
-                        &quote::quote! {Self {
-                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                            encode_format: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                            encoded_string_representation: ::core::default::Default::default(),
-                        }},
-                    );
-                    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                        &postgresql_type_ident_where_element_equal_to_encoded_string_representation_upper_camel_case,
-                        &quote::quote! {
-                            match #increment_snake_case.checked_add(1) {
-                                Some(#value_snake_case) => {
-                                    *#increment_snake_case = #value_snake_case;
-                                    Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, &self.encode_format, #increment_snake_case))
-                                }
-                                None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                            }
-                        },
-                        &quote::quote!{
-                            #query_snake_case = #query_snake_case.bind(self.encoded_string_representation);
-                            #query_snake_case
-                        }
-                    );
-                    quote::quote! {
-                        #postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream
-                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream
-                        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_equal_to_encoded_string_representation_token_stream
+        let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &naming::EqualToEncodedStringRepresentationUpperCamelCase,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{
+                pub encode_format: EncodeFormat,
+                pub encoded_string_representation: std::string::String,
+            },
+            &quote::quote!{
+                encode_format: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                encoded_string_representation: ::core::default::Default::default(),
+            },
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, &self.encode_format, #increment_snake_case))
                     }
+                    None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                 }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.encoded_string_representation);
+                #query_snake_case
             }
-        };
+        );
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
