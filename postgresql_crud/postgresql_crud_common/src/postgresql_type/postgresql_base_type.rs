@@ -310,62 +310,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 
 // In PostgreSQL, INT8RANGE is a range type that is used to represent a range of 64-bit integers (BIGINT). The range types in PostgreSQL can be used with various operations that allow you to filter, compare, and manipulate the ranges. Below is a comprehensive list of WHERE operations that you can use with the INT8RANGE type.
 
-// 1. Checking if a value is contained within a range
-// You can use the @> (contains) operator to check if a value is contained within an INT8RANGE.
-
-// sql
-// Копировать код
-// WHERE range_column @> 10
-// This will return rows where the range contains the value 10.
-
-// 2. Checking if a range contains another range
-// You can use the @> operator to check if one range contains another.
-
-// sql
-// Копировать код
-// WHERE range_column @> '[5, 15]'
-// This will return rows where range_column contains the range [5, 15].
-
-// 3. Checking if a value is strictly inside a range (not touching boundaries)
-// You can use the << (strictly contained by) operator to check if a value is strictly inside the range.
-
-// sql
-// Копировать код
-// WHERE 10 << range_column
-// This will return rows where range_column does not include the boundaries and strictly contains the value 10.
-
-// 4. Checking if a range is strictly contained by another range
-// You can use the << operator to check if one range is strictly contained within another range.
-
-// sql
-// Копировать код
-// WHERE range_column << '[5, 15]'
-// This will return rows where range_column is strictly contained within [5, 15].
-
-// 5. Checking if a range overlaps with another range
-// You can use the && (overlaps) operator to check if two ranges overlap.
-
-// sql
-// Копировать код
-// WHERE range_column && '[10, 20]'
-// This will return rows where range_column overlaps with the range [10, 20].
-
-// 6. Checking if a range does not overlap with another range
-// You can use the && operator in a negation form to check if two ranges do not overlap.
-
-// sql
-// Копировать код
-// WHERE NOT (range_column && '[10, 20]')
-// This will return rows where range_column does not overlap with the range [10, 20].
-
-// 7. Checking if a range is left of another range (non-overlapping)
-// You can use the &< (left of) operator to check if one range is entirely to the left of another.
-
-// sql
-// Копировать код
-// WHERE range_column &< '[5, 15]'
-// This will return rows where range_column is completely to the left of the range [5, 15].
-
 // 8. Checking if a range is right of another range (non-overlapping)
 // You can use the &> (right of) operator to check if one range is entirely to the right of another.
 

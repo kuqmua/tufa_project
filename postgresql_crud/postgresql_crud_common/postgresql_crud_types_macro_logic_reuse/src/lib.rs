@@ -4442,6 +4442,38 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
             )
         };
 
+        let strictly_to_left_of_range_upper_camel_case = naming::StrictlyToLeftOfRangeUpperCamelCase;
+        let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &strictly_to_left_of_range_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub #value_snake_case: #ident},
+            &quote::quote!{
+                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            },
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({} &< ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
+                #query_snake_case
+            }
+        );
+
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
@@ -4449,6 +4481,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
                 &equal_upper_camel_case,
                 &value_is_contained_within_range_upper_camel_case,
                 &contains_another_range_upper_camel_case,
+                &strictly_to_left_of_range_upper_camel_case,
             ]
         );
         quote::quote! {
@@ -4457,6 +4490,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
             #postgresql_type_tokens_where_element_contains_another_range_token_stream
+            #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };
