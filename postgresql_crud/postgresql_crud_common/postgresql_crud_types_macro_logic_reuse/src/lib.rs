@@ -2156,9 +2156,35 @@ impl IsNullable {
         }
     }
 }
-enum ShouldWhereElementFieldsBePublic {
+enum ShouldWhereElementFieldsBePublic<'a> {
     True,
-    False
+    False {
+        elements_length: std::primitive::u64,
+        ident: &'a dyn quote::ToTokens,
+        postfix: &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
+        try_new_error_named_variants_token_stream: &'a dyn quote::ToTokens,
+        try_new_additional_input_parameters_token_stream: &'a dyn quote::ToTokens,
+        try_new_content_token_stream: &'a dyn quote::ToTokens,
+        impl_deserialize_token_stream: &'a dyn quote::ToTokens,
+    }
+}
+impl ShouldWhereElementFieldsBePublic<'_> {
+    fn maybe_try_new_error_named_and_try_new_and_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::True => proc_macro2::TokenStream::new(),
+            Self::False {
+                elements_length,
+                ident,
+                postfix,
+                try_new_error_named_variants_token_stream,
+                try_new_additional_input_parameters_token_stream,
+                try_new_content_token_stream,
+                impl_deserialize_token_stream,
+            } => {
+                proc_macro2::TokenStream::new()
+            }
+        }
+    }
 }
 fn generate_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
@@ -2233,11 +2259,27 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
 ) -> proc_macro2::TokenStream {
     let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
         ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
-        ShouldWhereElementFieldsBePublic::False => &proc_macro2::TokenStream::new()
+        ShouldWhereElementFieldsBePublic::False {
+            elements_length: _,
+            ident: _,
+            postfix: _,
+            try_new_error_named_variants_token_stream: _,
+            try_new_additional_input_parameters_token_stream: _,
+            try_new_content_token_stream: _,
+            impl_deserialize_token_stream: _,
+        } => &proc_macro2::TokenStream::new()
     };
     let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
         ShouldWhereElementFieldsBePublic::True => quote::quote! {serde::Deserialize, },
-        ShouldWhereElementFieldsBePublic::False => proc_macro2::TokenStream::new()
+        ShouldWhereElementFieldsBePublic::False {
+            elements_length: _,
+            ident: _,
+            postfix: _,
+            try_new_error_named_variants_token_stream: _,
+            try_new_additional_input_parameters_token_stream: _,
+            try_new_content_token_stream: _,
+            impl_deserialize_token_stream: _,
+        } => proc_macro2::TokenStream::new()
     };
     let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
     let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
@@ -2472,7 +2514,15 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False,
+                        ShouldWhereElementFieldsBePublic::False {
+                            elements_length: ::core::default::Default::default(),
+                            ident: &ident,
+                            postfix: &naming::FalseUpperCamelCase,
+                            try_new_error_named_variants_token_stream: &quote::quote!{},
+                            try_new_additional_input_parameters_token_stream: &quote::quote!{},
+                            try_new_content_token_stream: &quote::quote!{},
+                            impl_deserialize_token_stream: &quote::quote!{},
+                        },
                         &quote::quote!{
                             start: #field_type,
                             end: #field_type
@@ -2853,7 +2903,15 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_in_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_in_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False,
+                        ShouldWhereElementFieldsBePublic::False {
+                            elements_length: ::core::default::Default::default(),
+                            ident: &ident,
+                            postfix: &naming::FalseUpperCamelCase,
+                            try_new_error_named_variants_token_stream: &quote::quote!{},
+                            try_new_additional_input_parameters_token_stream: &quote::quote!{},
+                            try_new_content_token_stream: &quote::quote!{},
+                            impl_deserialize_token_stream: &quote::quote!{},
+                        },
                         &quote::quote!{value: std::vec::Vec<#field_type>}
                     );
                     let postgresql_type_ident_where_element_in_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementInTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -3700,7 +3758,15 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
                     let postgresql_type_ident_where_element_length_more_than_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_length_more_than_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False,
+                        ShouldWhereElementFieldsBePublic::False {
+                            elements_length: ::core::default::Default::default(),
+                            ident: &ident,
+                            postfix: &naming::FalseUpperCamelCase,
+                            try_new_error_named_variants_token_stream: &quote::quote!{},
+                            try_new_additional_input_parameters_token_stream: &quote::quote!{},
+                            try_new_content_token_stream: &quote::quote!{},
+                            impl_deserialize_token_stream: &quote::quote!{},
+                        },
                         &quote::quote!{length_more_than: #std_primitive_i32_token_stream,}
                     );
                     let postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -4246,7 +4312,15 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
                 IsNullable::False => {
                     let postgresql_type_ident_where_element_between_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                         &postgresql_type_ident_where_element_between_upper_camel_case,
-                        ShouldWhereElementFieldsBePublic::False,
+                        ShouldWhereElementFieldsBePublic::False {
+                            elements_length: ::core::default::Default::default(),
+                            ident: &ident,
+                            postfix: &naming::FalseUpperCamelCase,
+                            try_new_error_named_variants_token_stream: &quote::quote!{},
+                            try_new_additional_input_parameters_token_stream: &quote::quote!{},
+                            try_new_content_token_stream: &quote::quote!{},
+                            impl_deserialize_token_stream: &quote::quote!{},
+                        },
                         &quote::quote!{
                             start: #ident,
                             end: #ident
