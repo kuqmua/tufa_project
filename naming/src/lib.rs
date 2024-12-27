@@ -500,7 +500,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["upper", "bound"],
     ["greater", "than", "lower", "bound"],
     ["overlap", "with", "range"],
-    ["adjacent", "with", "range"]
+    ["adjacent", "with", "range"],
+    ["range", "length"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
