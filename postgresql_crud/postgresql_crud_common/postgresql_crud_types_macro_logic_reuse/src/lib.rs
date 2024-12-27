@@ -3424,9 +3424,10 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let hexadecimal_notation_equal_upper_camel_case = naming::HexadecimalNotationEqualUpperCamelCase;
         let postgresql_type_tokens_where_element_hexadecimal_notation_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::HexadecimalNotationEqualUpperCamelCase,
+            &hexadecimal_notation_equal_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -3452,15 +3453,17 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 #query_snake_case
             }
         );
+
+        let length_more_than_upper_camel_case = naming::LengthMoreThanUpperCamelCase;
         let postgresql_type_tokens_where_element_length_more_than_token_stream = {
             let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
             generate_postgresql_type_tokens_where_element_variant_token_stream(
                 &ident,
-                &naming::LengthMoreThanUpperCamelCase,
+                &length_more_than_upper_camel_case,
                 &is_nullable,
                 ShouldWhereElementFieldsBePublic::False {
                     ident: &ident,
-                    postfix: &naming::LengthMoreThanUpperCamelCase,
+                    postfix: &length_more_than_upper_camel_case,
                     try_new_error_named_variants_token_stream: &quote::quote!{
                         LengthIsNegative {
                             #[eo_to_std_string_string_serialize_deserialize]
@@ -3755,9 +3758,10 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             )
         };
 
+        let equal_to_encoded_string_representation_upper_camel_case = naming::EqualToEncodedStringRepresentationUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &naming::EqualToEncodedStringRepresentationUpperCamelCase,
+            &equal_to_encoded_string_representation_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
@@ -3787,9 +3791,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             is_nullable,
             &ident,
             &vec![
-                &naming::HexadecimalNotationEqualUpperCamelCase,
-                &naming::LengthMoreThanUpperCamelCase,
-                &naming::EqualToEncodedStringRepresentationUpperCamelCase,
+                &hexadecimal_notation_equal_upper_camel_case,
+                &length_more_than_upper_camel_case,
+                &equal_to_encoded_string_representation_upper_camel_case,
             ]
         );
         quote::quote! {
