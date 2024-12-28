@@ -4314,6 +4314,16 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     generated.into()
 }
 ////////////////////
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI32)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Included(::core::default::Default::default()),
+        }}
+    )
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI64)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
