@@ -4431,8 +4431,10 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &contains_another_range_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+            &quote::quote!{pub #value_snake_case: #ident},
+            &quote::quote!{
+                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            },
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
@@ -4450,7 +4452,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                 }
             },
             &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
             }
         );

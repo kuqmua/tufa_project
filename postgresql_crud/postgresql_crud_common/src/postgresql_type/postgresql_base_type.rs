@@ -209,7 +209,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
     PartialEq,
     Eq,
     //todo utoipa::ToSchema,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI64,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI32,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32,
 )]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(pub sqlx::postgres::types::PgRange<std::primitive::i32>);
