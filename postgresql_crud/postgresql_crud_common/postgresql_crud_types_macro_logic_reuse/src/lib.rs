@@ -4338,7 +4338,10 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
-        let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
+        let std_primitive_capacity_token_stream = match pg_range_int_capacity {
+            PgRangeIntCapacity::I32 => quote::quote!{std::primitive::i32},
+            PgRangeIntCapacity::I64 => quote::quote!{std::primitive::i64},
+        };
 
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4390,7 +4393,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &value_is_contained_within_range_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
+            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4420,7 +4423,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &contains_another_range_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
+            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4514,7 +4517,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &lower_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
+            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4544,7 +4547,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &upper_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
+            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4671,7 +4674,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &range_length_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_i64_token_stream},
+            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4744,6 +4747,14 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     // }
     generated.into()
 } 
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+        input,
+        PgRangeIntCapacity::I32
+    )
+}
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
