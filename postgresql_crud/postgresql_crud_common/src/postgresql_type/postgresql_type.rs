@@ -453,6 +453,35 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgIntervalAsPostgres
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 )]
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI32);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT4RANGE}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI32);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT4RANGE} {NOT_NULL}")
+    }
+}
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
