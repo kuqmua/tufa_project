@@ -4325,8 +4325,14 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i6
     )
 }
 
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+enum PgRangeIntCapacity {
+    I32,
+    I64,
+}
+fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+    input: proc_macro::TokenStream,
+    pg_range_int_capacity: PgRangeIntCapacity
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -4737,4 +4743,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
     //     );
     // }
     generated.into()
+} 
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+        input,
+        PgRangeIntCapacity::I64
+    )
 }
