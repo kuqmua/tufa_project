@@ -4338,6 +4338,7 @@ enum RangeType {
     I64,
     SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4346,6 +4347,7 @@ impl RangeType {
             Self::I64 => quote::quote!{std::primitive::i64},
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
         }
     }
 }
@@ -4806,5 +4808,18 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
     )
 }
