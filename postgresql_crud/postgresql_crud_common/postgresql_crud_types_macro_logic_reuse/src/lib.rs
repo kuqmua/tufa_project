@@ -4314,7 +4314,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     generated.into()
 }
 ////////////////////
-fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRange)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
         &quote::quote!{sqlx::postgres::types::PgRange {
@@ -4322,15 +4323,6 @@ fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc
             end: std::ops::Bound::Included(::core::default::Default::default()),
         }}
     )
-}
-
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI32)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI64)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 
 enum RangeType {
@@ -5073,11 +5065,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
     )
 }
 
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
-}
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -5085,11 +5072,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
         ShouldImplRangeLength::False,
     )
-}
-
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
@@ -5101,11 +5083,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     )
 }
 
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
-}
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -5115,11 +5092,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     )
 }
 
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
-}
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -5127,11 +5099,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
         ShouldImplRangeLength::False,
     )
-}
-//
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
