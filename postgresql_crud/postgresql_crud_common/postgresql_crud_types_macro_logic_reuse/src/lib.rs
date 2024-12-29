@@ -4351,9 +4351,14 @@ impl RangeType {
         }
     }
 }
+enum ShouldImplRangeLength {
+    True,
+    False
+}
 fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
     input: proc_macro::TokenStream,
-    range_type: RangeType
+    range_type: RangeType,
+    should_impl_range_length: ShouldImplRangeLength,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -4690,52 +4695,60 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
 
         //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
         let range_length_upper_camel_case = naming::RangeLengthUpperCamelCase;
-        let postgresql_type_tokens_where_element_range_length_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &range_length_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(upper({}) - lower({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
+        let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &should_impl_range_length {
+            ShouldImplRangeLength::True => generate_postgresql_type_tokens_where_element_variant_token_stream(
+                &ident,
+                &range_length_upper_camel_case,
+                &is_nullable,
+                ShouldWhereElementFieldsBePublic::True,
+                &quote::quote!{pub #value_snake_case: std::primitive::i64},//todo try_new - check length > 0
+                &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+                &quote::quote!{
+                    match #increment_snake_case.checked_add(1) {
+                        Some(#value_snake_case) => {
+                            *#increment_snake_case = #value_snake_case;
+                            Ok(format!(
+                                "{}(upper({}) - lower({}) = ${})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
+                                #column_snake_case,
+                                #increment_snake_case
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                },
+                &quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                    #query_snake_case
                 }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
-        );
+            ),
+            ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
+        };
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
-            &vec![
-                &equal_upper_camel_case,
-                &value_is_contained_within_range_upper_camel_case,
-                &contains_another_range_upper_camel_case,
-                &strictly_to_left_of_range_upper_camel_case,
-                &strictly_to_right_of_range_upper_camel_case,
-                &lower_bound_upper_camel_case,
-                &upper_bound_upper_camel_case,
-                &greater_than_lower_bound_upper_camel_case,
-                &overlap_with_range_upper_camel_case,
-                &adjacent_with_range_upper_camel_case,
-                &range_length_upper_camel_case,
-            ]
+            &{
+                let mut value: std::vec::Vec<&dyn quote::ToTokens> = vec![
+                    &equal_upper_camel_case,
+                    &value_is_contained_within_range_upper_camel_case,
+                    &contains_another_range_upper_camel_case,
+                    &strictly_to_left_of_range_upper_camel_case,
+                    &strictly_to_right_of_range_upper_camel_case,
+                    &lower_bound_upper_camel_case,
+                    &upper_bound_upper_camel_case,
+                    &greater_than_lower_bound_upper_camel_case,
+                    &overlap_with_range_upper_camel_case,
+                    &adjacent_with_range_upper_camel_case,
+                ];
+                if let ShouldImplRangeLength::True = &should_impl_range_length {
+                    value.push(&range_length_upper_camel_case);
+                }
+                value
+            }
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
@@ -4750,7 +4763,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
             #postgresql_type_tokens_where_element_overlap_with_range_token_stream
             #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
-            #postgresql_type_tokens_where_element_range_length_token_stream
+            #maybe_postgresql_type_tokens_where_element_range_length_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };
@@ -4773,7 +4786,8 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::I32
+        RangeType::I32,
+        ShouldImplRangeLength::True,
     )
 }
 
@@ -4781,7 +4795,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::I64
+        RangeType::I64,
+        ShouldImplRangeLength::True,
     )
 }
 
@@ -4794,7 +4809,8 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chron
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+        ShouldImplRangeLength::True,
     )
 }
 
@@ -4807,7 +4823,8 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chron
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
+        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+        ShouldImplRangeLength::True,
     )
 }
 
@@ -4820,6 +4837,7 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chron
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+        ShouldImplRangeLength::False,
     )
 }
