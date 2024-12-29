@@ -4810,7 +4810,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-        ShouldImplRangeLength::True,
+        ShouldImplRangeLength::False,
     )
 }
 
@@ -4824,7 +4824,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-        ShouldImplRangeLength::True,
+        ShouldImplRangeLength::False,
     )
 }
 
