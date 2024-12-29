@@ -4340,6 +4340,7 @@ enum RangeType {
     SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+    SqlxPostgresTypesPgRangeSqlxTypesDecimal,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4350,6 +4351,7 @@ impl RangeType {
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
         }
     }
 }
@@ -5123,6 +5125,20 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+        ShouldImplRangeLength::False,
+    )
+}
+//
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
         ShouldImplRangeLength::False,
     )
 }
