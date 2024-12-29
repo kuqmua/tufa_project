@@ -4314,7 +4314,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     generated.into()
 }
 ////////////////////
-fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
         &quote::quote!{sqlx::postgres::types::PgRange {
@@ -4326,32 +4326,39 @@ fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primiti
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI32)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(input)
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeStdPrimitiveI64)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(input)
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 
-enum PgRangeIntCapacity {
+enum RangeType {
     I32,
     I64,
     SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+    SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+}
+impl RangeType {
+    fn type_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::I32 => quote::quote!{std::primitive::i32},
+            Self::I64 => quote::quote!{std::primitive::i64},
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
+        }
+    }
 }
 fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
     input: proc_macro::TokenStream,
-    pg_range_int_capacity: PgRangeIntCapacity
+    range_type: RangeType
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
-        let range_type_token_stream = match pg_range_int_capacity {
-            PgRangeIntCapacity::I32 => quote::quote!{std::primitive::i32},
-            PgRangeIntCapacity::I64 => quote::quote!{std::primitive::i64},
-            PgRangeIntCapacity::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
-        };
+        let range_type_token_stream = range_type.type_token_stream();
 
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4764,7 +4771,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        PgRangeIntCapacity::I32
+        RangeType::I32
     )
 }
 
@@ -4772,25 +4779,32 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        PgRangeIntCapacity::I64
+        RangeType::I64
     )
 }
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &quote::quote!{sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
-        }}
-    )
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
 }
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        PgRangeIntCapacity::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
     )
 }
