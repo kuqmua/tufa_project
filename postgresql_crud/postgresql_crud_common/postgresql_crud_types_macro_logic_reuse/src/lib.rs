@@ -4339,6 +4339,7 @@ enum RangeType {
     SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4348,6 +4349,7 @@ impl RangeType {
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
         }
     }
 }
@@ -5107,6 +5109,20 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+        ShouldImplRangeLength::False,
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input)
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
         ShouldImplRangeLength::False,
     )
 }

@@ -38,28 +38,20 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "pg_range_naive_date_time_as_postgresql_ts_range_not_null": {
+    "pg_range_chrono_naive_date_as_postgresql_date_range": {
       "start": {
-        "Included": "1980-01-01T00:00:00"
+        "Included": "1970-01-01"
       },
       "end": {
-        "Included": "1990-01-01T00:00:00"
+        "Included": "1970-01-01"
       }
     },
-    "pg_range_date_time_utc_as_ts_tz_range_not_null": {
+    "pg_range_chrono_naive_date_as_postgresql_date_range_not_null": {
       "start": {
-        "Included": "1980-01-01T00:00:00Z"
+        "Included": "1970-01-01"
       },
       "end": {
-        "Included": "1990-01-01T00:00:00Z"
-      }
-    },
-    "pg_range_date_time_local_as_postgresql_ts_tz_range_not_null": {
-      "start": {
-        "Included": "1980-01-01T03:00:00+03:00"
-      },
-      "end": {
-        "Included": "1990-01-01T03:00:00+03:00"
+        "Included": "1980-01-01"
       }
     }
   }
@@ -126,7 +118,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "pg_range_naive_date_time_as_postgresql_ts_range_not_null": {
+  # "pg_range_chrono_naive_date_as_postgresql_date_range": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -134,10 +126,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -145,7 +137,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     {
   #       "ValueIsContainedWithinRange": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
+  #         "value": "1970-01-01"
   #       }
   #     },
   #     {
@@ -153,10 +145,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -166,10 +158,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -179,10 +171,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -190,13 +182,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     {
   #       "LowerBound": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
+  #         "value": "1970-01-01"
   #       }
   #     },
   #     {
   #       "UpperBound": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
+  #         "value": "1970-01-01"
   #       }
   #     },
   #     {
@@ -204,10 +196,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -217,10 +209,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
@@ -230,156 +222,42 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           },
   #           "end": {
-  #             "Included": "1970-01-01T00:00:00"
+  #             "Included": "1970-01-01"
   #           }
   #         }
   #       }
-  #     }
-  #   ]
-  # },
-  # "pg_range_date_time_utc_as_ts_tz_range_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     # {
-  #     #   "Equal": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "ValueIsContainedWithinRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": "1970-01-01T00:00:00Z"
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "ContainsAnotherRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "StrictlyToLeftOfRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "StrictlyToRightOfRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "LowerBound": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": "1970-01-01T00:00:00Z"
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "UpperBound": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": "1970-01-01T00:00:00Z"
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "GreaterThanLowerBound": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "OverlapWithRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "AdjacentWithRange": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": {
-  #     #       "start": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       },
-  #     #       "end": {
-  #     #         "Included": "1970-01-01T00:00:00Z"
-  #     #       }
-  #     #     }
-  #     #   }
-  #     # },
+  #     },
   #     {
-  #       "RangeLength": {
-  #         "logical_operator": "Or",
-  #         "value": 2
+  #       "IsNull": {
+  #         "logical_operator": "Or"
   #       }
   #     }
   #   ]
   # },
-  "pg_range_date_time_local_as_postgresql_ts_tz_range_not_null": {
+  "pg_range_chrono_naive_date_as_postgresql_date_range_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
-      #       },
-      #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
-      #       }
-      #     }
-      #   }
-      # },
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": {
+            "start": {
+              "Included": "1970-01-01"
+            },
+            "end": {
+              "Included": "1980-01-01"
+            }
+          }
+        }
+      }
+      # ,
       # {
       #   "ValueIsContainedWithinRange": {
       #     "logical_operator": "Or",
-      #     "value": "1970-01-01T03:00:00+03:00"
+      #     "value": "1970-01-01"
       #   }
       # },
       # {
@@ -387,10 +265,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
@@ -400,10 +278,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
@@ -413,10 +291,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
@@ -424,13 +302,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       # {
       #   "LowerBound": {
       #     "logical_operator": "Or",
-      #     "value": "1970-01-01T03:00:00+03:00"
+      #     "value": "1970-01-01"
       #   }
       # },
       # {
       #   "UpperBound": {
       #     "logical_operator": "Or",
-      #     "value": "1970-01-01T03:00:00+03:00"
+      #     "value": "1970-01-01"
       #   }
       # },
       # {
@@ -438,10 +316,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
@@ -451,10 +329,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
@@ -464,20 +342,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       },
       #       "end": {
-      #         "Included": "1970-01-01T03:00:00+03:00"
+      #         "Included": "1970-01-01"
       #       }
       #     }
       #   }
-      # },
-      {
-        "RangeLength": {
-          "logical_operator": "Or",
-          "value": 2
-        }
-      }
+      # }
     ]
   },
   "select": [
@@ -485,13 +357,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
     {
-      "pg_range_naive_date_time_as_postgresql_ts_range_not_null": null
+      "pg_range_chrono_naive_date_as_postgresql_date_range": null
     },
     {
-      "pg_range_date_time_utc_as_ts_tz_range_not_null": null
-    },
-    {
-      "pg_range_date_time_local_as_postgresql_ts_tz_range_not_null": null
+      "pg_range_chrono_naive_date_as_postgresql_date_range_not_null": null
     }
   ],
   "order_by": {
