@@ -4314,10 +4314,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     generated.into()
 }
 ////////////////////
-enum PgRangeIntCapacity {
-    I32,
-    I64,
-}
 fn generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
@@ -4337,7 +4333,12 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i6
     generate_postgresql_base_type_tokens_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(input)
 }
 
-fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+enum PgRangeIntCapacity {
+    I32,
+    I64,
+    SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+}
+fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
     input: proc_macro::TokenStream,
     pg_range_int_capacity: PgRangeIntCapacity
 ) -> proc_macro::TokenStream {
@@ -4346,9 +4347,10 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
-        let std_primitive_capacity_token_stream = match pg_range_int_capacity {
+        let range_type_token_stream = match pg_range_int_capacity {
             PgRangeIntCapacity::I32 => quote::quote!{std::primitive::i32},
             PgRangeIntCapacity::I64 => quote::quote!{std::primitive::i64},
+            PgRangeIntCapacity::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
         };
 
         let increment_snake_case = naming::IncrementSnakeCase;
@@ -4401,7 +4403,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &value_is_contained_within_range_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
+            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4527,7 +4529,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &lower_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
+            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4557,7 +4559,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &upper_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
+            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4684,7 +4686,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &range_length_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #std_primitive_capacity_token_stream},
+            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4760,7 +4762,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         PgRangeIntCapacity::I32
     )
@@ -4768,13 +4770,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64(
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         PgRangeIntCapacity::I64
     )
 }
 
-//////
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -4788,79 +4789,8 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_chron
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        };
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
-        let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &equal_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal_upper_camel_case,
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    };
-    let postgresql_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::False);
-    let postgresql_type_std_option_option_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::True);
-    let generated = quote::quote! {
-        #postgresql_type_ident_where_element_token_stream
-        #postgresql_type_std_option_option_ident_where_element_token_stream
-    };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        PgRangeIntCapacity::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    )
 }
