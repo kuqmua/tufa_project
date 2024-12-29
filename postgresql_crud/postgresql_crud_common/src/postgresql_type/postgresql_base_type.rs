@@ -1809,16 +1809,7 @@ const _: () = {
 // pub struct StdNetIpAddr(pub std::net::IpAddr);
 // pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 // pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-// pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
-// pub struct WhereSqlxTypesJson<T> {
-//     pub value: SqlxTypesJson<T>,
-//     pub logical_operator: LogicalOperator,
-// }
-// pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
-// pub struct WhereStdOptionOptionSqlxTypesJson<T> {
-//     pub value: StdOptionOptionSqlxTypesJson<T>,
-//     pub logical_operator: LogicalOperator,
-// }
+
 // pub struct SerdeJsonValue(pub serde_json::Value);
 
 ////////////////////////////////
