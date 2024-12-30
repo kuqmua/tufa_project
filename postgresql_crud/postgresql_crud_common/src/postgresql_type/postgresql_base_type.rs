@@ -1774,6 +1774,27 @@ const _: () = {
 
 //todo another ranges
 
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElement,
+)]
+pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
+// pub const fn from_calendar_date(
+//     year: i32,
+//     month: Month,
+//     day: u8,
+// ) -> Result<Date, ComponentRange>
+
+
+
+
+
 // #[derive(
 //     Debug,
 //     Clone,
@@ -1865,7 +1886,7 @@ const _: () = {
 
 
 // pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-// pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
+
 // pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 
 

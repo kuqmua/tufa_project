@@ -46,7 +46,7 @@ sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_
 # strum = {version = "=0.24.1"}
 # strum_macros = {version = "=0.24.3"}
 # thiserror = {version = "=1.0.48"}
-# time = {version = "=0.3.36"}
+# time = {version = "=0.3.36", features = ["serde"]}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 secrecy = {version = "=0.8", features = ["serde"]}
 # toml = {version = "=0.5"}
