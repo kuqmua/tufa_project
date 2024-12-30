@@ -676,3 +676,32 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesDeci
 //         format!("{column} {TIMESTAMPTZ} {NOT_NULL}")
 //     }
 // }
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesTimeDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesTimeDate);
+impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDate {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {DATE}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeDate);
+impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDateNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {DATE} {NOT_NULL}")
+    }
+}

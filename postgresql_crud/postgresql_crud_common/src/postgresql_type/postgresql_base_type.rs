@@ -1781,8 +1781,8 @@ const _: () = {
     Eq,
     serde::Serialize,
     serde::Deserialize,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElement,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeDate,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate,
 )]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 // pub const fn from_calendar_date(
