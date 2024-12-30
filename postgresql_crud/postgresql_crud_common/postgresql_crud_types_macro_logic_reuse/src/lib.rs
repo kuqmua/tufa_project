@@ -5660,7 +5660,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
 pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::types::time::Date::MIN}
+        &quote::quote!{
+            sqlx::types::time::Date::from_calendar_date(
+                ::core::default::Default::default(),
+                time::Month::January,
+                1,
+            ).unwrap()
+        }
     )
 }
 

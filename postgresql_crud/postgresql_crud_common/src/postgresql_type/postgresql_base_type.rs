@@ -1780,7 +1780,7 @@ const _: () = {
     PartialEq,
     Eq,
     serde::Serialize,
-    serde::Deserialize,
+    serde::Deserialize,//todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_calendar_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeDate,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate,
 )]

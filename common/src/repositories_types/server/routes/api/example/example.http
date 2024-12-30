@@ -38,8 +38,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "time_offset_date_time_as_postgresql_timestamp_tz": 0,
-    "time_offset_date_time_as_postgresql_timestamp_tz_not_null": 15
+    "sqlx_types_time_date_as_postgresql_date": [
+      -2020,
+      0
+    ],
+    "sqlx_types_time_date_as_postgresql_date_not_null": [
+      0,
+      0
+    ]
   }
 ]
 
