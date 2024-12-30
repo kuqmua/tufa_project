@@ -38,14 +38,16 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_time_date_as_postgresql_date": [
-      -2020,
-      0
-    ],
-    "sqlx_types_time_date_as_postgresql_date_not_null": [
-      0,
-      0
-    ]
+    "sqlx_types_time_date_as_postgresql_date": {
+      "year": 0,
+      "month": 1,
+      "day": 1
+    },
+    "sqlx_types_time_date_as_postgresql_date_not_null": {
+      "year": 2000,
+      "month": 1,
+      "day": 1
+    }
   }
 ]
 
@@ -110,26 +112,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "time_offset_date_time_as_postgresql_timestamp_tz": {
+  # "sqlx_types_time_date_as_postgresql_date": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
+  #         "value": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
   #       }
   #     },
   #     {
@@ -139,26 +132,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "time_offset_date_time_as_postgresql_timestamp_tz_not_null": {
+  "sqlx_types_time_date_as_postgresql_date_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "Before": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
       {
-        "Between": {
+        "Equal": {
           "logical_operator": "Or",
-          "start": 2,
-          "end": 7
+          "value": {
+            "year": 2000,
+            "month": 1,
+            "day": 1
+          }
         }
       }
     ]
@@ -168,10 +152,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
     {
-      "time_offset_date_time_as_postgresql_timestamp_tz": null
+      "sqlx_types_time_date_as_postgresql_date": null
     },
     {
-      "time_offset_date_time_as_postgresql_timestamp_tz_not_null": null
+      "sqlx_types_time_date_as_postgresql_date_not_null": null
     }
   ],
   "order_by": {

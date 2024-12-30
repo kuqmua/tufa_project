@@ -5661,9 +5661,8 @@ pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::Token
     generate_postgresql_base_type_tokens(
         input,
         &quote::quote!{
-            sqlx::types::time::Date::from_calendar_date(
+            sqlx::types::time::Date::from_ordinal_date(
                 ::core::default::Default::default(),
-                time::Month::January,
                 1,
             ).unwrap()
         }
