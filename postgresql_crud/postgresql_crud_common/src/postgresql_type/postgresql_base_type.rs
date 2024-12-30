@@ -1779,8 +1779,8 @@ const _: () = {
     Clone,
     PartialEq,
     Eq,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElement,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeOffsetDateTime,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime,
 )]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 impl serde::Serialize for SqlxTypesTimeOffsetDateTime {
@@ -1848,12 +1848,12 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
         )
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeOffsetDateTime {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(sqlx::types::time::OffsetDateTime::UNIX_EPOCH)
-    }
-}
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxTypesTimeOffsetDateTime {
+//     #[inline]
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(sqlx::types::time::OffsetDateTime::UNIX_EPOCH)
+//     }
+// }
 
 
 
