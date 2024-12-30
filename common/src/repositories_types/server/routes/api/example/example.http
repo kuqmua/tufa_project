@@ -44,7 +44,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       "day": 1
     },
     "sqlx_types_time_date_as_postgresql_date_not_null": {
-      "year": 2000,
+      "year": -4712,
       "month": 1,
       "day": 1
     }

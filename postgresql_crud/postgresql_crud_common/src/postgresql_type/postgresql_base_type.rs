@@ -1779,7 +1779,6 @@ const _: () = {
     Clone,
     PartialEq,
     Eq,
-    // serde::Serialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeDate,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate,
 )]
@@ -1788,7 +1787,12 @@ pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 pub enum SqlxTypesTimeDateTryNewErrorNamed {
     FromCalendarDate {
         #[eo_to_std_string_string_serialize_deserialize]
-        from_calendar_date: std::string::String,
+        value: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    LessThanMinimumPostgresqlValue {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -1803,9 +1807,25 @@ impl SqlxTypesTimeDate {
             month,
             day,
         ) {
-            Ok(value) => Ok(Self(value)),
+            Ok(value) => {
+                //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
+                let minimum = sqlx::types::time::Date::from_calendar_date(
+                    -4713,
+                    time::Month::December,
+                    31,
+                ).unwrap();
+                if minimum > value {
+                    Err(SqlxTypesTimeDateTryNewErrorNamed::LessThanMinimumPostgresqlValue {
+                        value: format!("{value:?}"),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+                else {
+                    Ok(Self(value))
+                }
+            },
             Err(error) => Err(SqlxTypesTimeDateTryNewErrorNamed::FromCalendarDate {
-                from_calendar_date: format!("{error:?}"),
+                value: format!("{error:?}"),
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
