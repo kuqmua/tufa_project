@@ -136,6 +136,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         },
+  #         "end": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -155,11 +170,26 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "Before": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "year": 0,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # },
       {
-        "Before": {
+        "Between": {
           "logical_operator": "Or",
-          "value": {
-            "year": 2000,
+          "start": {
+            "year": 1000,
+            "month": 1,
+            "day": 1
+          },
+          "end": {
+            "year": 3000,
             "month": 1,
             "day": 1
           }
