@@ -126,6 +126,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -135,8 +145,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "sqlx_types_time_date_as_postgresql_date_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "year": 0,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # },
       {
-        "Equal": {
+        "Before": {
           "logical_operator": "Or",
           "value": {
             "year": 2000,
