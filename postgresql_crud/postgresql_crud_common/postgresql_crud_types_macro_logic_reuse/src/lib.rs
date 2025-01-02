@@ -5722,10 +5722,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             }
         );
 
-        let before_upper_camel_case = naming::BeforeUpperCamelCase;
-        let postgresql_type_tokens_where_element_before_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let greater_than_upper_camel_case = naming::BeforeUpperCamelCase;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &before_upper_camel_case,
+            &greater_than_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -5737,7 +5737,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
                     Some(#value_snake_case) => {
                         *#increment_snake_case = #value_snake_case;
                         Ok(format!(
-                            "{}({} < ${})",
+                            "{}({} > ${})",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                             #column_snake_case,
                             #increment_snake_case
@@ -6130,7 +6130,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &ident,
             &vec![
                 &equal_upper_camel_case,
-                &before_upper_camel_case,
+                &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_date_upper_camel_case,
             ]
@@ -6139,7 +6139,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
 
             #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_before_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
             #postgresql_type_tokens_where_element_current_date_token_stream
             #postgresql_type_tokens_where_element_token_stream
