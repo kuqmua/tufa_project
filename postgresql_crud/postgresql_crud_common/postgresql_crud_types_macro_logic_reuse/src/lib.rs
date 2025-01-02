@@ -6645,6 +6645,26 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             }
         );
 
+        let greater_than_current_time_upper_camel_case = naming::GreaterThanCurrentTimeUpperCamelCase;
+        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &greater_than_current_time_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{},
+            &quote::quote!{},
+            &quote::quote!{
+                Ok(format!(
+                    "{}({} > current_time)",
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                ))
+            },
+            &quote::quote!{
+                #query_snake_case
+            }
+        );
+
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
@@ -6653,6 +6673,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_time_upper_camel_case,
+                &greater_than_current_time_upper_camel_case,
             ]
         );
         quote::quote! {
@@ -6662,6 +6683,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
             #postgresql_type_tokens_where_element_current_time_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };
