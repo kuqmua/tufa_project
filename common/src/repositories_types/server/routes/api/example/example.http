@@ -39,7 +39,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "sqlx_types_chrono_naive_time_as_postgresql_time": "00:00:00",
-    "sqlx_types_chrono_naive_time_as_postgresql_time_not_null": "00:00:00"
+    "sqlx_types_chrono_naive_time_as_postgresql_time_not_null": "10:00:00"
   }
 ]
 
@@ -114,6 +114,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": "00:00:00"
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -123,10 +129,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "sqlx_types_chrono_naive_time_as_postgresql_time_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": "00:00:00"
+      #   }
+      # },
       {
-        "Equal": {
+        "GreaterThan": {
           "logical_operator": "Or",
-          "value": "00:00:00"
+          "value": "08:00:00"
         }
       }
     ]
