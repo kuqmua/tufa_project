@@ -2159,9 +2159,17 @@ pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 )]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 
-
-
-
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeTime,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime,
+)]
+pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);//todo putting this type to postgresql ignores milliseconds. maybe it changes in future versions of sqlx
 
 
 
@@ -2278,10 +2286,6 @@ pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 // pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
-
-
-
-// pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 
 
 // pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);

@@ -38,8 +38,18 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "chrono_naive_date_time_as_postgresql_timestamp": "1970-01-01T00:00:00",
-    "chrono_naive_date_time_as_postgresql_timestamp_not_null": "2990-01-01T00:00:00"
+    "sqlx_types_time_time_as_postgresql_time": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "sqlx_types_time_time_as_postgresql_time_not_null": [
+      19,
+      4,
+      4,
+      4
+    ]
   }
 ]
 
@@ -104,35 +114,55 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "chrono_naive_date_time_as_postgresql_timestamp": {
+  # "sqlx_types_time_time_as_postgresql_time": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
   #       }
   #     },
   #     {
   #       "GreaterThan": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
   #       }
   #     },
   #     {
   #       "Between": {
   #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00",
-  #         "end": "1970-01-01T00:00:00"
+  #         "start": [
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
   #       }
   #     },
   #     {
-  #       "CurrentTimestamp": {
+  #       "CurrentTime": {
   #         "logical_operator": "Or"
   #       }
   #     },
   #     {
-  #       "GreaterThanCurrentTimestamp": {
+  #       "GreaterThanCurrentTime": {
   #         "logical_operator": "Or"
   #       }
   #     },
@@ -143,39 +173,59 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "chrono_naive_date_time_as_postgresql_timestamp_not_null": {
+  "sqlx_types_time_time_as_postgresql_time_not_null": {
     "logical_operator": "Or",
     "value": [
       # {
       #   "Equal": {
       #     "logical_operator": "Or",
-      #     "value": "1970-01-01T00:00:00"
+      #     "value": [
+      #       0,
+      #       0,
+      #       0,
+      #       0
+      #     ]
       #   }
       # }
       # ,
       # {
       #   "GreaterThan": {
       #     "logical_operator": "Or",
-      #     "value": "1975-01-01T00:00:00"
+      #     "value": [
+      #       2,
+      #       2,
+      #       2,
+      #       2
+      #     ]
       #   }
       # }
       # ,
       # {
       #   "Between": {
       #     "logical_operator": "Or",
-      #     "start": "1975-01-01T00:00:00",
-      #     "end": "1985-01-01T00:00:00"
+      #     "start": [
+      #       0,
+      #       0,
+      #       0,
+      #       0
+      #     ],
+      #     "end": [
+      #       3,
+      #       3,
+      #       3,
+      #       3
+      #     ]
       #   }
       # }
       # ,
       # {
-      #   "CurrentTimestamp": {
+      #   "CurrentTime": {
       #     "logical_operator": "Or"
       #   }
       # }
       # ,
       {
-        "GreaterThanCurrentTimestamp": {
+        "GreaterThanCurrentTime": {
           "logical_operator": "Or"
         }
       }
@@ -186,10 +236,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
     {
-      "chrono_naive_date_time_as_postgresql_timestamp": null
+      "sqlx_types_time_time_as_postgresql_time": null
     },
     {
-      "chrono_naive_date_time_as_postgresql_timestamp_not_null": null
+      "sqlx_types_time_time_as_postgresql_time_not_null": null
     }
   ],
   "order_by": {
