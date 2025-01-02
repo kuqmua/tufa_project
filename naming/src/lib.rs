@@ -504,7 +504,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["range", "length"],
     ["length", "is", "negative", "or", "zero"],
     ["before"],
-    ["current", "date"]
+    ["current", "date"],
+    ["current", "time"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
