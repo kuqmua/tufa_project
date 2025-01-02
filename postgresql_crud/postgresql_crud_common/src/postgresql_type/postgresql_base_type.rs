@@ -2123,6 +2123,18 @@ const _: () = {
 };
 
 
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesChronoNaiveTime,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime,
+)]
+pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
+
 
 
 
@@ -2238,7 +2250,6 @@ const _: () = {
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 // pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 // pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
-// pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 // pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 
 
