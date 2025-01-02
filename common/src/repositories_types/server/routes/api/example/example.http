@@ -127,6 +127,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "CurrentTime": {
+  #         "logical_operator": "Or"
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -148,11 +153,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": "00:00:00"
       #   }
       # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": "00:00:00",
+      #     "end": "00:00:00"
+      #   }
+      # },
       {
-        "Between": {
-          "logical_operator": "Or",
-          "start": "04:00:00",
-          "end": "20:00:00"
+        "CurrentTime": {
+          "logical_operator": "Or"
         }
       }
     ]
