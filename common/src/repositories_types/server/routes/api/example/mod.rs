@@ -116,8 +116,11 @@ pub struct Example {
     // pub sqlx_types_time_date_as_postgresql_date: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeDateAsPostgresqlDate,
     // pub sqlx_types_time_date_as_postgresql_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeDateAsPostgresqlDateNotNull,
 
-    pub sqlx_types_chrono_naive_time_as_postgresql_time: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTime,
-    pub sqlx_types_chrono_naive_time_as_postgresql_time_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
+    // pub sqlx_types_chrono_naive_time_as_postgresql_time: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTime,
+    // pub sqlx_types_chrono_naive_time_as_postgresql_time_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
+
+    pub sqlx_types_chrono_naive_date_as_postgresql_date: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDate,
+    pub sqlx_types_chrono_naive_date_as_postgresql_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
 
     //here
 
@@ -153,9 +156,6 @@ pub struct Example {
 
     // pub sqlx_types_chrono_naive_date_time_as_postgresql_timestamp: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
     // pub sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull,
-
-    // pub sqlx_types_chrono_naive_date_as_postgresql_date: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDate,
-    // pub sqlx_types_chrono_naive_date_as_postgresql_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
 
     // pub sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz,
     // pub sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull,
