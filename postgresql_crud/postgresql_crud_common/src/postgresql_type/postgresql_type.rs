@@ -821,3 +821,32 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTimeNotN
         format!("{column} {TIME} {NOT_NULL}")
     }
 }
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxPostgresTypesPgTimeTz);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {TIMETZ}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgTimeTz);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {TIMETZ} {NOT_NULL}")
+    }
+}
