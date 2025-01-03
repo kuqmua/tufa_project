@@ -8906,45 +8906,45 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_tim_primitive_date_t
             )
         };
 
-        // let current_timestamp_upper_camel_case = naming::CurrentTimestampUpperCamelCase;
-        // let postgresql_type_tokens_where_element_current_timestamp_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-        //     &ident,
-        //     &current_timestamp_upper_camel_case,
-        //     &is_nullable,
-        //     ShouldWhereElementFieldsBePublic::True,
-        //     &quote::quote!{},
-        //     &quote::quote!{},
-        //     &quote::quote!{
-        //         Ok(format!(
-        //             "{}({} = current_timestamp)",
-        //             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-        //             #column_snake_case,
-        //         ))
-        //     },
-        //     &quote::quote!{
-        //         #query_snake_case
-        //     }
-        // );
+        let current_timestamp_upper_camel_case = naming::CurrentTimestampUpperCamelCase;
+        let postgresql_type_tokens_where_element_current_timestamp_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &current_timestamp_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{},
+            &quote::quote!{},
+            &quote::quote!{
+                Ok(format!(
+                    "{}({} = current_timestamp)",
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                ))
+            },
+            &quote::quote!{
+                #query_snake_case
+            }
+        );
 
-        // let greater_than_current_timestamp_upper_camel_case = naming::GreaterThanCurrentTimestampUpperCamelCase;
-        // let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-        //     &ident,
-        //     &greater_than_current_timestamp_upper_camel_case,
-        //     &is_nullable,
-        //     ShouldWhereElementFieldsBePublic::True,
-        //     &quote::quote!{},
-        //     &quote::quote!{},
-        //     &quote::quote!{
-        //         Ok(format!(
-        //             "{}({} > current_timestamp)",
-        //             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-        //             #column_snake_case,
-        //         ))
-        //     },
-        //     &quote::quote!{
-        //         #query_snake_case
-        //     }
-        // );
+        let greater_than_current_timestamp_upper_camel_case = naming::GreaterThanCurrentTimestampUpperCamelCase;
+        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &greater_than_current_timestamp_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{},
+            &quote::quote!{},
+            &quote::quote!{
+                Ok(format!(
+                    "{}({} > current_timestamp)",
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                ))
+            },
+            &quote::quote!{
+                #query_snake_case
+            }
+        );
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
@@ -8953,8 +8953,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_tim_primitive_date_t
                 &equal_upper_camel_case,
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
-                // &current_timestamp_upper_camel_case,
-                // &greater_than_current_timestamp_upper_camel_case,
+                &current_timestamp_upper_camel_case,
+                &greater_than_current_timestamp_upper_camel_case,
             ]
         );
         quote::quote! {
@@ -8963,8 +8963,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_tim_primitive_date_t
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
-            // #postgresql_type_tokens_where_element_current_timestamp_token_stream
-            // #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
+            #postgresql_type_tokens_where_element_current_timestamp_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };
