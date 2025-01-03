@@ -38,22 +38,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_time_primitive_date_time_as_timestamp": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
-      8883,
-      3,
-      3,
-      3,
-      3,
-      3
-    ]
+    "sqlx_types_decimal_as_postgresql_numeric": "1",
+    "sqlx_types_decimal_as_postgresql_numeric_not_null": "5"
   }
 ]
 
@@ -118,64 +104,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "sqlx_types_time_primitive_date_time_as_timestamp": {
+  # "sqlx_types_decimal_as_postgresql_numeric": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThanCurrentTimestamp": {
-  #         "logical_operator": "Or"
+  #         "value": "0"
   #       }
   #     },
   #     {
@@ -185,64 +120,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
+  "sqlx_types_decimal_as_postgresql_numeric_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "Between": {
-      #     "logical_operator": "Or",
-      #     "start": [
-      #       0,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ],
-      #     "end": [
-      #       0,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "CurrentTimestamp": {
-      #     "logical_operator": "Or"
-      #   }
-      # },
       {
-        "GreaterThanCurrentTimestamp": {
-          "logical_operator": "Or"
+        "Equal": {
+          "logical_operator": "Or",
+          "value": "0"
         }
       }
     ]
@@ -252,10 +136,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
     {
-      "sqlx_types_time_primitive_date_time_as_timestamp": null
+      "sqlx_types_decimal_as_postgresql_numeric": null
     },
     {
-      "sqlx_types_time_primitive_date_time_as_timestamp_not_null": null
+      "sqlx_types_decimal_as_postgresql_numeric_not_null": null
     }
   ],
   "order_by": {

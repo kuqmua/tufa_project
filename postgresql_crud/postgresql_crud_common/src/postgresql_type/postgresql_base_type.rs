@@ -2844,6 +2844,19 @@ pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 )]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesDecimal,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal,
+)]
+pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
+
 // pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 
 
@@ -2856,7 +2869,7 @@ pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTi
 // pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 // pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 
-// pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
+
 
 
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
