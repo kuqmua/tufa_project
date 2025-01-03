@@ -72,54 +72,67 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  # "std_primitive_i64_as_postgresql_big_serial_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_decimal_as_postgresql_numeric": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "0"
-  #       }
-  #     },
-  #     {
-  #       "IsNull": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
+  "std_primitive_i64_as_postgresql_big_serial_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "In": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
+        }
+      }
+    ]
+  },
+  "sqlx_types_decimal_as_postgresql_numeric": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": "0"
+        }
+      },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": "0"
+        }
+      },
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": "0",
+          "end": "0"
+        }
+      },
+      {
+        "IsNull": {
+          "logical_operator": "Or"
+        }
+      }
+    ]
+  },
   "sqlx_types_decimal_as_postgresql_numeric_not_null": {
     "logical_operator": "Or",
     "value": [
@@ -127,6 +140,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "Equal": {
           "logical_operator": "Or",
           "value": "0"
+        }
+      },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": "0"
+        }
+      },
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": "0",
+          "end": "0"
         }
       }
     ]
