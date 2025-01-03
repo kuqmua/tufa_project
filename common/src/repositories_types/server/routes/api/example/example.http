@@ -148,6 +148,27 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -170,10 +191,31 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     ]
       #   }
       # },
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0,
+      #       1,
+      #       0,
+      #       0,
+      #       0,
+      #       0
+      #     ]
+      #   }
+      # },
       {
-        "GreaterThan": {
+        "Between": {
           "logical_operator": "Or",
-          "value": [
+          "start": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "end": [
             2,
             2,
             2,
