@@ -38,27 +38,21 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "time_offset_date_time_as_postgresql_timestamp_tz": [
-      1970,
+    "sqlx_types_time_primitive_date_time_as_timestamp": [
+      0,
       1,
-      0,
-      0,
-      0,
       0,
       0,
       0,
       0
     ],
-    "time_offset_date_time_as_postgresql_timestamp_tz_not_null": [
-      1995,
+    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
+      0,
       1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8
+      0,
+      0,
+      0,
+      0
     ]
   }
 ]
@@ -124,61 +118,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "time_offset_date_time_as_postgresql_timestamp_tz": {
+  # "sqlx_types_time_primitive_date_time_as_timestamp": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
   #         "value": [
-  #           1970,
+  #           0,
   #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
   #           0,
   #           0,
   #           0,
@@ -193,63 +141,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "time_offset_date_time_as_postgresql_timestamp_tz_not_null": {
+  "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       1970,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # }
-      # ,
-      # {
-      #   "Before": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       1990,
-      #       1,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # }
-      # ,
       {
-        "Between": {
+        "Equal": {
           "logical_operator": "Or",
-          "start": [
-            1980,
+          "value": [
+            0,
             1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "end": [
-            1990,
-            1,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -260,14 +160,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
-    # },
-    # {
-    #   "time_offset_date_time_as_postgresql_timestamp_tz": null
-    # },
     {
-      "time_offset_date_time_as_postgresql_timestamp_tz_not_null": null
+      "std_primitive_i64_as_postgresql_big_serial_not_null": null
+    },
+    {
+      "sqlx_types_time_primitive_date_time_as_timestamp": null
+    },
+    {
+      "sqlx_types_time_primitive_date_time_as_timestamp_not_null": null
     }
   ],
   "order_by": {
