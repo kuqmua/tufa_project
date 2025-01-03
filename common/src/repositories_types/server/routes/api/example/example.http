@@ -168,6 +168,37 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": {
+  #           "time": [
+  #             0,
+  #             0,
+  #             0,
+  #             0
+  #           ],
+  #           "offset": {
+  #             "hours": 0,
+  #             "minutes": 0,
+  #             "seconds": 0
+  #           }
+  #         },
+  #         "end": {
+  #           "time": [
+  #             0,
+  #             0,
+  #             0,
+  #             0
+  #           ],
+  #           "offset": {
+  #             "hours": 0,
+  #             "minutes": 0,
+  #             "seconds": 0
+  #           }
+  #         }
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -195,20 +226,51 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "time": [
+      #         0,
+      #         0,
+      #         0,
+      #         0
+      #       ],
+      #       "offset": {
+      #         "hours": 0,
+      #         "minutes": 0,
+      #         "seconds": 0
+      #       }
+      #     }
+      #   }
+      # },
       {
-        "GreaterThan": {
-          "logical_operator": "OrNot",
-          "value": {
+        "Between": {
+          "logical_operator": "Or",
+          "start": {
             "time": [
-              3,
-              3,
-              3,
-              3
+              4,
+              4,
+              4,
+              4
             ],
             "offset": {
-              "hours": 3,
-              "minutes": 3,
-              "seconds": 3
+              "hours": 4,
+              "minutes": 4,
+              "seconds": 4
+            }
+          },
+          "end": {
+            "time": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "offset": {
+              "hours": 2,
+              "minutes": 2,
+              "seconds": 2
             }
           }
         }
@@ -216,12 +278,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
-    # },
-    # {
-    #   "sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz": null
-    # },
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null": null
+    },
+    {
+      "sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz": null
+    },
     {
       "sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz_not_null": null
     }
