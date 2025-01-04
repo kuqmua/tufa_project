@@ -4336,6 +4336,7 @@ enum RangeType {
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4348,6 +4349,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{sqlx::types::time::PrimitiveDateTime},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -4360,6 +4362,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => ShouldImplRangeLength::False,
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => ShouldImplRangeLength::False,
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => ShouldImplRangeLength::False,
         }
     }
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4372,6 +4375,13 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime::UNIX_EPOCH},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap(),//todo
+                sqlx::types::time::Time::MIDNIGHT,
+            )},
         }
     }
 }
@@ -9965,5 +9975,35 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap(),//todo
+                sqlx::types::time::Time::MIDNIGHT,
+            )),
+            end: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap(),//todo
+                sqlx::types::time::Time::MIDNIGHT,
+            )),
+        }}
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     )
 }
