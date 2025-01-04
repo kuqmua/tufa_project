@@ -38,8 +38,20 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_decimal_as_postgresql_numeric": "1",
-    "sqlx_types_decimal_as_postgresql_numeric_not_null": "5"
+    "sqlx_types_big_decimal_as_postgresql_numeric": {
+      "digits": {
+        "sign": "NoSign",
+        "digits": [1,2]
+      },
+      "scale": 1
+    },
+    "sqlx_types_big_decimal_as_postgresql_numeric_not_null": {
+      "digits": {
+        "sign": "Plus",
+        "digits": [654]
+      },
+      "scale": 2
+    }
   }
 ]
 
@@ -72,87 +84,137 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i64_as_postgresql_big_serial_not_null": {
+  # "std_primitive_i64_as_postgresql_big_serial_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_big_decimal_as_postgresql_numeric": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
+  #         }
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
+  #         }
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": {
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
+  #         },
+  #         "end": {
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
+  #         }
+  #       }
+  #     },
+  #     {
+  #       "IsNull": {
+  #         "logical_operator": "Or"
+  #       }
+  #     }
+  #   ]
+  # },
+  "sqlx_types_big_decimal_as_postgresql_numeric_not_null": {
     "logical_operator": "Or",
     "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "digits": {
+      #         "sign": "Plus",
+      #         "digits": [64823423,2323,23423]
+      #       },
+      #       "scale": 2
+      #     }
+      #   }
+      # }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "digits": {
+      #         "sign": "NoSign",
+      #         "digits": [1]
+      #       },
+      #       "scale": 1
+      #     }
+      #   }
+      # }
+      # ,
       {
         "Between": {
           "logical_operator": "Or",
-          "start": 0,
-          "end": 0
-        }
-      },
-      {
-        "In": {
-          "logical_operator": "Or",
-          "value": [
-            0
-          ]
-        }
-      }
-    ]
-  },
-  "sqlx_types_decimal_as_postgresql_numeric": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": "0"
-        }
-      },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": "0"
-        }
-      },
-      {
-        "Between": {
-          "logical_operator": "Or",
-          "start": "0",
-          "end": "0"
-        }
-      },
-      {
-        "IsNull": {
-          "logical_operator": "Or"
-        }
-      }
-    ]
-  },
-  "sqlx_types_decimal_as_postgresql_numeric_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": "0"
-        }
-      },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": "0"
-        }
-      },
-      {
-        "Between": {
-          "logical_operator": "Or",
-          "start": "0",
-          "end": "0"
+          "start": {
+            "digits": {
+              "sign": "Plus",
+              "digits": [1]
+            },
+            "scale": 2
+          },
+          "end": {
+            "digits": {
+              "sign": "Plus",
+              "digits": [1000000]
+            },
+            "scale": 2
+          }
         }
       }
     ]
@@ -162,10 +224,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "std_primitive_i64_as_postgresql_big_serial_not_null": null
     },
     {
-      "sqlx_types_decimal_as_postgresql_numeric": null
+      "sqlx_types_big_decimal_as_postgresql_numeric": null
     },
     {
-      "sqlx_types_decimal_as_postgresql_numeric_not_null": null
+      "sqlx_types_big_decimal_as_postgresql_numeric_not_null": null
     }
   ],
   "order_by": {
