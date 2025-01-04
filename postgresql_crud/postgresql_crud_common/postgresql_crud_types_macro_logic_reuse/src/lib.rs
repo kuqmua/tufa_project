@@ -4350,6 +4350,18 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime},
         }
     }
+    fn should_impl_range_length(&self) -> ShouldImplRangeLength {
+        match &self {
+            Self::I32 => ShouldImplRangeLength::True,
+            Self::I64 => ShouldImplRangeLength::True,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => ShouldImplRangeLength::False,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => ShouldImplRangeLength::False,
+        }
+    }
 }
 enum ShouldImplRangeLength {
     True,
@@ -4358,7 +4370,6 @@ enum ShouldImplRangeLength {
 fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
     input: proc_macro::TokenStream,
     range_type: RangeType,
-    should_impl_range_length: ShouldImplRangeLength,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -4366,6 +4377,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
         let range_type_token_stream = range_type.type_token_stream();
+        let should_impl_range_length = range_type.should_impl_range_length();
 
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -5056,7 +5068,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::I32,
-        ShouldImplRangeLength::True,
     )
 }
 
@@ -5065,7 +5076,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::I64,
-        ShouldImplRangeLength::True,
     )
 }
 
@@ -5074,7 +5084,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-        ShouldImplRangeLength::False,
     )
 }
 
@@ -5083,7 +5092,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-        ShouldImplRangeLength::False,
     )
 }
 
@@ -5092,7 +5100,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-        ShouldImplRangeLength::False,
     )
 }
 
@@ -5101,7 +5108,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-        ShouldImplRangeLength::False,
     )
 }
 
@@ -5110,7 +5116,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-        ShouldImplRangeLength::False,
     )
 }
 
@@ -9954,7 +9959,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     // generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
     //     input,
     //     RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-    //     ShouldImplRangeLength::False,
     // )
 
     // let input: proc_macro::TokenStream,
