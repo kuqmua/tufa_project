@@ -4316,7 +4316,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     generated.into()
 }
 ////////////////////
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRange)]
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeDefaultInitialization)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
