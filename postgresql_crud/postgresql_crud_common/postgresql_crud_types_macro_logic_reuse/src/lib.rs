@@ -4362,6 +4362,18 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => ShouldImplRangeLength::False,
         }
     }
+    fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::I32 |
+            Self::I64 |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime::UNIX_EPOCH},
+        }
+    }
 }
 enum ShouldImplRangeLength {
     True,
@@ -4377,7 +4389,8 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
         let range_type_token_stream = range_type.type_token_stream();
-        let should_impl_range_length = range_type.should_impl_range_length();
+        let range_type_should_impl_range_length = range_type.should_impl_range_length();
+        let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
 
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4430,7 +4443,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+            &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
@@ -4556,7 +4569,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+            &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
@@ -4586,7 +4599,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+            &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
@@ -4707,7 +4720,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
 
         //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
         let range_length_upper_camel_case = naming::RangeLengthUpperCamelCase;
-        let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &should_impl_range_length {
+        let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
             ShouldImplRangeLength::True => {
                 let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
                 let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
@@ -5025,7 +5038,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                     &overlap_with_range_upper_camel_case,
                     &adjacent_with_range_upper_camel_case,
                 ];
-                if let ShouldImplRangeLength::True = &should_impl_range_length {
+                if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
                     value.push(&range_length_upper_camel_case);
                 }
                 value
@@ -8451,7 +8464,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: pr
         )}
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimePrimitiveDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -8988,7 +9000,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
     generated.into()
 }
 
-////////////////////
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesDecimal)]
 pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -8996,7 +9007,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenSt
         &quote::quote!{::core::default::Default::default()}
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -9472,7 +9482,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::Tok
         &quote::quote!{::core::default::Default::default()}
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -9941,7 +9950,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
     generated.into()
 }
 
-/////////////
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -9952,707 +9960,10 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         }}
     )
 }
-
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    // generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-    //     input,
-    //     RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-    // )
-
-    // let input: proc_macro::TokenStream,
-    let range_type = RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime;
-    let should_impl_range_length = ShouldImplRangeLength::False;
-
-
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
-        let range_type_token_stream = range_type.type_token_stream();
-
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        };
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
-        let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &equal_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let value_is_contained_within_range_upper_camel_case = naming::ValueIsContainedWithinRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &value_is_contained_within_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: sqlx::types::time::OffsetDateTime::UNIX_EPOCH},//here
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
-        );
-
-        let contains_another_range_upper_camel_case = naming::ContainsAnotherRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_contains_another_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &contains_another_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let strictly_to_left_of_range_upper_camel_case = naming::StrictlyToLeftOfRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &strictly_to_left_of_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} &< ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let strictly_to_right_of_range_upper_camel_case = naming::StrictlyToRightOfRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &strictly_to_right_of_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} &> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let lower_bound_upper_camel_case = naming::LowerBoundUpperCamelCase;
-        let postgresql_type_tokens_where_element_lower_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &lower_bound_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: sqlx::types::time::OffsetDateTime::UNIX_EPOCH},//here
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(lower({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
-        );
-
-        let upper_bound_upper_camel_case = naming::UpperBoundUpperCamelCase;
-        let postgresql_type_tokens_where_element_upper_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &upper_bound_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: sqlx::types::time::OffsetDateTime::UNIX_EPOCH},//
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(upper({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
-        );
-    
-        let greater_than_lower_bound_upper_camel_case = naming::GreaterThanLowerBoundUpperCamelCase;
-        let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &greater_than_lower_bound_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let overlap_with_range_upper_camel_case = naming::OverlapWithRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &overlap_with_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} && ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        let adjacent_with_range_upper_camel_case = naming::AdjacentWithRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &adjacent_with_range_upper_camel_case,
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} -|- ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
-        );
-
-        //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
-        let range_length_upper_camel_case = naming::RangeLengthUpperCamelCase;
-        let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &should_impl_range_length {
-            ShouldImplRangeLength::True => {
-                let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
-                let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
-                generate_postgresql_type_tokens_where_element_variant_token_stream(
-                    &ident,
-                    &range_length_upper_camel_case,
-                    &is_nullable,
-                    ShouldWhereElementFieldsBePublic::False {
-                        ident: &ident,
-                        postfix: &range_length_upper_camel_case,
-                        try_new_error_named_variants_token_stream: &quote::quote!{
-                            #length_is_negative_or_zero_upper_camel_case {
-                                #[eo_to_std_string_string_serialize_deserialize]
-                                #value_snake_case: #std_primitive_i64_token_stream,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                            },
-                        },
-                        try_new_additional_input_parameters_token_stream: &quote::quote!{
-                            #value_snake_case: #std_primitive_i64_token_stream
-                        },
-                        try_new_content_token_stream: &{
-                            let postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-                            quote::quote!{
-                                if #value_snake_case > 0 {
-                                    Ok(Self {
-                                        logical_operator,
-                                        #value_snake_case,
-                                    })
-                                }
-                                else {
-                                    Err(#postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case::#length_is_negative_or_zero_upper_camel_case {
-                                        #value_snake_case,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            }
-                        },
-                        impl_deserialize_token_stream: &{
-                            let postgresql_type_ident_where_element_range_length_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident);
-                            let (
-                                struct_postgresql_type_ident_where_element_range_length_double_quotes_token_stream,
-                                struct_postgresql_type_ident_where_element_range_length_with_2_elements_double_quotes_token_stream,
-                                postgresql_type_ident_where_element_range_length_double_quotes_token_stream
-                            ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_range_length_upper_camel_case, 2, &range_length_upper_camel_case);
-                            quote::quote! {
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for #postgresql_type_ident_where_element_range_length_upper_camel_case {
-                                        fn deserialize<__D>(
-                                            __deserializer: __D,
-                                        ) -> _serde::__private::Result<Self, __D::Error>
-                                        where
-                                            __D: _serde::Deserializer<'de>,
-                                        {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "field identifier",
-                                                    )
-                                                }
-                                                fn visit_u64<__E>(
-                                                    self,
-                                                    __value: u64,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(
-                                                    self,
-                                                    __value: &str,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                                        "value" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(
-                                                    self,
-                                                    __value: &[u8],
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                                        b"value" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(
-                                                    __deserializer: __D,
-                                                ) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(
-                                                        __deserializer,
-                                                        __FieldVisitor,
-                                                    )
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<
-                                                    #postgresql_type_ident_where_element_range_length_upper_camel_case,
-                                                >,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = #postgresql_type_ident_where_element_range_length_upper_camel_case;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        #struct_postgresql_type_ident_where_element_range_length_double_quotes_token_stream,
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::LogicalOperator,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &#struct_postgresql_type_ident_where_element_range_length_with_2_elements_double_quotes_token_stream,
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        #std_primitive_i64_token_stream,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    1usize,
-                                                                    &#struct_postgresql_type_ident_where_element_range_length_with_2_elements_double_quotes_token_stream,
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match #postgresql_type_ident_where_element_range_length_upper_camel_case::try_new(__field0, __field1) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(
-                                                    self,
-                                                    mut __map: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<
-                                                        crate::LogicalOperator,
-                                                    > = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<#std_primitive_i64_token_stream> = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                                        __Field,
-                                                    >(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                                            "logical_operator",
-                                                                        ),
-                                                                    );
-                                                                }
-                                                                __field0 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        crate::LogicalOperator,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("value"),
-                                                                    );
-                                                                }
-                                                                __field1 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        #std_primitive_i64_token_stream,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<
-                                                                    _serde::de::IgnoredAny,
-                                                                >(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("logical_operator")?
-                                                        }
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("value")?
-                                                        }
-                                                    };
-                                                    match #postgresql_type_ident_where_element_range_length_upper_camel_case::try_new(__field0, __field1) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                                    }
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                #postgresql_type_ident_where_element_range_length_double_quotes_token_stream,
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<
-                                                        #postgresql_type_ident_where_element_range_length_upper_camel_case,
-                                                    >,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
-                                        }
-                                    }
-                                };
-                            }
-                        },
-                    },
-                    &quote::quote!{#value_snake_case: #std_primitive_i64_token_stream},//todo try_new - check length > 0
-                    &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-                    &quote::quote!{
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                Ok(format!(
-                                    "{}(upper({}) - lower({}) = ${})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
-                                    #column_snake_case,
-                                    #increment_snake_case
-                                ))
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                    &quote::quote!{
-                        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                        #query_snake_case
-                    }
-                )
-            },
-            ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
-        };
-
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &{
-                let mut value: std::vec::Vec<&dyn quote::ToTokens> = vec![
-                    &equal_upper_camel_case,
-                    &value_is_contained_within_range_upper_camel_case,
-                    &contains_another_range_upper_camel_case,
-                    &strictly_to_left_of_range_upper_camel_case,
-                    &strictly_to_right_of_range_upper_camel_case,
-                    &lower_bound_upper_camel_case,
-                    &upper_bound_upper_camel_case,
-                    &greater_than_lower_bound_upper_camel_case,
-                    &overlap_with_range_upper_camel_case,
-                    &adjacent_with_range_upper_camel_case,
-                ];
-                if let ShouldImplRangeLength::True = &should_impl_range_length {
-                    value.push(&range_length_upper_camel_case);
-                }
-                value
-            }
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
-            #postgresql_type_tokens_where_element_contains_another_range_token_stream
-            #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
-            #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-            #postgresql_type_tokens_where_element_lower_bound_token_stream
-            #postgresql_type_tokens_where_element_upper_bound_token_stream
-            #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
-            #postgresql_type_tokens_where_element_overlap_with_range_token_stream
-            #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
-            #maybe_postgresql_type_tokens_where_element_range_length_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    };
-    let postgresql_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::False);
-    let postgresql_type_std_option_option_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::True);
-    let generated = quote::quote! {
-        #postgresql_type_ident_where_element_token_stream
-        #postgresql_type_std_option_option_ident_where_element_token_stream
-    };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32OrI64",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    )
 }

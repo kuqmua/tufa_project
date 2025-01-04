@@ -450,39 +450,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "pg_range_time_offset_date_time_as_ts_tz_range_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": [
-      #           1970,
-      #           1,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0
-      #         ]
-      #       },
-      #       "end": {
-      #         "Included": [
-      #           1970,
-      #           1,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0,
-      #           0
-      #         ]
-      #       }
-      #     }
-      #   }
-      # },
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": {
+            "start": {
+              "Included": [
+                1970,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "end": {
+              "Included": [
+                1970,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+      # ,
       # {
       #   "ValueIsContainedWithinRange": {
       #     "logical_operator": "Or",
@@ -518,7 +519,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       },
       #       "end": {
       #         "Included": [
-      #           1980,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -531,15 +532,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "StrictlyToLeftOfRange": {
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
       #         "Included": [
-      #           1971,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -552,7 +552,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       },
       #       "end": {
       #         "Included": [
-      #           1972,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -565,15 +565,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "StrictlyToRightOfRange": {
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
       #         "Included": [
-      #           1971,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -586,7 +585,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       },
       #       "end": {
       #         "Included": [
-      #           1972,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -599,13 +598,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "LowerBound": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       1975,
+      #       1970,
       #       1,
       #       0,
       #       0,
@@ -616,13 +614,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       0
       #     ]
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "UpperBound": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       1985,
+      #       1970,
       #       1,
       #       0,
       #       0,
@@ -633,15 +630,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       0
       #     ]
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "GreaterThanLowerBound": {
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
       #         "Included": [
-      #           1973,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -654,7 +650,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       },
       #       "end": {
       #         "Included": [
-      #           1974,
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -667,8 +663,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "OverlapWithRange": {
       #     "logical_operator": "Or",
@@ -688,7 +683,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       },
       #       "end": {
       #         "Included": [
-      #           1980,
+      #           1970,
+      #           1,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0
+      #         ]
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "AdjacentWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": [
+      #           1970,
+      #           1,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0,
+      #           0
+      #         ]
+      #       },
+      #       "end": {
+      #         "Included": [
+      #           1970,
       #           1,
       #           0,
       #           0,
@@ -702,40 +730,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # }
-      # ,
-      {
-        "AdjacentWithRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                1970,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ]
-            },
-            "end": {
-              "Included": [
-                1970,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ]
-            }
-          }
-        }
-      }
     ]
   },
   "select": [
