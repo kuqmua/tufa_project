@@ -3702,7 +3702,20 @@ const _: () = {
 };
 
 
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Eq,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+// )]
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
+
+
+
+
+
 
 
 // pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);

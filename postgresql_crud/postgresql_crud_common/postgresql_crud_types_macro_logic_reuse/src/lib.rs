@@ -4349,15 +4349,9 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{
-                sqlx::types::time::OffsetDateTime
-            },
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{
-                sqlx::types::time::PrimitiveDateTime
-            },
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
-                SqlxTypesTimeDate
-            },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDate},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -4383,37 +4377,11 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{
-                sqlx::types::time::OffsetDateTime::UNIX_EPOCH
-            },
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{
-                sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        ::core::default::Default::default(),
-                        1,
-                    ).unwrap(),//todo
-                    sqlx::types::time::Time::MIDNIGHT,
-                )
-
-
-            },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
                 crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
             },
-        }
-    }
-    fn serde_based_on_wrapper_type(&self) -> std::option::Option<proc_macro2::TokenStream> {
-        match &self {
-            Self::I32 |
-            Self::I64 |
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => None,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Some(quote::quote!{}),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Some(quote::quote!{}),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Some(quote::quote!{}),
         }
     }
     fn postgresql_type_self_where_bind_value_to_query_parameter_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4425,8 +4393,8 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => proc_macro2::TokenStream::new(),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{.0},
         }
     }
