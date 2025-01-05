@@ -2858,12 +2858,20 @@ const _: () = {
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "start",
-                &self.0.start,
+                &match self.0.start {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "end",
-                &self.0.end,
+                &match self.0.end {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::end(__serde_state)
         }
@@ -3141,12 +3149,20 @@ const _: () = {
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "start",
-                &self.0.start,
+                &match self.0.start {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "end",
-                &self.0.end,
+                &match self.0.end {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::end(__serde_state)
         }
