@@ -4500,7 +4500,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -4603,7 +4603,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -4803,7 +4803,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -5003,7 +5003,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -5203,7 +5203,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::new_utc(sqlx::types::time::Date::MIN, sqlx::types::time::Time::MIDNIGHT)),
-            end: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::new_utc(sqlx::types::time::Date::MIN, sqlx::types::time::Time::MIDNIGHT)),
+            end: std::ops::Bound::Excluded(sqlx::types::time::OffsetDateTime::new_utc(sqlx::types::time::Date::MIN, sqlx::types::time::Time::MIDNIGHT)),
         })
     }
 }
@@ -5403,7 +5403,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -5603,7 +5603,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::MIN),
-            end: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::MIN),
+            end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::MIN),
         })
     }
 }
@@ -5803,7 +5803,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -6003,7 +6003,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(sqlx::types::time::Date::MIN),
-            end: std::ops::Bound::Included(sqlx::types::time::Date::MIN),
+            end: std::ops::Bound::Excluded(sqlx::types::time::Date::MIN),
         })
     }
 }
@@ -6203,7 +6203,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }
@@ -6403,7 +6403,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         })
     }
 }

@@ -38,11 +38,6 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_time_date_as_postgresql_date_not_null": {
-      "year": 0,
-      "month": 1,
-      "day": 1
-    },
     "pg_range_sqlx_types_time_date_as_date_range": {
       "start": {
         "Included": {
@@ -52,7 +47,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         }
       },
       "end": {
-        "Included": {
+        "Excluded": {
           "year": 0,
           "month": 1,
           "day": 1
@@ -62,14 +57,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "pg_range_sqlx_types_time_date_as_date_range_not_null": {
       "start": {
         "Included": {
-          "year": 0,
+          "year": 1000,
           "month": 1,
           "day": 1
         }
       },
       "end": {
-        "Included": {
-          "year": 0,
+        "Excluded": {
+          "year": 2000,
           "month": 1,
           "day": 1
         }
@@ -147,16 +142,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -164,10 +161,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     {
   #       "ValueIsContainedWithinRange": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1
-  #         ]
+  #         "value": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
   #       }
   #     },
   #     {
@@ -175,16 +173,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -194,16 +194,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -213,36 +215,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
   #     },
   #     {
-  #       "LowerBound": {
+  #       "IncludedLowerBound": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1
-  #         ]
+  #         "value": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
   #       }
   #     },
   #     {
-  #       "UpperBound": {
+  #       "ExcludedUpperBound": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1
-  #         ]
+  #         "value": {
+  #           "year": 0,
+  #           "month": 1,
+  #           "day": 1
+  #         }
   #       }
   #     },
   #     {
@@ -250,16 +256,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -269,16 +277,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -288,16 +298,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "logical_operator": "Or",
   #         "value": {
   #           "start": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Included": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           },
   #           "end": {
-  #             "Included": [
-  #               0,
-  #               1
-  #             ]
+  #             "Excluded": {
+  #               "year": 0,
+  #               "month": 1,
+  #               "day": 1
+  #             }
   #           }
   #         }
   #       }
@@ -312,166 +324,187 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "pg_range_sqlx_types_time_date_as_date_range_not_null": {
     "logical_operator": "Or",
     "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "ValueIsContainedWithinRange": {
-          "logical_operator": "Or",
-          "value": [
-            0,
-            1
-          ]
-        }
-      },
-      {
-        "ContainsAnotherRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "StrictlyToLeftOfRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "StrictlyToRightOfRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "LowerBound": {
-          "logical_operator": "Or",
-          "value": [
-            0,
-            1
-          ]
-        }
-      },
-      {
-        "UpperBound": {
-          "logical_operator": "Or",
-          "value": [
-            0,
-            1
-          ]
-        }
-      },
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "ValueIsContainedWithinRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "year": 0,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # },
+      # {
+      #   "ContainsAnotherRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "StrictlyToLeftOfRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "StrictlyToRightOfRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "IncludedLowerBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "year": 1000,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # }
+      # ,
+      # {
+      #   "ExcludedUpperBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "year": 2000,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # }
+      # ,
       {
         "GreaterThanLowerBound": {
           "logical_operator": "Or",
           "value": {
             "start": {
-              "Included": [
-                0,
-                1
-              ]
+              "Included": {
+                "year": 1000,
+                "month": 1,
+                "day": 1
+              }
             },
             "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "OverlapWithRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
-            }
-          }
-        }
-      },
-      {
-        "AdjacentWithRange": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": [
-                0,
-                1
-              ]
-            },
-            "end": {
-              "Included": [
-                0,
-                1
-              ]
+              "Excluded": {
+                "year": 2000,
+                "month": 1,
+                "day": 1
+              }
             }
           }
         }
       }
+      # ,
+      # {
+      #   "OverlapWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # }
+      # ,
+      # {
+      #   "AdjacentWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "year": 0,
+      #           "month": 1,
+      #           "day": 1
+      #         }
+      #       }
+      #     }
+      #   }
+      # }
     ]
   },
   "select": [

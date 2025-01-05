@@ -4322,7 +4322,7 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macr
         input,
         &quote::quote!{sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Included(::core::default::Default::default()),
+            end: std::ops::Bound::Excluded(::core::default::Default::default()),
         }}
     )
 }
@@ -4349,9 +4349,15 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{sqlx::types::time::PrimitiveDateTime},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{sqlx::types::time::Date},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{
+                sqlx::types::time::OffsetDateTime
+            },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{
+                sqlx::types::time::PrimitiveDateTime
+            },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
+                SqlxTypesTimeDate
+            },
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -4377,20 +4383,51 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime::UNIX_EPOCH},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap(),//todo
-                sqlx::types::time::Time::MIDNIGHT,
-            )},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap()//todo
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{
+                sqlx::types::time::OffsetDateTime::UNIX_EPOCH
             },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{
+                sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        ::core::default::Default::default(),
+                        1,
+                    ).unwrap(),//todo
+                    sqlx::types::time::Time::MIDNIGHT,
+                )
+
+
+            },
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
+                crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            },
+        }
+    }
+    fn serde_based_on_wrapper_type(&self) -> std::option::Option<proc_macro2::TokenStream> {
+        match &self {
+            Self::I32 |
+            Self::I64 |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => None,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Some(quote::quote!{}),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Some(quote::quote!{}),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Some(quote::quote!{}),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query_parameter_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::I32 |
+            Self::I64 |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => proc_macro2::TokenStream::new(),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{.0},
         }
     }
 }
@@ -4410,6 +4447,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         let range_type_token_stream = range_type.type_token_stream();
         let range_type_should_impl_range_length = range_type.should_impl_range_length();
         let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
+        let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
 
         let increment_snake_case = naming::IncrementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4480,7 +4518,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                 }
             },
             &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
             }
         );
@@ -4581,10 +4619,10 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             }
         );
 
-        let lower_bound_upper_camel_case = naming::LowerBoundUpperCamelCase;
-        let postgresql_type_tokens_where_element_lower_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let included_lower_bound_upper_camel_case = naming::IncludedLowerBoundUpperCamelCase;
+        let postgresql_type_tokens_where_element_included_lower_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &lower_bound_upper_camel_case,
+            &included_lower_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4606,15 +4644,15 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                 }
             },
             &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
             }
         );
 
-        let upper_bound_upper_camel_case = naming::UpperBoundUpperCamelCase;
-        let postgresql_type_tokens_where_element_upper_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let excluded_upper_bound_upper_camel_case = naming::ExcludedUpperBoundUpperCamelCase;
+        let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &upper_bound_upper_camel_case,
+            &excluded_upper_bound_upper_camel_case,
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4636,7 +4674,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                 }
             },
             &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
             }
         );
@@ -5051,8 +5089,8 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                     &contains_another_range_upper_camel_case,
                     &strictly_to_left_of_range_upper_camel_case,
                     &strictly_to_right_of_range_upper_camel_case,
-                    &lower_bound_upper_camel_case,
-                    &upper_bound_upper_camel_case,
+                    &included_lower_bound_upper_camel_case,
+                    &excluded_upper_bound_upper_camel_case,
                     &greater_than_lower_bound_upper_camel_case,
                     &overlap_with_range_upper_camel_case,
                     &adjacent_with_range_upper_camel_case,
@@ -5071,8 +5109,8 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             #postgresql_type_tokens_where_element_contains_another_range_token_stream
             #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
             #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-            #postgresql_type_tokens_where_element_lower_bound_token_stream
-            #postgresql_type_tokens_where_element_upper_bound_token_stream
+            #postgresql_type_tokens_where_element_included_lower_bound_token_stream
+            #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
             #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
             #postgresql_type_tokens_where_element_overlap_with_range_token_stream
             #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
@@ -9975,7 +10013,7 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         input,
         &quote::quote!{sqlx::postgres::types::PgRange {
             start: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::UNIX_EPOCH),
-            end: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::UNIX_EPOCH),
+            end: std::ops::Bound::Excluded(sqlx::types::time::OffsetDateTime::UNIX_EPOCH),
         }}
     )
 }
@@ -9999,7 +10037,7 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
                 ).unwrap(),//todo
                 sqlx::types::time::Time::MIDNIGHT,
             )),
-            end: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+            end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
                 sqlx::types::time::Date::from_ordinal_date(
                     ::core::default::Default::default(),
                     1,
@@ -10028,7 +10066,7 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
                     1,
                 ).unwrap()//todo
             ),
-            end: std::ops::Bound::Included(
+            end: std::ops::Bound::Excluded(
                 sqlx::types::time::Date::from_ordinal_date(
                     ::core::default::Default::default(),
                     1,
