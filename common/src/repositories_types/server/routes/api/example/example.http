@@ -38,35 +38,43 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "pg_range_sqlx_types_time_date_as_date_range": {
+    "pg_range_sqlx_types_big_decimal_as_num_range": {
       "start": {
         "Included": {
-          "year": 0,
-          "month": 1,
-          "day": 1
+          "digits": {
+            "sign": "NoSign",
+            "digits": []
+          },
+          "scale": 0
         }
       },
       "end": {
         "Excluded": {
-          "year": 0,
-          "month": 1,
-          "day": 1
+          "digits": {
+            "sign": "NoSign",
+            "digits": []
+          },
+          "scale": 0
         }
       }
     },
-    "pg_range_sqlx_types_time_date_as_date_range_not_null": {
+    "pg_range_sqlx_types_big_decimal_as_num_range_not_null": {
       "start": {
         "Included": {
-          "year": 1000,
-          "month": 1,
-          "day": 1
+          "digits": {
+            "sign": "NoSign",
+            "digits": []
+          },
+          "scale": 0
         }
       },
       "end": {
         "Excluded": {
-          "year": 2000,
-          "month": 1,
-          "day": 1
+          "digits": {
+            "sign": "NoSign",
+            "digits": []
+          },
+          "scale": 0
         }
       }
     }
@@ -134,7 +142,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "pg_range_sqlx_types_time_date_as_date_range": {
+  # "pg_range_sqlx_types_big_decimal_as_num_range": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -143,16 +151,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -162,9 +174,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       "ValueIsContainedWithinRange": {
   #         "logical_operator": "Or",
   #         "value": {
-  #           "year": 0,
-  #           "month": 1,
-  #           "day": 1
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
   #         }
   #       }
   #     },
@@ -174,16 +188,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -195,16 +213,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -216,16 +238,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -235,9 +261,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       "IncludedLowerBound": {
   #         "logical_operator": "Or",
   #         "value": {
-  #           "year": 0,
-  #           "month": 1,
-  #           "day": 1
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
   #         }
   #       }
   #     },
@@ -245,9 +273,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       "ExcludedUpperBound": {
   #         "logical_operator": "Or",
   #         "value": {
-  #           "year": 0,
-  #           "month": 1,
-  #           "day": 1
+  #           "digits": {
+  #             "sign": "NoSign",
+  #             "digits": []
+  #           },
+  #           "scale": 0
   #         }
   #       }
   #     },
@@ -257,16 +287,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -278,16 +312,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -299,16 +337,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #         "value": {
   #           "start": {
   #             "Included": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           },
   #           "end": {
   #             "Excluded": {
-  #               "year": 0,
-  #               "month": 1,
-  #               "day": 1
+  #               "digits": {
+  #                 "sign": "NoSign",
+  #                 "digits": []
+  #               },
+  #               "scale": 0
   #             }
   #           }
   #         }
@@ -321,37 +363,44 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "pg_range_sqlx_types_time_date_as_date_range_not_null": {
+  "pg_range_sqlx_types_big_decimal_as_num_range_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
-      #         }
-      #       },
-      #       "end": {
-      #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
-      #         }
-      #       }
-      #     }
-      #   }
-      # },
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": {
+            "start": {
+              "Included": {
+                "digits": {
+                  "sign": "NoSign",
+                  "digits": []
+                },
+                "scale": 0
+              }
+            },
+            "end": {
+              "Excluded": {
+                "digits": {
+                  "sign": "NoSign",
+                  "digits": []
+                },
+                "scale": 0
+              }
+            }
+          }
+        }
+      }
+      # ,
       # {
       #   "ValueIsContainedWithinRange": {
       #     "logical_operator": "Or",
       #     "value": {
-      #       "year": 0,
-      #       "month": 1,
-      #       "day": 1
+      #       "digits": {
+      #         "sign": "NoSign",
+      #         "digits": []
+      #       },
+      #       "scale": 0
       #     }
       #   }
       # },
@@ -361,16 +410,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": {
       #       "start": {
       #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       },
       #       "end": {
       #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       }
       #     }
@@ -382,16 +435,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": {
       #       "start": {
       #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       },
       #       "end": {
       #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       }
       #     }
@@ -403,16 +460,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": {
       #       "start": {
       #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       },
       #       "end": {
       #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       }
       #     }
@@ -422,84 +483,96 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "IncludedLowerBound": {
       #     "logical_operator": "Or",
       #     "value": {
-      #       "year": 1000,
-      #       "month": 1,
-      #       "day": 1
+      #       "digits": {
+      #         "sign": "NoSign",
+      #         "digits": []
+      #       },
+      #       "scale": 0
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "ExcludedUpperBound": {
       #     "logical_operator": "Or",
       #     "value": {
-      #       "year": 2000,
-      #       "month": 1,
-      #       "day": 1
+      #       "digits": {
+      #         "sign": "NoSign",
+      #         "digits": []
+      #       },
+      #       "scale": 0
       #     }
       #   }
-      # }
-      # ,
-      {
-        "GreaterThanLowerBound": {
-          "logical_operator": "Or",
-          "value": {
-            "start": {
-              "Included": {
-                "year": 1000,
-                "month": 1,
-                "day": 1
-              }
-            },
-            "end": {
-              "Excluded": {
-                "year": 2000,
-                "month": 1,
-                "day": 1
-              }
-            }
-          }
-        }
-      }
-      # ,
+      # },
+      # {
+      #   "GreaterThanLowerBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": {
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
+      #         }
+      #       },
+      #       "end": {
+      #         "Excluded": {
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
       # {
       #   "OverlapWithRange": {
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
       #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       },
       #       "end": {
       #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       }
       #     }
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "AdjacentWithRange": {
       #     "logical_operator": "Or",
       #     "value": {
       #       "start": {
       #         "Included": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       },
       #       "end": {
       #         "Excluded": {
-      #           "year": 0,
-      #           "month": 1,
-      #           "day": 1
+      #           "digits": {
+      #             "sign": "NoSign",
+      #             "digits": []
+      #           },
+      #           "scale": 0
       #         }
       #       }
       #     }
@@ -512,10 +585,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
     # },
     # {
-    #   "pg_range_sqlx_types_time_date_as_date_range": null
+    #   "pg_range_sqlx_types_big_decimal_as_num_range": null
     # },
     {
-      "pg_range_sqlx_types_time_date_as_date_range_not_null": null
+      "pg_range_sqlx_types_big_decimal_as_num_range_not_null": null
     }
   ],
   "order_by": {

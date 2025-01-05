@@ -4338,6 +4338,7 @@ enum RangeType {
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+    SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4352,20 +4353,22 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDate},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimal},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
         match &self {
             Self::I32 => ShouldImplRangeLength::True,
             Self::I64 => ShouldImplRangeLength::True,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => ShouldImplRangeLength::False,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => ShouldImplRangeLength::False,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => ShouldImplRangeLength::False,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => ShouldImplRangeLength::False,
         }
     }
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4379,7 +4382,8 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{
                 crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
             },
         }
@@ -4395,7 +4399,8 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => proc_macro2::TokenStream::new(),
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{.0},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{.0},
         }
     }
 }
@@ -10048,5 +10053,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     )
 }
