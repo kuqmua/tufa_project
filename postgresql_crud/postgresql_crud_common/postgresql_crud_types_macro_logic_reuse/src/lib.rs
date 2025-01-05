@@ -4337,6 +4337,7 @@ enum RangeType {
     SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+    SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 }
 impl RangeType {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4350,6 +4351,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{sqlx::types::time::OffsetDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{sqlx::types::time::PrimitiveDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{sqlx::types::time::Date},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -4363,6 +4365,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => ShouldImplRangeLength::False,
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => ShouldImplRangeLength::False,
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => ShouldImplRangeLength::False,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => ShouldImplRangeLength::False,
         }
     }
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4382,6 +4385,12 @@ impl RangeType {
                 ).unwrap(),//todo
                 sqlx::types::time::Time::MIDNIGHT,
             )},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap()//todo
+            },
         }
     }
 }
@@ -10005,5 +10014,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+    )
+}
+
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{sqlx::postgres::types::PgRange {
+            start: std::ops::Bound::Included(
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap()//todo
+            ),
+            end: std::ops::Bound::Included(
+                sqlx::types::time::Date::from_ordinal_date(
+                    ::core::default::Default::default(),
+                    1,
+                ).unwrap()//todo
+            ),
+        }}
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     )
 }

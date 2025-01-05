@@ -3400,8 +3400,8 @@ const _: () = {
     Clone,
     PartialEq,
     Eq,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 )]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>);
 const _: () = {
@@ -3424,12 +3424,20 @@ const _: () = {
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "start",
-                &self.0.start,
+                &match self.0.start {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
                 "end",
-                &self.0.end,
+                &match self.0.end {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
             )?;
             _serde::ser::SerializeStruct::end(__serde_state)
         }
