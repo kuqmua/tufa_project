@@ -1112,6 +1112,7 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInetNotNull {
     }
 }
 
+// todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
 // #[derive(
 //     Debug,
 //     Clone,
@@ -1120,8 +1121,8 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInetNotNull {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 // )]
-// pub struct StdNetIpAddrAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::StdOptionOptionStdNetIpAddr);
-// impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlCidr {
+// pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesIpnetworkIpNetwork);
+// impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         format!("{column} {CIDR}")
 //     }
@@ -1134,8 +1135,8 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInetNotNull {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 // )]
-// pub struct StdNetIpAddrAsPostgresqlCidrNotNull(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
-// impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlCidrNotNull {
+// pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
+// impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         format!("{column} {CIDR} {NOT_NULL}")
 //     }

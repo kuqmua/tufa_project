@@ -38,8 +38,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_net_ip_addr_as_postgresql_inet": "0.0.0.0",
-    "std_net_ip_addr_as_postgresql_inet_not_null": "127.0.0.1"
+    "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr": "0.0.0.0/0",
+    "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_not_null": "127.0.0.1/32"
   }
 ]
 
@@ -104,13 +104,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "std_net_ip_addr_as_postgresql_inet": {
+  # "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": "0.0.0.0"
+  #         "value": "0.0.0.0/0"
   #       }
   #     },
   #     {
@@ -120,13 +120,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "std_net_ip_addr_as_postgresql_inet_not_null": {
+  "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_not_null": {
     "logical_operator": "Or",
     "value": [
       {
         "Equal": {
           "logical_operator": "Or",
-          "value": "127.0.0.1"
+          "value": "127.0.0.1/32"
         }
       }
     ]
@@ -136,10 +136,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
     # },
     # {
-    #   "std_net_ip_addr_as_postgresql_inet": null
+    #   "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr": null
     # },
     {
-      "std_net_ip_addr_as_postgresql_inet_not_null": null
+      "sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_not_null": null
     }
   ],
   "order_by": {

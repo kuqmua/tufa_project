@@ -155,11 +155,12 @@ pub struct Example {
     // pub sqlx_postgres_types_pg_money_as_postgresql_money: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgMoneyAsPostgresqlMoney,
     // pub sqlx_postgres_types_pg_money_as_postgresql_money_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull,
 
-    pub std_net_ip_addr_as_postgresql_inet: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlInet,
+    // pub std_net_ip_addr_as_postgresql_inet: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlInet,
     pub std_net_ip_addr_as_postgresql_inet_not_null: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlInetNotNull,
 
-    // pub std_net_ip_addr_as_postgresql_cidr: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlCidr,
-    // pub std_net_ip_addr_as_postgresql_cidr_not_null: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlCidrNotNull,
+    // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`s
+    // pub sqlx_types_ipnetwork_ip_network_as_postgresql_cidr: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr,
+    // pub sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
 
     //here
 
