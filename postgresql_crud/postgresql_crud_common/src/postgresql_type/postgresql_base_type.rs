@@ -4058,21 +4058,44 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
 }
 
 
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensStdNetIpAddr,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdNetIpAddr,
+)]
+pub struct StdNetIpAddr(pub std::net::IpAddr);
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdNetIpAddr {
+//     #[inline]
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED))
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
 
 
 // pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 
-
-
-
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 
-
-
 // pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 // pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
-// pub struct StdNetIpAddr(pub std::net::IpAddr);
+
 // pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 // pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 
