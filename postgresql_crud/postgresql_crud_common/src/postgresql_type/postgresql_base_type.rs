@@ -3997,8 +3997,8 @@ const _: () = {
     Clone,
     PartialEq,
     Eq,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney,
 )]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 impl serde::Serialize for SqlxPostgresTypesPgMoney {
@@ -4054,12 +4054,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
                 lifetime: serde::__private::PhantomData,
             },
         )
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for SqlxPostgresTypesPgMoney {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(sqlx::postgres::types::PgMoney(::core::default::Default::default()))
     }
 }
 

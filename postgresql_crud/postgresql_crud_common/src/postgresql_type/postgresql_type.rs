@@ -1053,3 +1053,32 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigD
         format!("{column} {NUMRANGE} {NOT_NULL}")
     }
 }
+
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxPostgresTypesPgMoney);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {MONEY}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgMoney);
+impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {MONEY} {NOT_NULL}")
+    }
+}
