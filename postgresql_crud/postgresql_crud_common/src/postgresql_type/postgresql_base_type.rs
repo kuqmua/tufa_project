@@ -4087,7 +4087,7 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
     Clone,
     PartialEq,
     Eq,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesMacAddressMacAddress,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress,
 )]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);

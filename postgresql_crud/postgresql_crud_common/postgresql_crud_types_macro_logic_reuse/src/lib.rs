@@ -3388,6 +3388,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
                 #query_snake_case
             }
         );
+
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
@@ -11042,14 +11043,6 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 //     generated.into()
 // }
 
-/////////
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesMacAddressMacAddress)]
-pub fn postgresql_base_type_tokens_SqlxTypesMacAddressMacAddress(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &quote::quote!{::core::default::Default::default()}
-    )
-}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -11099,15 +11092,113 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             }
         );
 
+        let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &greater_than_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub #value_snake_case: #ident},
+            &quote::quote!{#value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream},
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({} > ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
+                #query_snake_case
+            }
+        );
+
+        let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &case_sensitive_regular_expression_upper_camel_sase,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub value: std::string::String},
+            &quote::quote!{value: ::core::default::Default::default()},
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({}::text ~ ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case
+            }
+        );
+
+        let case_insensitive_regular_expression_upper_camel_case = naming::CaseInsensitiveRegularExpressionUpperCamelCase;
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &case_insensitive_regular_expression_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub value: std::string::String},
+            &quote::quote!{value: ::core::default::Default::default()},
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({}::text ~* ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+                #query_snake_case
+            }
+        );
+
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
-            &vec![&equal_upper_camel_case]
+            &vec![
+                &equal_upper_camel_case,
+                &greater_than_upper_camel_case,
+                &case_sensitive_regular_expression_upper_camel_sase,
+                &case_insensitive_regular_expression_upper_camel_case,
+            ]
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
 
             #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     };

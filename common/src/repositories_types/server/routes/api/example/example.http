@@ -135,6 +135,31 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -144,17 +169,43 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "mac_address_mac_address_as_mac_addr_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0,
+      #       0,
+      #       0,
+      #       0,
+      #       0,
+      #       0
+      #     ]
+      #   }
+      # },
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0,
+      #       0,
+      #       0,
+      #       0,
+      #       0,
+      #       0
+      #     ]
+      #   }
+      # },
+      # {
+      #   "CaseSensitiveRegularExpression": {
+      #     "logical_operator": "Or",
+      #     "value": "^02:02:03:04:05:06$"
+      #   }
+      # }
+      # ,
       {
-        "Equal": {
+        "CaseInsensitiveRegularExpression": {
           "logical_operator": "Or",
-          "value": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
+          "value": "^02:02:03:04:05:06$"
         }
       }
     ]
