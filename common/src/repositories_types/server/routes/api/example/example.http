@@ -70,7 +70,8 @@ content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
-  "std_primitive_i32_as_postgresql_serial_not_null": 6
+  "sqlx_types_uuid_uuid_as_postgresql_uuid": "00000000-0000-0000-0000-000000000000",
+  "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null": "00000000-0000-0000-0000-000000000000"
 }
 
 ###
@@ -118,45 +119,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "mac_address_mac_address_as_mac_addr": {
+  # "sqlx_types_uuid_uuid_as_postgresql_uuid": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
+  #         "value": "00000000-0000-0000-0000-000000000000"
   #       }
   #     },
   #     {
@@ -166,46 +135,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "mac_address_mac_address_as_mac_addr_not_null": {
+  "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0,
-      #       0
-      #     ]
-      #   }
-      # },
-      # {
-      #   "CaseSensitiveRegularExpression": {
-      #     "logical_operator": "Or",
-      #     "value": "^02:02:03:04:05:06$"
-      #   }
-      # }
-      # ,
       {
-        "CaseInsensitiveRegularExpression": {
+        "Equal": {
           "logical_operator": "Or",
-          "value": "^02:02:03:04:05:06$"
+          "value": "673b2fd0-d811-4163-bcaa-e455c912d629"
         }
       }
     ]
@@ -215,10 +151,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
     # },
     # {
-    #   "mac_address_mac_address_as_mac_addr": null
+    #   "sqlx_types_uuid_uuid_as_postgresql_uuid": null
     # },
     {
-      "mac_address_mac_address_as_mac_addr_not_null": null
+      "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null": null
     }
   ],
   "order_by": {
