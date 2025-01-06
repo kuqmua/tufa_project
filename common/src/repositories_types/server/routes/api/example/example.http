@@ -39,7 +39,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "sqlx_postgres_types_pg_money_as_postgresql_money": 0,
-    "sqlx_postgres_types_pg_money_as_postgresql_money_not_null": 0
+    "sqlx_postgres_types_pg_money_as_postgresql_money_not_null": 5
   }
 ]
 
@@ -114,6 +114,27 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -123,10 +144,34 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "sqlx_postgres_types_pg_money_as_postgresql_money_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": 1
+      #   }
+      # }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 2
+      #   }
+      # }
+      # ,
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 2,
+      #     "end": 4
+      #   }
+      # }
+      # ,
       {
-        "Equal": {
+        "In": {
           "logical_operator": "Or",
-          "value": 0
+          "value": [
+            1,2,4,76
+          ]
         }
       }
     ]
