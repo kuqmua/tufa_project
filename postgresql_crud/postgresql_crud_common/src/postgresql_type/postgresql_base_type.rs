@@ -4083,6 +4083,21 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
 // pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 
 
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Eq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesMacAddressMacAddress,
+//     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress,
+// )]
+// pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+
+
+
+
 
 
 
@@ -4092,9 +4107,8 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
 // pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 
 // pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
-// pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 
-// pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+
 // pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 
 // pub struct SerdeJsonValue(pub serde_json::Value);
