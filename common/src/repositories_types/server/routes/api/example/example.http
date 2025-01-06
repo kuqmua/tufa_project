@@ -129,6 +129,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -138,10 +150,24 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": "00000000-0000-0000-0000-000000000000"
+      #   }
+      # }
+      # ,
+      # {
+      #   "CaseSensitiveRegularExpression": {
+      #     "logical_operator": "Or",
+      #     "value": "^673b2fd0-d811-4163-bcaa"
+      #   }
+      # }
+      # ,
       {
-        "Equal": {
+        "CaseInsensitiveRegularExpression": {
           "logical_operator": "Or",
-          "value": "673b2fd0-d811-4163-bcaa-e455c912d629"
+          "value": "^673b2fd0-d811-4163-bcaa"
         }
       }
     ]
