@@ -38,22 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "mac_address_mac_address_as_mac_addr": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "mac_address_mac_address_as_mac_addr_not_null": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ]
+    "sqlx_types_bit_vec_as_postgresql_bit_not_null": [1]
   }
 ]
 
