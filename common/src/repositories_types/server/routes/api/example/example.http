@@ -115,6 +115,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #       }
   #     },
   #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T03:00:00+03:00",
+  #         "end": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
   #       }
@@ -124,10 +137,25 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": "1970-01-01T03:00:00+03:00"
+      #   }
+      # }
+      # ,
+      # {
+      #   "Before": {
+      #     "logical_operator": "Or",
+      #     "value": "1985-01-01T03:00:00+03:00"
+      #   }
+      # }
+      # ,
       {
-        "Equal": {
+        "Between": {
           "logical_operator": "Or",
-          "value": "1970-01-01T03:00:00+03:00"
+          "start": "1970-01-01T03:00:00+03:00",
+          "end": "1985-01-01T03:00:00+03:00"
         }
       }
     ]
