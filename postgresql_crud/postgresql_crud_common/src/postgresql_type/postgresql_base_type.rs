@@ -4235,12 +4235,17 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
 )]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
 
-
-
-
-
-
-
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 
 
 
@@ -4256,7 +4261,6 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::Da
 
 // pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
 // pub struct SerdeJsonValue(pub serde_json::Value);
 
 ////////////////////////////////

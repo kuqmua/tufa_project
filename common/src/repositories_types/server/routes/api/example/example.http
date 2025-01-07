@@ -38,7 +38,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_bit_vec_as_postgresql_bit_not_null": []
+    "chrono_date_time_chrono_local_as_timestamp_tz": "1970-01-01T03:00:00+03:00",
+    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1990-01-01T03:00:00+03:00"
   }
 ]
 
@@ -104,26 +105,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz": {
+  # "chrono_date_time_chrono_local_as_timestamp_tz": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00Z",
-  #         "end": "1970-01-01T00:00:00Z"
+  #         "value": "1970-01-01T03:00:00+03:00"
   #       }
   #     },
   #     {
@@ -133,27 +121,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz_not_null": {
+  "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": "1970-01-01T00:00:00Z"
-      #   }
-      # },
-      # {
-      #   "Before": {
-      #     "logical_operator": "Or",
-      #     "value": "1990-01-01T00:00:00Z"
-      #   }
-      # }
-      # ,
       {
-        "Between": {
+        "Equal": {
           "logical_operator": "Or",
-          "start": "1980-01-01T00:00:00Z",
-          "end": "1990-01-01T00:00:00Z"
+          "value": "1970-01-01T03:00:00+03:00"
         }
       }
     ]
@@ -163,10 +137,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
     # },
     # {
-    #   "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz": null
+    #   "chrono_date_time_chrono_local_as_timestamp_tz": null
     # },
     {
-      "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz_not_null": null
+      "chrono_date_time_chrono_local_as_timestamp_tz_not_null": null
     }
   ],
   "order_by": {
