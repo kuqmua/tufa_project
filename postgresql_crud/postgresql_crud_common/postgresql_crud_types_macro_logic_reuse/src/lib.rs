@@ -3305,40 +3305,21 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
-        let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &equal_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: #field_type},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
+            IsValueTypePub::True,
+            &field_type,
+            &quote::quote!{::core::default::Default::default()},
+            &proc_macro2::TokenStream::new(),
         );
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
-            &vec![&equal_upper_camel_case]
+            &vec![
+                &Equal::upper_camel_case(),
+            ]
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
@@ -3918,10 +3899,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -4340,7 +4320,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -4487,10 +4467,9 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -5104,7 +5083,8 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             },
             ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
         };
-
+        
+        let equal_upper_camel_case = Equal::upper_camel_case();
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
@@ -5243,10 +5223,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -5732,7 +5711,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &before_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -5793,10 +5772,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -6252,7 +6230,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_date_upper_camel_case,
@@ -6312,10 +6290,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -6772,7 +6749,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_time_upper_camel_case,
@@ -6832,10 +6809,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -7292,7 +7268,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_date_upper_camel_case,
@@ -7352,10 +7328,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -7812,7 +7787,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_timestamp_upper_camel_case,
@@ -7871,10 +7846,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -8331,7 +8305,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_time_upper_camel_case,
@@ -8393,10 +8367,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_time_tz(
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -8505,7 +8478,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_time_tz(
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -8566,10 +8539,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -9050,7 +9022,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &current_timestamp_upper_camel_case,
@@ -9109,10 +9081,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -9529,7 +9500,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -9584,10 +9555,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -10004,7 +9974,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -10145,10 +10115,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -10888,7 +10857,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &between_upper_camel_case,
                 &in_upper_camel_case,
@@ -10947,10 +10916,9 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -10981,7 +10949,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -11035,10 +11003,10 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 
 //         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-//         let equal_upper_camel_case = naming::EqualUpperCamelCase;
+//
 //         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
 //             &ident,
-//             &equal_upper_camel_case,
+//             &Equal::upper_camel_case(),
 //             &is_nullable,
 //             ShouldWhereElementFieldsBePublic::True,
 //             &quote::quote!{pub value: #field_type},
@@ -11070,7 +11038,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 //             is_nullable,
 //             &ident,
 //             &vec![
-//                 &equal_upper_camel_case,
+//                 &Equal::upper_camel_case(),
 //             ]
 //         );
 //         quote::quote! {
@@ -11114,10 +11082,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -11238,7 +11205,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &greater_than_upper_camel_case,
                 &case_sensitive_regular_expression_upper_camel_sase,
                 &case_insensitive_regular_expression_upper_camel_case,
@@ -11288,10 +11255,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #ident},
@@ -11382,7 +11348,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &case_sensitive_regular_expression_upper_camel_sase,
                 &case_insensitive_regular_expression_upper_camel_case,
             ]
@@ -11430,10 +11396,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
 
 //         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-//         let equal_upper_camel_case = naming::EqualUpperCamelCase;
+//
 //         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
 //             &ident,
-//             &equal_upper_camel_case,
+//             &Equal::upper_camel_case(),
 //             &is_nullable,
 //             ShouldWhereElementFieldsBePublic::True,
 //             &quote::quote!{pub value: #ident},
@@ -11464,7 +11430,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
 //             is_nullable,
 //             &ident,
 //             &vec![
-//                 &equal_upper_camel_case,
+//                 &Equal::upper_camel_case(),
 //             ]
 //         );
 //         quote::quote! {
@@ -11510,10 +11476,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -11931,7 +11896,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &before_upper_camel_case,
                 &between_upper_camel_case,
             ]
@@ -11981,10 +11946,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
         let postgresql_type_tokens_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &equal_upper_camel_case,
+            &Equal::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub value: #field_type},
@@ -12402,7 +12366,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &equal_upper_camel_case,
+                &Equal::upper_camel_case(),
                 &before_upper_camel_case,
                 &between_upper_camel_case,
             ]
