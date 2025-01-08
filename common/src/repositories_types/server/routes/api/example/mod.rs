@@ -53,7 +53,7 @@ pub struct Example {
     // pub std_primitive_i16_as_postgresql_small_int2_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull,
 
     // pub std_primitive_i32_as_postgresql_int4: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4,
-    // pub std_primitive_i32_as_postgresql_int4_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4NotNull,
+    pub std_primitive_i32_as_postgresql_int4_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4NotNull,
 
     // pub std_primitive_i64_as_postgresql_big_int8: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlInt8,
     // pub std_primitive_i64_as_postgresql_big_int8_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlInt8NotNull,
@@ -176,8 +176,8 @@ pub struct Example {
     // pub chrono_date_time_chrono_utc_as_postgresql_timestamp_tz: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
     // pub chrono_date_time_chrono_utc_as_postgresql_timestamp_tz_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull,
 
-    pub chrono_date_time_chrono_local_as_timestamp_tz: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
-    pub chrono_date_time_chrono_local_as_timestamp_tz_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
+    // pub chrono_date_time_chrono_local_as_timestamp_tz: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
+    // pub chrono_date_time_chrono_local_as_timestamp_tz_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
 
     //here
 

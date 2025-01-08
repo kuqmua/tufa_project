@@ -38,8 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "chrono_date_time_chrono_local_as_timestamp_tz": "1970-01-01T03:00:00+03:00",
-    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1990-01-01T03:00:00+03:00"
+    "std_primitive_i32_as_postgresql_int4_not_null": 1
   }
 ]
 
@@ -73,6 +72,39 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
+  "std_primitive_i32_as_postgresql_int4_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 1
+        }
+      }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
   # "std_primitive_i64_as_postgresql_big_serial_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -105,70 +137,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "chrono_date_time_chrono_local_as_timestamp_tz": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T03:00:00+03:00",
-  #         "end": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "IsNull": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
-  "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": "1970-01-01T03:00:00+03:00"
-      #   }
-      # }
-      # ,
-      # {
-      #   "Before": {
-      #     "logical_operator": "Or",
-      #     "value": "1985-01-01T03:00:00+03:00"
-      #   }
-      # }
-      # ,
-      {
-        "Between": {
-          "logical_operator": "Or",
-          "start": "1970-01-01T03:00:00+03:00",
-          "end": "1985-01-01T03:00:00+03:00"
-        }
-      }
-    ]
-  },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null": null
-    # },
-    # {
-    #   "chrono_date_time_chrono_local_as_timestamp_tz": null
-    # },
     {
-      "chrono_date_time_chrono_local_as_timestamp_tz_not_null": null
+      "std_primitive_i32_as_postgresql_int4_not_null": null
+    },
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null": null
     }
   ],
   "order_by": {
