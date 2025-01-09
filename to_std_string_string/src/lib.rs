@@ -196,41 +196,41 @@ impl ToStdStringString for axum::extract::rejection::JsonRejection {
         format!("{self}")
     }
 }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
+impl ToStdStringString for sqlx::types::chrono::NaiveTime {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::chrono::NaiveDate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::chrono::NaiveDateTime {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::time::Time {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::time::PrimitiveDateTime {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::Decimal {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::BigDecimal {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
 // impl ToStdStringString for  {
 //     fn to_std_string_string(&self) -> std::string::String {
 //         format!("{self}")
