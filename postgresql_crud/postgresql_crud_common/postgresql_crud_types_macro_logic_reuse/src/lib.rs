@@ -3421,7 +3421,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &ShouldAddDotZero::False,
         );
         
-        let in_upper_camel_case = naming::InUpperCamelCase;
         let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -3438,7 +3437,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
                 &Between::upper_camel_case(),
-                &in_upper_camel_case,
+                &In::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6199,7 +6198,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &ShouldAddDotZero::True,
         );
         
-        let in_upper_camel_case = naming::InUpperCamelCase;
         let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6213,7 +6211,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
                 &Between::upper_camel_case(),
-                &in_upper_camel_case,
+                &In::upper_camel_case(),
             ]
         );
         quote::quote! {
