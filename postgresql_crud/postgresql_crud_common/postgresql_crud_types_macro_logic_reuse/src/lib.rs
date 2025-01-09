@@ -2636,34 +2636,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
         );
-        // generate_postgresql_type_tokens_where_element_variant_token_stream(
-        //     &ident,
-        //     &greater_than_upper_camel_case,
-        //     &is_nullable,
-        //     ShouldWhereElementFieldsBePublic::True,
-        //     &quote::quote!{pub #value_snake_case: #field_type},
-        //     &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-        //     &quote::quote!{
-        //         match #increment_snake_case.checked_add(1) {
-        //             Some(#value_snake_case) => {
-        //                 *#increment_snake_case = #value_snake_case;
-        //                 Ok(format!(
-        //                     "{}({} > ${})",
-        //                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-        //                     #column_snake_case,
-        //                     #increment_snake_case
-        //                 ))
-        //             },
-        //             None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-        //                 code_occurence: error_occurence_lib::code_occurence!(),
-        //             })
-        //         }
-        //     },
-        //     &quote::quote!{
-        //         #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-        //         #query_snake_case
-        //     }
-        // );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = {
@@ -3998,35 +3970,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -4388,7 +4335,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
             ]
         );
@@ -5795,35 +5742,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -6222,7 +6144,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_date_upper_camel_case,
                 &greater_than_current_date_upper_camel_case,
@@ -6290,33 +6212,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -6720,7 +6622,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_time_upper_camel_case,
                 &greater_than_current_time_upper_camel_case,
@@ -6788,33 +6690,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -7218,7 +7100,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_date_upper_camel_case,
                 &greater_than_current_date_upper_camel_case,
@@ -7286,33 +7168,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -7716,7 +7578,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_timestamp_upper_camel_case,
                 &greater_than_current_timestamp_upper_camel_case,
@@ -7783,33 +7645,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: sqlx::types::time::Time::MIDNIGHT},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{sqlx::types::time::Time::MIDNIGHT},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -8213,7 +8055,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_time_upper_camel_case,
                 &greater_than_current_time_upper_camel_case,
@@ -8280,33 +8122,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_time_tz(
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{#value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         //todo seems like something wrong with this logic
@@ -8362,7 +8181,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_time_tz(
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
             ]
         );
@@ -8437,39 +8256,19 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap(),//todo
-                sqlx::types::time::Time::MIDNIGHT,
-            )},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        ::core::default::Default::default(),
+                        1,
+                    ).unwrap(),//todo
+                    sqlx::types::time::Time::MIDNIGHT,
+                )},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -8885,7 +8684,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &current_timestamp_upper_camel_case,
                 &greater_than_current_timestamp_upper_camel_case,
@@ -8952,33 +8751,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             },
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #field_type},
-            &quote::quote!{#value_snake_case: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -9342,7 +9121,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
             ]
         );
@@ -9402,33 +9181,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{#value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -9792,7 +9548,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
             ]
         );
@@ -9938,33 +9694,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{#value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         let between_upper_camel_case = naming::BetweenUpperCamelCase;
@@ -10651,7 +10384,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &between_upper_camel_case,
                 &in_upper_camel_case,
             ]
@@ -10840,33 +10573,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &WhereOperatorType::Ident(&ident),
         );
 
-        let postgresql_type_tokens_where_element_greater_than_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &greater_than_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{#value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
+            &WhereOperatorType::Ident(&ident)
         );
 
         let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
@@ -10934,7 +10644,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &greater_than_upper_camel_case,
+                &GreaterThan::upper_camel_case(),
                 &case_sensitive_regular_expression_upper_camel_sase,
                 &case_insensitive_regular_expression_upper_camel_case,
             ]
