@@ -2459,18 +2459,18 @@ trait WhereOperatorName {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }
 
-enum EqualValueType<'a> {
+enum WhereOperatorType<'a> {
     Ident(&'a syn::Ident),
     FieldType {
         field_type: &'a syn::Type,
         default_initialization_token_stream: &'a dyn quote::ToTokens,
     },
 }
-impl EqualValueType<'_> {
+impl WhereOperatorType<'_> {
     fn type_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
-            EqualValueType::Ident(value) => quote::quote!{#value},
-            EqualValueType::FieldType {
+            WhereOperatorType::Ident(value) => quote::quote!{#value},
+            WhereOperatorType::FieldType {
                 field_type,
                 ..
             } => quote::quote!{#field_type},
@@ -2478,16 +2478,16 @@ impl EqualValueType<'_> {
     }
     fn additional_bind_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
-            EqualValueType::Ident(_) => quote::quote!{.0},
-            EqualValueType::FieldType { .. } => proc_macro2::TokenStream::new(),
+            WhereOperatorType::Ident(_) => quote::quote!{.0},
+            WhereOperatorType::FieldType { .. } => proc_macro2::TokenStream::new(),
         }
     }
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
-            EqualValueType::Ident(_) => quote::quote!{
+            WhereOperatorType::Ident(_) => quote::quote!{
                 crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
             },
-            EqualValueType::FieldType {
+            WhereOperatorType::FieldType {
                 field_type: _,
                 default_initialization_token_stream
             } => quote::quote!{#default_initialization_token_stream},
@@ -2504,7 +2504,7 @@ impl Equal {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
-        equal_value_type: &EqualValueType,
+        where_operator_type: &WhereOperatorType,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
@@ -2512,15 +2512,15 @@ impl Equal {
         let query_snake_case = naming::QuerySnakeCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let equal_value_type_type_token_stream = equal_value_type.type_token_stream();
-        let equal_value_type_additional_bind_token_stream = equal_value_type.additional_bind_token_stream();
-        let default_initialization_token_stream = equal_value_type.default_initialization_token_stream();
+        let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
+        let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+        let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #equal_value_type_type_token_stream},
+            &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
             &quote::quote!{#value_snake_case: #default_initialization_token_stream},
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -2539,12 +2539,96 @@ impl Equal {
                 }
             },
             &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #equal_value_type_additional_bind_token_stream);
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #where_operator_type_additional_bind_token_stream);
                 #query_snake_case
             }
         )
     }
 }
+
+// struct GreaterThan;
+// impl WhereOperatorName for GreaterThan {
+//     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+//         &naming::GreaterThanUpperCamelCase
+//     }
+// }
+// impl GreaterThan {
+//     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+//         ident: &dyn quote::ToTokens,
+//         is_nullable: &IsNullable,
+//         where_operator_type: &WhereOperatorType,
+//     ) -> proc_macro2::TokenStream {
+//         let value_snake_case = naming::ValueSnakeCase;
+//         let increment_snake_case = naming::IncrementSnakeCase;
+//         let column_snake_case = naming::ColumnSnakeCase;
+//         let query_snake_case = naming::QuerySnakeCase;
+//         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+//         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+//         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
+//         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+//         let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
+
+
+
+//         // generate_postgresql_type_tokens_where_element_variant_token_stream(
+//         //     &ident,
+//         //     Self::upper_camel_case(),
+//         //     &is_nullable,
+//         //     ShouldWhereElementFieldsBePublic::True,
+//         //     &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
+//         //     &quote::quote!{#value_snake_case: #default_initialization_token_stream},
+//         //     &quote::quote!{
+//         //         match #increment_snake_case.checked_add(1) {
+//         //             Some(#value_snake_case) => {
+//         //                 *#increment_snake_case = #value_snake_case;
+//         //                 Ok(format!(
+//         //                     "{}({} = ${})",
+//         //                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//         //                     #column_snake_case,
+//         //                     #increment_snake_case
+//         //                 ))
+//         //             },
+//         //             None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//         //                 code_occurence: error_occurence_lib::code_occurence!(),
+//         //             })
+//         //         }
+//         //     },
+//         //     &quote::quote!{
+//         //         #query_snake_case = #query_snake_case.bind(self.#value_snake_case #where_operator_type_additional_bind_token_stream);
+//         //         #query_snake_case
+//         //     }
+//         // )
+
+//         generate_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             &greater_than_upper_camel_case,
+//             &is_nullable,
+//             ShouldWhereElementFieldsBePublic::True,
+//             &quote::quote!{pub #value_snake_case: #field_type},
+//             &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+//             &quote::quote!{
+//                 match #increment_snake_case.checked_add(1) {
+//                     Some(#value_snake_case) => {
+//                         *#increment_snake_case = #value_snake_case;
+//                         Ok(format!(
+//                             "{}({} > ${})",
+//                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                             #column_snake_case,
+//                             #increment_snake_case
+//                         ))
+//                     },
+//                     None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     })
+//                 }
+//             },
+//             &quote::quote!{
+//                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+//                 #query_snake_case
+//             }
+//         )
+//     }
+// }
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -2570,7 +2654,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -3342,7 +3426,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -3936,7 +4020,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -4479,7 +4563,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let value_is_contained_within_range_upper_camel_case = naming::ValueIsContainedWithinRangeUpperCamelCase;
@@ -5210,7 +5294,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let before_upper_camel_case = naming::BeforeUpperCamelCase;
@@ -5734,7 +5818,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -6227,7 +6311,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -6726,7 +6810,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -7225,7 +7309,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -7723,7 +7807,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{sqlx::types::time::Time::MIDNIGHT},
             },
@@ -8224,7 +8308,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_time_tz(
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -8373,7 +8457,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
                     sqlx::types::time::Date::from_ordinal_date(
@@ -8895,7 +8979,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -9349,7 +9433,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -9886,7 +9970,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -10664,7 +10748,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)},
             },
@@ -10732,7 +10816,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 //         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
 //             &ident,
 //             &is_nullable,
-//             &EqualValueType::FieldType {
+//             &WhereOperatorType::FieldType {
 //                 field_type: &field_type,
 //                 default_initialization_token_stream: &quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, ::core::default::Default::default()).unwrap())},
 //             },
@@ -10789,7 +10873,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let greater_than_upper_camel_case = naming::GreaterThanUpperCamelCase;
@@ -10939,7 +11023,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::Ident(&ident),
+            &WhereOperatorType::Ident(&ident),
         );
 
         let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
@@ -11058,7 +11142,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
         // let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         //     &ident,
         //     &is_nullable,
-        //     &EqualValueType::Ident(&ident),
+        //     &WhereOperatorType::Ident(&ident),
         // );
 
 //         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
@@ -11114,7 +11198,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
@@ -11564,7 +11648,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &EqualValueType::FieldType {
+            &WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
             },
