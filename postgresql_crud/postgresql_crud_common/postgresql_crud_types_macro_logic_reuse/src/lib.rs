@@ -3589,7 +3589,6 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-        let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -3629,7 +3628,7 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             is_nullable,
             &ident,
             &vec![
-                &case_sensitive_regular_expression_upper_camel_sase,
+                &CaseSensitiveRegularExpression::upper_camel_case(),
                 &case_insensitive_regular_expression_upper_camel_case
             ]
         );
@@ -6428,7 +6427,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &WhereOperatorType::Ident(&ident)
         );
 
-        let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6470,7 +6468,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &case_sensitive_regular_expression_upper_camel_sase,
+                &CaseSensitiveRegularExpression::upper_camel_case(),
                 &case_insensitive_regular_expression_upper_camel_case,
             ]
         );
@@ -6524,7 +6522,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             &WhereOperatorType::Ident(&ident),
         );
 
-        let case_sensitive_regular_expression_upper_camel_sase = naming::CaseSensitiveRegularExpressionUpperCamelCase;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6565,7 +6562,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &case_sensitive_regular_expression_upper_camel_sase,
+                &CaseSensitiveRegularExpression::upper_camel_case(),
                 &case_insensitive_regular_expression_upper_camel_case,
             ]
         );
