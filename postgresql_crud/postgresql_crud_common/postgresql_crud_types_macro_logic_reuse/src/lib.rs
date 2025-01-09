@@ -3058,7 +3058,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -3404,7 +3403,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &in_upper_camel_case,
             ]
         );
@@ -4058,8 +4057,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             &WhereOperatorType::Ident(&ident)
         );
 
-        //todo reuse 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -4074,7 +4071,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -4988,7 +4985,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             }
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5027,7 +5023,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             &vec![
                 &Equal::upper_camel_case(),
                 &before_upper_camel_case,
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5098,7 +5094,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &WhereOperatorType::Ident(&ident)
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5153,7 +5148,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_date_upper_camel_case,
                 &greater_than_current_date_upper_camel_case,
             ]
@@ -5229,7 +5224,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5287,7 +5281,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_time_upper_camel_case,
                 &greater_than_current_time_upper_camel_case,
             ]
@@ -5363,7 +5357,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5421,7 +5414,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_date_upper_camel_case,
                 &greater_than_current_date_upper_camel_case,
             ]
@@ -5497,7 +5490,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5555,7 +5547,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_timestamp_upper_camel_case,
                 &greater_than_current_timestamp_upper_camel_case,
             ]
@@ -5630,7 +5622,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5688,7 +5679,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_time_upper_camel_case,
                 &greater_than_current_time_upper_camel_case,
             ]
@@ -5781,7 +5772,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5845,7 +5835,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &current_timestamp_upper_camel_case,
                 &greater_than_current_timestamp_upper_camel_case,
             ]
@@ -5920,7 +5910,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             },
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -5938,7 +5927,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6003,7 +5992,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &WhereOperatorType::Ident(&ident)
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6018,7 +6006,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6169,7 +6157,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &WhereOperatorType::Ident(&ident)
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6512,7 +6499,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &vec![
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
                 &in_upper_camel_case,
             ]
         );
@@ -7036,7 +7023,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             }
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7051,7 +7037,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             &vec![
                 &Equal::upper_camel_case(),
                 &before_upper_camel_case,
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -7169,7 +7155,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             }
         );
 
-        let between_upper_camel_case = naming::BetweenUpperCamelCase;
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7184,7 +7169,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             &vec![
                 &Equal::upper_camel_case(),
                 &before_upper_camel_case,
-                &between_upper_camel_case,
+                &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
