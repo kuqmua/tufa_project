@@ -3370,6 +3370,62 @@ impl In {
     }
 }
 
+enum RegularExpression {
+    CaseSensitive,
+    CaseInsensitive
+}
+impl RegularExpression {
+    fn stringified(&self) -> &'static str {
+        match &self {
+            RegularExpression::CaseSensitive => "",
+            RegularExpression::CaseInsensitive => "*",
+        }
+    }
+}
+
+fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
+    ident: &dyn quote::ToTokens,
+    is_nullable: &IsNullable,
+    regular_expression: &RegularExpression,
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let case_stringified = regular_expression.stringified();
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} ~{case_stringified} ${{}})"));
+    generate_postgresql_type_tokens_where_element_variant_token_stream(
+        &ident,
+        &self_upper_camel_case,
+        &is_nullable,
+        ShouldWhereElementFieldsBePublic::True,
+        &quote::quote!{pub value: std::string::String},
+        &quote::quote!{value: ::core::default::Default::default()},
+        &quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!(
+                        #format_handle_token_stream,
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                        #increment_snake_case
+                    ))
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        },
+        &quote::quote!{
+            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+            #query_snake_case
+        }
+    )
+}
 struct CaseSensitiveRegularExpression;
 impl WhereOperatorName for CaseSensitiveRegularExpression {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3381,40 +3437,11 @@ impl CaseSensitiveRegularExpression {
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let self_upper_camel_case = Self::upper_camel_case();
-        generate_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &self_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: std::string::String},
-            &quote::quote!{value: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} ~ ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
+            &RegularExpression::CaseSensitive,
+            Self::upper_camel_case(),
         )
     }
 }
@@ -3430,40 +3457,11 @@ impl CaseInsensitiveRegularExpression {
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let self_upper_camel_case = Self::upper_camel_case();
-        generate_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &self_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub value: std::string::String},
-            &quote::quote!{value: ::core::default::Default::default()},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} ~* ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            }
+            &RegularExpression::CaseInsensitive,
+            Self::upper_camel_case(),
         )
     }
 }
