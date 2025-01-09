@@ -26,7 +26,7 @@ const NUMERIC: &std::primitive::str = "NUMERIC";
 const TIMESTAMPTZ: &std::primitive::str = "TIMESTAMPTZ";
 const DATE: &std::primitive::str = "DATE";
 const TIME: &std::primitive::str = "TIME";
-const TIMETZ: &std::primitive::str = "TIMETZ";
+// const TIMETZ: &std::primitive::str = "TIMETZ";//postgresql recommends do not use it https://wiki.postgresql.org/wiki/Don't_Do_This#Don.27t_use_timetz
 const TIMESTAMP: &std::primitive::str = "TIMESTAMP";
 const UUID: &std::primitive::str = "UUID";
 const INET: &std::primitive::str = "INET";
@@ -819,35 +819,6 @@ pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(crate::postgresql_type::post
 impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIME} {NOT_NULL}")
-    }
-}
-
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxPostgresTypesPgTimeTz);
-impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {TIMETZ}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgTimeTz);
-impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {TIMETZ} {NOT_NULL}")
     }
 }
 
