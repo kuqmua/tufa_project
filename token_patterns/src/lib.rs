@@ -196,6 +196,13 @@ impl quote::ToTokens for SqlxTypesTimeTimeMidnight {
         quote::quote! {sqlx::types::time::Time::MIDNIGHT}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct SqlxTypesTimeOffsetDateTimeUnixEpoch;
+impl quote::ToTokens for SqlxTypesTimeOffsetDateTimeUnixEpoch {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::types::time::OffsetDateTime::UNIX_EPOCH}.to_tokens(tokens)
+    }
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct Error0;

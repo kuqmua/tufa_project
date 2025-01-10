@@ -5271,7 +5271,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
 pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::types::time::OffsetDateTime::UNIX_EPOCH}
+        &token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch
     )
 }
 
@@ -6191,10 +6191,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(sqlx::types::time::OffsetDateTime::UNIX_EPOCH),
-            end: std::ops::Bound::Excluded(sqlx::types::time::OffsetDateTime::UNIX_EPOCH),
-        }}
+        &{
+            let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+            quote::quote!{sqlx::postgres::types::PgRange {
+                start: std::ops::Bound::Included(#sqlx_types_time_offset_date_time_unix_epoch),
+                end: std::ops::Bound::Excluded(#sqlx_types_time_offset_date_time_unix_epoch),
+            }}
+        }
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
