@@ -2448,6 +2448,15 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     }
 }
 
+fn generate_nullable_and_not_nullable_token_stream(ident: &syn::Ident, generate_postgresql_type_ident_where_element_token_stream: fn(ident: &syn::Ident, is_nullable: IsNullable) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+    let postgresql_type_ident_where_element_token_stream = generate_postgresql_type_ident_where_element_token_stream(ident, IsNullable::False);
+    let postgresql_type_std_option_option_ident_where_element_token_stream = generate_postgresql_type_ident_where_element_token_stream(ident, IsNullable::True);
+    quote::quote! {
+        #postgresql_type_ident_where_element_token_stream
+        #postgresql_type_std_option_option_ident_where_element_token_stream
+    }
+}
+
 enum IsValueTypePub {
     True,
     False,
@@ -6379,8 +6388,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);    
-    let generate_postgresql_type_tokens_where_element_token_stream = |is_nullable: IsNullable|{
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    fn generate_postgresql_type_ident_where_element_token_stream(ident: &syn::Ident, is_nullable: IsNullable) -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -6416,12 +6425,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             #postgresql_type_tokens_where_element_token_stream
         }
     };
-    let postgresql_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::False);
-    let postgresql_type_std_option_option_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_token_stream(IsNullable::True);
-    let generated = quote::quote! {
-        #postgresql_type_ident_where_element_token_stream
-        #postgresql_type_std_option_option_ident_where_element_token_stream
-    };
+    let generated = generate_nullable_and_not_nullable_token_stream(&ident, generate_postgresql_type_ident_where_element_token_stream);
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
