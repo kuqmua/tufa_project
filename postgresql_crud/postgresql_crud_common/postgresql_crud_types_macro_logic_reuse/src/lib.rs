@@ -6328,11 +6328,15 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
     generated.into()
 }
 
+fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
+    quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
+}
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensStdNetIpAddr)]
 pub fn postgresql_base_type_tokens_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
+        &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream()
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdNetIpAddr)]
@@ -6361,7 +6365,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)},
+                default_initialization_token_stream: &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream(),
             },
         );
 
@@ -6394,15 +6398,17 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     generated.into()
 }
 
-// todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
+// fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
+//     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+//     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+// }
+
+// // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
 // #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
 // pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 //     generate_postgresql_base_type_tokens(
 //         input,
-//         &{
-//             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-//             quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-//         }
+//         &sqlx_types_ipnetwork_ip_network_v4_token_stream()
 //     )
 // }
 // #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
@@ -6426,18 +6432,15 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 
 //         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-//
-        // let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        //     &ident,
-        //     &is_nullable,
-        //     &WhereOperatorType::FieldType {
-        //         field_type: &field_type,
-        //         default_initialization_token_stream: &{
-        //             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-        //             quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-        //         }
-        //     },
-        // );
+
+//         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+//             &ident,
+//             &is_nullable,
+//             &WhereOperatorType::FieldType {
+//                 field_type: &field_type,
+//                 default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+//             },
+//         );
 
 //         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
 //             is_nullable,
