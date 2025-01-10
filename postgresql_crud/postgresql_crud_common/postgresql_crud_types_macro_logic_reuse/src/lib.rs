@@ -3655,6 +3655,41 @@ impl GreaterThanCurrentTimestamp {
     }
 }
 
+struct CurrentTime;
+impl WhereOperatorName for CurrentTime {
+    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::CurrentTimeUpperCamelCase
+    }
+}
+impl CurrentTime {
+    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        ident: &dyn quote::ToTokens,
+        is_nullable: &IsNullable,
+    ) -> proc_macro2::TokenStream {
+        let column_snake_case = naming::ColumnSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            Self::upper_camel_case(),
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{},
+            &quote::quote!{},
+            &quote::quote!{
+                Ok(format!(
+                    "{}({} = current_time)",
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                ))
+            },
+            &quote::quote!{
+                #query_snake_case
+            }
+        )
+    }
+}
+
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5424,24 +5459,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &ShouldAddDotZero::False,
         );
 
-        let current_time_upper_camel_case = naming::CurrentTimeUpperCamelCase;
-        let postgresql_type_tokens_where_element_current_time_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &current_time_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{},
-            &quote::quote!{},
-            &quote::quote!{
-                Ok(format!(
-                    "{}({} = current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &quote::quote!{
-                #query_snake_case
-            }
         );
 
         let greater_than_current_time_upper_camel_case = naming::GreaterThanCurrentTimeUpperCamelCase;
@@ -5471,7 +5491,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
                 &Between::upper_camel_case(),
-                &current_time_upper_camel_case,
+                &CurrentTime::upper_camel_case(),
                 &greater_than_current_time_upper_camel_case,
             ]
         );
@@ -5762,24 +5782,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &ShouldAddDotZero::False,
         );
 
-        let current_time_upper_camel_case = naming::CurrentTimeUpperCamelCase;
-        let postgresql_type_tokens_where_element_current_time_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &current_time_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{},
-            &quote::quote!{},
-            &quote::quote!{
-                Ok(format!(
-                    "{}({} = current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &quote::quote!{
-                #query_snake_case
-            }
         );
 
         let greater_than_current_time_upper_camel_case = naming::GreaterThanCurrentTimeUpperCamelCase;
@@ -5809,7 +5814,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
                 &Equal::upper_camel_case(),
                 &GreaterThan::upper_camel_case(),
                 &Between::upper_camel_case(),
-                &current_time_upper_camel_case,
+                &CurrentTime::upper_camel_case(),
                 &greater_than_current_time_upper_camel_case,
             ]
         );
