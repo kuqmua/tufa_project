@@ -5370,19 +5370,22 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
     generated.into()
 }
 //////////////////////
+fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    quote::quote!{
+        sqlx::types::time::Date::from_ordinal_date(
+            #core_default_default_default,
+            1,
+        ).unwrap()//todo 
+    }
+}
+
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeDate)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{
-                sqlx::types::time::Date::from_ordinal_date(
-                    #core_default_default_default,
-                    1,
-                ).unwrap()//todo 
-            }
-        }
+        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream()
     )
 }
 
@@ -5886,11 +5889,9 @@ pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: pr
         &{
             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
             let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
+            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
             quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_ordinal_date(
-                    #core_default_default_default,
-                    1,
-                ).unwrap(),//todo
+                #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                 #sqlx_types_time_time_midnight,
             )}
         }
@@ -5924,11 +5925,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
                 field_type: &field_type,
                 default_initialization_token_stream: &{
                     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
                     quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx::types::time::Date::from_ordinal_date(
-                            #core_default_default_default,
-                            1,
-                        ).unwrap(),//todo
+                        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                         #sqlx_types_time_time_midnight,
                     )}
                 },
@@ -5942,11 +5941,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
                 field_type: &field_type,
                 default_initialization_token_stream: &{
                     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
                     quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx::types::time::Date::from_ordinal_date(
-                            #core_default_default_default,
-                            1,
-                        ).unwrap(),//todo
+                        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                         #sqlx_types_time_time_midnight,
                     )}
                 },
@@ -5960,11 +5957,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
                 field_type: &field_type,
                 default_initialization_token_stream: &{
                     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
                     quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx::types::time::Date::from_ordinal_date(
-                            #core_default_default_default,
-                            1,
-                        ).unwrap(),//todo
+                        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                         #sqlx_types_time_time_midnight,
                     )}
                 },
@@ -6215,19 +6210,14 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         &{
             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
             let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
+            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
             quote::quote!{sqlx::postgres::types::PgRange {
                 start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        #core_default_default_default,
-                        1,
-                    ).unwrap(),//todo
+                    #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                     #sqlx_types_time_time_midnight,
                 )),
                 end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        #core_default_default_default,
-                        1,
-                    ).unwrap(),//todo
+                    #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                     #sqlx_types_time_time_midnight,
                 )),
             }}
@@ -6248,19 +6238,10 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         input,
         &{
             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
             quote::quote!{sqlx::postgres::types::PgRange {
-                start: std::ops::Bound::Included(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        #core_default_default_default,
-                        1,
-                    ).unwrap()//todo
-                ),
-                end: std::ops::Bound::Excluded(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        #core_default_default_default,
-                        1,
-                    ).unwrap()//todo
-                ),
+                start: std::ops::Bound::Included(#sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream),
+                end: std::ops::Bound::Excluded(#sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream),
             }}
         }
         
