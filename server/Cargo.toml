@@ -68,7 +68,6 @@ git_info = {path = "../git_info"}
 common = {path = "../common"}# local dev test without commits version
 # enum_extension_lib = {path = "../enum_extension_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
-postgresql_crud = {path = "../postgresql_crud"}
 app_state = {path = "../app_state"}
 constants = {path = "../constants"}
 #
