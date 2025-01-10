@@ -190,6 +190,14 @@ impl quote::ToTokens for CoreDefaultDefaultDefault {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct SqlxTypesTimeTimeMidnight;
+impl quote::ToTokens for SqlxTypesTimeTimeMidnight {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {sqlx::types::time::Time::MIDNIGHT}.to_tokens(tokens)
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
 pub struct Error0;
 impl quote::ToTokens for Error0 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
