@@ -5699,31 +5699,27 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
@@ -5911,31 +5907,27 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
 
         let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
 
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
+        };
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
-            },
+            &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
@@ -6013,31 +6005,27 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
         );
 
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
@@ -6101,22 +6089,24 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident)
+            &where_operator_type_ident
         );
 
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
@@ -6258,22 +6248,24 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident)
+            &where_operator_type_ident
         );
 
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::True,
         );
@@ -6281,7 +6273,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
         let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
@@ -6423,7 +6415,6 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 
 //         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
-
 //         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
 //             &ident,
 //             &is_nullable,
@@ -6481,16 +6472,18 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident)
+            &where_operator_type_ident
         );
 
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -6682,13 +6675,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -6699,7 +6691,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
@@ -6758,13 +6750,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
 
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
+            &where_operator_type_ident,
         );
 
         let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -6775,7 +6766,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &WhereOperatorType::Ident(&ident),
+            &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
