@@ -181,6 +181,14 @@ impl quote::ToTokens for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCo
         quote::quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens)
     }
 }
+
+#[derive(Debug, Clone, Copy)]
+pub struct CoreDefaultDefaultDefault;
+impl quote::ToTokens for CoreDefaultDefaultDefault {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {::core::default::Default::default()}.to_tokens(tokens)
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct Error0;
 impl quote::ToTokens for Error0 {

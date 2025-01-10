@@ -447,7 +447,10 @@ pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std
     let ident = &syn_derive_input.ident;
     let generated = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
         &ident,
-        &quote::quote!{Self(::core::default::Default::default())},
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{Self(#core_default_default_default)}
+        },
     );
     generated.into()
 }
@@ -478,25 +481,28 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
     assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
 
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = {
-        let content_token_stream = match &variant {
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
-                ::core::default::Default::default()
-            },
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
-                Some(::core::default::Default::default())
-            },
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
-                vec![::core::default::Default::default()]
-            },
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
-                Some(vec![::core::default::Default::default()])
-            },
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                vec![Some(::core::default::Default::default())]
-            },
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
-                Some(vec![Some(::core::default::Default::default())])
-            },
+        let content_token_stream = {
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            match &variant {
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath => quote::quote! {
+                    #core_default_default_default
+                },
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
+                    Some(#core_default_default_default)
+                },
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath => quote::quote! {
+                    vec![#core_default_default_default]
+                },
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath => quote::quote! {
+                    Some(vec![#core_default_default_default])
+                },
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath => quote::quote! {
+                    vec![Some(#core_default_default_default)]
+                },
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote! {
+                    Some(vec![Some(#core_default_default_default)])
+                },
+            }
         };
         let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -541,23 +547,26 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
         };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_field_reader_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_json_type_ident_field_reader_upper_camel_case,
-            &match &variant {
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath | StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
-                    ::core::default::Default::default()
-                },
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath |
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath |
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath |
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => {
-                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-                    quote::quote! {
-                        Self {
-                            pagination: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+            &{
+                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                match &variant {
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath | StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionFullTypePath => quote::quote! {
+                        #core_default_default_default
+                    },
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecFullTypePath |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecFullTypePath |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdVecVecStdOptionOptionFullTypePath |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => {
+                        let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                        quote::quote! {
+                            Self {
+                                pagination: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+                            }
                         }
-                    }
-                },
+                    },
+                }
             },
         );
         (
@@ -1071,7 +1080,7 @@ fn generate_postgresql_base_type_tokens(
 pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 
@@ -1240,7 +1249,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         );
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_ident_column_upper_camel_case,
-            &quote::quote! {::core::default::Default::default()},
+            &token_patterns::CoreDefaultDefaultDefault,
         );
         quote::quote! {
             #pub_struct_postgresql_type_ident_column_token_stream
@@ -3403,7 +3412,10 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         &is_nullable,
         ShouldWhereElementFieldsBePublic::True,
         &quote::quote!{pub value: std::string::String},
-        &quote::quote!{value: ::core::default::Default::default()},
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{value: #core_default_default_default}
+        },
         &quote::quote!{
             match #increment_snake_case.checked_add(1) {
                 Some(#value_snake_case) => {
@@ -3749,7 +3761,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -3758,7 +3770,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -3767,7 +3779,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -3778,7 +3790,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
         
@@ -3841,7 +3853,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -3938,7 +3950,10 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
 pub fn postgresql_base_type_tokens_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{vec![::core::default::Default::default()]}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{vec![#core_default_default_default]}
+        }
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8)]
@@ -3965,7 +3980,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -4249,7 +4264,10 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                     },
                 },
                 &quote::quote!{length_more_than: #std_primitive_i64_token_stream,},
-                &quote::quote!{length_more_than: ::core::default::Default::default()},
+                &{
+                    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    quote::quote!{length_more_than: #core_default_default_default}
+                },
                 &quote::quote!{
                     match #increment_snake_case.checked_add(1) {
                         Some(#value_snake_case) => {
@@ -4276,9 +4294,12 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 pub encode_format: EncodeFormat,
                 pub encoded_string_representation: std::string::String,
             },
-            &quote::quote!{
-                encode_format: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                encoded_string_representation: ::core::default::Default::default(),
+            &{
+                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{
+                    encode_format: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    encoded_string_representation: #core_default_default_default,
+                }
             },
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
@@ -4332,11 +4353,14 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_interval(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgInterval {
-            months: ::core::default::Default::default(),
-            days: ::core::default::Default::default(),
-            microseconds: ::core::default::Default::default(),
-        }}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgInterval {
+                months: #core_default_default_default,
+                days: #core_default_default_default,
+                microseconds: #core_default_default_default,
+            }}
+        }
     )
 }
 
@@ -4416,10 +4440,13 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Excluded(::core::default::Default::default()),
-        }}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgRange {
+                start: std::ops::Bound::Included(#core_default_default_default),
+                end: std::ops::Bound::Excluded(#core_default_default_default),
+            }}
+        }
     )
 }
 
@@ -4475,7 +4502,10 @@ impl RangeType {
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{::core::default::Default::default()},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => {
+                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{#core_default_default_default}
+            },
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
@@ -5095,7 +5125,10 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
                         },
                     },
                     &quote::quote!{#value_snake_case: #std_primitive_i64_token_stream},//todo try_new - check length > 0
-                    &quote::quote!{#value_snake_case: ::core::default::Default::default()},
+                    &{
+                        let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                        quote::quote!{#value_snake_case: #core_default_default_default}
+                    },
                     &quote::quote!{
                         match #increment_snake_case.checked_add(1) {
                             Some(#value_snake_case) => {
@@ -5341,11 +5374,14 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
 pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{
-            sqlx::types::time::Date::from_ordinal_date(
-                ::core::default::Default::default(),
-                1,
-            ).unwrap()//todo 
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{
+                sqlx::types::time::Date::from_ordinal_date(
+                    #core_default_default_default,
+                    1,
+                ).unwrap()//todo 
+            }
         }
     )
 }
@@ -5440,7 +5476,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 
@@ -5468,7 +5504,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5477,7 +5513,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5486,7 +5522,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -5543,7 +5579,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 
@@ -5571,7 +5607,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5580,7 +5616,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5589,7 +5625,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -5646,7 +5682,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 
@@ -5674,7 +5710,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5683,7 +5719,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -5692,7 +5728,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -5851,13 +5887,16 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
 pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-            sqlx::types::time::Date::from_ordinal_date(
-                ::core::default::Default::default(),
-                1,
-            ).unwrap(),//todo
-            sqlx::types::time::Time::MIDNIGHT,
-        )}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_ordinal_date(
+                    #core_default_default_default,
+                    1,
+                ).unwrap(),//todo
+                sqlx::types::time::Time::MIDNIGHT,
+            )}
+        }
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimePrimitiveDateTime)]
@@ -5884,13 +5923,16 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        ::core::default::Default::default(),
-                        1,
-                    ).unwrap(),//todo
-                    sqlx::types::time::Time::MIDNIGHT,
-                )},
+                default_initialization_token_stream: &{
+                    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                        sqlx::types::time::Date::from_ordinal_date(
+                            #core_default_default_default,
+                            1,
+                        ).unwrap(),//todo
+                        sqlx::types::time::Time::MIDNIGHT,
+                    )}
+                },
             },
         );
 
@@ -5899,13 +5941,16 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        ::core::default::Default::default(),
-                        1,
-                    ).unwrap(),//todo
-                    sqlx::types::time::Time::MIDNIGHT,
-                )},
+                default_initialization_token_stream: &{
+                    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                        sqlx::types::time::Date::from_ordinal_date(
+                            #core_default_default_default,
+                            1,
+                        ).unwrap(),//todo
+                        sqlx::types::time::Time::MIDNIGHT,
+                    )}
+                },
             },
         );
 
@@ -5914,13 +5959,16 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_ordinal_date(
-                        ::core::default::Default::default(),
-                        1,
-                    ).unwrap(),//todo
-                    sqlx::types::time::Time::MIDNIGHT,
-                )},
+                default_initialization_token_stream: &{
+                    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+                        sqlx::types::time::Date::from_ordinal_date(
+                            #core_default_default_default,
+                            1,
+                        ).unwrap(),//todo
+                        sqlx::types::time::Time::MIDNIGHT,
+                    )}
+                },
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -5977,7 +6025,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
 pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal)]
@@ -6004,7 +6052,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -6013,7 +6061,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -6022,7 +6070,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
@@ -6065,7 +6113,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
 pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{::core::default::Default::default()}
+        &token_patterns::CoreDefaultDefaultDefault
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal)]
@@ -6162,22 +6210,25 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap(),//todo
-                sqlx::types::time::Time::MIDNIGHT,
-            )),
-            end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap(),//todo
-                sqlx::types::time::Time::MIDNIGHT,
-            )),
-        }}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgRange {
+                start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        #core_default_default_default,
+                        1,
+                    ).unwrap(),//todo
+                    sqlx::types::time::Time::MIDNIGHT,
+                )),
+                end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        #core_default_default_default,
+                        1,
+                    ).unwrap(),//todo
+                    sqlx::types::time::Time::MIDNIGHT,
+                )),
+            }}
+        }
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
@@ -6192,20 +6243,24 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap()//todo
-            ),
-            end: std::ops::Bound::Excluded(
-                sqlx::types::time::Date::from_ordinal_date(
-                    ::core::default::Default::default(),
-                    1,
-                ).unwrap()//todo
-            ),
-        }}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgRange {
+                start: std::ops::Bound::Included(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        #core_default_default_default,
+                        1,
+                    ).unwrap()//todo
+                ),
+                end: std::ops::Bound::Excluded(
+                    sqlx::types::time::Date::from_ordinal_date(
+                        #core_default_default_default,
+                        1,
+                    ).unwrap()//todo
+                ),
+            }}
+        }
+        
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
@@ -6228,7 +6283,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &quote::quote!{sqlx::postgres::types::PgMoney(::core::default::Default::default())}
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default)}
+        }
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney)]
@@ -6384,7 +6442,10 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 // pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 //     generate_postgresql_base_type_tokens(
 //         input,
-//         &quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, ::core::default::Default::default()).unwrap())}
+//         &{
+//             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+//             quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+//         }
 //     )
 // }
 // #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
@@ -6409,14 +6470,17 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 //         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
 
 //
-//         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-//             &ident,
-//             &is_nullable,
-//             &WhereOperatorType::FieldType {
-//                 field_type: &field_type,
-//                 default_initialization_token_stream: &quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, ::core::default::Default::default()).unwrap())},
-//             },
-//         );
+        // let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        //     &ident,
+        //     &is_nullable,
+        //     &WhereOperatorType::FieldType {
+        //         field_type: &field_type,
+        //         default_initialization_token_stream: &{
+        //             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+        //             quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+        //         }
+        //     },
+        // );
 
 //         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
 //             is_nullable,
@@ -6672,7 +6736,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
@@ -6748,7 +6812,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             &is_nullable,
             &WhereOperatorType::FieldType {
                 field_type: &field_type,
-                default_initialization_token_stream: &quote::quote!{::core::default::Default::default()},
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
 
