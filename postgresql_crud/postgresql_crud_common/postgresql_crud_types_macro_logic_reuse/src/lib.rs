@@ -5496,7 +5496,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &is_nullable,
         );
 
-        let greater_than_current_date_upper_camel_case = naming::GreaterThanCurrentDateUpperCamelCase;
         let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
