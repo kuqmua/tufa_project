@@ -9,7 +9,7 @@ edition = "2021"
 strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
-generate_postgresql_crud_second = {path = "./generate_postgresql_crud_second"}
+generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 generate_postgresql_json_type = {path = "./generate_postgresql_json_type"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}

@@ -4,25 +4,25 @@ pub use route_validators::check_body_size;
 pub use route_validators::check_commit;
 pub use uuid::Uuid;
 
-pub use generate_postgresql_crud_second::common_additional_error_variants;
-pub use generate_postgresql_crud_second::create_many_additional_error_variants;
-pub use generate_postgresql_crud_second::create_one_additional_error_variants;
-pub use generate_postgresql_crud_second::delete_many_additional_error_variants;
-pub use generate_postgresql_crud_second::delete_one_additional_error_variants;
-pub use generate_postgresql_crud_second::read_many_additional_error_variants;
-pub use generate_postgresql_crud_second::read_one_additional_error_variants;
-pub use generate_postgresql_crud_second::update_many_additional_error_variants;
-pub use generate_postgresql_crud_second::update_one_additional_error_variants;
+pub use generate_postgresql_crud::common_additional_error_variants;
+pub use generate_postgresql_crud::create_many_additional_error_variants;
+pub use generate_postgresql_crud::create_one_additional_error_variants;
+pub use generate_postgresql_crud::delete_many_additional_error_variants;
+pub use generate_postgresql_crud::delete_one_additional_error_variants;
+pub use generate_postgresql_crud::read_many_additional_error_variants;
+pub use generate_postgresql_crud::read_one_additional_error_variants;
+pub use generate_postgresql_crud::update_many_additional_error_variants;
+pub use generate_postgresql_crud::update_one_additional_error_variants;
 
-pub use generate_postgresql_crud_second::common_additional_route_logic;
-pub use generate_postgresql_crud_second::create_many_additional_route_logic;
-pub use generate_postgresql_crud_second::create_one_additional_route_logic;
-pub use generate_postgresql_crud_second::delete_many_additional_route_logic;
-pub use generate_postgresql_crud_second::delete_one_additional_route_logic;
-pub use generate_postgresql_crud_second::read_many_additional_route_logic;
-pub use generate_postgresql_crud_second::read_one_additional_route_logic;
-pub use generate_postgresql_crud_second::update_many_additional_route_logic;
-pub use generate_postgresql_crud_second::update_one_additional_route_logic;
+pub use generate_postgresql_crud::common_additional_route_logic;
+pub use generate_postgresql_crud::create_many_additional_route_logic;
+pub use generate_postgresql_crud::create_one_additional_route_logic;
+pub use generate_postgresql_crud::delete_many_additional_route_logic;
+pub use generate_postgresql_crud::delete_one_additional_route_logic;
+pub use generate_postgresql_crud::read_many_additional_route_logic;
+pub use generate_postgresql_crud::read_one_additional_route_logic;
+pub use generate_postgresql_crud::update_many_additional_route_logic;
+pub use generate_postgresql_crud::update_one_additional_route_logic;
 //////////////////////////////
 pub use postgresql_crud_common::value::Value;
 pub use postgresql_crud_common::BindQuery;
@@ -77,7 +77,7 @@ pub use postgresql_crud_common::LogicalOperator;
 pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type;
 
 ////////////
-pub use generate_postgresql_crud_second::GeneratePostgresqlCrudSecond;
+pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub use postgresql_crud_common::postgresql_type;
 

@@ -126,10 +126,10 @@ pub fn common_additional_route_logic(_attr: proc_macro::TokenStream, item: proc_
 }
 
 #[proc_macro_derive(
-    GeneratePostgresqlCrudSecond,
-    attributes(generate_postgresql_crud_second_primary_key)
+    GeneratePostgresqlCrud,
+    attributes(generate_postgresql_crud_primary_key)
 )]
-pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -517,10 +517,10 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                     for attr in &element.attrs {
                         if attr.path().segments.len() == 1 {
                             let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
-                            let generate_postgresql_crud_second_primary_key_snake_case_stringified = naming::GeneratePostgresqlCrudSecondPrimaryKeySnakeCase.to_string();
-                            if first_segment_ident == &generate_postgresql_crud_second_primary_key_snake_case_stringified {
+                            let generate_postgresql_crud_primary_key_snake_case_stringified = naming::GeneratePostgresqlCrudPrimaryKeySnakeCase.to_string();
+                            if first_segment_ident == &generate_postgresql_crud_primary_key_snake_case_stringified {
                                 if option_primary_key_field.is_some() {
-                                    panic!("two or more supported {generate_postgresql_crud_second_primary_key_snake_case_stringified} attributes!");
+                                    panic!("two or more supported {generate_postgresql_crud_primary_key_snake_case_stringified} attributes!");
                                 } else {
                                     option_primary_key_field = Some(SynFieldWrapper {
                                         syn_field: element.clone(),
@@ -3645,7 +3645,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
                                         //         line!(),
                                         //         column!(),
                                         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud_second/src/lib.rs"),
+                                        //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
                                         //             line: 3625,
                                         //             column: 266,
                                         //         }),
@@ -5534,7 +5534,7 @@ pub fn generate_postgresql_crud_second(input: proc_macro::TokenStream) -> proc_m
     // println!("{generated}");
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlCrudSecond",
+    //     "GeneratePostgresqlCrud",
     //     &generated,
     // );
     // }

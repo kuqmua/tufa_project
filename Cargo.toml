@@ -15,7 +15,7 @@ members = [
   "git_sync_command",
   "integration_tests",
   "postgresql_crud",
-  "postgresql_crud/generate_postgresql_crud_second",
+  "postgresql_crud/generate_postgresql_crud",
   "postgresql_crud/generate_postgresql_json_type",
   "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_common/postgresql_crud_macros_common",

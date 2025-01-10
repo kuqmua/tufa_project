@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "generate_postgresql_crud_second"
+name = "generate_postgresql_crud"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

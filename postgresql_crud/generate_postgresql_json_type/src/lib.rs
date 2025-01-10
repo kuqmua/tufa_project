@@ -598,7 +598,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             };
             //
-            //for new compatibility with GeneratePostgresqlCrudSecond logic
+            //for new compatibility with GeneratePostgresqlCrud logic
             let (
                 impl_postgresql_crud_bind_query_second_for_ident_to_create_with_generated_id_token_stream,
                 impl_postgresql_crud_bind_query_second_for_ident_to_create_without_generated_id_token_stream
@@ -2332,7 +2332,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 },
             );
-            //integration with GeneratePostgresqlCrudSecond
+            //integration with GeneratePostgresqlCrud
             let impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream = {
                 quote::quote!{
                     impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_json_type_ident_option_to_update_upper_camel_case {
