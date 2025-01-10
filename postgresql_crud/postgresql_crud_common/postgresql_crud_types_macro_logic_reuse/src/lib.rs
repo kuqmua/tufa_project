@@ -4344,17 +4344,27 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     // }
     generated.into()
 }
-////////////////////
+
+fn generate_sqlx_postgres_types_pg_range_token_steram(
+    start_token_stream: &dyn quote::ToTokens,
+    end_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    quote::quote!{sqlx::postgres::types::PgRange {
+        start: std::ops::Bound::Included(#start_token_stream),
+        end: std::ops::Bound::Excluded(#end_token_stream),
+    }}
+}
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeDefaultInitialization)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
         &{
             let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{sqlx::postgres::types::PgRange {
-                start: std::ops::Bound::Included(#core_default_default_default),
-                end: std::ops::Bound::Excluded(#core_default_default_default),
-            }}
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &core_default_default_default,
+                &core_default_default_default,
+            )
         }
     )
 }
@@ -5830,10 +5840,10 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         input,
         &{
             let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-            quote::quote!{sqlx::postgres::types::PgRange {
-                start: std::ops::Bound::Included(#sqlx_types_time_offset_date_time_unix_epoch),
-                end: std::ops::Bound::Excluded(#sqlx_types_time_offset_date_time_unix_epoch),
-            }}
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_offset_date_time_unix_epoch,
+                &sqlx_types_time_offset_date_time_unix_epoch,
+            )
         }
     )
 }
@@ -5851,10 +5861,10 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
         input,
         &{
             let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
-            quote::quote!{sqlx::postgres::types::PgRange {
-                start: std::ops::Bound::Included(#sqlx_types_time_primitive_date_time_new_token_stream),
-                end: std::ops::Bound::Excluded(#sqlx_types_time_primitive_date_time_new_token_stream),
-            }}
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_primitive_date_time_new_token_stream,
+                &sqlx_types_time_primitive_date_time_new_token_stream,
+            )
         }
     )
 }
@@ -5871,14 +5881,12 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_
     generate_postgresql_base_type_tokens(
         input,
         &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
             let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-            quote::quote!{sqlx::postgres::types::PgRange {
-                start: std::ops::Bound::Included(#sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream),
-                end: std::ops::Bound::Excluded(#sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream),
-            }}
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+            )
         }
-        
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
