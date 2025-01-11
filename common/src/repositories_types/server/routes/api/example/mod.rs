@@ -66,10 +66,10 @@ pub struct Example {
 
     // #[generate_postgresql_crud_primary_key]
     // pub std_primitive_i16_as_postgresql_small_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlSmallSerialNotNull,
-    #[generate_postgresql_crud_primary_key]
-    pub std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
     // #[generate_postgresql_crud_primary_key]
-    // pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    // pub std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialNotNull,
+    #[generate_postgresql_crud_primary_key]
+    pub std_primitive_i64_as_postgresql_big_serial_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull,
 
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBool,
     pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,

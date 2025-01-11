@@ -7,10 +7,11 @@ const SMALLSERIAL: &std::primitive::str = "SMALLSERIAL";
 const SERIAL: &std::primitive::str = "SERIAL";
 const BIGSERIAL: &std::primitive::str = "BIGSERIAL";
 const MONEY: &std::primitive::str = "MONEY";
+const NUMERIC: &std::primitive::str = "NUMERIC";
 const BOOL: &std::primitive::str = "BOOL";
 const CHAR: &std::primitive::str = "CHAR";
 const VARCHAR: &std::primitive::str = "VARCHAR";
-// const CHARN: &std::primitive::str = "CHAR(N)";
+// const CHARN: &std::primitive::str = "CHAR(N)";//todo length not supported yet
 const TEXT: &std::primitive::str = "TEXT";
 // const CITEXT: &std::primitive::str = "CITEXT";//activates by installing extension
 const BYTEA: &std::primitive::str = "BYTEA";
@@ -24,15 +25,14 @@ const TSRANGE: &std::primitive::str = "TSRANGE";
 const TSTZRANGE: &std::primitive::str = "TSTZRANGE";
 const DATERANGE: &std::primitive::str = "DATERANGE";
 const NUMRANGE: &std::primitive::str = "NUMRANGE";
-const NUMERIC: &std::primitive::str = "NUMERIC";
 const TIMESTAMP: &std::primitive::str = "TIMESTAMP";
 const TIMESTAMPTZ: &std::primitive::str = "TIMESTAMPTZ";
 const UUID: &std::primitive::str = "UUID";
 const INET: &std::primitive::str = "INET";
 const CIDR: &std::primitive::str = "CIDR";
 const MACADDR: &std::primitive::str = "MACADDR";
-const BIT: &std::primitive::str = "BIT";
-const VARBIT: &std::primitive::str = "VARBIT";
+// const BIT: &std::primitive::str = "BIT";
+// const VARBIT: &std::primitive::str = "VARBIT";
 
 const NOT_NULL: &std::primitive::str = "NOT NULL";
 
@@ -269,6 +269,62 @@ pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(crate::postgresql_ty
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {MONEY} {NOT_NULL}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesDecimal);
+impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {NUMERIC}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
+impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumericNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {NUMERIC} {NOT_NULL}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesBigDecimal);
+impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeric {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {NUMERIC}")
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
+)]
+pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesBigDecimal);
+impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {NUMERIC} {NOT_NULL}")
     }
 }
 #[derive(
@@ -896,62 +952,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigD
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
 )]
-pub struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesDecimal);
-impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {NUMERIC}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
-impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumericNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {NUMERIC} {NOT_NULL}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesBigDecimal);
-impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeric {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {NUMERIC}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
-pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(crate::postgresql_type::postgresql_base_type::SqlxTypesBigDecimal);
-impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {NUMERIC} {NOT_NULL}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens
-)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::StdOptionOptionSqlxTypesChronoNaiveDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
@@ -1197,6 +1197,8 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
         format!("{column} {MACADDR} {NOT_NULL}")
     }
 }
+
+
 // #[derive(
 //     Debug,
 //     Clone,
