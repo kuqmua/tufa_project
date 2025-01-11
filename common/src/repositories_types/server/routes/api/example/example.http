@@ -230,32 +230,6 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       0,
       0
     ],
-    "sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz": {
-      "time": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "offset": {
-        "hours": 0,
-        "minutes": 0,
-        "seconds": 0
-      }
-    },
-    "sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz_not_null": {
-      "time": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "offset": {
-        "hours": 0,
-        "minutes": 0,
-        "seconds": 0
-      }
-    },
     "sqlx_types_time_primitive_date_time_as_timestamp": [
       0,
       1,
