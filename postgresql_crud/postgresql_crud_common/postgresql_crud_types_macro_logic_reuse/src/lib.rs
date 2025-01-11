@@ -12,8 +12,6 @@ fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_strea
         }
     }
 }
-
-
 fn generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -32,22 +30,6 @@ fn generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std
         }
     }
 }
-
-#[proc_macro_derive(GenerateStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementFullTypePath)]
-pub fn generate_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let generated = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-        &ident,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{Self(#core_default_default_default)}
-        },
-    );
-    generated.into()
-}
-
 #[derive(strum_macros::Display)]
 enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant {
     FullTypePath,
@@ -57,7 +39,6 @@ enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOn
     StdVecVecStdOptionOptionFullTypePath,
     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
 }
-
 fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -314,7 +295,6 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
     // }
     generated.into()
 }
-
 #[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePath)]
 pub fn generate_postgresql_json_type_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::FullTypePath)
@@ -339,9 +319,6 @@ pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_pat
 pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
-
-
-///////////////////////////////
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -366,7 +343,6 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(
         }
     }
 }
-
 fn generate_impl_std_fmt_display_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens
@@ -482,7 +458,6 @@ fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::Der
         panic!("does work only on structs!");
     }
 }
-
 fn generate_postgresql_base_type_tokens(
     input: proc_macro::TokenStream,
     impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream: &dyn quote::ToTokens,
@@ -668,7 +643,6 @@ fn generate_postgresql_base_type_tokens(
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokens)]
 pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -676,7 +650,6 @@ pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro
         &token_patterns::CoreDefaultDefaultDefault
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypePrimaryKeyTokens)]
 pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -710,7 +683,6 @@ pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -
     // }
     generated.into()
 }
-
 fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -739,8 +711,6 @@ fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_sel
         }
     }
 }
-
-
 fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -753,11 +723,9 @@ fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std
         }
     }
 }
-
 fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #ident {}}
 }
-
 #[proc_macro_derive(PostgresqlTypeTokens)]
 pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -1525,7 +1493,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlTypePrimaryKeyTokens)]
 pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -1692,7 +1659,6 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     // }
     generated.into()
 }
-
 fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -1701,7 +1667,6 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(ident: &d
         }
     }
 }
-
 enum IsNullable {
     True,
     False,
@@ -1946,7 +1911,6 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
         }
     }
 }
-
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
     is_nullable: IsNullable,
     ident: &dyn quote::ToTokens,
@@ -2040,7 +2004,6 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
         #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
 }
-
 fn generate_nullable_and_not_nullable_token_stream<F>(generate_postgresql_type_ident_where_element_token_stream: F) -> proc_macro2::TokenStream 
 where
     F: Fn(IsNullable) -> proc_macro2::TokenStream
@@ -2052,7 +2015,6 @@ where
         #postgresql_type_std_option_option_ident_where_element_token_stream
     }
 }
-
 enum IsValueTypePub {
     True,
     False,
@@ -2068,11 +2030,9 @@ impl IsValueTypePub {
         }
     }
 }
-
 trait WhereOperatorName {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }
-
 enum WhereOperatorType<'a> {
     Ident(&'a syn::Ident),
     FieldType {
@@ -2159,7 +2119,6 @@ impl Equal {
         )
     }
 }
-
 struct GreaterThan;
 impl WhereOperatorName for GreaterThan {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2211,7 +2170,6 @@ impl GreaterThan {
         )
     }
 }
-
 enum BetweenTryNewErrorType {
     StartMoreOrEqualToEnd,
     StartIsEqualToEnd
@@ -2230,7 +2188,6 @@ impl BetweenTryNewErrorType {
         }
     }
 }
-
 enum ShouldAddDotZero {
     True,
     False,
@@ -2243,7 +2200,6 @@ impl ShouldAddDotZero {
         }
     }
 }
-
 struct Between;
 impl WhereOperatorName for Between {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2632,7 +2588,6 @@ impl Between {
         )
     }
 }
-
 struct In;
 impl WhereOperatorName for In {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2983,7 +2938,6 @@ impl In {
         )
     }
 }
-
 enum RegularExpression {
     CaseSensitive,
     CaseInsensitive
@@ -2996,7 +2950,6 @@ impl RegularExpression {
         }
     }
 }
-
 fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
     ident: &dyn quote::ToTokens,
     is_nullable: &IsNullable,
@@ -3062,7 +3015,6 @@ impl CaseSensitiveRegularExpression {
         )
     }
 }
-
 struct CaseInsensitiveRegularExpression;
 impl WhereOperatorName for CaseInsensitiveRegularExpression {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3082,7 +3034,6 @@ impl CaseInsensitiveRegularExpression {
         )
     }
 }
-
 struct Before;
 impl WhereOperatorName for Before {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3135,7 +3086,6 @@ impl Before {
         )
     }
 }
-
 struct CurrentDate;
 impl WhereOperatorName for CurrentDate {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3169,7 +3119,6 @@ impl CurrentDate {
         )
     }
 }
-
 struct GreaterThanCurrentDate;
 impl WhereOperatorName for GreaterThanCurrentDate {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3203,7 +3152,6 @@ impl GreaterThanCurrentDate {
         )
     }
 }
-
 struct CurrentTimestamp;
 impl WhereOperatorName for CurrentTimestamp {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3237,7 +3185,6 @@ impl CurrentTimestamp {
         )
     }
 }
-
 struct GreaterThanCurrentTimestamp;
 impl WhereOperatorName for GreaterThanCurrentTimestamp {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3271,7 +3218,6 @@ impl GreaterThanCurrentTimestamp {
         )
     }
 }
-
 struct CurrentTime;
 impl WhereOperatorName for CurrentTime {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3305,7 +3251,6 @@ impl CurrentTime {
         )
     }
 }
-
 struct GreaterThanCurrentTime;
 impl WhereOperatorName for GreaterThanCurrentTime {
     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3339,7 +3284,6 @@ impl GreaterThanCurrentTime {
         )
     }
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3401,7 +3345,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementBool)]
 pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3439,7 +3382,6 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdStringString)]
 pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3479,7 +3421,6 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensStdVecVecStdPrimitiveU8)]
 pub fn postgresql_base_type_tokens_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -3870,7 +3811,6 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgInterval)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_interval(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -3885,7 +3825,6 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_interval(input: proc_m
         }
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgInterval)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3937,7 +3876,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     // }
     generated.into()
 }
-
 fn generate_sqlx_postgres_types_pg_range_token_steram(
     start_token_stream: &dyn quote::ToTokens,
     end_token_stream: &dyn quote::ToTokens,
@@ -3947,7 +3885,6 @@ fn generate_sqlx_postgres_types_pg_range_token_steram(
         end: std::ops::Bound::Excluded(#end_token_stream),
     }}
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeDefaultInitialization)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -3961,7 +3898,6 @@ pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macr
         }
     )
 }
-
 enum RangeType {
     I32,
     I64,
@@ -4700,7 +4636,6 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     // }
     generated.into()
 } 
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4708,7 +4643,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
         RangeType::I32,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4716,7 +4650,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
         RangeType::I64,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4724,7 +4657,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4732,7 +4664,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4740,7 +4671,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4748,7 +4678,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4756,8 +4685,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     )
 }
-
-////////////////
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeOffsetDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -4765,7 +4692,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_
         &token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -4838,7 +4764,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
     // }
     generated.into()
 }
-//////////////////////
 fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{
@@ -4848,8 +4773,6 @@ fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwra
         ).unwrap()//todo 
     }
 }
-
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeDate)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -4857,7 +4780,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::Token
         &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream()
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -4921,7 +4843,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -4929,7 +4850,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macr
         &token_patterns::CoreDefaultDefaultDefault
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -4996,7 +4916,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDate)]
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5004,7 +4923,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macr
         &token_patterns::CoreDefaultDefaultDefault
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5071,7 +4989,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5079,7 +4996,6 @@ pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date_time(input: proc
         &token_patterns::CoreDefaultDefaultDefault
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDateTime)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5146,7 +5062,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5220,7 +5135,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
     // }
     generated.into()
 }
-
 fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
@@ -5230,7 +5144,6 @@ fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenS
         #sqlx_types_time_time_midnight,
     )}
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimePrimitiveDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5305,7 +5218,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesDecimal)]
 pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5367,7 +5279,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBigDecimal)]
 pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5426,7 +5337,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5447,7 +5357,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5468,7 +5377,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5489,7 +5397,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -5497,7 +5404,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     )
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney)]
 pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5566,11 +5472,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
     // }
     generated.into()
 }
-
 fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensStdNetIpAddr)]
 pub fn postgresql_base_type_tokens_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
@@ -5615,12 +5519,10 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     // }
     generated.into()
 }
-
 // fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
 //     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
 //     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
 // }
-
 // // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
 // #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
 // pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -5666,7 +5568,6 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
 //     // }
 //     generated.into()
 // }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5721,7 +5622,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5768,7 +5668,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5803,7 +5702,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5854,7 +5752,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     // }
     generated.into()
 }
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
