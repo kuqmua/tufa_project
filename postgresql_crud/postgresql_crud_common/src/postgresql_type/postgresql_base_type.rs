@@ -87,8 +87,6 @@ pub struct StdStringString(pub std::string::String);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8,
 )]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-
-
 #[derive(
     Debug,
     Clone,
@@ -201,8 +199,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
         deserializer.deserialize_struct("SqlxPostgresTypesPgInterval", FIELDS, SqlxPostgresTypesPgIntervalVisitor)
     }
 }
-////////////////////////////////////////////////////////////
-
 #[derive(
     Debug,
     Clone,
@@ -211,7 +207,7 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesTimeDate,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate,
 )]
-pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
+pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimeDateTryNewErrorNamed {
     FromCalendarDate {
@@ -550,8 +546,6 @@ const _: () = {
         }
     }
 };
-
-
 #[derive(
     Debug,
     Clone,
@@ -563,7 +557,6 @@ const _: () = {
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime,
 )]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
-
 #[derive(
     Debug,
     Clone,
@@ -575,7 +568,6 @@ pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate,
 )]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
-
 #[derive(
     Debug,
     Clone,
@@ -587,7 +579,6 @@ pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDateTime,
 )]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
-
 #[derive(
     Debug,
     Clone,
@@ -599,7 +590,6 @@ pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime,
 )]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);//todo putting this type to postgresql ignores milliseconds. maybe it changes in future versions of sqlx
-
 #[derive(
     Debug,
     Clone,
@@ -928,7 +918,6 @@ pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesTimePrimitiveDateTime,
 )]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-
 #[derive(
     Debug,
     Clone,
@@ -940,7 +929,6 @@ pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTi
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal,
 )]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);//todo add try_new impl and custom checks(maybe even remove it). coz its not 100% equals to postgresql type https://docs.rs/sqlx/latest/sqlx/postgres/types/index.html
-
 #[derive(
     Debug,
     Clone,
@@ -1100,7 +1088,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
         )
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1201,7 +1188,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
         deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI32", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1302,9 +1288,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
         deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI64", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor)
     }
 }
-
-//tstzrange
-
 #[derive(
     Debug,
     Clone,
@@ -1584,7 +1567,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -1864,7 +1846,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -2131,7 +2112,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -2172,8 +2152,6 @@ const _: () = {
         }
     }
 };
-#[doc(hidden)]
-#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -2400,7 +2378,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -2441,8 +2418,6 @@ const _: () = {
         }
     }
 };
-#[doc(hidden)]
-#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -2668,9 +2643,6 @@ const _: () = {
         }
     }
 };
-
-//todo another ranges
-
 #[derive(
     Debug,
     Clone,
@@ -2961,7 +2933,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -3252,7 +3223,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -3542,8 +3512,6 @@ const _: () = {
         }
     }
 };
-
-
 #[derive(
     Debug,
     Clone,
@@ -3833,7 +3801,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(
     Debug,
     Clone,
@@ -3898,7 +3865,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
         )
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -3910,7 +3876,6 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdNetIpAddr,
 )]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
-
 // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
 // #[derive(
 //     Debug,
@@ -3923,7 +3888,6 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork,
 // )]
 // pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
-
 #[derive(
     Debug,
     Clone,
@@ -3988,8 +3952,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
         )
     }
 }
-
-
 #[derive(
     Debug,
     Clone,
@@ -4064,7 +4026,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
         )
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -4076,7 +4037,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 )]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
-
 #[derive(
     Debug,
     Clone,
@@ -4088,9 +4048,6 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(pub sqlx::types::chrono::Da
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 )]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
-
-
-
 // #[derive(
 //     Debug,
 //     Clone,
@@ -4099,13 +4056,9 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec,
 // )]
-// pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-
+// pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);//is bitvec acceptable for json rest api?
 // pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
-
 // pub struct SerdeJsonValue(pub serde_json::Value);
-
-////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum EncodeFormat {
     Base64,
@@ -4131,7 +4084,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         ::core::default::Default::default()
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
 pub struct SqlxTypesTimeUtcOffset(pub sqlx::types::time::UtcOffset);
 impl serde::Serialize for SqlxTypesTimeUtcOffset {
@@ -4315,8 +4267,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
         )
     }
 }
-
-//todo pub or not for all - think
 #[derive(Debug, Clone, PartialEq, Eq, utoipa::ToSchema)]
 pub struct NumBigintBigInt(pub num_bigint::BigInt);
 impl serde::Serialize for NumBigintBigInt {
@@ -4465,7 +4415,6 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
         )
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
 pub struct NumBigintSign(pub num_bigint::Sign);
 impl serde::Serialize for NumBigintSign {
@@ -4545,4 +4494,3 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         )
     }
 }
-///////////////////////////////////////////////////////
