@@ -179,34 +179,36 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8NotN
 }
 // removed serial types (nullable) coz its cannot be nullable in postgresql https://www.tutorialsteacher.com/postgresql/serial-type .
 // todo rewrite create impl for serial types coz its autoincrement type by postgresql
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-// )]
-// pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
-// impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {SMALLSERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
-//     }
-// }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-// )]
-// pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
-// impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {SERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+)]
+pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {SMALLSERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+)]
+pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {SERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
+    }
+}
 //todo test autoincrement on int as primary key
 #[derive(
     Debug,
