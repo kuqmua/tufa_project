@@ -1,4 +1,3 @@
-
 const INT2: &std::primitive::str = "INT2";
 const INT4: &std::primitive::str = "INT4";
 const INT8: &std::primitive::str = "INT8";
