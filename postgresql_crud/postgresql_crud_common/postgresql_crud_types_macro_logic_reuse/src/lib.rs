@@ -5907,7 +5907,7 @@ pub fn postgresql_type_tokens_second(input: proc_macro::TokenStream) -> proc_mac
                 let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_kind {
                     PostgresqlTypeKind::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
                     PostgresqlTypeKind::NotNull => &quote::quote!{
-                        format!("{} {NOT_NULL}", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
+                        format!("{} NOT NULL", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
                     },
                 };
                 quote::quote!{
