@@ -36,6 +36,35 @@ const MACADDR: &std::primitive::str = "MACADDR";
 
 const NOT_NULL: &std::primitive::str = "NOT NULL";
 
+
+
+
+//
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond
+)]
+pub struct StdPrimitiveI16AsPostgresqlInt2Handle(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2Handle {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT2}")
+    }
+}
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNullable {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT2}")
+    }
+}
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNotNull {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT2} {NOT_NULL}")
+    }
+}
+//
 #[derive(
     Debug,
     Clone,
@@ -1227,3 +1256,5 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
 //         format!("{column} {BIT} {NOT_NULL}")
 //     }
 // }
+
+////////////////////////////
