@@ -39,7 +39,6 @@ const JSONB: &std::primitive::str = "JSONB";
 
 const NOT_NULL: &std::primitive::str = "NOT NULL";
 
-
 #[derive(
     Debug,
     Clone,
@@ -68,7 +67,6 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNul
         format!("{column} {INT2} {NOT_NULL}")
     }
 }
-//int and int4 are the same, so remove int type
 #[derive(
     Debug,
     Clone,
@@ -414,7 +412,6 @@ impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlBy
         format!("{column} {BYTEA} {NOT_NULL}")
     }
 }
-////
 //todo add prefix StdOptionOption for nullable types
 #[derive(
     Debug,
@@ -444,7 +441,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgIntervalAsPostgres
         format!("{column} {INTERVAL} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -473,7 +469,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
         format!("{column} {INT4RANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -502,7 +497,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
         format!("{column} {INT8RANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -531,7 +525,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
         format!("{column} {TSRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -560,7 +553,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
         format!("{column} {TSTZRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -589,7 +581,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
         format!("{column} {TSTZRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -618,7 +609,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
         format!("{column} {DATERANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -647,7 +637,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesDeci
         format!("{column} {NUMRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -676,7 +665,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeOffsetDateTimeAsPostgres
         format!("{column} {TIMESTAMPTZ} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -705,7 +693,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDateNotN
         format!("{column} {DATE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -734,7 +721,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveTimeAsPostgresqlT
         format!("{column} {TIME} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -763,7 +749,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateAsPostgresqlD
         format!("{column} {DATE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -792,7 +777,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateTimeAsPostgre
         format!("{column} {TIMESTAMP} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -821,7 +805,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTimeNotN
         format!("{column} {TIME} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -850,7 +833,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimePrimitiveDateTimeAsPostg
         format!("{column} {TIMESTAMP} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -879,7 +861,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumericNo
         format!("{column} {NUMERIC} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -908,7 +889,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeri
         format!("{column} {NUMERIC} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -937,7 +917,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
         format!("{column} {TSTZRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -966,7 +945,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
         format!("{column} {TSRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -995,7 +973,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
         format!("{column} {DATERANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1024,7 +1001,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigD
         format!("{column} {NUMRANGE} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1053,7 +1029,6 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlM
         format!("{column} {MONEY} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1082,7 +1057,6 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInetNotNull {
         format!("{column} {INET} {NOT_NULL}")
     }
 }
-
 // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
 // #[derive(
 //     Debug,
@@ -1112,7 +1086,6 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInetNotNull {
 //         format!("{column} {CIDR} {NOT_NULL}")
 //     }
 // }
-
 #[derive(
     Debug,
     Clone,
@@ -1141,7 +1114,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
         format!("{column} {MACADDR} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
@@ -1170,7 +1142,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidNotN
         format!("{column} {UUID} {NOT_NULL}")
     }
 }
-
 // #[derive(
 //     Debug,
 //     Clone,
@@ -1199,7 +1170,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidNotN
 //         format!("{column} {BIT} {NOT_NULL}")
 //     }
 // }
-
 #[derive(
     Debug,
     Clone,
@@ -1228,7 +1198,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
         format!("{column} {TIMESTAMPTZ} {NOT_NULL}")
     }
 }
-
 #[derive(
     Debug,
     Clone,
