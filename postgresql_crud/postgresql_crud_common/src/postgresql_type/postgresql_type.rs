@@ -55,13 +55,13 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2Handle
     }
 }
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNullable {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {INT2}")
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        <StdPrimitiveI16AsPostgresqlInt2Handle as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
     }
 }
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {INT2} {NOT_NULL}")
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{} {NOT_NULL}", <StdPrimitiveI16AsPostgresqlInt2Handle as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key))
     }
 }
 //
