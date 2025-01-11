@@ -38,37 +38,81 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i16_as_postgresql_small_int2": 0,
-    "std_primitive_i16_as_postgresql_small_int2_not_null": 0,
-    "std_primitive_i32_as_postgresql_int4": 0,
-    "std_primitive_i32_as_postgresql_int4_not_null": 0,
-    "std_primitive_i64_as_postgresql_big_int8": 0,
-    "std_primitive_i64_as_postgresql_big_int8_not_null": 0,
-    "std_primitive_f32_as_postgresql_float4": 0.0,
-    "std_primitive_f32_as_postgresql_float4_not_null": 0.0,
-    "std_primitive_f64_as_postgresql_float8": 0.0,
-    "std_primitive_f64_as_postgresql_float8_not_null": 0.0,
-    "std_primitive_bool_as_postgresql_bool": false,
-    "std_primitive_bool_as_postgresql_bool_not_null": false,
-    "std_string_string_as_postgresql_text": "",
-    "std_string_string_as_postgresql_text_not_null": "",
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea": [
+    "std_primitive_i16_as_small_int2_nullable": null,
+    "std_primitive_i16_as_small_int2_not_null": 0,
+    "std_primitive_i32_as_int4": 0,
+    "std_primitive_i32_as_int4_not_null": 0,
+    "std_primitive_i64_as_big_int8": 0,
+    "std_primitive_i64_as_big_int8_not_null": 0,
+    "std_primitive_f32_as_float4": 0.0,
+    "std_primitive_f32_as_float4_not_null": 0.0,
+    "std_primitive_f64_as_float8": 0.0,
+    "std_primitive_f64_as_float8_not_null": 0.0,
+    "sqlx_postgres_types_pg_money_as_money": 0,
+    "sqlx_postgres_types_pg_money_as_money_not_null": 0,
+    "sqlx_types_decimal_as_numeric": "0",
+    "sqlx_types_decimal_as_numeric_not_null": "0",
+    "sqlx_types_big_decimal_as_numeric": {
+      "digits": {
+        "sign": "NoSign",
+        "digits": []
+      },
+      "scale": 0
+    },
+    "sqlx_types_big_decimal_as_numeric_not_null": {
+      "digits": {
+        "sign": "NoSign",
+        "digits": []
+      },
+      "scale": 0
+    },
+    "std_primitive_bool_as_bool": false,
+    "std_primitive_bool_as_bool_not_null": false,
+    "std_string_string_as_text": "",
+    "std_string_string_as_text_not_null": "",
+    "std_vec_vec_std_primitive_u8_as_bytea": [
       0
     ],
-    "std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null": [
+    "std_vec_vec_std_primitive_u8_as_bytea_not_null": [
       0
     ],
-    "sqlx_postgres_types_pg_interval_as_postgresql_interval": {
+    "sqlx_types_time_date_as_date": {
+      "year": 0,
+      "month": 1,
+      "day": 1
+    },
+    "sqlx_types_time_date_as_date_not_null": {
+      "year": 0,
+      "month": 1,
+      "day": 1
+    },
+    "sqlx_types_chrono_naive_date_as_date": "1970-01-01",
+    "sqlx_types_chrono_naive_date_as_date_not_null": "1970-01-01",
+    "sqlx_types_chrono_naive_time_as_time": "00:00:00",
+    "sqlx_types_chrono_naive_time_as_time_not_null": "00:00:00",
+    "sqlx_types_time_time_as_time": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sqlx_types_time_time_as_time_not_null": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sqlx_postgres_types_pg_interval_as_interval": {
       "months": 0,
       "days": 0,
       "microseconds": 0
     },
-    "sqlx_postgres_types_pg_interval_as_postgresql_interval_not_null": {
+    "sqlx_postgres_types_pg_interval_as_interval_not_null": {
       "months": 0,
       "days": 0,
       "microseconds": 0
     },
-    "pg_range_std_primitive_i32_as_postgresql_int4_range": {
+    "pg_range_std_primitive_i32_as_int4_range": {
       "start": {
         "Included": 0
       },
@@ -76,7 +120,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "Excluded": 0
       }
     },
-    "pg_range_std_primitive_i32_as_postgresql_int4_range_not_null": {
+    "pg_range_std_primitive_i32_as_int4_range_not_null": {
       "start": {
         "Included": 0
       },
@@ -84,7 +128,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "Excluded": 0
       }
     },
-    "pg_range_std_primitive_i64_as_postgresql_int8_range": {
+    "pg_range_std_primitive_i64_as_int8_range": {
       "start": {
         "Included": 0
       },
@@ -92,7 +136,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "Excluded": 0
       }
     },
-    "pg_range_std_primitive_i64_as_postgresql_int8_range_not_null": {
+    "pg_range_std_primitive_i64_as_int8_range_not_null": {
       "start": {
         "Included": 0
       },
@@ -100,7 +144,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "Excluded": 0
       }
     },
-    "pg_range_naive_date_time_as_postgresql_ts_range": {
+    "pg_range_naive_date_time_as_ts_range": {
       "start": {
         "Included": "1970-01-01T00:00:00"
       },
@@ -108,12 +152,56 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "Excluded": "1970-01-01T00:00:00"
       }
     },
-    "pg_range_naive_date_time_as_postgresql_ts_range_not_null": {
+    "pg_range_naive_date_time_as_ts_range_not_null": {
       "start": {
         "Included": "1970-01-01T00:00:00"
       },
       "end": {
         "Excluded": "1970-01-01T00:00:00"
+      }
+    },
+    "pg_range_time_primitive_date_time_as_ts_range": {
+      "start": {
+        "Included": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "end": {
+        "Excluded": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "pg_range_time_primitive_date_time_as_ts_range_not_null": {
+      "start": {
+        "Included": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "end": {
+        "Excluded": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
       }
     },
     "pg_range_date_time_utc_as_ts_tz_range": {
@@ -131,136 +219,6 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       "end": {
         "Excluded": "1970-01-01T00:00:00Z"
       }
-    },
-    "pg_range_date_time_local_as_postgresql_ts_tz_range": {
-      "start": {
-        "Included": "1970-01-01T03:00:00+03:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T03:00:00+03:00"
-      }
-    },
-    "pg_range_date_time_local_as_postgresql_ts_tz_range_not_null": {
-      "start": {
-        "Included": "1970-01-01T03:00:00+03:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T03:00:00+03:00"
-      }
-    },
-    "pg_range_chrono_naive_date_as_postgresql_date_range": {
-      "start": {
-        "Included": "1970-01-01"
-      },
-      "end": {
-        "Excluded": "1970-01-01"
-      }
-    },
-    "pg_range_chrono_naive_date_as_postgresql_date_range_not_null": {
-      "start": {
-        "Included": "1970-01-01"
-      },
-      "end": {
-        "Excluded": "1970-01-01"
-      }
-    },
-    "pg_range_decimal_as_postgresql_num_range": {
-      "start": {
-        "Included": "0"
-      },
-      "end": {
-        "Excluded": "0"
-      }
-    },
-    "pg_range_decimal_as_postgresql_num_range_not_null": {
-      "start": {
-        "Included": "0"
-      },
-      "end": {
-        "Excluded": "0"
-      }
-    },
-    "time_offset_date_time_as_postgresql_timestamp_tz": [
-      1970,
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "time_offset_date_time_as_postgresql_timestamp_tz_not_null": [
-      1970,
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_date_as_postgresql_date": {
-      "year": 0,
-      "month": 1,
-      "day": 1
-    },
-    "sqlx_types_time_date_as_postgresql_date_not_null": {
-      "year": 0,
-      "month": 1,
-      "day": 1
-    },
-    "sqlx_types_chrono_naive_time_as_postgresql_time": "00:00:00",
-    "sqlx_types_chrono_naive_time_as_postgresql_time_not_null": "00:00:00",
-    "sqlx_types_chrono_naive_date_as_postgresql_date": "1970-01-01",
-    "sqlx_types_chrono_naive_date_as_postgresql_date_not_null": "1970-01-01",
-    "chrono_naive_date_time_as_postgresql_timestamp": "1970-01-01T00:00:00",
-    "chrono_naive_date_time_as_postgresql_timestamp_not_null": "1970-01-01T00:00:00",
-    "sqlx_types_time_time_as_postgresql_time": [
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_time_as_postgresql_time_not_null": [
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_primitive_date_time_as_timestamp": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_decimal_as_postgresql_numeric": "0",
-    "sqlx_types_decimal_as_postgresql_numeric_not_null": "0",
-    "sqlx_types_big_decimal_as_postgresql_numeric": {
-      "digits": {
-        "sign": "NoSign",
-        "digits": []
-      },
-      "scale": 0
-    },
-    "sqlx_types_big_decimal_as_postgresql_numeric_not_null": {
-      "digits": {
-        "sign": "NoSign",
-        "digits": []
-      },
-      "scale": 0
     },
     "pg_range_time_offset_date_time_as_ts_tz_range": {
       "start": {
@@ -318,48 +276,36 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         ]
       }
     },
-    "pg_range_time_primitive_date_time_as_ts_range": {
+    "pg_range_date_time_local_as_ts_tz_range": {
       "start": {
-        "Included": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
+        "Included": "1970-01-01T03:00:00+03:00"
       },
       "end": {
-        "Excluded": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
+        "Excluded": "1970-01-01T03:00:00+03:00"
       }
     },
-    "pg_range_time_primitive_date_time_as_ts_range_not_null": {
+    "pg_range_date_time_local_as_ts_tz_range_not_null": {
       "start": {
-        "Included": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
+        "Included": "1970-01-01T03:00:00+03:00"
       },
       "end": {
-        "Excluded": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
+        "Excluded": "1970-01-01T03:00:00+03:00"
+      }
+    },
+    "pg_range_chrono_naive_date_as_date_range": {
+      "start": {
+        "Included": "1970-01-01"
+      },
+      "end": {
+        "Excluded": "1970-01-01"
+      }
+    },
+    "pg_range_chrono_naive_date_as_date_range_not_null": {
+      "start": {
+        "Included": "1970-01-01"
+      },
+      "end": {
+        "Excluded": "1970-01-01"
       }
     },
     "pg_range_sqlx_types_time_date_as_date_range": {
@@ -392,6 +338,22 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           "month": 1,
           "day": 1
         }
+      }
+    },
+    "pg_range_decimal_as_num_range": {
+      "start": {
+        "Included": "0"
+      },
+      "end": {
+        "Excluded": "0"
+      }
+    },
+    "pg_range_decimal_as_num_range_not_null": {
+      "start": {
+        "Included": "0"
+      },
+      "end": {
+        "Excluded": "0"
       }
     },
     "pg_range_sqlx_types_big_decimal_as_num_range": {
@@ -434,10 +396,54 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         }
       }
     },
-    "sqlx_postgres_types_pg_money_as_postgresql_money": 0,
-    "sqlx_postgres_types_pg_money_as_postgresql_money_not_null": 0,
-    "std_net_ip_addr_as_postgresql_inet": "0.0.0.0",
-    "std_net_ip_addr_as_postgresql_inet_not_null": "0.0.0.0",
+    "chrono_naive_date_time_as_timestamp": "1970-01-01T00:00:00",
+    "chrono_naive_date_time_as_timestamp_not_null": "1970-01-01T00:00:00",
+    "sqlx_types_time_primitive_date_time_as_timestamp": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "time_offset_date_time_as_timestamp_tz": [
+      1970,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "time_offset_date_time_as_timestamp_tz_not_null": [
+      1970,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "chrono_date_time_chrono_utc_as_timestamp_tz": "1970-01-01T00:00:00Z",
+    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": "1970-01-01T00:00:00Z",
+    "chrono_date_time_chrono_local_as_timestamp_tz": "1970-01-01T03:00:00+03:00",
+    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1970-01-01T03:00:00+03:00",
+    "sqlx_types_uuid_uuid_as_uuid": "00000000-0000-0000-0000-000000000000",
+    "sqlx_types_uuid_uuid_as_uuid_not_null": "00000000-0000-0000-0000-000000000000",
+    "std_net_ip_addr_as_inet": "0.0.0.0",
+    "std_net_ip_addr_as_inet_not_null": "0.0.0.0",
     "mac_address_mac_address_as_mac_addr": [
       0,
       0,
@@ -453,13 +459,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       0,
       0,
       0
-    ],
-    "sqlx_types_uuid_uuid_as_postgresql_uuid": "00000000-0000-0000-0000-000000000000",
-    "sqlx_types_uuid_uuid_as_postgresql_uuid_not_null": "00000000-0000-0000-0000-000000000000",
-    "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_utc_as_postgresql_timestamp_tz_not_null": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_local_as_timestamp_tz": "1970-01-01T03:00:00+03:00",
-    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1970-01-01T03:00:00+03:00"
+    ]
   }
 ]
 

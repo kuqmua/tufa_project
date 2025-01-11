@@ -49,7 +49,7 @@
     // }
 }]
 pub struct Example {
-    pub std_primitive_i16_as_small_int2: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2,
+    pub std_primitive_i16_as_small_int2_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2Nullable,
     pub std_primitive_i16_as_small_int2_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull,
 
     pub std_primitive_i32_as_int4: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4,
