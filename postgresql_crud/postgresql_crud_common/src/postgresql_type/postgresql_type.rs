@@ -54,16 +54,6 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2Handle
         format!("{column} {INT2}")
     }
 }
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNullable {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        <StdPrimitiveI16AsPostgresqlInt2Handle as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
-    }
-}
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2HandleNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{} {NOT_NULL}", <StdPrimitiveI16AsPostgresqlInt2Handle as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key))
-    }
-}
 //
 #[derive(
     Debug,
@@ -1256,5 +1246,3 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
 //         format!("{column} {BIT} {NOT_NULL}")
 //     }
 // }
-
-////////////////////////////
