@@ -4048,15 +4048,112 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
     }
 }
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec,
-// )]
-// pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);//is bitvec acceptable for json rest api?
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec,
+)]
+pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);//is bitvec acceptable for json rest api?
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl _serde::Serialize for SqlxTypesBitVec {
+        fn serialize<__S>(
+            &self,
+            __serializer: __S,
+        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+        where
+            __S: _serde::Serializer,
+        {
+            _serde::Serializer::serialize_newtype_struct(
+                __serializer,
+                "SqlxTypesBitVec",
+                &self.0.to_bytes(),
+            )
+        }
+    }
+};
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVec {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<SqlxTypesBitVec>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = SqlxTypesBitVec;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct SqlxTypesBitVec",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::vec::Vec<std::primitive::u8> = <std::vec::Vec<
+                        std::primitive::u8,
+                    > as _serde::Deserialize>::deserialize(__e)?;
+                    _serde::__private::Ok(SqlxTypesBitVec(sqlx::types::BitVec::from_bytes(&__field0)))
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::vec::Vec<std::primitive::u8>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct SqlxTypesBitVec with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(SqlxTypesBitVec(sqlx::types::BitVec::from_bytes(&__field0)))
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "SqlxTypesBitVec",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<SqlxTypesBitVec>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+
+
 // pub struct SerdeJsonValue(pub serde_json::Value);
 
 /////////////////////////////////////////
