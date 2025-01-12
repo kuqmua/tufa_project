@@ -40,7 +40,7 @@ const MACADDR: &std::primitive::str = "MACADDR";
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
@@ -55,7 +55,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
@@ -70,7 +70,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
@@ -85,7 +85,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_type::postgresql_base_type::StdPrimitiveF32);
@@ -100,7 +100,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_type::postgresql_base_type::StdPrimitiveF64);
@@ -117,7 +117,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -133,7 +133,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSeria
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -149,7 +149,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerial {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -183,7 +183,7 @@ const _: () = {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgMoney);
@@ -198,7 +198,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlM
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
@@ -213,7 +213,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesBigDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesBigDecimal);
@@ -228,7 +228,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeri
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
@@ -243,7 +243,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 // )]
 // struct StdStringStringAsPostgresqlVarchar(crate::postgresql_type::postgresql_base_type::StdStringString);
@@ -258,7 +258,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 // //     PartialEq,
 // //     serde::Serialize,
 // //     serde::Deserialize,
-// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
 // //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 // // )]
 // // struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
@@ -273,7 +273,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdStringString);
@@ -288,7 +288,7 @@ impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
 // //     PartialEq,
 // //     serde::Serialize,
 // //     serde::Deserialize,
-// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
 // //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 // // )]
 // // struct StdStringStringAsPostgresqlCiText(crate::postgresql_type::postgresql_base_type::StdStringString);
@@ -303,7 +303,7 @@ impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(crate::postgresql_type::postgresql_base_type::StdVecVecStdPrimitiveU8);
@@ -318,7 +318,7 @@ impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlBy
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesTimeDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeDate);
@@ -333,7 +333,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDate {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesChronoNaiveDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDate);
@@ -348,7 +348,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateAsPostgresqlD
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveTime);
@@ -363,7 +363,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveTimeAsPostgresqlT
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesTimeTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeTime);
@@ -379,7 +379,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTime {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgInterval);
@@ -394,7 +394,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgIntervalAsPostgres
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI32);
@@ -409,7 +409,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI64);
@@ -424,7 +424,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
@@ -439,7 +439,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
@@ -454,7 +454,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
@@ -469,7 +469,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
@@ -484,7 +484,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
@@ -499,7 +499,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
@@ -514,7 +514,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
@@ -529,7 +529,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
@@ -544,7 +544,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesDeci
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
@@ -559,7 +559,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigD
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDateTime);
@@ -574,7 +574,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateTimeAsPostgre
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesTimePrimitiveDateTime);
@@ -589,7 +589,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimePrimitiveDateTimeAsPostg
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeOffsetDateTime);
@@ -604,7 +604,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeOffsetDateTimeAsPostgres
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
@@ -619,7 +619,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
@@ -634,7 +634,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesUuidUuidAsPostgresqlUuid(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
@@ -649,7 +649,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuid {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct StdNetIpAddrAsPostgresqlInet(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
@@ -665,7 +665,7 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 // )]
 // struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
@@ -680,7 +680,7 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
 struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(crate::postgresql_type::postgresql_base_type::SqlxTypesMacAddressMacAddress);
@@ -695,7 +695,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
 //     PartialEq,
 //     serde::Serialize,
 //     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 // )]
 // struct SqlxTypesBitVecAsPostgresqlBit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
