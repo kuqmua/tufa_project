@@ -4053,8 +4053,8 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
     Clone,
     PartialEq,
     Eq,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-    // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec,
 )]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);//is bitvec acceptable for json rest api?
 const _: () = {

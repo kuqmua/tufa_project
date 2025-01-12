@@ -31,7 +31,7 @@ const UUID: &std::primitive::str = "UUID";
 const INET: &std::primitive::str = "INET";
 // const CIDR: &std::primitive::str = "CIDR";
 const MACADDR: &std::primitive::str = "MACADDR";
-// const BIT: &std::primitive::str = "BIT";
+const BIT: &std::primitive::str = "BIT";
 // const VARBIT: &std::primitive::str = "VARBIT";
 
 #[derive(
@@ -689,18 +689,18 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
         format!("{column} {MACADDR}")
     }
 }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// )]
-// struct SqlxTypesBitVecAsPostgresqlBit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
-// impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlBit {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {BIT}")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+)]
+struct SqlxTypesBitVecAsPostgresqlBit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
+impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlBit {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {BIT}(8)")//todo number elements support. //todo not its work only if number % 8 = 0 coz std::primitive::u8 initialization, conversion and serde
+    }
+}
