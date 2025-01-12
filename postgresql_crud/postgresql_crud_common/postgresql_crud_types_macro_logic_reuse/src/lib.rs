@@ -1529,129 +1529,130 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
         Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
     };
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-    let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_to_create_token_stream = {
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_create_upper_camel_case,
+    let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_not_null_to_create_token_stream = {
+        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_create_upper_camel_case,
             &field_type
         );
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_create_upper_camel_case,
+        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_create_upper_camel_case,
             &field_type
         );
         quote::quote! {
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_create_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_create_token_stream
+            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
+            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
         }
     };
-    let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_to_read_token_stream = {
-        let impl_crate_bind_query_for_postgresql_type_ident_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_to_read_upper_camel_case,
+    let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_not_null_to_read_token_stream = {
+        let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_read_upper_camel_case,
             &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
         );
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_type_ident_to_read_upper_camel_case,
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_read_upper_camel_case,
             &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
         );
         quote::quote! {
-            #impl_crate_bind_query_for_postgresql_type_ident_to_read_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_read_token_stream
+            #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
         }
     };
-    let postgresql_type_ident_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_to_update_token_stream = {
-        let impl_std_fmt_display_for_postgresql_type_ident_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &postgresql_type_ident_to_update_upper_camel_case,
+    let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_not_null_to_update_token_stream = {
+        let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_update_upper_camel_case,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_type_ident_to_update_upper_camel_case,
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_update_upper_camel_case,
             &quote::quote!{format!("{self}")}
         );
-        let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_to_update_upper_camel_case);
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_update_upper_camel_case,
+        let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
+        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_update_upper_camel_case,
             &field_type
         );
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_update_upper_camel_case,
+        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_update_upper_camel_case,
             &field_type
         );
         quote::quote! {
-            #impl_std_fmt_display_for_postgresql_type_ident_to_update_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_update_token_stream
-            #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_update_token_stream
+            #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream
+            #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
         }
     };
-    let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_to_delete_token_stream = {
-        let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+    let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_ident_not_null_to_delete_token_stream = {
+        let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::Pub,
-            &postgresql_type_ident_to_delete_upper_camel_case,
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &field_type_struct_content_token_stream,
             false,
             true,
         );
-        let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
         );
-        let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
         );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &quote::quote!{format!("{self}")}
         );
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &field_type
         );
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &field_type
         );
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_type_ident_to_delete_upper_camel_case,
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
             &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
         );
         quote::quote!{
-            #postgresql_type_ident_to_delete_token_stream
-            #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
-            #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
+            #postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
         }
     };
-    let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_token_stream = {
+    let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
+        let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident);
         quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident {
-                type PostgresqlTypeSelfToCreate = #postgresql_type_ident_to_create_upper_camel_case;
-                type PostgresqlTypeSelfToRead = #postgresql_type_ident_to_read_upper_camel_case;
-                type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_to_update_upper_camel_case;
-                type PostgresqlTypeSelfToDelete = #postgresql_type_ident_to_delete_upper_camel_case;
+            impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
+                type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
+                type PostgresqlTypeSelfToRead = #postgresql_type_ident_not_null_to_read_upper_camel_case;
+                type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_not_null_to_update_upper_camel_case;
+                type PostgresqlTypeSelfToDelete = #postgresql_type_ident_not_null_to_delete_upper_camel_case;
             }
         }
     };
     //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
     let generated = quote::quote! {
-        #postgresql_type_ident_to_create_token_stream
+        #postgresql_type_ident_not_null_to_create_token_stream
 
-        #postgresql_type_ident_to_read_token_stream
+        #postgresql_type_ident_not_null_to_read_token_stream
 
-        #postgresql_type_ident_to_update_token_stream
+        #postgresql_type_ident_not_null_to_update_token_stream
 
-        #postgresql_type_ident_to_delete_token_stream
+        #postgresql_type_ident_not_null_to_delete_token_stream
 
-        #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_token_stream
+        #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
     };
     // if ident == "" {
     //     println!("{generated}");
@@ -5804,31 +5805,44 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
 }
 
 ////////////////
+enum PostgresqlTypeKind {
+    Nullable,
+    NotNull
+}
+impl PostgresqlTypeKind {
+    fn postgresql_type_field_type_where_element_upper_camel_case(&self, field_type: &syn::Type) -> proc_macro2::TokenStream {
+        let value: &dyn quote::ToTokens = match &self {
+            Self::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_type_last_segment(&field_type),
+            Self::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_type_last_segment(&field_type),
+        };
+        quote::quote!{#value}
+    }
+    fn ident_handle(&self, ident: &syn::Ident) -> proc_macro2::TokenStream {
+        let value: &dyn quote::ToTokens = match &self {
+            Self::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&ident),
+            Self::NotNull => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident),
+        };
+        quote::quote!{#value}
+    }
+    fn field_type_handle(&self, field_type: &syn::Type) -> proc_macro2::TokenStream {
+        let value: &dyn quote::ToTokens = match &self {
+            Self::Nullable => &naming::parameter::StdOptionOptionSelfUpperCamelCase::from_type_last_segment(&field_type),
+            Self::NotNull => &field_type,
+        };
+        quote::quote!{#value}
+    }
+}
 #[proc_macro_derive(PostgresqlTypeTokensSecond)]
 pub fn postgresql_type_tokens_second(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    enum PostgresqlTypeKind {
-        Nullable,
-        NotNull
-    }
+
     let generate_postgresql_type_nulllable_or_not_null = |postgresql_type_kind: &PostgresqlTypeKind| -> proc_macro2::TokenStream {
-        let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_kind {
-            PostgresqlTypeKind::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_type_last_segment(&field_type),
-            PostgresqlTypeKind::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_type_last_segment(&field_type),
-        };
-        let ident_handle: &dyn quote::ToTokens = match &postgresql_type_kind {
-            PostgresqlTypeKind::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&ident),
-            PostgresqlTypeKind::NotNull => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident),
-        };
-        let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_kind {
-            PostgresqlTypeKind::Nullable => &naming::parameter::StdOptionOptionSelfUpperCamelCase::from_type_last_segment(&field_type),
-            PostgresqlTypeKind::NotNull => &field_type,
-        };
-
-
+        let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = &postgresql_type_kind.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
+        let ident_handle: &dyn quote::ToTokens = &postgresql_type_kind.ident_handle(&ident);
+        let field_type_handle: &dyn quote::ToTokens = &postgresql_type_kind.field_type_handle(&field_type);
         let postgresql_type_ident_column_upper_camel_case = naming::parameter::PostgresqlTypeSelfColumnUpperCamelCase::from_tokens(&ident_handle);
 
         let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
@@ -5900,24 +5914,6 @@ pub fn postgresql_type_tokens_second(input: proc_macro::TokenStream) -> proc_mac
                     }
                 }
             };
-            let impl_crate_create_table_column_query_part_for_ident_token_stream = {
-                let ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream = quote::quote!{
-                    <#ident as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
-                };
-                let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_kind {
-                    PostgresqlTypeKind::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
-                    PostgresqlTypeKind::NotNull => &quote::quote!{
-                        format!("{} NOT NULL", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
-                    },
-                };
-                quote::quote!{
-                    impl crate::CreateTableColumnQueryPart for #ident_handle {
-                        fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-                            #content_token_stream
-                        }
-                    }
-                }
-            };
             quote::quote!{
                 #ident_token_stream
                 #impl_std_fmt_display_for_ident_token_stream
@@ -5925,7 +5921,6 @@ pub fn postgresql_type_tokens_second(input: proc_macro::TokenStream) -> proc_mac
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
                 #impl_crate_bind_query_for_ident_token_stream
                 #impl_ident_create_table_query_part_handle_token_stream
-                #impl_crate_create_table_column_query_part_for_ident_token_stream
             }
         };
         let pub_snake_case = naming::PubSnakeCase;
@@ -6624,6 +6619,105 @@ pub fn postgresql_type_tokens_second(input: proc_macro::TokenStream) -> proc_mac
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "PostgresqlTypeTokens",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+
+
+enum IsPrimaryKey {
+    True,
+    False,
+}
+fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+    postgresql_type_kind: &PostgresqlTypeKind,
+    ident: &syn::Ident,
+    field_type: &syn::Type,
+    is_primary_key: &IsPrimaryKey,
+) -> proc_macro2::TokenStream {
+    let ident_handle: &dyn quote::ToTokens = &postgresql_type_kind.ident_handle(&ident);
+    let ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream = quote::quote!{
+        <#ident as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
+    };
+    let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_kind {
+        PostgresqlTypeKind::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
+        PostgresqlTypeKind::NotNull => &match is_primary_key {
+            IsPrimaryKey::True => quote::quote!{
+                format!("{} NOT NULL {}", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream, crate::maybe_primary_key(is_primary_key))
+            },
+            IsPrimaryKey::False => quote::quote!{
+                format!("{} NOT NULL", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
+            }
+        },
+    };
+    quote::quote!{
+        impl crate::CreateTableColumnQueryPart for #ident_handle {
+            fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+                #content_token_stream
+            }
+        }
+    }
+}
+
+#[proc_macro_derive(PostgresqlTypeCreateTableColumnQueryPartTokens)]
+pub fn postgresql_type_create_table_column_query_part_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let is_primary_key = IsPrimaryKey::False;
+    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeKind::Nullable,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
+    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeKind::NotNull,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
+    let generated = quote::quote!{
+        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
+        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+    };
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlTypeCreateTableColumnQueryPartTokens",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+
+#[proc_macro_derive(PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens)]
+pub fn postgresql_type_create_table_column_query_part_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let is_primary_key = IsPrimaryKey::True;
+    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeKind::Nullable,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
+    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeKind::NotNull,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
+    let generated = quote::quote!{
+        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
+        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+    };
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens",
     //         &generated,
     //     );
     // }
