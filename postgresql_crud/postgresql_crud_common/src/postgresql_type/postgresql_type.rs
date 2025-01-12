@@ -42,7 +42,7 @@ const MACADDR: &std::primitive::str = "MACADDR";
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INT2}")
@@ -56,7 +56,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+struct StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INT4}")
@@ -70,7 +70,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlInt4 {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
+struct StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INT8}")
@@ -84,7 +84,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlInt8 {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_type::postgresql_base_type::StdPrimitiveF32);
+struct StdPrimitiveF32AsPostgresqlFloat4(crate::postgresql_type::postgresql_base_type::StdPrimitiveF32);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT4}")
@@ -98,7 +98,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF32AsPostgresqlFloat4 {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_type::postgresql_base_type::StdPrimitiveF64);
+struct StdPrimitiveF64AsPostgresqlFloat8(crate::postgresql_type::postgresql_base_type::StdPrimitiveF64);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {FLOAT8}")
@@ -107,36 +107,38 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
 const NOT_NULL: &std::primitive::str = "NOT NULL";
 // removed serial types (nullable) coz its cannot be nullable in postgresql https://www.tutorialsteacher.com/postgresql/serial-type .
 // todo rewrite create impl for serial types coz its autoincrement type by postgresql
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-)]
-pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {SMALLSERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-)]
-pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {SERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
-    }
-}
+
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+// )]
+// pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {SMALLSERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+// )]
+// pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialNotNull {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {SERIAL} {NOT_NULL}{}", crate::maybe_primary_key(is_primary_key))
+//     }
+// }
+
 //todo test autoincrement on int as primary key
 #[derive(
     Debug,
@@ -179,7 +181,7 @@ const _: () = {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgMoney);
+struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgMoney);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {MONEY}")
@@ -193,7 +195,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgMoneyAsPostgresqlM
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
+struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
 impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {NUMERIC}")
@@ -207,7 +209,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesBigDecimal);
+struct SqlxTypesBigDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesBigDecimal);
 impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeric {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {NUMERIC}")
@@ -221,7 +223,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesBigDecimalAsPostgresqlNumeri
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
 impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {BOOL}")
@@ -235,7 +237,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 // )]
-// pub struct StdStringStringAsPostgresqlVarchar(crate::postgresql_type::postgresql_base_type::StdStringString);
+// struct StdStringStringAsPostgresqlVarchar(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlVarchar {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         format!("{column} {VARCHAR}")
@@ -249,7 +251,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 // //     serde::Deserialize,
 // //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 // // )]
-// // pub struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
+// // struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         format!("{column} {CHARN}")
@@ -263,7 +265,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdStringString);
+struct StdStringStringAsPostgresqlText(crate::postgresql_type::postgresql_base_type::StdStringString);
 impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TEXT}")
@@ -277,7 +279,7 @@ impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
 // //     serde::Deserialize,
 // //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 // // )]
-// // pub struct StdStringStringAsPostgresqlCiText(crate::postgresql_type::postgresql_base_type::StdStringString);
+// // struct StdStringStringAsPostgresqlCiText(crate::postgresql_type::postgresql_base_type::StdStringString);
 // // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCiText {
 // //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 // //         format!("{column} {CITEXT}")
@@ -291,7 +293,7 @@ impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlText {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(crate::postgresql_type::postgresql_base_type::StdVecVecStdPrimitiveU8);
+struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(crate::postgresql_type::postgresql_base_type::StdVecVecStdPrimitiveU8);
 impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlBytea {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {BYTEA}")
@@ -305,7 +307,7 @@ impl crate::CreateTableColumnQueryPart for StdVecVecStdPrimitiveU8AsPostgresqlBy
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesTimeDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeDate);
+struct SqlxTypesTimeDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeDate);
 impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDate {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {DATE}")
@@ -319,7 +321,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeDateAsPostgresqlDate {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDate);
+struct SqlxTypesChronoNaiveDateAsPostgresqlDate(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDate);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateAsPostgresqlDate {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {DATE}")
@@ -333,7 +335,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateAsPostgresqlD
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveTime);
+struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveTimeAsPostgresqlTime {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIME}")
@@ -347,7 +349,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveTimeAsPostgresqlT
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesTimeTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeTime);
+struct SqlxTypesTimeTimeAsPostgresqlTime(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTime {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIME}")
@@ -362,7 +364,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeTimeAsPostgresqlTime {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgInterval);
+struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgInterval);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INTERVAL}")
@@ -376,7 +378,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgIntervalAsPostgres
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI32);
+struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI32);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INT4RANGE}")
@@ -390,7 +392,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI64);
+struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeStdPrimitiveI64);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INT8RANGE}")
@@ -404,7 +406,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeStdPrimitiveI
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TSRANGE}")
@@ -418,7 +420,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TSRANGE}")
@@ -432,7 +434,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TSTZRANGE}")
@@ -446,7 +448,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TSTZRANGE}")
@@ -460,7 +462,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TSTZRANGE}")
@@ -474,7 +476,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {DATERANGE}")
@@ -488,7 +490,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesChro
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {DATERANGE}")
@@ -502,7 +504,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesTime
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {NUMRANGE}")
@@ -516,7 +518,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesDeci
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(crate::postgresql_type::postgresql_base_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
 impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {NUMRANGE}")
@@ -530,7 +532,7 @@ impl crate::CreateTableColumnQueryPart for SqlxPostgresTypesPgRangeSqlxTypesBigD
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDateTime);
+struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoNaiveDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIMESTAMP}")
@@ -544,7 +546,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoNaiveDateTimeAsPostgre
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesTimePrimitiveDateTime);
+struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(crate::postgresql_type::postgresql_base_type::SqlxTypesTimePrimitiveDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIMESTAMP}")
@@ -558,7 +560,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimePrimitiveDateTimeAsPostg
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeOffsetDateTime);
+struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesTimeOffsetDateTime);
 impl crate::CreateTableColumnQueryPart for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIMESTAMPTZ}")
@@ -572,7 +574,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesTimeOffsetDateTimeAsPostgres
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIMESTAMPTZ}")
@@ -586,7 +588,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(crate::postgresql_type::postgresql_base_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {TIMESTAMPTZ}")
@@ -600,7 +602,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesUuidUuidAsPostgresqlUuid(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
+struct SqlxTypesUuidUuidAsPostgresqlUuid(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
 impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuid {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {UUID}")
@@ -614,7 +616,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuid {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct StdNetIpAddrAsPostgresqlInet(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
+struct StdNetIpAddrAsPostgresqlInet(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
 impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {INET}")
@@ -629,7 +631,7 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 // )]
-// pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
+// struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
 // impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         format!("{column} {CIDR}")
@@ -643,7 +645,7 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
     serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 )]
-pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(crate::postgresql_type::postgresql_base_type::SqlxTypesMacAddressMacAddress);
+struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(crate::postgresql_type::postgresql_base_type::SqlxTypesMacAddressMacAddress);
 impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {MACADDR}")
@@ -657,7 +659,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
 //     serde::Deserialize,
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokensSecond,
 // )]
-// pub struct SqlxTypesBitVecAsPostgresqlBit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
+// struct SqlxTypesBitVecAsPostgresqlBit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
 // impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlBit {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
 //         format!("{column} {BIT}")
