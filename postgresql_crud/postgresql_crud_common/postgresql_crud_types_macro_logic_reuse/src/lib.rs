@@ -5818,6 +5818,17 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
     // }
     generated.into()
 }
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBitVec)]
+pub fn postgresql_base_type_tokens_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{{
+            let mut value = sqlx::types::BitVec::new();
+            value.push(false);
+            value
+        }}
+    )
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
