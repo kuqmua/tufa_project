@@ -4148,12 +4148,6 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     // }
     generated.into()
 }
-
-
-
-
-
-
 fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{
@@ -5893,22 +5887,83 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
+        let position_equals_upper_camel_case = naming::PositionEqualsUpperCamelCase;
+        let postgresql_type_tokens_where_element_position_equals_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            &position_equals_upper_camel_case,
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{
+                pub #value_snake_case: std::primitive::bool,
+                pub position: std::primitive::i64,
+            },
+            &{
+                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{
+                    #value_snake_case: #core_default_default_default,
+                    position: #core_default_default_default,
+                }
+            },
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(first_increment) => {
+                        *#increment_snake_case = first_increment;
+                        match #increment_snake_case.checked_add(1) {
+                            Some(second_increment) => {
+                                *#increment_snake_case = second_increment;
+                                Ok(format!(
+                                    "{}(substring({}::text from ${}::int4 for 1::int4) = ${})",
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
+                                    first_increment,
+                                    second_increment,
+                                ))
+                            },
+                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.position);
+                #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
+                    "1"
+                }
+                else {
+                    "0"
+                });
+                #query_snake_case
+            }
+        );
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
+                &position_equals_upper_camel_case,
             ]
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_position_equals_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     });

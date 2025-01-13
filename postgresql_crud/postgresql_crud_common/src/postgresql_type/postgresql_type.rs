@@ -716,6 +716,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesMacAddressMacAddressAsPostgr
 struct SqlxTypesBitVecAsPostgresqlVarbit(crate::postgresql_type::postgresql_base_type::SqlxTypesBitVec);
 impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlVarbit {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {BIT} VARYING(8)")//todo number elements support. //todo not its work only if number % 8 = 0 coz std::primitive::u8 initialization, conversion and serde
+        format!("{column} {BIT} VARYING(9)")//todo number elements support. //todo not its work only if number % 8 = 0 coz std::primitive::u8 initialization, conversion and serde
     }
 }
