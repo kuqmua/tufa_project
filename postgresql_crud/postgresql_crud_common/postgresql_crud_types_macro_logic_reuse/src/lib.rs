@@ -3495,6 +3495,193 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
     // }
     generated.into()
 }
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &{
+            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+            quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default)}
+        }
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::True,
+        );
+        let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+                &In::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_in_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesDecimal)]
+pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &token_patterns::CoreDefaultDefaultDefault
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBigDecimal)]
+pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &token_patterns::CoreDefaultDefaultDefault
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementBool)]
 pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -3956,6 +4143,310 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+
+
+
+
+
+
+fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    quote::quote!{
+        sqlx::types::time::Date::from_ordinal_date(
+            #core_default_default_default,
+            1,
+        ).unwrap()//todo 
+    }
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream()
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+                &CurrentDate::upper_camel_case(),
+                &GreaterThanCurrentDate::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_current_date_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDate)]
+pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &token_patterns::CoreDefaultDefaultDefault
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+                &CurrentDate::upper_camel_case(),
+                &GreaterThanCurrentDate::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_current_date_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveTime)]
+pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &token_patterns::CoreDefaultDefaultDefault
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+                &CurrentTime::upper_camel_case(),
+                &GreaterThanCurrentTime::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_current_time_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeTime)]
+pub fn postgresql_base_type_tokens_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &token_patterns::SqlxTypesTimeTimeMidnight,
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
+        };
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &ShouldAddDotZero::False,
+        );
+        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &Between::upper_camel_case(),
+                &CurrentTime::upper_camel_case(),
+                &GreaterThanCurrentTime::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_current_time_token_stream
+            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
     //         &generated,
     //     );
     // }
@@ -4800,6 +5291,42 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_st
         RangeType::I64,
     )
 }
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+    )
+}
+fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
+    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
+    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
+        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+        #sqlx_types_time_time_midnight,
+    )}
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &{
+            let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_primitive_date_time_new_token_stream,
+                &sqlx_types_time_primitive_date_time_new_token_stream,
+            )
+        }
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+    )
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4814,11 +5341,24 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     )
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &{
+            let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_offset_date_time_unix_epoch,
+                &sqlx_types_time_offset_date_time_unix_epoch,
+            )
+        }
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     )
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
@@ -4828,6 +5368,26 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     )
 }
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &{
+            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
+            generate_sqlx_postgres_types_pg_range_token_steram(
+                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+            )
+        }
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
+        input,
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+    )
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
@@ -4835,309 +5395,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sq
         RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     )
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
         input,
-        &token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch
+        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        // todo
-        // -- Values after the current timestamp
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
-
-        // -- Values equal to the current date (ignoring time)
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column::date = CURRENT_DATE;
-        // 6. Time Zone Conversion
-        // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
-
-        // -- Compare with a specific timestamp in another time zone
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
-
-        // -- Values after a timestamp in a different time zone
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &Before::upper_camel_case(),
-                &Between::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_before_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
-    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-    quote::quote!{
-        sqlx::types::time::Date::from_ordinal_date(
-            #core_default_default_default,
-            1,
-        ).unwrap()//todo 
-    }
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream()
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentDate::upper_camel_case(),
-                &GreaterThanCurrentDate::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_date_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTime::upper_camel_case(),
-                &GreaterThanCurrentTime::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_time_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentDate::upper_camel_case(),
-                &GreaterThanCurrentDate::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_date_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -5211,88 +5474,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
     //     );
     // }
     generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::SqlxTypesTimeTimeMidnight,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
-        };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTime::upper_camel_case(),
-                &GreaterThanCurrentTime::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_time_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
-    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-    let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
-    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-        #sqlx_types_time_time_midnight,
-    )}
 }
 #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimePrimitiveDateTime)]
 pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -5368,76 +5549,15 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
     // }
     generated.into()
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeOffsetDateTime)]
+pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_base_type_tokens(
         input,
-        &token_patterns::CoreDefaultDefaultDefault
+        &token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch
     )
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -5450,10 +5570,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
-            &where_operator_type_ident
         );
         let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -5462,402 +5581,48 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
+        // todo
+        // -- Values after the current timestamp
+        // SELECT *
+        // FROM your_table
+        // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
+
+        // -- Values equal to the current date (ignoring time)
+        // SELECT *
+        // FROM your_table
+        // WHERE your_timestamptz_column::date = CURRENT_DATE;
+        // 6. Time Zone Conversion
+        // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
+
+        // -- Compare with a specific timestamp in another time zone
+        // SELECT *
+        // FROM your_table
+        // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
+
+        // -- Values after a timestamp in a different time zone
+        // SELECT *
+        // FROM your_table
+        // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
             &vec![
                 &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
+                &Before::upper_camel_case(),
                 &Between::upper_camel_case(),
             ]
         );
         quote::quote! {
             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_before_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     });
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_offset_date_time_unix_epoch,
-                &sqlx_types_time_offset_date_time_unix_epoch,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_primitive_date_time_new_token_stream,
-                &sqlx_types_time_primitive_date_time_new_token_stream,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default)}
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &ShouldAddDotZero::True,
-        );
-        let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &In::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_in_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensStdNetIpAddr)]
-pub fn postgresql_base_type_tokens_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream()
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdNetIpAddr)]
-pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream(),
-            },
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementStdNetIpAddr",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-// fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
-//     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-//     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-// }
-// // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
-// #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
-// pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     generate_postgresql_base_type_tokens(
-//         input,
-//         &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-//     )
-// }
-// #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
-// pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     panic_location::panic_location();
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-//     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-//         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-//         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-//             &ident,
-//             &is_nullable,
-//             &WhereOperatorType::FieldType {
-//                 field_type: &field_type,
-//                 default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-//             },
-//         );
-//         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-//             is_nullable,
-//             &ident,
-//             &vec![
-//                 &Equal::upper_camel_case(),
-//             ]
-//         );
-//         quote::quote! {
-//             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-//             #postgresql_type_tokens_where_element_equal_token_stream
-//             #postgresql_type_tokens_where_element_token_stream
-//         }
-//     });
-//     // if ident == "" {
-//     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-//     //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork",
-//     //         &generated,
-//     //     );
-//     // }
-//     generated.into()
-// }
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &CaseSensitiveRegularExpression::upper_camel_case(),
-                &CaseInsensitiveRegularExpression::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::Ident(&ident),
-        );
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-                &CaseSensitiveRegularExpression::upper_camel_case(),
-                &CaseInsensitiveRegularExpression::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBitVec)]
-pub fn postgresql_base_type_tokens_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &quote::quote!{{
-            let mut value = sqlx::types::BitVec::new();
-            value.push(false);
-            value
-        }}
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::Ident(&ident),
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &Equal::upper_camel_case(),
-            ]
-        );
-        quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec",
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime",
     //         &generated,
     //     );
     // }
@@ -5963,3 +5728,244 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     // }
     generated.into()
 }
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &WhereOperatorType::Ident(&ident),
+        );
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &CaseSensitiveRegularExpression::upper_camel_case(),
+                &CaseInsensitiveRegularExpression::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
+    quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensStdNetIpAddr)]
+pub fn postgresql_base_type_tokens_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream()
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdNetIpAddr)]
+pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream(),
+            },
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementStdNetIpAddr",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident,
+        );
+        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_ident
+        );
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+                &GreaterThan::upper_camel_case(),
+                &CaseSensitiveRegularExpression::upper_camel_case(),
+                &CaseInsensitiveRegularExpression::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBitVec)]
+pub fn postgresql_base_type_tokens_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &quote::quote!{{
+            let mut value = sqlx::types::BitVec::new();
+            value.push(false);
+            value
+        }}
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &WhereOperatorType::Ident(&ident),
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
+// fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
+//     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+//     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+// }
+// // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
+// #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
+// pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_base_type_tokens(
+//         input,
+//         &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+//     )
+// }
+// #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
+// pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     panic_location::panic_location();
+//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+//     let ident = &syn_derive_input.ident;
+//     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+//     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+//         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+//         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+//             &ident,
+//             &is_nullable,
+//             &WhereOperatorType::FieldType {
+//                 field_type: &field_type,
+//                 default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+//             },
+//         );
+//         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+//             is_nullable,
+//             &ident,
+//             &vec![
+//                 &Equal::upper_camel_case(),
+//             ]
+//         );
+//         quote::quote! {
+//             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+//             #postgresql_type_tokens_where_element_equal_token_stream
+//             #postgresql_type_tokens_where_element_token_stream
+//         }
+//     });
+//     // if ident == "" {
+//     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+//     //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork",
+//     //         &generated,
+//     //     );
+//     // }
+//     generated.into()
+// }

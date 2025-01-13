@@ -4047,7 +4047,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
         )
     }
 }
-
 #[derive(
     Debug,
     Clone,
