@@ -4152,13 +4152,178 @@ const _: () = {
         }
     }
 };
+// const _: () = {
+//     #[allow(unused_extern_crates, clippy::useless_attribute)]
+//     extern crate serde as _serde;
+//     #[automatically_derived]
+//     impl _serde::Serialize for SqlxTypesBitVec {
+//         fn serialize<__S>(
+//             &self,
+//             __serializer: __S,
+//         ) -> _serde::__private::Result<__S::Ok, __S::Error>
+//         where
+//             __S: _serde::Serializer,
+//         {
+//             _serde::Serializer::serialize_newtype_struct(
+//                 __serializer,
+//                 "SqlxTypesBitVec",
+//                 &self.0,
+//             )
+//         }
+//     }
+// };
+// #[doc(hidden)]
+// #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+// const _: () = {
+//     #[allow(unused_extern_crates, clippy::useless_attribute)]
+//     extern crate serde as _serde;
+//     #[automatically_derived]
+//     impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVec {
+//         fn deserialize<__D>(
+//             __deserializer: __D,
+//         ) -> _serde::__private::Result<Self, __D::Error>
+//         where
+//             __D: _serde::Deserializer<'de>,
+//         {
+//             #[doc(hidden)]
+//             struct __Visitor<'de> {
+//                 marker: _serde::__private::PhantomData<SqlxTypesBitVec>,
+//                 lifetime: _serde::__private::PhantomData<&'de ()>,
+//             }
+//             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+//                 type Value = SqlxTypesBitVec;
+//                 fn expecting(
+//                     &self,
+//                     __formatter: &mut _serde::__private::Formatter,
+//                 ) -> _serde::__private::fmt::Result {
+//                     _serde::__private::Formatter::write_str(
+//                         __formatter,
+//                         "tuple struct SqlxTypesBitVec",
+//                     )
+//                 }
+//                 #[inline]
+//                 fn visit_newtype_struct<__E>(
+//                     self,
+//                     __e: __E,
+//                 ) -> _serde::__private::Result<Self::Value, __E::Error>
+//                 where
+//                     __E: _serde::Deserializer<'de>,
+//                 {
+//                     let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
+//                         std::primitive::bool,
+//                     > as _serde::Deserialize>::deserialize(__e)?;
+//                     _serde::__private::Ok(SqlxTypesBitVec(__field0))
+//                 }
+//                 #[inline]
+//                 fn visit_seq<__A>(
+//                     self,
+//                     mut __seq: __A,
+//                 ) -> _serde::__private::Result<Self::Value, __A::Error>
+//                 where
+//                     __A: _serde::de::SeqAccess<'de>,
+//                 {
+//                     let __field0 = match _serde::de::SeqAccess::next_element::<
+//                         std::vec::Vec<std::primitive::bool>,
+//                     >(&mut __seq)? {
+//                         _serde::__private::Some(__value) => __value,
+//                         _serde::__private::None => {
+//                             return _serde::__private::Err(
+//                                 _serde::de::Error::invalid_length(
+//                                     0usize,
+//                                     &"tuple struct SqlxTypesBitVec with 1 element",
+//                                 ),
+//                             );
+//                         }
+//                     };
+//                     _serde::__private::Ok(SqlxTypesBitVec(__field0))
+//                 }
+//             }
+//             _serde::Deserializer::deserialize_newtype_struct(
+//                 __deserializer,
+//                 "SqlxTypesBitVec",
+//                 __Visitor {
+//                     marker: _serde::__private::PhantomData::<SqlxTypesBitVec>,
+//                     lifetime: _serde::__private::PhantomData,
+//                 },
+//             )
+//         }
+//     }
+// };
+
+
+
 
 
 // pub struct SerdeJsonValue(pub serde_json::Value);
 
 /////////////////////////////////////////
 //support types
+fn std_vec_vec_std_primitive_bool_to_std_vec_vec_std_primitive_u8_bit_by_bit(std_vec_vec_std_primitive_bool: std::vec::Vec<std::primitive::bool>) -> std::vec::Vec<std::primitive::u8> {
+    let mut std_vec_vec_std_primitive_u8 = Vec::new();
+    let mut byte = 0u8;
+    for (index, element) in std_vec_vec_std_primitive_bool.iter().enumerate() {
+        if *element {
+            byte |= 1 << (index % 8);
+        }
+        if index % 8 == 7 {
+            std_vec_vec_std_primitive_u8.push(byte);
+            byte = 0;
+        }
+    }
+    if std_vec_vec_std_primitive_bool.len() % 8 != 0 {
+        std_vec_vec_std_primitive_u8.push(byte);
+    }
+    std_vec_vec_std_primitive_u8
+}
+fn std_vec_vec_std_primitive_u8_to_std_vec_vec_std_primitive_bool_bit_by_bit(std_vec_vec_std_primitive_u8: std::vec::Vec<std::primitive::u8>) -> std::vec::Vec<std::primitive::bool> {
+    let mut std_vec_vec_std_primitive_bool = Vec::new();
+    for byte in std_vec_vec_std_primitive_u8 {
+        for bit in 0..8 {
+            std_vec_vec_std_primitive_bool.push((byte & (1 << bit)) != 0);
+        }
+    }
+    std_vec_vec_std_primitive_bool
+}
+#[test]
+fn u8_to_bool_and_bool_to_u8_bit_by_bit_conversion() {
+    let mut start_std_vec_vec_std_primitive_u8: std::vec::Vec<std::primitive::u8> = vec![];
+    {
+        for i in 0..255 {
+            start_std_vec_vec_std_primitive_u8.push(i);
+        }
+        start_std_vec_vec_std_primitive_u8.push(255);
+    }
+    // println!("start_std_vec_vec_std_primitive_u8\n{:?}", start_std_vec_vec_std_primitive_u8);
+    println!("start_std_vec_vec_std_primitive_u8\n{:?}", start_std_vec_vec_std_primitive_u8.len());
+    let start_std_vec_vec_std_primitive_bool = std_vec_vec_std_primitive_u8_to_std_vec_vec_std_primitive_bool_bit_by_bit(start_std_vec_vec_std_primitive_u8.clone());
+    // println!("start_std_vec_vec_std_primitive_bool\n{:?}", start_std_vec_vec_std_primitive_bool);
+    println!("start_std_vec_vec_std_primitive_bool\n{:?}", start_std_vec_vec_std_primitive_bool.len());
 
+    let end_std_vec_vec_std_primitive_u8 = std_vec_vec_std_primitive_bool_to_std_vec_vec_std_primitive_u8_bit_by_bit(start_std_vec_vec_std_primitive_bool.clone());
+    // println!("end_std_vec_vec_std_primitive_u8\n{:?}", end_std_vec_vec_std_primitive_u8);
+    println!("end_std_vec_vec_std_primitive_u8\n{:?}", end_std_vec_vec_std_primitive_u8.len());
+
+    let end_std_vec_vec_std_primitive_bool = std_vec_vec_std_primitive_u8_to_std_vec_vec_std_primitive_bool_bit_by_bit(end_std_vec_vec_std_primitive_u8.clone());
+    // println!("end_std_vec_vec_std_primitive_bool\n{:?}", end_std_vec_vec_std_primitive_bool);
+    println!("end_std_vec_vec_std_primitive_bool\n{:?}", end_std_vec_vec_std_primitive_bool.len());
+
+    let the_end_std_vec_vec_std_primitive_u8 = std_vec_vec_std_primitive_bool_to_std_vec_vec_std_primitive_u8_bit_by_bit(end_std_vec_vec_std_primitive_bool.clone());
+    // println!("the_end_std_vec_vec_std_primitive_u8\n{:?}", the_end_std_vec_vec_std_primitive_u8);
+    println!("the_end_std_vec_vec_std_primitive_u8\n{:?}", the_end_std_vec_vec_std_primitive_u8.len());
+
+    if start_std_vec_vec_std_primitive_u8 == end_std_vec_vec_std_primitive_u8 && end_std_vec_vec_std_primitive_u8 == the_end_std_vec_vec_std_primitive_u8 {
+        println!("std_vec_vec_std_primitive_u8 true");
+    }
+    else {
+        println!("std_vec_vec_std_primitive_u8 false");
+    }
+    if start_std_vec_vec_std_primitive_bool == end_std_vec_vec_std_primitive_bool {
+        println!("start_std_vec_vec_std_primitive_bool true");
+    }
+    else {
+        println!("start_std_vec_vec_std_primitive_bool false");
+    }
+}
 
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
