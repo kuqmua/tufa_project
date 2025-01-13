@@ -4072,7 +4072,7 @@ const _: () = {
             _serde::Serializer::serialize_newtype_struct(
                 __serializer,
                 "SqlxTypesBitVec",
-                &std_vec_vec_std_primitive_u8_to_std_vec_vec_std_primitive_bool_bit_by_bit(self.0.to_bytes()),
+                &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
             )
         }
     }
@@ -4117,8 +4117,13 @@ const _: () = {
                     let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
                         std::primitive::bool,
                     > as _serde::Deserialize>::deserialize(__e)?;
-                    // _serde::__private::Ok(SqlxTypesBitVec(__field0))
-                    _serde::__private::Ok(SqlxTypesBitVec(sqlx::types::BitVec::from_bytes(&std_vec_vec_std_primitive_bool_to_std_vec_vec_std_primitive_u8_bit_by_bit(__field0))))
+                    _serde::__private::Ok(SqlxTypesBitVec({
+                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                        __field0.into_iter().enumerate().for_each(|(index, element)|{
+                            bit_vec.set(index, element);
+                        });
+                        bit_vec
+                    }))
                 }
                 #[inline]
                 fn visit_seq<__A>(
@@ -4141,8 +4146,13 @@ const _: () = {
                             );
                         }
                     };
-                    // _serde::__private::Ok(SqlxTypesBitVec(__field0))
-                    _serde::__private::Ok(SqlxTypesBitVec(sqlx::types::BitVec::from_bytes(&std_vec_vec_std_primitive_bool_to_std_vec_vec_std_primitive_u8_bit_by_bit(__field0))))
+                    _serde::__private::Ok(SqlxTypesBitVec({
+                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                        __field0.into_iter().enumerate().for_each(|(index, element)|{
+                            bit_vec.set(index, element);
+                        });
+                        bit_vec
+                    }))
                 }
             }
             _serde::Deserializer::deserialize_newtype_struct(
