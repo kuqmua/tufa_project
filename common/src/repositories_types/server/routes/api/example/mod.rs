@@ -91,6 +91,7 @@ pub struct Example {
     // pub std_string_string_as_char_n_nullable: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNullable,
     // pub std_string_string_as_char_n_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNotNull,
 
+    // todo error occurred while decoding column \"std_string_string_as_varchar_not_null\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdStringStringAsPostgresqlVarcharNotNullToRead` (as SQL type `TEXT`) is not compatible with SQL type `VARCHAR`
     // pub std_string_string_as_varchar_nullable: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNullable,
     // pub std_string_string_as_varchar_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull,
 
