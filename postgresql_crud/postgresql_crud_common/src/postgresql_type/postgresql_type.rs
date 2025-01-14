@@ -28,7 +28,7 @@ const TIMESTAMP: &std::primitive::str = "TIMESTAMP";
 const TIMESTAMPTZ: &std::primitive::str = "TIMESTAMPTZ";
 const UUID: &std::primitive::str = "UUID";
 const INET: &std::primitive::str = "INET";
-// const CIDR: &std::primitive::str = "CIDR";
+const CIDR: &std::primitive::str = "CIDR";
 const MACADDR: &std::primitive::str = "MACADDR";
 const BIT: &std::primitive::str = "BIT";
 
@@ -235,22 +235,6 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
         format!("{column} {BOOL}")
     }
 }
-// todo error occurred while decoding column \"std_primitive_i8_as_char_nullable\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI8AsPostgresqlCharNullableToRead` (as SQL type `\"CHAR\"`) is not compatible with SQL type `CHAR`
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// )]
-// struct StdPrimitiveI8AsPostgresqlChar(crate::postgresql_type::postgresql_base_type::StdPrimitiveI8);
-// impl crate::CreateTableColumnQueryPart for StdPrimitiveI8AsPostgresqlChar {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {CHAR}")
-//     }
-// }
 #[derive(
     Debug,
     Clone,
@@ -672,22 +656,21 @@ impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
         format!("{column} {INET}")
     }
 }
-// todo error occurred while decoding column \"std_net_ip_addr_as_cidr_not_null\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdNetIpAddrAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// )]
-// struct StdNetIpAddrAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
-// impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlCidr {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {CIDR}")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+)]
+struct StdNetIpAddrAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
+impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlCidr {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {CIDR}")
+    }
+}
 #[derive(
     Debug,
     Clone,
@@ -703,22 +686,21 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgres
         format!("{column} {INET}")
     }
 }
-//todo error occurred while decoding column \"sqlx_types_ipnetwork_ip_network_as_cidr_not_null\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// )]
-// struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
-// impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {CIDR}")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+)]
+struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
+impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {CIDR}")
+    }
+}
 #[derive(
     Debug,
     Clone,
