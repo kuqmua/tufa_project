@@ -3971,18 +3971,17 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdNetIpAddr,
 )]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
-// todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork,
-// )]
-// pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork,
+)]
+pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 #[derive(
     Debug,
     Clone,

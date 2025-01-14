@@ -5815,6 +5815,54 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     // }
     generated.into()
 }
+fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
+pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_base_type_tokens(
+        input,
+        &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+    )
+}
+#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
+pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+            },
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &Equal::upper_camel_case(),
+            ]
+        );
+        quote::quote! {
+            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork",
+    //         &generated,
+    //     );
+    // }
+    generated.into()
+}
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
 pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -6292,52 +6340,3 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
     // }
     generated.into()
 }
-// fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
-//     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-//     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-// }
-// // todo mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeSqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNullToRead` (as SQL type `INET`) is not compatible with SQL type `CIDR`
-// #[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
-// pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     generate_postgresql_base_type_tokens(
-//         input,
-//         &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-//     )
-// }
-// #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
-// pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     panic_location::panic_location();
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-//     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-//         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-//         let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-//             &ident,
-//             &is_nullable,
-//             &WhereOperatorType::FieldType {
-//                 field_type: &field_type,
-//                 default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-//             },
-//         );
-//         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-//             is_nullable,
-//             &ident,
-//             &vec![
-//                 &Equal::upper_camel_case(),
-//             ]
-//         );
-//         quote::quote! {
-//             #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-//             #postgresql_type_tokens_where_element_equal_token_stream
-//             #postgresql_type_tokens_where_element_token_stream
-//         }
-//     });
-//     // if ident == "" {
-//     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-//     //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork",
-//     //         &generated,
-//     //     );
-//     // }
-//     generated.into()
-// }
