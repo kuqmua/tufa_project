@@ -10,7 +10,6 @@ const MONEY: &std::primitive::str = "MONEY";
 const NUMERIC: &std::primitive::str = "NUMERIC";
 const BOOL: &std::primitive::str = "BOOL";
 const CHAR: &std::primitive::str = "CHAR";
-// const CHARN: &std::primitive::str = "CHAR(N)";//todo length not supported yet
 // const VARCHAR: &std::primitive::str = "VARCHAR";
 const TEXT: &std::primitive::str = "TEXT";
 // const CITEXT: &std::primitive::str = "CITEXT";//activates by installing extension
@@ -264,7 +263,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 // struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
 // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
 //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {CHARN}")
+//         format!("{column} {CHAR}(10)")
 //     }
 // }
 // #[derive(
