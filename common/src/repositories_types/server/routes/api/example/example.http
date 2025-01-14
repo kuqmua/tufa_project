@@ -38,8 +38,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "sqlx_types_bit_vec_as_varbit_not_null": [
-      false, true, false, true, true, true, false, false, false
+    "sqlx_types_bit_vec_as_bit_not_null": [
+      false, true, false, true, true, true, false, false, true
     ]
   }
 ]
