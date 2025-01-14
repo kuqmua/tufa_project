@@ -3967,17 +3967,6 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
     Eq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensStdNetIpAddr,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementStdNetIpAddr,
-)]
-pub struct StdNetIpAddr(pub std::net::IpAddr);
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork,
 )]

@@ -170,12 +170,6 @@ pub struct Example {
     // #[generate_postgresql_crud_primary_key] //todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough //fails too but primary key is a different logic. need refactor it as different task
     pub sqlx_types_uuid_uuid_as_uuid_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
 
-    pub std_net_ip_addr_as_inet_nullable: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlInetNullable,
-    pub std_net_ip_addr_as_inet_not_null: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlInetNotNull,
-
-    pub std_net_ip_addr_as_cidr_nullable: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlCidrNullable,
-    pub std_net_ip_addr_as_cidr_not_null: postgresql_crud::postgresql_type::postgresql_type::StdNetIpAddrAsPostgresqlCidrNotNull,
-
     pub sqlx_types_ipnetwork_ip_network_as_inet_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNullable,
     pub sqlx_types_ipnetwork_ip_network_as_inet_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
 

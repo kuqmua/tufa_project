@@ -650,36 +650,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuid {
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
 )]
-struct StdNetIpAddrAsPostgresqlInet(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
-impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlInet {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {INET}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
-struct StdNetIpAddrAsPostgresqlCidr(crate::postgresql_type::postgresql_base_type::StdNetIpAddr);
-impl crate::CreateTableColumnQueryPart for StdNetIpAddrAsPostgresqlCidr {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {CIDR}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
 struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(crate::postgresql_type::postgresql_base_type::SqlxTypesIpnetworkIpNetwork);
 impl crate::CreateTableColumnQueryPart for SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
