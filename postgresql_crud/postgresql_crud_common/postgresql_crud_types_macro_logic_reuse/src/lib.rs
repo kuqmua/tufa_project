@@ -366,6 +366,9 @@ fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
             }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+                <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
         }
     }
 }
@@ -761,7 +764,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    let generate_postgresql_type_nulllable_or_not_null = |postgresql_type_kind: &PostgresqlTypeKind| -> proc_macro2::TokenStream {
+    let generate_postgresql_type_nullable_or_not_null = |postgresql_type_kind: &PostgresqlTypeKind| -> proc_macro2::TokenStream {
         let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = &postgresql_type_kind.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
         let ident_handle: &dyn quote::ToTokens = &postgresql_type_kind.ident_handle(&ident);
         let field_type_handle: &dyn quote::ToTokens = &postgresql_type_kind.field_type_handle(&field_type);
@@ -1532,8 +1535,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         };
         generated.into()
     };
-    let ident_nullable_token_stream = generate_postgresql_type_nulllable_or_not_null(&PostgresqlTypeKind::Nullable);
-    let ident_not_null_token_stream = generate_postgresql_type_nulllable_or_not_null(&PostgresqlTypeKind::NotNull);
+    let ident_nullable_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::Nullable);
+    let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::NotNull);
     let generated = quote::quote!{
         #ident_nullable_token_stream
         #ident_not_null_token_stream
