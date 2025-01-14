@@ -251,21 +251,21 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 //         format!("{column} {CHAR}")
 //     }
 // }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// )]
-// struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
-// impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
-//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-//         format!("{column} {CHAR}(10)")
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+)]
+struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
+impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {CHAR}(10)")
+    }
+}
 #[derive(
     Debug,
     Clone,
