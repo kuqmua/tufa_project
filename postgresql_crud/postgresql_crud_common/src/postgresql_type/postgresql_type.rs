@@ -9,7 +9,7 @@ const BIGSERIAL: &std::primitive::str = "BIGSERIAL";
 const MONEY: &std::primitive::str = "MONEY";
 const NUMERIC: &std::primitive::str = "NUMERIC";
 const BOOL: &std::primitive::str = "BOOL";
-// const CHAR: &std::primitive::str = "CHAR";
+const CHAR: &std::primitive::str = "CHAR";
 // const CHARN: &std::primitive::str = "CHAR(N)";//todo length not supported yet
 // const VARCHAR: &std::primitive::str = "VARCHAR";
 const TEXT: &std::primitive::str = "TEXT";
@@ -236,6 +236,37 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
         format!("{column} {BOOL}")
     }
 }
+// todo error occurred while decoding column \"std_primitive_i8_as_char_nullable\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI8AsPostgresqlCharNullableToRead` (as SQL type `\"CHAR\"`) is not compatible with SQL type `CHAR`
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+// )]
+// struct StdPrimitiveI8AsPostgresqlChar(crate::postgresql_type::postgresql_base_type::StdPrimitiveI8);
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveI8AsPostgresqlChar {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {CHAR}")
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+// )]
+// struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
+// impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {CHARN}")
+//     }
+// }
 // #[derive(
 //     Debug,
 //     Clone,
@@ -251,21 +282,6 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
 //         format!("{column} {VARCHAR}")
 //     }
 // }
-// // #[derive(
-// //     Debug,
-// //     Clone,
-// //     PartialEq,
-// //     serde::Serialize,
-// //     serde::Deserialize,
-// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
-// //     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-// // )]
-// // struct StdStringStringAsPostgresqlCharN(crate::postgresql_type::postgresql_base_type::StdStringString);
-// // impl crate::CreateTableColumnQueryPart for StdStringStringAsPostgresqlCharN {
-// //     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-// //         format!("{column} {CHARN}")
-// //     }
-// // }
 #[derive(
     Debug,
     Clone,

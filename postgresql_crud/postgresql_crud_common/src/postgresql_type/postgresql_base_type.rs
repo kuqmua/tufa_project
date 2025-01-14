@@ -1,3 +1,15 @@
+// todo error occurred while decoding column \"std_primitive_i8_as_char_nullable\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI8AsPostgresqlCharNullableToRead` (as SQL type `\"CHAR\"`) is not compatible with SQL type `CHAR`
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
+// )]
+// pub struct StdPrimitiveI8(pub std::primitive::i8);
 #[derive(
     Debug,
     Clone,

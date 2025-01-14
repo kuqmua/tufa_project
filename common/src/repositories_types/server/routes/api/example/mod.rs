@@ -83,8 +83,9 @@ pub struct Example {
     pub std_primitive_bool_as_bool_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNullable,
     pub std_primitive_bool_as_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
-    // pub std_string_string_as_char_nullable: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNullable,
-    // pub std_string_string_as_char_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNotNull,
+    // todo error occurred while decoding column \"std_primitive_i8_as_char_nullable\": mismatched types; Rust type `postgresql_crud_common::postgresql_type::postgresql_type::PostgresqlTypeStdPrimitiveI8AsPostgresqlCharNullableToRead` (as SQL type `\"CHAR\"`) is not compatible with SQL type `CHAR`
+    // pub std_primitive_i8_as_char_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI8AsPostgresqlCharNullable,
+    // pub std_primitive_i8_as_char_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI8AsPostgresqlCharNotNull,
 
     // pub std_string_string_as_char_n_nullable: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNullable,
     // pub std_string_string_as_char_n_not_null: postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNotNull,
