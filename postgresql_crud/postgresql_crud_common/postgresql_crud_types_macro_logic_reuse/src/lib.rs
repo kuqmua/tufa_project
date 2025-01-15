@@ -1552,10 +1552,14 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
         };
         generated.into()
     };
-    let ident_nullable_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::Nullable);
+    //i think its logical - auto generated types in postgresql cannot be null? right? 
+    let maybe_ident_nullable_token_stream = match &postgresql_type_initialized_by_tokens {
+        PostgresqlTypeInitializedByTokens::InitializedByPostgresql => proc_macro2::TokenStream::new(),
+        PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::Nullable),
+    };
     let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::NotNull);
     let generated = quote::quote!{
-        #ident_nullable_token_stream
+        #maybe_ident_nullable_token_stream
         #ident_not_null_token_stream
     };
     // if ident == "" {
@@ -1646,12 +1650,6 @@ pub fn postgresql_type_create_table_column_query_part_primary_key_tokens(input: 
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let is_primary_key = IsPrimaryKey::True;
-    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeKind::Nullable,
-        &ident,
-        &field_type,
-        &is_primary_key,
-    );
     let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
        &PostgresqlTypeKind::NotNull,
         &ident,
@@ -1659,7 +1657,6 @@ pub fn postgresql_type_create_table_column_query_part_primary_key_tokens(input: 
         &is_primary_key,
     );
     let generated = quote::quote!{
-        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
         #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
     };
     // if ident == "" {
