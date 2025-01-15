@@ -4594,3 +4594,17 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         )
     }
 }
+
+//todo no need to implement
+
+// crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
+// )]
+// pub struct StdPrimitiveI64AsLimit(pub std::primitive::i64);

@@ -548,56 +548,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream
                 )
             };
-            //for compatibility with GeneratePostgresqlCrud logic
-            let impl_postgresql_crud_bind_query_for_ident_to_create_without_generated_id_token_stream = {
-                //todo reuse logic of binding query
-                let try_generate_bind_increments_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_field_ident);
-                    let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
-                    quote::quote!{
-                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_create_snake_case(&self.0.#element_field_ident, #increment_snake_case) {
-                            Ok(value) => {
-                                #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
-                            }
-                            Err(error) => {
-                                return Err(error.into());
-                            }
-                        }
-                    }
-                });
-                let bind_value_to_query_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(&element);
-                    quote::quote!{
-                        #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #bind_value_to_postgresql_query_part_to_create_snake_case(self.0.#element_ident, #query_snake_case);
-                    }
-                });
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{increments_snake_case}}}"));
-                quote::quote!{
-                    impl<'a> #postgresql_crud_path_token_stream BindQuery<'a> for #ident_to_create_without_generated_id_upper_camel_case {
-                        fn try_increment(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<(), #postgresql_crud_path_token_stream TryGenerateBindIncrementsErrorNamed> {
-                            todo!()
-                        }
-                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_path_token_stream TryGenerateBindIncrementsErrorNamed> {
-                            let mut #increments_snake_case = std::string::String::from("");
-                            #(#try_generate_bind_increments_token_stream)*
-                            let _ = #increments_snake_case.pop();
-                            let _ = #increments_snake_case.pop();
-                            Ok(format!(#format_handle_token_stream))
-                        }
-                        fn bind_value_to_query(self, mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            #(#bind_value_to_query_token_stream)*
-                            #query_snake_case
-                        }
-                    }
-                }
-            };
-            //
             //for new compatibility with GeneratePostgresqlCrud logic
             let (
                 impl_postgresql_crud_bind_query_second_for_ident_to_create_with_generated_id_token_stream,
@@ -703,8 +653,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
                 #impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_with_generated_id_token_stream
                 #impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream
-
-                #impl_postgresql_crud_bind_query_for_ident_to_create_without_generated_id_token_stream
 
                 // #impl_postgresql_crud_bind_query_second_for_ident_to_create_with_generated_id_token_stream,
                 #impl_postgresql_crud_bind_query_second_for_ident_to_create_without_generated_id_token_stream
