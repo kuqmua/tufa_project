@@ -224,24 +224,44 @@ pub enum PaginationTryNewErrorNamed {
         offset: std::primitive::i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    LimitIsZero {
+    LimitIsLessThanOrEqualToZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
+    OffsetIsLessThanZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl Pagination {
     pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationTryNewErrorNamed> {
-        match offset.checked_add(limit) {
-            Some(_) => match limit == 0 {
-                true => Err(PaginationTryNewErrorNamed::LimitIsZero {
+        if limit <= 0 || offset < 0{
+            if limit <= 0 {
+                Err(PaginationTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                    limit,
                     code_occurence: error_occurence_lib::code_occurence!()
-                }),
-                false => Ok(Self{ limit, offset })
-            },
-            None => Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
-                limit,
-                offset,
-                code_occurence: error_occurence_lib::code_occurence!()
-            })
+                })
+            }
+            else {
+                Err(PaginationTryNewErrorNamed::OffsetIsLessThanZero {
+                    offset,
+                    code_occurence: error_occurence_lib::code_occurence!()
+                })
+            }
+        }
+        else {
+            if offset.checked_add(limit).is_some() {
+                Ok(Self{ limit, offset })
+            }
+            else {
+                Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                    limit,
+                    offset,
+                    code_occurence: error_occurence_lib::code_occurence!()
+                })
+            }
         }
     }
     pub fn start(&self) -> std::primitive::i64 {
