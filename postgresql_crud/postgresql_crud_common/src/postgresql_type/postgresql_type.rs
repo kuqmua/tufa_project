@@ -157,24 +157,6 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigSerial 
         format!("{column} {BIGSERIAL}")
     }
 }
-//todo exception for offset and limit for now
-const _: () = {
-    impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-        fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-        }
-    }
-    impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-        fn type_info() -> sqlx::postgres::PgTypeInfo {
-            <crate::postgresql_type::postgresql_base_type::StdPrimitiveI64 as sqlx::Type<sqlx::Postgres>>::type_info()
-        }
-    }
-    impl sqlx::postgres::PgHasArrayType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-        fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-            <crate::postgresql_type::postgresql_base_type::StdPrimitiveI64 as sqlx::postgres::PgHasArrayType>::array_type_info()
-        }
-    }
-};
 #[derive(
     Debug,
     Clone,

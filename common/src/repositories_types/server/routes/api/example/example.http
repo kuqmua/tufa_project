@@ -38,7 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i16_as_small_serial_not_null": null
+    "std_primitive_i32_as_int4_not_null": 4
   }
 ]
 
@@ -72,7 +72,7 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i16_as_small_serial_not_null": {
+  "std_primitive_i32_as_int4_not_null": {
     "logical_operator": "Or",
     "value": [
       # {
@@ -105,7 +105,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       # }
     ]
   },
-  # "std_primitive_i16_as_small_serial_not_null_prime": {
+  # "std_primitive_i64_as_big_serial_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -139,15 +139,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   # },
   "select": [
     {
-      "std_primitive_i16_as_small_serial_not_null": null
+      "std_primitive_i32_as_int4_not_null": null
     },
     {
-      "std_primitive_i16_as_small_serial_not_null_prime": null
+      "std_primitive_i64_as_big_serial_not_null": null
     }
   ],
   "order_by": {
     "column": {
-      "std_primitive_i16_as_small_serial_not_null_prime": null
+      "std_primitive_i64_as_big_serial_not_null": null
     },
     "order": "asc"
   },

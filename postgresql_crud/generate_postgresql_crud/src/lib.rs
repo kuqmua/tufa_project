@@ -1636,13 +1636,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let response_snake_case = naming::ResponseSnakeCase;
     let status_code_snake_case = naming::StatusCodeSnakeCase;
     let body_snake_case = naming::BodySnakeCase;
-    let limit_and_offset_type_token_stream = quote::quote!{postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialNotNull};
-    // {
-    //     let value = postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI64.get_inner_type_stringified("");
-    //     value
-    //         .parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
+    let limit_and_offset_type_token_stream = quote::quote!{postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlInt8NotNull};
+    
     let std_vec_vec_primary_key_field_type_to_create_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_create_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_read_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_read_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_update_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_update_upper_camel_case>};
