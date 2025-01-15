@@ -75,7 +75,7 @@ pub trait PostgresqlType<'a> {
     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 pub(crate) trait PostgresqlTypePrimaryKey<'a> {
-    type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a> + sqlx::Decode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
+    type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a> + sqlx::Type<sqlx::Postgres>;
     type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a> + crate::BindQuerySecond<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a> + std::fmt::Display + error_occurence_lib::ToStdStringString + sqlx::Encode<'a, sqlx::Postgres> + sqlx::Decode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     type PostgresqlTypeSelfToDelete: std::fmt::Debug

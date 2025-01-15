@@ -1644,6 +1644,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     // };
     let std_vec_vec_primary_key_field_type_to_create_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_create_upper_camel_case>};
+    let std_vec_vec_primary_key_field_type_to_read_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_read_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_update_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_update_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_delete_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_delete_upper_camel_case>};
 
@@ -2967,7 +2968,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateMany => quote::quote!{#postgresql_type_primary_key_field_type_to_create_upper_camel_case},
+                    Operation::CreateMany => quote::quote!{#postgresql_type_primary_key_field_type_to_read_upper_camel_case},//todo maybe other parameters must be read too?
                     Operation::UpdateMany => quote::quote!{#postgresql_type_primary_key_field_type_to_update_upper_camel_case},
                     Operation::DeleteMany => quote::quote!{#postgresql_type_primary_key_field_type_to_delete_upper_camel_case},
                     _ => panic!("supported only CreateMany, UpdateMany, DeleteMany")
@@ -2983,7 +2984,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateOne => quote::quote!{#postgresql_type_primary_key_field_type_to_create_upper_camel_case},
+                    Operation::CreateOne => quote::quote!{#postgresql_type_primary_key_field_type_to_read_upper_camel_case},//todo maybe other must also be read
                     Operation::UpdateOne => quote::quote!{#postgresql_type_primary_key_field_type_to_update_upper_camel_case},
                     Operation::DeleteOne => quote::quote!{#postgresql_type_primary_key_field_type_to_delete_upper_camel_case},
                     _ => panic!("supported only CreateOne, UpdateOne, DeleteOne")
@@ -3095,7 +3096,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &std_vec_vec_primary_key_field_type_to_create_token_stream,
+                    &std_vec_vec_primary_key_field_type_to_read_token_stream,
                     &type_variants_from_request_response_syn_variants,
                 );
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
@@ -3255,7 +3256,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 // &std_vec_vec_primary_key_inner_type_token_stream,
-                &std_vec_vec_primary_key_field_type_to_create_token_stream,
+                &std_vec_vec_primary_key_field_type_to_read_token_stream,
                 &proc_macro2::TokenStream::new(),
                 // &quote::quote! {
                 //     #value_snake_case
@@ -3363,7 +3364,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &postgresql_type_primary_key_field_type_to_create_upper_camel_case,
+                    &postgresql_type_primary_key_field_type_to_read_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
@@ -3490,7 +3491,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &postgresql_type_primary_key_field_type_to_create_upper_camel_case,
+                &postgresql_type_primary_key_field_type_to_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 // &quote::quote! {#primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case)},
                 &value_snake_case
