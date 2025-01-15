@@ -38,7 +38,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i32_as_int4_not_null": 5
+    "std_primitive_i32_as_int4_not_null": 0,
+    "sqlx_types_uuid_uuid_as_uuid_initialized_by_postgresql_not_null": null
   }
 ]
 
