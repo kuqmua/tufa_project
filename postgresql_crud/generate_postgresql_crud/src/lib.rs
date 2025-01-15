@@ -1412,6 +1412,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
                 println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
                 let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
+                let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
+                println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
+                let _ = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await.unwrap();
                 let create_table_if_not_exists_query_stringified = format!(
                     #create_table_if_not_exists_double_quotes_token_stream,
                     #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
@@ -2646,7 +2649,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWrapper| {
+    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = 
+    
+    generate_fields_named_token_stream
+    // generate_fields_named_excluding_primary_key_token_stream
+    (&|element: &SynFieldWrapper| {
         let field_ident = &element.field_ident;
         // let field_type = &element.syn_field.ty;
         let postgresql_type_field_type_to_create = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
@@ -3021,7 +3028,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream = {
         let fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-            let value = fields_without_primary_key.iter().map(|element| {
+            let value = fields.iter().map(|element| {
                 let field_ident = &element.field_ident;
                 quote::quote! {
                     #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -3099,15 +3106,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
-                    let column_names = fields_without_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    let mut column_names = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                         acc.push_str(&format!("{}", &element.field_ident));
-                        if incremented_index != fields_without_primary_key_len {
+                        // if incremented_index != fields_without_primary_key_len {
                             acc.push_str(&format!(","));
-                        }
+                        // }
                         acc
                     });
-                    let column_increments_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let _ = column_names.pop();
+                    let column_increments_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         // if element.option_generic.is_some() {
                         //     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
@@ -3170,7 +3178,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     let query_string_snake_case = naming::QueryStringSnakeCase;
-                    let query_bind_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let query_bind_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             #query_snake_case = #postgresql_crud_snake_case::BindQuery::bind_value_to_query(#element_snake_case.#field_ident, #query_snake_case);
@@ -5504,10 +5512,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{generated}");
     // if ident == "" {
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlCrud",
-    //     &generated,
-    // );
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "GeneratePostgresqlCrud",
+    //         &generated,
+    //     );
     // }
     generated.into()
 }
