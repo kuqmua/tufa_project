@@ -4711,7 +4711,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         match &self {
                             //todo maybe refactor it somehow? fails with "creates a temporary value which is freed while still in use"
                             PostgresqlType::JsonNullable => {
-                                let value = naming::parameter::SelfAsPostgresqlJsonUpperCamelCase::from_tokens(&value);
+                                let value = naming::parameter::SelfAsPostgresqlJsonNullableUpperCamelCase::from_tokens(&value);
                                 quote::quote!{#value}
                             },
                             PostgresqlType::JsonNotNull => {
@@ -4719,7 +4719,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 quote::quote!{#value}
                             },
                             PostgresqlType::JsonbNullable => {
-                                let value = naming::parameter::SelfAsPostgresqlJsonbUpperCamelCase::from_tokens(&value);
+                                let value = naming::parameter::SelfAsPostgresqlJsonbNullableUpperCamelCase::from_tokens(&value);
                                 quote::quote!{#value}
                             },
                             PostgresqlType::JsonbNotNull => {
