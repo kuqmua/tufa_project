@@ -1434,7 +1434,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let where_snake_case = naming::WhereSnakeCase;
     let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
     let returning_snake_case = naming::ReturningSnakeCase;
-    let returning_primary_key_stringified = format!(" {returning_snake_case} {primary_key_field_ident}");
+    let returning_primary_key_stringified = format!("{returning_snake_case} {primary_key_field_ident}");
     let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
     // let postgresql_crud_snake_case = naming::PostgresqlCrudSnakeCase;
     let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
@@ -3390,7 +3390,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         acc
                     });
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                        &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}){returning_primary_key_stringified}")
+                        &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}) {returning_primary_key_stringified}")
                     );
                     let try_generate_bind_increments = fields_without_primary_key.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
@@ -5099,7 +5099,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     };
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(
-                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}}{returning_primary_key_stringified}")
+                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}} {returning_primary_key_stringified}")
                     );
                     quote::quote! {
                         format!(
@@ -5304,7 +5304,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_token_stream = generate_quotes::double_quotes_token_stream(
-                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1{returning_primary_key_stringified}")
+                        &format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1 {returning_primary_key_stringified}")
                     );
                     quote::quote! {format!(#query_token_stream) }
                 };

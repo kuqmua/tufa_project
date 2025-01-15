@@ -3893,6 +3893,7 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(pub sqlx::types::chrono::
     Eq,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
 )]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 impl serde::Serialize for SqlxTypesUuidUuid {
