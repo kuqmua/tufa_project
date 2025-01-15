@@ -185,12 +185,12 @@ pub struct Example {
     pub sqlx_types_bit_vec_as_varbit_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable,
     pub sqlx_types_bit_vec_as_varbit_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull,
 
-    // pub object_animal_as_json_nullable: ObjectAnimalAsPostgresqlJsonNullable,
+    pub object_animal_as_json_nullable: ObjectAnimalAsPostgresqlJsonNullable,
     // pub option_object_animal_as_json_nullable: StdOptionOptionObjectAnimalAsPostgresqlJsonNullable,
     // pub std_vec_vec_object_with_id_animal_as_json_nullable: StdVecVecObjectWithIdAnimalAsPostgresqlJsonNullable,
     // pub option_std_vec_vec_object_with_id_animal_as_json_nullable: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonNullable,
 
-    // pub object_animal_as_json_not_null: ObjectAnimalAsPostgresqlJsonNotNull,
+    pub object_animal_as_json_not_null: ObjectAnimalAsPostgresqlJsonNotNull,
     // pub option_object_animal_as_json_not_null: StdOptionOptionObjectAnimalAsPostgresqlJsonNotNull,
     // pub std_vec_vec_object_with_id_animal_as_json_not_null: StdVecVecObjectWithIdAnimalAsPostgresqlJsonNotNull,
     // pub option_std_vec_vec_object_with_id_animal_as_json_not_null: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonNotNull,
