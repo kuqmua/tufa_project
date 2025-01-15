@@ -2470,16 +2470,11 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
     let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&ident);
     let postgresql_type_ident_not_null_to_create_token_stream = {
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_create_upper_camel_case,
-            &field_type
-        );
         let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
             &postgresql_type_ident_not_null_to_create_upper_camel_case,
             &field_type
         );
         quote::quote! {
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
             #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
         }
     };
