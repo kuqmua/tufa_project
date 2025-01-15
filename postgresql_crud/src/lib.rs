@@ -67,7 +67,7 @@ pub use postgresql_crud_common::generate_postgresql_json_type::StdDefaultDefault
 // pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementDeleteBindQuery;
 // pub use postgresql_crud_common::generate_postgresql_json_type::JsonArrayElementCreateBindQuery;
 
-pub use postgresql_crud_common::generate_postgresql_json_type::Pagination;
+pub use postgresql_crud_common::pagination::Pagination;
 
 pub use postgresql_crud_common::generate_postgresql_json_type::wrap_into_jsonb_build_object;
 

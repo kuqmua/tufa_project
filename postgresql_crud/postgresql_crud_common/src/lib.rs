@@ -2,6 +2,7 @@ pub mod generate_postgresql_json_type;
 pub mod value;
 pub mod postgresql_type;
 pub mod postgresql_json_type;
+pub mod pagination;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateBindIncrementsErrorNamed {
