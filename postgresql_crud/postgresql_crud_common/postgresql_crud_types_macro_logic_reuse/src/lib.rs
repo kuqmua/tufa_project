@@ -759,7 +759,7 @@ impl PostgresqlTypeKind {
 }
 
 enum PostgresqlTypeInitializedByTokens {
-    InitializedByPostgresql,
+    InitializedUsingDefaultKeywordByPostgresql,
     InitializedByClient,
 }
 fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream, postgresql_type_initialized_by_tokens: PostgresqlTypeInitializedByTokens) -> proc_macro::TokenStream {
@@ -893,7 +893,7 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
                 Visibility::Pub,
                 &postgresql_type_ident_to_create_upper_camel_case,
                 match &postgresql_type_initialized_by_tokens {
-                    PostgresqlTypeInitializedByTokens::InitializedByPostgresql => &empty_struct_content_token_stream,
+                    PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
                     PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_struct_content_token_stream,
                 },
                 false,
@@ -902,18 +902,18 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
             let impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
                 &postgresql_type_ident_to_create_upper_camel_case,
                 match &postgresql_type_initialized_by_tokens {
-                    PostgresqlTypeInitializedByTokens::InitializedByPostgresql => &ok_std_string_string_from_default_token_stream,
+                    PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &ok_std_string_string_from_default_token_stream,
                     PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
                 },
                 match &postgresql_type_initialized_by_tokens {
-                    PostgresqlTypeInitializedByTokens::InitializedByPostgresql => &query_snake_case,
+                    PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
                     PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
                 },
             );
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &postgresql_type_ident_to_create_upper_camel_case,
                 match &postgresql_type_initialized_by_tokens {
-                    PostgresqlTypeInitializedByTokens::InitializedByPostgresql => &self_core_default_default_default_token_stream,
+                    PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &self_core_default_default_default_token_stream,
                     PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                 },
             );
@@ -1554,7 +1554,7 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
     };
     //i think its logical - auto generated types in postgresql cannot be null? right? 
     let maybe_ident_nullable_token_stream = match &postgresql_type_initialized_by_tokens {
-        PostgresqlTypeInitializedByTokens::InitializedByPostgresql => proc_macro2::TokenStream::new(),
+        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => proc_macro2::TokenStream::new(),
         PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::Nullable),
     };
     let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::NotNull);
@@ -1570,9 +1570,9 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
     // }
     generated.into()
 }
-#[proc_macro_derive(PostgresqlTypeInitializedByPostgresqlTokens)]
-pub fn postgresql_type_initialized_by_postgresql_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_type_initialized_by_tokens(input, PostgresqlTypeInitializedByTokens::InitializedByPostgresql)
+#[proc_macro_derive(PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens)]
+pub fn postgresql_type_initialized_using_default_keyword_by_postgresql_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_type_initialized_by_tokens(input, PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql)
 }
 #[proc_macro_derive(PostgresqlTypeInitializedByClientTokens)]
 pub fn postgresql_type_initialized_by_client_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {

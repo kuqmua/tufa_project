@@ -115,7 +115,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByPostgresqlTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -131,7 +131,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSeria
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByPostgresqlTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -147,7 +147,7 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerial {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByPostgresqlTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
@@ -614,7 +614,7 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByPostgresqlTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     // postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
