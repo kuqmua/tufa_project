@@ -5,7 +5,7 @@ pub(crate) trait PostgresqlBaseTypeSelfTraits<'a>: std::fmt::Debug
     + serde::Deserialize<'a>
     + sqlx::Type<sqlx::Postgres>
     + sqlx::Decode<'a, sqlx::Postgres>
-    + crate::BindQuerySecond<'a>
+    + crate::BindQuery<'a>
     + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
 pub(crate) trait PostgresqlBaseType<'a> {
     type PostgresqlBaseTypeSelf: PostgresqlBaseTypeSelfTraits<'a>;
@@ -16,7 +16,7 @@ pub(crate) trait PostgresqlBaseType<'a> {
         + serde::Deserialize<'a>
         + sqlx::Type<sqlx::Postgres>
         + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuerySecond<'a>
+        + crate::BindQuery<'a>
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 pub(crate) trait PostgresqlBaseTypePrimaryKey<'a> {

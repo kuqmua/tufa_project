@@ -256,7 +256,7 @@ fn generate_postgresql_json_type_token_stream(input: proc_macro::TokenStream, va
     );
     let impl_crate_bind_query_for_token_stream = {
         quote::quote!{
-            impl crate::BindQuerySecond<'_> for #ident {
+            impl crate::BindQuery<'_> for #ident {
                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                     match increment.checked_add(1) {
                         Some(value) => {
@@ -329,7 +329,7 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(
     let self_snake_case = naming::SelfSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
-    let crate_bind_query_token_stream = quote::quote!{crate::BindQuerySecond::};
+    let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
     let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
     quote::quote!{
@@ -775,7 +775,7 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
 
         let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
         let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-        let crate_bind_query_token_stream = quote::quote!{crate::BindQuerySecond::};
+        let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
 
         let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
         let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
@@ -1678,7 +1678,7 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-    let crate_bind_query_token_stream = quote::quote!{crate::BindQuerySecond::};
+    let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
 
     let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
     let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};

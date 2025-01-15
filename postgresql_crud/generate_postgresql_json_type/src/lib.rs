@@ -559,7 +559,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     bind_value_to_query_token_stream: &dyn quote::ToTokens,
                 |{
                     quote::quote!{
-                        impl<'a> postgresql_crud::BindQuerySecond<'a> for #ident_token_stream {
+                        impl<'a> postgresql_crud::BindQuery<'a> for #ident_token_stream {
                             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                 #try_generate_bind_increments_token_stream
                             }
@@ -2283,7 +2283,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             //integration with GeneratePostgresqlCrud
             let impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream = {
                 quote::quote!{
-                    impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_json_type_ident_option_to_update_upper_camel_case {
+                    impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_json_type_ident_option_to_update_upper_camel_case {
                         fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                             todo!()
                         }
@@ -4965,7 +4965,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             };
                             quote::quote!{
-                                impl<'a> postgresql_crud::BindQuerySecond<'a> for #postgresql_type_tokens_to_create_upper_camel_case {
+                                impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_type_tokens_to_create_upper_camel_case {
                                     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                         #try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream
                                     }

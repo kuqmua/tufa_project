@@ -120,7 +120,7 @@ pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt:
     }
 }
 
-pub trait BindQuerySecond<'a> {
+pub trait BindQuery<'a> {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
