@@ -1,7 +1,7 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct Pagination {
-    limit: std::primitive::u64,
-    offset: std::primitive::u64,
+    limit: std::primitive::i64,
+    offset: std::primitive::i64,
 }
 impl<'de> serde::Deserialize<'de> for Pagination {
     fn deserialize<__D>(
@@ -109,7 +109,7 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                 __A: serde::de::SeqAccess<'de>,
             {
                 let __field0 = match serde::de::SeqAccess::next_element::<
-                    std::primitive::u64,
+                    std::primitive::i64,
                 >(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
@@ -122,7 +122,7 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<
-                    std::primitive::u64,
+                    std::primitive::i64,
                 >(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
@@ -147,8 +147,8 @@ impl<'de> serde::Deserialize<'de> for Pagination {
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: serde::__private::Option<std::primitive::u64> = serde::__private::None;
-                let mut __field1: serde::__private::Option<std::primitive::u64> = serde::__private::None;
+                let mut __field0: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<
                     __Field,
                 >(&mut __map)? {
@@ -161,7 +161,7 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                             }
                             __field0 = serde::__private::Some(
                                 serde::de::MapAccess::next_value::<
-                                    std::primitive::u64,
+                                    std::primitive::i64,
                                 >(&mut __map)?,
                             );
                         }
@@ -173,7 +173,7 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                             }
                             __field1 = serde::__private::Some(
                                 serde::de::MapAccess::next_value::<
-                                    std::primitive::u64,
+                                    std::primitive::i64,
                                 >(&mut __map)?,
                             );
                         }
@@ -219,9 +219,9 @@ impl<'de> serde::Deserialize<'de> for Pagination {
 pub enum PaginationTryNewErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::u64,
+        limit: std::primitive::i64,
         #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::u64,
+        offset: std::primitive::i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     LimitIsZero {
@@ -229,7 +229,7 @@ pub enum PaginationTryNewErrorNamed {
     }
 }
 impl Pagination {
-    pub fn try_new(limit: std::primitive::u64, offset: std::primitive::u64) -> Result<Self, PaginationTryNewErrorNamed> {
+    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationTryNewErrorNamed> {
         match offset.checked_add(limit) {
             Some(_) => match limit == 0 {
                 true => Err(PaginationTryNewErrorNamed::LimitIsZero {
@@ -244,18 +244,45 @@ impl Pagination {
             })
         }
     }
-    pub fn start(&self) -> std::primitive::u64 {
+    pub fn start(&self) -> std::primitive::i64 {
         self.offset
     }
-    pub fn end(&self) -> std::primitive::u64 {
+    pub fn end(&self) -> std::primitive::i64 {
         self.offset + self.limit
+    }
+}
+//for ReadMany in GeneratePostgresqlCrud
+impl crate::BindQuery<'_> for Pagination {
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(limit_increment) => {
+                *increment = limit_increment;
+                match increment.checked_add(1) {
+                    Some(offset_increment) => {
+                        *increment = offset_increment;
+                        Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
+                    }
+                    None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        code_occurence: error_occurence_lib::code_occurence!()
+                    })
+                }
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                code_occurence: error_occurence_lib::code_occurence!()
+            }),
+        }
+    }
+    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.limit);
+        query = query.bind(self.offset);
+        query
     }
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Pagination {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            limit: 1,
+            limit: 3,
             offset: std::default::Default::default(),
         }
     }

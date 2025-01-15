@@ -3590,8 +3590,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
                     #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
                     pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#postgresql_type_ident_column_upper_camel_case>,
-                    pub #limit_snake_case: #limit_and_offset_type_token_stream,
-                    pub #offset_snake_case: #limit_and_offset_type_token_stream,
+                    pub pagination: postgresql_crud::Pagination,
                 },
             ),
         );
@@ -3660,8 +3659,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {{}}"));
                     let by_snake_case = naming::BySnakeCase;
                     let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
-                    let additional_parameters_limit_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{limit_snake_case} {{}}"));
-                    let additional_parameters_offset_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{offset_snake_case} {{}}"));
                     let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_e6e820dd_ec74_4bc5_b482_2aa9cd6b3793 =
                         generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                     let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_6d384a1b_d37a_4fd3_9ed3_c160afbb74fc =
@@ -3704,24 +3701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     {
                                         #prefix_to_additional_parameters_token_stream
                                         let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                            &#parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                                            &mut #increment_snake_case
-                                        ) {
-                                            Ok(#value_snake_case) => #value_snake_case,
-                                            Err(#error_0_token_stream) => {
-                                                #bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream_e6e820dd_ec74_4bc5_b482_2aa9cd6b3793
-                                            },
-                                        };
-                                        additional_parameters.push_str(&format!(
-                                            #additional_parameters_limit_handle_token_stream,
-                                            #prefix_snake_case,
-                                            #value_snake_case
-                                        ));
-                                    }
-                                    {
-                                        #prefix_to_additional_parameters_token_stream
-                                        let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                            &#parameters_snake_case.#payload_snake_case.#offset_snake_case,
+                                            &#parameters_snake_case.#payload_snake_case.pagination,
                                             &mut #increment_snake_case
                                         ) {
                                             Ok(#value_snake_case) => #value_snake_case,
@@ -3730,7 +3710,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             },
                                         };
                                         additional_parameters.push_str(&format!(
-                                            #additional_parameters_offset_handle_token_stream,
+                                            "{}{}",
                                             #prefix_snake_case,
                                             #value_snake_case
                                         ));
@@ -3759,11 +3739,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #(#binded_query_modifications_token_stream)*
                         #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
-                            #parameters_snake_case.#payload_snake_case.#limit_snake_case,
-                            #query_snake_case,
-                        );
-                        #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
-                            #parameters_snake_case.#payload_snake_case.#offset_snake_case,
+                            #parameters_snake_case.#payload_snake_case.pagination,
                             #query_snake_case,
                         );
                         #query_snake_case
@@ -3995,8 +3971,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                             ),
                         },
-                        #limit_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                        #offset_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        pagination: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     }
                 }
             },

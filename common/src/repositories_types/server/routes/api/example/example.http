@@ -38,7 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i32_as_int4_not_null": 4
+    "std_primitive_i32_as_int4_not_null": 5
   }
 ]
 
@@ -80,7 +80,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": 0
       #   }
-      # },
+      # }
+      # ,
       {
         "GreaterThan": {
           "logical_operator": "Or",
@@ -151,11 +152,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     "order": "asc"
   },
-  "limit": 10,
-  "offset": 0
+  "pagination": {
+    "limit": 3,
+    "offset": 0
+  }
 }
 
-###
+### 
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
 content-type: application/json
