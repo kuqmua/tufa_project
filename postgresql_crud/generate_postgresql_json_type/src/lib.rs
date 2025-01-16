@@ -5294,8 +5294,36 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let struct_declaration_token_stream = quote::quote!{{
                                 logical_operator: postgresql_crud::LogicalOperator,
                             }};
+
+                            ////
+                                    // let fields_declaration_token_stream = {
+                                    //     let value = vec_syn_field.iter().map(|element| {
+                                    //         let field_ident = element
+                                    //             .ident
+                                    //             .as_ref()
+                                    //             .unwrap_or_else(|| {
+                                    //                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    //             });
+                                    //         let postgresql_json_type_type_path_to_create_token_stream = naming::parameter::PostgresqlJsonTypeSelfUpperCamelCase::from_type_last_segment(&element.ty);
+                                    //         quote::quote!{
+                                    //             #field_ident: #postgresql_json_type_type_path_to_create_token_stream
+                                    //         }
+                                    //     });
+                                    //     quote::quote!{#(#value),*}
+                                    // };
+                            ////
                             let pub_struct_postgresql_type_tokens_where_element_declaration_token_stream = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => &struct_declaration_token_stream,
+                                PostgresqlJsonType::Object => 
+                                
+                                // &{
+
+                                // }
+                                
+                                
+                                // quote::quote!{
+                                //     std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8
+                                // }
+                                &struct_declaration_token_stream,
                                 PostgresqlJsonType::StdOptionOptionObject => &struct_declaration_token_stream,
                                 PostgresqlJsonType::StdVecVecObjectWithId => &struct_declaration_token_stream,
                                 PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &struct_declaration_token_stream,
@@ -5550,7 +5578,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
         #postgresql_type_traits_token_stream
     };
-    // if ident == "Animal" {
+    // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlJsonType",
     //         &generated,
