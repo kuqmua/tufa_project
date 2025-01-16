@@ -119,8 +119,8 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveF64AsPostgresqlFloat8 {
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
-struct StdPrimitiveI16AsPostgresqlSmallSerial(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerial {
+struct StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {SMALLSERIAL}")
     }
@@ -135,8 +135,8 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlSmallSeria
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
-struct StdPrimitiveI32AsPostgresqlSerial(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerial {
+struct StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {SERIAL}")
     }
@@ -151,8 +151,8 @@ impl crate::CreateTableColumnQueryPart for StdPrimitiveI32AsPostgresqlSerial {
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
 )]
-struct StdPrimitiveI64AsPostgresqlBigSerial(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigSerial {
+struct StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {BIGSERIAL}")
     }
