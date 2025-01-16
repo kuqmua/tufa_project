@@ -38,8 +38,11 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i32_as_int4_not_null": 1,
-    "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": null
+    "std_primitive_i32_as_int4_not_null": 0,
+    "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": null,
+    "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null_prime": null,
+    "uuid_uuid_as_uuid_initialized_by_client_nullable": "00000000-0000-0000-0000-000000000000",
+    "uuid_uuid_as_uuid_initialized_by_client_not_null": "00000000-0000-0000-0000-000000000000"
   }
 ]
 
