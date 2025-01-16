@@ -169,7 +169,6 @@ pub struct Example {
     // pub chrono_date_time_chrono_local_as_timestamp_tz_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNullable,
     // pub chrono_date_time_chrono_local_as_timestamp_tz_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
 
-
     // pub uuid_uuid_as_uuid_v4_init_by_postgres_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresqlNotNull,
     // #[generate_postgresql_crud_primary_key] //todo maybe later support something else but now i think uuid v4 and v7 is enough
     // pub uuid_uuid_as_uuid_v4_init_by_postgres_not_null_prime: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresqlNotNull,
@@ -192,27 +191,16 @@ pub struct Example {
     // pub sqlx_types_bit_vec_as_varbit_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable,
     // pub sqlx_types_bit_vec_as_varbit_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull,
 
-    //todo maybe just remove json type and use only jsonb ?
-    //todo for json types need to use json_matches_schema instead of jsonb_matches_schema
-    // pub object_animal_as_json_nullable: ObjectAnimalAsPostgresqlJsonNullable,
-    // pub option_object_animal_as_json_nullable: StdOptionOptionObjectAnimalAsPostgresqlJsonNullable,
-    // pub std_vec_vec_object_with_id_animal_as_json_nullable: StdVecVecObjectWithIdAnimalAsPostgresqlJsonNullable,
-    // pub option_std_vec_vec_object_with_id_animal_as_json_nullable: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonNullable,
-
-    //todo for json types need to use json_matches_schema instead of jsonb_matches_schema
-    // pub object_animal_as_json_not_null: ObjectAnimalAsPostgresqlJsonNotNull,
-    // pub option_object_animal_as_json_not_null: StdOptionOptionObjectAnimalAsPostgresqlJsonNotNull,
-    // pub std_vec_vec_object_with_id_animal_as_json_not_null: StdVecVecObjectWithIdAnimalAsPostgresqlJsonNotNull,
-    // pub option_std_vec_vec_object_with_id_animal_as_json_not_null: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonNotNull,
-
     // pub object_animal_as_jsonb_nullable: ObjectAnimalAsPostgresqlJsonbNullable,
-    // pub option_object_animal_as_jsonb_nullable: StdOptionOptionObjectAnimalAsPostgresqlJsonbNullable,
-    // pub std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdVecVecObjectWithIdAnimalAsPostgresqlJsonbNullable,
-    // pub option_std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonbNullable,
-
     pub object_animal_as_jsonb_not_null: ObjectAnimalAsPostgresqlJsonbNotNull,
+
+    // pub option_object_animal_as_jsonb_nullable: StdOptionOptionObjectAnimalAsPostgresqlJsonbNullable,
     // pub option_object_animal_as_jsonb_not_null: StdOptionOptionObjectAnimalAsPostgresqlJsonbNotNull,
+
+    // pub std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdVecVecObjectWithIdAnimalAsPostgresqlJsonbNullable,
     // pub std_vec_vec_object_with_id_animal_as_jsonb_not_null: StdVecVecObjectWithIdAnimalAsPostgresqlJsonbNotNull,
+
+    // pub option_std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonbNullable,
     // pub option_std_vec_vec_object_with_id_animal_as_jsonb_not_null: StdOptionOptionStdVecVecObjectWithIdAnimalAsPostgresqlJsonbNotNull,
     
     //63max
