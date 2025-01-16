@@ -5550,3 +5550,4 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     // // }
     generated.into()
 }
+//todo impl custom serde::Deserialize for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhere
