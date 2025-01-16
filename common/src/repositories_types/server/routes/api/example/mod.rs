@@ -525,7 +525,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                             is_first_push_to_additional_parameters_already_happend = true;
                         }
                         Err(error_0) => {
-                            todo!()
+                            panic!()
                         }
                     }
                 }
@@ -541,7 +541,7 @@ pub async fn try_read_many_route_logic(app_state: axum::extract::State<crate::re
                             is_first_push_to_additional_parameters_already_happend = true;
                         }
                         Err(error_0) => {
-                            todo!()
+                            panic!()
                         }
                     }
                 }
@@ -1659,10 +1659,10 @@ impl PostgresqlJsonTypeAnimalOptionToUpdate {
 }
 impl<'a> postgresql_crud::BindQuery<'a> for PostgresqlJsonTypeAnimalOptionToUpdate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        panic!()
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        panic!()
     }
 }
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for PostgresqlJsonTypeAnimalOptionToUpdate {}
