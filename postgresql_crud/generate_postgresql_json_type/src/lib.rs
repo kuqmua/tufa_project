@@ -5538,13 +5538,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
         #postgresql_type_traits_token_stream
     };
-    if ident == "" {
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "GeneratePostgresqlJsonType",
-            &generated,
-        );
-        // quote::quote!{}.into()
-    }
+    // if ident == "" {
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         "GeneratePostgresqlJsonType",
+    //         &generated,
+    //     );
+    //     // quote::quote!{}.into()
+    // }
     // // else {
     // //     generated.into()
     // // }
