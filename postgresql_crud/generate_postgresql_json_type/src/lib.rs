@@ -5250,36 +5250,28 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let struct_declaration_token_stream = quote::quote!{{
                                 logical_operator: postgresql_crud::LogicalOperator,
                             }};
-
-                            ////
-                                    // let fields_declaration_token_stream = {
-                                    //     let value = vec_syn_field.iter().map(|element| {
-                                    //         let field_ident = element
-                                    //             .ident
-                                    //             .as_ref()
-                                    //             .unwrap_or_else(|| {
-                                    //                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //             });
-                                    //         let postgresql_json_type_type_path_to_create_token_stream = naming::parameter::PostgresqlJsonTypeSelfUpperCamelCase::from_type_last_segment(&element.ty);
-                                    //         quote::quote!{
-                                    //             #field_ident: #postgresql_json_type_type_path_to_create_token_stream
-                                    //         }
-                                    //     });
-                                    //     quote::quote!{#(#value),*}
-                                    // };
-                            ////
                             let pub_struct_postgresql_type_tokens_where_element_declaration_token_stream = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => 
-                                
-                                // &{
-
-                                // }
-                                
-                                
-                                // quote::quote!{
-                                //     std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8
-                                // }
-                                &struct_declaration_token_stream,
+                                PostgresqlJsonType::Object => &{
+                                    let fields_declaration_token_stream = {
+                                        let value = vec_syn_field.iter().map(|element| {
+                                            let field_ident = element
+                                                .ident
+                                                .as_ref()
+                                                .unwrap_or_else(|| {
+                                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                                });
+                                            let postgresql_json_type_type_path_field_reader_token_stream = naming::parameter::PostgresqlJsonTypeSelfFieldReaderUpperCamelCase::from_type_last_segment(&element.ty);
+                                            quote::quote!{
+                                                #field_ident: #postgresql_json_type_type_path_field_reader_token_stream
+                                            }
+                                        });
+                                        quote::quote!{#(#value),*}
+                                    };
+                                    quote::quote!{{
+                                        logical_operator: postgresql_crud::LogicalOperator,
+                                        #fields_declaration_token_stream
+                                    }}
+                                },
                                 PostgresqlJsonType::StdOptionOptionObject => &struct_declaration_token_stream,
                                 PostgresqlJsonType::StdVecVecObjectWithId => &struct_declaration_token_stream,
                                 PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &struct_declaration_token_stream,
@@ -5298,8 +5290,23 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = {
                             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_where_element_token_stream = match &postgresql_json_type {
-                                //todo
-                                PostgresqlJsonType::Object => quote::quote!{todo!()},
+                                PostgresqlJsonType::Object => {
+                                    let value = vec_syn_field.iter().map(|element| {
+                                        let field_ident = element
+                                            .ident
+                                            .as_ref()
+                                            .unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                        quote::quote!{
+                                            #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                                        }
+                                    });
+                                    quote::quote!{Self {
+                                        logical_operator: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                        #(#value),*
+                                    }}
+                                },
                                 PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
                                 PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
                                 PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
@@ -5531,13 +5538,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
         #postgresql_type_traits_token_stream
     };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "GeneratePostgresqlJsonType",
-    //         &generated,
-    //     );
-    //     // quote::quote!{}.into()
-    // }
+    if ident == "" {
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "GeneratePostgresqlJsonType",
+            &generated,
+        );
+        // quote::quote!{}.into()
+    }
     // // else {
     // //     generated.into()
     // // }

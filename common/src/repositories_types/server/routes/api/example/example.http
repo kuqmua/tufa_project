@@ -74,7 +74,71 @@ POST http://127.0.0.1:8080/example/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
-
+{
+  # "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "object_animal_as_jsonb_not_null": {
+    "LogicalOperator": "Or",
+    "value": [
+      {
+        "logical_operator": "Or",
+        "std_primitive_i8": {}
+      }
+    ]
+  },
+  "select": [
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    },
+    {
+      "object_animal_as_jsonb_not_null": [
+        {
+          "std_primitive_i8": {}
+        }
+      ]
+    }
+  ],
+  "order_by": {
+    "column": {
+      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    },
+    "order": "asc"
+  },
+  "pagination": {
+    "limit": 3,
+    "offset": 0
+  }
+}
 
 ### 
 
