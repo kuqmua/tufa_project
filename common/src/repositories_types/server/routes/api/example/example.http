@@ -38,7 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i32_as_int4_not_null": 0,
+    "std_primitive_i32_as_int4_not_null": 1,
     "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": null
   }
 ]
@@ -56,7 +56,7 @@ content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
-  "std_primitive_i32_as_int4_not_null": 0,
+  "std_primitive_i32_as_int4_not_null": 1,
   "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": null
 }
 
@@ -74,63 +74,63 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 
 {
-  # "std_primitive_i32_as_int4_not_null": {
+  "std_primitive_i32_as_int4_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      }
+      # ,
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
+  # "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
   #     # {
   #     #   "Equal": {
   #     #     "logical_operator": "Or",
-  #     #     "value": 0
+  #     #     "value": "38b6d0c8-28ec-4c73-9dc7-f458125cfa8a"
   #     #   }
-  #     # },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     }
+  #     # }
   #     # ,
   #     # {
-  #     #   "Between": {
+  #     #   "CaseSensitiveRegularExpression": {
   #     #     "logical_operator": "Or",
-  #     #     "start": 0,
-  #     #     "end": 0
+  #     #     "value": ""
   #     #   }
   #     # },
   #     # {
-  #     #   "In": {
+  #     #   "CaseInsensitiveRegularExpression": {
   #     #     "logical_operator": "Or",
-  #     #     "value": [
-  #     #       0
-  #     #     ]
+  #     #     "value": ""
   #     #   }
   #     # }
   #   ]
   # },
-  "uuid_uuid_as_uuid_v4_initialized_by_postgresql_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": "38b6d0c8-28ec-4c73-9dc7-f458125cfa8a"
-        }
-      }
-      # ,
-      # {
-      #   "CaseSensitiveRegularExpression": {
-      #     "logical_operator": "Or",
-      #     "value": ""
-      #   }
-      # },
-      # {
-      #   "CaseInsensitiveRegularExpression": {
-      #     "logical_operator": "Or",
-      #     "value": ""
-      #   }
-      # }
-    ]
-  },
   "select": [
     {
       "std_primitive_i32_as_int4_not_null": null

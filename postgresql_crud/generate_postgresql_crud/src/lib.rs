@@ -3373,34 +3373,38 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let column_names = fields_without_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    let mut column_names = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         acc.push_str(&format!("{}", &element.field_ident));
                         acc.push_str({
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            if incremented_index == fields_without_primary_key_len {
-                                ""
-                            } else {
-                                ","
-                            }
+                            // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                            // if incremented_index == fields_without_primary_key_len {
+                            //     ""
+                            // } else {
+                            //     ","
+                            // }
+                            ","
                         });
                         acc
                     });
-                    let column_increments = fields_without_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                    let _ = column_names.pop();
+                    let mut column_increments = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
                         acc.push_str(&format!("{{}}"));
                         acc.push_str({
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            if incremented_index == fields_without_primary_key_len {
-                                ""
-                            } else {
-                                ","
-                            }
+                            // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                            // if incremented_index == fields_without_primary_key_len {
+                            //     ""
+                            // } else {
+                            //     ","
+                            // }
+                            ","
                         });
                         acc
                     });
+                    let _ = column_increments.pop();
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                         &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}) {returning_primary_key_stringified}")
                     );
-                    let try_generate_bind_increments = fields_without_primary_key.iter().map(|element| {
+                    let try_generate_bind_increments = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         // if element.option_generic.is_some() {
                         //     let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
@@ -3450,7 +3454,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    let binded_query_modifications_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             query = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#field_ident, query);
@@ -3501,7 +3505,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             // println!(" {try_operation_token_stream}");
             // let try_operation_test_token_stream = {
-            //     let element_fields_initialization_token_stream = fields_without_primary_key.iter().map(|element|{
+            //     let element_fields_initialization_token_stream = fields.iter().map(|element|{
             //         let field_ident = &element.field_ident;
             //         let field_type = &element.field.ty;
             //         quote::quote!{
