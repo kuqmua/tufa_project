@@ -1659,10 +1659,10 @@ impl PostgresqlJsonTypeAnimalOptionToUpdate {
 }
 impl<'a> postgresql_crud::BindQuery<'a> for PostgresqlJsonTypeAnimalOptionToUpdate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        panic!()
     }
     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        panic!()
     }
 }
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for PostgresqlJsonTypeAnimalOptionToUpdate {}
@@ -2056,14 +2056,14 @@ impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelf
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
 pub struct PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhere {
-    LogicalOperator: postgresql_crud::LogicalOperator,
+    logical_operator: postgresql_crud::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhereElement>,
 }
 impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhere {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
-            LogicalOperator: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             value: vec![postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()],
         }
     }
@@ -2098,9 +2098,12 @@ impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'_>
         column: &dyn std::fmt::Display,
         is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        // todo!()
+        Ok(String::from(" object_animal_as_jsonb_not_null->>'std_primitive_i8' = '0'"))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        // todo!()
+        query
     }
 }
+

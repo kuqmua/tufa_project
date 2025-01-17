@@ -5354,7 +5354,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(postgresql_type_tokens_upper_camel_case));
                     let postgresql_type_tokens_where_token_stream = {
                         let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
-                        let logical_operator_snake_case = naming::LogicalOperatorUpperCamelCase;
+                        let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
                         let postgresql_type_tokens_where_token_stream = {
                             let value_snake_case = naming::ValueSnakeCase;
                             quote::quote!{
@@ -5533,7 +5533,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         #common_token_stream
 
         #ident_token_stream
-
+        //todo return it later
         // #object_with_id_ident_token_stream
 
         #postgresql_type_traits_token_stream
