@@ -46,6 +46,17 @@ pub trait PostgresqlJsonType {
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
         is_postgresql_type: std::primitive::bool,
     ) -> std::string::String;
+    //new
+    type PostgresqlJsonTypeSelfWhereElement<'a>: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        // + schemars::JsonSchema //todo
+        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
+        + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'a>;
+    //endnew
     type PostgresqlJsonTypeSelfOptionToUpdate<'a>: std::fmt::Debug
         + Clone
         + PartialEq
