@@ -216,7 +216,7 @@ pub struct Example {
     serde::Deserialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
-    // postgresql_crud::GeneratePostgresqlJsonType
+    // postgresql_crud::GeneratePostgresqlJsonType,
 )] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -2048,12 +2048,12 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhereElement {}
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        // todo!()
         Ok(String::from(" object_animal_as_jsonb_not_null->>'std_primitive_i8' = '0'"))
+        // todo!()
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        // todo!()
         query
+        // todo!()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]

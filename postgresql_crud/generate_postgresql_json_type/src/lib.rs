@@ -5398,7 +5398,23 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
                         let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
                         let postgresql_type_self_where_try_generate_bind_increments_content_token_stream = match &postgresql_json_type {
-                            PostgresqlJsonType::Object => quote::quote!{todo!()},
+                            PostgresqlJsonType::Object => quote::quote!{
+                                let mut acc = std::string::String::default();
+                                let mut is_need_to_add_logical_operator_inner_handle = false;
+                                for element in &postgresql_type_self_where.value {
+                                    match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                                        Ok(value) => {
+                                            acc.push_str(&format!("{value} "));
+                                            is_need_to_add_logical_operator_inner_handle = true;
+                                        }
+                                        Err(error) => {
+                                            return Err(error);
+                                        }
+                                    }
+                                }
+                                let _ = acc.pop();
+                                Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                            },
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
@@ -5417,7 +5433,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_type_self_where_bind_value_to_query_token_stream = {
                         let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
                         let postgresql_type_self_where_bind_value_to_query_content_token_stream = match &postgresql_json_type {
-                            PostgresqlJsonType::Object => quote::quote!{todo!()},
+                            PostgresqlJsonType::Object => quote::quote!{
+                                for element in postgresql_type_self_where.value {
+                                    query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                                }
+                                query
+                            },
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
