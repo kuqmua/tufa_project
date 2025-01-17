@@ -266,7 +266,17 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "self", "where", "element", "position", "equals", "try", "new", "error", "named"],
     ["postgresql", "type", "self", "where", "element", "position", "equals"],
     ["self", "as", "postgresql", "json", "nullable"],
-    ["self", "as", "postgresql", "jsonb", "nullable"]
+    ["self", "as", "postgresql", "jsonb", "nullable"],
+    ["postgresql", "json", "type", "object", "self", "where", "element"],
+    ["postgresql", "json", "type", "std", "option", "option", "object", "self", "where", "element"],
+    ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "where", "element"],
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "where", "element"],
+    ["postgresql", "json", "type", "object", "self", "where"],
+    ["postgresql", "json", "type", "std", "option", "option", "object", "self", "where"],
+    ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "where"],
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "where"],
+    ["postgresql", "json", "type", "self", "where", "element"],
+    ["postgresql", "json", "type", "self", "where"]
 ]);
 
 ////////////////////////////////////////////////////

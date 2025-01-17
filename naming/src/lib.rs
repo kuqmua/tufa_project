@@ -510,7 +510,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["current", "timestamp"],
     ["greater", "than", "current", "timestamp"],
     ["position", "equals"],
-    ["position", "is", "less", "or", "equal", "zero"]
+    ["position", "is", "less", "or", "equal", "zero"],
+    ["postgresql", "json", "type", "self", "where", "element"],
+    ["postgresql", "json", "type", "self", "where"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
