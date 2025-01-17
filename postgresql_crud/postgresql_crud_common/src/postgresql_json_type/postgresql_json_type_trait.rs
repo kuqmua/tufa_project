@@ -56,6 +56,9 @@ pub trait PostgresqlJsonType {
         + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
         + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
         + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'a>;
+    type PostgresqlJsonTypeSelfWhere: std::fmt::Debug
+        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
+        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     //endnew
     type PostgresqlJsonTypeSelfOptionToUpdate<'a>: std::fmt::Debug
         + Clone

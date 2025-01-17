@@ -1033,6 +1033,117 @@ impl schemars::JsonSchema for PostgresqlJsonTypeUuidOptionsToRead {
         }
     }
 }
+/////////////////////
+// PostgresqlJsonTypeSelfWhereElement
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlJsonTypeUuidWhereElementEqual {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: uuid::Uuid,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidWhereElementEqual {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: ::core::default::Default::default(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeUuidWhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value);
+        query
+    }
+}
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlJsonTypeUuidWhereElement {
+    Equal(PostgresqlJsonTypeUuidWhereElementEqual),
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeUuidWhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlJsonTypeUuidWhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlJsonTypeUuidWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
+        ]
+    }
+}
+
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlJsonTypeUuidWhere {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<PostgresqlJsonTypeUuidWhereElement>,
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeUuidWhere {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &self.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
+    }
+}
+//todo impl try_new + custom serde::Deserialize
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidWhere {
+    #[inline]
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
+}
+
+
+
+
+
+
+////////////////////
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct PostgresqlJsonTypeUuidOptionToUpdate(pub uuid::Uuid);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidOptionToUpdate {
@@ -1094,6 +1205,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         };
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter_handle}'{field_ident}'))")
     }
+    type PostgresqlJsonTypeSelfWhereElement<'a> = PostgresqlJsonTypeUuidWhereElement;
+    type PostgresqlJsonTypeSelfWhere = PostgresqlJsonTypeUuidWhere;
     type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeUuidOptionToUpdate;
     type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed = PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed;
     fn try_generate_postgresql_json_type_to_update(
@@ -1224,6 +1337,118 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 pub type PostgresqlJsonTypeStdPrimitiveI8OptionsToRead = StdPrimitiveI8;
+/////////////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub struct PostgresqlJsonTypeStdPrimitiveI8WhereElementEqual {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: std::primitive::i8,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdPrimitiveI8WhereElementEqual {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: ::core::default::Default::default(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdPrimitiveI8WhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        println!("self.value {}", &self.value);
+        query = query.bind(sqlx::types::Json(self.value));
+        query
+    }
+}
+
+
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub enum PostgresqlJsonTypeStdPrimitiveI8WhereElement {
+    Equal(PostgresqlJsonTypeStdPrimitiveI8WhereElementEqual),
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdPrimitiveI8WhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlJsonTypeStdPrimitiveI8WhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlJsonTypeStdPrimitiveI8WhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdPrimitiveI8WhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
+        ]
+    }
+}
+
+////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub struct PostgresqlJsonTypeStdPrimitiveI8Where {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<PostgresqlJsonTypeStdPrimitiveI8WhereElement>,
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdPrimitiveI8Where {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &self.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
+    }
+}
+//todo impl try_new + custom serde::Deserialize
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdPrimitiveI8Where {
+    #[inline]
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
+}
+
+
+
+
+
+
+
+/////////////
 pub type PostgresqlJsonTypeStdPrimitiveI8OptionToUpdate = StdPrimitiveI8;
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum PostgresqlJsonTypeStdPrimitiveI8OptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed {
@@ -1258,6 +1483,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     ) -> std::string::String {
         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
     }
+    type PostgresqlJsonTypeSelfWhereElement<'a> = PostgresqlJsonTypeStdPrimitiveI8WhereElement;
+    type PostgresqlJsonTypeSelfWhere = PostgresqlJsonTypeStdPrimitiveI8Where;
     type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeStdPrimitiveI8OptionToUpdate;
     type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed = PostgresqlJsonTypeStdPrimitiveI8OptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed;
     fn try_generate_postgresql_json_type_to_update(
@@ -1296,66 +1523,5 @@ impl crate::BindQuery<'_> for StdPrimitiveI8 {
     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(sqlx::types::Json(self.0));
         query
-    }
-}
-
-///////////////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI8WhereElementEqual {
-    pub logical_operator: crate::LogicalOperator,
-    pub value: std::primitive::i16,
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI8WhereElementEqual {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self {
-            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            value: ::core::default::Default::default(),
-        }
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI8WhereElementEqual {
-    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-            }
-            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-        }
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.value);
-        query
-    }
-}
-
-
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub enum PostgresqlTypeStdPrimitiveI8WhereElement {
-    Equal(PostgresqlTypeStdPrimitiveI8WhereElementEqual),
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI8WhereElement {
-    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        match &self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
-        }
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        match self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
-        }
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI8WhereElement {}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI8WhereElement {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI8WhereElement {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-        ]
     }
 }
