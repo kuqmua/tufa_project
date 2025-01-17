@@ -2048,10 +2048,12 @@ impl postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVe
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhereElement {}
 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        todo!()
+        // todo!()
+        Ok(String::from(" object_animal_as_jsonb_not_null->>'std_primitive_i8' = '0'"))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+        // todo!()
+        query
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
@@ -2098,12 +2100,26 @@ impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'_>
         column: &dyn std::fmt::Display,
         is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
-        // todo!()
-        Ok(String::from(" object_animal_as_jsonb_not_null->>'std_primitive_i8' = '0'"))
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &postgresql_type_self_where.value {
+            match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        // todo!()
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in postgresql_type_self_where.value {
+            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
         query
     }
 }
-
