@@ -324,32 +324,24 @@ pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_op
     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
 
-////////////
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElement)]
 pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-
-    // let data_struct = match syn_derive_input.data {
-    //     syn::Data::Struct(value) => value,
-    //     syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
-    // };
-    // let fields_unnamed = match data_struct.fields {
-    //     syn::Fields::Unnamed(value) => value.unnamed,
-    //     syn::Fields::Named(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Unnamed"),
-    // };
-    // assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
-
+    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    };
+    let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
     let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
     let postgresql_json_type_ident_where_element_equal_token_stream = {
         let postgresql_json_type_ident_where_element_equal_token_stream = {
             quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
                 pub struct #postgresql_json_type_ident_where_element_equal_upper_camel_case {
                     pub logical_operator: crate::LogicalOperator,
-                    pub value: std::primitive::i8,
+                    pub value: #field_type,
                 }
             }
         };
@@ -358,8 +350,8 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                         Self {
-                            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                            value: ::core::default::Default::default(),
+                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            value: #core_default_default_default_token_stream,
                         }
                     }
                 }
@@ -379,7 +371,6 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                         }
                     }
                     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        println!("self.value {}", &self.value);
                         query = query.bind(sqlx::types::Json(self.value));
                         query
                     }
@@ -392,14 +383,15 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
             #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream
         }
     };
-
-    let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
+    
     let postgresql_json_type_ident_where_element_token_stream = {
+        let equal_upper_camel_case = naming::EqualUpperCamelCase;
+        let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_where_element_token_stream = {
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
                 pub enum #postgresql_json_type_ident_where_element_upper_camel_case {
-                    Equal(#postgresql_json_type_ident_where_element_equal_upper_camel_case),
+                    #equal_upper_camel_case(#postgresql_json_type_ident_where_element_equal_upper_camel_case),
                 }
             }
         };
@@ -408,12 +400,12 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_ident_where_element_upper_camel_case {
                     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String,     crate::TryGenerateBindIncrementsErrorNamed> {
                         match &self {
-                            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+                            Self::#equal_upper_camel_case(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
                         }
                     }
                     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                         match self {
-                            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+                            Self::#equal_upper_camel_case(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
                         }
                     }
                 }
@@ -438,7 +430,7 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                 impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_json_type_ident_where_element_upper_camel_case {
                     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
                         vec![
-                            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
+                            Self::#equal_upper_camel_case(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream),
                         ]
                     }
                 }
@@ -461,9 +453,6 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
     //     println!("-------");
     // }
     generated.into()
-
-
-
 
     // panic_location::panic_location();
     // let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -524,10 +513,6 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
     // // }
     // generated.into()
 }
-/////////////
-
-
-
 
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
