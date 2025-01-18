@@ -3993,11 +3993,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{operation_payload_example_route_logic_token_stream}");
         (
             quote::quote! {
-                // #parameters_token_stream
-                // #try_operation_route_logic_token_stream
+                #parameters_token_stream
+                #try_operation_route_logic_token_stream
                 #try_operation_token_stream
-                // #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
-                // #operation_payload_example_route_logic_token_stream
+                #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream
+                #operation_payload_example_route_logic_token_stream
             },
             // try_operation_test_token_stream,
             quote::quote! {},
