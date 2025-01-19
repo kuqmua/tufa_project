@@ -36,12 +36,178 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
-
 [
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 1
+      "std_primitive_i8": 0,
+      "std_primitive_i16": 0,
+      "std_primitive_i32": 0,
+      "std_primitive_i64": 0,
+      "std_primitive_u8": 0,
+      "std_primitive_u16": 0,
+      "std_primitive_u32": 0,
+      "std_primitive_u64": 0,
+      "std_primitive_f32": 0.0,
+      "std_primitive_f64": 0.0,
+      "std_primitive_bool": false,
+      "std_string_string": "",
+      "std_option_option_std_primitive_i8": 0,
+      "std_option_option_std_primitive_i16": 0,
+      "std_option_option_std_primitive_i32": 0,
+      "std_option_option_std_primitive_i64": 0,
+      "std_option_option_std_primitive_u8": 0,
+      "std_option_option_std_primitive_u16": 0,
+      "std_option_option_std_primitive_u32": 0,
+      "std_option_option_std_primitive_u64": 0,
+      "std_option_option_std_primitive_f32": 0.0,
+      "std_option_option_std_primitive_f64": 0.0,
+      "std_option_option_std_primitive_bool": false,
+      "std_option_option_std_string_string": "",
+      "std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_vec_vec_std_primitive_i16": [
+        0
+      ],
+      "std_vec_vec_std_primitive_i32": [
+        0
+      ],
+      "std_vec_vec_std_primitive_i64": [
+        0
+      ],
+      "std_vec_vec_std_primitive_u8": [
+        0
+      ],
+      "std_vec_vec_std_primitive_u16": [
+        0
+      ],
+      "std_vec_vec_std_primitive_u32": [
+        0
+      ],
+      "std_vec_vec_std_primitive_u64": [
+        0
+      ],
+      "std_vec_vec_std_primitive_f32": [
+        0.0
+      ],
+      "std_vec_vec_std_primitive_f64": [
+        0.0
+      ],
+      "std_vec_vec_std_primitive_bool": [
+        false
+      ],
+      "std_vec_vec_std_string_string": [
+        ""
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i16": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i32": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_i64": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_u8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_u16": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_u32": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_u64": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_f32": [
+        0.0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_f64": [
+        0.0
+      ],
+      "std_option_option_std_vec_vec_std_primitive_bool": [
+        false
+      ],
+      "std_option_option_std_vec_vec_std_string_string": [
+        ""
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i16": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i32": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_i64": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_u8": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_u16": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_u32": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_u64": [
+        0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_f32": [
+        0.0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_f64": [
+        0.0
+      ],
+      "std_vec_vec_std_option_option_std_primitive_bool": [
+        false
+      ],
+      "std_vec_vec_std_option_option_std_string_string": [
+        ""
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": [
+        0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": [
+        0.0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": [
+        0.0
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": [
+        false
+      ],
+      "std_option_option_std_vec_vec_std_option_option_std_string_string": [
+        ""
+      ]
     }
   }
 ]
@@ -118,7 +284,930 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": 1
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": ""
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdVecVecStdOptionOptionStdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
+              }
+            }
+          ]
+        }
+      },
+      {
+        "StdOptionOptionStdVecVecStdOptionOptionStdStringString": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": null
               }
             }
           ]
@@ -134,6 +1223,459 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "object_animal_as_jsonb_not_null": [
         {
           "std_primitive_i8": {}
+        },
+        {
+          "std_primitive_i16": {}
+        },
+        {
+          "std_primitive_i32": {}
+        },
+        {
+          "std_primitive_i64": {}
+        },
+        {
+          "std_primitive_u8": {}
+        },
+        {
+          "std_primitive_u16": {}
+        },
+        {
+          "std_primitive_u32": {}
+        },
+        {
+          "std_primitive_u64": {}
+        },
+        {
+          "std_primitive_f32": {}
+        },
+        {
+          "std_primitive_f64": {}
+        },
+        {
+          "std_primitive_bool": {}
+        },
+        {
+          "std_string_string": {}
+        },
+        {
+          "std_option_option_std_primitive_i8": {}
+        },
+        {
+          "std_option_option_std_primitive_i16": {}
+        },
+        {
+          "std_option_option_std_primitive_i32": {}
+        },
+        {
+          "std_option_option_std_primitive_i64": {}
+        },
+        {
+          "std_option_option_std_primitive_u8": {}
+        },
+        {
+          "std_option_option_std_primitive_u16": {}
+        },
+        {
+          "std_option_option_std_primitive_u32": {}
+        },
+        {
+          "std_option_option_std_primitive_u64": {}
+        },
+        {
+          "std_option_option_std_primitive_f32": {}
+        },
+        {
+          "std_option_option_std_primitive_f64": {}
+        },
+        {
+          "std_option_option_std_primitive_bool": {}
+        },
+        {
+          "std_option_option_std_string_string": {}
+        },
+        {
+          "std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_i16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_i32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_i64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_u8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_u16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_u32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_u64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_f32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_f64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_primitive_bool": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_string_string": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_i64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_u8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_u16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_u32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_u64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_f32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_f64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_primitive_bool": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_string_string": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_i64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_u8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_u16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_u32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_u64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_f32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_f64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_primitive_bool": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_vec_vec_std_option_option_std_string_string": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_i64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_u8": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_u16": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_u32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_u64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_f32": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_f64": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "std_option_option_std_vec_vec_std_option_option_std_string_string": {
+            "pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
         }
       ]
     }
