@@ -4447,6 +4447,58 @@ impl GreaterThanLowerBound {
         )
     }
 }
+struct OverlapWithRange;
+impl WhereOperatorName for OverlapWithRange {
+    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::OverlapWithRangeUpperCamelCase
+    }
+}
+impl OverlapWithRange {
+    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        ident: &dyn quote::ToTokens,
+        is_nullable: &IsNullable,
+    ) -> proc_macro2::TokenStream {
+        let column_snake_case = naming::ColumnSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        };
+        generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            Self::upper_camel_case(),
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub #value_snake_case: #ident},
+            &quote::quote!{
+                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            },
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({} && ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
+                #query_snake_case
+            }
+        )
+    }
+}
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -5366,36 +5418,9 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &ident,
             &is_nullable,
         );
-        let overlap_with_range_upper_camel_case = naming::OverlapWithRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = OverlapWithRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &overlap_with_range_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} && ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
         );
         let adjacent_with_range_upper_camel_case = naming::AdjacentWithRangeUpperCamelCase;
         let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
@@ -5742,6 +5767,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         let included_lower_bound_upper_camel_case = IncludedLowerBound::upper_camel_case();
         let excluded_upper_bound_upper_camel_case = ExcludedUpperBound::upper_camel_case();
         let greater_than_lower_bound_upper_camel_case = GreaterThanLowerBound::upper_camel_case();
+        let overlap_with_range_upper_camel_case = OverlapWithRange::upper_camel_case();
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
