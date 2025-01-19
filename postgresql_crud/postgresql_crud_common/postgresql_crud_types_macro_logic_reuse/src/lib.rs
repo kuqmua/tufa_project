@@ -4133,6 +4133,58 @@ impl ValueIsContainedWithinRange {
         )
     }
 }
+struct ContainsAnotherRange;
+impl WhereOperatorName for ContainsAnotherRange {
+    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::ContainsAnotherRangeUpperCamelCase
+    }
+}
+impl ContainsAnotherRange {
+    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        ident: &dyn quote::ToTokens,
+        is_nullable: &IsNullable,
+    ) -> proc_macro2::TokenStream {
+        let column_snake_case = naming::ColumnSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        };
+        generate_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            Self::upper_camel_case(),
+            &is_nullable,
+            ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{pub #value_snake_case: #ident},
+            &quote::quote!{
+                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            },
+            &quote::quote!{
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        Ok(format!(
+                            "{}({} @> ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            #increment_snake_case
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            &quote::quote!{
+                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
+                #query_snake_case
+            }
+        )
+    }
+}
 
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -5022,36 +5074,9 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &range_type_default_initialization_token_stream,
             &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
         );
-        let contains_another_range_upper_camel_case = naming::ContainsAnotherRangeUpperCamelCase;
-        let postgresql_type_tokens_where_element_contains_another_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
+        let postgresql_type_tokens_where_element_contains_another_range_token_stream = ContainsAnotherRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &contains_another_range_upper_camel_case,
             &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &quote::quote!{
-                #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-            },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                #query_snake_case
-            }
         );
         let strictly_to_left_of_range_upper_camel_case = naming::StrictlyToLeftOfRangeUpperCamelCase;
         let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = generate_postgresql_type_tokens_where_element_variant_token_stream(
@@ -5574,6 +5599,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         };
         let equal_upper_camel_case = Equal::upper_camel_case();
         let value_is_contained_within_range_upper_camel_case = ValueIsContainedWithinRange::upper_camel_case();
+        let contains_another_range_upper_camel_case = ContainsAnotherRange::upper_camel_case();
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
