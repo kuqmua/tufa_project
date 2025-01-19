@@ -3546,7 +3546,6 @@ impl CurrentDate {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3561,9 +3560,7 @@ impl CurrentDate {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
@@ -3579,7 +3576,6 @@ impl GreaterThanCurrentDate {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3594,9 +3590,7 @@ impl GreaterThanCurrentDate {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
@@ -3612,7 +3606,6 @@ impl CurrentTimestamp {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3627,9 +3620,7 @@ impl CurrentTimestamp {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
@@ -3645,7 +3636,6 @@ impl GreaterThanCurrentTimestamp {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3660,9 +3650,7 @@ impl GreaterThanCurrentTimestamp {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
@@ -3678,7 +3666,6 @@ impl CurrentTime {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3693,9 +3680,7 @@ impl CurrentTime {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
@@ -3711,7 +3696,6 @@ impl GreaterThanCurrentTime {
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             Self::upper_camel_case(),
@@ -3726,12 +3710,26 @@ impl GreaterThanCurrentTime {
                     #column_snake_case,
                 ))
             },
-            &quote::quote!{
-                #query_snake_case
-            }
+            &naming::QuerySnakeCase
         )
     }
 }
+// 
+// struct LengthMoreThan;
+// impl WhereOperatorName for LengthMoreThan {
+//     fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+//         &naming::LengthMoreThanUpperCamelCase
+//     }
+// }
+// impl LengthMoreThan {
+//     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+//         // ident: &dyn quote::ToTokens,
+//         // is_nullable: &IsNullable,
+//     ) -> proc_macro2::TokenStream {
+
+//     }
+// }
+
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
