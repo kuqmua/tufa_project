@@ -469,65 +469,6 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
     //     println!("-------");
     // }
     generated.into()
-
-    // panic_location::panic_location();
-    // let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    // let ident = &syn_derive_input.ident;
-    // let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    // let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-    //     let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-    //     let where_operator_type_field_type = WhereOperatorType::FieldType {
-    //         field_type: &field_type,
-    //         default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-    //     };
-    //     let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //         &ident,
-    //         &is_nullable,
-    //         &where_operator_type_field_type,
-    //     );
-    //     let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //         &ident,
-    //         &is_nullable,
-    //         &where_operator_type_field_type,
-    //     );
-    //     let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //         &ident,
-    //         &is_nullable,
-    //         &where_operator_type_field_type,
-    //         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-    //         &ShouldAddDotZero::False,
-    //     );
-    //     let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //         &ident,
-    //         &is_nullable,
-    //         &where_operator_type_field_type,
-    //     );
-    //     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-    //         is_nullable,
-    //         &ident,
-    //         &vec![
-    //             &Equal::upper_camel_case(),
-    //             &GreaterThan::upper_camel_case(),
-    //             &Between::upper_camel_case(),
-    //             &In::upper_camel_case(),
-    //         ]
-    //     );
-    //     quote::quote! {
-    //         #maybe_postgresql_type_tokens_where_element_is_null_token_stream
-    //         #postgresql_type_tokens_where_element_equal_token_stream
-    //         #postgresql_type_tokens_where_element_greater_than_token_stream
-    //         #postgresql_type_tokens_where_element_between_token_stream
-    //         #postgresql_type_tokens_where_element_in_token_stream
-    //         #postgresql_type_tokens_where_element_token_stream
-    //     }
-    // });
-    // // if ident == "" {
-    // //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    // //         "PostgresqlBaseTypeTokensWhereElementNumber",
-    // //         &generated,
-    // //     );
-    // // }
-    // generated.into()
 }
 
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
@@ -2423,7 +2364,7 @@ impl IsValueTypePub {
     }
 }
 trait WhereOperatorName {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }
 enum WhereOperatorType<'a> {
     Ident(&'a syn::Ident),
@@ -2462,12 +2403,13 @@ impl WhereOperatorType<'_> {
 }
 struct Equal;
 impl WhereOperatorName for Equal {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::EqualUpperCamelCase
     }
 }
 impl Equal {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         where_operator_type: &WhereOperatorType,
@@ -2569,12 +2511,13 @@ impl Equal {
 }
 struct GreaterThan;
 impl WhereOperatorName for GreaterThan {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanUpperCamelCase
     }
 }
 impl GreaterThan {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         where_operator_type: &WhereOperatorType,
@@ -2650,12 +2593,13 @@ impl ShouldAddDotZero {
 }
 struct Between;
 impl WhereOperatorName for Between {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::BetweenUpperCamelCase
     }
 }
 impl Between {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         where_operator_type: &WhereOperatorType,
@@ -3038,12 +2982,13 @@ impl Between {
 }
 struct In;
 impl WhereOperatorName for In {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::InUpperCamelCase
     }
 }
 impl In {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         where_operator_type: &WhereOperatorType,
@@ -3446,12 +3391,13 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
 }
 struct CaseSensitiveRegularExpression;
 impl WhereOperatorName for CaseSensitiveRegularExpression {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::CaseSensitiveRegularExpressionUpperCamelCase
     }
 }
 impl CaseSensitiveRegularExpression {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3465,12 +3411,13 @@ impl CaseSensitiveRegularExpression {
 }
 struct CaseInsensitiveRegularExpression;
 impl WhereOperatorName for CaseInsensitiveRegularExpression {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::CaseInsensitiveRegularExpressionUpperCamelCase
     }
 }
 impl CaseInsensitiveRegularExpression {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3484,12 +3431,13 @@ impl CaseInsensitiveRegularExpression {
 }
 struct Before;
 impl WhereOperatorName for Before {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::BeforeUpperCamelCase
     }
 }
 impl Before {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3536,12 +3484,13 @@ impl Before {
 }
 struct CurrentDate;
 impl WhereOperatorName for CurrentDate {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::CurrentDateUpperCamelCase
     }
 }
 impl CurrentDate {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3566,12 +3515,13 @@ impl CurrentDate {
 }
 struct GreaterThanCurrentDate;
 impl WhereOperatorName for GreaterThanCurrentDate {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanCurrentDateUpperCamelCase
     }
 }
 impl GreaterThanCurrentDate {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3596,12 +3546,13 @@ impl GreaterThanCurrentDate {
 }
 struct CurrentTimestamp;
 impl WhereOperatorName for CurrentTimestamp {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::CurrentTimestampUpperCamelCase
     }
 }
 impl CurrentTimestamp {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3626,12 +3577,13 @@ impl CurrentTimestamp {
 }
 struct GreaterThanCurrentTimestamp;
 impl WhereOperatorName for GreaterThanCurrentTimestamp {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanCurrentTimestampUpperCamelCase
     }
 }
 impl GreaterThanCurrentTimestamp {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3656,12 +3608,13 @@ impl GreaterThanCurrentTimestamp {
 }
 struct CurrentTime;
 impl WhereOperatorName for CurrentTime {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::CurrentTimeUpperCamelCase
     }
 }
 impl CurrentTime {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3686,12 +3639,13 @@ impl CurrentTime {
 }
 struct GreaterThanCurrentTime;
 impl WhereOperatorName for GreaterThanCurrentTime {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanCurrentTimeUpperCamelCase
     }
 }
 impl GreaterThanCurrentTime {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -3716,12 +3670,13 @@ impl GreaterThanCurrentTime {
 }
 struct LengthMoreThan;
 impl WhereOperatorName for LengthMoreThan {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::LengthMoreThanUpperCamelCase
     }
 }
 impl LengthMoreThan {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4032,12 +3987,13 @@ impl LengthMoreThan {
 }
 struct EqualToEncodedStringRepresentation;
 impl WhereOperatorName for EqualToEncodedStringRepresentation {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::EqualToEncodedStringRepresentationUpperCamelCase
     }
 }
 impl EqualToEncodedStringRepresentation {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4084,12 +4040,13 @@ impl EqualToEncodedStringRepresentation {
 }
 struct ValueIsContainedWithinRange;
 impl WhereOperatorName for ValueIsContainedWithinRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::ValueIsContainedWithinRangeUpperCamelCase
     }
 }
 impl ValueIsContainedWithinRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
@@ -4135,12 +4092,13 @@ impl ValueIsContainedWithinRange {
 }
 struct ContainsAnotherRange;
 impl WhereOperatorName for ContainsAnotherRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::ContainsAnotherRangeUpperCamelCase
     }
 }
 impl ContainsAnotherRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4187,12 +4145,13 @@ impl ContainsAnotherRange {
 }
 struct StrictlyToLeftOfRange;
 impl WhereOperatorName for StrictlyToLeftOfRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::StrictlyToLeftOfRangeUpperCamelCase
     }
 }
 impl StrictlyToLeftOfRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4239,12 +4198,13 @@ impl StrictlyToLeftOfRange {
 }
 struct StrictlyToRightOfRange;
 impl WhereOperatorName for StrictlyToRightOfRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::StrictlyToRightOfRangeUpperCamelCase
     }
 }
 impl StrictlyToRightOfRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4291,12 +4251,13 @@ impl StrictlyToRightOfRange {
 }
 struct IncludedLowerBound;
 impl WhereOperatorName for IncludedLowerBound {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::IncludedLowerBoundUpperCamelCase
     }
 }
 impl IncludedLowerBound {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
@@ -4344,12 +4305,13 @@ impl IncludedLowerBound {
 }
 struct ExcludedUpperBound;
 impl WhereOperatorName for ExcludedUpperBound {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::ExcludedUpperBoundUpperCamelCase
     }
 }
 impl ExcludedUpperBound {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
@@ -4397,12 +4359,13 @@ impl ExcludedUpperBound {
 }
 struct GreaterThanLowerBound;
 impl WhereOperatorName for GreaterThanLowerBound {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanLowerBoundUpperCamelCase
     }
 }
 impl GreaterThanLowerBound {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4449,12 +4412,13 @@ impl GreaterThanLowerBound {
 }
 struct OverlapWithRange;
 impl WhereOperatorName for OverlapWithRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::OverlapWithRangeUpperCamelCase
     }
 }
 impl OverlapWithRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4501,12 +4465,13 @@ impl OverlapWithRange {
 }
 struct AdjacentWithRange;
 impl WhereOperatorName for AdjacentWithRange {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::AdjacentWithRangeUpperCamelCase
     }
 }
 impl AdjacentWithRange {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4553,12 +4518,13 @@ impl AdjacentWithRange {
 }
 struct RangeLength;
 impl WhereOperatorName for RangeLength {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::RangeLengthUpperCamelCase
     }
 }
 impl RangeLength {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -4875,12 +4841,13 @@ impl RangeLength {
 }
 struct PositionEquals;
 impl WhereOperatorName for PositionEquals {
-    fn upper_camel_case() -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::PositionEqualsUpperCamelCase
     }
 }
 impl PositionEquals {
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
@@ -5276,24 +5243,28 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let in_handle = In;
+        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
@@ -5302,10 +5273,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &In::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &in.upper_camel_case(),
             ]
         );
         quote::quote! {
