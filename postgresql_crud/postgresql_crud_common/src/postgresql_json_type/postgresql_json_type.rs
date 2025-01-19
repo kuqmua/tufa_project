@@ -184,171 +184,183 @@ pub struct StdPrimitiveBool(pub std::primitive::bool);
 pub struct StdStringString(pub std::string::String);
 
 
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]//todo add validate range
-// pub struct StdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primitive::i8>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primitive::i16>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primitive::i32>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primitive::i64>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primitive::u8>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primitive::u16>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primitive::u32>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primitive::u64>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primitive::f32>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primitive::f64>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     Copy,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     Default,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     schemars::JsonSchema,
-//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-// )]
-// pub struct StdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]//todo add validate range
+pub struct StdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primitive::i8>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveI16(pub std::option::Option<std::primitive::i16>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveI32(pub std::option::Option<std::primitive::i32>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveI64(pub std::option::Option<std::primitive::i64>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveU8(pub std::option::Option<std::primitive::u8>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveU16(pub std::option::Option<std::primitive::u16>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveU32(pub std::option::Option<std::primitive::u32>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveU64(pub std::option::Option<std::primitive::u64>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveF32(pub std::option::Option<std::primitive::f32>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveF64(pub std::option::Option<std::primitive::f64>);
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
+    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElement,
+)]
+pub struct StdOptionOptionStdStringString(pub std::option::Option<std::string::String>);
 
 // #[derive(
 //     Debug,
