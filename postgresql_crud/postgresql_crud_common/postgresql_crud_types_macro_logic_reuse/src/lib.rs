@@ -2425,7 +2425,7 @@ impl Equal {
         let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
@@ -2533,7 +2533,7 @@ impl GreaterThan {
         let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
@@ -2616,7 +2616,7 @@ impl Between {
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
         let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
-        let self_upper_camel_case = Self::upper_camel_case();
+        let self_upper_camel_case = self.upper_camel_case();
         let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
         let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
         let maybe_dot_zero_token_stream = should_add_dot_zero.maybe_dot_zero_token_stream();
@@ -3003,7 +3003,7 @@ impl In {
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let query_snake_case = naming::QuerySnakeCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let self_upper_camel_case = Self::upper_camel_case();
+        let self_upper_camel_case = self.upper_camel_case();
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
         let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
@@ -3405,7 +3405,7 @@ impl CaseSensitiveRegularExpression {
             &ident,
             &is_nullable,
             &RegularExpression::CaseSensitive,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
         )
     }
 }
@@ -3425,7 +3425,7 @@ impl CaseInsensitiveRegularExpression {
             &ident,
             &is_nullable,
             &RegularExpression::CaseInsensitive,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
         )
     }
 }
@@ -3452,7 +3452,7 @@ impl Before {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -3497,7 +3497,7 @@ impl CurrentDate {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3528,7 +3528,7 @@ impl GreaterThanCurrentDate {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3559,7 +3559,7 @@ impl CurrentTimestamp {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3590,7 +3590,7 @@ impl GreaterThanCurrentTimestamp {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3621,7 +3621,7 @@ impl CurrentTime {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3652,7 +3652,7 @@ impl GreaterThanCurrentTime {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
@@ -3688,7 +3688,7 @@ impl LengthMoreThan {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let self_upper_camel_case = Self::upper_camel_case();
+        let self_upper_camel_case = self.upper_camel_case();
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -4008,7 +4008,7 @@ impl EqualToEncodedStringRepresentation {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &Self::upper_camel_case(),
+            &self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
@@ -4062,7 +4062,7 @@ impl ValueIsContainedWithinRange {
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4113,7 +4113,7 @@ impl ContainsAnotherRange {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4166,7 +4166,7 @@ impl StrictlyToLeftOfRange {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4219,7 +4219,7 @@ impl StrictlyToRightOfRange {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4275,7 +4275,7 @@ impl IncludedLowerBound {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4329,7 +4329,7 @@ impl ExcludedUpperBound {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4380,7 +4380,7 @@ impl GreaterThanLowerBound {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4433,7 +4433,7 @@ impl OverlapWithRange {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4486,7 +4486,7 @@ impl AdjacentWithRange {
         };
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            Self::upper_camel_case(),
+            self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4537,7 +4537,7 @@ impl RangeLength {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        let self_upper_camel_case = Self::upper_camel_case();
+        let self_upper_camel_case = self.upper_camel_case();
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
         let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
         generate_postgresql_type_tokens_where_element_variant_token_stream(
@@ -4860,7 +4860,7 @@ impl PositionEquals {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        let self_upper_camel_case = Self::upper_camel_case();
+        let self_upper_camel_case = self.upper_camel_case();
         let std_primitive_bool_token_stream = quote::quote!{std::primitive::bool};
         let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
         generate_postgresql_type_tokens_where_element_variant_token_stream(
@@ -5276,7 +5276,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
                 &equal.upper_camel_case(),
                 &greater_than.upper_camel_case(),
                 &between.upper_camel_case(),
-                &in.upper_camel_case(),
+                &in_handle.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5315,24 +5315,29 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::True,
         );
-        let postgresql_type_tokens_where_element_in_token_stream = In::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let in_handle = In;
+        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -5341,10 +5346,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &In::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &in_handle.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5383,17 +5388,20 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
@@ -5404,9 +5412,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5441,17 +5449,20 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -5462,9 +5473,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5491,7 +5502,8 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::FieldType {
@@ -5503,7 +5515,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
+                &equal.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5528,11 +5540,13 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5540,8 +5554,8 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             is_nullable,
             &ident,
             &vec![
-                &CaseSensitiveRegularExpression::upper_camel_case(),
-                &CaseInsensitiveRegularExpression::upper_camel_case(),
+                &case_sensitive_regular_expression.upper_camel_case(),
+                &case_insensitive_regular_expression.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5577,7 +5591,8 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::FieldType {
@@ -5585,11 +5600,13 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
                 default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             },
         );
-        let postgresql_type_tokens_where_element_length_more_than_token_stream = LengthMoreThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let length_more_than = LengthMoreThan;
+        let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = EqualToEncodedStringRepresentation::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal_to_encoded_string_representation = EqualToEncodedStringRepresentation;
+        let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5597,9 +5614,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &LengthMoreThan::upper_camel_case(),
-                &EqualToEncodedStringRepresentation::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &length_more_than.upper_camel_case(),
+                &equal_to_encoded_string_representation.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5643,28 +5660,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_date = CurrentDate;
+        let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_date = GreaterThanCurrentDate;
+        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5672,11 +5694,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentDate::upper_camel_case(),
-                &GreaterThanCurrentDate::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_date.upper_camel_case(),
+                &greater_than_current_date.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5716,28 +5738,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_date_token_stream = CurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_date = CurrentDate;
+        let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = GreaterThanCurrentDate::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_date = GreaterThanCurrentDate;
+        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5745,11 +5772,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentDate::upper_camel_case(),
-                &GreaterThanCurrentDate::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_date.upper_camel_case(),
+                &greater_than_current_date.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5789,28 +5816,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_time = CurrentTime;
+        let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_time = GreaterThanCurrentTime;
+        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5818,11 +5850,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTime::upper_camel_case(),
-                &GreaterThanCurrentTime::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_time.upper_camel_case(),
+                &greater_than_current_time.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5862,28 +5894,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_time_token_stream = CurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_time = CurrentTime;
+        let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = GreaterThanCurrentTime::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_time = GreaterThanCurrentTime;
+        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -5891,11 +5928,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTime::upper_camel_case(),
-                &GreaterThanCurrentTime::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_time.upper_camel_case(),
+                &greater_than_current_time.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -5939,17 +5976,20 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -5960,9 +6000,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6110,12 +6150,14 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = ValueIsContainedWithinRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let value_is_contained_within_range = ValueIsContainedWithinRange;
+        let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &range_type_token_stream,
@@ -6123,63 +6165,72 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &range_type_default_initialization_token_stream,
             &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
         );
-        let postgresql_type_tokens_where_element_contains_another_range_token_stream = ContainsAnotherRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let contains_another_range = ContainsAnotherRange;
+        let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = StrictlyToLeftOfRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let strictly_to_left_of_range = StrictlyToLeftOfRange;
+        let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = StrictlyToRightOfRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let strictly_to_right_of_range = StrictlyToRightOfRange;
+        let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_included_lower_bound_token_stream = IncludedLowerBound::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &range_type_token_stream,
-            &range_type_default_initialization_token_stream,
-            &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-        );
-        let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = ExcludedUpperBound::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let included_lower_bound = IncludedLowerBound;
+        let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &range_type_token_stream,
             &range_type_default_initialization_token_stream,
             &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
         );
-        let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = GreaterThanLowerBound::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let excluded_upper_bound = ExcludedUpperBound;
+        let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = ExcludedUpperBound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &range_type_token_stream,
+            &range_type_default_initialization_token_stream,
+            &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+        );
+        let greater_than_lower_bound = GreaterThanLowerBound;
+        let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = OverlapWithRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let overlap_with_range = OverlapWithRange;
+        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = AdjacentWithRange::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let adjacent_with_range = AdjacentWithRange;
+        let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
         //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
+        let range_length = RangeLength;
         let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
-            ShouldImplRangeLength::True => RangeLength::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                 &ident,
                 &is_nullable,
             ),
             ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
         };
-        let equal_upper_camel_case = Equal::upper_camel_case();
-        let value_is_contained_within_range_upper_camel_case = ValueIsContainedWithinRange::upper_camel_case();
-        let contains_another_range_upper_camel_case = ContainsAnotherRange::upper_camel_case();
-        let strictly_to_left_of_range_upper_camel_case = StrictlyToLeftOfRange::upper_camel_case();
-        let strictly_to_right_of_range_upper_camel_case = StrictlyToRightOfRange::upper_camel_case();
-        let included_lower_bound_upper_camel_case = IncludedLowerBound::upper_camel_case();
-        let excluded_upper_bound_upper_camel_case = ExcludedUpperBound::upper_camel_case();
-        let greater_than_lower_bound_upper_camel_case = GreaterThanLowerBound::upper_camel_case();
-        let overlap_with_range_upper_camel_case = OverlapWithRange::upper_camel_case();
-        let adjacent_with_range_upper_camel_case = AdjacentWithRange::upper_camel_case();
-        let range_length_upper_camel_case = RangeLength::upper_camel_case();
+        let equal_upper_camel_case = equal.upper_camel_case();
+        let value_is_contained_within_range_upper_camel_case = value_is_contained_within_range.upper_camel_case();
+        let contains_another_range_upper_camel_case = contains_another_range.upper_camel_case();
+        let strictly_to_left_of_range_upper_camel_case = strictly_to_left_of_range.upper_camel_case();
+        let strictly_to_right_of_range_upper_camel_case = strictly_to_right_of_range.upper_camel_case();
+        let included_lower_bound_upper_camel_case = included_lower_bound.upper_camel_case();
+        let excluded_upper_bound_upper_camel_case = excluded_upper_bound.upper_camel_case();
+        let greater_than_lower_bound_upper_camel_case = greater_than_lower_bound.upper_camel_case();
+        let overlap_with_range_upper_camel_case = overlap_with_range.upper_camel_case();
+        let adjacent_with_range_upper_camel_case = adjacent_with_range.upper_camel_case();
+        let range_length_upper_camel_case = range_length.upper_camel_case();
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
@@ -6370,28 +6421,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_timestamp_token_stream = CurrentTimestamp::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_timestamp = CurrentTimestamp;
+        let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = GreaterThanCurrentTimestamp::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_timestamp = GreaterThanCurrentTimestamp;
+        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -6399,11 +6455,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTimestamp::upper_camel_case(),
-                &GreaterThanCurrentTimestamp::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_timestamp.upper_camel_case(),
+                &greater_than_current_timestamp.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6444,28 +6500,33 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             field_type: &field_type,
             default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
         };
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_field_type,
             &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &ShouldAddDotZero::False,
         );
-        let postgresql_type_tokens_where_element_current_timestamp_token_stream = CurrentTimestamp::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let current_timestamp = CurrentTimestamp;
+        let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = GreaterThanCurrentTimestamp::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than_current_timestamp = GreaterThanCurrentTimestamp;
+        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -6473,11 +6534,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &Between::upper_camel_case(),
-                &CurrentTimestamp::upper_camel_case(),
-                &GreaterThanCurrentTimestamp::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &between.upper_camel_case(),
+                &current_timestamp.upper_camel_case(),
+                &greater_than_current_timestamp.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6514,16 +6575,19 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let before = Before;
+        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -6556,9 +6620,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &Before::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &before.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6586,16 +6650,19 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let before = Before;
+        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -6606,9 +6673,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &Before::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &before.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6636,16 +6703,19 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_before_token_stream = Before::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let before = Before;
+        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_between_token_stream = Between::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let between = Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
@@ -6656,9 +6726,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &Before::upper_camel_case(),
-                &Between::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &before.upper_camel_case(),
+                &between.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6685,16 +6755,19 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -6702,9 +6775,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &CaseSensitiveRegularExpression::upper_camel_case(),
-                &CaseInsensitiveRegularExpression::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &case_sensitive_regular_expression.upper_camel_case(),
+                &case_insensitive_regular_expression.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6741,7 +6814,8 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::FieldType {
@@ -6753,7 +6827,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
+                &equal.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6789,7 +6863,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::FieldType {
@@ -6801,7 +6876,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
+                &equal.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6827,21 +6902,25 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident,
         );
-        let postgresql_type_tokens_where_element_greater_than_token_stream = GreaterThan::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let greater_than = GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &where_operator_type_ident
         );
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = CaseSensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = CaseInsensitiveRegularExpression::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -6849,10 +6928,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &GreaterThan::upper_camel_case(),
-                &CaseSensitiveRegularExpression::upper_camel_case(),
-                &CaseInsensitiveRegularExpression::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &greater_than.upper_camel_case(),
+                &case_sensitive_regular_expression.upper_camel_case(),
+                &case_insensitive_regular_expression.upper_camel_case(),
             ]
         );
         quote::quote! {
@@ -6897,12 +6976,14 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
-        let postgresql_type_tokens_where_element_equal_token_stream = Equal::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let equal = Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let postgresql_type_tokens_where_element_position_equals_token_stream = PositionEquals::generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let position_equals = PositionEquals;
+        let postgresql_type_tokens_where_element_position_equals_token_stream = position_equals.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -6910,8 +6991,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             is_nullable,
             &ident,
             &vec![
-                &Equal::upper_camel_case(),
-                &PositionEquals::upper_camel_case(),
+                &equal.upper_camel_case(),
+                &position_equals.upper_camel_case(),
             ]
         );
         quote::quote! {
