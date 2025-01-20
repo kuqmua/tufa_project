@@ -394,8 +394,8 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
     let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
     let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
 
-
-    let postgresql_json_type_ident_where_element_equal_token_stream = Equal::generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+    let equal = Equal;
+    let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
     );
@@ -2453,6 +2453,7 @@ impl Equal {
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
     ) -> proc_macro2::TokenStream {
