@@ -2045,10 +2045,10 @@ impl IsNullable {
             Self::False => proc_macro2::TokenStream::new(),
         }
     }
-    fn maybe_add_is_null_variant<'a>(&self, variants: &'a std::vec::Vec<&'a dyn quote::ToTokens>) -> std::vec::Vec<&'a dyn quote::ToTokens> {
+    fn maybe_add_is_null_variant<'a>(&self, variants: &'a std::vec::Vec<&'a dyn WhereOperatorName>) -> std::vec::Vec<&'a dyn WhereOperatorName> {
         if let Self::True = &self {
             let mut variants_cloned = variants.clone();
-            variants_cloned.push(&naming::IsNullUpperCamelCase);
+            variants_cloned.push(&IsNull);
             variants_cloned
         }
         else {
@@ -2244,10 +2244,11 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
         }
     }
 }
+
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
     is_nullable: IsNullable,
     ident: &dyn quote::ToTokens,
-    variants_original: &std::vec::Vec<&dyn quote::ToTokens>
+    variants_original: &std::vec::Vec<&dyn WhereOperatorName>
 ) -> proc_macro2::TokenStream {
     let variants = is_nullable.maybe_add_is_null_variant(variants_original);
     let value_snake_case = naming::ValueSnakeCase;
@@ -2270,12 +2271,13 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
                     IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
                 };
+                let element_upper_camel_case = element.upper_camel_case();
                 let postgresql_type_tokens_where_element_equal_upper_camel_case = {
-                    let value = format!("{postgresql_type_tokens_where_element_upper_camel_case}{}", quote::quote!{#element});
+                    let value = format!("{postgresql_type_tokens_where_element_upper_camel_case}{}", quote::quote!{#element_upper_camel_case});
                     value.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                quote::quote!{#element(#postgresql_type_tokens_where_element_equal_upper_camel_case)}
+                quote::quote!{#element_upper_camel_case(#postgresql_type_tokens_where_element_equal_upper_camel_case)}
             });
             quote::quote!{#(#variants_token_stream),*}
         }
@@ -2283,13 +2285,16 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
         &postgresql_type_tokens_where_element_upper_camel_case,
         &{
-            let variants_token_stream = variants.iter().map(|element|quote::quote!{
-                Self::#element(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                    #value_snake_case,
-                    #increment_snake_case,
-                    #column_snake_case,
-                    #is_need_to_add_logical_operator_snake_case,
-                )
+            let variants_token_stream = variants.iter().map(|element|{
+                let element_upper_camel_case = element.upper_camel_case();
+                quote::quote!{
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                        #value_snake_case,
+                        #increment_snake_case,
+                        #column_snake_case,
+                        #is_need_to_add_logical_operator_snake_case,
+                    )
+                }
             });
             quote::quote!{
                 match &self {
@@ -2298,11 +2303,14 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
             }
         },
         &{
-            let variants_token_stream = variants.iter().map(|element|quote::quote!{
-                Self::#element(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-                    #value_snake_case,
-                    #query_snake_case
-                )
+            let variants_token_stream = variants.iter().map(|element|{
+                let element_upper_camel_case = element.upper_camel_case();
+                quote::quote!{
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                        #value_snake_case,
+                        #query_snake_case
+                    )
+                }
             });
             quote::quote!{
                 match self {
@@ -2321,10 +2329,13 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
         &postgresql_type_tokens_where_element_upper_camel_case,
         &{
-            let variants_token_stream = variants.iter().map(|element|quote::quote!{
-                Self::#element(
-                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                )
+            let variants_token_stream = variants.iter().map(|element|{
+                let element_upper_camel_case = element.upper_camel_case();
+                quote::quote!{
+                    Self::#element_upper_camel_case(
+                        #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    )
+                }
             });
             quote::quote!{vec![#(#variants_token_stream),*]}
         },
@@ -2399,6 +2410,13 @@ impl WhereOperatorType<'_> {
                 default_initialization_token_stream
             } => quote::quote!{#default_initialization_token_stream},
         }
+    }
+}
+
+struct IsNull;
+impl WhereOperatorName for IsNull {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::IsNullUpperCamelCase
     }
 }
 struct Equal;
@@ -5274,10 +5292,10 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &in_handle.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &in_handle,
             ]
         );
         quote::quote! {
@@ -5347,10 +5365,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &in_handle.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &in_handle,
             ]
         );
         quote::quote! {
@@ -5413,9 +5431,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
             ]
         );
         quote::quote! {
@@ -5474,9 +5492,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
             ]
         );
         quote::quote! {
@@ -5516,7 +5534,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
+                &equal,
             ]
         );
         quote::quote! {
@@ -5555,8 +5573,8 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             is_nullable,
             &ident,
             &vec![
-                &case_sensitive_regular_expression.upper_camel_case(),
-                &case_insensitive_regular_expression.upper_camel_case(),
+                &case_sensitive_regular_expression,
+                &case_insensitive_regular_expression,
             ]
         );
         quote::quote! {
@@ -5615,9 +5633,9 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &length_more_than.upper_camel_case(),
-                &equal_to_encoded_string_representation.upper_camel_case(),
+                &equal,
+                &length_more_than,
+                &equal_to_encoded_string_representation,
             ]
         );
         quote::quote! {
@@ -5695,11 +5713,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_date.upper_camel_case(),
-                &greater_than_current_date.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_date,
+                &greater_than_current_date,
             ]
         );
         quote::quote! {
@@ -5773,11 +5791,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_date.upper_camel_case(),
-                &greater_than_current_date.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_date,
+                &greater_than_current_date,
             ]
         );
         quote::quote! {
@@ -5851,11 +5869,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_time.upper_camel_case(),
-                &greater_than_current_time.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_time,
+                &greater_than_current_time,
             ]
         );
         quote::quote! {
@@ -5929,11 +5947,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_time.upper_camel_case(),
-                &greater_than_current_time.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_time,
+                &greater_than_current_time,
             ]
         );
         quote::quote! {
@@ -6001,9 +6019,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
             ]
         );
         quote::quote! {
@@ -6221,35 +6239,24 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             ),
             ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
         };
-        let equal_upper_camel_case = equal.upper_camel_case();
-        let value_is_contained_within_range_upper_camel_case = value_is_contained_within_range.upper_camel_case();
-        let contains_another_range_upper_camel_case = contains_another_range.upper_camel_case();
-        let strictly_to_left_of_range_upper_camel_case = strictly_to_left_of_range.upper_camel_case();
-        let strictly_to_right_of_range_upper_camel_case = strictly_to_right_of_range.upper_camel_case();
-        let included_lower_bound_upper_camel_case = included_lower_bound.upper_camel_case();
-        let excluded_upper_bound_upper_camel_case = excluded_upper_bound.upper_camel_case();
-        let greater_than_lower_bound_upper_camel_case = greater_than_lower_bound.upper_camel_case();
-        let overlap_with_range_upper_camel_case = overlap_with_range.upper_camel_case();
-        let adjacent_with_range_upper_camel_case = adjacent_with_range.upper_camel_case();
-        let range_length_upper_camel_case = range_length.upper_camel_case();
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
             &{
-                let mut value: std::vec::Vec<&dyn quote::ToTokens> = vec![
-                    &equal_upper_camel_case,
-                    &value_is_contained_within_range_upper_camel_case,
-                    &contains_another_range_upper_camel_case,
-                    &strictly_to_left_of_range_upper_camel_case,
-                    &strictly_to_right_of_range_upper_camel_case,
-                    &included_lower_bound_upper_camel_case,
-                    &excluded_upper_bound_upper_camel_case,
-                    &greater_than_lower_bound_upper_camel_case,
-                    &overlap_with_range_upper_camel_case,
-                    &adjacent_with_range_upper_camel_case,
+                let mut value: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                    &equal,
+                    &value_is_contained_within_range,
+                    &contains_another_range,
+                    &strictly_to_left_of_range,
+                    &strictly_to_right_of_range,
+                    &included_lower_bound,
+                    &excluded_upper_bound,
+                    &greater_than_lower_bound,
+                    &overlap_with_range,
+                    &adjacent_with_range,
                 ];
                 if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
-                    value.push(&range_length_upper_camel_case);
+                    value.push(&range_length);
                 }
                 value
             }
@@ -6456,11 +6463,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_timestamp.upper_camel_case(),
-                &greater_than_current_timestamp.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_timestamp,
+                &greater_than_current_timestamp,
             ]
         );
         quote::quote! {
@@ -6535,11 +6542,11 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &between.upper_camel_case(),
-                &current_timestamp.upper_camel_case(),
-                &greater_than_current_timestamp.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &between,
+                &current_timestamp,
+                &greater_than_current_timestamp,
             ]
         );
         quote::quote! {
@@ -6621,9 +6628,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &before.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &before,
+                &between,
             ]
         );
         quote::quote! {
@@ -6674,9 +6681,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &before.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &before,
+                &between,
             ]
         );
         quote::quote! {
@@ -6727,9 +6734,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &before.upper_camel_case(),
-                &between.upper_camel_case(),
+                &equal,
+                &before,
+                &between,
             ]
         );
         quote::quote! {
@@ -6776,9 +6783,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &case_sensitive_regular_expression.upper_camel_case(),
-                &case_insensitive_regular_expression.upper_camel_case(),
+                &equal,
+                &case_sensitive_regular_expression,
+                &case_insensitive_regular_expression,
             ]
         );
         quote::quote! {
@@ -6828,7 +6835,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
+                &equal,
             ]
         );
         quote::quote! {
@@ -6877,7 +6884,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
+                &equal,
             ]
         );
         quote::quote! {
@@ -6929,10 +6936,10 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &greater_than.upper_camel_case(),
-                &case_sensitive_regular_expression.upper_camel_case(),
-                &case_insensitive_regular_expression.upper_camel_case(),
+                &equal,
+                &greater_than,
+                &case_sensitive_regular_expression,
+                &case_insensitive_regular_expression,
             ]
         );
         quote::quote! {
@@ -6992,8 +6999,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             is_nullable,
             &ident,
             &vec![
-                &equal.upper_camel_case(),
-                &position_equals.upper_camel_case(),
+                &equal,
+                &position_equals,
             ]
         );
         quote::quote! {
