@@ -382,8 +382,19 @@ pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_op
     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElement)]
-pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[derive(strum_macros::Display)]
+enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific {
+    FullTypePath,
+    StdOptionOptionFullTypePath,
+    StdVecVecFullTypePath,
+    StdOptionOptionStdVecVecFullTypePath,
+    StdVecVecStdOptionOptionFullTypePath,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+}
+fn generate_postgresql_json_type_where_element(
+    input: proc_macro::TokenStream,
+    variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -409,18 +420,6 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                 }
             }
         };
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream = {
-            quote::quote!{
-                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
-                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                        Self {
-                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                            value: #core_default_default_default_token_stream,
-                        }
-                    }
-                }
-            }
-        };
         let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream = {
             quote::quote!{
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
@@ -441,10 +440,30 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
                 }
             }
         };
+        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream = {
+            let value_initialization_token_stream = &match &variant {
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePath => quote::quote!{#core_default_default_default_token_stream},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePath => quote::quote!{Some(#core_default_default_default_token_stream)},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
+            };
+            quote::quote!{
+                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
+                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+                        Self {
+                            logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                            value: #value_initialization_token_stream,
+                        }
+                    }
+                }
+            }
+        };
         quote::quote!{
             #postgresql_json_type_ident_where_element_equal_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream
             #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream
+            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream
         }
     };
     
@@ -517,6 +536,49 @@ pub fn generate_postgresql_json_type_where_element(input: proc_macro::TokenStrea
     //     println!("-------");
     // }
     generated.into()
+}
+
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePath,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePath,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePath,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePath,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePath,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+    )
 }
 
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
