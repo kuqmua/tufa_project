@@ -384,12 +384,24 @@ pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_op
 
 #[derive(strum_macros::Display)]
 enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific {
-    FullTypePath,
-    StdOptionOptionFullTypePath,
-    StdVecVecFullTypePath,
-    StdOptionOptionStdVecVecFullTypePath,
-    StdVecVecStdOptionOptionFullTypePath,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+    FullTypePathNumber,
+    FullTypePathBool,
+    FullTypePathString,
+    StdOptionOptionFullTypePathNumber,
+    StdOptionOptionFullTypePathBool,
+    StdOptionOptionFullTypePathString,
+    StdVecVecFullTypePathNumber,
+    StdVecVecFullTypePathBool,
+    StdVecVecFullTypePathString,
+    StdOptionOptionStdVecVecFullTypePathNumber,
+    StdOptionOptionStdVecVecFullTypePathBool,
+    StdOptionOptionStdVecVecFullTypePathString,
+    StdVecVecStdOptionOptionFullTypePathNumber,
+    StdVecVecStdOptionOptionFullTypePathBool,
+    StdVecVecStdOptionOptionFullTypePathString,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
 }
 fn generate_postgresql_json_type_where_element(
     input: proc_macro::TokenStream,
@@ -442,12 +454,24 @@ fn generate_postgresql_json_type_where_element(
         };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream = {
             let value_initialization_token_stream = &match &variant {
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePath => quote::quote!{#core_default_default_default_token_stream},
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePath => quote::quote!{Some(#core_default_default_default_token_stream)},
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
-                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString => quote::quote!{#core_default_default_default_token_stream},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString => quote::quote!{Some(#core_default_default_default_token_stream)},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString => quote::quote!{vec![#core_default_default_default_token_stream]},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
             };
             quote::quote!{
                 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
@@ -538,46 +562,130 @@ fn generate_postgresql_json_type_where_element(
     generated.into()
 }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePath)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
+    )
+}
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathString)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_where_element(
+        input,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
     )
 }
 
