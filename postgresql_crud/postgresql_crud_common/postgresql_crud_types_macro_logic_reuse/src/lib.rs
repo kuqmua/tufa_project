@@ -2412,7 +2412,7 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
         } => &proc_macro2::TokenStream::new()
     };
     let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
-        ShouldWhereElementFieldsBePublic::True => quote::quote! {serde::Deserialize, },
+        ShouldWhereElementFieldsBePublic::True => quote::quote! {serde::Deserialize},
         ShouldWhereElementFieldsBePublic::False {
             ident: _,
             postfix: _,
@@ -2673,12 +2673,11 @@ impl Equal {
         field_type: &syn::Type,
         variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
         
-        
         // ident: &dyn quote::ToTokens,
         // where_operator_type: &WhereOperatorType,
         // default_initialization_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        // let value_snake_case = naming::ValueSnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
         // let increment_snake_case = naming::IncrementSnakeCase;
         // let column_snake_case = naming::ColumnSnakeCase;
         // let query_snake_case = naming::QuerySnakeCase;
@@ -2694,15 +2693,21 @@ impl Equal {
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
         //here
-        let postgresql_json_type_ident_where_element_equal_token_stream = {
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-                pub struct #postgresql_json_type_ident_where_element_equal_upper_camel_case {
-                    pub logical_operator: crate::LogicalOperator,
-                    pub value: #field_type,
-                }
-            }
+
+        let self_upper_camel_case = self.upper_camel_case();
+        let should_where_element_fields_be_public = ShouldWhereElementFieldsBePublic::True;
+
+        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
+        let postgresql_json_type_ident_where_element_equal_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
+            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &should_where_element_fields_be_public,
+            &ShouldImplementSchemarsJsonSchema::True,
+            &quote::quote!{pub #value_snake_case: #field_type,},
+        );
         let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream = {
             quote::quote!{
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
@@ -2760,7 +2765,6 @@ impl Equal {
             #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_element_equal_token_stream
         }
-
 
         // generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         //     &ident,
