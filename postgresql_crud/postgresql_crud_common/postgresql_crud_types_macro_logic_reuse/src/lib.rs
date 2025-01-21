@@ -431,102 +431,20 @@ fn generate_postgresql_json_type_where_element(
         &variant,
     );
 
-
         // let equal = Equal;
         // let greater_than = GreaterThan;
         // let between = Between;
         // let in_handle = In;
+
     let variants: std::vec::Vec<&dyn WhereOperatorName> = vec![
         &equal,
     ];
-    let postgresql_json_type_ident_where_element_token_stream = {
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
-        let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        
-        let postgresql_json_type_ident_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
-            &ShouldImplementSchemarsJsonSchema::True,
-            &postgresql_json_type_ident_where_element_upper_camel_case,
-            &{
-                let variants_token_stream = variants.iter().map(|element|{
-                    //here difference
-                    let postgresql_json_type_tokens_where_element_upper_camel_case: &dyn std::fmt::Display = &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-                    let element_upper_camel_case = element.upper_camel_case();
-                    let postgresql_json_type_tokens_where_element_equal_upper_camel_case = {
-                        let value = format!("{postgresql_json_type_tokens_where_element_upper_camel_case}{}", quote::quote!{#element_upper_camel_case});
-                        value.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
-                    quote::quote!{#element_upper_camel_case(#postgresql_json_type_tokens_where_element_equal_upper_camel_case)}
-                });
-                quote::quote!{#(#variants_token_stream),*}
-            }
-        );
-        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-            &postgresql_json_type_ident_where_element_upper_camel_case,
-            &{
-                let variants_token_stream = variants.iter().map(|element|{
-                    let element_upper_camel_case = element.upper_camel_case();
-                    quote::quote!{
-                        Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                            #value_snake_case,
-                            #increment_snake_case,
-                            #column_snake_case,
-                            #is_need_to_add_logical_operator_snake_case,
-                        )
-                    }
-                });
-                quote::quote!{
-                    match &self {
-                        #(#variants_token_stream),*
-                    }
-                }
-            },
-            &{
-                let variants_token_stream = variants.iter().map(|element|{
-                    let element_upper_camel_case = element.upper_camel_case();
-                    quote::quote!{
-                        Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-                            #value_snake_case,
-                            #query_snake_case
-                        )
-                    }
-                });
-                quote::quote!{
-                    match self {
-                        #(#variants_token_stream),*
-                    }
-                }
-            }
-        );
-        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_json_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
-            &postgresql_json_type_ident_where_element_upper_camel_case
-        );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_json_type_ident_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_json_type_ident_where_element_upper_camel_case,
-            &quote::quote!{format!("{self:#?}")},
-        );
-        let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_json_type_ident_where_element_upper_camel_case,
-            &{
-                let variants_token_stream = variants.iter().map(|element|{
-                    let element_upper_camel_case = element.upper_camel_case();
-                    quote::quote!{
-                        Self::#element_upper_camel_case(
-                            #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                        )
-                    }
-                });
-                quote::quote!{vec![#(#variants_token_stream),*]}
-            },
-        );
-        quote::quote!{
-            #postgresql_json_type_ident_where_element_token_stream
-            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_token_stream
-            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_json_type_ident_where_element_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_postgresql_json_type_ident_where_element_token_stream
-            #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_where_element_token_stream
-        }
-    };
+    let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+        &ident,
+        &variants,
+        &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+        &ShouldImplementSchemarsJsonSchema::True,
+    );
     let generated = quote::quote!{
         #postgresql_json_type_ident_where_element_equal_token_stream
         #postgresql_json_type_ident_where_element_token_stream
@@ -2454,13 +2372,12 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
         }
     }
 }
-
-fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-    is_nullable: IsNullable,
+fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
     ident: &dyn quote::ToTokens,
-    variants_original: &std::vec::Vec<&dyn WhereOperatorName>
+    variants: &std::vec::Vec<&dyn WhereOperatorName>,
+    postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
-    let variants = is_nullable.maybe_add_is_null_variant(variants_original);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -2469,12 +2386,8 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
-    let postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
-        IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
-        IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-    };
     let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
-        &ShouldImplementSchemarsJsonSchema::False,
+        should_implement_schemars_json_schema,
         &postgresql_type_tokens_where_element_upper_camel_case,
         &{
             let variants_token_stream = variants.iter().map(|element|{
@@ -2554,6 +2467,23 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
         #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
+}
+fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+    is_nullable: IsNullable,
+    ident: &dyn quote::ToTokens,
+    variants_original: &std::vec::Vec<&dyn WhereOperatorName>
+) -> proc_macro2::TokenStream {
+    let variants = is_nullable.maybe_add_is_null_variant(variants_original);
+    let postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
+        IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
+        IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+    };
+    generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+        &ident,
+        &variants,
+        &postgresql_type_tokens_where_element_upper_camel_case,
+        &ShouldImplementSchemarsJsonSchema::False,
+    )
 }
 fn generate_nullable_and_not_nullable_token_stream<F>(generate_postgresql_type_ident_where_element_token_stream: F) -> proc_macro2::TokenStream 
 where
