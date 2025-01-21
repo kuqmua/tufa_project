@@ -2469,7 +2469,7 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
-    let postgresql_type_tokens_where_element_upper_camel_case: &dyn quote::ToTokens = match &is_nullable {
+    let postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
         IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
         IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
     };
@@ -2478,10 +2478,6 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
         &postgresql_type_tokens_where_element_upper_camel_case,
         &{
             let variants_token_stream = variants.iter().map(|element|{
-                let postgresql_type_tokens_where_element_upper_camel_case: &dyn std::fmt::Display = match &is_nullable {
-                    IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                    IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                };
                 let element_upper_camel_case = element.upper_camel_case();
                 let postgresql_type_tokens_where_element_equal_upper_camel_case = {
                     let value = format!("{postgresql_type_tokens_where_element_upper_camel_case}{}", quote::quote!{#element_upper_camel_case});
