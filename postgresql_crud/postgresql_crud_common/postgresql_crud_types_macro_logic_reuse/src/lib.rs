@@ -2145,6 +2145,7 @@ impl IsNullable {
                 let postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                     &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
                     &ShouldWhereElementFieldsBePublic::True,
+                    &ShouldImplementSchemarsJsonSchema::False,
                     &proc_macro2::TokenStream::new()
                 );
                 let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -2307,6 +2308,7 @@ fn generate_postgresql_type_tokens_where_element_variant_token_stream(
             // let postgresql_type_ident_where_element_tokens_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
             //     &postgresql_type_ident_where_element_tokens_upper_camel_case,
             //     &should_where_element_fields_be_public,
+            //     &ShouldImplementSchemarsJsonSchema::False,
             //     &additional_type_declaration_token_stream,
             // );
             // let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream();
@@ -2363,6 +2365,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
     let postgresql_type_ident_where_element_tokens_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
         &postgresql_type_ident_where_element_tokens_upper_camel_case,
         &should_where_element_fields_be_public,
+        &ShouldImplementSchemarsJsonSchema::False,
         &additional_type_declaration_token_stream,
     );
     let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream();
@@ -2394,7 +2397,8 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
 fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     should_where_element_fields_be_public: &ShouldWhereElementFieldsBePublic,
-    additional_type_declaration_token_stream: &dyn quote::ToTokens
+    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
+    additional_type_declaration_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
         ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
@@ -2421,7 +2425,7 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
     let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
     quote::quote! {
-        #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream)]
+        #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_impl_serde_deserialize_token_stream #should_implement_schemars_json_schema)]
         pub struct #ident {
             #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
             #additional_type_declaration_token_stream
@@ -2689,6 +2693,7 @@ impl Equal {
         };
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
+        //here
         let postgresql_json_type_ident_where_element_equal_token_stream = {
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
