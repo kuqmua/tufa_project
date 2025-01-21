@@ -40,20 +40,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 0,
-      "std_option_option_std_primitive_i8": 0,
-      "std_vec_vec_std_primitive_i8": [
-        0
-      ],
-      "std_option_option_std_vec_vec_std_primitive_i8": [
-        0
-      ],
-      "std_vec_vec_std_option_option_std_primitive_i8": [
-        0
-      ],
-      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": [
-        0
-      ]
+      "std_primitive_i8": 2
     }
   }
 ]
@@ -127,83 +114,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "StdPrimitiveI8": {
           "logical_operator": "Or",
           "value": [
+            # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
             {
-              "Equal": {
+              "GreaterThan": {
                 "logical_operator": "Or",
                 "value": 0
-              }
-            }
-          ]
-        }
-      },
-      {
-        "StdOptionOptionStdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": 0
-              }
-            }
-          ]
-        }
-      },
-      {
-        "StdVecVecStdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  0
-                ]
-              }
-            }
-          ]
-        }
-      },
-      {
-        "StdOptionOptionStdVecVecStdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  0
-                ]
-              }
-            }
-          ]
-        }
-      },
-      {
-        "StdVecVecStdOptionOptionStdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  0
-                ]
-              }
-            }
-          ]
-        }
-      },
-      {
-        "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  0
-                ]
               }
             }
           ]
@@ -219,41 +139,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "object_animal_as_jsonb_not_null": [
         {
           "std_primitive_i8": {}
-        },
-        {
-          "std_option_option_std_primitive_i8": {}
-        },
-        {
-          "std_vec_vec_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_option_option_std_vec_vec_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_vec_vec_std_option_option_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
         }
       ]
     }
