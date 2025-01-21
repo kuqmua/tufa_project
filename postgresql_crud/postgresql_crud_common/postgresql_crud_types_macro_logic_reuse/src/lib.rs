@@ -2708,6 +2708,7 @@ impl Equal {
             &ShouldImplementSchemarsJsonSchema::True,
             &quote::quote!{pub #value_snake_case: #field_type,},
         );
+        // let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream();
         let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_element_equal_token_stream = {
             quote::quote!{
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_ident_where_element_equal_upper_camel_case {
