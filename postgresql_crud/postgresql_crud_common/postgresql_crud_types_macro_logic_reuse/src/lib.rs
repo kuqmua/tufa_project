@@ -428,7 +428,6 @@ fn generate_postgresql_json_type_where_element(
         &field_type,
         &variant,
     );
-
     let greater_than = GreaterThan;
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
@@ -2837,11 +2836,11 @@ enum ShouldAddDotZero {
     True,
     False,
 }
-impl ShouldAddDotZero {
-    fn maybe_dot_zero_token_stream(&self) -> proc_macro2::TokenStream {
+impl quote::ToTokens for ShouldAddDotZero {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote!{.0},
-            Self::False => proc_macro2::TokenStream::new(),
+            Self::True => quote::quote!{.0}.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
         }
     }
 }
@@ -2873,7 +2872,6 @@ impl Between {
         let self_upper_camel_case = self.upper_camel_case();
         let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
         let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
-        let maybe_dot_zero_token_stream = should_add_dot_zero.maybe_dot_zero_token_stream();
         generate_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -2900,11 +2898,11 @@ impl Between {
                         if 
                             #start_snake_case
                             #where_operator_type_additional_bind_token_stream
-                            #maybe_dot_zero_token_stream
+                            #should_add_dot_zero
                             #try_new_error_named_compare_symbol_token_stream
                             #end_snake_case
                             #where_operator_type_additional_bind_token_stream
-                            #maybe_dot_zero_token_stream
+                            #should_add_dot_zero
                         {
                             Ok(Self {
                                 logical_operator,
