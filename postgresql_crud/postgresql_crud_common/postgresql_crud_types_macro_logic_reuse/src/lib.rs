@@ -382,6 +382,7 @@ pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_op
     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant::StdOptionOptionStdVecVecStdOptionOptionFullTypePath)
 }
 
+//todo maybe not need it? remove it?
 #[derive(strum_macros::Display)]
 enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific {
     FullTypePathNumber,
@@ -480,17 +481,7 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    // let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-    //     crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    // };
-    // let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-    // let value_snake_case = naming::ValueSnakeCase;
-    // let column_snake_case = naming::ColumnSnakeCase;
-    // let increment_snake_case = naming::IncrementSnakeCase;
-    // let query_snake_case = naming::QuerySnakeCase;
-    // let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
-    // let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
-    
+
     let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber;
 
     let equal = Equal;
@@ -515,17 +506,6 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
         &ident,
         &field_type,
     );
-
-    // if ident == "StdPrimitiveI8" {
-    //     println!("{postgresql_json_type_ident_where_element_greater_than_token_stream}");
-    //     println!("--------------");
-    //     println!("{postgresql_json_type_ident_where_element_between_token_stream}");
-    // }
-
-        // let equal = Equal;
-        // let greater_than = GreaterThan;
-        // let between = Between;
-        // let in_handle = In;
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
         &ident,
@@ -559,10 +539,43 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
 }
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathBool)]
 pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool,
-    )
+    panic_location::panic_location();
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let ident = &syn_derive_input.ident;
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+
+    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber;
+
+    let equal = Equal;
+    let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &ident,
+        &field_type,
+        &variant,
+    );
+
+    let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+        &ident,
+        &vec![
+            &equal,
+        ],
+        &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+        &ShouldImplementSchemarsJsonSchema::True,
+    );
+    let generated = quote::quote!{
+        #postgresql_json_type_ident_where_element_equal_token_stream
+
+        #postgresql_json_type_ident_where_element_token_stream
+
+    };
+    // if ident == "" {
+    //     println!("{generated}");
+    //     println!("-------");
+    // }
+    generated.into()
+    // generate_postgresql_json_type_where_element(
+    //     input,
+    //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool,
+    // )
 }
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathString)]
 pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {

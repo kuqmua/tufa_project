@@ -232,7 +232,7 @@ pub struct Animal {
     // pub std_primitive_u64: postgresql_crud::postgresql_json_type::StdPrimitiveU64,
     // pub std_primitive_f32: postgresql_crud::postgresql_json_type::StdPrimitiveF32,
     // pub std_primitive_f64: postgresql_crud::postgresql_json_type::StdPrimitiveF64,
-    // pub std_primitive_bool: postgresql_crud::postgresql_json_type::StdPrimitiveBool,
+    pub std_primitive_bool: postgresql_crud::postgresql_json_type::StdPrimitiveBool,
     // pub std_string_string: postgresql_crud::postgresql_json_type::StdStringString,
     // pub std_option_option_std_primitive_i8: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI8,
     // pub std_option_option_std_primitive_i16: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI16,
