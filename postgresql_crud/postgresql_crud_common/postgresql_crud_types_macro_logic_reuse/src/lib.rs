@@ -2308,7 +2308,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
             &postgresql_type_std_option_option_ident_where_element_tokens_upper_camel_case,
             &postgresql_type_ident_where_element_tokens_upper_camel_case
         ),
-        IsNullable::False => generate_postgresql_type_tokens_where_element_variant_original_token_stream(
+        IsNullable::False => generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_ident_where_element_tokens_upper_camel_case,
             should_where_element_fields_be_public,
             &ShouldImplementSchemarsJsonSchema::False,
@@ -2320,7 +2320,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
     }
 }
 ///////////////////////
-fn generate_postgresql_type_tokens_where_element_variant_original_token_stream(
+fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
     postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case: &dyn quote::ToTokens,
     should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
     should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
@@ -2675,7 +2675,7 @@ impl Equal {
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
         };
-        generate_postgresql_type_tokens_where_element_variant_original_token_stream(
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
@@ -2785,7 +2785,7 @@ impl GreaterThan {
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
         };
-        generate_postgresql_type_tokens_where_element_variant_original_token_stream(
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
