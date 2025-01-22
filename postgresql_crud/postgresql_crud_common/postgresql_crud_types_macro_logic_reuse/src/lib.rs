@@ -2590,6 +2590,29 @@ impl WhereOperatorName for Equal {
     }
 }
 impl Equal {
+    fn generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!(
+                        "{}({} = ${})",
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                        #increment_snake_case
+                    ))
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -2612,22 +2635,7 @@ impl Equal {
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
             &quote::quote!{#value_snake_case: #default_initialization_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #where_operator_type_additional_bind_token_stream);
                 #query_snake_case
@@ -2677,20 +2685,7 @@ impl Equal {
             &ShouldImplementSchemarsJsonSchema::True,
             &quote::quote!{pub #value_snake_case: #field_type,},
             &quote::quote!{#value_snake_case: #value_initialization_token_stream,},
-            &quote::quote!{
-                match increment.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    }
-                    None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                }
-            },
+            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
                 #query_snake_case
