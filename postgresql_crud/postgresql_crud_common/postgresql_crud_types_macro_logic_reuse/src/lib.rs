@@ -432,7 +432,6 @@ fn generate_postgresql_json_type_where_element(
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
-        &variant,
     );
         // let equal = Equal;
         // let greater_than = GreaterThan;
@@ -2752,7 +2751,6 @@ impl GreaterThan {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
-        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
@@ -2765,32 +2763,12 @@ impl GreaterThan {
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let value_initialization_token_stream = &match &variant {
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString => quote::quote!{#core_default_default_default_token_stream},
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString => quote::quote!{Some(#core_default_default_default_token_stream)},
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString => quote::quote!{vec![#core_default_default_default_token_stream]},
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-            StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
-        };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
             &quote::quote!{pub #value_snake_case: #field_type,},
-            &quote::quote!{#value_snake_case: #value_initialization_token_stream,},
+            &quote::quote!{#value_snake_case: #core_default_default_default_token_stream,},
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
@@ -2836,6 +2814,32 @@ impl WhereOperatorName for Between {
     }
 }
 impl Between {
+    fn generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(first_value) => {
+                    *#increment_snake_case = first_value;
+                    match #increment_snake_case.checked_add(1) {
+                        Some(second_value) => {
+                            *#increment_snake_case = second_value;
+                            let between_snake_case = naming::BetweenSnakeCase;
+                            let and_snake_case = naming::AndSnakeCase;
+                            Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -3188,27 +3192,7 @@ impl Between {
                 #start_snake_case: #default_initialization_token_stream,
                 #end_snake_case: #default_initialization_token_stream,
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(first_value) => {
-                        *#increment_snake_case = first_value;
-                        match #increment_snake_case.checked_add(1) {
-                            Some(second_value) => {
-                                *#increment_snake_case = second_value;
-                                let between_snake_case = naming::BetweenSnakeCase;
-                                let and_snake_case = naming::AndSnakeCase;
-                                Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#start_snake_case #where_operator_type_additional_bind_token_stream);
                 #query_snake_case = #query_snake_case.bind(self.#end_snake_case #where_operator_type_additional_bind_token_stream);
