@@ -2620,8 +2620,6 @@ impl Equal {
         where_operator_type: &WhereOperatorType,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -2649,8 +2647,6 @@ impl Equal {
         variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let self_upper_camel_case = self.upper_camel_case();
