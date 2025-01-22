@@ -511,11 +511,11 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
     );
 
-    if ident == "StdPrimitiveI8" {
-        println!("{postgresql_json_type_ident_where_element_greater_than_token_stream}");
-        println!("--------------");
-        println!("{postgresql_json_type_ident_where_element_between_token_stream}");
-    }
+    // if ident == "StdPrimitiveI8" {
+    //     println!("{postgresql_json_type_ident_where_element_greater_than_token_stream}");
+    //     println!("--------------");
+    //     println!("{postgresql_json_type_ident_where_element_between_token_stream}");
+    // }
 
         // let equal = Equal;
         // let greater_than = GreaterThan;
@@ -2914,6 +2914,23 @@ impl WhereOperatorName for Between {
     }
 }
 impl Between {
+    fn generate_try_new_error_named_variants_token_stream(
+        &self,
+        try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
+        type_token_stream: &dyn quote::ToTokens,
+    ) -> proc_macro2::TokenStream {
+        let start_snake_case = naming::StartSnakeCase;
+        let end_snake_case = naming::EndSnakeCase;
+        quote::quote!{
+            #try_new_error_named_upper_camel_case_token_stream {
+                #[eo_to_std_string_string_serialize_deserialize]
+                #start_snake_case: #type_token_stream,
+                #[eo_to_std_string_string_serialize_deserialize]
+                #end_snake_case: #type_token_stream,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            }
+        }
+    }
     fn generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -2968,15 +2985,10 @@ impl Between {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &quote::quote!{
-                    #try_new_error_named_upper_camel_case_token_stream {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        #start_snake_case: #where_operator_type_type_token_stream,
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        #end_snake_case: #where_operator_type_type_token_stream,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    }
-                },
+                try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
+                    &try_new_error_named_upper_camel_case_token_stream,
+                    &where_operator_type_type_token_stream,
+                ),
                 try_new_additional_input_parameters_token_stream: &quote::quote!{
                     #start_snake_case: #where_operator_type_type_token_stream,
                     #end_snake_case: #where_operator_type_type_token_stream
@@ -3328,15 +3340,10 @@ impl Between {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &quote::quote!{
-                    #try_new_error_named_upper_camel_case_token_stream {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        #start_snake_case: #field_type,
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        #end_snake_case: #field_type,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    }
-                },
+                try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
+                    &try_new_error_named_upper_camel_case_token_stream,
+                    &field_type,
+                ),
                 try_new_additional_input_parameters_token_stream: &quote::quote!{
                     #start_snake_case: #field_type,
                     #end_snake_case: #field_type,
