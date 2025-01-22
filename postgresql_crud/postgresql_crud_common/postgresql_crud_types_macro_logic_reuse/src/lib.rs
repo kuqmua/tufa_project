@@ -586,35 +586,29 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: 
 
     let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString;
 
-    let equal = Equal;
-    let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+    let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+    let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
-        &variant,
     );
-    // let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
-    // let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //     &ident,
-    //     &is_nullable,
-    // );
-    // let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
-    // let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //     &ident,
-    //     &is_nullable,
-    // );
+    let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+    let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &ident,
+        &field_type,
+    );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
         &ident,
         &vec![
-            &equal,
-            // &case_sensitive_regular_expression,
-            // &case_insensitive_regular_expression,
+            &case_sensitive_regular_expression,
+            &case_insensitive_regular_expression,
         ],
         &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
         &ShouldImplementSchemarsJsonSchema::True,
     );
     let generated = quote::quote!{
-        #postgresql_json_type_ident_where_element_equal_token_stream
+        #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+        #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
 
         #postgresql_json_type_ident_where_element_token_stream
 
@@ -4094,7 +4088,6 @@ impl In {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
-        // between_try_new_error_type: &BetweenTryNewErrorType,
     ) -> proc_macro2::TokenStream {
         let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
         let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
@@ -4108,8 +4101,6 @@ impl In {
         let start_snake_case = naming::StartSnakeCase;
         let end_snake_case = naming::EndSnakeCase;
         let self_upper_camel_case = self.upper_camel_case();
-        // let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
-        // let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
@@ -4475,6 +4466,55 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         }
     )
 }
+fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+    ident: &dyn quote::ToTokens,
+    field_type: &syn::Type,
+    regular_expression: &RegularExpression,
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let case_stringified = regular_expression.stringified();
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(({{}})::text ~{case_stringified} ${{}}::text)"));
+    let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+        &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        ShouldWhereElementFieldsBePublic::True,
+        &ShouldImplementSchemarsJsonSchema::True,
+        &quote::quote!{pub value: std::string::String},
+        &quote::quote!{value: #core_default_default_default_token_stream},
+        &quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!(
+                        #format_handle_token_stream,
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                        #increment_snake_case
+                    ))
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        },
+        &quote::quote!{
+            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
+            #query_snake_case
+        }
+    )
+}
 struct CaseSensitiveRegularExpression;
 impl WhereOperatorName for CaseSensitiveRegularExpression {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4490,6 +4530,18 @@ impl CaseSensitiveRegularExpression {
         generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
+            &RegularExpression::CaseSensitive,
+            self.upper_camel_case(),
+        )
+    }
+    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        field_type: &syn::Type,
+    ) -> proc_macro2::TokenStream {
+        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &field_type,
             &RegularExpression::CaseSensitive,
             self.upper_camel_case(),
         )
@@ -4510,6 +4562,18 @@ impl CaseInsensitiveRegularExpression {
         generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
+            &RegularExpression::CaseInsensitive,
+            self.upper_camel_case(),
+        )
+    }
+    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        field_type: &syn::Type,
+    ) -> proc_macro2::TokenStream {
+        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &field_type,
             &RegularExpression::CaseInsensitive,
             self.upper_camel_case(),
         )
