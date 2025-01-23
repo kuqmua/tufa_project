@@ -4469,14 +4469,20 @@ fn generate_regular_expression_postgresql_type_self_where_try_generate_bind_incr
         }
     }
 }
+fn generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+        #query_snake_case
+    }
+}
 fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
     ident: &dyn quote::ToTokens,
     is_nullable: &IsNullable,
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
@@ -4485,10 +4491,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         &generate_regular_expression_additional_type_declaration_token_stream(),
         &generate_regular_expression_additional_default_initialization_token_stream(),
         &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &PostgresqlTypeOrJsonType::PostgresqlType),
-        &quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-            #query_snake_case
-        }
+        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
     )
 }
 fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -4497,8 +4500,6 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
     let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
         let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
         value.parse::<proc_macro2::TokenStream>()
@@ -4512,10 +4513,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
         &generate_regular_expression_additional_type_declaration_token_stream(),
         &generate_regular_expression_additional_default_initialization_token_stream(),
         &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &PostgresqlTypeOrJsonType::PostgresqlJsonType),
-        &quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-            #query_snake_case
-        }
+        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
     )
 }
 struct CaseSensitiveRegularExpression;
