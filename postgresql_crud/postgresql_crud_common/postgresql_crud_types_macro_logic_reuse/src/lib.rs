@@ -1140,11 +1140,11 @@ fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_sel
     quote::quote! {impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #ident {}}
 }
 
-enum PostgresqlTypeKind {
+enum PostgresqlTypeNullableOrNotNull {
     Nullable,
     NotNull
 }
-impl PostgresqlTypeKind {
+impl PostgresqlTypeNullableOrNotNull {
     fn postgresql_type_field_type_where_element_upper_camel_case(&self, field_type: &syn::Type) -> proc_macro2::TokenStream {
         let value: &dyn quote::ToTokens = match &self {
             Self::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_type_last_segment(&field_type),
@@ -1178,10 +1178,10 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generate_postgresql_type_nullable_or_not_null = |postgresql_type_kind: &PostgresqlTypeKind| -> proc_macro2::TokenStream {
-        let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = &postgresql_type_kind.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
-        let ident_handle: &dyn quote::ToTokens = &postgresql_type_kind.ident_handle(&ident);
-        let field_type_handle: &dyn quote::ToTokens = &postgresql_type_kind.field_type_handle(&field_type);
+    let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
+        let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
+        let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
+        let field_type_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.field_type_handle(&field_type);
         let postgresql_type_ident_column_upper_camel_case = naming::parameter::PostgresqlTypeSelfColumnUpperCamelCase::from_tokens(&ident_handle);
 
         let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
@@ -1972,9 +1972,9 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
     let maybe_ident_nullable_token_stream = match &postgresql_type_initialized_by_tokens {
         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => proc_macro2::TokenStream::new(),
         PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => proc_macro2::TokenStream::new(),
-        PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::Nullable),
+        PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable),
     };
-    let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeKind::NotNull);
+    let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
     let generated = quote::quote!{
         #maybe_ident_nullable_token_stream
         #ident_not_null_token_stream
@@ -2005,18 +2005,18 @@ enum IsPrimaryKey {
     False,
 }
 fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-    postgresql_type_kind: &PostgresqlTypeKind,
+    postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull,
     ident: &syn::Ident,
     field_type: &syn::Type,
     is_primary_key: &IsPrimaryKey,
 ) -> proc_macro2::TokenStream {
-    let ident_handle: &dyn quote::ToTokens = &postgresql_type_kind.ident_handle(&ident);
+    let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
     let ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream = quote::quote!{
         <#ident as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
     };
-    let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_kind {
-        PostgresqlTypeKind::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
-        PostgresqlTypeKind::NotNull => &match is_primary_key {
+    let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+        PostgresqlTypeNullableOrNotNull::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
+        PostgresqlTypeNullableOrNotNull::NotNull => &match is_primary_key {
             IsPrimaryKey::True => quote::quote!{
                 format!("{} NOT NULL {}", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream, crate::maybe_primary_key(is_primary_key))
             },
@@ -2041,13 +2041,13 @@ pub fn postgresql_type_create_table_column_query_part_tokens(input: proc_macro::
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let is_primary_key = IsPrimaryKey::False;
     let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeKind::Nullable,
+       &PostgresqlTypeNullableOrNotNull::Nullable,
         &ident,
         &field_type,
         &is_primary_key,
     );
     let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeKind::NotNull,
+       &PostgresqlTypeNullableOrNotNull::NotNull,
         &ident,
         &field_type,
         &is_primary_key,
@@ -2072,7 +2072,7 @@ pub fn postgresql_type_create_table_column_query_part_primary_key_tokens(input: 
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let is_primary_key = IsPrimaryKey::True;
     let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeKind::NotNull,
+       &PostgresqlTypeNullableOrNotNull::NotNull,
         &ident,
         &field_type,
         &is_primary_key,
@@ -2331,15 +2331,15 @@ impl IsNullable {
         }
     }
 }
-enum WhereElementTryNewErrorNamed {
+enum PostgresqlTypeOrJsonType {
     PostgresqlType,
     PostgresqlJsonType,
 }
-impl std::fmt::Display for WhereElementTryNewErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+impl std::fmt::Display for PostgresqlTypeOrJsonType {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         match &self {
-            Self::PostgresqlType => write!(f, "{}", naming::PostgresqlTypeUpperCamelCase),
-            Self::PostgresqlJsonType => write!(f, "{}", naming::PostgresqlJsonTypeUpperCamelCase),
+            Self::PostgresqlType => write!(formatter, "{}", naming::PostgresqlTypeUpperCamelCase),
+            Self::PostgresqlJsonType => write!(formatter, "{}", naming::PostgresqlJsonTypeUpperCamelCase),
         }
     }
 }
@@ -2355,7 +2355,7 @@ enum ShouldWhereElementFieldsBePublic<'a> {
     }
 }
 impl ShouldWhereElementFieldsBePublic<'_> {
-    fn maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(&self, where_element_try_new_error_named: &WhereElementTryNewErrorNamed) -> proc_macro2::TokenStream {
+    fn maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(&self, postgresql_type_or_json_type: &PostgresqlTypeOrJsonType) -> proc_macro2::TokenStream {
         match &self {
             Self::True => proc_macro2::TokenStream::new(),
             Self::False {
@@ -2368,7 +2368,7 @@ impl ShouldWhereElementFieldsBePublic<'_> {
             } => {
                 let postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case = {
                     let value = format!(
-                        "{where_element_try_new_error_named}{}{postfix}{}",
+                        "{postgresql_type_or_json_type}{}{postfix}{}",
                         naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
                         naming::TryNewErrorNamedUpperCamelCase
                     );
@@ -2385,7 +2385,7 @@ impl ShouldWhereElementFieldsBePublic<'_> {
                 };
                 let postgresql_type_ident_where_element_tokens_upper_camel_case = {
                     let value = format!(
-                        "{where_element_try_new_error_named}{}{postfix}",
+                        "{postgresql_type_or_json_type}{}{postfix}",
                         naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
                     );
                     value.parse::<proc_macro2::TokenStream>()
@@ -2463,7 +2463,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
             &postgresql_type_ident_where_element_tokens_upper_camel_case
         ),
         IsNullable::False => generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &WhereElementTryNewErrorNamed::PostgresqlType,
+            &PostgresqlTypeOrJsonType::PostgresqlType,
             &postgresql_type_ident_where_element_tokens_upper_camel_case,
             should_where_element_fields_be_public,
             &ShouldImplementSchemarsJsonSchema::False,
@@ -2476,7 +2476,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
 }
 ///////////////////////
 fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-    where_element_try_new_error_named: &WhereElementTryNewErrorNamed,
+    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
     postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case: &dyn quote::ToTokens,
     should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
     should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
@@ -2491,7 +2491,7 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
         &should_implement_schemars_json_schema,
         &additional_type_declaration_token_stream,
     );
-    let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(where_element_try_new_error_named);
+    let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(postgresql_type_or_json_type);
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
         &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
         &{
@@ -2832,7 +2832,7 @@ impl Equal {
             StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
         };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
@@ -2922,7 +2922,7 @@ impl GreaterThan {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
@@ -3394,7 +3394,7 @@ impl Between {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
@@ -4108,7 +4108,7 @@ impl In {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
@@ -4420,6 +4420,55 @@ impl RegularExpression {
         }
     }
 }
+fn generate_regular_expression_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let std_string_string = token_patterns::StdStringString;
+    quote::quote!{pub #value_snake_case: #std_string_string}
+}
+fn generate_regular_expression_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    quote::quote!{#value_snake_case: #core_default_default_default}
+}
+fn generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(
+    regular_expression: &RegularExpression,
+    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let case_stringified = regular_expression.stringified();
+    //using postgresql operator -> than converting it into text returns original string wrapped in double quotes ("original string" instead of original string). it causes problems with regular expression api.
+    //this code remove double quotes from start and end of string(text) to make regular expression correct
+    //decided to use -> postgresql operator instead of ->> operation(cast to text) coz cast to text also affect other types like bool and number. they just will fail at decoding
+    let path = match &postgresql_type_or_json_type {
+        PostgresqlTypeOrJsonType::PostgresqlType => std::string::String::from("{}"),
+        PostgresqlTypeOrJsonType::PostgresqlJsonType => std::string::String::from("substring(({})::text from 2 for length(({})::text) - 2)"),
+    };
+    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({path} ~{case_stringified} ${{}})"));
+    let column_or_columns_token_stream = match &postgresql_type_or_json_type {
+        PostgresqlTypeOrJsonType::PostgresqlType => quote::quote!{#column_snake_case,},
+        PostgresqlTypeOrJsonType::PostgresqlJsonType => quote::quote!{#column_snake_case,#column_snake_case,},
+    };
+    quote::quote!{
+        match #increment_snake_case.checked_add(1) {
+            Some(#value_snake_case) => {
+                *#increment_snake_case = #value_snake_case;
+                Ok(format!(
+                    #format_handle_token_stream,
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_or_columns_token_stream
+                    #increment_snake_case
+                ))
+            },
+            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
     ident: &dyn quote::ToTokens,
     is_nullable: &IsNullable,
@@ -4432,34 +4481,16 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
     let query_snake_case = naming::QuerySnakeCase;
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-    let case_stringified = regular_expression.stringified();
-    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} ~{case_stringified} ${{}})"));
+    // let case_stringified = regular_expression.stringified();
+    // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} ~{case_stringified} ${{}})"));
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
         &is_nullable,
         ShouldWhereElementFieldsBePublic::True,
-        &quote::quote!{pub value: std::string::String},
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{value: #core_default_default_default}
-        },
-        &quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(
-                        #format_handle_token_stream,
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        #column_snake_case,
-                        #increment_snake_case
-                    ))
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        },
+        &generate_regular_expression_additional_type_declaration_token_stream(),
+        &generate_regular_expression_additional_default_initialization_token_stream(),
+        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &PostgresqlTypeOrJsonType::PostgresqlType),
         &quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
             #query_snake_case
@@ -4478,39 +4509,39 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
     let column_snake_case = naming::ColumnSnakeCase;
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let case_stringified = regular_expression.stringified();
-    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(({{}})::text ~{case_stringified} ${{}}::text)"));
-    let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+    // let case_stringified = regular_expression.stringified();
+    // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(({{}})::text ~{case_stringified} ${{}}::text)"));
     let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
         let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-        &WhereElementTryNewErrorNamed::PostgresqlJsonType,
+        &PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
         ShouldWhereElementFieldsBePublic::True,
         &ShouldImplementSchemarsJsonSchema::True,
-        &quote::quote!{pub value: std::string::String},
-        &quote::quote!{value: #core_default_default_default_token_stream},
+        &generate_regular_expression_additional_type_declaration_token_stream(),
+        &generate_regular_expression_additional_default_initialization_token_stream(),
+        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &PostgresqlTypeOrJsonType::PostgresqlJsonType),
+        // &quote::quote!{
+        //     match #increment_snake_case.checked_add(1) {
+        //         Some(#value_snake_case) => {
+        //             *#increment_snake_case = #value_snake_case;
+        //             Ok(format!(
+        //                 #format_handle_token_stream,
+        //                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+        //                 #column_snake_case,
+        //                 #increment_snake_case
+        //             ))
+        //         },
+        //         None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+        //             code_occurence: error_occurence_lib::code_occurence!(),
+        //         })
+        //     }
+        // },
         &quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(
-                        #format_handle_token_stream,
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        #column_snake_case,
-                        #increment_snake_case
-                    ))
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        },
-        &quote::quote!{
-            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
+            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
             #query_snake_case
         }
     )
