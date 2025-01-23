@@ -3764,6 +3764,17 @@ impl In {
             ))
         }
     }
+    fn generate_postgresql_type_self_where_bind_value_to_query_token_stream(element_bind_content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let element_snake_case = naming::ElementSnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        quote::quote!{
+            for #element_snake_case in self.#value_snake_case {
+                #query_snake_case = #query_snake_case.bind(#element_bind_content_token_stream);
+            }
+            #query_snake_case
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -4076,12 +4087,7 @@ impl In {
                 value: vec![#default_initialization_token_stream]
             },
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                for #element_snake_case in self.#value_snake_case {
-                    #query_snake_case = #query_snake_case.bind(#element_snake_case #where_operator_type_additional_bind_token_stream);
-                }
-                #query_snake_case
-            }
+            &Self::generate_postgresql_type_self_where_bind_value_to_query_token_stream(&quote::quote!{#element_snake_case #where_operator_type_additional_bind_token_stream})
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -4399,12 +4405,7 @@ impl In {
                 value: vec![#core_default_default_default_token_stream]
             },
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                for #element_snake_case in self.#value_snake_case {
-                    #query_snake_case = #query_snake_case.bind(sqlx::types::Json(#element_snake_case));
-                }
-                #query_snake_case
-            }
+            &Self::generate_postgresql_type_self_where_bind_value_to_query_token_stream(&quote::quote!{sqlx::types::Json(#element_snake_case)})
         )
     }
 }
