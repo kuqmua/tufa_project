@@ -3725,30 +3725,6 @@ impl Between {
     }
 }
 
-
-
-
-fn generate_in_try_new_error_named_variants_token_stream(not_unique_value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-    let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-    quote::quote!{
-        #is_empty_upper_camel_case {
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-        #not_unique_upper_camel_case {
-            #[eo_to_std_string_string_serialize_deserialize]
-            #value_snake_case: #not_unique_value_type_token_stream,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-    }
-}
-fn generate_in_try_new_additional_input_parameters_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    quote::quote!{
-        #value_snake_case: std::vec::Vec<#vec_type_token_stream>
-    }
-}
 struct In;
 impl WhereOperatorName for In {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3756,6 +3732,27 @@ impl WhereOperatorName for In {
     }
 }
 impl In {
+    fn generate_try_new_error_named_variants_token_stream(not_unique_value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
+        let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
+        quote::quote!{
+            #is_empty_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            },
+            #not_unique_upper_camel_case {
+                #[eo_to_std_string_string_serialize_deserialize]
+                #value_snake_case: #not_unique_value_type_token_stream,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            },
+        }
+    }
+    fn generate_try_new_additional_input_parameters_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        quote::quote!{
+            #value_snake_case: std::vec::Vec<#vec_type_token_stream>
+        }
+    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
@@ -4111,8 +4108,8 @@ impl In {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_in_try_new_error_named_variants_token_stream(&where_operator_type_type_token_stream),
-                try_new_additional_input_parameters_token_stream: &generate_in_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&where_operator_type_type_token_stream),
+                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
@@ -4153,8 +4150,8 @@ impl In {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_in_try_new_error_named_variants_token_stream(&field_type),
-                try_new_additional_input_parameters_token_stream: &generate_in_try_new_additional_input_parameters_token_stream(&field_type),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&field_type),
+                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&field_type),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
