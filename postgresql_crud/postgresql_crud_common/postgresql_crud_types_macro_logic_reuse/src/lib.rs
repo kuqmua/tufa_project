@@ -2966,6 +2966,7 @@ impl quote::ToTokens for ShouldAddDotZero {
         }
     }
 }
+
 struct Between;
 impl WhereOperatorName for Between {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2990,7 +2991,53 @@ impl Between {
             }
         }
     }
-    fn generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+    fn generate_try_new_additional_input_parameters_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let start_snake_case = naming::StartSnakeCase;
+        let end_snake_case = naming::EndSnakeCase;
+        quote::quote!{
+            #start_snake_case: #type_token_stream,
+            #end_snake_case: #type_token_stream
+        }
+    }
+    fn generate_try_new_content_token_stream(
+        ident: &dyn quote::ToTokens,
+        postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
+        between_try_new_error_type: &BetweenTryNewErrorType,
+        start_end_additional_token_stream: &dyn quote::ToTokens,
+    ) -> proc_macro2::TokenStream {
+        let start_snake_case = naming::StartSnakeCase;
+        let end_snake_case = naming::EndSnakeCase;
+        let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
+        let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
+        let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+            PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        };
+        quote::quote!{
+            if 
+                #start_snake_case
+                #start_end_additional_token_stream
+                #try_new_error_named_compare_symbol_token_stream
+                #end_snake_case
+                #start_end_additional_token_stream
+            {
+                Ok(Self {
+                    logical_operator,
+                    #start_snake_case,
+                    #end_snake_case
+                })
+            }
+            else {
+                Err(#postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case::#try_new_error_named_upper_camel_case_token_stream {
+                    #start_snake_case,
+                    #end_snake_case,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
+    //here
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
@@ -3048,37 +3095,13 @@ impl Between {
                     &try_new_error_named_upper_camel_case_token_stream,
                     &where_operator_type_type_token_stream,
                 ),
-                try_new_additional_input_parameters_token_stream: &quote::quote!{
-                    #start_snake_case: #where_operator_type_type_token_stream,
-                    #end_snake_case: #where_operator_type_type_token_stream
-                },
-                try_new_content_token_stream: &{
-                    let postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-                    quote::quote!{
-                        if 
-                            #start_snake_case
-                            #where_operator_type_additional_bind_token_stream
-                            #should_add_dot_zero
-                            #try_new_error_named_compare_symbol_token_stream
-                            #end_snake_case
-                            #where_operator_type_additional_bind_token_stream
-                            #should_add_dot_zero
-                        {
-                            Ok(Self {
-                                logical_operator,
-                                #start_snake_case,
-                                #end_snake_case
-                            })
-                        }
-                        else {
-                            Err(#postgresql_type_ident_where_element_between_try_new_error_named_upper_camel_case::#try_new_error_named_upper_camel_case_token_stream {
-                                #start_snake_case,
-                                #end_snake_case,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    }
-                },
+                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                    &ident,
+                    &PostgresqlTypeOrJsonType::PostgresqlType,
+                    &between_try_new_error_type,
+                    &quote::quote!{#where_operator_type_additional_bind_token_stream #should_add_dot_zero},
+                ),
                 impl_deserialize_token_stream: &{
                     let postgresql_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
                     let (
@@ -3363,7 +3386,7 @@ impl Between {
                 #start_snake_case: #default_initialization_token_stream,
                 #end_snake_case: #default_initialization_token_stream,
             },
-            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
+            &Self::generate_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#start_snake_case #where_operator_type_additional_bind_token_stream);
                 #query_snake_case = #query_snake_case.bind(self.#end_snake_case #where_operator_type_additional_bind_token_stream);
@@ -3403,33 +3426,13 @@ impl Between {
                     &try_new_error_named_upper_camel_case_token_stream,
                     &field_type,
                 ),
-                try_new_additional_input_parameters_token_stream: &quote::quote!{
-                    #start_snake_case: #field_type,
-                    #end_snake_case: #field_type,
-                },
-                try_new_content_token_stream: &{
-                    let postgresql_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-                    quote::quote!{
-                        if 
-                            #start_snake_case
-                            #try_new_error_named_compare_symbol_token_stream
-                            #end_snake_case
-                        {
-                            Ok(Self {
-                                logical_operator,
-                                #start_snake_case,
-                                #end_snake_case
-                            })
-                        }
-                        else {
-                            Err(#postgresql_json_type_ident_where_element_between_try_new_error_named_upper_camel_case::#try_new_error_named_upper_camel_case_token_stream {
-                                #start_snake_case,
-                                #end_snake_case,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    }
-                },
+                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&field_type),
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                    &ident,
+                    &PostgresqlTypeOrJsonType::PostgresqlJsonType,
+                    &between_try_new_error_type,
+                    &proc_macro2::TokenStream::new(),
+                ),
                 impl_deserialize_token_stream: &{
                     let postgresql_json_type_ident_where_element_between_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident);
                     let (
@@ -3715,7 +3718,7 @@ impl Between {
                 #start_snake_case: #core_default_default_default_token_stream,
                 #end_snake_case: #core_default_default_default_token_stream,
             },
-            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
+            &Self::generate_try_generate_bind_increments_token_stream(),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#start_snake_case));
                 #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#end_snake_case));
