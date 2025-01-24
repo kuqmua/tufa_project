@@ -3327,6 +3327,14 @@ impl Between {
             #end_snake_case: #type_token_stream
         }
     }
+    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let start_snake_case = naming::StartSnakeCase;
+        let end_snake_case = naming::EndSnakeCase;
+        quote::quote!{
+            #start_snake_case: #initialization_token_stream,
+            #end_snake_case: #initialization_token_stream,
+        }
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -3351,6 +3359,17 @@ impl Between {
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             }
+        }
+    }
+    fn generate_bind_value_to_query_token_stream(
+        start_bind_token_stream: &dyn quote::ToTokens,
+        end_bind_token_stream: &dyn quote::ToTokens,
+    ) -> proc_macro2::TokenStream {
+        let query_snake_case = naming::QuerySnakeCase;
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(#start_bind_token_stream);
+            #query_snake_case = #query_snake_case.bind(#end_bind_token_stream);
+            #query_snake_case
         }
     }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -3400,16 +3419,12 @@ impl Between {
                 ),
             },
             &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-            &quote::quote!{
-                #start_snake_case: #default_initialization_token_stream,
-                #end_snake_case: #default_initialization_token_stream,
-            },
+            &Self::generate_additional_default_initialization_token_stream(&default_initialization_token_stream),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#start_snake_case #where_operator_type_additional_bind_token_stream);
-                #query_snake_case = #query_snake_case.bind(self.#end_snake_case #where_operator_type_additional_bind_token_stream);
-                #query_snake_case
-            }
+            &Self::generate_bind_value_to_query_token_stream(
+                &quote::quote!{self.#start_snake_case #where_operator_type_additional_bind_token_stream},
+                &quote::quote!{self.#end_snake_case #where_operator_type_additional_bind_token_stream},
+            )
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -3460,16 +3475,12 @@ impl Between {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &quote::quote!{
-                #start_snake_case: #core_default_default_default_token_stream,
-                #end_snake_case: #core_default_default_default_token_stream,
-            },
+            &Self::generate_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#start_snake_case));
-                #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#end_snake_case));
-                #query_snake_case
-            }
+            &Self::generate_bind_value_to_query_token_stream(
+                &quote::quote!{sqlx::types::Json(self.#start_snake_case)},
+                &quote::quote!{sqlx::types::Json(self.#end_snake_case)},
+            )
         )
     }
 }
