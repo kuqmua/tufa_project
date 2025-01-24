@@ -4044,17 +4044,7 @@ fn generate_in_additional_default_initialization_token_stream(default_initializa
         #value_snake_case: vec![#default_initialization_token_stream]
     }
 }
-fn generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(element_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let element_snake_case = naming::ElementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    quote::quote!{
-        for #element_snake_case in self.#value_snake_case {
-            #query_snake_case = #query_snake_case.bind(#element_bind_token_stream);
-        }
-        #query_snake_case
-    }
-}
+
 struct In;
 impl WhereOperatorName for In {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4095,6 +4085,17 @@ impl In {
             ))
         }
     }
+    fn generate_postgresql_type_or_json_type_self_where_bind_value_to_query_token_stream(element_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let element_snake_case = naming::ElementSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        quote::quote!{
+            for #element_snake_case in self.#value_snake_case {
+                #query_snake_case = #query_snake_case.bind(#element_bind_token_stream);
+            }
+            #query_snake_case
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -4127,7 +4128,7 @@ impl In {
             &generate_in_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
             &generate_in_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(&{
+            &Self::generate_postgresql_type_or_json_type_self_where_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
                 let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                 quote::quote!{#element_snake_case #where_operator_type_additional_bind_token_stream}
@@ -4170,7 +4171,7 @@ impl In {
             &generate_in_additional_type_declaration_token_stream(&field_type),
             &generate_in_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(&{
+            &Self::generate_postgresql_type_or_json_type_self_where_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
                 quote::quote!{sqlx::types::Json(#element_snake_case)}
             }),
