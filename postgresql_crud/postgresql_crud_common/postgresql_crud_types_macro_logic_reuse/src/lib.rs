@@ -3319,6 +3319,14 @@ impl Between {
             };
         }
     }
+    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let start_snake_case = naming::StartSnakeCase;
+        let end_snake_case = naming::EndSnakeCase;
+        quote::quote!{
+            #start_snake_case: #type_token_stream,
+            #end_snake_case: #type_token_stream
+        }
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -3391,10 +3399,7 @@ impl Between {
                     &where_operator_type_type_token_stream,
                 ),
             },
-            &quote::quote!{
-                #start_snake_case: #where_operator_type_type_token_stream,
-                #end_snake_case: #where_operator_type_type_token_stream
-            },
+            &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
             &quote::quote!{
                 #start_snake_case: #default_initialization_token_stream,
                 #end_snake_case: #default_initialization_token_stream,
@@ -3454,10 +3459,7 @@ impl Between {
                 ),
             },
             &ShouldImplementSchemarsJsonSchema::True,
-            &quote::quote!{
-                #start_snake_case: #field_type,
-                #end_snake_case: #field_type,
-            },
+            &Self::generate_additional_type_declaration_token_stream(&field_type),
             &quote::quote!{
                 #start_snake_case: #core_default_default_default_token_stream,
                 #end_snake_case: #core_default_default_default_token_stream,
