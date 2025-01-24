@@ -2991,14 +2991,6 @@ impl Between {
             }
         }
     }
-    fn generate_try_new_additional_input_parameters_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
-        quote::quote!{
-            #start_snake_case: #type_token_stream,
-            #end_snake_case: #type_token_stream
-        }
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
@@ -3380,13 +3372,9 @@ impl Between {
         between_try_new_error_type: &BetweenTryNewErrorType,
         should_add_dot_zero: &ShouldAddDotZero,
     ) -> proc_macro2::TokenStream {
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-        let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
         let self_upper_camel_case = self.upper_camel_case();
-        let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
@@ -3396,10 +3384,10 @@ impl Between {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
-                    &try_new_error_named_upper_camel_case_token_stream,
+                    &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
                     &where_operator_type_type_token_stream,
                 ),
-                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
+                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
@@ -3414,12 +3402,16 @@ impl Between {
                 ),
             },
             &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-            &Self::generate_additional_default_initialization_token_stream(&default_initialization_token_stream),
+            &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(
-                &quote::quote!{self.#start_snake_case #where_operator_type_additional_bind_token_stream},
-                &quote::quote!{self.#end_snake_case #where_operator_type_additional_bind_token_stream},
-            )
+            &{
+                let start_snake_case = naming::StartSnakeCase;
+                let end_snake_case = naming::EndSnakeCase;
+                Self::generate_bind_value_to_query_token_stream(
+                    &quote::quote!{self.#start_snake_case #where_operator_type_additional_bind_token_stream},
+                    &quote::quote!{self.#end_snake_case #where_operator_type_additional_bind_token_stream},
+                )
+            }
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -3428,11 +3420,7 @@ impl Between {
         field_type: &syn::Type,
         between_try_new_error_type: &BetweenTryNewErrorType,
     ) -> proc_macro2::TokenStream {
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
         let self_upper_camel_case = self.upper_camel_case();
-        let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
             value.parse::<proc_macro2::TokenStream>()
@@ -3446,10 +3434,10 @@ impl Between {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
-                    &try_new_error_named_upper_camel_case_token_stream,
+                    &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
                     &field_type,
                 ),
-                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&field_type),
+                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&field_type),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
@@ -3465,12 +3453,16 @@ impl Between {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
+            &Self::generate_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(
-                &quote::quote!{sqlx::types::Json(self.#start_snake_case)},
-                &quote::quote!{sqlx::types::Json(self.#end_snake_case)},
-            )
+            &{
+                let start_snake_case = naming::StartSnakeCase;
+                let end_snake_case = naming::EndSnakeCase;
+                Self::generate_bind_value_to_query_token_stream(
+                    &quote::quote!{sqlx::types::Json(self.#start_snake_case)},
+                    &quote::quote!{sqlx::types::Json(self.#end_snake_case)},
+                )
+            }
         )
     }
 }
@@ -3495,12 +3487,6 @@ impl In {
                 #value_snake_case: #not_unique_value_type_token_stream,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             },
-        }
-    }
-    fn generate_try_new_additional_input_parameters_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{
-            #value_snake_case: std::vec::Vec<#vec_type_token_stream>
         }
     }
     fn generate_try_new_content_token_stream(
@@ -3859,7 +3845,7 @@ impl In {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&where_operator_type_type_token_stream),
-                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
+                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
@@ -3901,7 +3887,7 @@ impl In {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&field_type),
-                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(&field_type),
+                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&field_type),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
