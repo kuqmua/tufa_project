@@ -4032,21 +4032,29 @@ fn generate_in_impl_deserialize_token_stream(
         };
     }
 }
-// fn generate_in_() -> proc_macro2::TokenStream {
-    
-// }
-// fn generate_in_() -> proc_macro2::TokenStream {
-    
-// }
-// fn generate_in_() -> proc_macro2::TokenStream {
-    
-// }
-// fn generate_in_() -> proc_macro2::TokenStream {
-    
-// }
-// fn generate_in_() -> proc_macro2::TokenStream {
-    
-// }
+fn generate_in_additional_type_declaration_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{
+        #value_snake_case: std::vec::Vec<#vec_type_token_stream>
+    }
+}
+fn generate_in_additional_default_initialization_token_stream(default_initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{
+        #value_snake_case: vec![#default_initialization_token_stream]
+    }
+}
+fn generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(element_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let element_snake_case = naming::ElementSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{
+        for #element_snake_case in self.#value_snake_case {
+            #query_snake_case = #query_snake_case.bind(#element_bind_token_stream);
+        }
+        #query_snake_case
+    }
+}
 struct In;
 impl WhereOperatorName for In {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4093,20 +4101,9 @@ impl In {
         is_nullable: &IsNullable,
         where_operator_type: &WhereOperatorType,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-        let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-        let element_snake_case = naming::ElementSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let self_upper_camel_case = self.upper_camel_case();
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
-        let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-        let default_initialization_token_stream = where_operator_type.default_initialization_token_stream();
+        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -4118,28 +4115,23 @@ impl In {
                 try_new_additional_input_parameters_token_stream: &generate_in_try_new_additional_input_parameters_token_stream(&where_operator_type_type_token_stream),
                 try_new_content_token_stream: &generate_in_try_new_content_token_stream(
                     &ident,
-                    &PostgresqlTypeOrJsonType::PostgresqlType,
+                    &postgresql_type_or_json_type,
                 ),
                 impl_deserialize_token_stream: &generate_in_impl_deserialize_token_stream(
                     &ident,
-                    &PostgresqlTypeOrJsonType::PostgresqlType,
+                    &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                     &where_operator_type_type_token_stream,
                 ),
             },
-            &quote::quote!{
-                value: std::vec::Vec<#where_operator_type_type_token_stream>
-            },
-            &quote::quote!{
-                value: vec![#default_initialization_token_stream]
-            },
+            &generate_in_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
+            &generate_in_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                for #element_snake_case in self.#value_snake_case {
-                    #query_snake_case = #query_snake_case.bind(#element_snake_case #where_operator_type_additional_bind_token_stream);
-                }
-                #query_snake_case
-            }
+            &generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(&{
+                let element_snake_case = naming::ElementSnakeCase;
+                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+                quote::quote!{#element_snake_case #where_operator_type_additional_bind_token_stream}
+            }),
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -4147,26 +4139,16 @@ impl In {
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
     ) -> proc_macro2::TokenStream {
-        let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-        let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let element_snake_case = naming::ElementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let start_more_or_equal_to_end_upper_camel_case = naming::StartMoreOrEqualToEndUpperCamelCase;
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
         let self_upper_camel_case = self.upper_camel_case();
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
+            &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
@@ -4175,29 +4157,23 @@ impl In {
                 try_new_additional_input_parameters_token_stream: &generate_in_try_new_additional_input_parameters_token_stream(&field_type),
                 try_new_content_token_stream: &generate_in_try_new_content_token_stream(
                     &ident,
-                    &PostgresqlTypeOrJsonType::PostgresqlJsonType,
+                    &postgresql_type_or_json_type,
                 ),
                 impl_deserialize_token_stream: &generate_in_impl_deserialize_token_stream(
                     &ident,
-                    &PostgresqlTypeOrJsonType::PostgresqlJsonType,
+                    &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                     &field_type,
                 ),
             },
             &ShouldImplementSchemarsJsonSchema::True,
-            &quote::quote!{
-                value: std::vec::Vec<#field_type>
-            },
-            &quote::quote!{
-                value: vec![#core_default_default_default_token_stream]
-            },
+            &generate_in_additional_type_declaration_token_stream(&field_type),
+            &generate_in_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
             &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                for #element_snake_case in self.#value_snake_case {
-                    #query_snake_case = #query_snake_case.bind(sqlx::types::Json(#element_snake_case));
-                }
-                #query_snake_case
-            }
+            &generate_in_postgresql_type_self_where_bind_value_to_query_token_stream(&{
+                let element_snake_case = naming::ElementSnakeCase;
+                quote::quote!{sqlx::types::Json(#element_snake_case)}
+            }),
         )
     }
 }
