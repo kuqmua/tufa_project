@@ -30,15 +30,7 @@ fn generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std
         }
     }
 }
-// #[derive(strum_macros::Display)]
-// enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariant {
-//     FullTypePath,
-//     StdOptionOptionFullTypePath,
-//     StdVecVecFullTypePath,
-//     StdOptionOptionStdVecVecFullTypePath,
-//     StdVecVecStdOptionOptionFullTypePath,
-//     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-// }
+
 fn generate_postgresql_json_type_token_stream(
     input: proc_macro::TokenStream,
     variant: StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
@@ -46,6 +38,8 @@ fn generate_postgresql_json_type_token_stream(
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
+    let syn_derive_input_cloned = syn_derive_input.clone();
+    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input_cloned);
 
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -372,6 +366,7 @@ fn generate_postgresql_json_type_token_stream(
         }
     };
     let std_option_option_ident_token_stream = {
+        let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
         let std_option_option_ident_token_stream = {
             quote::quote!{
                 #[derive(
@@ -388,12 +383,12 @@ fn generate_postgresql_json_type_token_stream(
                     // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
                     // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathNumber, //todo 
                 )]//todo add validate range
-                pub struct StdOptionOptionStdPrimitiveI8(pub std::option::Option<std::primitive::i8>);
+                pub struct #std_option_option_ident_upper_camel_case(pub std::option::Option<#field_type>);
             }
         };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream = {
             quote::quote!{
-                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdPrimitiveI8 {
+                impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #std_option_option_ident_upper_camel_case {
                     #[inline]
                     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
                         Self(Some(::core::default::Default::default()))
