@@ -438,16 +438,6 @@ fn generate_postgresql_json_type_where_element(
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    // let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-    //     crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    // };
-    // let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-    // let value_snake_case = naming::ValueSnakeCase;
-    // let column_snake_case = naming::ColumnSnakeCase;
-    // let increment_snake_case = naming::IncrementSnakeCase;
-    // let query_snake_case = naming::QuerySnakeCase;
-    // let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
-    // let postgresql_json_type_ident_where_element_equal_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementEqualUpperCamelCase::from_tokens(&ident);
     
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -455,44 +445,19 @@ fn generate_postgresql_json_type_where_element(
         &field_type,
         &variant,
     );
-    // let greater_than = GreaterThan;
-    // let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-    //     &ident,
-    //     &field_type,
-    // );
-    // let between = Between;
-    // let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-    //     &ident,
-    //     &field_type,
-    //     &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-    // );
-    // println!("ident {ident}");
-    // if ident == "StdPrimitiveI8" {
-    //     println!("{postgresql_json_type_ident_where_element_between_token_stream}");
-    // }
-    // println!("{}");
-
-        // let equal = Equal;
-        // let greater_than = GreaterThan;
-        // let between = Between;
-        // let in_handle = In;
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
         &ident,
         &vec![
             &equal,
-            // &greater_than,
         ],
         &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
         &ShouldImplementSchemarsJsonSchema::True,
     );
     let generated = quote::quote!{
         #postgresql_json_type_ident_where_element_equal_token_stream
-        // #postgresql_json_type_ident_where_element_greater_than_token_stream
-        // #postgresql_json_type_ident_where_element_between_token_stream
 
         #postgresql_json_type_ident_where_element_token_stream
-
     };
     // if ident == "" {
     //     println!("{generated}");
@@ -520,17 +485,20 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
     let between = Between;
     let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+        &variant,
     );
     let in_handle = In;
     let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -608,11 +576,13 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: 
     let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
     let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -660,17 +630,20 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_p
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
     let between = Between;
     let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+        &variant,
     );
     let in_handle = In;
     let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
+        &variant,
     );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -3020,6 +2993,7 @@ impl GreaterThan {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
+        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
@@ -3525,6 +3499,7 @@ impl Between {
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
         between_try_new_error_type: &BetweenTryNewErrorType,
+        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
@@ -3977,6 +3952,7 @@ impl In {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
+        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
@@ -4488,6 +4464,7 @@ impl CaseSensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
+        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -4520,6 +4497,7 @@ impl CaseInsensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
+        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
