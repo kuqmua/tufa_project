@@ -2853,7 +2853,15 @@ impl WhereOperatorName for GreaterThan {
     }
 }
 impl GreaterThan {
-    fn generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        quote::quote!{pub #value_snake_case: #type_token_stream}
+    }
+    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        quote::quote!{#value_snake_case: #initialization_token_stream}
+    }
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
@@ -2876,6 +2884,13 @@ impl GreaterThan {
             }
         }
     }
+    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let query_snake_case = naming::QuerySnakeCase;
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
+            #query_snake_case
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -2896,13 +2911,10 @@ impl GreaterThan {
             self.upper_camel_case(),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #where_operator_type_type_token_stream},
-            &quote::quote!{#value_snake_case: #default_initialization_token_stream},
-            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #where_operator_type_additional_bind_token_stream);
-                #query_snake_case
-            }
+            &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
+            &Self::generate_additional_default_initialization_token_stream(&default_initialization_token_stream),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream(&quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}),
         )
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -2926,13 +2938,10 @@ impl GreaterThan {
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
-            &quote::quote!{pub #value_snake_case: #field_type,},
-            &quote::quote!{#value_snake_case: #core_default_default_default_token_stream,},
-            &Self::generate_postgresql_type_or_json_type_self_where_try_generate_bind_increments_token_stream(),
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
-                #query_snake_case
-            }
+            &Self::generate_additional_type_declaration_token_stream(&field_type),
+            &Self::generate_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
         )
     }
 }
