@@ -152,33 +152,37 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "StdOptionOptionStdPrimitiveI8": {
           "logical_operator": "Or",
           "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": 0
-              }
-            },
-            {
-              "GreaterThan": {
-                "logical_operator": "Or",
-                "value": null
-              }
-            },
-            {
-              "Between": {
-                "logical_operator": "Or",
-                "start": null,
-                "end": null
-              }
-            },
-            {
-              "In": {
-                "logical_operator": "Or",
-                "value": [
-                  null
-                ]
-              }
-            },
+            # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": null
+            #   }
+            # }
+            # ,
+            # {
+            #   "GreaterThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # }
+            # ,
+            # {
+            #   "Between": {
+            #     "logical_operator": "Or",
+            #     "start": 0,
+            #     "end": 0
+            #   }
+            # }
+            # ,
+            # {
+            #   "In": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # }
+            # ,
             {
               "IsNull": {
                 "logical_operator": "Or"

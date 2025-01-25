@@ -570,19 +570,17 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: 
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString;
+    // let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString;
 
     let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
-        &variant,
     );
     let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
         &field_type,
-        &variant,
     );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -2368,7 +2366,6 @@ impl IsNullable {
             Self::False => proc_macro2::TokenStream::new(),
         }
     }
-    //
     fn maybe_generate_postgresql_json_type_std_option_option_tokens_where_element_is_null_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         match &self  {
             Self::True => {
@@ -2394,7 +2391,7 @@ impl IsNullable {
                     &postgresql_json_type_ident_where_element_is_null_upper_camel_case,
                     &quote::quote! {
                         Ok(format!(
-                            "{}({} is null)",
+                            "{}({} = 'null'::jsonb)",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                             #column_snake_case,
                         ))
@@ -2410,7 +2407,6 @@ impl IsNullable {
             Self::False => proc_macro2::TokenStream::new(),
         }
     }
-    //
     fn maybe_add_is_null_variant<'a>(&self, variants: &'a std::vec::Vec<&'a dyn WhereOperatorName>) -> std::vec::Vec<&'a dyn WhereOperatorName> {
         if let Self::True = &self {
             let mut variants_cloned = variants.clone();
@@ -3007,7 +3003,7 @@ impl GreaterThan {
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -3534,7 +3530,7 @@ impl Between {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &{
                 let start_snake_case = naming::StartSnakeCase;
@@ -3955,7 +3951,6 @@ impl In {
         variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
@@ -3983,7 +3978,7 @@ impl In {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&core_default_default_default_token_stream),
+            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
@@ -4464,7 +4459,6 @@ impl CaseSensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
-        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -4497,7 +4491,6 @@ impl CaseInsensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
         field_type: &syn::Type,
-        variant: &StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
