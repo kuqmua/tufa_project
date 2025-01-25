@@ -532,10 +532,6 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
     //     println!("-------");
     // }
     generated.into()
-    // generate_postgresql_json_type_where_element(
-    //     input,
-    //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber,
-    // )
 }
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathBool)]
 pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -572,10 +568,6 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: pr
     //     println!("-------");
     // }
     generated.into()
-    // generate_postgresql_json_type_where_element(
-    //     input,
-    //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool,
-    // )
 }
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathString)]
 pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -618,10 +610,6 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: 
     //     println!("-------");
     // }
     generated.into()
-    // generate_postgresql_json_type_where_element(
-    //     input,
-    //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString,
-    // )
 }
 #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathNumber)]
 pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
