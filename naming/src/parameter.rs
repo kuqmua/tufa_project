@@ -292,7 +292,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "json", "type", "self", "where", "element", "is", "null"],
     ["postgresql", "json", "type", "std", "option", "option", "self", "to", "create"],
     ["postgresql", "json", "type", "std", "option", "option", "self", "field", "reader"],
-    ["postgresql", "json", "type", "std", "option", "option", "self", "options", "to", "read"]
+    ["postgresql", "json", "type", "std", "option", "option", "self", "options", "to", "read"],
+    ["postgresql", "json", "type", "std", "option", "option", "self", "where", "element"],
+    ["postgresql", "json", "type", "std", "option", "option", "self", "where"]
 ]);
 
 ////////////////////////////////////////////////////
