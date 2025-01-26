@@ -11,6 +11,25 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
         let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
 
+        let ident_token_stream = {
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    Copy,
+                    PartialEq,
+                    Eq,
+                    Default,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    utoipa::ToSchema,
+                    schemars::JsonSchema,
+                    // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdPrimitiveI8,
+                    // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdPrimitiveI8,
+                )]
+                pub struct #ident( pub #field_type);//todo #[validate(range(min = -128i8, max = 127i8))]
+            }
+        };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
             &{
@@ -462,6 +481,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
         let generated = quote::quote!{
+            #ident_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
 
             #postgresql_json_type_ident_to_create_alias_token_stream
