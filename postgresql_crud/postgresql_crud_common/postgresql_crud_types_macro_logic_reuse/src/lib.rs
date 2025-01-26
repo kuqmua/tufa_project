@@ -67,26 +67,89 @@ fn generate_postgresql_json_type_token_stream(
         let postgresql_json_type_ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_json_type_ident_to_create_upper_camel_case, &ident);
         let postgresql_json_type_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfFieldReaderUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_field_reader_token_stream = {
-            // let content_token_stream = match &variant {
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString => quote::quote!{{}},
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-            //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{{ pagination: crate::pagination::Pagination }},
-            // };
+            let content_token_stream = match &variant {
+
+
+
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdStringString |
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdStringString => quote::quote!{{}},
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdStringString |
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdStringString |
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdStringString |
+
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{{ pagination: crate::pagination::Pagination }},
+            };
             quote::quote!{
                 #[derive(
                     Debug,
@@ -98,45 +161,102 @@ fn generate_postgresql_json_type_token_stream(
                     utoipa::ToSchema,
                     schemars::JsonSchema,
                 )]
-                pub struct #postgresql_json_type_ident_field_reader_upper_camel_case {}
+                pub struct #postgresql_json_type_ident_field_reader_upper_camel_case #content_token_stream
             }
         };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_field_reader_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_json_type_ident_field_reader_upper_camel_case,
             &{
-                
-                // match &variant {
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString => quote::quote! {
-                //         #core_default_default_default
-                //     },
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-                //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => {
-                //         let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-                //         quote::quote! {
-                //             Self {
-                //                 pagination: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
-                //             }
-                //         }
-                //     },
-                // }
-                core_default_default_default
+                match &variant {
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdStringString => quote::quote! {
+                        #core_default_default_default
+                    },
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
+                        let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                        quote::quote! {
+                            Self {
+                                pagination: crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case(),
+                            }
+                        }
+                    },
+                }
             },
         );
         let postgresql_json_type_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
@@ -244,12 +364,31 @@ fn generate_postgresql_json_type_token_stream(
                 };
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
                 match &variant {
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString => {
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdStringString => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'))")
                         );
@@ -257,23 +396,62 @@ fn generate_postgresql_json_type_token_stream(
                             format!(#format_handle_token_stream)
                         }
                     },
-                     //different order
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionStdStringString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))")
                         )
                     ),
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdStringString |
+
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+                    StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionStdStringString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))")
                         )
@@ -346,265 +524,9 @@ fn generate_postgresql_json_type_token_stream(
             #impl_crate_bind_query_for_token_stream
         }
     };
-    let std_option_option_ident_token_stream = {
-        let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
-        let std_option_option_ident_token_stream = {
-            quote::quote!{
-                #[derive(
-                    Debug,
-                    Clone,
-                    Copy,
-                    PartialEq,
-                    Eq,
-                    Default,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    utoipa::ToSchema,
-                    schemars::JsonSchema,
-                    // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdOptionOptionFullTypePath,
-                    // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathNumber, //todo 
-                )]//todo add validate range
-                pub struct #std_option_option_ident_upper_camel_case(pub std::option::Option<#field_type>);
-            }
-        };
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &std_option_option_ident_upper_camel_case,
-            &quote::quote!{
-                Self(Some(::core::default::Default::default()))
-            },
-        );
-        let postgresql_json_type_std_option_option_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionSelfToCreateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &postgresql_json_type_std_option_option_ident_to_create_upper_camel_case,
-            &std_option_option_ident_upper_camel_case
-        );
-        let postgresql_json_type_std_option_option_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionSelfFieldReaderUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_ident_field_reader_token_stream = quote::quote!{
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                Default,
-                serde::Serialize,
-                serde::Deserialize,
-                utoipa::ToSchema,
-                schemars::JsonSchema,
-            )]
-            pub struct #postgresql_json_type_std_option_option_ident_field_reader_upper_camel_case {}
-        };
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_field_reader_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_json_type_std_option_option_ident_field_reader_upper_camel_case,
-            &core_default_default_default,
-        );
-        let postgresql_json_type_std_option_option_ident_options_to_read_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionSelfOptionsToReadUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_ident_options_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &postgresql_json_type_std_option_option_ident_options_to_read_upper_camel_case,
-            &std_option_option_ident_upper_camel_case
-        );
-        let postgresql_json_type_std_option_option_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_std_option_option_ident_where_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdOptionOptionSelfWhereUpperCamelCase::from_tokens(&ident);
-        //todo impl try_new + custom serde::Deserialize
-        let postgresql_json_type_std_option_option_ident_where_token_stream = {
-            quote::quote!{
-                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-                pub struct #postgresql_json_type_std_option_option_ident_where_upper_camel_case {
-                    logical_operator: crate::LogicalOperator,
-                    value: std::vec::Vec<#postgresql_json_type_std_option_option_ident_where_element_upper_camel_case>,
-                }
-            }
-        };
-        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_std_option_option_ident_where_token_stream = {
-            quote::quote!{
-                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_std_option_option_ident_where_upper_camel_case {
-                    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                        let mut acc = std::string::String::default();
-                        let mut is_need_to_add_logical_operator_inner_handle = false;
-                        for element in &self.value {
-                            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                                Ok(value) => {
-                                    acc.push_str(&format!("{value} "));
-                                    is_need_to_add_logical_operator_inner_handle = true;
-                                }
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            }
-                        }
-                        let _ = acc.pop();
-                        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                    }
-                    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        for element in self.value {
-                            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
-                        }
-                        query
-                    }
-                }
-            }
-        };
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_json_type_std_option_option_ident_where_upper_camel_case,
-            &quote::quote!{
-                Self {
-                    logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                }
-            },
-        );
-
-        let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_std_option_option_ident_where_token_stream = {
-            quote::quote!{
-                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8Where {
-                    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                        let mut acc = std::string::String::default();
-                        let mut is_need_to_add_logical_operator_inner_handle = false;
-                        for element in &self.value {
-                            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                                Ok(value) => {
-                                    acc.push_str(&format!("{value} "));
-                                    is_need_to_add_logical_operator_inner_handle = true;
-                                }
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            }
-                        }
-                        let _ = acc.pop();
-                        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                    }
-                    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        for element in self.value {
-                            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
-                        }
-                        query
-                    }
-                }
-            }
-        };
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &quote::quote!{PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8Where},
-            &quote::quote!{
-                Self {
-                    logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                    value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-                }
-            },
-        );
-        let postgresql_json_type_std_option_option_ident_option_to_update_token_stream = {
-            quote::quote!{
-                pub type PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8OptionToUpdate = StdOptionOptionStdPrimitiveI8;
-            }
-        };
-        let postgresql_json_type_std_option_option_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream = {
-            quote::quote!{
-                #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-                pub enum PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8OptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed {
-                    CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-                }
-            }
-        };
-        let impl_crate_postgresql_json_type_postgresql_json_type_trait_postgresql_json_type_for_std_option_option_ident_token_stream = {
-            quote::quote!{
-                impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdOptionOptionStdPrimitiveI8 {
-                    type PostgresqlJsonTypeSelfToCreate<'a> = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8ToCreate;
-                    fn try_generate_postgresql_json_type_to_create(
-                        postgresql_json_type_self_to_create: &Self::PostgresqlJsonTypeSelfToCreate<'_>,
-                        increment: &mut std::primitive::u64,
-                    ) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed> {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("${increment}"))
-                            }
-                            None => Err(crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    }
-                    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(postgresql_json_type_self_to_create.0));
-                        query
-                    }
-                    type PostgresqlJsonTypeSelfFieldReader<'a> = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8FieldReader;
-                    type PostgresqlJsonTypeSelfOptionsToRead<'a> = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8OptionsToRead;
-                    fn generate_postgresql_json_type_to_read(
-                        postgresql_json_type_self_field_reader: &Self::PostgresqlJsonTypeSelfFieldReader<'_>,
-                        field_ident: &std::primitive::str,
-                        column_name_and_maybe_field_getter: &std::primitive::str,
-                        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-                        is_postgresql_type: std::primitive::bool,
-                    ) -> std::string::String {
-                        format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
-                    }
-                    type PostgresqlJsonTypeSelfWhereElement<'a> = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8WhereElement;
-                    type PostgresqlJsonTypeSelfWhere = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8Where;
-                    type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8OptionToUpdate;
-                    type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed = PostgresqlJsonTypeStdOptionOptionStdPrimitiveI8OptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed;
-                    fn try_generate_postgresql_json_type_to_update(
-                        postgresql_json_type_self_option_to_update: &Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
-                        jsonb_set_accumulator: &std::primitive::str,
-                        jsonb_set_target: &std::primitive::str,
-                        jsonb_set_path: &std::primitive::str,
-                        increment: &mut std::primitive::u64,
-                    ) -> Result<std::string::String, Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed> {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-                            }
-                            None => Err(Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    }
-                    fn bind_value_to_postgresql_query_part_to_update<'a>(
-                        postgresql_json_type_self_option_to_update: Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
-                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(postgresql_json_type_self_option_to_update.0));
-                        query
-                    }
-                }
-            }
-        };
-        let impl_crate_bind_query_for_std_option_option_ident_token_stream = {
-            quote::quote!{
-                impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveI8 {
-                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("${increment}"))
-                            }
-                            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    }
-                    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(self.0));
-                        query
-                    }
-                }
-            }
-        };
-        quote::quote!{
-            #std_option_option_ident_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-            #postgresql_json_type_std_option_option_ident_to_create_alias_token_stream
-            #postgresql_json_type_std_option_option_ident_field_reader_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_field_reader_token_stream
-            #postgresql_json_type_std_option_option_ident_options_to_read_alias_token_stream
-            #postgresql_json_type_std_option_option_ident_where_token_stream
-            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_std_option_option_ident_where_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_where_token_stream
-
-            #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_std_option_option_ident_where_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_std_option_option_ident_where_token_stream
-            #postgresql_json_type_std_option_option_ident_option_to_update_token_stream
-            #postgresql_json_type_std_option_option_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
-            #impl_crate_postgresql_json_type_postgresql_json_type_trait_postgresql_json_type_for_std_option_option_ident_token_stream
-            #impl_crate_bind_query_for_std_option_option_ident_token_stream
-        }
-    };
     //todo maybe impl Encode instead of just wrap into sqlx::types::Json
     let generated = quote::quote!{
         #ident_token_stream
-        // #std_option_option_ident_token_stream
     };
     // if ident == "StdOptionOptionStdPrimitiveI8" {
     //     println!("{generated}");
@@ -612,128 +534,246 @@ fn generate_postgresql_json_type_token_stream(
     // }
     generated.into()
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePathNumber)]
-pub fn generate_postgresql_json_type_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber)
+#[proc_macro_derive(GeneratePostgresqlJsonTypeStdPrimitiveI8)]
+pub fn generate_postgresql_json_type_std_primitive_i8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI8)
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePathBool)]
-pub fn generate_postgresql_json_type_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePathString)]
-pub fn generate_postgresql_json_type_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePathBool)]
+// pub fn generate_postgresql_json_type_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeFullTypePathString)]
+// pub fn generate_postgresql_json_type_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString)
+// }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathBool)]
+// pub fn generate_postgresql_json_type_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionFullTypePathString)]
+// pub fn generate_postgresql_json_type_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString)
+// }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathNumber)]
-pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathBool)]
-pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathString)]
-pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathBool)]
+// pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecFullTypePathString)]
+// pub fn generate_postgresql_json_type_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString)
+// }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathNumber)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathBool)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathString)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathBool)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecFullTypePathString)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString)
+// }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathBool)]
+// pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdVecVecStdOptionOptionFullTypePathString)]
+// pub fn generate_postgresql_json_type_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString)
+// }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString)
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeStdOptionOptionStdVecVecStdOptionOptionFullTypePathString)]
+// pub fn generate_postgresql_json_type_std_option_option_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_token_stream(input, StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString)
+// }
 
 //todo maybe not need it? remove it?
 #[derive(strum_macros::Display)]
 enum StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific {
-    FullTypePathNumber,
-    FullTypePathBool,
-    FullTypePathString,
-    StdOptionOptionFullTypePathNumber,
-    StdOptionOptionFullTypePathBool,
-    StdOptionOptionFullTypePathString,
-    StdVecVecFullTypePathNumber,
-    StdVecVecFullTypePathBool,
-    StdVecVecFullTypePathString,
-    StdOptionOptionStdVecVecFullTypePathNumber,
-    StdOptionOptionStdVecVecFullTypePathBool,
-    StdOptionOptionStdVecVecFullTypePathString,
-    StdVecVecStdOptionOptionFullTypePathNumber,
-    StdVecVecStdOptionOptionFullTypePathBool,
-    StdVecVecStdOptionOptionFullTypePathString,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
+    StdPrimitiveI8,
+    StdPrimitiveI16,
+    StdPrimitiveI32,
+    StdPrimitiveI64,
+    StdPrimitiveU8,
+    StdPrimitiveU16,
+    StdPrimitiveU32,
+    StdPrimitiveU64,
+    StdPrimitiveF32,
+    StdPrimitiveF64,
+    StdPrimitiveBool,
+    StdStringString,
+
+    StdOptionOptionStdPrimitiveI8,
+    StdOptionOptionStdPrimitiveI16,
+    StdOptionOptionStdPrimitiveI32,
+    StdOptionOptionStdPrimitiveI64,
+    StdOptionOptionStdPrimitiveU8,
+    StdOptionOptionStdPrimitiveU16,
+    StdOptionOptionStdPrimitiveU32,
+    StdOptionOptionStdPrimitiveU64,
+    StdOptionOptionStdPrimitiveF32,
+    StdOptionOptionStdPrimitiveF64,
+    StdOptionOptionStdPrimitiveBool,
+    StdOptionOptionStdStringString,
+
+    StdVecVecStdPrimitiveI8,
+    StdVecVecStdPrimitiveI16,
+    StdVecVecStdPrimitiveI32,
+    StdVecVecStdPrimitiveI64,
+    StdVecVecStdPrimitiveU8,
+    StdVecVecStdPrimitiveU16,
+    StdVecVecStdPrimitiveU32,
+    StdVecVecStdPrimitiveU64,
+    StdVecVecStdPrimitiveF32,
+    StdVecVecStdPrimitiveF64,
+    StdVecVecStdPrimitiveBool,
+    StdVecVecStdStringString,
+
+    StdOptionOptionStdVecVecStdPrimitiveI8,
+    StdOptionOptionStdVecVecStdPrimitiveI16,
+    StdOptionOptionStdVecVecStdPrimitiveI32,
+    StdOptionOptionStdVecVecStdPrimitiveI64,
+    StdOptionOptionStdVecVecStdPrimitiveU8,
+    StdOptionOptionStdVecVecStdPrimitiveU16,
+    StdOptionOptionStdVecVecStdPrimitiveU32,
+    StdOptionOptionStdVecVecStdPrimitiveU64,
+    StdOptionOptionStdVecVecStdPrimitiveF32,
+    StdOptionOptionStdVecVecStdPrimitiveF64,
+    StdOptionOptionStdVecVecStdPrimitiveBool,
+    StdOptionOptionStdVecVecStdStringString,
+
+    StdVecVecStdOptionOptionStdPrimitiveI8,
+    StdVecVecStdOptionOptionStdPrimitiveI16,
+    StdVecVecStdOptionOptionStdPrimitiveI32,
+    StdVecVecStdOptionOptionStdPrimitiveI64,
+    StdVecVecStdOptionOptionStdPrimitiveU8,
+    StdVecVecStdOptionOptionStdPrimitiveU16,
+    StdVecVecStdOptionOptionStdPrimitiveU32,
+    StdVecVecStdOptionOptionStdPrimitiveU64,
+    StdVecVecStdOptionOptionStdPrimitiveF32,
+    StdVecVecStdOptionOptionStdPrimitiveF64,
+    StdVecVecStdOptionOptionStdPrimitiveBool,
+    StdVecVecStdOptionOptionStdStringString,
+
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
+    StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
+    StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 }
 impl StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific {
     fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         match &self {
-            Self::FullTypePathNumber |
-            Self::FullTypePathBool |
-            Self::FullTypePathString => quote::quote!{#core_default_default_default_token_stream},
-            Self::StdOptionOptionFullTypePathNumber |
-            Self::StdOptionOptionFullTypePathBool |
-            Self::StdOptionOptionFullTypePathString => quote::quote!{Some(#core_default_default_default_token_stream)},
-            Self::StdVecVecFullTypePathNumber |
-            Self::StdVecVecFullTypePathBool |
-            Self::StdVecVecFullTypePathString => quote::quote!{vec![#core_default_default_default_token_stream]},
-            Self::StdOptionOptionStdVecVecFullTypePathNumber |
-            Self::StdOptionOptionStdVecVecFullTypePathBool |
-            Self::StdOptionOptionStdVecVecFullTypePathString => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
-            Self::StdVecVecStdOptionOptionFullTypePathNumber |
-            Self::StdVecVecStdOptionOptionFullTypePathBool |
-            Self::StdVecVecStdOptionOptionFullTypePathString => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
+            Self::StdPrimitiveI8 |
+            Self::StdPrimitiveI16 |
+            Self::StdPrimitiveI32 |
+            Self::StdPrimitiveI64 |
+            Self::StdPrimitiveU8 |
+            Self::StdPrimitiveU16 |
+            Self::StdPrimitiveU32 |
+            Self::StdPrimitiveU64 |
+            Self::StdPrimitiveF32 |
+            Self::StdPrimitiveF64 |
+            Self::StdPrimitiveBool |
+            Self::StdStringString => quote::quote!{#core_default_default_default_token_stream},
+
+            Self::StdOptionOptionStdPrimitiveI8 |
+            Self::StdOptionOptionStdPrimitiveI16 |
+            Self::StdOptionOptionStdPrimitiveI32 |
+            Self::StdOptionOptionStdPrimitiveI64 |
+            Self::StdOptionOptionStdPrimitiveU8 |
+            Self::StdOptionOptionStdPrimitiveU16 |
+            Self::StdOptionOptionStdPrimitiveU32 |
+            Self::StdOptionOptionStdPrimitiveU64 |
+            Self::StdOptionOptionStdPrimitiveF32 |
+            Self::StdOptionOptionStdPrimitiveF64 |
+            Self::StdOptionOptionStdPrimitiveBool |
+            Self::StdOptionOptionStdStringString => quote::quote!{Some(#core_default_default_default_token_stream)},
+
+            Self::StdVecVecStdPrimitiveI8 |
+            Self::StdVecVecStdPrimitiveI16 |
+            Self::StdVecVecStdPrimitiveI32 |
+            Self::StdVecVecStdPrimitiveI64 |
+            Self::StdVecVecStdPrimitiveU8 |
+            Self::StdVecVecStdPrimitiveU16 |
+            Self::StdVecVecStdPrimitiveU32 |
+            Self::StdVecVecStdPrimitiveU64 |
+            Self::StdVecVecStdPrimitiveF32 |
+            Self::StdVecVecStdPrimitiveF64 |
+            Self::StdVecVecStdPrimitiveBool |
+            Self::StdVecVecStdStringString => quote::quote!{vec![#core_default_default_default_token_stream]},
+
+            Self::StdOptionOptionStdVecVecStdPrimitiveI8 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveI16 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveI32 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveI64 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveU8 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveU16 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveU32 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveU64 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveF32 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveF64 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveBool |
+            Self::StdOptionOptionStdVecVecStdStringString => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
+
+            Self::StdVecVecStdOptionOptionStdPrimitiveI8 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveI16 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveI32 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveI64 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveU8 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveU16 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveU32 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveU64 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveF32 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveF64 |
+            Self::StdVecVecStdOptionOptionStdPrimitiveBool |
+            Self::StdVecVecStdOptionOptionStdStringString => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
+
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
         }
     }
 }
@@ -774,14 +814,14 @@ fn generate_postgresql_json_type_where_element(
     generated.into()
 }
 
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdPrimitiveI8)]
+pub fn generate_postgresql_json_type_where_element_std_primitive_i8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathNumber;
+    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveI8;
 
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -835,14 +875,14 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_number(input: 
     // }
     generated.into()
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdPrimitiveBool)]
+pub fn generate_postgresql_json_type_where_element_std_primitive_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathBool;
+    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdPrimitiveBool;
 
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -871,14 +911,14 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_bool(input: pr
     // }
     generated.into()
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdStringString)]
+pub fn generate_postgresql_json_type_where_element_std_string_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    // let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::FullTypePathString;
+    // let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdStringString;
 
     let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -913,14 +953,14 @@ pub fn generate_postgresql_json_type_where_element_full_type_path_string(input: 
     // }
     generated.into()
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdPrimitiveI8)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_primitive_i8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
-    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber;
+    let variant = StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveI8;
 
     let is_null = IsNull;
     let is_nullable = IsNullable::True;
@@ -984,104 +1024,104 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_p
     //     StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathNumber,
     // )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdPrimitiveBool)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_primitive_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathBool,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdPrimitiveBool,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdStringString)]
+pub fn generate_postgresql_json_type_where_element_std_option_option_std_string_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     generate_postgresql_json_type_where_element(
         input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionFullTypePathString,
+        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdStringString,
     )
 }
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
-    )
-}
-#[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathString)]
-pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_json_type_where_element(
-        input,
-        StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
-    )
-}
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathNumber,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathBool)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathBool,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecFullTypePathString)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecFullTypePathString,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathNumber,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathBool)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathBool,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecFullTypePathString)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecFullTypePathString,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathNumber,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathBool)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathBool,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdVecVecStdOptionOptionFullTypePathString)]
+// pub fn generate_postgresql_json_type_where_element_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdVecVecStdOptionOptionFullTypePathString,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathBool)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
+//     )
+// }
+// #[proc_macro_derive(GeneratePostgresqlJsonTypeWhereElementStdOptionOptionStdVecVecStdOptionOptionFullTypePathString)]
+// pub fn generate_postgresql_json_type_where_element_std_option_option_std_vec_vec_std_option_option_full_type_path_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     generate_postgresql_json_type_where_element(
+//         input,
+//         StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementVariantTypeSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
+//     )
+// }
 
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
