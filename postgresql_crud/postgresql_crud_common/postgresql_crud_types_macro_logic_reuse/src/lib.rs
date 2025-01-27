@@ -633,7 +633,57 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
 
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element(&variant)
+                    //todo maybe remove ident, field_type from arguments. variant is enough
+                    let equal = Equal;
+                    let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &field_type,
+                        &variant,
+                    );
+                    let greater_than = GreaterThan;
+                    let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &field_type,
+                        &variant,
+                    );
+                    let between = Between;
+                    let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &field_type,
+                        &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                        &variant,
+                    );
+                    let in_handle = In;
+                    let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &field_type,
+                        &variant,
+                    );
+                    //todo write wrapper around it with reuse parameters
+                    let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                        &ident,
+                        &vec![
+                            &equal,
+                            &greater_than,
+                            &between,
+                            &in_handle,
+                        ],
+                        &postgresql_json_type_ident_where_element_upper_camel_case,
+                        &ShouldImplementSchemarsJsonSchema::True,
+                    );
+                    let generated = quote::quote!{
+                        #postgresql_json_type_ident_where_element_equal_token_stream
+                        #postgresql_json_type_ident_where_element_greater_than_token_stream
+                        #postgresql_json_type_ident_where_element_between_token_stream
+                        #postgresql_json_type_ident_where_element_in_token_stream
+
+                        #postgresql_json_type_ident_where_element_token_stream
+                    };
+                    // if ident == "" {
+                    //     println!("{generated}");
+                    //     println!("-------");
+                    // }
+                    generated
                 },
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 => {
                     generate_postgresql_json_type_where_element(&variant)
@@ -847,7 +897,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     let variants_token_stream = 
     // PostgresqlJsonType::into_array()
     [
-        PostgresqlJsonType::StdPrimitiveI8
+        PostgresqlJsonType::StdPrimitiveI8,
+        PostgresqlJsonType::StdOptionOptionStdPrimitiveI8
     ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
