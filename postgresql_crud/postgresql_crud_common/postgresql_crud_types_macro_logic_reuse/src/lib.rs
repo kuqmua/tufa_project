@@ -824,34 +824,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         generated
     }
     let variants_token_stream = 
-    // PostgresqlJsonType::into_array()
-    [
-        PostgresqlJsonType::StdPrimitiveI8,
-        PostgresqlJsonType::StdPrimitiveI16,
-        PostgresqlJsonType::StdPrimitiveI32,
-        PostgresqlJsonType::StdPrimitiveI64,
-        PostgresqlJsonType::StdPrimitiveU8,
-        PostgresqlJsonType::StdPrimitiveU16,
-        PostgresqlJsonType::StdPrimitiveU32,
-        PostgresqlJsonType::StdPrimitiveU64,
-        PostgresqlJsonType::StdPrimitiveF32,
-        PostgresqlJsonType::StdPrimitiveF64,
-        PostgresqlJsonType::StdPrimitiveBool,
-        PostgresqlJsonType::StdStringString,
-
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveI16,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveI32,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveI64,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveU8,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveU16,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveU32,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveU64,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveF32,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveF64,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
-        PostgresqlJsonType::StdOptionOptionStdStringString,
-    ]
+    PostgresqlJsonType::into_array()
+    // [
+    //     PostgresqlJsonType::StdPrimitiveI8,
+    // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
         #(#variants_token_stream)*
