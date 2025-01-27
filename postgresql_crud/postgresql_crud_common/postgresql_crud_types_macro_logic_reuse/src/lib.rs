@@ -513,8 +513,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 );
                 let between = Between;
                 let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
                     &variant,
                 );
@@ -1752,8 +1750,6 @@ pub fn generate_postgresql_json_type_where_element_std_primitive_i8(input: proc_
     );
     let between = Between;
     let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
         &variant,
     );
@@ -1886,8 +1882,6 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_std_primiti
     );
     let between = Between;
     let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &BetweenTryNewErrorType::StartMoreOrEqualToEnd,
         &variant,
     );
@@ -4742,11 +4736,12 @@ impl Between {
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        ident: &dyn quote::ToTokens,
-        field_type: &dyn quote::ToTokens,
         between_try_new_error_type: &BetweenTryNewErrorType,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
+        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
+        let field_type = &variant.field_type();
+
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
