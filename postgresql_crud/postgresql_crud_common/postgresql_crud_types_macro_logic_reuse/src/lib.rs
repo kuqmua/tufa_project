@@ -278,7 +278,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
 
         //todo migrate to newest version of schemars crate then write validation logic.
-        
+
         // pub struct StdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
         // pub struct StdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
         // pub struct StdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))] pub std::primitive::i32);
@@ -748,6 +748,33 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &variant,
             );
+            // let = Equal;
+            // let = GreaterThan;
+            // let = Between;
+            // let = In;
+            // let = CaseSensitiveRegularExpression;
+            // let = CaseInsensitiveRegularExpression;
+            // let = Before;
+            // let = CurrentDate;
+            // let = GreaterThanCurrentDate;
+            // let = CurrentTimestamp;
+            // let = GreaterThanCurrentTimestamp;
+            // let = CurrentTime;
+            // let = GreaterThanCurrentTime;
+            // let = LengthMoreThan;
+            // let = EqualToEncodedStringRepresentation;
+            // let = ValueIsContainedWithinRange;
+            // let = ContainsAnotherRange;
+            // let = StrictlyToLeftOfRange;
+            // let = StrictlyToRightOfRange;
+            // let = IncludedLowerBound;
+            // let = ExcludedUpperBound;
+            // let = GreaterThanLowerBound;
+            // let = OverlapWithRange;
+            // let = AdjacentWithRange;
+            // let = RangeLength;
+            // let = PositionEquals;
+
             
             //todo remove generate_postgresql_json_type_where_element_token_stream later
             let generate_postgresql_json_type_where_element_token_stream = || -> proc_macro2::TokenStream {
