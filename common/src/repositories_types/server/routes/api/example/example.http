@@ -38,10 +38,33 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i16_as_small_int2_nullable": null,
+    "std_primitive_i16_as_small_int2_nullable": 0,
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_option_option_std_primitive_i8": null
+      "std_primitive_i8": 0,
+      "std_primitive_i16": 0,
+      "std_primitive_i32": 0,
+      "std_primitive_i64": 0,
+      "std_primitive_u8": 0,
+      "std_primitive_u16": 0,
+      "std_primitive_u32": 0,
+      "std_primitive_u64": 0,
+      "std_primitive_f32": 0.0,
+      "std_primitive_f64": 0.0,
+      "std_primitive_bool": false,
+      "std_string_string": "",
+      "std_option_option_std_primitive_i8": 0,
+      "std_option_option_std_primitive_i16": 0,
+      "std_option_option_std_primitive_i32": 0,
+      "std_option_option_std_primitive_i64": 0,
+      "std_option_option_std_primitive_u8": 0,
+      "std_option_option_std_primitive_u16": 0,
+      "std_option_option_std_primitive_u32": 0,
+      "std_option_option_std_primitive_u64": 0,
+      "std_option_option_std_primitive_f32": 0.0,
+      "std_option_option_std_primitive_f64": 0.0,
+      "std_option_option_std_primitive_bool": false,
+      "std_option_option_std_string_string": null
     }
   }
 ]
@@ -79,34 +102,33 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   # "std_primitive_i16_as_small_int2_nullable": {
   #   "logical_operator": "Or",
   #   "value": [
-  #     # {
-  #     #   "Equal": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": 0
-  #     #   }
-  #     # }
-  #     # ,
-  #     # {
-  #     #   "GreaterThan": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": 0
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "Between": {
-  #     #     "logical_operator": "Or",
-  #     #     "start": 0,
-  #     #     "end": 0
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "In": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": [
-  #     #       0
-  #     #     ]
-  #     #   }
-  #     # },
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     },
   #     {
   #       "IsNull": {
   #         "logical_operator": "Or"
@@ -149,8 +171,739 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "StdPrimitiveI8": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveI16": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveI32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveI64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveU8": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveU16": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveU32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveU64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveF32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0.0,
+      #           "end": 0.0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0.0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveF64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0.0,
+      #           "end": 0.0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0.0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdPrimitiveBool": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": false
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdStringString": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": ""
+      #         }
+      #       },
+      #       {
+      #         "CaseSensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": ""
+      #         }
+      #       },
+      #       {
+      #         "CaseInsensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": ""
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveI8": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveI16": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveI32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveI64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveU8": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveU16": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveU32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveU64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveF32": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0.0,
+      #           "end": 0.0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0.0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveF64": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0.0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0.0,
+      #           "end": 0.0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0.0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "StdOptionOptionStdPrimitiveBool": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": false
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
       {
-        "StdOptionOptionStdPrimitiveI8": {
+        "StdOptionOptionStdStringString": {
           "logical_operator": "Or",
           "value": [
             {
@@ -161,24 +914,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             }
             # ,
             # {
-            #   "GreaterThan": {
+            #   "CaseSensitiveRegularExpression": {
             #     "logical_operator": "Or",
-            #     "value": 0
+            #     "value": ""
             #   }
             # },
             # {
-            #   "Between": {
+            #   "CaseInsensitiveRegularExpression": {
             #     "logical_operator": "Or",
-            #     "start": 0,
-            #     "end": 0
-            #   }
-            # },
-            # {
-            #   "In": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       0
-            #     ]
+            #     "value": ""
             #   }
             # }
           ]
@@ -196,7 +940,76 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
+          "std_primitive_i8": {}
+        },
+        {
+          "std_primitive_i16": {}
+        },
+        {
+          "std_primitive_i32": {}
+        },
+        {
+          "std_primitive_i64": {}
+        },
+        {
+          "std_primitive_u8": {}
+        },
+        {
+          "std_primitive_u16": {}
+        },
+        {
+          "std_primitive_u32": {}
+        },
+        {
+          "std_primitive_u64": {}
+        },
+        {
+          "std_primitive_f32": {}
+        },
+        {
+          "std_primitive_f64": {}
+        },
+        {
+          "std_primitive_bool": {}
+        },
+        {
+          "std_string_string": {}
+        },
+        {
           "std_option_option_std_primitive_i8": {}
+        },
+        {
+          "std_option_option_std_primitive_i16": {}
+        },
+        {
+          "std_option_option_std_primitive_i32": {}
+        },
+        {
+          "std_option_option_std_primitive_i64": {}
+        },
+        {
+          "std_option_option_std_primitive_u8": {}
+        },
+        {
+          "std_option_option_std_primitive_u16": {}
+        },
+        {
+          "std_option_option_std_primitive_u32": {}
+        },
+        {
+          "std_option_option_std_primitive_u64": {}
+        },
+        {
+          "std_option_option_std_primitive_f32": {}
+        },
+        {
+          "std_option_option_std_primitive_f64": {}
+        },
+        {
+          "std_option_option_std_primitive_bool": {}
+        },
+        {
+          "std_option_option_std_string_string": {}
         }
       ]
     }

@@ -1,3 +1,4 @@
+//todo remove IsNull filter and put it into Equal filter 
 #[derive(
     Debug,
     Clone,
