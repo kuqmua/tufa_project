@@ -547,7 +547,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &field_type,
                         &variant,
                     );
-
+                    //todo write wrapper around it with reuse parameters
                     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                         &ident,
                         &vec![
@@ -586,7 +586,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &vec![
                             &equal,
                         ],
-                        &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                        &postgresql_json_type_ident_where_element_upper_camel_case,
                         &ShouldImplementSchemarsJsonSchema::True,
                     );
                     let generated = quote::quote!{
@@ -601,7 +601,35 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     generated
                 },
                 PostgresqlJsonType::StdStringString => {
-                    generate_postgresql_json_type_where_element(&variant)
+                    let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+                    let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                    );
+                    let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+                    let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                    );
+
+                    let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                        &ident,
+                        &vec![
+                            &case_sensitive_regular_expression,
+                            &case_insensitive_regular_expression,
+                        ],
+                        &postgresql_json_type_ident_where_element_upper_camel_case,
+                        &ShouldImplementSchemarsJsonSchema::True,
+                    );
+                    let generated = quote::quote!{
+                        #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                        #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+
+                        #postgresql_json_type_ident_where_element_token_stream
+                    };
+                    // if ident == "" {
+                    //     println!("{generated}");
+                    //     println!("-------");
+                    // }
+                    generated
                 },
 
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => {
@@ -1839,19 +1867,16 @@ pub fn generate_postgresql_json_type_where_element_std_string_string(input: proc
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
     // let variant = PostgresqlJsonType::StdStringString;
 
     let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
-        &field_type,
     );
     let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
     let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &ident,
-        &field_type,
     );
 
     let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -5670,7 +5695,6 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
 }
 fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
     ident: &dyn quote::ToTokens,
-    field_type: &syn::Type,
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
@@ -5729,11 +5753,9 @@ impl CaseSensitiveRegularExpression {
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        field_type: &syn::Type,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &field_type,
             &RegularExpression::CaseSensitive,
             self.upper_camel_case(),
         )
@@ -5761,11 +5783,9 @@ impl CaseInsensitiveRegularExpression {
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        field_type: &syn::Type,
     ) -> proc_macro2::TokenStream {
         generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &ident,
-            &field_type,
             &RegularExpression::CaseInsensitive,
             self.upper_camel_case(),
         )
