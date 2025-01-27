@@ -21,7 +21,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdPrimitiveI8,
                     // postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdPrimitiveI8,
                 )]
-                pub struct #ident( pub #field_type);//todo #[validate(range(min = -128i8, max = 127i8))]
+                pub struct #ident(pub #field_type);//todo #[validate(range(min = -128i8, max = 127i8))]
             }
         };
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -509,8 +509,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 );
                 let greater_than = GreaterThan;
                 let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
                 let between = Between;
@@ -1750,8 +1748,6 @@ pub fn generate_postgresql_json_type_where_element_std_primitive_i8(input: proc_
     );
     let greater_than = GreaterThan;
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
     let between = Between;
@@ -1886,8 +1882,6 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_std_primiti
     );
     let greater_than = GreaterThan;
     let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
     let between = Between;
@@ -4245,13 +4239,11 @@ impl GreaterThan {
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        ident: &dyn quote::ToTokens,
-        field_type: &dyn quote::ToTokens,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
@@ -4260,7 +4252,7 @@ impl GreaterThan {
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&field_type),
+            &Self::generate_additional_type_declaration_token_stream(&variant.field_type()),
             &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
