@@ -475,11 +475,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
+            //todo remove generate_postgresql_json_type_where_element_token_stream later
             let generate_postgresql_json_type_where_element_token_stream = |variant: &PostgresqlJsonType| -> proc_macro2::TokenStream {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
 
@@ -506,8 +505,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 //todo maybe remove ident, field_type from arguments. variant is enough
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
                 let greater_than = GreaterThan;
@@ -558,8 +555,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_bool_token_stream = |variant: &PostgresqlJsonType| {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
 
@@ -585,8 +580,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_string_token_stream = |variant: &PostgresqlJsonType| {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
                 let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
@@ -1719,8 +1712,6 @@ fn generate_postgresql_json_type_where_element(
     
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
 
@@ -1755,8 +1746,6 @@ pub fn generate_postgresql_json_type_where_element_std_primitive_i8(input: proc_
 
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
     let greater_than = GreaterThan;
@@ -1816,8 +1805,6 @@ pub fn generate_postgresql_json_type_where_element_std_primitive_bool(input: pro
 
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
 
@@ -1895,8 +1882,6 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_std_primiti
 
     let equal = Equal;
     let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
     let greater_than = GreaterThan;
@@ -4169,13 +4154,11 @@ impl Equal {
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        ident: &dyn quote::ToTokens,
-        field_type: &dyn quote::ToTokens,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
@@ -4184,7 +4167,7 @@ impl Equal {
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&field_type),
+            &Self::generate_additional_type_declaration_token_stream(&variant.field_type()),
             &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
