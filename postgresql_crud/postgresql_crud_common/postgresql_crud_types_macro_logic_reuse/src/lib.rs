@@ -475,43 +475,41 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             }
         };
-        /////////
-        //todo WhereElement
-        fn generate_postgresql_json_type_where_element(
-            variant: &PostgresqlJsonType,
-        ) -> proc_macro2::TokenStream {
-            panic_location::panic_location();
-            let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
-            let field_type = variant.field_type();
-    
-            let equal = Equal;
-            let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
-                &field_type,
-                &variant,
-            );
-
-            let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
-                &ident,
-                &vec![
-                    &equal,
-                ],
-                &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                &ShouldImplementSchemarsJsonSchema::True,
-            );
-            let generated = quote::quote!{
-                #postgresql_json_type_ident_where_element_equal_token_stream
-
-                #postgresql_json_type_ident_where_element_token_stream
-            };
-            // if ident == "" {
-            //     println!("{generated}");
-            //     println!("-------");
-            // }
-            generated
-        }
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
+            fn generate_postgresql_json_type_where_element(
+                variant: &PostgresqlJsonType,
+            ) -> proc_macro2::TokenStream {
+                panic_location::panic_location();
+                let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
+                let field_type = variant.field_type();
+    
+                let equal = Equal;
+                let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &field_type,
+                    &variant,
+                );
+
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                    &ident,
+                    &vec![
+                        &equal,
+                    ],
+                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &ShouldImplementSchemarsJsonSchema::True,
+                );
+                let generated = quote::quote!{
+                    #postgresql_json_type_ident_where_element_equal_token_stream
+
+                    #postgresql_json_type_ident_where_element_token_stream
+                };
+                // if ident == "" {
+                //     println!("{generated}");
+                //     println!("-------");
+                // }
+                generated
+            }
             match &variant {
                 PostgresqlJsonType::StdPrimitiveI8 |
                 PostgresqlJsonType::StdPrimitiveI16 |
@@ -568,7 +566,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         #postgresql_json_type_ident_where_element_in_token_stream
 
                         #postgresql_json_type_ident_where_element_token_stream
-
                     };
                     // if ident == "" {
                     //     println!("{generated}");
@@ -577,7 +574,31 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     generated
                 },
                 PostgresqlJsonType::StdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element(&variant)
+                    let equal = Equal;
+                    let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &field_type,
+                        &variant,
+                    );
+
+                    let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                        &ident,
+                        &vec![
+                            &equal,
+                        ],
+                        &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                        &ShouldImplementSchemarsJsonSchema::True,
+                    );
+                    let generated = quote::quote!{
+                        #postgresql_json_type_ident_where_element_equal_token_stream
+
+                        #postgresql_json_type_ident_where_element_token_stream
+                    };
+                    // if ident == "" {
+                    //     println!("{generated}");
+                    //     println!("-------");
+                    // }
+                    generated
                 },
                 PostgresqlJsonType::StdStringString => {
                     generate_postgresql_json_type_where_element(&variant)
@@ -769,7 +790,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
             }
         };
-        /////////
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
         let generated = quote::quote!{
             #ident_token_stream
