@@ -4739,12 +4739,11 @@ impl Between {
         between_try_new_error_type: &BetweenTryNewErrorType,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
         let field_type = &variant.field_type();
 
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
@@ -4753,7 +4752,7 @@ impl Between {
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
+                ident: &variant,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
                     &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
@@ -4761,13 +4760,13 @@ impl Between {
                 ),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&field_type),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
-                    &ident,
+                    &variant,
                     &postgresql_type_or_json_type,
                     &between_try_new_error_type,
                     &proc_macro2::TokenStream::new(),
                 ),
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
-                    &ident,
+                    &variant,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                     &field_type,
