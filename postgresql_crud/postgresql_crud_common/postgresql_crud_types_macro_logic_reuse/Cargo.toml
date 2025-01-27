@@ -16,6 +16,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 postgresql_crud_macros_common = {path = "../postgresql_crud_macros_common"}
 constants = {path = "../../../constants"}
+enum_extension_lib = {path = "../../../enum_extension_lib"}
 generate_quotes = {path = "../../../generate_quotes"}
 panic_location = {path = "../../../panic_location"}
 macros_helpers = {path = "../../../macros_helpers"}

@@ -1,11 +1,7 @@
 #[proc_macro]
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    fn generate_postgresql_json_type_handle_token_stream(
-        input: proc_macro::TokenStream,
-        variant: PostgresqlJsonType,
-    ) -> proc_macro::TokenStream {
-        let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    fn generate_postgresql_json_type_handle_token_stream(variant: &PostgresqlJsonType) -> proc_macro2::TokenStream {
         let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
         let field_type = &variant.field_type();
 
@@ -501,11 +497,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //      println!("{generated}");
         //      println!("-------");
         //  }
-        generated.into()
+        generated
     }
+    let variants_token_stream = PostgresqlJsonType::into_array().into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
-        
+        #(#variants_token_stream)*
     };
+    //  if ident == "" {
+    //      println!("{generated}");
+    //      println!("-------");
+    //  }
     generated.into()
 }
 
@@ -1124,7 +1125,7 @@ pub fn generate_postgresql_json_type_std_primitive_i8(input: proc_macro::TokenSt
 // }
 
 //todo maybe not need it? remove it?
-#[derive(strum_macros::Display)]
+#[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
     StdPrimitiveI8,
     StdPrimitiveI16,
