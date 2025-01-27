@@ -1,22 +1,23 @@
-//todo maybe some derive impl does not need?
+postgresql_crud_types_macro_logic_reuse::generate_postgresql_json_types!();
+
+// #[derive(
+//     Debug,
+//     Clone,
+//     Copy,
+//     PartialEq,
+//     Eq,
+//     Default,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdPrimitiveI8,
+//     postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdPrimitiveI8,
+// )]
+// pub struct StdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
 
 
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeStdPrimitiveI8,
-    postgresql_crud_types_macro_logic_reuse::GeneratePostgresqlJsonTypeWhereElementStdPrimitiveI8,
-)]
-pub struct StdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
 // #[derive(
 //     Debug,
 //     Clone,
