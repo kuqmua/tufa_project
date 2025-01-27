@@ -518,8 +518,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 );
                 let in_handle = In;
                 let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
-                    &field_type,
                     &variant,
                 );
                 //todo write wrapper around it with reuse parameters
@@ -1755,8 +1753,6 @@ pub fn generate_postgresql_json_type_where_element_std_primitive_i8(input: proc_
     );
     let in_handle = In;
     let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
 
@@ -1887,8 +1883,6 @@ pub fn generate_postgresql_json_type_where_element_std_option_option_std_primiti
     );
     let in_handle = In;
     let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &ident,
-        &field_type,
         &variant,
     );
 
@@ -5190,14 +5184,14 @@ impl In {
     }
     fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        ident: &dyn quote::ToTokens,
-        field_type: &dyn quote::ToTokens,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
+        let field_type = &variant.field_type();
+
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
@@ -5205,16 +5199,16 @@ impl In {
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
+                ident: &variant,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&field_type),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&field_type),
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
-                    &ident,
+                    &variant,
                     &postgresql_type_or_json_type,
                 ),
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
-                    &ident,
+                    &variant,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                     &field_type,
