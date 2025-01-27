@@ -476,7 +476,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             //todo remove generate_postgresql_json_type_where_element_token_stream later
-            let generate_postgresql_json_type_where_element_token_stream = |variant: &PostgresqlJsonType| -> proc_macro2::TokenStream {
+            let generate_postgresql_json_type_where_element_token_stream = || -> proc_macro2::TokenStream {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &variant,
@@ -501,7 +501,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            let generate_postgresql_json_type_where_element_number_token_stream = |variant: &PostgresqlJsonType| {
+            let generate_postgresql_json_type_where_element_number_token_stream = || {
                 //todo maybe remove ident, field_type from arguments. variant is enough
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -546,7 +546,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            let generate_postgresql_json_type_where_element_bool_token_stream = |variant: &PostgresqlJsonType| {
+            let generate_postgresql_json_type_where_element_bool_token_stream = || {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &variant,
@@ -571,7 +571,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            let generate_postgresql_json_type_where_element_string_token_stream = |variant: &PostgresqlJsonType| {
+            let generate_postgresql_json_type_where_element_string_token_stream = || {
                 let equal = Equal;
                 let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &variant,
@@ -618,9 +618,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonType::StdPrimitiveU32 |
                 PostgresqlJsonType::StdPrimitiveU64 |
                 PostgresqlJsonType::StdPrimitiveF32 |
-                PostgresqlJsonType::StdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(&variant),
-                PostgresqlJsonType::StdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(&variant),
-                PostgresqlJsonType::StdStringString => generate_postgresql_json_type_where_element_string_token_stream(&variant),
+                PostgresqlJsonType::StdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(),
+                PostgresqlJsonType::StdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(),
+                PostgresqlJsonType::StdStringString => generate_postgresql_json_type_where_element_string_token_stream(),
 
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 |
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 |
@@ -631,156 +631,156 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveU32 |
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveU64 |
                 PostgresqlJsonType::StdOptionOptionStdPrimitiveF32 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(&variant),
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(&variant),
-                PostgresqlJsonType::StdOptionOptionStdStringString  => generate_postgresql_json_type_where_element_string_token_stream(&variant),
+                PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(),
+                PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(),
+                PostgresqlJsonType::StdOptionOptionStdStringString  => generate_postgresql_json_type_where_element_string_token_stream(),
 
                 PostgresqlJsonType::StdVecVecStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
 
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
 
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
 
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
                 PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream(&variant)
+                    generate_postgresql_json_type_where_element_token_stream()
                 },
             }
         };
