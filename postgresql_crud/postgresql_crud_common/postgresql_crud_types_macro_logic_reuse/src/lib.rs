@@ -1,4 +1,72 @@
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+enum PostgresqlJsonTypeHandle {
+    StdPrimitiveI8,
+    StdPrimitiveI16,
+    StdPrimitiveI32,
+    StdPrimitiveI64,
+    StdPrimitiveU8,
+    StdPrimitiveU16,
+    StdPrimitiveU32,
+    StdPrimitiveU64,
+    StdPrimitiveF32,
+    StdPrimitiveF64,
+    StdPrimitiveBool,
+    StdStringString,
+}
+impl PostgresqlJsonTypeHandle {
+    fn field_type(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
+            Self::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
+            Self::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
+            Self::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
+            Self::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
+            Self::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
+            Self::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
+            Self::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
+            Self::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
+            Self::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
+            Self::StdPrimitiveBool => quote::quote!{std::primitive::bool},
+            Self::StdStringString => quote::quote!{std::string::String},
+        }
+    }
+    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        match &self {
+            Self::StdPrimitiveI8 |
+            Self::StdPrimitiveI16 |
+            Self::StdPrimitiveI32 |
+            Self::StdPrimitiveI64 |
+            Self::StdPrimitiveU8 |
+            Self::StdPrimitiveU16 |
+            Self::StdPrimitiveU32 |
+            Self::StdPrimitiveU64 |
+            Self::StdPrimitiveF32 |
+            Self::StdPrimitiveF64 |
+            Self::StdPrimitiveBool |
+            Self::StdStringString => quote::quote!{#core_default_default_default_token_stream},
+        }
+    }
+}
+impl quote::ToTokens for PostgresqlJsonTypeHandle {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        self.to_string()
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+        .to_tokens(tokens)
+    }
+}
+
+enum PostgresqlJsonTypePattern {
+    FullTypePath,
+    StdOptionOptionFullTypePath,
+    StdVecVecFullTypePath,
+    StdOptionOptionStdVecVecFullTypePath,
+    StdVecVecStdOptionOptionFullTypePath,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+}
+
+#[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
     StdPrimitiveI8,
     StdPrimitiveI16,
@@ -81,83 +149,83 @@ enum PostgresqlJsonType {
 impl PostgresqlJsonType {
     fn field_type(&self) -> proc_macro2::TokenStream {
         match &self {
-            PostgresqlJsonType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
-            PostgresqlJsonType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
-            PostgresqlJsonType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
-            PostgresqlJsonType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
-            PostgresqlJsonType::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
-            PostgresqlJsonType::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
-            PostgresqlJsonType::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
-            PostgresqlJsonType::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
-            PostgresqlJsonType::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
-            PostgresqlJsonType::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
-            PostgresqlJsonType::StdPrimitiveBool => quote::quote!{std::primitive::bool},
-            PostgresqlJsonType::StdStringString => quote::quote!{std::string::String},
+            Self::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
+            Self::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
+            Self::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
+            Self::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
+            Self::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
+            Self::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
+            Self::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
+            Self::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
+            Self::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
+            Self::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
+            Self::StdPrimitiveBool => quote::quote!{std::primitive::bool},
+            Self::StdStringString => quote::quote!{std::string::String},
 
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
-            PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
-            PostgresqlJsonType::StdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
+            Self::StdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::primitive::i8>},
+            Self::StdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::primitive::i16>},
+            Self::StdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::primitive::i32>},
+            Self::StdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::primitive::i64>},
+            Self::StdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::primitive::u8>},
+            Self::StdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::primitive::u16>},
+            Self::StdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::primitive::u32>},
+            Self::StdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::primitive::u64>},
+            Self::StdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::primitive::f32>},
+            Self::StdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::primitive::f64>},
+            Self::StdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::primitive::bool>},
+            Self::StdOptionOptionStdStringString => quote::quote!{std::option::Option<std::string::String>},
 
-            PostgresqlJsonType::StdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::primitive::i8>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::primitive::i16>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::primitive::i32>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::primitive::i64>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::primitive::u8>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::primitive::u16>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::primitive::u32>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::primitive::u64>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::primitive::f32>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::primitive::f64>},
-            PostgresqlJsonType::StdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::primitive::bool>},
-            PostgresqlJsonType::StdVecVecStdStringString => quote::quote!{std::vec::Vec<std::string::String>},
+            Self::StdVecVecStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::primitive::i8>},
+            Self::StdVecVecStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::primitive::i16>},
+            Self::StdVecVecStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::primitive::i32>},
+            Self::StdVecVecStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::primitive::i64>},
+            Self::StdVecVecStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::primitive::u8>},
+            Self::StdVecVecStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::primitive::u16>},
+            Self::StdVecVecStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::primitive::u32>},
+            Self::StdVecVecStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::primitive::u64>},
+            Self::StdVecVecStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::primitive::f32>},
+            Self::StdVecVecStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::primitive::f64>},
+            Self::StdVecVecStdPrimitiveBool => quote::quote!{std::vec::Vec<std::primitive::bool>},
+            Self::StdVecVecStdStringString => quote::quote!{std::vec::Vec<std::string::String>},
 
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i8>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i16>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i32>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i64>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u8>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u16>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u32>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u64>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f32>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f64>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::bool>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::string::String>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i8>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i16>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i32>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::i64>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u8>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u16>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u32>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::u64>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f32>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::f64>>},
+            Self::StdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::primitive::bool>>},
+            Self::StdOptionOptionStdVecVecStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::string::String>>},
 
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i8>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i16>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i32>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i64>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u8>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u16>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u32>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u64>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f32>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f64>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::bool>>},
-            PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => quote::quote!{std::vec::Vec<std::option::Option<std::string::String>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i8>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i16>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i32>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::i64>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u8>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u16>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u32>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::u64>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f32>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::f64>>},
+            Self::StdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::vec::Vec<std::option::Option<std::primitive::bool>>},
+            Self::StdVecVecStdOptionOptionStdStringString => quote::quote!{std::vec::Vec<std::option::Option<std::string::String>>},
 
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>},
-            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i8>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i16>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i32>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::i64>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u8>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u16>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u32>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::u64>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f32>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::f64>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::primitive::bool>>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<std::string::String>>>},
         }
     }
     fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
@@ -1068,7 +1136,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
         };
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
-        let generated = quote::quote!{
+        let mut generated = quote::quote!{
             #ident_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
 
@@ -1087,15 +1155,22 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
             #postgresql_json_type_ident_where_element_token_stream
         };
-        //  if ident == "" {
-        //      println!("{generated}");
-        //      println!("-------");
+        //  if quote::quote!{#ident}.to_string() == "StdOptionOptionStdPrimitiveI8" {
+        //     //  println!("{generated}");
+        //     //  println!("-------");
+        //      macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //          "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
+        //          &generated,
+        //      );
+        //      generated = quote::quote!{}
         //  }
         generated
     }
-    let variants_token_stream = PostgresqlJsonType::into_array()
+    let variants_token_stream = 
+    PostgresqlJsonType::into_array()
     // [
     //     PostgresqlJsonType::StdPrimitiveI8,
+    //     PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
     // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
