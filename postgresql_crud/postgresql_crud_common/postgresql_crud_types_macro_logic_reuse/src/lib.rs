@@ -2691,47 +2691,6 @@ enum IsNullable {
     False,
 }
 impl IsNullable {
-    fn maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        match &self  {
-            Self::True => {
-                let column_snake_case = naming::ColumnSnakeCase;
-                let query_snake_case = naming::QuerySnakeCase;
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                    crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                };
-                let postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case = naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementIsNullUpperCamelCase::from_tokens(&ident);
-                let postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-                    &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
-                    &ShouldWhereElementFieldsBePublic::True,
-                    &ShouldImplementSchemarsJsonSchema::False,
-                    &proc_macro2::TokenStream::new()
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
-                    &quote::quote! {Self {
-                        logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    }},
-                );
-                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                    &postgresql_type_std_option_option_ident_where_element_is_null_upper_camel_case,
-                    &quote::quote! {
-                        Ok(format!(
-                            "{}({} is null)",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                        ))
-                    },
-                    &query_snake_case
-                );
-                quote::quote! {
-                    #postgresql_type_std_option_option_ident_where_element_is_null_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream
-                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_std_option_option_ident_where_element_is_null_token_stream
-                }
-            },
-            Self::False => proc_macro2::TokenStream::new(),
-        }
-    }
     fn maybe_generate_postgresql_json_type_std_option_option_tokens_where_element_is_null_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         match &self  {
             Self::True => {
@@ -2771,16 +2730,6 @@ impl IsNullable {
                 }
             },
             Self::False => proc_macro2::TokenStream::new(),
-        }
-    }
-    fn maybe_add_is_null_variant<'a>(&self, variants: &'a std::vec::Vec<&'a dyn WhereOperatorName>) -> std::vec::Vec<&'a dyn WhereOperatorName> {
-        if let Self::True = &self {
-            let mut variants_cloned = variants.clone();
-            variants_cloned.push(&IsNull);
-            variants_cloned
-        }
-        else {
-            variants.clone()
         }
     }
 }
@@ -6771,7 +6720,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -6813,7 +6761,6 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -6846,7 +6793,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         
         let equal = Equal;
@@ -6886,7 +6832,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -6916,7 +6861,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -6951,7 +6895,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -6980,7 +6923,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -7012,7 +6954,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7034,7 +6975,6 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        // let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -7052,7 +6992,6 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             ]
         );
         quote::quote! {
-            // #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
@@ -7072,7 +7011,6 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -7092,7 +7030,6 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_token_stream
@@ -7123,7 +7060,6 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -7153,7 +7089,6 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_length_more_than_token_stream
             #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
@@ -7191,7 +7126,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -7235,7 +7169,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7266,7 +7199,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -7313,7 +7245,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7344,7 +7275,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -7391,7 +7321,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7422,7 +7351,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
@@ -7469,7 +7397,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7507,7 +7434,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -7539,7 +7465,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -7682,7 +7607,6 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -7776,7 +7700,6 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             }
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
             #postgresql_type_tokens_where_element_contains_another_range_token_stream
@@ -7938,7 +7861,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -7985,7 +7907,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -8016,7 +7937,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
         let where_operator_type_field_type = WhereOperatorType::FieldType {
             field_type: &field_type,
@@ -8064,7 +7984,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -8095,7 +8014,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8148,7 +8066,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_before_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -8170,7 +8087,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8201,7 +8117,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_before_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -8223,7 +8138,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8254,7 +8168,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_before_token_stream
             #postgresql_type_tokens_where_element_between_token_stream
@@ -8276,7 +8189,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -8303,7 +8215,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
             #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
@@ -8335,7 +8246,6 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -8353,7 +8263,6 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
@@ -8384,7 +8293,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -8402,7 +8310,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
@@ -8422,7 +8329,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8457,7 +8363,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_greater_than_token_stream
             #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
@@ -8497,7 +8402,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
         let query_snake_case = naming::QuerySnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -8518,7 +8422,6 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_position_equals_token_stream
             #postgresql_type_tokens_where_element_token_stream
