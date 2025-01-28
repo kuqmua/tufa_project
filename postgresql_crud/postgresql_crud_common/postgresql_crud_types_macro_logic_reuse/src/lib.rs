@@ -685,7 +685,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
             &{
-                let content_token_stream = variant.initialization_token_stream();
+                // let content_token_stream = variant.initialization_token_stream();
+                let content_token_stream = postgresql_json_type_pattern.initialization_token_stream();
                 quote::quote!{
                     Self(#content_token_stream)
                 }
