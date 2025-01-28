@@ -3297,7 +3297,7 @@ impl Equal {
                 let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                 quote::quote!{
                     if let Some(#value_snake_case) = self.#value_snake_case {
-                        #query_snake_case = #query_snake_case.bind(self.#value_snake_case #where_operator_type_additional_bind_token_stream);
+                        #query_snake_case = #query_snake_case.bind(#value_snake_case #where_operator_type_additional_bind_token_stream);
                     }
                 }
             },
