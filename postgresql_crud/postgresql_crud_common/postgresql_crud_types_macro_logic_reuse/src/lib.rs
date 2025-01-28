@@ -3283,7 +3283,12 @@ impl Equal {
     fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
-        match &is_nullable_postgresql_type {
+        let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
+            quote::quote!{
+                #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
+            }
+        };
+        let additional_content_token_stream = match &is_nullable_postgresql_type {
             IsNullablePostgresqlType::NullablePostgresqlType {
                 bind_content_token_stream,
             } => {
@@ -3291,25 +3296,18 @@ impl Equal {
                     if let Some(#value_snake_case) = self.#value_snake_case {
                         #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
                     }
-                    #query_snake_case
                 }
             },
             IsNullablePostgresqlType::NotNullPostgresqlType {
                 bind_content_token_stream,
-            } => {
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
-                    #query_snake_case
-                }
-            },
+            } => generate_query_equals_query_bind_token_stream(&bind_content_token_stream),
             IsNullablePostgresqlType::PostgresqlJsonType {
                 bind_content_token_stream,
-            } => {
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
-                    #query_snake_case
-                }
-            },
+            } => generate_query_equals_query_bind_token_stream(&bind_content_token_stream),
+        };
+        quote::quote!{
+            #additional_content_token_stream
+            #query_snake_case
         }
     }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
