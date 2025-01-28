@@ -3213,17 +3213,17 @@ impl WhereOperatorName for IsNull {
         &naming::IsNullUpperCamelCase
     }
 }
-// enum IsNullablePostgresqlType {
-//     NullablePostgresqlType {
-//         content_token_stream: proc_macro2::TokenStream,
-//     },
-//     NotNullPostgresqlType {
-//         content_token_stream: proc_macro2::TokenStream,
-//     },
-//     PostgresqlJsonType {
-//         content_token_stream: proc_macro2::TokenStream,
-//     },
-// }
+enum IsNullablePostgresqlType {
+    NullablePostgresqlType {
+        bind_content_token_stream: proc_macro2::TokenStream,
+    },
+    NotNullPostgresqlType {
+        bind_content_token_stream: proc_macro2::TokenStream,
+    },
+    PostgresqlJsonType {
+        bind_content_token_stream: proc_macro2::TokenStream,
+    },
+}
 struct Equal;
 impl WhereOperatorName for Equal {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3280,18 +3280,38 @@ impl Equal {
     //     }
         
     // }
-    // fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-    //     let query_snake_case = naming::QuerySnakeCase;
-    //     match &is_nullable_postgresql_type {
-    //         IsNullablePostgresqlType::True => quote::quote!{#query_snake_case},
-    //         IsNullablePostgresqlType::False {
-    //             bind_token_stream,
-    //         } => quote::quote!{
-    //             #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-    //             #query_snake_case
-    //         }
-    //     }
-    // }
+    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        match &is_nullable_postgresql_type {
+            IsNullablePostgresqlType::NullablePostgresqlType {
+                bind_content_token_stream,
+            } => {
+                quote::quote!{
+                    if let Some(#value_snake_case) = self.#value_snake_case {
+                        #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
+                    }
+                    #query_snake_case
+                }
+            },
+            IsNullablePostgresqlType::NotNullPostgresqlType {
+                bind_content_token_stream,
+            } => {
+                quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
+                    #query_snake_case
+                }
+            },
+            IsNullablePostgresqlType::PostgresqlJsonType {
+                bind_content_token_stream,
+            } => {
+                quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
+                    #query_snake_case
+                }
+            },
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -3346,19 +3366,13 @@ impl Equal {
                         ))
                     }
                 },
-                &{
-                    let bind_token_stream = {
+                &Self::generate_bind_value_to_query_token_stream(&IsNullablePostgresqlType::NullablePostgresqlType {
+                    bind_content_token_stream: {
                         let value_snake_case = naming::ValueSnakeCase;
                         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                         quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-                    };
-                    quote::quote!{
-                        if let Some(#value_snake_case) = self.#value_snake_case {
-                            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-                        }
-                        #query_snake_case
                     }
-                },
+                }),
             ),
             IsNullable::False => generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
                 &PostgresqlTypeOrJsonType::PostgresqlType,
@@ -3385,17 +3399,13 @@ impl Equal {
                         })
                     }
                 },
-                &{
-                    let bind_token_stream = {
+                &Self::generate_bind_value_to_query_token_stream(&IsNullablePostgresqlType::NotNullPostgresqlType {
+                    bind_content_token_stream: {
                         let value_snake_case = naming::ValueSnakeCase;
                         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                         quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-                    };
-                    quote::quote!{
-                        #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-                        #query_snake_case
                     }
-                },
+                }),
             )
         }
     }
@@ -3417,12 +3427,6 @@ impl Equal {
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        // let is_nullable_postgresql_type = IsNullablePostgresqlType::False;
-        let bind_token_stream = {
-            let value_snake_case = naming::ValueSnakeCase;
-            quote::quote!{sqlx::types::Json(self.#value_snake_case)}
-        };
-
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -3447,11 +3451,9 @@ impl Equal {
                     })
                 }
             },
-            // &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type)
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-                #query_snake_case
-            }
+            &Self::generate_bind_value_to_query_token_stream(&IsNullablePostgresqlType::PostgresqlJsonType {
+                bind_content_token_stream: quote::quote!{sqlx::types::Json(self.#value_snake_case)}
+            }),
         )
     }
 }
