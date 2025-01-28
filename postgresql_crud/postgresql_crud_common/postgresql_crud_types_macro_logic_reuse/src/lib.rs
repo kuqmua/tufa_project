@@ -3107,9 +3107,8 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
     is_nullable: IsNullable,
     ident: &dyn quote::ToTokens,
-    variants_original: &std::vec::Vec<&dyn WhereOperatorName>
+    variants: &std::vec::Vec<&dyn WhereOperatorName>
 ) -> proc_macro2::TokenStream {
-    let variants = is_nullable.maybe_add_is_null_variant(variants_original);
     let postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
         IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
         IsNullable::False => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
@@ -7035,7 +7034,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
+        // let maybe_postgresql_type_tokens_where_element_is_null_token_stream = is_nullable.maybe_generate_postgresql_type_std_option_option_tokens_where_element_is_null_token_stream(&ident);
         let equal = Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -7053,7 +7052,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
             ]
         );
         quote::quote! {
-            #maybe_postgresql_type_tokens_where_element_is_null_token_stream
+            // #maybe_postgresql_type_tokens_where_element_is_null_token_stream
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
