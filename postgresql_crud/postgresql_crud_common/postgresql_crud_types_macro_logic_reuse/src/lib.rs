@@ -49,20 +49,21 @@ enum PostgresqlJsonTypePattern {
     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
 }
 impl PostgresqlJsonTypePattern {
-    fn field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
+    // fn field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
+    //     let field_type = postgresql_json_type_handle.field_type();
+    //     match &self {
+    //         Self::FullTypePath => field_type,
+    //         Self::StdOptionOptionFullTypePath => quote::quote!{std::option::Option<#field_type>},
+    //         Self::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#field_type>},
+    //         Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<#field_type>>},
+    //         Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#field_type>>},
+    //         Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#field_type>>>},
+    //     }
+    // }
+    fn wrapper_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
         let field_type = postgresql_json_type_handle.field_type();
         match &self {
             Self::FullTypePath => field_type,
-            Self::StdOptionOptionFullTypePath => quote::quote!{std::option::Option<#field_type>},
-            Self::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#field_type>},
-            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<#field_type>>},
-            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#field_type>>},
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#field_type>>>},
-        }
-    }
-    fn wrapper_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        match &self {
-            Self::FullTypePath => quote::quote!{#postgresql_json_type_handle},
             Self::StdOptionOptionFullTypePath => quote::quote!{std::option::Option<#postgresql_json_type_handle>},
             Self::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
             Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<#postgresql_json_type_handle>>},
@@ -645,7 +646,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
 
         let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
-        let field_type = &variant.field_type();
+        // let field_type = &variant.field_type();
+        let field_type = &postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle);
 
         let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
 
