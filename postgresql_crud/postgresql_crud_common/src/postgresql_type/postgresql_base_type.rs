@@ -52,70 +52,70 @@ pub struct StdPrimitiveI64(pub std::primitive::i64);
 //     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 // )]
 // pub struct StdPrimitiveF64(pub std::primitive::f64);
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney,
-)]
-pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
-impl serde::Serialize for SqlxPostgresTypesPgMoney {
-    fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
-    where
-        __S: serde::Serializer,
-    {
-        serde::Serializer::serialize_newtype_struct(__serializer, "SqlxPostgresTypesPgMoney", &self.0 .0)
-    }
-}
-impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<SqlxPostgresTypesPgMoney>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = SqlxPostgresTypesPgMoney;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxPostgresTypesPgMoney")
-            }
-            #[inline]
-            fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-            where
-                __E: serde::Deserializer<'de>,
-            {
-                let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxPostgresTypesPgMoney with 1 element"));
-                    }
-                };
-                serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
-            }
-        }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "SqlxPostgresTypesPgMoney",
-            __Visitor {
-                marker: serde::__private::PhantomData::<SqlxPostgresTypesPgMoney>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Eq,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney,
+// )]
+// pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
+// impl serde::Serialize for SqlxPostgresTypesPgMoney {
+//     fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+//     where
+//         __S: serde::Serializer,
+//     {
+//         serde::Serializer::serialize_newtype_struct(__serializer, "SqlxPostgresTypesPgMoney", &self.0 .0)
+//     }
+// }
+// impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
+//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<SqlxPostgresTypesPgMoney>,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = SqlxPostgresTypesPgMoney;
+//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxPostgresTypesPgMoney")
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
+//                 serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxPostgresTypesPgMoney with 1 element"));
+//                     }
+//                 };
+//                 serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "SqlxPostgresTypesPgMoney",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<SqlxPostgresTypesPgMoney>,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
 // #[derive(
 //     Debug,
 //     Clone,
@@ -286,18 +286,18 @@ impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
 //         )
 //     }
 // }
-// #[derive(
-//     Debug,
-//     Clone,
-//     PartialEq,
-//     Eq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-//     postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementBool,
-// )]
-// pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementBool,
+)]
+pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private? //todo column "std_primitive_bool_as_postgresql_bool" is of type boolean but expression is of type bigint
 // #[derive(
 //     Debug,
 //     Clone,

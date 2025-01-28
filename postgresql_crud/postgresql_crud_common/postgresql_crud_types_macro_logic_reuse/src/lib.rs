@@ -1093,8 +1093,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //  }
         generated
     }
-    let variants_token_stream = 
-    PostgresqlJsonType::into_array()
+    let variants_token_stream = PostgresqlJsonType::into_array()
     // [
     //     PostgresqlJsonType::StdPrimitiveI8,
     // ]
