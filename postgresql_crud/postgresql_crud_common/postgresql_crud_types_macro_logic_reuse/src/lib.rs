@@ -639,6 +639,11 @@ impl quote::ToTokens for PostgresqlJsonType {
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     fn generate_postgresql_json_type_handle_token_stream(variant: &PostgresqlJsonType) -> proc_macro2::TokenStream {
+        let (
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern
+        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
+
         let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
         let field_type = &variant.field_type();
 
