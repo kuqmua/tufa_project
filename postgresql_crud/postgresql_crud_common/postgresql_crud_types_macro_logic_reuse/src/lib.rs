@@ -30,23 +30,6 @@ impl PostgresqlJsonTypeHandle {
             Self::StdStringString => quote::quote!{std::string::String},
         }
     }
-    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-        match &self {
-            Self::StdPrimitiveI8 |
-            Self::StdPrimitiveI16 |
-            Self::StdPrimitiveI32 |
-            Self::StdPrimitiveI64 |
-            Self::StdPrimitiveU8 |
-            Self::StdPrimitiveU16 |
-            Self::StdPrimitiveU32 |
-            Self::StdPrimitiveU64 |
-            Self::StdPrimitiveF32 |
-            Self::StdPrimitiveF64 |
-            Self::StdPrimitiveBool |
-            Self::StdStringString => quote::quote!{#core_default_default_default_token_stream},
-        }
-    }
 }
 impl quote::ToTokens for PostgresqlJsonTypeHandle {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -65,91 +48,41 @@ enum PostgresqlJsonTypePattern {
     StdVecVecStdOptionOptionFullTypePath,
     StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
 }
-
-fn field_type_handle(
-    postgresql_json_type_handle: &PostgresqlJsonTypeHandle,
-    postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-) -> proc_macro2::TokenStream {
-    match (&postgresql_json_type_pattern, &postgresql_json_type_handle) {
-        StdPrimitiveI8 => quote::quote!{},
-        StdPrimitiveI16 => quote::quote!{},
-        StdPrimitiveI32 => quote::quote!{},
-        StdPrimitiveI64 => quote::quote!{},
-        StdPrimitiveU8 => quote::quote!{},
-        StdPrimitiveU16 => quote::quote!{},
-        StdPrimitiveU32 => quote::quote!{},
-        StdPrimitiveU64 => quote::quote!{},
-        StdPrimitiveF32 => quote::quote!{},
-        StdPrimitiveF64 => quote::quote!{},
-        StdPrimitiveBool => quote::quote!{},
-        StdStringString => quote::quote!{},
-
-        StdOptionOptionStdPrimitiveI8 => quote::quote!{},
-        StdOptionOptionStdPrimitiveI16 => quote::quote!{},
-        StdOptionOptionStdPrimitiveI32 => quote::quote!{},
-        StdOptionOptionStdPrimitiveI64 => quote::quote!{},
-        StdOptionOptionStdPrimitiveU8 => quote::quote!{},
-        StdOptionOptionStdPrimitiveU16 => quote::quote!{},
-        StdOptionOptionStdPrimitiveU32 => quote::quote!{},
-        StdOptionOptionStdPrimitiveU64 => quote::quote!{},
-        StdOptionOptionStdPrimitiveF32 => quote::quote!{},
-        StdOptionOptionStdPrimitiveF64 => quote::quote!{},
-        StdOptionOptionStdPrimitiveBool => quote::quote!{},
-        StdOptionOptionStdStringString => quote::quote!{},
-
-        StdVecVecStdPrimitiveI8 => quote::quote!{},
-        StdVecVecStdPrimitiveI16 => quote::quote!{},
-        StdVecVecStdPrimitiveI32 => quote::quote!{},
-        StdVecVecStdPrimitiveI64 => quote::quote!{},
-        StdVecVecStdPrimitiveU8 => quote::quote!{},
-        StdVecVecStdPrimitiveU16 => quote::quote!{},
-        StdVecVecStdPrimitiveU32 => quote::quote!{},
-        StdVecVecStdPrimitiveU64 => quote::quote!{},
-        StdVecVecStdPrimitiveF32 => quote::quote!{},
-        StdVecVecStdPrimitiveF64 => quote::quote!{},
-        StdVecVecStdPrimitiveBool => quote::quote!{},
-        StdVecVecStdStringString => quote::quote!{},
-
-        StdOptionOptionStdVecVecStdPrimitiveI8 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveI16 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveI32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveI64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveU8 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveU16 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveU32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveU64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveF32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveF64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdPrimitiveBool => quote::quote!{},
-        StdOptionOptionStdVecVecStdStringString => quote::quote!{},
-
-        StdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{},
-        StdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{},
-        StdVecVecStdOptionOptionStdStringString => quote::quote!{},
-
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => quote::quote!{},
-        StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{},
+impl PostgresqlJsonTypePattern {
+    fn field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
+        let field_type = postgresql_json_type_handle.field_type();
+        match &self {
+            Self::FullTypePath => field_type,
+            Self::StdOptionOptionFullTypePath => quote::quote!{std::option::Option<#field_type>},
+            Self::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#field_type>},
+            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<#field_type>>},
+            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#field_type>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#field_type>>>},
+        }
+    }
+    fn wrapper_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
+        match &self {
+            Self::FullTypePath => quote::quote!{#postgresql_json_type_handle},
+            Self::StdOptionOptionFullTypePath => quote::quote!{std::option::Option<#postgresql_json_type_handle>},
+            Self::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<#postgresql_json_type_handle>>},
+            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>},
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>>},
+        }
+    }
+    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        match &self {
+            Self::FullTypePath => quote::quote!{#core_default_default_default_token_stream},
+            Self::StdOptionOptionFullTypePath => quote::quote!{Some(#core_default_default_default_token_stream)},
+            Self::StdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
+            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
+            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
+        }
     }
 }
+
 
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
