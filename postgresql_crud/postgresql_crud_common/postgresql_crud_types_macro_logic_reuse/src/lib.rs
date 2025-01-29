@@ -83,6 +83,26 @@ impl PostgresqlJsonTypePattern {
         }
     }
 }
+enum PostgresqlJsonTypePatternSpecific {
+    FullTypePathNumber,
+    FullTypePathBool,
+    FullTypePathString,
+    StdOptionOptionFullTypePathNumber,
+    StdOptionOptionFullTypePathBool,
+    StdOptionOptionFullTypePathString,
+    StdVecVecFullTypePathNumber,
+    StdVecVecFullTypePathBool,
+    StdVecVecFullTypePathString,
+    StdOptionOptionStdVecVecFullTypePathNumber,
+    StdOptionOptionStdVecVecFullTypePathBool,
+    StdOptionOptionStdVecVecFullTypePathString,
+    StdVecVecStdOptionOptionFullTypePathNumber,
+    StdVecVecStdOptionOptionFullTypePathBool,
+    StdVecVecStdOptionOptionFullTypePathString,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
+    StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
+}
 
 fn all_postgresql_json_type_handles_and_patterns() -> std::vec::Vec<(PostgresqlJsonTypePattern, PostgresqlJsonTypeHandle)> {
     vec![
