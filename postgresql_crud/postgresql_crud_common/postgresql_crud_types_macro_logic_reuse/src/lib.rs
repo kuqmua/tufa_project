@@ -83,26 +83,45 @@ impl PostgresqlJsonTypePattern {
         }
     }
     fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            }
+        };
         match &self {
-            Self::FullTypePath => quote::quote!{#core_default_default_default_token_stream},
-            Self::StdOptionOptionFullTypePath => quote::quote!{Some(#core_default_default_default_token_stream)},
-            Self::StdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
-            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
-            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
+            Self::FullTypePath => {
+                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{#core_default_default_default_token_stream}
+            },
+            Self::StdOptionOptionFullTypePath => quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)},
+            Self::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream])},
+            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)]},
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)])},
         }
     }
     fn non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            }
+        };
         match &self {
-            //todo maybe use here vec always contains one element?
-            Self::FullTypePath => quote::quote!{#core_default_default_default_token_stream},
-            Self::StdOptionOptionFullTypePath => quote::quote!{#core_default_default_default_token_stream},
-            Self::StdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
-            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
-            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
-            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#core_default_default_default_token_stream]},
+            Self::FullTypePath => {
+                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{#core_default_default_default_token_stream}
+            },
+            Self::StdOptionOptionFullTypePath => quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream},
+            Self::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
         }
     }
 }
@@ -1329,15 +1348,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         generated
     }
     let variants_token_stream = 
-    PostgresqlJsonType::into_array()
-    // [
-    //     PostgresqlJsonType::StdPrimitiveI8,
-    //     PostgresqlJsonType::StdPrimitiveBool,
-    //     PostgresqlJsonType::StdStringString,
-    //     PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
-    //     PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
-    //     PostgresqlJsonType::StdOptionOptionStdStringString,
-    // ]
+    // PostgresqlJsonType::into_array()
+    [
+        PostgresqlJsonType::StdPrimitiveI8,
+        // PostgresqlJsonType::StdPrimitiveBool,
+        // PostgresqlJsonType::StdStringString,
+        PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
+        // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
+        // PostgresqlJsonType::StdOptionOptionStdStringString,
+    ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
         #(#variants_token_stream)*
