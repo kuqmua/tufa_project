@@ -84,7 +84,6 @@ impl PostgresqlJsonTypePattern {
     }
 }
 
-
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
     StdPrimitiveI8,
@@ -1070,180 +1069,79 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            match &variant {
-                PostgresqlJsonType::StdPrimitiveI8 |
-                PostgresqlJsonType::StdPrimitiveI16 |
-                PostgresqlJsonType::StdPrimitiveI32 |
-                PostgresqlJsonType::StdPrimitiveI64 |
-                PostgresqlJsonType::StdPrimitiveU8 |
-                PostgresqlJsonType::StdPrimitiveU16 |
-                PostgresqlJsonType::StdPrimitiveU32 |
-                PostgresqlJsonType::StdPrimitiveU64 |
-                PostgresqlJsonType::StdPrimitiveF32 |
-                PostgresqlJsonType::StdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(),
-                PostgresqlJsonType::StdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(),
-                PostgresqlJsonType::StdStringString => generate_postgresql_json_type_where_element_string_token_stream(),
-
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveI32 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveI64 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveU8 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveU16 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveU32 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveU64 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveF32 |
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => generate_postgresql_json_type_where_element_number_token_stream(),
-                PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => generate_postgresql_json_type_where_element_bool_token_stream(),
-                PostgresqlJsonType::StdOptionOptionStdStringString  => generate_postgresql_json_type_where_element_string_token_stream(),
-
-                PostgresqlJsonType::StdVecVecStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
-                PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => {
-                    generate_postgresql_json_type_where_element_token_stream()
-                },
+            match (&postgresql_json_type_pattern, &postgresql_json_type_handle) {
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) => generate_postgresql_json_type_where_element_number_token_stream(),
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) => generate_postgresql_json_type_where_element_bool_token_stream(),
+                (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdStringString)  => generate_postgresql_json_type_where_element_string_token_stream(),
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) => generate_postgresql_json_type_where_element_number_token_stream(),
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) => generate_postgresql_json_type_where_element_bool_token_stream(),
+                (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString) => generate_postgresql_json_type_where_element_string_token_stream(),
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) |
+                (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdStringString) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdStringString) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) |
+                (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool) |
+                (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString) => generate_postgresql_json_type_where_element_token_stream(),
             }
         };
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
