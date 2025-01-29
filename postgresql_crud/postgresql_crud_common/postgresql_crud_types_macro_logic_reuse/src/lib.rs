@@ -5758,14 +5758,11 @@ impl LengthMoreThan {
             #length_more_than_snake_case: #std_primitive_i64_token_stream,
         }
     }
-    // fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    //     let start_snake_case = naming::StartSnakeCase;
-    //     let end_snake_case = naming::EndSnakeCase;
-    //     quote::quote!{
-    //         #start_snake_case: #initialization_token_stream,
-    //         #end_snake_case: #initialization_token_stream,
-    //     }
-    // }
+    fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
+        let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+        let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+        quote::quote!{length_more_than: #core_default_default_default}
+    }
     // fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
     //     let increment_snake_case = naming::IncrementSnakeCase;
     //     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -5837,10 +5834,7 @@ impl LengthMoreThan {
                 )
             },
             &Self::generate_additional_type_declaration_token_stream(),
-            &{
-                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote!{length_more_than: #core_default_default_default}
-            },
+            &Self::generate_additional_default_initialization_token_stream(),
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
