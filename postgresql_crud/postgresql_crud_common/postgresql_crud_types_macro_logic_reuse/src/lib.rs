@@ -3752,7 +3752,6 @@ impl WhereOperatorName for Between {
 }
 impl Between {
     fn generate_try_new_error_named_variants_token_stream(
-        &self,
         try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
         type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
@@ -4160,7 +4159,7 @@ impl Between {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
                     &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
                     &where_operator_type_type_token_stream,
                 ),
@@ -4217,7 +4216,7 @@ impl Between {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
                     &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
                     &non_optional_field_type,
                 ),
@@ -5455,17 +5454,16 @@ impl WhereOperatorName for LengthMoreThan {
 }
 impl LengthMoreThan {
     fn generate_try_new_error_named_variants_token_stream(
-        &self,
         length_is_negative_upper_camel_case_token_stream: &dyn quote::ToTokens,
         type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
+        let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
+        let value_snake_case = naming::ValueSnakeCase;
         quote::quote!{
             quote::quote!{
                 #length_is_negative_upper_camel_case_token_stream {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    #value_snake_case: #std_primitive_i64_token_stream,
+                    #value_snake_case: #type_token_stream,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
             }
@@ -5865,13 +5863,22 @@ impl LengthMoreThan {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &quote::quote!{
+                try_new_error_named_variants_token_stream: &
+                
+                // Self::generate_try_new_error_named_variants_token_stream(
+                //     length_is_negative_upper_camel_case_token_stream: &dyn quote::ToTokens,
+                //     type_token_stream: &dyn quote::ToTokens,
+                // )
+                
+                quote::quote!{
                     #length_is_negative_upper_camel_case {
                         #[eo_to_std_string_string_serialize_deserialize]
                         #value_snake_case: #std_primitive_i64_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
-                },
+                }
+                
+                ,
                 try_new_additional_input_parameters_token_stream: &quote::quote!{
                     length_more_than: #std_primitive_i64_token_stream,
                 },
