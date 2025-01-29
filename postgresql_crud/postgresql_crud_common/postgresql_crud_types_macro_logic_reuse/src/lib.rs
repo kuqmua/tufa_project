@@ -846,32 +846,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 };
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
-                match &variant {
-                    PostgresqlJsonType::StdPrimitiveI8 |
-                    PostgresqlJsonType::StdPrimitiveI16 |
-                    PostgresqlJsonType::StdPrimitiveI32 |
-                    PostgresqlJsonType::StdPrimitiveI64 |
-                    PostgresqlJsonType::StdPrimitiveU8 |
-                    PostgresqlJsonType::StdPrimitiveU16 |
-                    PostgresqlJsonType::StdPrimitiveU32 |
-                    PostgresqlJsonType::StdPrimitiveU64 |
-                    PostgresqlJsonType::StdPrimitiveF32 |
-                    PostgresqlJsonType::StdPrimitiveF64 |
-                    PostgresqlJsonType::StdPrimitiveBool |
-                    PostgresqlJsonType::StdStringString |
-
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveI32 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveI64 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveU8 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveU16 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveU32 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveU64 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveF32 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 |
-                    PostgresqlJsonType::StdOptionOptionStdPrimitiveBool |
-                    PostgresqlJsonType::StdOptionOptionStdStringString => {
+                
+                match &postgresql_json_type_pattern {
+                    PostgresqlJsonTypePattern::FullTypePath |
+                    PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'))")
                         );
@@ -879,62 +857,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                             format!(#format_handle_token_stream)
                         }
                     },
-
-                    PostgresqlJsonType::StdVecVecStdPrimitiveI8 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveI16 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveI32 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveI64 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveU8 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveU16 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveU32 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveU64 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveF32 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveF64 |
-                    PostgresqlJsonType::StdVecVecStdPrimitiveBool |
-                    PostgresqlJsonType::StdVecVecStdStringString |
-
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI32 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI64 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU8 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU16 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU32 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveU64 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF32 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool |
-                    PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+                    PostgresqlJsonTypePattern::StdVecVecFullTypePath |
+                    PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))")
                         )
                     ),
-
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU8 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU16 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveU64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString |
-
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-                    PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
+                    PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath |
+                    PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
                         &generate_quotes::double_quotes_token_stream(
                             &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))")
                         )
