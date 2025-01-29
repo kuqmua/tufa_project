@@ -83,6 +83,30 @@ impl PostgresqlJsonTypePattern {
         }
     }
 }
+impl std::convert::From<&PostgresqlJsonTypePatternSpecific> for PostgresqlJsonTypePattern {
+    fn from(value: &PostgresqlJsonTypePatternSpecific) -> Self {
+        match value {
+            PostgresqlJsonTypePatternSpecific::FullTypePathNumber => PostgresqlJsonTypePattern::FullTypePath,
+            PostgresqlJsonTypePatternSpecific::FullTypePathBool => PostgresqlJsonTypePattern::FullTypePath,
+            PostgresqlJsonTypePatternSpecific::FullTypePathString => PostgresqlJsonTypePattern::FullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathNumber => PostgresqlJsonTypePattern::StdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathBool => PostgresqlJsonTypePattern::StdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathString => PostgresqlJsonTypePattern::StdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber => PostgresqlJsonTypePattern::StdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool => PostgresqlJsonTypePattern::StdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString => PostgresqlJsonTypePattern::StdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber => PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool => PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString => PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+        }
+    }
+}
 enum PostgresqlJsonTypePatternSpecific {
     FullTypePathNumber,
     FullTypePathBool,
