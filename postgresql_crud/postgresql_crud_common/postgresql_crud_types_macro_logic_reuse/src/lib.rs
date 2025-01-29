@@ -5794,6 +5794,7 @@ impl LengthMoreThan {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
+        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -5802,7 +5803,7 @@ impl LengthMoreThan {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
-                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(),
+                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
@@ -5812,70 +5813,58 @@ impl LengthMoreThan {
                     &postgresql_type_or_json_type,
                 )
             },
-            &Self::generate_additional_type_declaration_token_stream(),
+            &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream()
         )
     }
-    // fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-    //     &self,
-    //     between_try_new_error_type: &BetweenTryNewErrorType,
-    //     variant: &PostgresqlJsonType,
-    // ) -> proc_macro2::TokenStream {
-    //     let self_upper_camel_case = self.upper_camel_case();
-    //     let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-    //         let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
-    //         value.parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
-    //     let non_optional_field_type = {
-    //         let (
-    //             postgresql_json_type_handle,
-    //             postgresql_json_type_pattern
-    //         ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-    //         postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)
-    //     };
-    //     let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
-    //     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-    //         &postgresql_type_or_json_type,
-    //         &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-    //         ShouldWhereElementFieldsBePublic::False {
-    //             ident: &variant,
-    //             postfix: &self_upper_camel_case,
-    //             try_new_error_named_variants_token_stream: &self.generate_try_new_error_named_variants_token_stream(
-    //                 &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
-    //                 &non_optional_field_type,
-    //             ),
-    //             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-    //             try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
-    //                 &variant,
-    //                 &postgresql_type_or_json_type,
-    //                 &between_try_new_error_type,
-    //                 &proc_macro2::TokenStream::new(),
-    //             ),
-    //             impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
-    //                 &variant,
-    //                 &postgresql_type_or_json_type,
-    //                 &self_upper_camel_case,
-    //                 &non_optional_field_type,
-    //             ),
-    //         },
-    //         &ShouldImplementSchemarsJsonSchema::True,
-    //         &additional_type_declaration_token_stream,
-    //         &Self::generate_additional_default_initialization_token_stream(&PostgresqlJsonTypePattern::from(variant).non_optional_initialization_token_stream()),
-    //         &Self::generate_try_generate_bind_increments_token_stream(),
-    //         &{
-    //             let start_snake_case = naming::StartSnakeCase;
-    //             let end_snake_case = naming::EndSnakeCase;
-    //             Self::generate_bind_value_to_query_token_stream(
-    //                 &quote::quote!{sqlx::types::Json(self.#start_snake_case)},
-    //                 &quote::quote!{sqlx::types::Json(self.#end_snake_case)},
-    //             )
-    //         }
-    //     )
-    // }
+    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        variant: &PostgresqlJsonType,
+    ) -> proc_macro2::TokenStream {
+        let self_upper_camel_case = self.upper_camel_case();
+        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        
+        // let non_optional_field_type = {
+        //     let (
+        //         postgresql_json_type_handle,
+        //         postgresql_json_type_pattern
+        //     ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
+        //     postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)
+        // };
+        // let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
+        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
+        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
+        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &postgresql_type_or_json_type,
+            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            ShouldWhereElementFieldsBePublic::False {
+                ident: &variant,
+                postfix: &self_upper_camel_case,
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                ),
+                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                )
+            },
+            &ShouldImplementSchemarsJsonSchema::True,
+            &additional_type_declaration_token_stream,
+            &Self::generate_additional_default_initialization_token_stream(),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream()
+        )
+    }
 }
 struct EqualToEncodedStringRepresentation;
 impl WhereOperatorName for EqualToEncodedStringRepresentation {
