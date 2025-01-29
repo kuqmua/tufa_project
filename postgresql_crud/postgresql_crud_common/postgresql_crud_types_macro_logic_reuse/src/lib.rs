@@ -5453,15 +5453,23 @@ impl WhereOperatorName for LengthMoreThan {
     }
 }
 impl LengthMoreThan {
-    fn generate_try_new_error_named_variants_token_stream(
-        length_is_negative_upper_camel_case: &dyn quote::ToTokens,
-        type_token_stream: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
+    fn length_is_negative_upper_camel_case() -> naming::LengthIsNegativeUpperCamelCase {
+        naming::LengthIsNegativeUpperCamelCase
+    }
+    fn length_is_negative_snake_case() -> naming::LengthIsNegativeSnakeCase {
+        naming::LengthIsNegativeSnakeCase
+    }
+    fn std_primitive_i64_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{std::primitive::i64}
+    }
+    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
+        let length_is_negative_upper_camel_case = Self::length_is_negative_upper_camel_case();
+        let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
         quote::quote!{
             #length_is_negative_upper_camel_case {
                 #[eo_to_std_string_string_serialize_deserialize]
-                #value_snake_case: #type_token_stream,
+                #value_snake_case: #std_primitive_i64_token_stream,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             },
         }
@@ -5858,10 +5866,7 @@ impl LengthMoreThan {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
-                    &length_is_negative_upper_camel_case,
-                    &std_primitive_i64_token_stream,
-                ),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&std_primitive_i64_token_stream),
                 try_new_content_token_stream: &{
                     let postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
