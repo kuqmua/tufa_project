@@ -5763,56 +5763,35 @@ impl LengthMoreThan {
         let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
         quote::quote!{length_more_than: #core_default_default_default}
     }
-    // fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-    //     let increment_snake_case = naming::IncrementSnakeCase;
-    //     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    //     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-    //     quote::quote!{
-    //         match #increment_snake_case.checked_add(1) {
-    //             Some(first_value) => {
-    //                 *#increment_snake_case = first_value;
-    //                 match #increment_snake_case.checked_add(1) {
-    //                     Some(second_value) => {
-    //                         *#increment_snake_case = second_value;
-    //                         let between_snake_case = naming::BetweenSnakeCase;
-    //                         let and_snake_case = naming::AndSnakeCase;
-    //                         Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-    //                     },
-    //                     None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-    //                         code_occurence: error_occurence_lib::code_occurence!(),
-    //                     })
-    //                 }
-    //             },
-    //             None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-    //                 code_occurence: error_occurence_lib::code_occurence!(),
-    //             })
-    //         }
-    //     }
-    // }
-    // fn generate_bind_value_to_query_token_stream(
-    //     start_bind_token_stream: &dyn quote::ToTokens,
-    //     end_bind_token_stream: &dyn quote::ToTokens,
-    // ) -> proc_macro2::TokenStream {
-    //     let query_snake_case = naming::QuerySnakeCase;
-    //     quote::quote!{
-    //         #query_snake_case = #query_snake_case.bind(#start_bind_token_stream);
-    //         #query_snake_case = #query_snake_case.bind(#end_bind_token_stream);
-    //         #query_snake_case
-    //     }
-    // }
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let value_snake_case = naming::ValueSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
+                }
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+            }
+        }
+    }
+    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+        let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(self.#length_more_than_snake_case);
+            #query_snake_case
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
-        let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
-        let query_snake_case = naming::QuerySnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -5835,19 +5814,8 @@ impl LengthMoreThan {
             },
             &Self::generate_additional_type_declaration_token_stream(),
             &Self::generate_additional_default_initialization_token_stream(),
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
-                    }
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.length_more_than);
-                #query_snake_case
-            }
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream()
         )
     }
     // fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
