@@ -5794,10 +5794,11 @@ impl LengthMoreThan {
     //         };
     //     }
     // }
-    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    fn generate_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
         let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+        let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
         quote::quote!{
-            #length_more_than_snake_case: #type_token_stream,
+            #length_more_than_snake_case: #std_primitive_i64_token_stream,
         }
     }
     // fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -5867,7 +5868,7 @@ impl LengthMoreThan {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
-                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&std_primitive_i64_token_stream),
+                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(),
                 try_new_content_token_stream: &{
                     let postgresql_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                     quote::quote!{
@@ -6126,7 +6127,7 @@ impl LengthMoreThan {
                     }
                 },
             },
-            &Self::generate_additional_type_declaration_token_stream(&std_primitive_i64_token_stream),
+            &Self::generate_additional_type_declaration_token_stream(),
             &{
                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
                 quote::quote!{length_more_than: #core_default_default_default}
