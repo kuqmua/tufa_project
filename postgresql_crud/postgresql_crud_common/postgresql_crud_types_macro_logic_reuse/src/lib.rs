@@ -294,83 +294,6 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
     }
 }
 
-fn all_postgresql_json_type_handles_and_patterns() -> std::vec::Vec<(PostgresqlJsonTypePattern, PostgresqlJsonTypeHandle)> {
-    vec![
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::FullTypePath, PostgresqlJsonTypeHandle::StdStringString),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::StdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::StdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdStringString),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath, PostgresqlJsonTypeHandle::StdStringString),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI8),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI16),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveI64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU8),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU16),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveU64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF32),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveF64),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdPrimitiveBool),
-        (PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath, PostgresqlJsonTypeHandle::StdStringString) 
-    ]
-}
-
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
     StdPrimitiveI8,
@@ -1550,19 +1473,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //     PostgresqlJsonType::StdPrimitiveI8,
     //     PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
     // ]
-    // all_postgresql_json_type_handles_and_patterns()
-    .into_iter().map(|
-        element
-    // (
-    //     // element
-    //     postgresql_json_type_pattern,
-    //     postgresql_json_type_handle
-    // )
-    |generate_postgresql_json_type_handle_token_stream(
-        &element
-        // &postgresql_json_type_pattern,
-        // &postgresql_json_type_handle
-    ));
+    .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
         #(#variants_token_stream)*
     };
