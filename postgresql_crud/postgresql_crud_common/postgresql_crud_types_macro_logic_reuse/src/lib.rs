@@ -672,88 +672,6 @@ impl PostgresqlJsonType {
             ),
         }
     }
-    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-        match &self {
-            Self::StdPrimitiveI8 |
-            Self::StdPrimitiveI16 |
-            Self::StdPrimitiveI32 |
-            Self::StdPrimitiveI64 |
-            Self::StdPrimitiveU8 |
-            Self::StdPrimitiveU16 |
-            Self::StdPrimitiveU32 |
-            Self::StdPrimitiveU64 |
-            Self::StdPrimitiveF32 |
-            Self::StdPrimitiveF64 |
-            Self::StdPrimitiveBool |
-            Self::StdStringString => quote::quote!{#core_default_default_default_token_stream},
-
-            Self::StdOptionOptionStdPrimitiveI8 |
-            Self::StdOptionOptionStdPrimitiveI16 |
-            Self::StdOptionOptionStdPrimitiveI32 |
-            Self::StdOptionOptionStdPrimitiveI64 |
-            Self::StdOptionOptionStdPrimitiveU8 |
-            Self::StdOptionOptionStdPrimitiveU16 |
-            Self::StdOptionOptionStdPrimitiveU32 |
-            Self::StdOptionOptionStdPrimitiveU64 |
-            Self::StdOptionOptionStdPrimitiveF32 |
-            Self::StdOptionOptionStdPrimitiveF64 |
-            Self::StdOptionOptionStdPrimitiveBool |
-            Self::StdOptionOptionStdStringString => quote::quote!{Some(#core_default_default_default_token_stream)},
-
-            Self::StdVecVecStdPrimitiveI8 |
-            Self::StdVecVecStdPrimitiveI16 |
-            Self::StdVecVecStdPrimitiveI32 |
-            Self::StdVecVecStdPrimitiveI64 |
-            Self::StdVecVecStdPrimitiveU8 |
-            Self::StdVecVecStdPrimitiveU16 |
-            Self::StdVecVecStdPrimitiveU32 |
-            Self::StdVecVecStdPrimitiveU64 |
-            Self::StdVecVecStdPrimitiveF32 |
-            Self::StdVecVecStdPrimitiveF64 |
-            Self::StdVecVecStdPrimitiveBool |
-            Self::StdVecVecStdStringString => quote::quote!{vec![#core_default_default_default_token_stream]},
-
-            Self::StdOptionOptionStdVecVecStdPrimitiveI8 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveI16 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveI32 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveI64 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveU8 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveU16 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveU32 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveU64 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveF32 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveF64 |
-            Self::StdOptionOptionStdVecVecStdPrimitiveBool |
-            Self::StdOptionOptionStdVecVecStdStringString => quote::quote!{Some(vec![#core_default_default_default_token_stream])},
-
-            Self::StdVecVecStdOptionOptionStdPrimitiveI8 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveI16 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveI32 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveI64 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveU8 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveU16 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveU32 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveU64 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveF32 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveF64 |
-            Self::StdVecVecStdOptionOptionStdPrimitiveBool |
-            Self::StdVecVecStdOptionOptionStdStringString => quote::quote!{vec![Some(#core_default_default_default_token_stream)]},
-
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI32 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI64 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU8 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU16 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU32 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveU64 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF32 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool |
-            Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString => quote::quote!{Some(vec![Some(#core_default_default_default_token_stream)])},
-        }
-    }
 }
 impl quote::ToTokens for PostgresqlJsonType {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -3615,19 +3533,17 @@ impl Equal {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
+        let (
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern
+        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&{
-                let (
-                    postgresql_json_type_handle,
-                    postgresql_json_type_pattern
-                ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-                postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)
-            }),
-            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
+            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
+            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
             &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
         )
@@ -3709,19 +3625,17 @@ impl GreaterThan {
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
+        let (
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern
+        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             ShouldWhereElementFieldsBePublic::True,
             &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&{
-                let (
-                    postgresql_json_type_handle,
-                    postgresql_json_type_pattern
-                ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-                postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)
-            }),
-            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
+            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
+            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -4254,7 +4168,7 @@ impl Between {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
+            &Self::generate_additional_default_initialization_token_stream(&PostgresqlJsonTypePattern::from(variant).initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &{
                 let start_snake_case = naming::StartSnakeCase;
@@ -4672,13 +4586,11 @@ impl In {
         &self,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        let field_type = {
-            let (
-                postgresql_json_type_handle,
-                postgresql_json_type_pattern
-            ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-            postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)
-        };
+        let (
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern
+        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
+        let field_type = postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
 
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
@@ -4708,7 +4620,7 @@ impl In {
             },
             &ShouldImplementSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&field_type),
-            &Self::generate_additional_default_initialization_token_stream(&variant.initialization_token_stream()),
+            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
