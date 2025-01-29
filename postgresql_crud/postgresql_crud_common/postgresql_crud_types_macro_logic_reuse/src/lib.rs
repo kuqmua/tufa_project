@@ -1240,6 +1240,66 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
+            let generate_postgresql_json_type_where_element_vec_number_token_stream = || {
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                    &ident,
+                    &vec![
+                        &equal,
+                    ],
+                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &ShouldImplementSchemarsJsonSchema::True,
+                );
+                let generated = quote::quote!{
+                    #postgresql_json_type_ident_where_element_equal_token_stream
+
+                    #postgresql_json_type_ident_where_element_token_stream
+                };
+                // if ident == "" {
+                //     println!("{generated}");
+                //     println!("-------");
+                // }
+                generated
+            };
+            let generate_postgresql_json_type_where_element_vec_bool_token_stream = || {
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                    &ident,
+                    &vec![
+                        &equal,
+                    ],
+                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &ShouldImplementSchemarsJsonSchema::True,
+                );
+                let generated = quote::quote!{
+                    #postgresql_json_type_ident_where_element_equal_token_stream
+
+                    #postgresql_json_type_ident_where_element_token_stream
+                };
+                // if ident == "" {
+                //     println!("{generated}");
+                //     println!("-------");
+                // }
+                generated
+            };
+            let generate_postgresql_json_type_where_element_vec_string_token_stream = || {
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+                    &ident,
+                    &vec![
+                        &equal,
+                    ],
+                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &ShouldImplementSchemarsJsonSchema::True,
+                );
+                let generated = quote::quote!{
+                    #postgresql_json_type_ident_where_element_equal_token_stream
+
+                    #postgresql_json_type_ident_where_element_token_stream
+                };
+                // if ident == "" {
+                //     println!("{generated}");
+                //     println!("-------");
+                // }
+                generated
+            };
             match &PostgresqlJsonTypePatternSpecific::from(variant) {
                 PostgresqlJsonTypePatternSpecific::FullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::FullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
@@ -1247,12 +1307,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber |
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool |
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString |
+                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
                 PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool |
                 PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString |
