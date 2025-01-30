@@ -7073,6 +7073,16 @@ impl PositionEquals {
             };
         }
     }
+    fn generate_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        let std_primitive_bool_token_stream = Self::std_primitive_bool_token_stream();
+        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        quote::quote!{
+            #value_snake_case: #std_primitive_bool_token_stream,
+            #position_snake_case: #std_primitive_i32_token_stream,
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -7095,25 +7105,19 @@ impl PositionEquals {
             &ident,
             &self_upper_camel_case,
             &is_nullable,
-            {
-                let position_is_less_or_equal_zero_upper_camel_case = naming::PositionIsLessOrEqualZeroUpperCamelCase;
-                ShouldWhereElementFieldsBePublic::False {
-                    ident: &ident,
-                    postfix: &self_upper_camel_case,
-                    try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
-                    try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(),
-                    try_new_content_token_stream: &Self::generate_try_new_content_token_stream(&ident, &postgresql_type_or_json_type),
-                    impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
-                        &ident,
-                        &postgresql_type_or_json_type,
-                        &self_upper_camel_case,
-                    ),
-                }
+            ShouldWhereElementFieldsBePublic::False {
+                ident: &ident,
+                postfix: &self_upper_camel_case,
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_additional_input_parameters_token_stream: &Self::generate_try_new_additional_input_parameters_token_stream(),
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(&ident, &postgresql_type_or_json_type),
+                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                    &ident,
+                    &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
+                ),
             },
-            &quote::quote!{
-                #value_snake_case: #std_primitive_bool_token_stream,
-                position: #std_primitive_i32_token_stream,
-            },
+            &Self::generate_additional_type_declaration_token_stream(),
             &{
                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
                 quote::quote!{
