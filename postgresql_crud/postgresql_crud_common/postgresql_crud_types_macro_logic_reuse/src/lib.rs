@@ -7083,6 +7083,15 @@ impl PositionEquals {
             #position_snake_case: #std_primitive_i32_token_stream,
         }
     }
+    fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+        quote::quote!{
+            #value_snake_case: #core_default_default_default,
+            #position_snake_case: #core_default_default_default,
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -7118,13 +7127,7 @@ impl PositionEquals {
                 ),
             },
             &Self::generate_additional_type_declaration_token_stream(),
-            &{
-                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote!{
-                    #value_snake_case: #core_default_default_default,
-                    position: #core_default_default_default,
-                }
-            },
+            &Self::generate_additional_default_initialization_token_stream(),
             &quote::quote!{
                 match #increment_snake_case.checked_add(1) {
                     Some(first_increment) => {
