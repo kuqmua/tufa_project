@@ -7806,6 +7806,10 @@ impl PositionEquals {
         variant: &PostgresqlJsonType,
         postgresql_json_array_element_type: &PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
+        let array_element_postgresql_json_type_handle = PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
+        let array_element_postgresql_json_type_pattern = PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
+        let array_element_postgresql_json_type_pattern_specific = PostgresqlJsonTypePatternSpecific::from(postgresql_json_array_element_type);
+
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
