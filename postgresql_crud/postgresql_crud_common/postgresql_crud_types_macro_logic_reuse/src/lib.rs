@@ -7405,14 +7405,14 @@ impl PositionEquals {
     fn position_is_less_or_equal_zero_upper_camel_case() -> naming::PositionIsLessOrEqualZeroUpperCamelCase {
         naming::PositionIsLessOrEqualZeroUpperCamelCase
     }
-    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
+    fn generate_try_new_error_named_variants_token_stream(postgresql_json_array_element_type: &PostgresqlJsonArrayElementType,) -> proc_macro2::TokenStream {
         let position_snake_case = Self::position_snake_case();
         let position_is_less_or_equal_zero_upper_camel_case = Self::position_is_less_or_equal_zero_upper_camel_case();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        let array_element_field_type = PostgresqlJsonTypePattern::from(postgresql_json_array_element_type).field_type(&PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type));
         quote::quote!{
             #position_is_less_or_equal_zero_upper_camel_case {
                 #[eo_to_std_string_string_serialize_deserialize]
-                #position_snake_case: #std_primitive_i32_token_stream,
+                #position_snake_case: #array_element_field_type,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             },
         }
@@ -7806,9 +7806,12 @@ impl PositionEquals {
         variant: &PostgresqlJsonType,
         postgresql_json_array_element_type: &PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
+
         let array_element_postgresql_json_type_handle = PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
         let array_element_postgresql_json_type_pattern = PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
         let array_element_postgresql_json_type_pattern_specific = PostgresqlJsonTypePatternSpecific::from(postgresql_json_array_element_type);
+
+        let array_element_field_type = array_element_postgresql_json_type_pattern.field_type(&array_element_postgresql_json_type_handle);
 
         let self_upper_camel_case = self.upper_camel_case();
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
@@ -7824,7 +7827,7 @@ impl PositionEquals {
             ShouldWhereElementFieldsBePublic::False {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&postgresql_json_array_element_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &variant,
