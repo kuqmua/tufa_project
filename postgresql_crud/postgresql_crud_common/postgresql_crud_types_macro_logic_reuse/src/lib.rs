@@ -1444,14 +1444,23 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_vec_bool_token_stream = || {
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
-                    &vec![
-                        &equal,
-                    ],
+                    &{
+                        let mut vec: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                            &equal,
+                            &length_more_than,
+                        ];
+                        if let MaybePostgresqlJsonTypeIdentWhereElementPositionEquals::Some { postgresql_json_type_ident_where_element_position_equals_token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_equals {
+                            vec.push(&position_equals);
+                        }
+                        vec
+                    },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
+                    #postgresql_json_type_ident_where_element_length_more_than_token_stream
+                    #maybe_postgresql_json_type_ident_where_element_position_equals
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -1464,14 +1473,23 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_vec_string_token_stream = || {
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
-                    &vec![
-                        &equal,
-                    ],
+                    &{
+                        let mut vec: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                            &equal,
+                            &length_more_than,
+                        ];
+                        if let MaybePostgresqlJsonTypeIdentWhereElementPositionEquals::Some { postgresql_json_type_ident_where_element_position_equals_token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_equals {
+                            vec.push(&position_equals);
+                        }
+                        vec
+                    },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
+                    #postgresql_json_type_ident_where_element_length_more_than_token_stream
+                    #maybe_postgresql_json_type_ident_where_element_position_equals
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -1536,16 +1554,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         generated
     }
     let variants_token_stream = 
-    // PostgresqlJsonType::into_array()
-    [
-        PostgresqlJsonType::StdPrimitiveI8,
-        // PostgresqlJsonType::StdPrimitiveBool,
-        // PostgresqlJsonType::StdStringString,
-        // PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
-        // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
-        // PostgresqlJsonType::StdOptionOptionStdStringString,
-        PostgresqlJsonType::StdVecVecStdPrimitiveI8,
-    ]
+    PostgresqlJsonType::into_array()
+    // [
+    //     PostgresqlJsonType::StdPrimitiveI8,
+    //     // PostgresqlJsonType::StdPrimitiveBool,
+    //     // PostgresqlJsonType::StdStringString,
+    //     // PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
+    //     // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
+    //     // PostgresqlJsonType::StdOptionOptionStdStringString,
+    //     PostgresqlJsonType::StdVecVecStdPrimitiveI8,
+    // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
         #(#variants_token_stream)*
