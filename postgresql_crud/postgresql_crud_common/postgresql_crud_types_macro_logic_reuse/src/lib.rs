@@ -1098,9 +1098,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &variant,
             );
             let length_more_than = LengthMoreThan;
-            // let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-            //     &variant,
-            // );
+            let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                &variant,
+            );
 
 
             // let = Equal;
@@ -1254,14 +1254,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &ident,
                     &vec![
                         &equal,
-                        // &length_more_than,
+                        &length_more_than,
                     ],
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
-                    // #postgresql_json_type_ident_where_element_length_more_than_token_stream
+                    #postgresql_json_type_ident_where_element_length_more_than_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -1353,7 +1353,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
             #postgresql_json_type_ident_where_element_token_stream
         };
-        //  if quote::quote!{#ident}.to_string() == "StdOptionOptionStdPrimitiveI8" {
+        //  if quote::quote!{#ident}.to_string() == "StdVecVecStdPrimitiveI8" {
         //     //  println!("{generated}");
         //     //  println!("-------");
         //      macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -1370,9 +1370,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         PostgresqlJsonType::StdPrimitiveI8,
         // PostgresqlJsonType::StdPrimitiveBool,
         // PostgresqlJsonType::StdStringString,
-        PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
+        // PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
         // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
         // PostgresqlJsonType::StdOptionOptionStdStringString,
+        PostgresqlJsonType::StdVecVecStdPrimitiveI8,
     ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
@@ -5489,7 +5490,7 @@ impl LengthMoreThan {
         let length_more_than_snake_case = Self::length_more_than_snake_case();
         let length_is_negative_upper_camel_case = Self::length_is_negative_upper_camel_case();
         quote::quote!{
-            if #length_more_than_snake_case > 0 {
+            if #length_more_than_snake_case > -1 {
                 Ok(Self{
                     logical_operator,
                     #length_more_than_snake_case
@@ -5839,7 +5840,6 @@ impl LengthMoreThan {
         // };
         // let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
