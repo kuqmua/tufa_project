@@ -5787,7 +5787,7 @@ impl LengthMoreThan {
                     match #increment_snake_case.checked_add(1) {
                         Some(#value_snake_case) => {
                             *#increment_snake_case = #value_snake_case;
-                            Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
+                            Ok(format!("{}(jsonb_array_length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
                         }
                         None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
@@ -5855,15 +5855,6 @@ impl LengthMoreThan {
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        
-        // let non_optional_field_type = {
-        //     let (
-        //         postgresql_json_type_handle,
-        //         postgresql_json_type_pattern
-        //     ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        //     postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)
-        // };
-        // let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
