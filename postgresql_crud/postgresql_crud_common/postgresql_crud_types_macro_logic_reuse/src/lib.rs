@@ -3753,11 +3753,12 @@ impl WhereOperatorName for Between {
 }
 impl Between {
     fn generate_try_new_error_named_variants_token_stream(
-        try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
+        between_try_new_error_type: &BetweenTryNewErrorType,
         type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
         let start_snake_case = naming::StartSnakeCase;
         let end_snake_case = naming::EndSnakeCase;
+        let try_new_error_named_upper_camel_case_token_stream = &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
         quote::quote!{
             #try_new_error_named_upper_camel_case_token_stream {
                 #[eo_to_std_string_string_serialize_deserialize]
@@ -4161,7 +4162,7 @@ impl Between {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
-                    &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
+                    &between_try_new_error_type,
                     &where_operator_type_type_token_stream,
                 ),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
@@ -4218,7 +4219,7 @@ impl Between {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
-                    &between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream(),
+                    &between_try_new_error_type,
                     &non_optional_field_type,
                 ),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
