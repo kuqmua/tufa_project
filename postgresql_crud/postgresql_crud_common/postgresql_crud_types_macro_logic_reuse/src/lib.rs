@@ -7092,23 +7092,105 @@ impl PositionEquals {
             #position_snake_case: #core_default_default_default,
         }
     }
+    fn generate_try_generate_bind_increments_token_stream(postgresql_type_or_json_type: &PostgresqlTypeOrJsonType) -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        match &postgresql_type_or_json_type {
+            PostgresqlTypeOrJsonType::PostgresqlType => {
+                quote::quote!{
+                    match #increment_snake_case.checked_add(1) {
+                        Some(first_increment) => {
+                            *#increment_snake_case = first_increment;
+                            match #increment_snake_case.checked_add(1) {
+                                Some(second_increment) => {
+                                    *#increment_snake_case = second_increment;
+                                    Ok(format!(
+                                        "{}(substring({}::text from ${}::int4 for 1::int4) = ${})",
+                                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #column_snake_case,
+                                        first_increment,
+                                        second_increment,
+                                    ))
+                                },
+                                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                })
+                            }
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                }
+            },
+            PostgresqlTypeOrJsonType::PostgresqlJsonType => {
+                quote::quote!{
+                    match #increment_snake_case.checked_add(1) {
+                        Some(first_increment) => {
+                            *#increment_snake_case = first_increment;
+                            match #increment_snake_case.checked_add(1) {
+                                Some(second_increment) => {
+                                    *#increment_snake_case = second_increment;
+                                    Ok(format!(
+                                        "{}(substring({}::text from ${}::int4 for 1::int4) = ${})",
+                                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #column_snake_case,
+                                        first_increment,
+                                        second_increment,
+                                    ))
+                                },
+                                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                })
+                            }
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                }
+            }
+        }
+    }
+    fn generate_bind_value_to_query_token_stream(postgresql_type_or_json_type: &PostgresqlTypeOrJsonType) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        match &postgresql_type_or_json_type {
+            PostgresqlTypeOrJsonType::PostgresqlType => {
+                quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+                    #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
+                        "1"
+                    }
+                    else {
+                        "0"
+                    });
+                    #query_snake_case
+                }
+            },
+            PostgresqlTypeOrJsonType::PostgresqlJsonType => {
+                quote::quote!{
+                    #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+                    #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
+                        "1"
+                    }
+                    else {
+                        "0"
+                    });
+                    #query_snake_case
+                }
+            }
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        };
         let self_upper_camel_case = self.upper_camel_case();
-        let std_primitive_bool_token_stream = quote::quote!{std::primitive::bool};
-        let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
@@ -7128,41 +7210,8 @@ impl PositionEquals {
             },
             &Self::generate_additional_type_declaration_token_stream(),
             &Self::generate_additional_default_initialization_token_stream(),
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(first_increment) => {
-                        *#increment_snake_case = first_increment;
-                        match #increment_snake_case.checked_add(1) {
-                            Some(second_increment) => {
-                                *#increment_snake_case = second_increment;
-                                Ok(format!(
-                                    "{}(substring({}::text from ${}::int4 for 1::int4) = ${})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
-                                    first_increment,
-                                    second_increment,
-                                ))
-                            },
-                            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.position);
-                #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
-                    "1"
-                }
-                else {
-                    "0"
-                });
-                #query_snake_case
-            }
+            &Self::generate_try_generate_bind_increments_token_stream(&postgresql_type_or_json_type),
+            &Self::generate_bind_value_to_query_token_stream(&postgresql_type_or_json_type),
         )
     }
 }
