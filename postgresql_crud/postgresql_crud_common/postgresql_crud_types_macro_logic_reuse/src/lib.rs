@@ -1101,7 +1101,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &variant,
             );
-
+            let position_equals = PositionEquals;
+            let postgresql_json_type_ident_where_element_position_equals_token_stream = position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                &variant,
+            );
 
             // let = Equal;
             // let = GreaterThan;
@@ -1252,6 +1255,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &vec![
                         &equal,
                         &length_more_than,
+                        &position_equals,
                     ],
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
@@ -1259,6 +1263,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
                     #postgresql_json_type_ident_where_element_length_more_than_token_stream
+                    #postgresql_json_type_ident_where_element_position_equals_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
