@@ -163,25 +163,25 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "StdVecVecStdPrimitiveI8": {
           "logical_operator": "Or",
           "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  0
-                ]
-              }
-            },
-            {
-              "LengthMoreThan": {
-                "logical_operator": "Or",
-                "length_more_than": 0
-              }
-            },
+            # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # },
+            # {
+            #   "LengthMoreThan": {
+            #     "logical_operator": "Or",
+            #     "length_more_than": 0
+            #   }
+            # },
             {
               "PositionEquals": {
                 "logical_operator": "Or",
-                "value": false,
-                "position": 1
+                "value": 1,
+                "position": 0
               }
             }
           ]
@@ -190,17 +190,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
-    },
-    {
-      "std_primitive_bool_as_bool_nullable": null
-    },
+    # {
+    #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    # },
+    # {
+    #   "std_primitive_bool_as_bool_nullable": null
+    # },
     {
       "object_animal_as_jsonb_not_null": [
-        {
-          "std_primitive_i8": {}
-        },
+        # {
+        #   "std_primitive_i8": {}
+        # },
         {
           "std_vec_vec_std_primitive_i8": {
             "pagination": {
