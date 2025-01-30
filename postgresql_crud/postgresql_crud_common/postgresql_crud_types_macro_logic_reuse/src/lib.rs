@@ -1144,10 +1144,35 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &variant,
             );
-            let position_equals = PositionEquals;
-            let postgresql_json_type_ident_where_element_position_equals_token_stream = position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &variant,
-            );
+
+
+            enum MaybePostgresqlJsonTypeIdentWhereElementPositionEquals {
+                Some {
+                    postgresql_json_type_ident_where_element_position_equals_token_stream: proc_macro2::TokenStream,
+                },
+                None,
+            }
+            impl quote::ToTokens for MaybePostgresqlJsonTypeIdentWhereElementPositionEquals {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    match &self {
+                        Self::Some {
+                            postgresql_json_type_ident_where_element_position_equals_token_stream
+                        } => {
+                            postgresql_json_type_ident_where_element_position_equals_token_stream.to_tokens(tokens)
+                        },
+                        Self::None => proc_macro2::TokenStream::new().to_tokens(tokens)
+                    }
+                }
+            }
+            let maybe_postgresql_json_type_ident_where_element_position_equals = match PostgresqlJsonArrayElementType::try_from(variant) {
+                Ok(value) => MaybePostgresqlJsonTypeIdentWhereElementPositionEquals::Some {
+                    postgresql_json_type_ident_where_element_position_equals_token_stream: 
+                    proc_macro2::TokenStream::new()
+                    
+                    // position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                },
+                Err(_) => MaybePostgresqlJsonTypeIdentWhereElementPositionEquals::None
+            };
 
             // let = Equal;
             // let = GreaterThan;
@@ -1292,13 +1317,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
+
+
             let generate_postgresql_json_type_where_element_vec_number_token_stream = || {
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &vec![
                         &equal,
                         &length_more_than,
-                        &position_equals,
+                        // &position_equals,
                     ],
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
@@ -1306,7 +1333,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
                     #postgresql_json_type_ident_where_element_length_more_than_token_stream
-                    #postgresql_json_type_ident_where_element_position_equals_token_stream
+                    // #postgresql_json_type_ident_where_element_position_equals_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -1363,6 +1390,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_string_token_stream(),
+                
                 PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
