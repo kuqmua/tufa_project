@@ -1101,10 +1101,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &variant,
             );
-            let position_equals = PositionEquals;
-            let postgresql_json_type_ident_where_element_position_equals_token_stream = position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &variant,
-            );
+            // let position_equals = PositionEquals;
+            // let postgresql_json_type_ident_where_element_position_equals_token_stream = position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+            //     &variant,
+            // );
 
             // let = Equal;
             // let = GreaterThan;
@@ -1255,7 +1255,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &vec![
                         &equal,
                         &length_more_than,
-                        &position_equals,
+                        // &position_equals,
                     ],
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldImplementSchemarsJsonSchema::True,
@@ -1263,7 +1263,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
                     #postgresql_json_type_ident_where_element_length_more_than_token_stream
-                    #postgresql_json_type_ident_where_element_position_equals_token_stream
+                    // #postgresql_json_type_ident_where_element_position_equals_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -6722,13 +6722,13 @@ impl RangeLength {
         )
     }
 }
-struct PositionEquals;
-impl WhereOperatorName for PositionEquals {
+struct BitVecPositionEquals;
+impl WhereOperatorName for BitVecPositionEquals {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::PositionEqualsUpperCamelCase
+        &naming::BitVecPositionEqualsUpperCamelCase
     }
 }
-impl PositionEquals {
+impl BitVecPositionEquals {
     fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
         quote::quote!{std::primitive::bool}
     }
@@ -6771,9 +6771,9 @@ impl PositionEquals {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
         let position_is_less_or_equal_zero_upper_camel_case = Self::position_is_less_or_equal_zero_upper_camel_case();
-        let postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        let postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+            PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
         quote::quote!{
             if #position_snake_case > 0 {
@@ -6784,7 +6784,7 @@ impl PositionEquals {
                 })
             }
             else {
-                Err(#postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case::#position_is_less_or_equal_zero_upper_camel_case {
+                Err(#postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case::#position_is_less_or_equal_zero_upper_camel_case {
                     #position_snake_case,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
@@ -6796,15 +6796,15 @@ impl PositionEquals {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionEqualsUpperCamelCase::from_tokens(&ident),
-            PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionEqualsUpperCamelCase::from_tokens(&ident),
+        let postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+            PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBitVecPositionEqualsUpperCamelCase::from_tokens(&ident),
+            PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBitVecPositionEqualsUpperCamelCase::from_tokens(&ident),
         };
         let (
-            struct_postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream,
-            struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
-            postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream
-        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case, 2, &self.upper_camel_case());
+            struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream,
+            struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
+            postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream
+        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case, 2, &self.upper_camel_case());
         let std_primitive_bool_token_stream = Self::std_primitive_bool_token_stream();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
@@ -6813,7 +6813,7 @@ impl PositionEquals {
                 extern crate serde as _serde;
                 #[automatically_derived]
                 impl<'de> _serde::Deserialize<'de>
-                for #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case {
+                for #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case {
                     fn deserialize<__D>(
                         __deserializer: __D,
                     ) -> _serde::__private::Result<Self, __D::Error>
@@ -6901,19 +6901,19 @@ impl PositionEquals {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
                             marker: _serde::__private::PhantomData<
-                                #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case,
+                                #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
                             >,
                             lifetime: _serde::__private::PhantomData<&'de ()>,
                         }
                         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case;
+                            type Value = #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case;
                             fn expecting(
                                 &self,
                                 __formatter: &mut _serde::__private::Formatter,
                             ) -> _serde::__private::fmt::Result {
                                 _serde::__private::Formatter::write_str(
                                     __formatter,
-                                    #struct_postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream,
+                                    #struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream,
                                 )
                             }
                             #[inline]
@@ -6932,7 +6932,7 @@ impl PositionEquals {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 0usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
@@ -6945,7 +6945,7 @@ impl PositionEquals {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 1usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
@@ -6958,12 +6958,12 @@ impl PositionEquals {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 2usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
                                 };
-                                match #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                match #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case::try_new(__field0, __field1, __field2) {
                                     Ok(value) => _serde::__private::Ok(value),
                                     Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -7050,7 +7050,7 @@ impl PositionEquals {
                                         _serde::__private::de::missing_field("position")?
                                     }
                                 };
-                                match #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                match #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case::try_new(__field0, __field1, __field2) {
                                     Ok(value) => _serde::__private::Ok(value),
                                     Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -7064,11 +7064,11 @@ impl PositionEquals {
                         ];
                         _serde::Deserializer::deserialize_struct(
                             __deserializer,
-                            #postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream,
+                            #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
                                 marker: _serde::__private::PhantomData::<
-                                    #postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case,
+                                    #postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
                                 >,
                                 lifetime: _serde::__private::PhantomData,
                             },
@@ -8951,8 +8951,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let position_equals = PositionEquals;
-        let postgresql_type_tokens_where_element_position_equals_token_stream = position_equals.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let bit_vec_position_equals = BitVecPositionEquals;
+        let postgresql_type_tokens_where_element_bit_vec_position_equals_token_stream = bit_vec_position_equals.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -8961,12 +8961,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             &ident,
             &vec![
                 &equal,
-                &position_equals,
+                &bit_vec_position_equals,
             ]
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_position_equals_token_stream
+            #postgresql_type_tokens_where_element_bit_vec_position_equals_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     });
