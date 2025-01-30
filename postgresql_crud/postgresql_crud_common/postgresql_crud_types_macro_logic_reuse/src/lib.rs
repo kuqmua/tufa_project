@@ -844,6 +844,100 @@ impl quote::ToTokens for PostgresqlJsonArrayElementType {
         .to_tokens(tokens)
     }
 }
+impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeHandle {
+    fn from(value: &PostgresqlJsonArrayElementType) -> Self {
+        match &value {
+            PostgresqlJsonArrayElementType::StdPrimitiveI8 => Self::StdPrimitiveI8,
+            PostgresqlJsonArrayElementType::StdPrimitiveI16 => Self::StdPrimitiveI16,
+            PostgresqlJsonArrayElementType::StdPrimitiveI32 => Self::StdPrimitiveI32,
+            PostgresqlJsonArrayElementType::StdPrimitiveI64 => Self::StdPrimitiveI64,
+            PostgresqlJsonArrayElementType::StdPrimitiveU8 => Self::StdPrimitiveU8,
+            PostgresqlJsonArrayElementType::StdPrimitiveU16 => Self::StdPrimitiveU16,
+            PostgresqlJsonArrayElementType::StdPrimitiveU32 => Self::StdPrimitiveU32,
+            PostgresqlJsonArrayElementType::StdPrimitiveU64 => Self::StdPrimitiveU64,
+            PostgresqlJsonArrayElementType::StdPrimitiveF32 => Self::StdPrimitiveF32,
+            PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::StdPrimitiveF64,
+            PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::StdPrimitiveBool,
+            PostgresqlJsonArrayElementType::StdStringString => Self::StdStringString,
+
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 => Self::StdPrimitiveI8,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 => Self::StdPrimitiveI16,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 => Self::StdPrimitiveI32,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 => Self::StdPrimitiveI64,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 => Self::StdPrimitiveU8,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 => Self::StdPrimitiveU16,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 => Self::StdPrimitiveU32,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 => Self::StdPrimitiveU64,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 => Self::StdPrimitiveF32,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdPrimitiveF64,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdPrimitiveBool,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdStringString,
+        }
+    }
+}
+impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypePattern {
+    fn from(value: &PostgresqlJsonArrayElementType) -> Self {
+        match value {
+            PostgresqlJsonArrayElementType::StdPrimitiveI8 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI16 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI64 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU8 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU16 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU64 |
+            PostgresqlJsonArrayElementType::StdPrimitiveF32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveF64 |
+            PostgresqlJsonArrayElementType::StdPrimitiveBool |
+            PostgresqlJsonArrayElementType::StdStringString => Self::FullTypePath,
+
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePath,
+        }
+    }
+}
+impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypePatternSpecific {
+    fn from(value: &PostgresqlJsonArrayElementType) -> Self {
+        match value {
+            PostgresqlJsonArrayElementType::StdPrimitiveI8 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI16 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveI64 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU8 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU16 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveU64 |
+            PostgresqlJsonArrayElementType::StdPrimitiveF32 |
+            PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::FullTypePathNumber,
+            PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::FullTypePathBool,
+            PostgresqlJsonArrayElementType::StdStringString => Self::FullTypePathString,
+
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionFullTypePathNumber,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdOptionOptionFullTypePathBool,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePathString,
+        }
+    }
+}
+
 
 #[proc_macro]
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
