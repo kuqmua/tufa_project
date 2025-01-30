@@ -512,7 +512,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["position", "equals"],
     ["position", "is", "less", "or", "equal", "zero"],
     ["postgresql", "json", "type", "self", "where", "element"],
-    ["postgresql", "json", "type", "self", "where"]
+    ["postgresql", "json", "type", "self", "where"],
+    ["position"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

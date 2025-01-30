@@ -1130,9 +1130,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             // let = AdjacentWithRange;
             // let = RangeLength;
             // let = PositionEquals;+
-
-            //+ LengthEquals
-
             
             //todo remove generate_postgresql_json_type_where_element_token_stream later
             let generate_postgresql_json_type_where_element_token_stream = || -> proc_macro2::TokenStream {
@@ -5865,6 +5862,7 @@ impl LengthMoreThan {
         )
     }
 }
+
 struct EqualToEncodedStringRepresentation;
 impl WhereOperatorName for EqualToEncodedStringRepresentation {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6726,6 +6724,31 @@ impl WhereOperatorName for PositionEquals {
     }
 }
 impl PositionEquals {
+    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{std::primitive::bool}
+    }
+    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
+    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{std::primitive::i32}
+    }
+    fn position_snake_case() -> naming::PositionSnakeCase {
+        naming::PositionSnakeCase
+    }
+    fn position_is_less_or_equal_zero_upper_camel_case() -> naming::PositionIsLessOrEqualZeroUpperCamelCase {
+        naming::PositionIsLessOrEqualZeroUpperCamelCase
+    }
+    fn try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
+        let position_snake_case = Self::position_snake_case();
+        let position_is_less_or_equal_zero_upper_camel_case = Self::position_is_less_or_equal_zero_upper_camel_case();
+        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        quote::quote!{
+            #position_is_less_or_equal_zero_upper_camel_case {
+                #[eo_to_std_string_string_serialize_deserialize]
+                #position_snake_case: #std_primitive_i32_token_stream,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            },
+        }
+    }
     fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -6752,13 +6775,7 @@ impl PositionEquals {
                 ShouldWhereElementFieldsBePublic::False {
                     ident: &ident,
                     postfix: &self_upper_camel_case,
-                    try_new_error_named_variants_token_stream: &quote::quote!{
-                        #position_is_less_or_equal_zero_upper_camel_case {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            position: #std_primitive_i32_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    },
+                    try_new_error_named_variants_token_stream: &Self::try_new_error_named_variants_token_stream(),
                     try_new_additional_input_parameters_token_stream: &quote::quote!{
                         #value_snake_case: #std_primitive_bool_token_stream,
                         position: #std_primitive_i32_token_stream,
