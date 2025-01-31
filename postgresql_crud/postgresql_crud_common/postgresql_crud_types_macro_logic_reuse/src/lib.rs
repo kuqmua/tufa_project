@@ -3639,58 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-struct ValueIsContainedWithinRange;
-impl WhereOperatorName for ValueIsContainedWithinRange {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::ValueIsContainedWithinRangeUpperCamelCase
-    }
-}
-impl ValueIsContainedWithinRange {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-        range_type_token_stream: &dyn quote::ToTokens,
-        range_type_should_impl_range_length: &ShouldImplRangeLength,
-        range_type_default_initialization_token_stream: &dyn quote::ToTokens,
-        range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            crate::WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #range_type_token_stream},
-            &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote!{
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
-                #query_snake_case
-            }
-        )
-    }
-}
 struct ContainsAnotherRange;
 impl WhereOperatorName for ContainsAnotherRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6282,7 +6230,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let value_is_contained_within_range = ValueIsContainedWithinRange;
+        let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
         let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
