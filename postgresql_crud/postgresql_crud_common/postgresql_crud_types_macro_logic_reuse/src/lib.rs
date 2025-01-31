@@ -3639,38 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-
-struct CurrentTime;
-impl WhereOperatorName for CurrentTime {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::CurrentTimeUpperCamelCase
-    }
-}
-impl CurrentTime {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-    ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            self.upper_camel_case(),
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{},
-            &quote::quote!{},
-            &quote::quote!{
-                Ok(format!(
-                    "{}({} = current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &naming::QuerySnakeCase
-        )
-    }
-}
 struct GreaterThanCurrentTime;
 impl WhereOperatorName for GreaterThanCurrentTime {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6502,7 +6470,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &crate::filters::ShouldAddDotZero::False,
         );
-        let current_time = CurrentTime;
+        let current_time = crate::filters::CurrentTime;
         let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6578,7 +6546,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &crate::filters::ShouldAddDotZero::False,
         );
-        let current_time = CurrentTime;
+        let current_time = crate::filters::CurrentTime;
         let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
