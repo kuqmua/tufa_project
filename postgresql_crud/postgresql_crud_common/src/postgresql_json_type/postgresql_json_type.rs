@@ -13,6 +13,7 @@ postgresql_crud_types_macro_logic_reuse::generate_postgresql_json_types!();
     utoipa::ToSchema,
 )]
 pub struct Uuid(pub uuid::Uuid);
+//here +
 impl schemars::JsonSchema for Uuid {
     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
         schemars::_private::alloc::borrow::Cow::Borrowed("Uuid")
@@ -31,16 +32,16 @@ impl schemars::JsonSchema for Uuid {
         }
     }
 }
-impl error_occurence_lib::ToStdStringString for Uuid {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Uuid {
     #[inline]
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         //maybe compile time uuid gen? not need to gen on runtime. if all different on compile time than its enough 
         Self(uuid::Uuid::new_v4())
+    }
+}
+impl error_occurence_lib::ToStdStringString for Uuid {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
     }
 }
 
@@ -65,11 +66,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         ::core::default::Default::default()
     }
 }
-// impl UuidFieldReader {
-//     fn generate_postgresql_json_type_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
-//     }
-// }
 
 pub type PostgresqlJsonTypeUuidOptionsToRead = Uuid;
 
@@ -113,6 +109,30 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypeUuidWhereElementEqual {
@@ -160,8 +180,6 @@ impl schemars::JsonSchema for PostgresqlJsonTypeUuidWhereElementEqual {
         }
     }
 }
-
-
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidWhereElementEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
