@@ -2,6 +2,16 @@ pub trait WhereOperatorName {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }
 
+enum IsNullablePostgresqlType<'a> {
+    NullablePostgresqlType {
+        where_operator_type: &'a crate::WhereOperatorType<'a>,
+    },
+    NotNullPostgresqlType {
+        where_operator_type: &'a crate::WhereOperatorType<'a>,
+    },
+    PostgresqlJsonType,
+}
+
 pub struct Equal;
 impl WhereOperatorName for Equal {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -17,7 +27,7 @@ impl Equal {
         let value_snake_case = naming::ValueSnakeCase;
         quote::quote!{#value_snake_case: #initialization_token_stream}
     }
-    fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &crate::IsNullablePostgresqlType) -> proc_macro2::TokenStream {
+    fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
         let match_increment_checked_add_token_stream = {
@@ -42,7 +52,7 @@ impl Equal {
             }
         };
         match &is_nullable_postgresql_type {
-            crate::IsNullablePostgresqlType::NullablePostgresqlType {
+            IsNullablePostgresqlType::NullablePostgresqlType {
                 where_operator_type: _,
             } => {
                 quote::quote!{
@@ -58,11 +68,11 @@ impl Equal {
                     }
                 }
             },
-            crate::IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
-            crate::IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
+            IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
+            IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
         }
     }
-    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &crate::IsNullablePostgresqlType) -> proc_macro2::TokenStream {
+    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
@@ -71,7 +81,7 @@ impl Equal {
             }
         };
         let additional_content_token_stream = match &is_nullable_postgresql_type {
-            crate::IsNullablePostgresqlType::NullablePostgresqlType {
+            IsNullablePostgresqlType::NullablePostgresqlType {
                 where_operator_type,
             } => {
                 let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
@@ -81,14 +91,14 @@ impl Equal {
                     }
                 }
             },
-            crate::IsNullablePostgresqlType::NotNullPostgresqlType {
+            IsNullablePostgresqlType::NotNullPostgresqlType {
                 where_operator_type,
             } => generate_query_equals_query_bind_token_stream(&{
                 let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                 quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
             }),
             //todo maybe instead of wrapping into sqlx::types::Json - impl Encode? 
-            crate::IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
+            IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
         };
         quote::quote!{
             #additional_content_token_stream
@@ -112,7 +122,7 @@ impl Equal {
         let should_implement_schemars_json_schema = crate::ShouldImplementSchemarsJsonSchema::False;
         match &is_nullable {
             crate::IsNullable::True => {
-                let is_nullable_postgresql_type = crate::IsNullablePostgresqlType::NullablePostgresqlType {
+                let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
                     where_operator_type: &where_operator_type,
                 };
                 crate::generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
@@ -129,7 +139,7 @@ impl Equal {
                 )
             },
             crate::IsNullable::False => {
-                let is_nullable_postgresql_type = crate::IsNullablePostgresqlType::NotNullPostgresqlType {
+                let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
                     where_operator_type: &where_operator_type,
                 };
                 crate::generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
@@ -157,7 +167,7 @@ impl Equal {
             value.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let is_nullable_postgresql_type = crate::IsNullablePostgresqlType::PostgresqlJsonType;
+        let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
         let (
             postgresql_json_type_handle,
             postgresql_json_type_pattern

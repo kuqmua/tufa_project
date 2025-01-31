@@ -3621,16 +3621,6 @@ impl WhereOperatorType<'_> {
     }
 }
 
-enum IsNullablePostgresqlType<'a> {
-    NullablePostgresqlType {
-        where_operator_type: &'a WhereOperatorType<'a>,
-    },
-    NotNullPostgresqlType {
-        where_operator_type: &'a WhereOperatorType<'a>,
-    },
-    PostgresqlJsonType,
-}
-
 #[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
 pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
