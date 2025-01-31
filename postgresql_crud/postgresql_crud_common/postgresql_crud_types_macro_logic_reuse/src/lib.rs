@@ -3624,7 +3624,7 @@ impl WhereOperatorType<'_> {
 }
 
 struct IsNull;
-impl WhereOperatorName for IsNull {
+impl crate::WhereOperatorName for IsNull {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::IsNullUpperCamelCase
     }
@@ -3640,7 +3640,7 @@ enum IsNullablePostgresqlType<'a> {
 }
 
 struct ContainsAnotherRange;
-impl WhereOperatorName for ContainsAnotherRange {
+impl crate::WhereOperatorName for ContainsAnotherRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::ContainsAnotherRangeUpperCamelCase
     }
@@ -3693,7 +3693,7 @@ impl ContainsAnotherRange {
     }
 }
 struct StrictlyToLeftOfRange;
-impl WhereOperatorName for StrictlyToLeftOfRange {
+impl crate::WhereOperatorName for StrictlyToLeftOfRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::StrictlyToLeftOfRangeUpperCamelCase
     }
@@ -3746,7 +3746,7 @@ impl StrictlyToLeftOfRange {
     }
 }
 struct StrictlyToRightOfRange;
-impl WhereOperatorName for StrictlyToRightOfRange {
+impl crate::WhereOperatorName for StrictlyToRightOfRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::StrictlyToRightOfRangeUpperCamelCase
     }
@@ -3799,7 +3799,7 @@ impl StrictlyToRightOfRange {
     }
 }
 struct IncludedLowerBound;
-impl WhereOperatorName for IncludedLowerBound {
+impl crate::WhereOperatorName for IncludedLowerBound {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::IncludedLowerBoundUpperCamelCase
     }
@@ -3853,7 +3853,7 @@ impl IncludedLowerBound {
     }
 }
 struct ExcludedUpperBound;
-impl WhereOperatorName for ExcludedUpperBound {
+impl crate::WhereOperatorName for ExcludedUpperBound {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::ExcludedUpperBoundUpperCamelCase
     }
@@ -3907,7 +3907,7 @@ impl ExcludedUpperBound {
     }
 }
 struct GreaterThanLowerBound;
-impl WhereOperatorName for GreaterThanLowerBound {
+impl crate::WhereOperatorName for GreaterThanLowerBound {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::GreaterThanLowerBoundUpperCamelCase
     }
@@ -3960,7 +3960,7 @@ impl GreaterThanLowerBound {
     }
 }
 struct OverlapWithRange;
-impl WhereOperatorName for OverlapWithRange {
+impl crate::WhereOperatorName for OverlapWithRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::OverlapWithRangeUpperCamelCase
     }
@@ -4013,7 +4013,7 @@ impl OverlapWithRange {
     }
 }
 struct AdjacentWithRange;
-impl WhereOperatorName for AdjacentWithRange {
+impl crate::WhereOperatorName for AdjacentWithRange {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::AdjacentWithRangeUpperCamelCase
     }
@@ -4066,7 +4066,7 @@ impl AdjacentWithRange {
     }
 }
 struct RangeLength;
-impl WhereOperatorName for RangeLength {
+impl crate::WhereOperatorName for RangeLength {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::RangeLengthUpperCamelCase
     }
@@ -4389,7 +4389,7 @@ impl RangeLength {
     }
 }
 struct BitVecPositionEquals;
-impl WhereOperatorName for BitVecPositionEquals {
+impl crate::WhereOperatorName for BitVecPositionEquals {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::BitVecPositionEqualsUpperCamelCase
     }
@@ -4878,7 +4878,7 @@ impl BitVecPositionEquals {
 }
 
 struct PositionEquals;
-impl WhereOperatorName for PositionEquals {
+impl crate::WhereOperatorName for PositionEquals {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         &naming::PositionEqualsUpperCamelCase
     }
