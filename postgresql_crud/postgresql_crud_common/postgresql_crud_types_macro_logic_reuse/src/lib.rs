@@ -1320,7 +1320,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             };
             let generate_postgresql_json_type_where_element_number_token_stream = || {
                 //todo maybe remove ident, field_type from arguments. variant is enough
-                let greater_than = GreaterThan;
+                let greater_than = crate::filters::GreaterThan;
                 let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &variant,
                 );
@@ -3639,101 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-struct GreaterThan;
-impl WhereOperatorName for GreaterThan {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::GreaterThanUpperCamelCase
-    }
-}
-impl GreaterThan {
-    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{pub #value_snake_case: #type_token_stream}
-    }
-    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{#value_snake_case: #initialization_token_stream}
-    }
-    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(
-                        "{}({} > ${})",
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        #column_snake_case,
-                        #increment_snake_case
-                    ))
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
-    }
-    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let query_snake_case = naming::QuerySnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-            #query_snake_case
-        }
-    }
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-        where_operator_type: &WhereOperatorType,
-    ) -> proc_macro2::TokenStream {
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            self.upper_camel_case(),
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &Self::generate_additional_type_declaration_token_stream(&where_operator_type.type_token_stream()),
-            &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
-            &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
-                let value_snake_case = naming::ValueSnakeCase;
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-            }),
-        )
-    }
-    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        variant: &PostgresqlJsonType,
-    ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let (
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern
-        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-            ShouldWhereElementFieldsBePublic::True,
-            &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
-            &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
-                let value_snake_case = naming::ValueSnakeCase;
-                quote::quote!{sqlx::types::Json(self.#value_snake_case)}
-            }),
-        )
-    }
-}
 enum BetweenTryNewErrorType {
     StartMoreOrEqualToEnd,
     StartIsEqualToEnd
@@ -7699,7 +7604,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7770,7 +7675,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
             &is_nullable,
             &where_operator_type_ident,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7840,7 +7745,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7899,7 +7804,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
             &is_nullable,
             &where_operator_type_ident,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8102,7 +8007,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &is_nullable,
             &where_operator_type_ident,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8178,7 +8083,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8254,7 +8159,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8330,7 +8235,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8410,7 +8315,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
             &is_nullable,
             &where_operator_type_ident,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8840,7 +8745,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8917,7 +8822,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             &is_nullable,
             &where_operator_type_field_type,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9305,7 +9210,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &is_nullable,
             &where_operator_type_ident,
         );
-        let greater_than = GreaterThan;
+        let greater_than = crate::filters::GreaterThan;
         let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
