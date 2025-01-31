@@ -3639,37 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-struct CurrentDate;
-impl WhereOperatorName for CurrentDate {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::CurrentDateUpperCamelCase
-    }
-}
-impl CurrentDate {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-    ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            self.upper_camel_case(),
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{},
-            &quote::quote!{},
-            &quote::quote!{
-                Ok(format!(
-                    "{}({} = current_date)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &naming::QuerySnakeCase
-        )
-    }
-}
 struct GreaterThanCurrentDate;
 impl WhereOperatorName for GreaterThanCurrentDate {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6473,7 +6442,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
             &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &crate::filters::ShouldAddDotZero::False,
         );
-        let current_date = CurrentDate;
+        let current_date = crate::filters::CurrentDate;
         let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6549,7 +6518,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
             &crate::filters::ShouldAddDotZero::False,
         );
-        let current_date = CurrentDate;
+        let current_date = crate::filters::CurrentDate;
         let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
