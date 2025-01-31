@@ -39,26 +39,32 @@ impl error_occurence_lib::ToStdStringString for Uuid {
 
 pub type PostgresqlJsonTypeUuidToCreate = Uuid;
 
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct PostgresqlJsonTypeUuidOptionsToRead(pub uuid::Uuid);
-impl schemars::JsonSchema for PostgresqlJsonTypeUuidOptionsToRead {
-    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidOptionsToRead")
-    }
-    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::PostgresqlJsonTypeUuidOptionsToRead")
-    }
-    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
-        {
-            let mut schema = generator.subschema_for::<std::string::String>();
-            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
-            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
-            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
-            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
-            schema
-        }
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct PostgresqlJsonTypeUuidFieldReader {}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidFieldReader {
+    #[inline]
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
     }
 }
+// impl UuidFieldReader {
+//     fn generate_postgresql_json_type_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+//         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
+//     }
+// }
+
+pub type PostgresqlJsonTypeUuidOptionsToRead = Uuid;
 /////////////////////
 // PostgresqlJsonTypeSelfWhereElement
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
@@ -257,36 +263,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Default,
-    serde :: Serialize,
-    serde ::
-Deserialize,
-    utoipa :: ToSchema,
-    schemars :: JsonSchema,
-)]
-pub struct PostgresqlJsonTypeUuidFieldReader {}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidFieldReader {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        ::core::default::Default::default()
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidOptionsToRead {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
-// impl UuidFieldReader {
-//     fn generate_postgresql_json_type_to_read(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         format!("jsonb_build_object('{field_ident}', jsonb_build_object('value', {column_name_and_maybe_field_getter}->'{field_ident}'))")
-//     }
-// }
+
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum PostgresqlJsonTypeUuidOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
