@@ -1380,11 +1380,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 generated
             };
             let generate_postgresql_json_type_where_element_string_token_stream = || {
-                let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+                let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
                 let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &ident,
                 );
-                let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+                let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
                 let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &ident,
                 );
@@ -3639,514 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-enum RegularExpression {
-    CaseSensitive,
-    CaseInsensitive
-}
-impl RegularExpression {
-    fn stringified(&self) -> &'static str {
-        match &self {
-            RegularExpression::CaseSensitive => "",
-            RegularExpression::CaseInsensitive => "*",
-        }
-    }
-}
-
-fn generate_regular_expression_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
-    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-    quote::quote!{
-        #is_empty_upper_camel_case {
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        }
-    }
-}
-fn generate_regular_expression_try_new_content_token_stream(
-    ident: &dyn quote::ToTokens,
-    regular_expression: &RegularExpression,
-    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
-) -> proc_macro2::TokenStream {
-    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_type_ident_where_element_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &(regular_expression,postgresql_type_or_json_type) {
-        (
-            RegularExpression::CaseSensitive,
-            PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseSensitive,
-            PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-    };
-    quote::quote!{
-        if !#value_snake_case.is_empty() {
-            Ok(Self {
-                logical_operator,
-                #value_snake_case,
-            })
-        }
-        else {
-            Err(#postgresql_type_ident_where_element_regular_expression_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-}
-fn generate_impl_deserialize_token_stream(
-    ident: &dyn quote::ToTokens,
-    regular_expression: &RegularExpression,
-    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
-    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &(regular_expression,postgresql_type_or_json_type) {
-        (
-            RegularExpression::CaseSensitive,
-            PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseSensitive,
-            PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
-    };
-    let (
-        struct_postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream,
-        struct_postgresql_type_or_json_type_ident_where_element_regular_expression_with_2_elements_double_quotes_token_stream,
-        postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream
-    ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case, 2, &self_upper_camel_case);
-    let std_string_string = token_patterns::StdStringString;
-    quote::quote! {
-        const _: () = {
-            #[allow(unused_extern_crates, clippy::useless_attribute)]
-            extern crate serde as _serde;
-            #[automatically_derived]
-            impl<'de> _serde::Deserialize<'de>
-            for #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case {
-                fn deserialize<__D>(
-                    __deserializer: __D,
-                ) -> _serde::__private::Result<Self, __D::Error>
-                where
-                    __D: _serde::Deserializer<'de>,
-                {
-                    #[allow(non_camel_case_types)]
-                    #[doc(hidden)]
-                    enum __Field {
-                        __field0,
-                        __field1,
-                        __ignore,
-                    }
-                    #[doc(hidden)]
-                    struct __FieldVisitor;
-                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                        type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
-                        fn visit_u64<__E>(
-                            self,
-                            __value: u64,
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                0u64 => _serde::__private::Ok(__Field::__field0),
-                                1u64 => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
-                        fn visit_str<__E>(
-                            self,
-                            __value: &str,
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                "value" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                b"value" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
-                    }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
-                    #[doc(hidden)]
-                    struct __Visitor<'de> {
-                        marker: _serde::__private::PhantomData<
-                            #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case,
-                        >,
-                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                    }
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream,
-                            )
-                        }
-                        #[inline]
-                        fn visit_seq<__A>(
-                            self,
-                            mut __seq: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match _serde::de::SeqAccess::next_element::<
-                                crate::LogicalOperator,
-                            >(&mut __seq)? {
-                                _serde::__private::Some(__value) => __value,
-                                _serde::__private::None => {
-                                    return _serde::__private::Err(
-                                        _serde::de::Error::invalid_length(
-                                            0usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_regular_expression_with_2_elements_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field1 = match _serde::de::SeqAccess::next_element::<
-                                #std_string_string,
-                            >(&mut __seq)? {
-                                _serde::__private::Some(__value) => __value,
-                                _serde::__private::None => {
-                                    return _serde::__private::Err(
-                                        _serde::de::Error::invalid_length(
-                                            1usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_regular_expression_with_2_elements_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            match #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case::try_new(__field0, __field1) {
-                                Ok(value) => _serde::__private::Ok(value),
-                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                            }
-                        }
-                        #[inline]
-                        fn visit_map<__A>(
-                            self,
-                            mut __map: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::MapAccess<'de>,
-                        {
-                            let mut __field0: _serde::__private::Option<
-                                crate::LogicalOperator,
-                            > = _serde::__private::None;
-                            let mut __field1: _serde::__private::Option<#std_string_string> = _serde::__private::None;
-                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                __Field,
-                            >(&mut __map)? {
-                                match __key {
-                                    __Field::__field0 => {
-                                        if _serde::__private::Option::is_some(&__field0) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field(
-                                                    "logical_operator",
-                                                ),
-                                            );
-                                        }
-                                        __field0 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                crate::LogicalOperator,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    __Field::__field1 => {
-                                        if _serde::__private::Option::is_some(&__field1) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("value"),
-                                            );
-                                        }
-                                        __field1 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                #std_string_string,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    _ => {
-                                        let _ = _serde::de::MapAccess::next_value::<
-                                            _serde::de::IgnoredAny,
-                                        >(&mut __map)?;
-                                    }
-                                }
-                            }
-                            let __field0 = match __field0 {
-                                _serde::__private::Some(__field0) => __field0,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("logical_operator")?
-                                }
-                            };
-                            let __field1 = match __field1 {
-                                _serde::__private::Some(__field1) => __field1,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("value")?
-                                }
-                            };
-                            match #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case::try_new(__field0, __field1) {
-                                Ok(value) => _serde::__private::Ok(value),
-                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                            }
-                        }
-                    }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-                    _serde::Deserializer::deserialize_struct(
-                        __deserializer,
-                        #postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream,
-                        FIELDS,
-                        __Visitor {
-                            marker: _serde::__private::PhantomData::<
-                                #postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case,
-                            >,
-                            lifetime: _serde::__private::PhantomData,
-                        },
-                    )
-                }
-            }
-        };
-    }
-}
-fn generate_regular_expression_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let std_string_string = token_patterns::StdStringString;
-    quote::quote!{#value_snake_case: #std_string_string}
-}
-fn generate_regular_expression_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-    quote::quote!{#value_snake_case: #core_default_default_default}
-}
-fn generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(
-    regular_expression: &RegularExpression,
-    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
-) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-    let case_stringified = regular_expression.stringified();
-    //using postgresql operator -> than converting it into text returns original string wrapped in double quotes ("original string" instead of original string). it causes problems with regular expression api.
-    //this code remove double quotes from start and end of string(text) to make regular expression correct
-    //decided to use -> postgresql operator instead of ->> operation(cast to text) coz cast to text also affect other types like bool and number. they just will fail at decoding
-    let path = match &postgresql_type_or_json_type {
-        PostgresqlTypeOrJsonType::PostgresqlType => std::string::String::from("{}"),
-        PostgresqlTypeOrJsonType::PostgresqlJsonType => std::string::String::from("substring(({})::text from 2 for length(({})::text) - 2)"),
-    };
-    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({path} ~{case_stringified} ${{}})"));
-    let column_or_columns_token_stream = match &postgresql_type_or_json_type {
-        PostgresqlTypeOrJsonType::PostgresqlType => quote::quote!{#column_snake_case,},
-        PostgresqlTypeOrJsonType::PostgresqlJsonType => quote::quote!{#column_snake_case,#column_snake_case,},
-    };
-    quote::quote!{
-        match #increment_snake_case.checked_add(1) {
-            Some(#value_snake_case) => {
-                *#increment_snake_case = #value_snake_case;
-                Ok(format!(
-                    #format_handle_token_stream,
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_or_columns_token_stream
-                    #increment_snake_case
-                ))
-            },
-            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-}
-fn generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    quote::quote!{
-        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-        #query_snake_case
-    }
-}
-fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    ident: &dyn quote::ToTokens,
-    is_nullable: &IsNullable,
-    regular_expression: &RegularExpression,
-    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
-    generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-        &ident,
-        &self_upper_camel_case,
-        &is_nullable,
-        ShouldWhereElementFieldsBePublic::False {
-            ident: &ident,
-            postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_regular_expression_try_new_error_named_variants_token_stream(),
-            try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
-            try_new_content_token_stream: &generate_regular_expression_try_new_content_token_stream(
-                &ident,
-                &regular_expression,
-                &postgresql_type_or_json_type,
-            ),
-            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream(
-                &ident,
-                &regular_expression,
-                &postgresql_type_or_json_type,
-                &self_upper_camel_case,
-            ),
-        },
-        &generate_regular_expression_additional_type_declaration_token_stream(),
-        &generate_regular_expression_additional_default_initialization_token_stream(),
-        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
-        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
-    )
-}
-fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-    ident: &dyn quote::ToTokens,
-    regular_expression: &RegularExpression,
-    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlJsonType;
-    generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-        &PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-        ShouldWhereElementFieldsBePublic::False {
-            ident: &ident,
-            postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_regular_expression_try_new_error_named_variants_token_stream(),
-            try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
-            try_new_content_token_stream: &generate_regular_expression_try_new_content_token_stream(
-                &ident,
-                &regular_expression,
-                &postgresql_type_or_json_type,
-            ),
-            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream(
-                &ident,
-                &regular_expression,
-                &postgresql_type_or_json_type,
-                &self_upper_camel_case,
-            ),
-        },
-        &ShouldImplementSchemarsJsonSchema::True,
-        &generate_regular_expression_additional_type_declaration_token_stream(),
-        &generate_regular_expression_additional_default_initialization_token_stream(),
-        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
-        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
-    )
-}
-struct CaseSensitiveRegularExpression;
-impl WhereOperatorName for CaseSensitiveRegularExpression {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::CaseSensitiveRegularExpressionUpperCamelCase
-    }
-}
-impl CaseSensitiveRegularExpression {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-    ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &RegularExpression::CaseSensitive,
-            self.upper_camel_case(),
-        )
-    }
-    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &RegularExpression::CaseSensitive,
-            self.upper_camel_case(),
-        )
-    }
-}
-struct CaseInsensitiveRegularExpression;
-impl WhereOperatorName for CaseInsensitiveRegularExpression {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::CaseInsensitiveRegularExpressionUpperCamelCase
-    }
-}
-impl CaseInsensitiveRegularExpression {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-    ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &RegularExpression::CaseInsensitive,
-            self.upper_camel_case(),
-        )
-    }
-    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &RegularExpression::CaseInsensitive,
-            self.upper_camel_case(),
-        )
-    }
-}
 struct Before;
 impl WhereOperatorName for Before {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6898,12 +6390,12 @@ pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_m
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8082,12 +7574,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8229,12 +7721,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
             &is_nullable,
             &where_operator_type_ident
         );
-        let case_sensitive_regular_expression = CaseSensitiveRegularExpression;
+        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
-        let case_insensitive_regular_expression = CaseInsensitiveRegularExpression;
+        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
         let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
