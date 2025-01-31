@@ -3639,37 +3639,6 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-struct GreaterThanCurrentTime;
-impl WhereOperatorName for GreaterThanCurrentTime {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::GreaterThanCurrentTimeUpperCamelCase
-    }
-}
-impl GreaterThanCurrentTime {
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-    ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            self.upper_camel_case(),
-            &is_nullable,
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{},
-            &quote::quote!{},
-            &quote::quote!{
-                Ok(format!(
-                    "{}({} > current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &naming::QuerySnakeCase
-        )
-    }
-}
 struct LengthMoreThan;
 impl WhereOperatorName for LengthMoreThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -6475,7 +6444,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             &ident,
             &is_nullable,
         );
-        let greater_than_current_time = GreaterThanCurrentTime;
+        let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
         let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -6551,7 +6520,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             &ident,
             &is_nullable,
         );
-        let greater_than_current_time = GreaterThanCurrentTime;
+        let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
         let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,

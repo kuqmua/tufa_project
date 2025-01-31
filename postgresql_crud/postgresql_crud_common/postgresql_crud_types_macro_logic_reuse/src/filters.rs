@@ -1977,3 +1977,35 @@ impl CurrentTime {
         )
     }
 }
+
+pub struct GreaterThanCurrentTime;
+impl crate::WhereOperatorName for GreaterThanCurrentTime {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::GreaterThanCurrentTimeUpperCamelCase
+    }
+}
+impl GreaterThanCurrentTime {
+    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        is_nullable: &crate::IsNullable,
+    ) -> proc_macro2::TokenStream {
+        let column_snake_case = naming::ColumnSnakeCase;
+        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+            &ident,
+            crate::WhereOperatorName::upper_camel_case(self),
+            &is_nullable,
+            crate::ShouldWhereElementFieldsBePublic::True,
+            &quote::quote!{},
+            &quote::quote!{},
+            &quote::quote!{
+                Ok(format!(
+                    "{}({} > current_time)",
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                ))
+            },
+            &naming::QuerySnakeCase
+        )
+    }
+}
