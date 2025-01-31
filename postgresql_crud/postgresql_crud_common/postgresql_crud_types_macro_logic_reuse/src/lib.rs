@@ -3307,44 +3307,7 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
         postgresql_type_ident_where_element_tokens_double_quotes_token_stream
     )
 }
-fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-    ident: &dyn quote::ToTokens,
-    postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    is_nullable: &IsNullable,
-    should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
-    additional_type_declaration_token_stream: &dyn quote::ToTokens,
-    additional_default_initialization_token_stream: &dyn quote::ToTokens,
-    postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
-    postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
-        let value = format!("{prefix}{postfix}");
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let postgresql_type_ident_where_element_tokens_upper_camel_case = generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-    );
-    let postgresql_type_std_option_option_ident_where_element_tokens_upper_camel_case = generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-        &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
-    );
-    match &is_nullable {
-        IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &postgresql_type_std_option_option_ident_where_element_tokens_upper_camel_case,
-            &postgresql_type_ident_where_element_tokens_upper_camel_case
-        ),
-        IsNullable::False => generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &PostgresqlTypeOrJsonType::PostgresqlType,
-            &postgresql_type_ident_where_element_tokens_upper_camel_case,
-            should_where_element_fields_be_public,
-            &ShouldImplementSchemarsJsonSchema::False,
-            &additional_type_declaration_token_stream,
-            &additional_default_initialization_token_stream,
-            &postgresql_type_self_where_try_generate_bind_increments_token_stream,
-            &postgresql_type_self_where_bind_value_to_query_token_stream,
-        )
-    }
-}
+
 ///////////////////////
 fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
     postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,

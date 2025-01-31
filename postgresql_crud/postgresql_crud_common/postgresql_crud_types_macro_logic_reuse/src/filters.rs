@@ -12,6 +12,45 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
+fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+    ident: &dyn quote::ToTokens,
+    postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    is_nullable: &crate::IsNullable,
+    should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
+    additional_type_declaration_token_stream: &dyn quote::ToTokens,
+    additional_default_initialization_token_stream: &dyn quote::ToTokens,
+    postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
+    postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
+        let value = format!("{prefix}{postfix}");
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let postgresql_type_ident_where_element_tokens_upper_camel_case = generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+    );
+    let postgresql_type_std_option_option_ident_where_element_tokens_upper_camel_case = generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+        &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+    );
+    match &is_nullable {
+        crate::IsNullable::True => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+            &postgresql_type_std_option_option_ident_where_element_tokens_upper_camel_case,
+            &postgresql_type_ident_where_element_tokens_upper_camel_case
+        ),
+        crate::IsNullable::False => crate::generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &crate::PostgresqlTypeOrJsonType::PostgresqlType,
+            &postgresql_type_ident_where_element_tokens_upper_camel_case,
+            should_where_element_fields_be_public,
+            &crate::ShouldImplementSchemarsJsonSchema::False,
+            &additional_type_declaration_token_stream,
+            &additional_default_initialization_token_stream,
+            &postgresql_type_self_where_try_generate_bind_increments_token_stream,
+            &postgresql_type_self_where_bind_value_to_query_token_stream,
+        )
+    }
+}
+
 pub struct Equal;
 impl WhereOperatorName for Equal {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -236,7 +275,7 @@ impl GreaterThan {
         is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -721,7 +760,7 @@ impl Between {
         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             &is_nullable,
@@ -1189,7 +1228,7 @@ impl In {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             &is_nullable,
@@ -1652,7 +1691,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-    crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+    generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
         &is_nullable,
@@ -1799,7 +1838,7 @@ impl Before {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -1845,7 +1884,7 @@ impl CurrentDate {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -1877,7 +1916,7 @@ impl GreaterThanCurrentDate {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -1909,7 +1948,7 @@ impl CurrentTimestamp {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -1941,7 +1980,7 @@ impl GreaterThanCurrentTimestamp {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -1973,7 +2012,7 @@ impl CurrentTime {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2005,7 +2044,7 @@ impl GreaterThanCurrentTime {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2380,7 +2419,7 @@ impl LengthMoreThan {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             &is_nullable,
@@ -2463,7 +2502,7 @@ impl EqualToEncodedStringRepresentation {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2518,7 +2557,7 @@ impl ValueIsContainedWithinRange {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2570,7 +2609,7 @@ impl ContainsAnotherRange {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2624,7 +2663,7 @@ impl StrictlyToLeftOfRange {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2678,7 +2717,7 @@ impl StrictlyToRightOfRange {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2735,7 +2774,7 @@ impl IncludedLowerBound {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2790,7 +2829,7 @@ impl ExcludedUpperBound {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2842,7 +2881,7 @@ impl GreaterThanLowerBound {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2896,7 +2935,7 @@ impl OverlapWithRange {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -2950,7 +2989,7 @@ impl AdjacentWithRange {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
@@ -3007,7 +3046,7 @@ impl RangeLength {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
         let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             &is_nullable,
@@ -3773,7 +3812,7 @@ impl BitVecPositionEquals {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
-        crate::generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             &is_nullable,
