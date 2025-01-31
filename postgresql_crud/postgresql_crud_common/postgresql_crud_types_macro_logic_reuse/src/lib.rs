@@ -1236,27 +1236,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             }
         );
-        let impl_crate_bind_query_for_token_stream = {
-            quote::quote!{
-                impl crate::BindQuery<'_> for #ident {
-                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("${increment}"))
-                            }
-                            None => Err(crate::TryGenerateBindIncrementsErrorNamed::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!()
-                            }),
-                        }
-                    }
-                    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        query = query.bind(sqlx::types::Json(self.0));
-                        query
-                    }
-                }
-            }
-        };
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             
@@ -1582,8 +1561,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #postgresql_json_type_ident_option_to_update_alias_token_stream
             #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
             #impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream
-
-            #impl_crate_bind_query_for_token_stream
 
             #postgresql_json_type_ident_where_element_token_stream
         };
