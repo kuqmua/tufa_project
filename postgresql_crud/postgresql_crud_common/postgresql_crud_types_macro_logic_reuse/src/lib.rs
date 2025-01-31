@@ -3709,7 +3709,7 @@ impl LengthMoreThan {
             struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream
-        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2, &self.upper_camel_case());
+        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2, &crate::WhereOperatorName::upper_camel_case(self));
         let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
         quote::quote! {
             const _: () = {
@@ -3992,7 +3992,7 @@ impl LengthMoreThan {
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
+        let self_upper_camel_case = crate::WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -4023,7 +4023,7 @@ impl LengthMoreThan {
         &self,
         variant: &PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
+        let self_upper_camel_case = crate::WhereOperatorName::upper_camel_case(self);
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
@@ -4080,7 +4080,7 @@ impl EqualToEncodedStringRepresentation {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            &self.upper_camel_case(),
+            &crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
@@ -4134,7 +4134,7 @@ impl ValueIsContainedWithinRange {
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4185,7 +4185,7 @@ impl ContainsAnotherRange {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4238,7 +4238,7 @@ impl StrictlyToLeftOfRange {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4291,7 +4291,7 @@ impl StrictlyToRightOfRange {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4347,7 +4347,7 @@ impl IncludedLowerBound {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4401,7 +4401,7 @@ impl ExcludedUpperBound {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
@@ -4452,7 +4452,7 @@ impl GreaterThanLowerBound {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4505,7 +4505,7 @@ impl OverlapWithRange {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4558,7 +4558,7 @@ impl AdjacentWithRange {
         };
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
-            self.upper_camel_case(),
+            crate::WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
@@ -4609,7 +4609,7 @@ impl RangeLength {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
-        let self_upper_camel_case = self.upper_camel_case();
+        let self_upper_camel_case = crate::WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
         let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -4983,7 +4983,7 @@ impl BitVecPositionEquals {
             struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream
-        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case, 2, &self.upper_camel_case());
+        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case, 2, &crate::WhereOperatorName::upper_camel_case(self));
         let std_primitive_bool_token_stream = Self::std_primitive_bool_token_stream();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
@@ -5374,7 +5374,7 @@ impl BitVecPositionEquals {
         ident: &dyn quote::ToTokens,
         is_nullable: &IsNullable,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
+        let self_upper_camel_case = crate::WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -5473,7 +5473,7 @@ impl PositionEquals {
             struct_postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream
-        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case, 2, &self.upper_camel_case());
+        ) = generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case, 2, &crate::WhereOperatorName::upper_camel_case(self));
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
             const _: () = {
@@ -5818,7 +5818,7 @@ impl PositionEquals {
         variant: &PostgresqlJsonType,
         postgresql_json_array_element_type: &PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
+        let self_upper_camel_case = crate::WhereOperatorName::upper_camel_case(self);
         let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
             let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
             value.parse::<proc_macro2::TokenStream>()
