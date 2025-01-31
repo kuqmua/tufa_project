@@ -3309,48 +3309,6 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
 }
 
 ///////////////////////
-fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
-    postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case: &dyn quote::ToTokens,
-    should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
-    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
-    additional_type_declaration_token_stream: &dyn quote::ToTokens,
-    additional_default_initialization_token_stream: &dyn quote::ToTokens,
-    postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
-    postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    let postgresql_type_ident_where_element_tokens_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-        &should_where_element_fields_be_public,
-        &should_implement_schemars_json_schema,
-        &additional_type_declaration_token_stream,
-    );
-    let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(postgresql_type_or_json_type);
-    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-        &{
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-            };
-            quote::quote! {Self {
-                logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                #additional_default_initialization_token_stream
-            }}
-        },
-    );
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-        &postgresql_type_self_where_try_generate_bind_increments_token_stream,
-        &postgresql_type_self_where_bind_value_to_query_token_stream
-    );
-    quote::quote! {
-        #postgresql_type_ident_where_element_tokens_token_stream
-        #maybe_try_new_error_named_and_try_new_and_deserialize_token_stream
-        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream
-        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream
-    }
-}
-///////////////////////
 fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     should_where_element_fields_be_public: &ShouldWhereElementFieldsBePublic,
