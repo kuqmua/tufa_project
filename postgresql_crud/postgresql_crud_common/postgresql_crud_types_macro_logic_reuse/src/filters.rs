@@ -4350,7 +4350,9 @@ impl PositionMoreThan {
     fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
         naming::PositionIsLessThanZeroUpperCamelCase
     }
-    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
+    fn generate_try_new_error_named_variants_token_stream(
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
         let position_snake_case = Self::position_snake_case();
         let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
@@ -4715,7 +4717,7 @@ impl PositionMoreThan {
                         Some(second_increment) => {
                             *#increment_snake_case = second_increment;
                             Ok(format!(
-                                "{}({}->${} = ${})",
+                                "{}({}->${} > ${})",
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #column_snake_case,
                                 first_increment,
@@ -4762,7 +4764,7 @@ impl PositionMoreThan {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&postgresql_json_array_element_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &variant,
