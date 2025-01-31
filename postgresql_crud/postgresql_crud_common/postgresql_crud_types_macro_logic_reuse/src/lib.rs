@@ -1513,12 +1513,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
                 PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber |
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool |
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool |
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
+                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
             }
         };
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
@@ -1542,7 +1542,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
             #postgresql_json_type_ident_where_element_token_stream
         };
-        //  if quote::quote!{#ident}.to_string() == "StdVecVecStdPrimitiveI8" {
+        //  if quote::quote!{#ident}.to_string() == "" {
         //     //  println!("{generated}");
         //     //  println!("-------");
         //      macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
