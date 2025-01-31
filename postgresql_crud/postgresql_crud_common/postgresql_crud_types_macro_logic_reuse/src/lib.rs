@@ -1219,7 +1219,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &equal,
                     ],
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1257,7 +1257,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &in_handle,
                     ],
                     &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1280,7 +1280,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &equal,
                     ],
                     &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1311,7 +1311,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         &case_insensitive_regular_expression,
                     ],
                     &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1344,7 +1344,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1374,7 +1374,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -1403,7 +1403,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
                     #postgresql_json_type_ident_where_element_equal_token_stream
@@ -3150,11 +3150,11 @@ pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> pro
     // }
     generated.into()
 }
-enum ShouldImplementSchemarsJsonSchema {
+enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,
 }
-impl quote::ToTokens for ShouldImplementSchemarsJsonSchema {
+impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
@@ -3163,7 +3163,7 @@ impl quote::ToTokens for ShouldImplementSchemarsJsonSchema {
     }
 }
 fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
-    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
+    should_implement_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -3191,7 +3191,7 @@ impl IsNullable {
                 let postgresql_json_type_ident_where_element_is_null_token_stream = generate_postgresql_type_tokens_where_element_tokens_token_stream(
                     &postgresql_json_type_ident_where_element_is_null_upper_camel_case,
                     &ShouldWhereElementFieldsBePublic::True,
-                    &ShouldImplementSchemarsJsonSchema::True,
+                    &ShouldDeriveSchemarsJsonSchema::True,
                     &proc_macro2::TokenStream::new()
                 );
                 let impl_crate_generate_postgresql_json_type_std_default_default_but_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_where_element_is_null_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -3331,7 +3331,7 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
 fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     should_where_element_fields_be_public: &ShouldWhereElementFieldsBePublic,
-    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
+    should_implement_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
@@ -3370,7 +3370,7 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     ident: &dyn quote::ToTokens,
     variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>,
     postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
+    should_implement_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -3475,7 +3475,7 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
         &ident,
         &variants,
         &postgresql_type_tokens_where_element_upper_camel_case,
-        &ShouldImplementSchemarsJsonSchema::False,
+        &ShouldDeriveSchemarsJsonSchema::False,
     )
 }
 fn generate_nullable_and_not_nullable_token_stream<F>(generate_postgresql_type_ident_where_element_token_stream: F) -> proc_macro2::TokenStream 

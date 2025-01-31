@@ -110,30 +110,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypeUuidWhereElementEqual {
     pub logical_operator: crate::LogicalOperator,

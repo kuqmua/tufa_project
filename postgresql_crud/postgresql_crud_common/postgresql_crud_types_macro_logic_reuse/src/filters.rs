@@ -42,7 +42,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
             &crate::PostgresqlTypeOrJsonType::PostgresqlType,
             &postgresql_type_ident_where_element_tokens_upper_camel_case,
             should_where_element_fields_be_public,
-            &crate::ShouldImplementSchemarsJsonSchema::False,
+            &crate::ShouldDeriveSchemarsJsonSchema::False,
             &additional_type_declaration_token_stream,
             &additional_default_initialization_token_stream,
             &postgresql_type_self_where_try_generate_bind_increments_token_stream,
@@ -55,7 +55,7 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case: &dyn quote::ToTokens,
     should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
-    should_implement_schemars_json_schema: &crate::ShouldImplementSchemarsJsonSchema,
+    should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -200,7 +200,7 @@ impl Equal {
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
         let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
-        let should_implement_schemars_json_schema = crate::ShouldImplementSchemarsJsonSchema::False;
+        let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
         match &is_nullable {
             crate::IsNullable::True => {
                 let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
@@ -257,7 +257,7 @@ impl Equal {
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
             &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
@@ -350,7 +350,7 @@ impl GreaterThan {
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
             &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
@@ -884,7 +884,7 @@ impl Between {
                     &non_optional_field_type,
                 ),
             },
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(&crate::PostgresqlJsonTypePattern::from(variant).non_optional_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
@@ -1338,7 +1338,7 @@ impl In {
                     &non_optional_field_type,
                 ),
             },
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.non_optional_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
@@ -1791,7 +1791,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
                 &self_upper_camel_case,
             ),
         },
-        &crate::ShouldImplementSchemarsJsonSchema::True,
+        &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_regular_expression_additional_type_declaration_token_stream(),
         &generate_regular_expression_additional_default_initialization_token_stream(),
         &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
@@ -2514,7 +2514,7 @@ impl LengthMoreThan {
                     &postgresql_type_or_json_type,
                 )
             },
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(),
             &Self::generate_try_generate_bind_increments_token_stream(&postgresql_type_or_json_type),
@@ -4321,7 +4321,7 @@ impl PositionEquals {
                     &postgresql_json_array_element_type,
                 )
             },
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(),
             &Self::generate_try_generate_bind_increments_token_stream(),
@@ -4776,7 +4776,7 @@ impl PositionGreaterThan {
                     &postgresql_json_array_element_type,
                 )
             },
-            &crate::ShouldImplementSchemarsJsonSchema::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &Self::generate_additional_default_initialization_token_stream(),
             &Self::generate_try_generate_bind_increments_token_stream(),
