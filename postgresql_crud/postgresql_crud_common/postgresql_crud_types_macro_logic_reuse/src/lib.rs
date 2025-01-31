@@ -126,6 +126,303 @@ impl PostgresqlJsonTypePattern {
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
         }
     }
+    fn should_derive_schemars_json_schema(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> ShouldDeriveSchemarsJsonSchema {
+        match (&postgresql_json_type_handle, &self) {
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::FullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::StdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::StdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::StdOptionOptionStdVecVecFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::StdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI8,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI16,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI32,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveI64,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU8,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU16,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU32,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveU64,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF32,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveF64,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdPrimitiveBool,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+            (
+                PostgresqlJsonTypeHandle::StdStringString,
+                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ) => ShouldDeriveSchemarsJsonSchema::True,
+        }
+    }
 }
 impl std::convert::From<&PostgresqlJsonTypePatternSpecific> for PostgresqlJsonTypePattern {
     fn from(value: &PostgresqlJsonTypePatternSpecific) -> Self {
