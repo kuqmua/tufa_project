@@ -1418,7 +1418,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &{
-                        let mut vec: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                        let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                             &equal,
                             &length_more_than,
                         ];
@@ -1447,7 +1447,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &{
-                        let mut vec: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                        let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                             &equal,
                             &length_more_than,
                         ];
@@ -1476,7 +1476,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &{
-                        let mut vec: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                        let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                             &equal,
                             &length_more_than,
                         ];
@@ -3428,7 +3428,7 @@ fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
 }
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
     ident: &dyn quote::ToTokens,
-    variants: &std::vec::Vec<&dyn WhereOperatorName>,
+    variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>,
     postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     should_implement_schemars_json_schema: &ShouldImplementSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
@@ -3525,7 +3525,7 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
     is_nullable: IsNullable,
     ident: &dyn quote::ToTokens,
-    variants: &std::vec::Vec<&dyn WhereOperatorName>
+    variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>
 ) -> proc_macro2::TokenStream {
     let postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
         IsNullable::True => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
@@ -3564,9 +3564,7 @@ impl IsValueTypePub {
         }
     }
 }
-trait WhereOperatorName {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
-}
+
 enum WhereOperatorType<'a> {
     Ident(&'a syn::Ident),
     FieldType {
@@ -4601,7 +4599,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             is_nullable,
             &ident,
             &{
-                let mut value: std::vec::Vec<&dyn WhereOperatorName> = vec![
+                let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                     &equal,
                     &value_is_contained_within_range,
                     &contains_another_range,
