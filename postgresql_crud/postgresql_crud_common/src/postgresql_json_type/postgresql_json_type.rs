@@ -36,26 +36,9 @@ impl error_occurence_lib::ToStdStringString for Uuid {
         self.0.to_string()
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct PostgresqlJsonTypeUuidToCreate(pub uuid::Uuid);
-impl schemars::JsonSchema for PostgresqlJsonTypeUuidToCreate {
-    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidToCreate")
-    }
-    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-        schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::PostgresqlJsonTypeUuidToCreate")
-    }
-    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
-        {
-            let mut schema = generator.subschema_for::<std::string::String>();
-            schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
-            schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
-            schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
-            schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
-            schema
-        }
-    }
-}
+
+pub type PostgresqlJsonTypeUuidToCreate = Uuid;
+
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct PostgresqlJsonTypeUuidOptionsToRead(pub uuid::Uuid);
 impl schemars::JsonSchema for PostgresqlJsonTypeUuidOptionsToRead {
@@ -181,11 +164,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 
-
-
-
-
-
 ////////////////////
 #[derive(Debug, Clone, Copy, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct PostgresqlJsonTypeUuidOptionToUpdate(pub uuid::Uuid);
@@ -278,12 +256,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self(::core::default::Default::default())
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidToCreate {
-    #[inline]
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
+
 #[derive(
     Debug,
     Clone,
