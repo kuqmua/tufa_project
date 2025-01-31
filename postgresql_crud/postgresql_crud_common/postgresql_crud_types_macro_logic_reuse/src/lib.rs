@@ -3623,12 +3623,6 @@ impl WhereOperatorType<'_> {
     }
 }
 
-struct IsNull;
-impl crate::WhereOperatorName for IsNull {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::IsNullUpperCamelCase
-    }
-}
 enum IsNullablePostgresqlType<'a> {
     NullablePostgresqlType {
         where_operator_type: &'a WhereOperatorType<'a>,
