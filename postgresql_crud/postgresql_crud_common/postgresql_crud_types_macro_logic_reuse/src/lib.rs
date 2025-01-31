@@ -1,3 +1,5 @@
+mod filters;
+
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypeHandle {
     StdPrimitiveI8,
@@ -1230,7 +1232,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             
-            let equal = Equal;
+            let equal = crate::filters::Equal;
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &variant,
             );
@@ -3636,178 +3638,7 @@ enum IsNullablePostgresqlType<'a> {
     },
     PostgresqlJsonType,
 }
-struct Equal;
-impl WhereOperatorName for Equal {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::EqualUpperCamelCase
-    }
-}
-impl Equal {
-    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{pub #value_snake_case: #type_token_stream}
-    }
-    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{#value_snake_case: #initialization_token_stream}
-    }
-    fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let match_increment_checked_add_token_stream = {
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            }
-        };
-        match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type: _,
-            } => {
-                quote::quote!{
-                    if self.#value_snake_case.is_some() {
-                        #match_increment_checked_add_token_stream
-                    }
-                    else {
-                        Ok(format!(
-                            "{}({} is null)",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                        ))
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
-            IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
-        }
-    }
-    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
-            quote::quote!{
-                #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
-            }
-        };
-        let additional_content_token_stream = match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type,
-            } => {
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{
-                    if let Some(#value_snake_case) = self.#value_snake_case {
-                        #query_snake_case = #query_snake_case.bind(#value_snake_case #where_operator_type_additional_bind_token_stream);
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType {
-                where_operator_type,
-            } => generate_query_equals_query_bind_token_stream(&{
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-            }),
-            //todo maybe instead of wrapping into sqlx::types::Json - impl Encode? 
-            IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
-        };
-        quote::quote!{
-            #additional_content_token_stream
-            #query_snake_case
-        }
-    }
-    fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &IsNullable,
-        where_operator_type: &WhereOperatorType,
-    ) -> proc_macro2::TokenStream {
-        let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
-            let postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens = self.upper_camel_case();
-            let value = format!("{prefix}{postfix}");
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = PostgresqlTypeOrJsonType::PostgresqlType;
-        let should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic = ShouldWhereElementFieldsBePublic::True;
-        let should_implement_schemars_json_schema = ShouldImplementSchemarsJsonSchema::False;
-        match &is_nullable {
-            IsNullable::True => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &Self::generate_additional_type_declaration_token_stream(&where_operator_type.std_option_option_type_token_stream()),
-                    &Self::generate_additional_default_initialization_token_stream(&where_operator_type.std_option_option_default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            },
-            IsNullable::False => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &Self::generate_additional_type_declaration_token_stream(&where_operator_type.type_token_stream()),
-                    &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            }
-        }
-    }
-    fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        variant: &PostgresqlJsonType,
-    ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = self.upper_camel_case();
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
-        let (
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern
-        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-            ShouldWhereElementFieldsBePublic::True,
-            &ShouldImplementSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
-            &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-            &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-        )
-    }
-}
+
 struct GreaterThan;
 impl WhereOperatorName for GreaterThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -7862,7 +7693,7 @@ pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::Token
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -7933,7 +7764,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(in
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
         
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8003,7 +7834,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8062,7 +7893,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: p
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8113,7 +7944,7 @@ pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenSt
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8198,7 +8029,7 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8265,7 +8096,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: pro
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8341,7 +8172,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(in
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8417,7 +8248,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(in
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8493,7 +8324,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: pro
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8573,7 +8404,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -8745,7 +8576,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9003,7 +8834,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_ti
             field_type: &field_type,
             default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9080,7 +8911,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_
             field_type: &field_type,
             default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
         };
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9153,7 +8984,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_tim
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9226,7 +9057,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9277,7 +9108,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sql
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9327,7 +9158,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: pro
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9384,7 +9215,7 @@ pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_mac
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9431,7 +9262,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9468,7 +9299,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_addr
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
     let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
         let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
@@ -9540,7 +9371,7 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
         let query_snake_case = naming::QuerySnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let equal = Equal;
+        let equal = crate::filters::Equal;
         let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
