@@ -39,38 +39,11 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
-    "std_primitive_bool_as_bool_nullable": true,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 1,
-      "std_primitive_bool": true,
-      "std_string_string": "",
-      "std_option_option_std_primitive_i8": 1,
-      "std_option_option_std_primitive_bool": true,
-      "std_option_option_std_string_string": "",
+      "std_primitive_i8": 0,
       "std_vec_vec_std_primitive_i8": [
-        1,2,3
-      ],
-      "std_vec_vec_std_primitive_bool": [
-        true, false, true
-      ],
-      "std_vec_vec_std_string_string": [
-        "cat", "dog", "rabbit"
-      ],
-      "std_option_option_std_vec_vec_std_primitive_i8": null,
-      "std_option_option_std_vec_vec_std_primitive_bool": null,
-      "std_option_option_std_vec_vec_std_string_string": null,
-      "std_vec_vec_std_option_option_std_primitive_i8": [
-        1,2,3, null
-      ],
-      "std_vec_vec_std_option_option_std_primitive_bool": [
-        true, false, true, null
-      ],
-      "std_vec_vec_std_option_option_std_string_string": [
-        "cat", "dog", "rabbit", null
-      ],
-      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": null,
-      "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": null,
-      "std_option_option_std_vec_vec_std_option_option_std_string_string": null
+        9,4
+      ]
     }
   }
 ]
@@ -137,17 +110,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "std_primitive_bool_as_bool_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": false
-  #       }
-  #     }
-  #   ]
-  # },
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
@@ -185,433 +147,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     ]
       #   }
       # },
-      # {
-      #   "StdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": false
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "GreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "Between": {
-      #           "logical_operator": "Or",
-      #           "start": 0,
-      #           "end": 0
-      #         }
-      #       },
-      #       {
-      #         "In": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": false
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             false
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": false,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             ""
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdVecVecStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdVecVecStdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             false
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": false,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdVecVecStdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             ""
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdOptionOptionStdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             false
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": false,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdOptionOptionStdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             ""
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             false
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": false,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
       {
-        "StdOptionOptionStdVecVecStdOptionOptionStdStringString": {
+        "StdVecVecStdPrimitiveI8": {
           "logical_operator": "Or",
           "value": [
             # {
             #   "Equal": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       ""
+            #       0
             #     ]
             #   }
             # },
@@ -621,11 +165,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "length_more_than": 0
             #   }
             # },
+            # {
+            #   "PositionEquals": {
+            #     "logical_operator": "Or",
+            #     "value": 0,
+            #     "position": 0
+            #   }
+            # },
             {
-              "PositionEquals": {
+              "PositionMoreThan": {
                 "logical_operator": "Or",
-                "value": null,
-                "position": 3
+                "value": 3,
+                "position": 0
               }
             }
           ]
@@ -637,121 +188,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     # {
     #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
     # },
-    # {
-    #   "std_primitive_bool_as_bool_nullable": null
-    # },
     {
       "object_animal_as_jsonb_not_null": [
         # {
         #   "std_primitive_i8": {}
         # },
-        # {
-        #   "std_primitive_bool": {}
-        # },
-        # {
-        #   "std_string_string": {}
-        # },
-        # {
-        #   "std_option_option_std_primitive_i8": {}
-        # },
-        # {
-        #   "std_option_option_std_primitive_bool": {}
-        # },
-        # {
-        #   "std_option_option_std_string_string": {}
-        # },
-        # {
-        #   "std_vec_vec_std_primitive_i8": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_vec_vec_std_primitive_bool": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_vec_vec_std_string_string": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_option_option_std_vec_vec_std_primitive_i8": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_option_option_std_vec_vec_std_primitive_bool": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_option_option_std_vec_vec_std_string_string": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_vec_vec_std_option_option_std_primitive_i8": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_vec_vec_std_option_option_std_primitive_bool": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_vec_vec_std_option_option_std_string_string": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "std_option_option_std_vec_vec_std_option_option_std_primitive_bool": {
-        #     "pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
         {
-          "std_option_option_std_vec_vec_std_option_option_std_string_string": {
+          "std_vec_vec_std_primitive_i8": {
             "pagination": {
-              "limit": 5,
+              "limit": 3,
               "offset": 0
             }
           }
