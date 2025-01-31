@@ -303,10 +303,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "json", "type", "self", "where", "element", "bit", "vec", "position", "equals"],
     ["postgresql", "json", "type", "self", "where", "element", "bit", "vec", "position", "equals", "try", "new", "error", "named"],
     ["postgresql", "type", "self", "where", "element", "bit", "vec", "position", "equals"],
-    ["postgresql", "type", "self", "where", "element", "position", "more", "than", "try", "new", "error", "named"],
-    ["postgresql", "json", "type", "self", "where", "element", "position", "more", "than", "try", "new", "error", "named"],
-    ["postgresql", "type", "self", "where", "element", "position", "more", "than"],
-    ["postgresql", "json", "type", "self", "where", "element", "position", "more", "than"]
+    ["postgresql", "type", "self", "where", "element", "position", "greater", "than", "try", "new", "error", "named"],
+    ["postgresql", "json", "type", "self", "where", "element", "position", "greater", "than", "try", "new", "error", "named"],
+    ["postgresql", "type", "self", "where", "element", "position", "greater", "than"],
+    ["postgresql", "json", "type", "self", "where", "element", "position", "greater", "than"]
 ]);
 
 ////////////////////////////////////////////////////

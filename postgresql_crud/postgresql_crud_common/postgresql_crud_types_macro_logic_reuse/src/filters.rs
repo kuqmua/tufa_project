@@ -4330,13 +4330,13 @@ impl PositionEquals {
     }
 }
 
-pub struct PositionMoreThan;
-impl WhereOperatorName for PositionMoreThan {
+pub struct PositionGreaterThan;
+impl WhereOperatorName for PositionGreaterThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::PositionMoreThanUpperCamelCase
+        &naming::PositionGreaterThanUpperCamelCase
     }
 }
-impl PositionMoreThan {
+impl PositionGreaterThan {
     fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
         quote::quote!{std::primitive::bool}
     }
@@ -4371,9 +4371,9 @@ impl PositionMoreThan {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
         let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
-        let postgresql_type_or_json_type_ident_where_element_position_more_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        let postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
         quote::quote!{
             if #position_snake_case >= 0 {
@@ -4384,7 +4384,7 @@ impl PositionMoreThan {
                 })
             }
             else {
-                Err(#postgresql_type_or_json_type_ident_where_element_position_more_than_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
+                Err(#postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
                     #position_snake_case,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
@@ -4397,15 +4397,15 @@ impl PositionMoreThan {
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType
     ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionMoreThanUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionMoreThanUpperCamelCase::from_tokens(&ident),
+        let postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionGreaterThanUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionGreaterThanUpperCamelCase::from_tokens(&ident),
         };
         let (
-            struct_postgresql_type_or_json_type_ident_where_element_position_more_than_double_quotes_token_stream,
-            struct_postgresql_type_or_json_type_ident_where_element_position_more_than_with_2_elements_double_quotes_token_stream,
-            postgresql_type_or_json_type_ident_where_element_position_more_than_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
+            struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream,
+            struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_with_2_elements_double_quotes_token_stream,
+            postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
             const _: () = {
@@ -4413,7 +4413,7 @@ impl PositionMoreThan {
                 extern crate serde as _serde;
                 #[automatically_derived]
                 impl<'de> _serde::Deserialize<'de>
-                for #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case {
+                for #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case {
                     fn deserialize<__D>(
                         __deserializer: __D,
                     ) -> _serde::__private::Result<Self, __D::Error>
@@ -4501,19 +4501,19 @@ impl PositionMoreThan {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
                             marker: _serde::__private::PhantomData<
-                                #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case,
+                                #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case,
                             >,
                             lifetime: _serde::__private::PhantomData<&'de ()>,
                         }
                         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case;
+                            type Value = #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case;
                             fn expecting(
                                 &self,
                                 __formatter: &mut _serde::__private::Formatter,
                             ) -> _serde::__private::fmt::Result {
                                 _serde::__private::Formatter::write_str(
                                     __formatter,
-                                    #struct_postgresql_type_or_json_type_ident_where_element_position_more_than_double_quotes_token_stream,
+                                    #struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream,
                                 )
                             }
                             #[inline]
@@ -4532,7 +4532,7 @@ impl PositionMoreThan {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 0usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_more_than_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
@@ -4545,7 +4545,7 @@ impl PositionMoreThan {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 1usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_more_than_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
@@ -4558,12 +4558,12 @@ impl PositionMoreThan {
                                         return _serde::__private::Err(
                                             _serde::de::Error::invalid_length(
                                                 2usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_more_than_with_2_elements_double_quotes_token_stream,
+                                                &#struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_with_2_elements_double_quotes_token_stream,
                                             ),
                                         );
                                     }
                                 };
-                                match #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                match #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case::try_new(__field0, __field1, __field2) {
                                     Ok(value) => _serde::__private::Ok(value),
                                     Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -4650,7 +4650,7 @@ impl PositionMoreThan {
                                         _serde::__private::de::missing_field("position")?
                                     }
                                 };
-                                match #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case::try_new(__field0, __field1, __field2) {
+                                match #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case::try_new(__field0, __field1, __field2) {
                                     Ok(value) => _serde::__private::Ok(value),
                                     Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -4664,11 +4664,11 @@ impl PositionMoreThan {
                         ];
                         _serde::Deserializer::deserialize_struct(
                             __deserializer,
-                            #postgresql_type_or_json_type_ident_where_element_position_more_than_double_quotes_token_stream,
+                            #postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
                                 marker: _serde::__private::PhantomData::<
-                                    #postgresql_type_or_json_type_ident_where_element_position_more_than_upper_camel_case,
+                                    #postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case,
                                 >,
                                 lifetime: _serde::__private::PhantomData,
                             },
