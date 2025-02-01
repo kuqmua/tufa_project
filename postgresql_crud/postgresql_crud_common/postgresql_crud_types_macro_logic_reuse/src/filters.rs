@@ -467,7 +467,6 @@ impl Between {
     fn generate_impl_deserialize_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-        self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
         element_type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
         let postgresql_type_or_json_type_ident_where_element_between_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
@@ -478,7 +477,7 @@ impl Between {
             struct_postgresql_type_or_json_type_ident_where_element_between_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_between_with_3_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_between_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_between_upper_camel_case, 3, &self_upper_camel_case);
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_between_upper_camel_case, 3);
         quote::quote! {
             const _: () = {
                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -833,7 +832,6 @@ impl Between {
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
-                    &self_upper_camel_case,
                     &where_operator_type_type_token_stream,
                 ),
             },
@@ -888,7 +886,6 @@ impl Between {
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
-                    &self_upper_camel_case,
                     &non_optional_field_type,
                 ),
             },
@@ -971,7 +968,6 @@ impl In {
     fn generate_impl_deserialize_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-        self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
         vec_type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
         let postgresql_type_or_json_type_ident_where_element_in_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
@@ -982,7 +978,7 @@ impl In {
             struct_postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_in_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_in_upper_camel_case, 2, &self_upper_camel_case);
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_in_upper_camel_case, 2);
         quote::quote! {
             const _: () = {
                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -1294,7 +1290,6 @@ impl In {
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
-                    &self_upper_camel_case,
                     &where_operator_type_type_token_stream,
                 ),
             },
@@ -1342,7 +1337,6 @@ impl In {
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
-                    &self_upper_camel_case,
                     &non_optional_field_type,
                 ),
             },
@@ -1422,7 +1416,6 @@ fn generate_regular_expression_impl_deserialize_token_stream(
     ident: &dyn quote::ToTokens,
     regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &(regular_expression,postgresql_type_or_json_type) {
         (
@@ -1446,7 +1439,7 @@ fn generate_regular_expression_impl_deserialize_token_stream(
         struct_postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream,
         struct_postgresql_type_or_json_type_ident_where_element_regular_expression_with_2_elements_double_quotes_token_stream,
         postgresql_type_or_json_type_ident_where_element_regular_expression_double_quotes_token_stream
-    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case, 2, &self_upper_camel_case);
+    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_regular_expression_upper_camel_case, 2);
     let std_string_string = token_patterns::StdStringString;
     quote::quote! {
         const _: () = {
@@ -1759,7 +1752,6 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
-                &self_upper_camel_case,
             ),
         },
         &generate_regular_expression_additional_type_declaration_token_stream(),
@@ -1796,7 +1788,6 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
-                &self_upper_camel_case,
             ),
         },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
@@ -2183,7 +2174,7 @@ impl LengthMoreThan {
             struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2);
         let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
         quote::quote! {
             const _: () = {
@@ -3136,7 +3127,7 @@ impl RangeLength {
                         struct_postgresql_type_ident_where_element_range_length_double_quotes_token_stream,
                         struct_postgresql_type_ident_where_element_range_length_with_2_elements_double_quotes_token_stream,
                         postgresql_type_ident_where_element_range_length_double_quotes_token_stream
-                    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_range_length_upper_camel_case, 2, &self_upper_camel_case);
+                    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_ident_where_element_range_length_upper_camel_case, 2);
                     quote::quote! {
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3468,7 +3459,7 @@ impl BitVecPositionEquals {
             struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case, 2);
         let std_primitive_bool_token_stream = Self::std_primitive_bool_token_stream();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
@@ -3958,7 +3949,7 @@ impl PositionEquals {
             struct_postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_position_equals_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_position_equals_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case, 2);
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
             const _: () = {
@@ -4413,7 +4404,7 @@ impl PositionGreaterThan {
             struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream,
             struct_postgresql_type_or_json_type_ident_where_element_position_greater_than_with_2_elements_double_quotes_token_stream,
             postgresql_type_or_json_type_ident_where_element_position_greater_than_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case, 2, &WhereOperatorName::upper_camel_case(self));
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_position_greater_than_upper_camel_case, 2);
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
         quote::quote! {
             const _: () = {
