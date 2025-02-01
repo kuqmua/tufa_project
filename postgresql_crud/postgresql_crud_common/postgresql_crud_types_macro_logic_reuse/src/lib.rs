@@ -1196,7 +1196,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         
         let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_where_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereUpperCamelCase::from_tokens(&ident);
-        //todo impl try_new + custom serde::Deserialize
         let postgresql_json_type_ident_where_token_stream = {
             quote::quote!{
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema)]
