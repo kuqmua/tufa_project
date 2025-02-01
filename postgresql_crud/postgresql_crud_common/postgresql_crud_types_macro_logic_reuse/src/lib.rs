@@ -14,6 +14,7 @@ enum PostgresqlJsonTypeHandle {
     StdPrimitiveF64,
     StdPrimitiveBool,
     StdStringString,
+    UuidUuid,
 }
 impl PostgresqlJsonTypeHandle {
     fn field_type(&self) -> proc_macro2::TokenStream {
@@ -30,6 +31,29 @@ impl PostgresqlJsonTypeHandle {
             Self::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
             Self::StdPrimitiveBool => quote::quote!{std::primitive::bool},
             Self::StdStringString => quote::quote!{std::string::String},
+            Self::UuidUuid => quote::quote!{uuid::Uuid}
+        }
+    }
+    fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            Self::StdPrimitiveI8 |
+            Self::StdPrimitiveI16 |
+            Self::StdPrimitiveI32 |
+            Self::StdPrimitiveI64 |
+            Self::StdPrimitiveU8 |
+            Self::StdPrimitiveU16 |
+            Self::StdPrimitiveU32 |
+            Self::StdPrimitiveU64 |
+            Self::StdPrimitiveF32 |
+            Self::StdPrimitiveF64 |
+            Self::StdPrimitiveBool |
+            Self::StdStringString => {
+                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{#core_default_default_default_token_stream}
+            },
+            Self::UuidUuid => quote::quote!{
+                uuid::Uuid::new_v4()
+            },
         }
     }
 }
@@ -84,7 +108,7 @@ impl PostgresqlJsonTypePattern {
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
         }
     }
-    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
+    fn initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
             let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -94,10 +118,7 @@ impl PostgresqlJsonTypePattern {
             }
         };
         match &self {
-            Self::FullTypePath => {
-                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote!{#core_default_default_default_token_stream}
-            },
+            Self::FullTypePath => postgresql_json_type_handle.full_type_path_initialization_token_stream(),
             Self::StdOptionOptionFullTypePath => quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)},
             Self::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
             Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream])},
@@ -105,7 +126,7 @@ impl PostgresqlJsonTypePattern {
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)])},
         }
     }
-    fn non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+    fn non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
             let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -115,312 +136,12 @@ impl PostgresqlJsonTypePattern {
             }
         };
         match &self {
-            Self::FullTypePath => {
-                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote!{#core_default_default_default_token_stream}
-            },
+            Self::FullTypePath => postgresql_json_type_handle.full_type_path_initialization_token_stream(),
             Self::StdOptionOptionFullTypePath => quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream},
             Self::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
             Self::StdOptionOptionStdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
             Self::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-        }
-    }
-    fn should_derive_schemars_json_schema(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> ShouldDeriveSchemarsJsonSchema {
-        match (&postgresql_json_type_handle, &self) {
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::FullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::StdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::StdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::StdOptionOptionStdVecVecFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::StdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI8,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI16,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI32,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveI64,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU8,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU16,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU32,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveU64,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF32,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveF64,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdPrimitiveBool,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
-            (
-                PostgresqlJsonTypeHandle::StdStringString,
-                Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            ) => ShouldDeriveSchemarsJsonSchema::True,
         }
     }
 }
@@ -1245,23 +966,34 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             postgresql_json_type_handle,
             postgresql_json_type_pattern
         ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;//PostgresqlJsonType::from((&postgresql_json_type_pattern, &postgresql_json_type_handle))
+        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
         let field_type = &postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
 
         let ident_token_stream = {
-            let maybe_derive_schemars_json_schema_token_stream = match &postgresql_json_type_handle {
-                PostgresqlJsonTypeHandle::StdPrimitiveI8 |
-                PostgresqlJsonTypeHandle::StdPrimitiveI16 |
-                PostgresqlJsonTypeHandle::StdPrimitiveI32 |
-                PostgresqlJsonTypeHandle::StdPrimitiveI64 |
-                PostgresqlJsonTypeHandle::StdPrimitiveU8 |
-                PostgresqlJsonTypeHandle::StdPrimitiveU16 |
-                PostgresqlJsonTypeHandle::StdPrimitiveU32 |
-                PostgresqlJsonTypeHandle::StdPrimitiveU64 |
-                PostgresqlJsonTypeHandle::StdPrimitiveF32 |
-                PostgresqlJsonTypeHandle::StdPrimitiveF64 |
-                PostgresqlJsonTypeHandle::StdPrimitiveBool |
-                PostgresqlJsonTypeHandle::StdStringString => quote::quote!{schemars::JsonSchema,},
+            let maybe_derive_schemars_json_schema_token_stream = {
+                let schemars_json_schema_token_stream = quote::quote!{schemars::JsonSchema,};
+                match &postgresql_json_type_pattern {
+                    PostgresqlJsonTypePattern::FullTypePath => match &postgresql_json_type_handle {
+                        PostgresqlJsonTypeHandle::StdPrimitiveI8 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveI16 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveI32 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveI64 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveU8 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveU16 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveU32 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveU64 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveF32 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveF64 |
+                        PostgresqlJsonTypeHandle::StdPrimitiveBool |
+                        PostgresqlJsonTypeHandle::StdStringString => schemars_json_schema_token_stream,
+                        PostgresqlJsonTypeHandle::UuidUuid => proc_macro2::TokenStream::new(),
+                    },
+                    PostgresqlJsonTypePattern::StdOptionOptionFullTypePath |
+                    PostgresqlJsonTypePattern::StdVecVecFullTypePath |
+                    PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath |
+                    PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath |
+                    PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => schemars_json_schema_token_stream,
+                }
             };
             quote::quote!{
                 #[derive(
@@ -1278,22 +1010,49 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 pub struct #ident(pub #field_type);//todo #[validate(range(min = -128i8, max = 127i8))]
             }
         };
-        let maybe_impl_schemars_json_schema_for_ident_token_stream = match &postgresql_json_type_handle {
-            PostgresqlJsonTypeHandle::StdPrimitiveI8 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI16 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI64 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU8 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU16 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU64 |
-            PostgresqlJsonTypeHandle::StdPrimitiveF32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveF64 |
-            PostgresqlJsonTypeHandle::StdPrimitiveBool |
-            PostgresqlJsonTypeHandle::StdStringString => proc_macro2::TokenStream::new(),
+        let maybe_impl_schemars_json_schema_for_ident_token_stream = match &postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::FullTypePath => match &postgresql_json_type_handle {
+                PostgresqlJsonTypeHandle::StdPrimitiveI8 |
+                PostgresqlJsonTypeHandle::StdPrimitiveI16 |
+                PostgresqlJsonTypeHandle::StdPrimitiveI32 |
+                PostgresqlJsonTypeHandle::StdPrimitiveI64 |
+                PostgresqlJsonTypeHandle::StdPrimitiveU8 |
+                PostgresqlJsonTypeHandle::StdPrimitiveU16 |
+                PostgresqlJsonTypeHandle::StdPrimitiveU32 |
+                PostgresqlJsonTypeHandle::StdPrimitiveU64 |
+                PostgresqlJsonTypeHandle::StdPrimitiveF32 |
+                PostgresqlJsonTypeHandle::StdPrimitiveF64 |
+                PostgresqlJsonTypeHandle::StdPrimitiveBool |
+                PostgresqlJsonTypeHandle::StdStringString => proc_macro2::TokenStream::new(),
+                PostgresqlJsonTypeHandle::UuidUuid => {
+                    quote::quote!{
+                        impl schemars::JsonSchema for Uuid {
+                            fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+                                schemars::_private::alloc::borrow::Cow::Borrowed("Uuid")
+                            }
+                            fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+                                schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::Uuid")
+                            }
+                            fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+                                {
+                                    let mut schema = generator.subschema_for::<std::string::String>();
+                                    schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
+                                    schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
+                                    schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
+                                    schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
+                                    schema
+                                }
+                            }
+                        }
+                    }
+                },
+            },
+            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath |
+            PostgresqlJsonTypePattern::StdVecVecFullTypePath |
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath |
+            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath |
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => proc_macro2::TokenStream::new(),
         };
-        
-
         //todo migrate to newest version of schemars crate then write validation logic.
 
         // pub struct StdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
@@ -1312,7 +1071,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
             &{
-                let content_token_stream = postgresql_json_type_pattern.initialization_token_stream();
+                let content_token_stream = postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle);
                 quote::quote!{
                     Self(#content_token_stream)
                 }

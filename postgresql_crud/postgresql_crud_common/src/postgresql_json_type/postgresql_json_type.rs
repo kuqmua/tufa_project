@@ -115,52 +115,10 @@ pub struct PostgresqlJsonTypeUuidWhereElementEqual {
     pub logical_operator: crate::LogicalOperator,
     pub value: Uuid,
 }
-// impl schemars::JsonSchema for PostgresqlJsonTypeUuidWhereElementEqual {
-//     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-//         schemars::_private::alloc::borrow::Cow::Borrowed("PostgresqlJsonTypeUuidWhereElementEqual")
-//     }
-//     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-//         schemars::_private::alloc::borrow::Cow::Borrowed("server::entry::PostgresqlJsonTypeUuidWhereElementEqual")
-//     }
-//     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
-//         {
-//             let mut schema = ::schemars::Schema::try_from(
-//                 ::serde_json::Value::Object({
-//                     let mut object = ::serde_json::Map::new();
-//                     let _ = object.insert(
-//                         ("type").into(),
-//                         ::serde_json::to_value(&"object").unwrap(),
-//                     );
-//                     object
-//                 }),
-//             ).unwrap();
-//             {
-//                 schemars::_private::insert_object_property::<crate::LogicalOperator>(
-//                     &mut schema,
-//                     "logical_operator",
-//                     false,
-//                     false,
-//                     { generator.subschema_for::<crate::LogicalOperator>() },
-//                 );
-//             }
-//             {
-//                 schemars::_private::insert_object_property::<Uuid>(
-//                     &mut schema,
-//                     "value",
-//                     false,
-//                     false,
-//                     { generator.subschema_for::<Uuid>() },
-//                 );
-//             }
-//             schema
-//         }
-//     }
-// }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeUuidWhereElementEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            // value: ::core::default::Default::default(),
             value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }

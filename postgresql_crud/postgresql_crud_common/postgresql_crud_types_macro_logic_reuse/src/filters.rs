@@ -257,7 +257,7 @@ impl Equal {
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
-            &postgresql_json_type_pattern.should_derive_schemars_json_schema(&postgresql_json_type_handle),
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&variant),
             &Self::generate_additional_default_initialization_token_stream(&{
                 let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
@@ -362,7 +362,7 @@ impl GreaterThan {
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
+            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -862,13 +862,11 @@ impl Between {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let non_optional_field_type = {
-            let (
-                postgresql_json_type_handle,
-                postgresql_json_type_pattern
-            ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-            postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)
-        };
+        let (
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern
+        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
+        let non_optional_field_type = postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle);
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
@@ -896,7 +894,7 @@ impl Between {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(&crate::PostgresqlJsonTypePattern::from(variant).non_optional_initialization_token_stream()),
+            &Self::generate_additional_default_initialization_token_stream(&crate::PostgresqlJsonTypePattern::from(variant).non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &{
                 let start_snake_case = naming::StartSnakeCase;
@@ -1350,7 +1348,7 @@ impl In {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.non_optional_initialization_token_stream()),
+            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
