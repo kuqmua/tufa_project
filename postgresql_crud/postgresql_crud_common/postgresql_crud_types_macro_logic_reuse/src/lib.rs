@@ -1860,15 +1860,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
             #impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream
         };
-        //  if quote::quote!{#ident}.to_string() == "" {
-        //     //  println!("{generated}");
-        //     //  println!("-------");
-        //      macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //          "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-        //          &generated,
-        //      );
-        //      generated = quote::quote!{}
-        //  }
+        // if quote::quote!{#ident}.to_string() == "" {
+        //    //  println!("{generated}");
+        //    //  println!("-------");
+        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
+        //         &generated,
+        //     );
+        //     generated = quote::quote!{}
+        // }
         generated
     }
     let variants_token_stream = 
@@ -1877,10 +1877,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //     PostgresqlJsonType::StdPrimitiveI8,
     //     // PostgresqlJsonType::StdPrimitiveBool,
     //     // PostgresqlJsonType::StdStringString,
-    //     // PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
+    //     PostgresqlJsonType::StdOptionOptionStdPrimitiveI8,
     //     // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
     //     // PostgresqlJsonType::StdOptionOptionStdStringString,
-    //     PostgresqlJsonType::StdVecVecStdPrimitiveI8,
+    //     // PostgresqlJsonType::StdVecVecStdPrimitiveI8,
     // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {

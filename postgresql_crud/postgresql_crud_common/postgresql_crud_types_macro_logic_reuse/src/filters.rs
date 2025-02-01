@@ -258,8 +258,18 @@ impl Equal {
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
             &postgresql_json_type_pattern.should_derive_schemars_json_schema(&postgresql_json_type_handle),
-            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
+            &Self::generate_additional_type_declaration_token_stream(&variant),
+            &Self::generate_additional_default_initialization_token_stream(&{
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                    quote::quote! {
+                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                    }
+                };
+                crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
+            }),
             &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
             &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
         )
