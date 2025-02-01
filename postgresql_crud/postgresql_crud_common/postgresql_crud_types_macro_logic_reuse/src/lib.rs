@@ -184,6 +184,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdPrimitiveF64 => Self::FullTypePath,
             PostgresqlJsonType::StdPrimitiveBool => Self::FullTypePath,
             PostgresqlJsonType::StdStringString => Self::FullTypePath,
+            PostgresqlJsonType::UuidUuid => Self::FullTypePath,
 
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => Self::StdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 => Self::StdOptionOptionFullTypePath,
@@ -197,6 +198,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => Self::StdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePath,
+            PostgresqlJsonType::StdOptionOptionUuidUuid => Self::StdOptionOptionFullTypePath,
 
             PostgresqlJsonType::StdVecVecStdPrimitiveI8 => Self::StdVecVecFullTypePath,
             PostgresqlJsonType::StdVecVecStdPrimitiveI16 => Self::StdVecVecFullTypePath,
@@ -210,6 +212,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdVecVecStdPrimitiveF64 => Self::StdVecVecFullTypePath,
             PostgresqlJsonType::StdVecVecStdPrimitiveBool => Self::StdVecVecFullTypePath,
             PostgresqlJsonType::StdVecVecStdStringString => Self::StdVecVecFullTypePath,
+            PostgresqlJsonType::StdVecVecUuidUuid => Self::StdVecVecFullTypePath,
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => Self::StdOptionOptionStdVecVecFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => Self::StdOptionOptionStdVecVecFullTypePath,
@@ -223,6 +226,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => Self::StdOptionOptionStdVecVecFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => Self::StdOptionOptionStdVecVecFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => Self::StdOptionOptionStdVecVecFullTypePath,
+            PostgresqlJsonType::StdOptionOptionStdVecVecUuidUuid => Self::StdOptionOptionStdVecVecFullTypePath,
 
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => Self::StdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => Self::StdVecVecStdOptionOptionFullTypePath,
@@ -236,6 +240,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => Self::StdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => Self::StdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => Self::StdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonType::StdVecVecStdOptionOptionUuidUuid => Self::StdVecVecStdOptionOptionFullTypePath,
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
@@ -249,6 +254,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionUuidUuid => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
         }
     }
 }
@@ -287,6 +293,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdPrimitiveF64 => Self::FullTypePathNumber,
             PostgresqlJsonType::StdPrimitiveBool => Self::FullTypePathBool,
             PostgresqlJsonType::StdStringString => Self::FullTypePathString,
+            PostgresqlJsonType::UuidUuid => Self::FullTypePathString,
 
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => Self::StdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 => Self::StdOptionOptionFullTypePathNumber,
@@ -300,6 +307,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => Self::StdOptionOptionFullTypePathBool,
             PostgresqlJsonType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePathString,
+            PostgresqlJsonType::StdOptionOptionUuidUuid => Self::StdOptionOptionFullTypePathString,
 
             PostgresqlJsonType::StdVecVecStdPrimitiveI8 => Self::StdVecVecFullTypePathNumber,
             PostgresqlJsonType::StdVecVecStdPrimitiveI16 => Self::StdVecVecFullTypePathNumber,
@@ -313,6 +321,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdVecVecStdPrimitiveF64 => Self::StdVecVecFullTypePathNumber,
             PostgresqlJsonType::StdVecVecStdPrimitiveBool => Self::StdVecVecFullTypePathBool,
             PostgresqlJsonType::StdVecVecStdStringString => Self::StdVecVecFullTypePathString,
+            PostgresqlJsonType::StdVecVecUuidUuid => Self::StdVecVecFullTypePathString,
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => Self::StdOptionOptionStdVecVecFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => Self::StdOptionOptionStdVecVecFullTypePathNumber,
@@ -326,6 +335,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => Self::StdOptionOptionStdVecVecFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => Self::StdOptionOptionStdVecVecFullTypePathBool,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => Self::StdOptionOptionStdVecVecFullTypePathString,
+            PostgresqlJsonType::StdOptionOptionStdVecVecUuidUuid => Self::StdOptionOptionStdVecVecFullTypePathString,
 
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => Self::StdVecVecStdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => Self::StdVecVecStdOptionOptionFullTypePathNumber,
@@ -339,6 +349,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => Self::StdVecVecStdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => Self::StdVecVecStdOptionOptionFullTypePathBool,
             PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => Self::StdVecVecStdOptionOptionFullTypePathString,
+            PostgresqlJsonType::StdVecVecStdOptionOptionUuidUuid => Self::StdVecVecStdOptionOptionFullTypePathString,
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
@@ -352,6 +363,7 @@ impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePatternSpecif
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
+            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionUuidUuid => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
         }
     }
 }
@@ -370,6 +382,7 @@ enum PostgresqlJsonArrayElementType {
     StdPrimitiveF64,
     StdPrimitiveBool,
     StdStringString,
+    UuidUuid,
 
     StdOptionOptionStdPrimitiveI8,
     StdOptionOptionStdPrimitiveI16,
@@ -383,6 +396,7 @@ enum PostgresqlJsonArrayElementType {
     StdOptionOptionStdPrimitiveF64,
     StdOptionOptionStdPrimitiveBool,
     StdOptionOptionStdStringString,
+    StdOptionOptionUuidUuid,
 }
 impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementType {
     type Error = ();
@@ -400,6 +414,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdPrimitiveF64 => Err(()),
             PostgresqlJsonType::StdPrimitiveBool => Err(()),
             PostgresqlJsonType::StdStringString => Err(()),
+            PostgresqlJsonType::UuidUuid => Err(()),
 
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI8 => Err(()),
             PostgresqlJsonType::StdOptionOptionStdPrimitiveI16 => Err(()),
@@ -413,6 +428,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdOptionOptionStdPrimitiveF64 => Err(()),
             PostgresqlJsonType::StdOptionOptionStdPrimitiveBool => Err(()),
             PostgresqlJsonType::StdOptionOptionStdStringString => Err(()),
+            PostgresqlJsonType::StdOptionOptionUuidUuid => Err(()),
 
             PostgresqlJsonType::StdVecVecStdPrimitiveI8 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveI8),
             PostgresqlJsonType::StdVecVecStdPrimitiveI16 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveI16),
@@ -426,6 +442,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdVecVecStdPrimitiveF64 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveF64),
             PostgresqlJsonType::StdVecVecStdPrimitiveBool => Ok(PostgresqlJsonArrayElementType::StdPrimitiveBool),
             PostgresqlJsonType::StdVecVecStdStringString => Ok(PostgresqlJsonArrayElementType::StdStringString),
+            PostgresqlJsonType::StdVecVecUuidUuid => Ok(PostgresqlJsonArrayElementType::UuidUuid),
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI8 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveI8),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveI16 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveI16),
@@ -439,6 +456,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveF64 => Ok(PostgresqlJsonArrayElementType::StdPrimitiveF64),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdPrimitiveBool => Ok(PostgresqlJsonArrayElementType::StdPrimitiveBool),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdStringString => Ok(PostgresqlJsonArrayElementType::StdStringString),
+            PostgresqlJsonType::StdOptionOptionStdVecVecUuidUuid => Ok(PostgresqlJsonArrayElementType::UuidUuid),
 
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI8 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8),
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveI16 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16),
@@ -452,6 +470,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveF64 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64),
             PostgresqlJsonType::StdVecVecStdOptionOptionStdPrimitiveBool => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool),
             PostgresqlJsonType::StdVecVecStdOptionOptionStdStringString => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdStringString),
+            PostgresqlJsonType::StdVecVecStdOptionOptionUuidUuid => Ok(PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid),
 
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16),
@@ -465,6 +484,7 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64 => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdStringString),
+            PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionUuidUuid => Ok(PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid),
         }
     }
 }
@@ -491,6 +511,7 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeH
             PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::StdPrimitiveF64,
             PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::StdPrimitiveBool,
             PostgresqlJsonArrayElementType::StdStringString => Self::StdStringString,
+            PostgresqlJsonArrayElementType::UuidUuid => Self::UuidUuid,
 
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 => Self::StdPrimitiveI8,
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 => Self::StdPrimitiveI16,
@@ -504,6 +525,7 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeH
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdPrimitiveF64,
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdPrimitiveBool,
             PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdStringString,
+            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self::UuidUuid,
         }
     }
 }
@@ -521,7 +543,8 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeP
             PostgresqlJsonArrayElementType::StdPrimitiveF32 |
             PostgresqlJsonArrayElementType::StdPrimitiveF64 |
             PostgresqlJsonArrayElementType::StdPrimitiveBool |
-            PostgresqlJsonArrayElementType::StdStringString => Self::FullTypePath,
+            PostgresqlJsonArrayElementType::StdStringString |
+            PostgresqlJsonArrayElementType::UuidUuid => Self::FullTypePath,
 
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
@@ -534,7 +557,8 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeP
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 |
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePath,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString |
+            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self::StdOptionOptionFullTypePath,
         }
     }
 }
@@ -552,7 +576,8 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeP
             PostgresqlJsonArrayElementType::StdPrimitiveF32 |
             PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::FullTypePathNumber,
             PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::FullTypePathBool,
-            PostgresqlJsonArrayElementType::StdStringString => Self::FullTypePathString,
+            PostgresqlJsonArrayElementType::StdStringString |
+            PostgresqlJsonArrayElementType::UuidUuid => Self::FullTypePathString,
 
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
@@ -565,7 +590,8 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeP
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionFullTypePathNumber,
             PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdOptionOptionFullTypePathBool,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdOptionOptionFullTypePathString,
+            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString |
+            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self::StdOptionOptionFullTypePathString,
         }
     }
 }
@@ -584,6 +610,7 @@ enum PostgresqlJsonType {
     StdPrimitiveF64,
     StdPrimitiveBool,
     StdStringString,
+    UuidUuid,
 
     StdOptionOptionStdPrimitiveI8,
     StdOptionOptionStdPrimitiveI16,
@@ -597,6 +624,7 @@ enum PostgresqlJsonType {
     StdOptionOptionStdPrimitiveF64,
     StdOptionOptionStdPrimitiveBool,
     StdOptionOptionStdStringString,
+    StdOptionOptionUuidUuid,
 
     StdVecVecStdPrimitiveI8,
     StdVecVecStdPrimitiveI16,
@@ -610,6 +638,7 @@ enum PostgresqlJsonType {
     StdVecVecStdPrimitiveF64,
     StdVecVecStdPrimitiveBool,
     StdVecVecStdStringString,
+    StdVecVecUuidUuid,
 
     StdOptionOptionStdVecVecStdPrimitiveI8,
     StdOptionOptionStdVecVecStdPrimitiveI16,
@@ -623,6 +652,7 @@ enum PostgresqlJsonType {
     StdOptionOptionStdVecVecStdPrimitiveF64,
     StdOptionOptionStdVecVecStdPrimitiveBool,
     StdOptionOptionStdVecVecStdStringString,
+    StdOptionOptionStdVecVecUuidUuid,
 
     StdVecVecStdOptionOptionStdPrimitiveI8,
     StdVecVecStdOptionOptionStdPrimitiveI16,
@@ -636,6 +666,7 @@ enum PostgresqlJsonType {
     StdVecVecStdOptionOptionStdPrimitiveF64,
     StdVecVecStdOptionOptionStdPrimitiveBool,
     StdVecVecStdOptionOptionStdStringString,
+    StdVecVecStdOptionOptionUuidUuid,
 
     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8,
     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI16,
@@ -649,6 +680,7 @@ enum PostgresqlJsonType {
     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
     StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     StdOptionOptionStdVecVecStdOptionOptionStdStringString,
+    StdOptionOptionStdVecVecStdOptionOptionUuidUuid,
 }
 impl PostgresqlJsonType {
     fn to_postgresql_json_type_handle_and_postgresql_json_type_pattern(&self) -> (PostgresqlJsonTypeHandle, PostgresqlJsonTypePattern) {
@@ -701,6 +733,10 @@ impl PostgresqlJsonType {
                 PostgresqlJsonTypeHandle::StdStringString,
                 PostgresqlJsonTypePattern::FullTypePath,
             ),
+            Self::UuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
+                PostgresqlJsonTypePattern::FullTypePath,
+            ),
 
             Self::StdOptionOptionStdPrimitiveI8 => (
                 PostgresqlJsonTypeHandle::StdPrimitiveI8,
@@ -748,6 +784,10 @@ impl PostgresqlJsonType {
             ),
             Self::StdOptionOptionStdStringString => (
                 PostgresqlJsonTypeHandle::StdStringString,
+                PostgresqlJsonTypePattern::StdOptionOptionFullTypePath,
+            ),
+            Self::StdOptionOptionUuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
                 PostgresqlJsonTypePattern::StdOptionOptionFullTypePath,
             ),
 
@@ -799,6 +839,10 @@ impl PostgresqlJsonType {
                 PostgresqlJsonTypeHandle::StdStringString,
                 PostgresqlJsonTypePattern::StdVecVecFullTypePath,
             ),
+            Self::StdVecVecUuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
+                PostgresqlJsonTypePattern::StdVecVecFullTypePath,
+            ),
 
             Self::StdOptionOptionStdVecVecStdPrimitiveI8 => (
                 PostgresqlJsonTypeHandle::StdPrimitiveI8,
@@ -846,6 +890,10 @@ impl PostgresqlJsonType {
             ),
             Self::StdOptionOptionStdVecVecStdStringString => (
                 PostgresqlJsonTypeHandle::StdStringString,
+                PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath,
+            ),
+            Self::StdOptionOptionStdVecVecUuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
                 PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath,
             ),
 
@@ -897,6 +945,10 @@ impl PostgresqlJsonType {
                 PostgresqlJsonTypeHandle::StdStringString,
                 PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath,
             ),
+            Self::StdVecVecStdOptionOptionUuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
+                PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath,
+            ),
 
             Self::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8 => (
                 PostgresqlJsonTypeHandle::StdPrimitiveI8,
@@ -944,6 +996,10 @@ impl PostgresqlJsonType {
             ),
             Self::StdOptionOptionStdVecVecStdOptionOptionStdStringString => (
                 PostgresqlJsonTypeHandle::StdStringString,
+                PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+            ),
+            Self::StdOptionOptionStdVecVecStdOptionOptionUuidUuid => (
+                PostgresqlJsonTypeHandle::UuidUuid,
                 PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
             ),
         }
@@ -1026,12 +1082,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypeHandle::StdStringString => proc_macro2::TokenStream::new(),
                 PostgresqlJsonTypeHandle::UuidUuid => {
                     quote::quote!{
-                        impl schemars::JsonSchema for Uuid {
+                        impl schemars::JsonSchema for UuidUuid {
                             fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed("Uuid")
+                                schemars::_private::alloc::borrow::Cow::Borrowed("UuidUuid")
                             }
                             fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::Uuid")
+                                schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidUuid")
                             }
                             fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
                                 {
@@ -1640,6 +1696,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //     // PostgresqlJsonType::StdOptionOptionStdPrimitiveBool,
     //     // PostgresqlJsonType::StdOptionOptionStdStringString,
     //     // PostgresqlJsonType::StdVecVecStdPrimitiveI8,
+    //     PostgresqlJsonType::UuidUuid,
     // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {

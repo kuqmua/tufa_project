@@ -53,7 +53,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         #postgresql_crud_path_token_stream AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
 
-    let postgresql_crud_uuid_option_to_update_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidOptionToUpdate};//todo reuse
+    let postgresql_crud_uuid_option_to_update_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionToUpdate};//todo reuse
 
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
@@ -717,7 +717,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &ident_field_to_read_with_id_upper_camel_case,
                         &quote::quote!{
                             #[serde(rename(serialize = #id_snake_case_double_quotes_token_stream, deserialize = #id_snake_case_double_quotes_token_stream))]
-                             Id(#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidFieldReader),//todo reuse
+                             Id(#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidFieldReader),//todo reuse
                         },
                     );
                     (
@@ -794,7 +794,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let maybe_id_token_stream = if contains_id {
                         quote::quote!{
                             #maybe_serde_skip_serializing_if_option_is_none_token_stream
-                            #id_snake_case: std::option::Option<#postgresql_crud_path_token_stream Value<#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidOptionsToRead>>,
+                            #id_snake_case: std::option::Option<#postgresql_crud_path_token_stream Value<#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionsToRead>>,
                         }
                     }
                     else {
@@ -1123,7 +1123,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let maybe_id_serde_de_seq_access_next_element_token_stream = if contains_id {
                                 generate_serde_de_seq_access_next_element_token_stream(
                                     0,
-                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidOptionsToRead},//todo reuse
+                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionsToRead},//todo reuse
                                 )
                             }
                             else {
@@ -1176,7 +1176,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let maybe_id_mut_field_index_serde_private_option_token_stream = if contains_id {
                                 generate_mut_field_index_serde_private_option_token_stream(
                                     0,
-                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidOptionsToRead},//todo
+                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionsToRead},//todo
                                 )
                             }
                             else {
@@ -1225,7 +1225,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 generate_field_initialization_token_stream(
                                     0,
                                     &id_snake_case_double_quotes_token_stream,
-                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidOptionsToRead},//todo reuse
+                                    &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionsToRead},//todo reuse
                                 )
                             }
                             else {
@@ -4434,7 +4434,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         &quote::quote!{#id_upper_camel_case},
                                         &id_snake_case_double_quotes_token_stream,
                                         &value_snake_case_double_quotes_token_stream,
-                                        &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::Uuid},
+                                        &quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::UuidUuid},
                                     );
                                     quote::quote!{#value,}
                                 }
