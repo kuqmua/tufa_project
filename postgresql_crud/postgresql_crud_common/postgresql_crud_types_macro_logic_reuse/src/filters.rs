@@ -257,7 +257,7 @@ impl Equal {
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &postgresql_json_type_pattern.should_derive_schemars_json_schema(&postgresql_json_type_handle),
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
             &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
