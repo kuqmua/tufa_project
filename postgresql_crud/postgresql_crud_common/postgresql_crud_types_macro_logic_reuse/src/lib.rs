@@ -1996,49 +1996,58 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 }
 
 fn generate_postgresql_type_or_json_type_where_token_stream(
-    postgresql_type_or_json_type: &PostgresqlCrudOrJsonType,
-    ident: &Ident,
+    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
+    ident: &syn::Ident,
 ) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
-    let postgresql_json_type_ident_where_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereUpperCamelCase::from_tokens(&ident);
-    let postgresql_json_type_ident_where_token_stream = {
+    let postgresql_type_or_json_type_ident_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+        PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+        PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+    };
+    let postgresql_type_or_json_type_ident_where_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+        PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident),
+        PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereUpperCamelCase::from_tokens(&ident),
+    };
+    let postgresql_type_or_json_type_ident_where_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema)]
-            pub struct #postgresql_json_type_ident_where_upper_camel_case {
+            pub struct #postgresql_type_or_json_type_ident_where_upper_camel_case {
                 logical_operator: crate::LogicalOperator,
-                value: std::vec::Vec<#postgresql_json_type_ident_where_element_upper_camel_case>,
+                value: std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
             }
         }
     };
-    let postgresql_json_type_ident_where_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+    let postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+        PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+    };
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-    let postgresql_json_type_ident_where_try_new_error_named_token_stream = {
+    let postgresql_type_or_json_type_ident_where_try_new_error_named_token_stream = {
         quote::quote!{
             #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #postgresql_json_type_ident_where_try_new_error_named_upper_camel_case {
+            pub enum #postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case {
                 #is_empty_upper_camel_case {
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
                 #not_unique_upper_camel_case {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    value: #postgresql_json_type_ident_where_element_upper_camel_case,
+                    value: #postgresql_type_or_json_type_ident_where_element_upper_camel_case,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
             }
         }
     };
-    let impl_postgresql_json_type_ident_where_try_new_token_stream = {
+    let impl_postgresql_type_or_json_type_ident_where_try_new_token_stream = {
         let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
         let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
         quote::quote!{
-            impl #postgresql_json_type_ident_where_upper_camel_case {
+            impl #postgresql_type_or_json_type_ident_where_upper_camel_case {
                 fn try_new(
                     #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
-                    value: std::vec::Vec<#postgresql_json_type_ident_where_element_upper_camel_case>,
-                ) -> Result<Self, #postgresql_json_type_ident_where_try_new_error_named_upper_camel_case> {
+                    value: std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
+                ) -> Result<Self, #postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case> {
                     if value.is_empty() {
-                        return Err(#postgresql_json_type_ident_where_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
+                        return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -2049,7 +2058,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                             if !acc.contains(&element) {
                                 acc.push(element);
                             } else {
-                                return Err(#postgresql_json_type_ident_where_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
+                                return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
                                     value: element.clone(),
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
@@ -2064,18 +2073,18 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
             }
         }
     };
-    let impl_serde_deserialize_for_postgresql_json_type_ident_where_token_stream = {
+    let impl_serde_deserialize_for_postgresql_type_or_json_type_ident_where_token_stream = {
         let (
             struct_postgresql_json_type_ident_where_double_quotes_token_stream,
             struct_postgresql_json_type_ident_where_with_2_elements_double_quotes_token_stream,
             postgresql_json_type_ident_where_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_json_type_ident_where_upper_camel_case, 2);
+        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_upper_camel_case, 2);
         quote::quote!{
             const _: () = {
                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                 extern crate serde as _serde;
                 #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for #postgresql_json_type_ident_where_upper_camel_case {
+                impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_upper_camel_case {
                     fn deserialize<__D>(
                         __deserializer: __D,
                     ) -> _serde::__private::Result<Self, __D::Error>
@@ -2158,11 +2167,11 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                         }
                         #[doc(hidden)]
                         struct __Visitor<'de> {
-                            marker: _serde::__private::PhantomData<#postgresql_json_type_ident_where_upper_camel_case>,
+                            marker: _serde::__private::PhantomData<#postgresql_type_or_json_type_ident_where_upper_camel_case>,
                             lifetime: _serde::__private::PhantomData<&'de ()>,
                         }
                         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_json_type_ident_where_upper_camel_case;
+                            type Value = #postgresql_type_or_json_type_ident_where_upper_camel_case;
                             fn expecting(
                                 &self,
                                 __formatter: &mut _serde::__private::Formatter,
@@ -2194,7 +2203,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                     }
                                 };
                                 let __field1 = match _serde::de::SeqAccess::next_element::<
-                                    std::vec::Vec<#postgresql_json_type_ident_where_element_upper_camel_case>,
+                                    std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
                                 >(&mut __seq)? {
                                     _serde::__private::Some(__value) => __value,
                                     _serde::__private::None => {
@@ -2206,7 +2215,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                         );
                                     }
                                 };
-                                match #postgresql_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
+                                match #postgresql_type_or_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
                                     Ok(value) => serde::__private::Ok(value),
                                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -2222,7 +2231,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                 let mut __field0: _serde::__private::Option<
                                     crate::LogicalOperator,
                                 > = _serde::__private::None;
-                                let mut __field1: _serde::__private::Option<std::vec::Vec<#postgresql_json_type_ident_where_element_upper_camel_case>> = _serde::__private::None;
+                                let mut __field1: _serde::__private::Option<std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>> = _serde::__private::None;
                                 while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                     __Field,
                                 >(&mut __map)? {
@@ -2249,7 +2258,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                             }
                                             __field1 = _serde::__private::Some(
                                                 _serde::de::MapAccess::next_value::<
-                                                    std::vec::Vec<#postgresql_json_type_ident_where_element_upper_camel_case>,
+                                                    std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
                                                 >(&mut __map)?,
                                             );
                                         }
@@ -2272,7 +2281,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                         _serde::__private::de::missing_field("value")?
                                     }
                                 };
-                                match #postgresql_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
+                                match #postgresql_type_or_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
                                     Ok(value) => serde::__private::Ok(value),
                                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
                                 }
@@ -2285,7 +2294,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                             #postgresql_json_type_ident_where_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
-                                marker: _serde::__private::PhantomData::<#postgresql_json_type_ident_where_upper_camel_case>,
+                                marker: _serde::__private::PhantomData::<#postgresql_type_or_json_type_ident_where_upper_camel_case>,
                                 lifetime: _serde::__private::PhantomData,
                             },
                         )
@@ -2294,9 +2303,9 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
             };
         }
     };
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_token_stream = {
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream = {
         quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_ident_where_upper_camel_case {
+            impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_or_json_type_ident_where_upper_camel_case {
                 fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                     let mut acc = std::string::String::default();
                     let mut is_need_to_add_logical_operator_inner_handle = false;
@@ -2323,8 +2332,8 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
             }
         }
     };
-    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-        &postgresql_json_type_ident_where_upper_camel_case,
+    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_or_json_type_ident_where_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+        &postgresql_type_or_json_type_ident_where_upper_camel_case,
         &quote::quote!{
             Self {
                 logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -2333,12 +2342,12 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
         },
     );
     quote::quote!{
-        #postgresql_json_type_ident_where_token_stream
-        #postgresql_json_type_ident_where_try_new_error_named_token_stream
-        #impl_postgresql_json_type_ident_where_try_new_token_stream
-        #impl_serde_deserialize_for_postgresql_json_type_ident_where_token_stream
-        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_ident_where_token_stream
-        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_where_token_stream
+        #postgresql_type_or_json_type_ident_where_token_stream
+        #postgresql_type_or_json_type_ident_where_try_new_error_named_token_stream
+        #impl_postgresql_type_or_json_type_ident_where_try_new_token_stream
+        #impl_serde_deserialize_for_postgresql_type_or_json_type_ident_where_token_stream
+        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream
+        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_or_json_type_ident_where_token_stream
     }
 }
 
