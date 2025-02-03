@@ -517,7 +517,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["bit", "vec", "position", "equals"],
     ["position", "is", "less", "than", "zero"],
     ["position", "greater", "than"],
-    ["position", "case", "sensitive", "regular", "expression"]
+    ["position", "case", "sensitive", "regular", "expression"],
+    ["position", "case", "insensitive", "regular", "expression"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

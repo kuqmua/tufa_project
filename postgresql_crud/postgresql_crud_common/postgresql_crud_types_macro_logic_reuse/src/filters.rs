@@ -4198,3 +4198,117 @@ impl PositionCaseSensitiveRegularExpression {
         )
     }
 }
+
+pub struct PositionCaseInsensitiveRegularExpression;
+impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase
+    }
+}
+impl PositionCaseInsensitiveRegularExpression {
+    fn generate_try_new_content_token_stream(
+        ident: &dyn quote::ToTokens,
+        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    ) -> proc_macro2::TokenStream {
+        let postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        };
+        generate_position_filter_try_new_content_token_stream(
+            &ident,
+            &postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_try_new_error_named_upper_camel_case,
+        )
+    }
+    fn generate_impl_deserialize_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    ) -> proc_macro2::TokenStream {
+        let postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
+        };
+        generate_position_filter_impl_deserialize_token_stream(
+            &postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_upper_camel_case,
+            &token_patterns::StdStringString,
+        )
+    }
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(first_increment) => {
+                    *#increment_snake_case = first_increment;
+                    match #increment_snake_case.checked_add(1) {
+                        Some(second_increment) => {
+                            *#increment_snake_case = second_increment;
+                            Ok(format!(
+                                "{}({}->>${} ~* ${})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
+                                first_increment,
+                                second_increment,
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
+    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let position_snake_case = naming::PositionSnakeCase;
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+            #query_snake_case
+        }
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        variant: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &postgresql_type_or_json_type,
+            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            crate::ShouldWhereElementFieldsBePublic::False {
+                ident: &variant,
+                postfix: &self_upper_camel_case,
+                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                ),
+                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                )
+            },
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &additional_type_declaration_token_stream,
+            &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream()
+        )
+    }
+}
