@@ -4005,18 +4005,6 @@ impl PositionGreaterThan {
     fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
         naming::PositionIsLessThanZeroUpperCamelCase
     }
-    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
-        let position_snake_case = Self::position_snake_case();
-        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
-        quote::quote!{
-            #position_is_less_than_zero_upper_camel_case {
-                #[eo_to_std_string_string_serialize_deserialize]
-                #position_snake_case: #std_primitive_i32_token_stream,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            },
-        }
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
