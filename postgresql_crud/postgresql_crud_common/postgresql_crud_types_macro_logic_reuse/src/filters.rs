@@ -3386,7 +3386,7 @@ impl RangeLength {
         )
     }
 }
-
+//todo maybe rename it as primitive element position filter? or something
 fn generate_position_filter_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;
     let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
@@ -3703,6 +3703,15 @@ fn generate_position_filter_impl_deserialize_token_stream(
         };
     }
 }
+fn generate_position_filter_additional_type_declaration_token_stream(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let position_snake_case = naming::PositionSnakeCase;
+    let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
+    quote::quote!{
+        #value_snake_case: #value_type_token_stream,
+        #position_snake_case: #std_primitive_i32_token_stream,
+    }
+}
 
 pub struct BitVecPositionEquals;
 impl WhereOperatorName for BitVecPositionEquals {
@@ -3750,16 +3759,6 @@ impl BitVecPositionEquals {
             &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
             &Self::std_primitive_bool_token_stream(),
         )
-    }
-    fn generate_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let std_primitive_bool_token_stream = Self::std_primitive_bool_token_stream();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
-        quote::quote!{
-            #value_snake_case: #std_primitive_bool_token_stream,
-            #position_snake_case: #std_primitive_i32_token_stream,
-        }
     }
     fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
@@ -3823,7 +3822,7 @@ impl BitVecPositionEquals {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&Self::std_primitive_bool_token_stream());
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -3895,15 +3894,6 @@ impl PositionEquals {
             postgresql_json_array_element_type,
         )
     }
-    fn generate_additional_type_declaration_token_stream(postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
-        quote::quote!{
-            #value_snake_case: #postgresql_json_array_element_type,
-            #position_snake_case: #std_primitive_i32_token_stream,
-        }
-    }
     fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
@@ -3974,7 +3964,7 @@ impl PositionEquals {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -4062,15 +4052,6 @@ impl PositionGreaterThan {
             postgresql_json_array_element_type,
         )
     }
-    fn generate_additional_type_declaration_token_stream(postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
-        quote::quote!{
-            #value_snake_case: #postgresql_json_array_element_type,
-            #position_snake_case: #std_primitive_i32_token_stream,
-        }
-    }
     fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
@@ -4141,7 +4122,7 @@ impl PositionGreaterThan {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -4216,16 +4197,6 @@ impl PositionCaseSensitiveRegularExpression {
             &token_patterns::StdStringString,
         )
     }
-    fn generate_additional_type_declaration_token_stream(postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
-        let std_string_string = token_patterns::StdStringString;
-        quote::quote!{
-            #value_snake_case: #std_string_string,
-            #position_snake_case: #std_primitive_i32_token_stream,
-        }
-    }
     fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
@@ -4288,7 +4259,7 @@ impl PositionCaseSensitiveRegularExpression {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
