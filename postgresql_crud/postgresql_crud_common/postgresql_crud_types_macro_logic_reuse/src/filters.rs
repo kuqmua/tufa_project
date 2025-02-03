@@ -3390,7 +3390,7 @@ impl RangeLength {
 fn generate_position_filter_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;
     let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
-    let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
+    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
     quote::quote!{
         #position_is_less_than_zero_upper_camel_case {
             #[eo_to_std_string_string_serialize_deserialize]
@@ -3431,7 +3431,7 @@ fn generate_position_filter_impl_deserialize_token_stream(
         struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
         postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream
     ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, 2);
-    let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
+    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
     quote::quote! {
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3706,7 +3706,7 @@ fn generate_position_filter_impl_deserialize_token_stream(
 fn generate_position_filter_additional_type_declaration_token_stream(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
-    let std_primitive_i32_token_stream = quote::quote!{std::primitive::i32};
+    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
     quote::quote!{
         #value_snake_case: #value_type_token_stream,
         #position_snake_case: #std_primitive_i32_token_stream,
@@ -3729,18 +3729,8 @@ impl WhereOperatorName for BitVecPositionEquals {
     }
 }
 impl BitVecPositionEquals {
-    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::bool}
-    }
-    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
-    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::i32}
-    }
     fn position_snake_case() -> naming::PositionSnakeCase {
         naming::PositionSnakeCase
-    }
-    fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
-        naming::PositionIsLessThanZeroUpperCamelCase
     }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
@@ -3766,7 +3756,7 @@ impl BitVecPositionEquals {
         };
         generate_position_filter_impl_deserialize_token_stream(
             &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
-            &Self::std_primitive_bool_token_stream(),
+            &token_patterns::StdPrimitiveBool,
         )
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
@@ -3822,7 +3812,7 @@ impl BitVecPositionEquals {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&Self::std_primitive_bool_token_stream());
+        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdPrimitiveBool);
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -3853,18 +3843,8 @@ impl WhereOperatorName for PositionEquals {
     }
 }
 impl PositionEquals {
-    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::bool}
-    }
-    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
-    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::i32}
-    }
     fn position_snake_case() -> naming::PositionSnakeCase {
         naming::PositionSnakeCase
-    }
-    fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
-        naming::PositionIsLessThanZeroUpperCamelCase
     }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
