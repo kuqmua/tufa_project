@@ -1236,10 +1236,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let position_equals = crate::filters::PositionEquals;
             let position_greater_than = crate::filters::PositionGreaterThan;
             let position_case_sensitive_regular_expression = crate::filters::PositionCaseSensitiveRegularExpression;
+            let position_case_insensitive_regular_expression = crate::filters::PositionCaseInsensitiveRegularExpression;
             let (
                 maybe_postgresql_json_type_ident_where_element_position_equals,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
              ) = match PostgresqlJsonArrayElementType::try_from(variant) {
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
@@ -1251,8 +1253,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
                     },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                    },
                 ),
                 Err(_) => (
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
@@ -1479,6 +1485,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression {
                             vec.push(&position_case_sensitive_regular_expression);
                         }
+                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression {
+                            vec.push(&position_case_insensitive_regular_expression);
+                        }
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
@@ -1489,6 +1498,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     #postgresql_json_type_ident_where_element_length_more_than_token_stream
                     #maybe_postgresql_json_type_ident_where_element_position_equals
                     #maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression
+                    #maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
