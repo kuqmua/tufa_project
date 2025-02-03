@@ -3399,6 +3399,29 @@ fn generate_position_filter_try_new_error_named_variants_token_stream() -> proc_
         },
     }
 }
+fn generate_position_filter_try_new_content_token_stream(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type_ident_where_element_position_filter_try_new_error_named_upper_camel_case: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let position_snake_case = naming::PositionSnakeCase;
+    let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
+    quote::quote!{
+        if #position_snake_case >= 0 {
+            Ok(Self {
+                logical_operator,
+                #value_snake_case,
+                #position_snake_case,
+            })
+        }
+        else {
+            Err(#postgresql_type_or_json_type_ident_where_element_position_filter_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
+                #position_snake_case,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 fn generate_position_filter_impl_deserialize_token_stream(
     postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     value_type_token_stream: &dyn quote::ToTokens,
@@ -3705,28 +3728,14 @@ impl BitVecPositionEquals {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
             crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
-        quote::quote!{
-            if #position_snake_case >= 0 {
-                Ok(Self {
-                    logical_operator,
-                    #value_snake_case,
-                    #position_snake_case,
-                })
-            }
-            else {
-                Err(#postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
-                    #position_snake_case,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_position_filter_try_new_content_token_stream(
+            &ident,
+            &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case,
+        )
     }
     fn generate_impl_deserialize_token_stream(
         &self,
@@ -3862,28 +3871,14 @@ impl PositionEquals {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
             crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
-        quote::quote!{
-            if #position_snake_case >= 0 {
-                Ok(Self {
-                    logical_operator,
-                    #value_snake_case,
-                    #position_snake_case,
-                })
-            }
-            else {
-                Err(#postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
-                    #position_snake_case,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_position_filter_try_new_content_token_stream(
+            &ident,
+            &postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case,
+        )
     }
     fn generate_impl_deserialize_token_stream(
         &self,
@@ -4043,28 +4038,14 @@ impl PositionGreaterThan {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
             crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
-        quote::quote!{
-            if #position_snake_case >= 0 {
-                Ok(Self {
-                    logical_operator,
-                    #value_snake_case,
-                    #position_snake_case,
-                })
-            }
-            else {
-                Err(#postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
-                    #position_snake_case,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_position_filter_try_new_content_token_stream(
+            &ident,
+            &postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case,
+        )
     }
     fn generate_impl_deserialize_token_stream(
         &self,
@@ -4212,28 +4193,14 @@ impl PositionCaseSensitiveRegularExpression {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let position_snake_case = Self::position_snake_case();
-        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
             crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
-        quote::quote!{
-            if #position_snake_case >= 0 {
-                Ok(Self {
-                    logical_operator,
-                    #value_snake_case,
-                    #position_snake_case,
-                })
-            }
-            else {
-                Err(#postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
-                    #position_snake_case,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_position_filter_try_new_content_token_stream(
+            &ident,
+            &postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case,
+        )
     }
     fn generate_impl_deserialize_token_stream(
         &self,
