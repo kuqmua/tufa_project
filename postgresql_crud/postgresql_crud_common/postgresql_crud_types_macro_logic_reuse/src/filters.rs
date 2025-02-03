@@ -2147,7 +2147,7 @@ impl LengthMoreThan {
         let length_more_than_snake_case = Self::length_more_than_snake_case();
         let length_is_negative_upper_camel_case = Self::length_is_negative_upper_camel_case();
         quote::quote!{
-            if #length_more_than_snake_case > -1 {
+            if #length_more_than_snake_case >= 0 {
                 Ok(Self{
                     logical_operator,
                     #length_more_than_snake_case
