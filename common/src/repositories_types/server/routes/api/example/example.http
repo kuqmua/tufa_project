@@ -41,15 +41,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
       "std_primitive_i8": 0,
-      "std_option_option_std_primitive_i8": null,
       "std_vec_vec_std_primitive_i8": [
-        0
-      ],
-      "std_option_option_std_vec_vec_std_primitive_i8": null,
-      "std_vec_vec_std_option_option_std_primitive_i8": [
-        0, null
-      ],
-      "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": null
+        0,2,3
+      ]
     }
   }
 ]
@@ -128,220 +122,66 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #           "logical_operator": "Or",
       #           "value": 0
       #         }
-      #       }
-      #       # ,
-      #       # {
-      #       #   "GreaterThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "Between": {
-      #       #     "logical_operator": "Or",
-      #       #     "start": 0,
-      #       #     "end": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "In": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       0
-      #       #     ]
-      #       #   }
-      #       # }
-      #     ]
-      #   }
-      # }
-      # ,
-      # {
-      #   "StdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
+      #       },
       #       {
-      #         "Equal": {
+      #         "GreaterThan": {
       #           "logical_operator": "Or",
-      #           "value": null
+      #           "value": 0
       #         }
-      #       }
-      #       # ,
-      #       # {
-      #       #   "GreaterThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "Between": {
-      #       #     "logical_operator": "Or",
-      #       #     "start": 0,
-      #       #     "end": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "In": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       0
-      #       #     ]
-      #       #   }
-      #       # }
-      #     ]
-      #   }
-      # }
-      # ,
-      # {
-      #   "StdVecVecStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
+      #       },
       #       {
-      #         "Equal": {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
       #           "logical_operator": "Or",
       #           "value": [
       #             0
       #           ]
       #         }
       #       }
-      #       # ,
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "length_more_than": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "PositionEquals": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "PositionGreaterThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # }
       #     ]
       #   }
-      # }
-      # ,
-      # {
-      #   "StdOptionOptionStdVecVecStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": null
-      #         }
-      #       }
-      #       # ,
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "length_more_than": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "PositionEquals": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "PositionGreaterThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # }
-      #     ]
-      #   }
-      # }
-      # ,
-      # {
-      #   "StdVecVecStdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionGreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # }
-      # ,
-      # {
-      #   "StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionGreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0,
-      #           "position": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # }
+      # },
+      {
+        "StdVecVecStdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # },
+            # {
+            #   "LengthMoreThan": {
+            #     "logical_operator": "Or",
+            #     "length_more_than": 0
+            #   }
+            # },
+            # {
+            #   "PositionEquals": {
+            #     "logical_operator": "Or",
+            #     "value": 0,
+            #     "position": 0
+            #   }
+            # },
+            {
+              "PositionGreaterThan": {
+                "logical_operator": "Or",
+                "value": 1,
+                "position": 2
+              }
+            }
+          ]
+        }
+      }
     ]
   },
   "select": [
@@ -350,38 +190,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     # },
     {
       "object_animal_as_jsonb_not_null": [
-        {
-          "std_primitive_i8": {}
-        },
-        {
-          "std_option_option_std_primitive_i8": {}
-        },
+        # {
+        #   "std_primitive_i8": {}
+        # },
         {
           "std_vec_vec_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_option_option_std_vec_vec_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_vec_vec_std_option_option_std_primitive_i8": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_option_option_std_vec_vec_std_option_option_std_primitive_i8": {
             "pagination": {
               "limit": 3,
               "offset": 0

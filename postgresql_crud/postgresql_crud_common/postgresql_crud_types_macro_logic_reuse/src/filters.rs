@@ -4248,3 +4248,186 @@ impl PositionGreaterThan {
         )
     }
 }
+
+pub struct PositionCaseSensitiveRegularExpression;
+impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase
+    }
+}
+impl PositionCaseSensitiveRegularExpression {
+    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{std::primitive::bool}
+    }
+    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
+    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{std::primitive::i32}
+    }
+    fn position_snake_case() -> naming::PositionSnakeCase {
+        naming::PositionSnakeCase
+    }
+    fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
+        naming::PositionIsLessThanZeroUpperCamelCase
+    }
+    fn generate_try_new_error_named_variants_token_stream(
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let position_snake_case = Self::position_snake_case();
+        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
+        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        quote::quote!{
+            #position_is_less_than_zero_upper_camel_case {
+                #[eo_to_std_string_string_serialize_deserialize]
+                #position_snake_case: #std_primitive_i32_token_stream,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            },
+        }
+    }
+    fn generate_try_new_content_token_stream(
+        ident: &dyn quote::ToTokens,
+        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    ) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
+        let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        };
+        quote::quote!{
+            if #position_snake_case >= 0 {
+                Ok(Self {
+                    logical_operator,
+                    #value_snake_case,
+                    #position_snake_case,
+                })
+            }
+            else {
+                Err(#postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case::#position_is_less_than_zero_upper_camel_case {
+                    #position_snake_case,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
+    fn generate_impl_deserialize_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType
+    ) -> proc_macro2::TokenStream {
+        let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
+        };
+        generate_position_filter_impl_deserialize_token_stream(
+            &postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_upper_camel_case,
+            postgresql_json_array_element_type,
+        )
+    }
+    fn generate_additional_type_declaration_token_stream(postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType) -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        quote::quote!{
+            #value_snake_case: #postgresql_json_array_element_type,
+            #position_snake_case: #std_primitive_i32_token_stream,
+        }
+    }
+    fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            }
+        };
+        quote::quote!{
+            #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
+            #position_snake_case: #core_default_default_default,
+        }
+    }
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let column_snake_case = naming::ColumnSnakeCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(first_increment) => {
+                    *#increment_snake_case = first_increment;
+                    match #increment_snake_case.checked_add(1) {
+                        Some(second_increment) => {
+                            *#increment_snake_case = second_increment;
+                            Ok(format!(
+                                "{}({}->${} > ${})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
+                                first_increment,
+                                second_increment,
+                            ))
+                        },
+                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    }
+    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+        let value_snake_case = naming::ValueSnakeCase;
+        let query_snake_case = naming::QuerySnakeCase;
+        let position_snake_case = Self::position_snake_case();
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
+            #query_snake_case
+        }
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        variant: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &postgresql_type_or_json_type,
+            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            crate::ShouldWhereElementFieldsBePublic::False {
+                ident: &variant,
+                postfix: &self_upper_camel_case,
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&postgresql_json_array_element_type),
+                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                ),
+                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
+                    &variant,
+                    &postgresql_type_or_json_type,
+                    &postgresql_json_array_element_type,
+                )
+            },
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &additional_type_declaration_token_stream,
+            &Self::generate_additional_default_initialization_token_stream(),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream()
+        )
+    }
+}
