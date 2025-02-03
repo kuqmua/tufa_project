@@ -239,3 +239,24 @@ impl quote::ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
         quote::quote!{#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveBool;
+impl quote::ToTokens for StdPrimitiveBool {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::bool}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveI32;
+impl quote::ToTokens for StdPrimitiveI32 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::i32}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveI64;
+impl quote::ToTokens for StdPrimitiveI64 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::i64}.to_tokens(tokens)
+    }
+}
