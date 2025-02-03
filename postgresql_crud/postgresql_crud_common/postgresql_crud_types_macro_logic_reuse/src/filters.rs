@@ -4086,9 +4086,7 @@ impl PositionGreaterThan {
     fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
         naming::PositionIsLessThanZeroUpperCamelCase
     }
-    fn generate_try_new_error_named_variants_token_stream(
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
-    ) -> proc_macro2::TokenStream {
+    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
         let position_snake_case = Self::position_snake_case();
         let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
@@ -4228,7 +4226,7 @@ impl PositionGreaterThan {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&postgresql_json_array_element_type),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &variant,
@@ -4269,9 +4267,7 @@ impl PositionCaseSensitiveRegularExpression {
     fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
         naming::PositionIsLessThanZeroUpperCamelCase
     }
-    fn generate_try_new_error_named_variants_token_stream(
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
-    ) -> proc_macro2::TokenStream {
+    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
         let position_snake_case = Self::position_snake_case();
         let position_is_less_than_zero_upper_camel_case = Self::position_is_less_than_zero_upper_camel_case();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
@@ -4314,7 +4310,6 @@ impl PositionCaseSensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType
     ) -> proc_macro2::TokenStream {
         let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
@@ -4322,15 +4317,16 @@ impl PositionCaseSensitiveRegularExpression {
         };
         generate_position_filter_impl_deserialize_token_stream(
             &postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_upper_camel_case,
-            postgresql_json_array_element_type,
+            &token_patterns::StdStringString,
         )
     }
     fn generate_additional_type_declaration_token_stream(postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
         let std_primitive_i32_token_stream = Self::std_primitive_i32_token_stream();
+        let std_string_string = token_patterns::StdStringString;
         quote::quote!{
-            #value_snake_case: #postgresql_json_array_element_type,
+            #value_snake_case: #std_string_string,
             #position_snake_case: #std_primitive_i32_token_stream,
         }
     }
@@ -4338,16 +4334,8 @@ impl PositionCaseSensitiveRegularExpression {
         let value_snake_case = naming::ValueSnakeCase;
         let position_snake_case = Self::position_snake_case();
         let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-            quote::quote! {
-                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-            }
-        };
         quote::quote!{
-            #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
+            #value_snake_case: #core_default_default_default,
             #position_snake_case: #core_default_default_default,
         }
     }
@@ -4364,7 +4352,7 @@ impl PositionCaseSensitiveRegularExpression {
                         Some(second_increment) => {
                             *#increment_snake_case = second_increment;
                             Ok(format!(
-                                "{}({}->${} > ${})",
+                                "{}({}->>${} ~ ${})",
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #column_snake_case,
                                 first_increment,
@@ -4388,7 +4376,7 @@ impl PositionCaseSensitiveRegularExpression {
         let position_snake_case = Self::position_snake_case();
         quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
+            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
             #query_snake_case
         }
     }
@@ -4411,7 +4399,7 @@ impl PositionCaseSensitiveRegularExpression {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &variant,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(&postgresql_json_array_element_type),
+                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &variant,
@@ -4420,7 +4408,6 @@ impl PositionCaseSensitiveRegularExpression {
                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
-                    &postgresql_json_array_element_type,
                 )
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
