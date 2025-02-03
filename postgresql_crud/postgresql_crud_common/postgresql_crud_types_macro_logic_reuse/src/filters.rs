@@ -3729,9 +3729,6 @@ impl WhereOperatorName for BitVecPositionEquals {
     }
 }
 impl BitVecPositionEquals {
-    fn position_snake_case() -> naming::PositionSnakeCase {
-        naming::PositionSnakeCase
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -3793,7 +3790,7 @@ impl BitVecPositionEquals {
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = Self::position_snake_case();
+        let position_snake_case = naming::PositionSnakeCase;
         quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
             #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
@@ -3843,9 +3840,6 @@ impl WhereOperatorName for PositionEquals {
     }
 }
 impl PositionEquals {
-    fn position_snake_case() -> naming::PositionSnakeCase {
-        naming::PositionSnakeCase
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -3908,7 +3902,7 @@ impl PositionEquals {
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = Self::position_snake_case();
+        let position_snake_case = naming::PositionSnakeCase;
         quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
             #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
@@ -3972,9 +3966,6 @@ impl WhereOperatorName for PositionGreaterThan {
     }
 }
 impl PositionGreaterThan {
-    fn position_snake_case() -> naming::PositionSnakeCase {
-        naming::PositionSnakeCase
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -4037,7 +4028,7 @@ impl PositionGreaterThan {
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = Self::position_snake_case();
+        let position_snake_case = naming::PositionSnakeCase;
         quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
             #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
@@ -4101,9 +4092,6 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
     }
 }
 impl PositionCaseSensitiveRegularExpression {
-    fn position_snake_case() -> naming::PositionSnakeCase {
-        naming::PositionSnakeCase
-    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -4165,7 +4153,7 @@ impl PositionCaseSensitiveRegularExpression {
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = Self::position_snake_case();
+        let position_snake_case = naming::PositionSnakeCase;
         quote::quote!{
             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
             #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
