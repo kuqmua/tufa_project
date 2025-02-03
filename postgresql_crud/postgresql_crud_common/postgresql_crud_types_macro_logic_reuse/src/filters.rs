@@ -3992,18 +3992,8 @@ impl WhereOperatorName for PositionGreaterThan {
     }
 }
 impl PositionGreaterThan {
-    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::bool}
-    }
-    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
-    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::i32}
-    }
     fn position_snake_case() -> naming::PositionSnakeCase {
         naming::PositionSnakeCase
-    }
-    fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
-        naming::PositionIsLessThanZeroUpperCamelCase
     }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
@@ -4131,18 +4121,8 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
     }
 }
 impl PositionCaseSensitiveRegularExpression {
-    fn std_primitive_bool_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::bool}
-    }
-    //todo maybe should support js int instead of i32 and i64. (i64 wrapper with custom try_new impl for js max and min value check)
-    fn std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::i32}
-    }
     fn position_snake_case() -> naming::PositionSnakeCase {
         naming::PositionSnakeCase
-    }
-    fn position_is_less_than_zero_upper_camel_case() -> naming::PositionIsLessThanZeroUpperCamelCase {
-        naming::PositionIsLessThanZeroUpperCamelCase
     }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
