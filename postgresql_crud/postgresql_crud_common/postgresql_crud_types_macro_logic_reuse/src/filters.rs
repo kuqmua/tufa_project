@@ -292,27 +292,7 @@ impl GreaterThan {
         quote::quote!{#value_snake_case: #initialization_token_stream}
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(
-                        "{}({} > ${})",
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        #column_snake_case,
-                        #increment_snake_case
-                    ))
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} > ${})"})
     }
     fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
@@ -1905,22 +1885,7 @@ impl Before {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} < ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} < ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2580,7 +2545,13 @@ impl EqualToEncodedStringRepresentation {
                 match #increment_snake_case.checked_add(1) {
                     Some(#value_snake_case) => {
                         *#increment_snake_case = #value_snake_case;
-                        Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, &self.encode_format, #increment_snake_case))
+                        Ok(format!(
+                            "{}(encode({}, '{}') = ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            &self.encode_format,
+                            #increment_snake_case
+                        ))
                     }
                     None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                 }
@@ -2622,22 +2593,7 @@ impl ValueIsContainedWithinRange {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2676,22 +2632,7 @@ impl ContainsAnotherRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} @> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2730,22 +2671,7 @@ impl StrictlyToLeftOfRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} &< ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} &< ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2784,22 +2710,7 @@ impl StrictlyToRightOfRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} &> ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} &> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2839,22 +2750,7 @@ impl IncludedLowerBound {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(lower({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2894,22 +2790,7 @@ impl ExcludedUpperBound {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(upper({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2948,22 +2829,7 @@ impl GreaterThanLowerBound {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} > ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} > ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -3002,22 +2868,7 @@ impl OverlapWithRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} && ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} && ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -3056,22 +2907,7 @@ impl AdjacentWithRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} -|- ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} -|- ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -4255,6 +4091,32 @@ impl PositionCaseInsensitiveRegularExpression {
     }
 }
 
+fn generate_try_generate_bind_increments_increment_checked_add_token_stream(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let element_snake_case = naming::ElementSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let acc_snake_case = naming::AccSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    quote::quote!{
+        match #increment_snake_case.checked_add(1) {
+            Some(#value_snake_case) => {
+                *#increment_snake_case = #value_snake_case;
+                Ok(format!(
+                    #format_handle_token_stream,
+                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    #column_snake_case,
+                    #increment_snake_case
+                ))
+            },
+            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+
 pub struct ContainsAllElementsOfArray;
 impl WhereOperatorName for ContainsAllElementsOfArray {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4262,31 +4124,6 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
     }
 }
 impl ContainsAllElementsOfArray {
-    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let element_snake_case = naming::ElementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(
-                        "{}({} @> ${})",
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        #column_snake_case,
-                        #increment_snake_case
-                    ))
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
-    }
     fn generate_bind_value_to_query_token_stream(element_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let element_snake_case = naming::ElementSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -4342,7 +4179,7 @@ impl ContainsAllElementsOfArray {
                 };
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
-            &Self::generate_try_generate_bind_increments_token_stream(),
+            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
                 quote::quote!{sqlx::types::Json(#element_snake_case)}
