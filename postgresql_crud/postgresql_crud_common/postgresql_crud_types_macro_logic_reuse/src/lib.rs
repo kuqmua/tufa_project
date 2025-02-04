@@ -1288,6 +1288,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 vec
             };
 
+            if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream } = maybe_postgresql_json_type_ident_where_element_position_equals {
+                common_postgresql_json_type_vec_filters_variants.push(&position_equals);
+                common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
+            }
             if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream } = maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array {
                 common_postgresql_json_type_vec_filters_variants.push(&contains_all_elements_of_array);
                 common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
@@ -1449,9 +1453,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &ident,
                     &{
                         let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_equals {
-                            vec.push(&position_equals);
-                        }
                         if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_greater_than {
                             vec.push(&position_greater_than);
                         }
@@ -1463,7 +1464,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let generated = quote::quote!{
                     #(#common_postgresql_json_type_vec_filters_token_stream)*
 
-                    #maybe_postgresql_json_type_ident_where_element_position_equals
                     #maybe_postgresql_json_type_ident_where_element_position_greater_than
 
                     #postgresql_json_type_ident_where_element_token_stream
@@ -1478,10 +1478,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &{
-                        let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_equals {
-                            vec.push(&position_equals);
-                        }
+                        let vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
@@ -1489,8 +1486,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 );
                 let generated = quote::quote!{
                     #(#common_postgresql_json_type_vec_filters_token_stream)*
-
-                    #maybe_postgresql_json_type_ident_where_element_position_equals
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
@@ -1505,9 +1500,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &ident,
                     &{
                         let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_equals {
-                            vec.push(&position_equals);
-                        }
                         if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression {
                             vec.push(&position_case_sensitive_regular_expression);
                         }
@@ -1522,7 +1514,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let generated = quote::quote!{
                     #(#common_postgresql_json_type_vec_filters_token_stream)*
 
-                    #maybe_postgresql_json_type_ident_where_element_position_equals
                     #maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression
                     #maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression
 
