@@ -1237,11 +1237,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let position_greater_than = crate::filters::PositionGreaterThan;
             let position_case_sensitive_regular_expression = crate::filters::PositionCaseSensitiveRegularExpression;
             let position_case_insensitive_regular_expression = crate::filters::PositionCaseInsensitiveRegularExpression;
+            // let contains_all_elements_of_array = crate::filters::ContainsAllElementsOfArray;
             let (
                 maybe_postgresql_json_type_ident_where_element_position_equals,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
+                // maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
              ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type) {
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
@@ -1256,14 +1258,36 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     token_stream: contains_all_elements_of_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                    // },
                 ),
                 Err(_) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                 )
             };
+
+            // let (
+            //     common_vec_postgresql_json_type_filters_variants,
+            //     common_vec_postgresql_json_type_filters_token_stream,
+            // ) = {
+            //     let mut common_vec_postgresql_json_type_filters_variants = vec![];
+            //     let mut common_vec_postgresql_json_type_filters_token_stream = vec![];
+            //     if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream } = maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array {
+            //         common_vec_postgresql_json_type_filters_variants.push(&position_greater_than);
+            //         common_vec_postgresql_json_type_filters_token_stream.push(&token_stream);
+            //     }
+            //     (
+            //         common_vec_postgresql_json_type_filters_variants,
+            //         common_vec_postgresql_json_type_filters_token_stream,
+            //     )
+            // };
+
+
 
             // let = Equal;
             // let = GreaterThan;
@@ -1423,6 +1447,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_greater_than {
                             vec.push(&position_greater_than);
                         }
+                        // common_vec_postgresql_json_type_filters.iter().for_each(|element|{
+                        //     vec.push(element);
+                        // });
                         vec
                     },
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
