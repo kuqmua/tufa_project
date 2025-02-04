@@ -1017,12 +1017,12 @@ impl quote::ToTokens for PostgresqlJsonType {
 #[proc_macro]
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    fn generate_postgresql_json_type_handle_token_stream(variant: &PostgresqlJsonType) -> proc_macro2::TokenStream {
+    fn generate_postgresql_json_type_handle_token_stream(postgresql_json_type: &PostgresqlJsonType) -> proc_macro2::TokenStream {
         let (
             postgresql_json_type_handle,
             postgresql_json_type_pattern
-        ) = variant.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &variant;
+        ) = postgresql_json_type.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
+        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &postgresql_json_type;
         let field_type = &postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
 
         let ident_token_stream = {
@@ -1207,11 +1207,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             
             let equal = crate::filters::Equal;
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &variant,
+                &postgresql_json_type,
             );
             let length_more_than = crate::filters::LengthMoreThan;
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &variant,
+                &postgresql_json_type,
             );
 
 
@@ -1242,19 +1242,19 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
-             ) = match PostgresqlJsonArrayElementType::try_from(variant) {
+             ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type) {
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                        token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                        token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&variant, &value)
+                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
                 ),
                 Err(_) => (
@@ -1318,16 +1318,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 //todo maybe remove ident, field_type from arguments. variant is enough
                 let greater_than = crate::filters::GreaterThan;
                 let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &variant,
+                    &postgresql_json_type,
                 );
                 let between = crate::filters::Between;
                 let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                    &variant,
+                    &postgresql_json_type,
                 );
                 let in_handle = crate::filters::In;
                 let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &variant,
+                    &postgresql_json_type,
                 );
                 //todo write wrapper around it with reuse parameters
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
@@ -1508,7 +1508,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            match &PostgresqlJsonTypePatternSpecific::from(variant) {
+            match &PostgresqlJsonTypePatternSpecific::from(postgresql_json_type) {
                 PostgresqlJsonTypePatternSpecific::FullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
                 PostgresqlJsonTypePatternSpecific::FullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
                 PostgresqlJsonTypePatternSpecific::FullTypePathString => generate_postgresql_json_type_where_element_string_token_stream(),
