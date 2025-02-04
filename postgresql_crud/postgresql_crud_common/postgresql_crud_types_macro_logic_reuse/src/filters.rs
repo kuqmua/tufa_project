@@ -4164,7 +4164,6 @@ fn generate_position_regular_expression_bind_value_to_query_token_stream() -> pr
 fn generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
-    postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
     let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
@@ -4211,12 +4210,10 @@ impl PositionCaseSensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type,
-            &postgresql_json_array_element_type,
             &RegularExpression::CaseSensitive,
         )
     }
@@ -4232,12 +4229,10 @@ impl PositionCaseInsensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             &WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type,
-            &postgresql_json_array_element_type,
             &RegularExpression::CaseInsensitive,
         )
     }

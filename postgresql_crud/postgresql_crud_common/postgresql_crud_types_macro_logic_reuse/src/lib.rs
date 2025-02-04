@@ -1253,10 +1253,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                        token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type)
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type)
                     },
                     // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                     //     token_stream: contains_all_elements_of_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
