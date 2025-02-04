@@ -3733,10 +3733,10 @@ impl BitVecPositionEquals {
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
+        let postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = &format!(
+            "{postgresql_type_or_json_type}{}",
+            naming::parameter::SelfWhereElementBitVecPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident)
+        ).parse::<proc_macro2::TokenStream>().unwrap();
         generate_position_filter_try_new_content_token_stream(
             &ident,
             &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_try_new_error_named_upper_camel_case,
