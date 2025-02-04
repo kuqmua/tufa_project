@@ -1219,6 +1219,12 @@ fn generate_additional_type_declaration_for_vec_token_stream(vec_type_token_stre
         #value_snake_case: std::vec::Vec<#vec_type_token_stream>
     }
 }
+fn generate_additional_default_initialization_token_stream(default_initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{
+        #value_snake_case: vec![#default_initialization_token_stream]
+    }
+}
 
 pub struct In;
 impl WhereOperatorName for In {
@@ -1227,12 +1233,6 @@ impl WhereOperatorName for In {
     }
 }
 impl In {
-    fn generate_additional_default_initialization_token_stream(default_initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{
-            #value_snake_case: vec![#default_initialization_token_stream]
-        }
-    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let element_snake_case = naming::ElementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -1309,7 +1309,7 @@ impl In {
                 ),
             },
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
+            &generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
@@ -1359,7 +1359,7 @@ impl In {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
@@ -4262,20 +4262,6 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
     }
 }
 impl ContainsAllElementsOfArray {
-    fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-            quote::quote! {
-                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-            }
-        };
-        quote::quote!{
-            #value_snake_case: vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]
-        }
-    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let element_snake_case = naming::ElementSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -4345,7 +4331,17 @@ impl ContainsAllElementsOfArray {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(),
+            &generate_additional_default_initialization_token_stream(&{
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                    quote::quote! {
+                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                    }
+                };
+                crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
+            }),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
