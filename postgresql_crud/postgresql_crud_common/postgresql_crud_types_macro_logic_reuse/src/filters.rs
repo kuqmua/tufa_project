@@ -4102,7 +4102,7 @@ fn generate_position_regular_expression_try_new_content_token_stream(
         &postgresql_type_or_json_type_ident_where_element_position_regular_expression_try_new_error_named_upper_camel_case,
     )
 }
-fn generate_position_regular_impl_deserialize_token_stream(
+fn generate_position_regular_expression_impl_deserialize_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
@@ -4118,6 +4118,40 @@ fn generate_position_regular_impl_deserialize_token_stream(
         &token_patterns::StdStringString,
     )
 }
+//todo different logic for postgresql type
+fn generate_position_regular_expression_try_generate_bind_increments_token_stream(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let regular_expression_stringified = regular_expression.stringified();
+    let format_handle_token_stream = format!("{{}}({{}}->>${{}} ~{regular_expression_stringified} ${{}})");
+    quote::quote!{
+        match #increment_snake_case.checked_add(1) {
+            Some(first_increment) => {
+                *#increment_snake_case = first_increment;
+                match #increment_snake_case.checked_add(1) {
+                    Some(second_increment) => {
+                        *#increment_snake_case = second_increment;
+                        Ok(format!(
+                            #format_handle_token_stream,
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            first_increment,
+                            second_increment,
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 
 pub struct PositionCaseSensitiveRegularExpression;
 impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
@@ -4128,37 +4162,6 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
 impl PositionCaseSensitiveRegularExpression {
     fn regular_expression() -> RegularExpression {
         RegularExpression::CaseSensitive
-    }
-    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(first_increment) => {
-                    *#increment_snake_case = first_increment;
-                    match #increment_snake_case.checked_add(1) {
-                        Some(second_increment) => {
-                            *#increment_snake_case = second_increment;
-                            Ok(format!(
-                                "{}({}->>${} ~ ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                first_increment,
-                                second_increment,
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
     }
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
@@ -4197,7 +4200,7 @@ impl PositionCaseSensitiveRegularExpression {
                     &postgresql_type_or_json_type,
                     &self_regular_expression,
                 ),
-                impl_deserialize_token_stream: &generate_position_regular_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
                     &self_regular_expression,
@@ -4206,7 +4209,7 @@ impl PositionCaseSensitiveRegularExpression {
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
-            &Self::generate_try_generate_bind_increments_token_stream(),
+            &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
             &Self::generate_bind_value_to_query_token_stream()
         )
     }
@@ -4221,37 +4224,6 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
 impl PositionCaseInsensitiveRegularExpression {
     fn regular_expression() -> RegularExpression {
         RegularExpression::CaseInsensitive
-    }
-    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(first_increment) => {
-                    *#increment_snake_case = first_increment;
-                    match #increment_snake_case.checked_add(1) {
-                        Some(second_increment) => {
-                            *#increment_snake_case = second_increment;
-                            Ok(format!(
-                                "{}({}->>${} ~* ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                first_increment,
-                                second_increment,
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
     }
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
@@ -4290,7 +4262,7 @@ impl PositionCaseInsensitiveRegularExpression {
                     &postgresql_type_or_json_type,
                     &Self::regular_expression(),
                 ),
-                impl_deserialize_token_stream: &generate_position_regular_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
                     &self_regular_expression,
@@ -4299,7 +4271,7 @@ impl PositionCaseInsensitiveRegularExpression {
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
             &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
-            &Self::generate_try_generate_bind_increments_token_stream(),
+            &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
             &Self::generate_bind_value_to_query_token_stream()
         )
     }
