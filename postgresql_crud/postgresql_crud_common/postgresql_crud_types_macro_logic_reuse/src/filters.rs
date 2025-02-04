@@ -964,6 +964,255 @@ fn generate_try_new_content_for_vec_token_stream(
         })
     }
 }
+fn generate_impl_deserialize_for_vec_token_stream(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    vec_type_token_stream: &dyn quote::ToTokens,
+    filter: &dyn std::fmt::Display,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case: &dyn quote::ToTokens = &{
+        let value = format!(
+            "{postgresql_type_or_json_type}{}{}",
+            naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            filter
+        );
+        value.parse::<proc_macro2::TokenStream>().unwrap()
+    };
+    let (
+        struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
+        struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
+        postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream
+    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&format!("{}", quote::quote!{#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case}), 2);
+    quote::quote! {
+        const _: () = {
+            #[allow(unused_extern_crates, clippy::useless_attribute)]
+            extern crate serde as _serde;
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case {
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    #[allow(non_camel_case_types)]
+                    #[doc(hidden)]
+                    enum __Field {
+                        __field0,
+                        __field1,
+                        __ignore,
+                    }
+                    #[doc(hidden)]
+                    struct __FieldVisitor;
+                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                        type Value = __Field;
+                        fn expecting(
+                            &self,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
+                        ) -> _serde::__private::fmt::Result {
+                            _serde::__private::Formatter::write_str(
+                                __formatter,
+                                "field identifier",
+                            )
+                        }
+                        fn visit_u64<__E>(
+                            self,
+                            __value: u64,
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                        fn visit_str<__E>(
+                            self,
+                            __value: &str,
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                "value" => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                        fn visit_bytes<__E>(
+                            self,
+                            __value: &[u8],
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                b"value" => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                    }
+                    impl<'de> _serde::Deserialize<'de> for __Field {
+                        #[inline]
+                        fn deserialize<__D>(
+                            __deserializer: __D,
+                        ) -> _serde::__private::Result<Self, __D::Error>
+                        where
+                            __D: _serde::Deserializer<'de>,
+                        {
+                            _serde::Deserializer::deserialize_identifier(
+                                __deserializer,
+                                __FieldVisitor,
+                            )
+                        }
+                    }
+                    #[doc(hidden)]
+                    struct __Visitor<'de> {
+                        marker: _serde::__private::PhantomData<
+                            #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
+                        >,
+                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                    }
+                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                        type Value = #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case;
+                        fn expecting(
+                            &self,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
+                        ) -> _serde::__private::fmt::Result {
+                            _serde::__private::Formatter::write_str(
+                                __formatter,
+                                #struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
+                            )
+                        }
+                        #[inline]
+                        fn visit_seq<__A>(
+                            self,
+                            mut __seq: __A,
+                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        where
+                            __A: _serde::de::SeqAccess<'de>,
+                        {
+                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                crate::LogicalOperator,
+                            >(&mut __seq)? {
+                                _serde::__private::Some(__value) => __value,
+                                _serde::__private::None => {
+                                    return _serde::__private::Err(
+                                        _serde::de::Error::invalid_length(
+                                            0usize,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
+                                        ),
+                                    );
+                                }
+                            };
+                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                std::vec::Vec<#vec_type_token_stream>,
+                            >(&mut __seq)? {
+                                _serde::__private::Some(__value) => __value,
+                                _serde::__private::None => {
+                                    return _serde::__private::Err(
+                                        _serde::de::Error::invalid_length(
+                                            1usize,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
+                                        ),
+                                    );
+                                }
+                            };
+                            match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
+                                Ok(value) => _serde::__private::Ok(value),
+                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                            }
+                        }
+                        #[inline]
+                        fn visit_map<__A>(
+                            self,
+                            mut __map: __A,
+                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        where
+                            __A: _serde::de::MapAccess<'de>,
+                        {
+                            let mut __field0: _serde::__private::Option<
+                                crate::LogicalOperator,
+                            > = _serde::__private::None;
+                            let mut __field1: _serde::__private::Option<
+                                std::vec::Vec<#vec_type_token_stream>,
+                            > = _serde::__private::None;
+                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                __Field,
+                            >(&mut __map)? {
+                                match __key {
+                                    __Field::__field0 => {
+                                        if _serde::__private::Option::is_some(&__field0) {
+                                            return _serde::__private::Err(
+                                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                                    "logical_operator",
+                                                ),
+                                            );
+                                        }
+                                        __field0 = _serde::__private::Some(
+                                            _serde::de::MapAccess::next_value::<
+                                                crate::LogicalOperator,
+                                            >(&mut __map)?,
+                                        );
+                                    }
+                                    __Field::__field1 => {
+                                        if _serde::__private::Option::is_some(&__field1) {
+                                            return _serde::__private::Err(
+                                                <__A::Error as _serde::de::Error>::duplicate_field("value"),
+                                            );
+                                        }
+                                        __field1 = _serde::__private::Some(
+                                            _serde::de::MapAccess::next_value::<
+                                                std::vec::Vec<#vec_type_token_stream>,
+                                            >(&mut __map)?,
+                                        );
+                                    }
+                                    _ => {
+                                        let _ = _serde::de::MapAccess::next_value::<
+                                            _serde::de::IgnoredAny,
+                                        >(&mut __map)?;
+                                    }
+                                }
+                            }
+                            let __field0 = match __field0 {
+                                _serde::__private::Some(__field0) => __field0,
+                                _serde::__private::None => {
+                                    _serde::__private::de::missing_field("logical_operator")?
+                                }
+                            };
+                            let __field1 = match __field1 {
+                                _serde::__private::Some(__field1) => __field1,
+                                _serde::__private::None => {
+                                    _serde::__private::de::missing_field("value")?
+                                }
+                            };
+                            match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
+                                Ok(value) => _serde::__private::Ok(value),
+                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                            }
+                        }
+                    }
+                    #[doc(hidden)]
+                    const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
+                    _serde::Deserializer::deserialize_struct(
+                        __deserializer,
+                        #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
+                        FIELDS,
+                        __Visitor {
+                            marker: _serde::__private::PhantomData::<
+                                #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
+                            >,
+                            lifetime: _serde::__private::PhantomData,
+                        },
+                    )
+                }
+            }
+        };
+    }
+}
 
 pub struct In;
 impl WhereOperatorName for In {
@@ -972,250 +1221,6 @@ impl WhereOperatorName for In {
     }
 }
 impl In {
-    fn generate_impl_deserialize_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-        vec_type_token_stream: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_in_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementInUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementInUpperCamelCase::from_tokens(&ident),
-        };
-        let (
-            struct_postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream,
-            struct_postgresql_type_or_json_type_ident_where_element_in_with_2_elements_double_quotes_token_stream,
-            postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_in_upper_camel_case, 2);
-        quote::quote! {
-            const _: () = {
-                #[allow(unused_extern_crates, clippy::useless_attribute)]
-                extern crate serde as _serde;
-                #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case {
-                    fn deserialize<__D>(
-                        __deserializer: __D,
-                    ) -> _serde::__private::Result<Self, __D::Error>
-                    where
-                        __D: _serde::Deserializer<'de>,
-                    {
-                        #[allow(non_camel_case_types)]
-                        #[doc(hidden)]
-                        enum __Field {
-                            __field0,
-                            __field1,
-                            __ignore,
-                        }
-                        #[doc(hidden)]
-                        struct __FieldVisitor;
-                        impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                            type Value = __Field;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    "field identifier",
-                                )
-                            }
-                            fn visit_u64<__E>(
-                                self,
-                                __value: u64,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    0u64 => _serde::__private::Ok(__Field::__field0),
-                                    1u64 => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_str<__E>(
-                                self,
-                                __value: &str,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    "value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_bytes<__E>(
-                                self,
-                                __value: &[u8],
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    b"value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                        }
-                        impl<'de> _serde::Deserialize<'de> for __Field {
-                            #[inline]
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: _serde::Deserializer<'de>,
-                            {
-                                _serde::Deserializer::deserialize_identifier(
-                                    __deserializer,
-                                    __FieldVisitor,
-                                )
-                            }
-                        }
-                        #[doc(hidden)]
-                        struct __Visitor<'de> {
-                            marker: _serde::__private::PhantomData<
-                                #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case,
-                            >,
-                            lifetime: _serde::__private::PhantomData<&'de ()>,
-                        }
-                        impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    #struct_postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream,
-                                )
-                            }
-                            #[inline]
-                            fn visit_seq<__A>(
-                                self,
-                                mut __seq: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::SeqAccess<'de>,
-                            {
-                                let __field0 = match _serde::de::SeqAccess::next_element::<
-                                    crate::LogicalOperator,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                0usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_in_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                let __field1 = match _serde::de::SeqAccess::next_element::<
-                                    std::vec::Vec<#vec_type_token_stream>,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                1usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_in_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                            #[inline]
-                            fn visit_map<__A>(
-                                self,
-                                mut __map: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::MapAccess<'de>,
-                            {
-                                let mut __field0: _serde::__private::Option<
-                                    crate::LogicalOperator,
-                                > = _serde::__private::None;
-                                let mut __field1: _serde::__private::Option<
-                                    std::vec::Vec<#vec_type_token_stream>,
-                                > = _serde::__private::None;
-                                while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                    __Field,
-                                >(&mut __map)? {
-                                    match __key {
-                                        __Field::__field0 => {
-                                            if _serde::__private::Option::is_some(&__field0) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field(
-                                                        "logical_operator",
-                                                    ),
-                                                );
-                                            }
-                                            __field0 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    crate::LogicalOperator,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        __Field::__field1 => {
-                                            if _serde::__private::Option::is_some(&__field1) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field("value"),
-                                                );
-                                            }
-                                            __field1 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    std::vec::Vec<#vec_type_token_stream>,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        _ => {
-                                            let _ = _serde::de::MapAccess::next_value::<
-                                                _serde::de::IgnoredAny,
-                                            >(&mut __map)?;
-                                        }
-                                    }
-                                }
-                                let __field0 = match __field0 {
-                                    _serde::__private::Some(__field0) => __field0,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("logical_operator")?
-                                    }
-                                };
-                                let __field1 = match __field1 {
-                                    _serde::__private::Some(__field1) => __field1,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("value")?
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                        }
-                        #[doc(hidden)]
-                        const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-                        _serde::Deserializer::deserialize_struct(
-                            __deserializer,
-                            #postgresql_type_or_json_type_ident_where_element_in_double_quotes_token_stream,
-                            FIELDS,
-                            __Visitor {
-                                marker: _serde::__private::PhantomData::<
-                                    #postgresql_type_or_json_type_ident_where_element_in_upper_camel_case,
-                                >,
-                                lifetime: _serde::__private::PhantomData,
-                            },
-                        )
-                    }
-                }
-            };
-        }
-    }
     fn generate_additional_type_declaration_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         quote::quote!{
@@ -1295,10 +1300,11 @@ impl In {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
                     &where_operator_type_type_token_stream,
+                    &self_upper_camel_case,
                 ),
             },
             &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
@@ -1343,10 +1349,11 @@ impl In {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &non_optional_field_type,
+                    &self_upper_camel_case,
                 ),
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
@@ -4254,250 +4261,6 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
     }
 }
 impl ContainsAllElementsOfArray {
-    fn generate_impl_deserialize_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-        vec_type_token_stream: &dyn quote::ToTokens,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementContainsAllElementsOfArrayUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementContainsAllElementsOfArrayUpperCamelCase::from_tokens(&ident),
-        };
-        let (
-            struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
-            struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
-            postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case, 2);
-        quote::quote! {
-            const _: () = {
-                #[allow(unused_extern_crates, clippy::useless_attribute)]
-                extern crate serde as _serde;
-                #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case {
-                    fn deserialize<__D>(
-                        __deserializer: __D,
-                    ) -> _serde::__private::Result<Self, __D::Error>
-                    where
-                        __D: _serde::Deserializer<'de>,
-                    {
-                        #[allow(non_camel_case_types)]
-                        #[doc(hidden)]
-                        enum __Field {
-                            __field0,
-                            __field1,
-                            __ignore,
-                        }
-                        #[doc(hidden)]
-                        struct __FieldVisitor;
-                        impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                            type Value = __Field;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    "field identifier",
-                                )
-                            }
-                            fn visit_u64<__E>(
-                                self,
-                                __value: u64,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    0u64 => _serde::__private::Ok(__Field::__field0),
-                                    1u64 => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_str<__E>(
-                                self,
-                                __value: &str,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    "value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_bytes<__E>(
-                                self,
-                                __value: &[u8],
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    b"value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                        }
-                        impl<'de> _serde::Deserialize<'de> for __Field {
-                            #[inline]
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: _serde::Deserializer<'de>,
-                            {
-                                _serde::Deserializer::deserialize_identifier(
-                                    __deserializer,
-                                    __FieldVisitor,
-                                )
-                            }
-                        }
-                        #[doc(hidden)]
-                        struct __Visitor<'de> {
-                            marker: _serde::__private::PhantomData<
-                                #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
-                            >,
-                            lifetime: _serde::__private::PhantomData<&'de ()>,
-                        }
-                        impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    #struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
-                                )
-                            }
-                            #[inline]
-                            fn visit_seq<__A>(
-                                self,
-                                mut __seq: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::SeqAccess<'de>,
-                            {
-                                let __field0 = match _serde::de::SeqAccess::next_element::<
-                                    crate::LogicalOperator,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                0usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                let __field1 = match _serde::de::SeqAccess::next_element::<
-                                    std::vec::Vec<#vec_type_token_stream>,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                1usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                            #[inline]
-                            fn visit_map<__A>(
-                                self,
-                                mut __map: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::MapAccess<'de>,
-                            {
-                                let mut __field0: _serde::__private::Option<
-                                    crate::LogicalOperator,
-                                > = _serde::__private::None;
-                                let mut __field1: _serde::__private::Option<
-                                    std::vec::Vec<#vec_type_token_stream>,
-                                > = _serde::__private::None;
-                                while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                    __Field,
-                                >(&mut __map)? {
-                                    match __key {
-                                        __Field::__field0 => {
-                                            if _serde::__private::Option::is_some(&__field0) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field(
-                                                        "logical_operator",
-                                                    ),
-                                                );
-                                            }
-                                            __field0 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    crate::LogicalOperator,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        __Field::__field1 => {
-                                            if _serde::__private::Option::is_some(&__field1) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field("value"),
-                                                );
-                                            }
-                                            __field1 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    std::vec::Vec<#vec_type_token_stream>,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        _ => {
-                                            let _ = _serde::de::MapAccess::next_value::<
-                                                _serde::de::IgnoredAny,
-                                            >(&mut __map)?;
-                                        }
-                                    }
-                                }
-                                let __field0 = match __field0 {
-                                    _serde::__private::Some(__field0) => __field0,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("logical_operator")?
-                                    }
-                                };
-                                let __field1 = match __field1 {
-                                    _serde::__private::Some(__field1) => __field1,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("value")?
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                        }
-                        #[doc(hidden)]
-                        const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-                        _serde::Deserializer::deserialize_struct(
-                            __deserializer,
-                            #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
-                            FIELDS,
-                            __Visitor {
-                                marker: _serde::__private::PhantomData::<
-                                    #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
-                                >,
-                                lifetime: _serde::__private::PhantomData,
-                            },
-                        )
-                    }
-                }
-            };
-        }
-    }
     fn generate_additional_type_declaration_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         quote::quote!{
@@ -4578,10 +4341,11 @@ impl ContainsAllElementsOfArray {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &postgresql_json_array_element_type,
+                    &self_upper_camel_case,
                 ),
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
