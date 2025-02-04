@@ -3686,6 +3686,38 @@ impl BitVecPositionEquals {
     }
 }
 
+fn generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    quote::quote!{
+        match #increment_snake_case.checked_add(1) {
+            Some(first_increment) => {
+                *#increment_snake_case = first_increment;
+                match #increment_snake_case.checked_add(1) {
+                    Some(second_increment) => {
+                        *#increment_snake_case = second_increment;
+                        Ok(format!(
+                            #format_handle_token_stream,
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            #column_snake_case,
+                            first_increment,
+                            second_increment,
+                        ))
+                    },
+                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            },
+            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+
 pub struct PositionEquals;
 impl WhereOperatorName for PositionEquals {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3722,35 +3754,7 @@ impl PositionEquals {
         )
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(first_increment) => {
-                    *#increment_snake_case = first_increment;
-                    match #increment_snake_case.checked_add(1) {
-                        Some(second_increment) => {
-                            *#increment_snake_case = second_increment;
-                            Ok(format!(
-                                "{}({}->${} = ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                first_increment,
-                                second_increment,
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} = ${})"})
     }
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
@@ -3848,35 +3852,7 @@ impl PositionGreaterThan {
         )
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(first_increment) => {
-                    *#increment_snake_case = first_increment;
-                    match #increment_snake_case.checked_add(1) {
-                        Some(second_increment) => {
-                            *#increment_snake_case = second_increment;
-                            Ok(format!(
-                                "{}({}->${} > ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                first_increment,
-                                second_increment,
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
+        generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} > ${})"})
     }
     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
