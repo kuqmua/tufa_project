@@ -920,6 +920,50 @@ fn generate_try_new_error_named_variants_for_vec_token_stream(not_unique_value_t
         },
     }
 }
+fn generate_try_new_content_for_vec_token_stream(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    filter: &dyn std::fmt::Display,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
+    let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
+    let element_snake_case = naming::ElementSnakeCase;
+    let acc_snake_case = naming::AccSnakeCase;
+    let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case = {
+        let value = format!(
+            "{postgresql_type_or_json_type}{}{}{}",
+            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            filter,
+            naming::TryNewErrorNamedUpperCamelCase
+        );
+        value.parse::<proc_macro2::TokenStream>().unwrap()
+    };
+    quote::quote!{
+        if #value_snake_case.is_empty() {
+            return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        {
+            let mut #acc_snake_case = vec![];
+            for #element_snake_case in &#value_snake_case {
+                if !#acc_snake_case.contains(&#element_snake_case) {
+                    #acc_snake_case.push(#element_snake_case);
+                } else {
+                    return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
+                        #value_snake_case: #element_snake_case.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self{
+            logical_operator,
+            #value_snake_case
+        })
+    }
+}
 
 pub struct In;
 impl WhereOperatorName for In {
@@ -928,44 +972,6 @@ impl WhereOperatorName for In {
     }
 }
 impl In {
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-        let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-        let element_snake_case = naming::ElementSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
-        let postgresql_type_or_json_type_ident_where_element_in_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementInTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementInTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        quote::quote!{
-            if #value_snake_case.is_empty() {
-                return Err(#postgresql_type_or_json_type_ident_where_element_in_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            {
-                let mut #acc_snake_case = vec![];
-                for #element_snake_case in &#value_snake_case {
-                    if !#acc_snake_case.contains(&#element_snake_case) {
-                        #acc_snake_case.push(#element_snake_case);
-                    } else {
-                        return Err(#postgresql_type_or_json_type_ident_where_element_in_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                            #value_snake_case: #element_snake_case.clone(),
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            Ok(Self{
-                logical_operator,
-                #value_snake_case
-            })
-        }
-    }
     fn generate_impl_deserialize_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -1284,9 +1290,10 @@ impl In {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&where_operator_type_type_token_stream),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &ident,
@@ -1331,9 +1338,10 @@ impl In {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&non_optional_field_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &postgresql_json_type,
@@ -4246,44 +4254,6 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
     }
 }
 impl ContainsAllElementsOfArray {
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-        let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-        let element_snake_case = naming::ElementSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
-        let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementContainsAllElementsOfArrayTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementContainsAllElementsOfArrayTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        quote::quote!{
-            if #value_snake_case.is_empty() {
-                return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-            {
-                let mut #acc_snake_case = vec![];
-                for #element_snake_case in &#value_snake_case {
-                    if !#acc_snake_case.contains(&#element_snake_case) {
-                        #acc_snake_case.push(#element_snake_case);
-                    } else {
-                        return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                            #value_snake_case: #element_snake_case.clone(),
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-            }
-            Ok(Self{
-                logical_operator,
-                #value_snake_case
-            })
-        }
-    }
     fn generate_impl_deserialize_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -4603,9 +4573,10 @@ impl ContainsAllElementsOfArray {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&postgresql_json_array_element_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
                     &postgresql_json_type,
