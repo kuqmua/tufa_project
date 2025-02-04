@@ -4152,6 +4152,16 @@ fn generate_position_regular_expression_try_generate_bind_increments_token_strea
         }
     }
 }
+fn generate_position_regular_expression_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let position_snake_case = naming::PositionSnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+        #query_snake_case
+    }
+}
 
 pub struct PositionCaseSensitiveRegularExpression;
 impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
@@ -4162,16 +4172,6 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
 impl PositionCaseSensitiveRegularExpression {
     fn regular_expression() -> RegularExpression {
         RegularExpression::CaseSensitive
-    }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = naming::PositionSnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-            #query_snake_case
-        }
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -4210,7 +4210,7 @@ impl PositionCaseSensitiveRegularExpression {
             &additional_type_declaration_token_stream,
             &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
             &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
-            &Self::generate_bind_value_to_query_token_stream()
+            &generate_position_regular_expression_bind_value_to_query_token_stream(),
         )
     }
 }
@@ -4224,16 +4224,6 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
 impl PositionCaseInsensitiveRegularExpression {
     fn regular_expression() -> RegularExpression {
         RegularExpression::CaseInsensitive
-    }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = naming::PositionSnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-            #query_snake_case
-        }
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -4272,7 +4262,7 @@ impl PositionCaseInsensitiveRegularExpression {
             &additional_type_declaration_token_stream,
             &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
             &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
-            &Self::generate_bind_value_to_query_token_stream()
+            &generate_position_regular_expression_bind_value_to_query_token_stream(),
         )
     }
 }
