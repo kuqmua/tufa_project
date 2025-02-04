@@ -398,6 +398,14 @@ enum PostgresqlJsonArrayElementType {
     StdOptionOptionStdStringString,
     StdOptionOptionUuidUuid,
 }
+impl quote::ToTokens for PostgresqlJsonArrayElementType {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        self.to_string()
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonArrayElementType to proc_macro2::TokenStream"))
+        .to_tokens(tokens)
+    }
+}
 impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementType {
     type Error = ();
     fn try_from(value: &PostgresqlJsonType) -> Result<Self, Self::Error> {
@@ -486,14 +494,6 @@ impl std::convert::TryFrom<&PostgresqlJsonType> for PostgresqlJsonArrayElementTy
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionStdStringString => Ok(PostgresqlJsonArrayElementType::StdOptionOptionStdStringString),
             PostgresqlJsonType::StdOptionOptionStdVecVecStdOptionOptionUuidUuid => Ok(PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid),
         }
-    }
-}
-impl quote::ToTokens for PostgresqlJsonArrayElementType {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.to_string()
-        .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonArrayElementType to proc_macro2::TokenStream"))
-        .to_tokens(tokens)
     }
 }
 impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeHandle {
