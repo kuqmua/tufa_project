@@ -4218,19 +4218,6 @@ impl PositionCaseInsensitiveRegularExpression {
     fn regular_expression() -> RegularExpression {
         RegularExpression::CaseInsensitive
     }
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        generate_position_filter_try_new_content_token_stream(
-            &ident,
-            &postgresql_type_or_json_type_ident_where_element_position_case_insensitive_regular_expression_try_new_error_named_upper_camel_case,
-        )
-    }
     fn generate_impl_deserialize_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
