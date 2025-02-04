@@ -4085,7 +4085,7 @@ impl PositionGreaterThan {
     }
 }
 
-
+//todo this functions used only once coz in the future will be postgresql types support. now its only postgresql json types
 fn generate_position_regular_expression_try_new_content_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -4162,6 +4162,45 @@ fn generate_position_regular_expression_bind_value_to_query_token_stream() -> pr
         #query_snake_case
     }
 }
+fn generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    variant: &crate::PostgresqlJsonType,
+    postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    regular_expression: &RegularExpression,
+) -> proc_macro2::TokenStream {
+    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+    let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
+    generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+        &postgresql_type_or_json_type,
+        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        crate::ShouldWhereElementFieldsBePublic::False {
+            ident: &variant,
+            postfix: &self_upper_camel_case,
+            try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+            try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+            try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
+                &variant,
+                &postgresql_type_or_json_type,
+                &regular_expression,
+            ),
+            impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
+                &variant,
+                &postgresql_type_or_json_type,
+                &regular_expression,
+            )
+        },
+        &crate::ShouldDeriveSchemarsJsonSchema::True,
+        &additional_type_declaration_token_stream,
+        &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+        &generate_position_regular_expression_try_generate_bind_increments_token_stream(&regular_expression),
+        &generate_position_regular_expression_bind_value_to_query_token_stream(),
+    )
+}
 
 pub struct PositionCaseSensitiveRegularExpression;
 impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
@@ -4170,47 +4209,16 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
     }
 }
 impl PositionCaseSensitiveRegularExpression {
-    fn regular_expression() -> RegularExpression {
-        RegularExpression::CaseSensitive
-    }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         variant: &crate::PostgresqlJsonType,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
-        let self_regular_expression = Self::regular_expression();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &variant,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
-                    &variant,
-                    &postgresql_type_or_json_type,
-                    &self_regular_expression,
-                ),
-                impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
-                    &variant,
-                    &postgresql_type_or_json_type,
-                    &self_regular_expression,
-                )
-            },
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &additional_type_declaration_token_stream,
-            &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
-            &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
-            &generate_position_regular_expression_bind_value_to_query_token_stream(),
+        generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+            &WhereOperatorName::upper_camel_case(self),
+            &variant,
+            &postgresql_json_array_element_type,
+            &RegularExpression::CaseSensitive,
         )
     }
 }
@@ -4222,47 +4230,16 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
     }
 }
 impl PositionCaseInsensitiveRegularExpression {
-    fn regular_expression() -> RegularExpression {
-        RegularExpression::CaseInsensitive
-    }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         variant: &crate::PostgresqlJsonType,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&variant));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
-        let self_regular_expression = Self::regular_expression();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &variant,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
-                    &variant,
-                    &postgresql_type_or_json_type,
-                    &Self::regular_expression(),
-                ),
-                impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
-                    &variant,
-                    &postgresql_type_or_json_type,
-                    &self_regular_expression,
-                )
-            },
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &additional_type_declaration_token_stream,
-            &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
-            &generate_position_regular_expression_try_generate_bind_increments_token_stream(&self_regular_expression),
-            &generate_position_regular_expression_bind_value_to_query_token_stream(),
+        generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+            &WhereOperatorName::upper_camel_case(self),
+            &variant,
+            &postgresql_json_array_element_type,
+            &RegularExpression::CaseInsensitive,
         )
     }
 }
