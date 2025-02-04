@@ -3717,6 +3717,16 @@ fn generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(f
         }
     }
 }
+fn generate_bind_value_to_query_position_sqlx_types_json_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let position_snake_case = naming::PositionSnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+        #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
+        #query_snake_case
+    }
+}
 
 pub struct PositionEquals;
 impl WhereOperatorName for PositionEquals {
@@ -3755,16 +3765,6 @@ impl PositionEquals {
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} = ${})"})
-    }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = naming::PositionSnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
-            #query_snake_case
-        }
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3811,7 +3811,7 @@ impl PositionEquals {
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream()
+            &generate_bind_value_to_query_position_sqlx_types_json_token_stream()
         )
     }
 }
@@ -3854,16 +3854,6 @@ impl PositionGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} > ${})"})
     }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = naming::PositionSnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
-            #query_snake_case
-        }
-    }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3909,7 +3899,7 @@ impl PositionGreaterThan {
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream()
+            &generate_bind_value_to_query_position_sqlx_types_json_token_stream()
         )
     }
 }
