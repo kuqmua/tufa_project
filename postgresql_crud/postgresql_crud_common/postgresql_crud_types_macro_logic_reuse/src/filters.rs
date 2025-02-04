@@ -3686,6 +3686,26 @@ impl BitVecPositionEquals {
     }
 }
 
+fn generate_try_new_content_position_sqlx_types_json_token_stream(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    filter: &dyn std::fmt::Display,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = &{
+        let value = format!(
+            "{postgresql_type_or_json_type}{}{}{}",
+            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            filter,
+            naming::TryNewErrorNamedUpperCamelCase
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    generate_position_filter_try_new_content_token_stream(
+        &ident,
+        &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
+    )
+}
 fn generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -3735,19 +3755,6 @@ impl WhereOperatorName for PositionEquals {
     }
 }
 impl PositionEquals {
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionEqualsTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        generate_position_filter_try_new_content_token_stream(
-            &ident,
-            &postgresql_type_or_json_type_ident_where_element_position_equals_try_new_error_named_upper_camel_case,
-        )
-    }
     fn generate_impl_deserialize_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -3787,9 +3794,10 @@ impl PositionEquals {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_position_sqlx_types_json_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &postgresql_json_type,
@@ -3823,19 +3831,6 @@ impl WhereOperatorName for PositionGreaterThan {
     }
 }
 impl PositionGreaterThan {
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionGreaterThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        generate_position_filter_try_new_content_token_stream(
-            &ident,
-            &postgresql_type_or_json_type_ident_where_element_position_greater_than_try_new_error_named_upper_camel_case,
-        )
-    }
     fn generate_impl_deserialize_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -3875,9 +3870,10 @@ impl PositionGreaterThan {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_position_sqlx_types_json_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &postgresql_json_type,
