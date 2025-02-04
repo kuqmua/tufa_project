@@ -4085,6 +4085,24 @@ impl PositionGreaterThan {
     }
 }
 
+
+fn generate_position_regular_expression_try_new_content_token_stream(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    regular_expression: &RegularExpression,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match (&postgresql_type_or_json_type, &regular_expression) {
+        (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseSensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseSensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+    };
+    generate_position_filter_try_new_content_token_stream(
+        &ident,
+        &postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case,
+    )
+}
+
 pub struct PositionCaseSensitiveRegularExpression;
 impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4092,18 +4110,8 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
     }
 }
 impl PositionCaseSensitiveRegularExpression {
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        generate_position_filter_try_new_content_token_stream(
-            &ident,
-            &postgresql_type_or_json_type_ident_where_element_position_case_sensitive_regular_expression_try_new_error_named_upper_camel_case,
-        )
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseSensitive
     }
     fn generate_impl_deserialize_token_stream(
         &self,
@@ -4181,9 +4189,10 @@ impl PositionCaseSensitiveRegularExpression {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
+                    &Self::regular_expression(),
                 ),
                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &variant,
@@ -4206,6 +4215,9 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
     }
 }
 impl PositionCaseInsensitiveRegularExpression {
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseInsensitive
+    }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -4295,9 +4307,10 @@ impl PositionCaseInsensitiveRegularExpression {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
                     &variant,
                     &postgresql_type_or_json_type,
+                    &Self::regular_expression(),
                 ),
                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &variant,
