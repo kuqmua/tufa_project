@@ -4238,7 +4238,6 @@ impl PositionCaseInsensitiveRegularExpression {
     }
 }
 
-///////////
 pub struct ContainsAllElementsOfArray;
 impl WhereOperatorName for ContainsAllElementsOfArray {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -4572,28 +4571,20 @@ impl ContainsAllElementsOfArray {
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         quote::quote!{
-            let mut #acc_snake_case = std::string::String::default();
-            for #element_snake_case in &self.#value_snake_case {
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        #acc_snake_case.push_str(&format!("${},", #value_snake_case));
-                    },
-                    None => {
-                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!(
+                        "{}({} @> ${})",
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                        #increment_snake_case
+                    ))
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
             }
-            let _ = #acc_snake_case.pop();
-            let in_snake_case = naming::InSnakeCase;
-            Ok(format!(
-                "{}({} @> ({}))",
-                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                #column_snake_case,
-                #acc_snake_case
-            ))
         }
     }
     fn generate_bind_value_to_query_token_stream(element_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -4601,9 +4592,7 @@ impl ContainsAllElementsOfArray {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
         quote::quote!{
-            for #element_snake_case in self.#value_snake_case {
-                #query_snake_case = #query_snake_case.bind(#element_bind_token_stream);
-            }
+            #query_snake_case = #query_snake_case.bind(sqlx::types::Json(self.#value_snake_case));
             #query_snake_case
         }
     }
