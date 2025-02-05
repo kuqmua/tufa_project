@@ -2987,7 +2987,7 @@ impl RangeLength {
         };
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
-        let std_primitive_i64_token_stream = quote::quote!{std::primitive::i64};
+        let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
