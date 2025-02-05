@@ -3884,7 +3884,7 @@ impl PositionGreaterThan {
 }
 
 //todo this functions used only once coz in the future will be postgresql types support. now its only postgresql json types
-fn generate_position_regular_expression_try_new_content_token_stream(
+fn generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
@@ -3900,7 +3900,7 @@ fn generate_position_regular_expression_try_new_content_token_stream(
         &postgresql_type_or_json_type_ident_where_element_position_regular_expression_try_new_error_named_upper_camel_case,
     )
 }
-fn generate_position_regular_expression_impl_deserialize_token_stream(
+fn generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
@@ -3916,7 +3916,7 @@ fn generate_position_regular_expression_impl_deserialize_token_stream(
         &token_patterns::StdStringString,
     )
 }
-fn generate_position_regular_expression_try_generate_bind_increments_token_stream(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
+fn generate_try_generate_bind_increments_token_stream_4334f73e_cfcd_494b_aa9c_54a4aa8a0e39(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -3949,7 +3949,7 @@ fn generate_position_regular_expression_try_generate_bind_increments_token_strea
         }
     }
 }
-fn generate_position_regular_expression_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+fn generate_bind_value_to_query_token_stream_32f8f7cf_128f_474a_8e53_f0f0dec3720c() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
@@ -3959,7 +3959,7 @@ fn generate_position_regular_expression_bind_value_to_query_token_stream() -> pr
         #query_snake_case
     }
 }
-fn generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
     regular_expression: &RegularExpression,
@@ -3979,12 +3979,12 @@ fn generate_position_regular_expression_postgresql_json_type_tokens_where_elemen
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-            try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
+            try_new_content_token_stream: &generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
                 &postgresql_json_type,
                 &postgresql_type_or_json_type,
                 &regular_expression,
             ),
-            impl_deserialize_token_stream: &generate_position_regular_expression_impl_deserialize_token_stream(
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(
                 &postgresql_json_type,
                 &postgresql_type_or_json_type,
                 &regular_expression,
@@ -3993,8 +3993,8 @@ fn generate_position_regular_expression_postgresql_json_type_tokens_where_elemen
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &additional_type_declaration_token_stream,
         &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CoreDefaultDefaultDefault),
-        &generate_position_regular_expression_try_generate_bind_increments_token_stream(&regular_expression),
-        &generate_position_regular_expression_bind_value_to_query_token_stream(),
+        &generate_try_generate_bind_increments_token_stream_4334f73e_cfcd_494b_aa9c_54a4aa8a0e39(&regular_expression),
+        &generate_bind_value_to_query_token_stream_32f8f7cf_128f_474a_8e53_f0f0dec3720c(),
     )
 }
 
@@ -4009,7 +4009,7 @@ impl PositionCaseSensitiveRegularExpression {
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type,
             &RegularExpression::CaseSensitive,
@@ -4028,7 +4028,7 @@ impl PositionCaseInsensitiveRegularExpression {
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        generate_position_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type,
             &RegularExpression::CaseInsensitive,
