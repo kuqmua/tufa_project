@@ -3334,9 +3334,9 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
 ) -> proc_macro2::TokenStream {
     let (
         struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
-        struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
+        struct_postgresql_type_or_json_type_ident_where_element_filter_with_3_elements_double_quotes_token_stream,
         postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream
-    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, 2);
+    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, 3);
     let temporary_json_number_type = temporary_json_number_type();
     quote::quote! {
         const _: () = {
@@ -3463,7 +3463,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                     return _serde::__private::Err(
                                         _serde::de::Error::invalid_length(
                                             0usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_3_elements_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -3476,7 +3476,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                     return _serde::__private::Err(
                                         _serde::de::Error::invalid_length(
                                             1usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_3_elements_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -3489,7 +3489,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                     return _serde::__private::Err(
                                         _serde::de::Error::invalid_length(
                                             2usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_3_elements_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -4233,3 +4233,7 @@ impl OverlapsWithArray {
         )
     }
 }
+
+
+// SELECT * FROM table_name WHERE 10 < ANY(array_column);
+// SELECT * FROM table_name WHERE 5 > ALL(array_column);
