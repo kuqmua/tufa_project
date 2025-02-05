@@ -910,7 +910,7 @@ fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
     let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
     let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
-    let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case = {
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = {
         let value = format!(
             "{postgresql_type_or_json_type}{}{}{}",
             &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
@@ -921,7 +921,7 @@ fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
     };
     quote::quote!{
         if #value_snake_case.is_empty() {
-            return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
+            return Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
@@ -931,7 +931,7 @@ fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                 if !#acc_snake_case.contains(&#element_snake_case) {
                     #acc_snake_case.push(#element_snake_case);
                 } else {
-                    return Err(#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
+                    return Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
                         #value_snake_case: #element_snake_case.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -950,7 +950,7 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
     vec_type_token_stream: &dyn quote::ToTokens,
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case: &dyn quote::ToTokens = &{
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn quote::ToTokens = &{
         let value = format!(
             "{postgresql_type_or_json_type}{}{}",
             naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
@@ -959,16 +959,16 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
         value.parse::<proc_macro2::TokenStream>().unwrap()
     };
     let (
-        struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
-        struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
-        postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream
-    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&format!("{}", quote::quote!{#postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case}), 2);
+        struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
+        struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
+        postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream
+    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&format!("{}", quote::quote!{#postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case}), 2);
     quote::quote! {
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
             extern crate serde as _serde;
             #[automatically_derived]
-            impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case {
+            impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case {
                 fn deserialize<__D>(
                     __deserializer: __D,
                 ) -> _serde::__private::Result<Self, __D::Error>
@@ -1052,19 +1052,19 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                     #[doc(hidden)]
                     struct __Visitor<'de> {
                         marker: _serde::__private::PhantomData<
-                            #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
+                            #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
                         >,
                         lifetime: _serde::__private::PhantomData<&'de ()>,
                     }
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case;
+                        type Value = #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case;
                         fn expecting(
                             &self,
                             __formatter: &mut _serde::__private::Formatter<'_>,
                         ) -> _serde::__private::fmt::Result {
                             _serde::__private::Formatter::write_str(
                                 __formatter,
-                                #struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
+                                #struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
                             )
                         }
                         #[inline]
@@ -1083,7 +1083,7 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                                     return _serde::__private::Err(
                                         _serde::de::Error::invalid_length(
                                             0usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
                                         ),
                                     );
                                 }
@@ -1096,12 +1096,12 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                                     return _serde::__private::Err(
                                         _serde::de::Error::invalid_length(
                                             1usize,
-                                            &#struct_postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_with_2_elements_double_quotes_token_stream,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
                                         ),
                                     );
                                 }
                             };
-                            match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
+                            match #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case::try_new(__field0, __field1) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -1169,7 +1169,7 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                                     _serde::__private::de::missing_field("value")?
                                 }
                             };
-                            match #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case::try_new(__field0, __field1) {
+                            match #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case::try_new(__field0, __field1) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -1179,11 +1179,11 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                     const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
-                        #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_double_quotes_token_stream,
+                        #postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
                         FIELDS,
                         __Visitor {
                             marker: _serde::__private::PhantomData::<
-                                #postgresql_type_or_json_type_ident_where_element_contains_all_elements_of_array_upper_camel_case,
+                                #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
                             >,
                             lifetime: _serde::__private::PhantomData,
                         },
