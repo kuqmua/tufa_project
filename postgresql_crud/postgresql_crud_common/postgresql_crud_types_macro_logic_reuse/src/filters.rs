@@ -22,7 +22,8 @@ fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_c
 }
 
 fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
-    &token_patterns::StdPrimitiveI32
+    //todo possible js number max value overflow
+    &token_patterns::StdPrimitiveI64
 }
 
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
