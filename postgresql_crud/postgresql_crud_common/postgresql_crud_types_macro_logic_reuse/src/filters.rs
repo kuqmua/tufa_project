@@ -3659,7 +3659,7 @@ impl BitVecPositionEquals {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_9a677220_67b3_4d4d_a7b7_92314cce8e40_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &ident,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
@@ -3677,7 +3677,7 @@ impl BitVecPositionEquals {
     }
 }
 
-fn generate_try_new_content_9a677220_67b3_4d4d_a7b7_92314cce8e40_token_stream(
+fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     filter: &dyn std::fmt::Display,
@@ -3790,7 +3790,7 @@ impl PositionEquals {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_9a677220_67b3_4d4d_a7b7_92314cce8e40_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
@@ -3852,7 +3852,7 @@ impl PositionGreaterThan {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_9a677220_67b3_4d4d_a7b7_92314cce8e40_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
