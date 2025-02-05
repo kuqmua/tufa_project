@@ -944,7 +944,7 @@ fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
         })
     }
 }
-fn generate_impl_deserialize_for_vec_token_stream(
+fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     vec_type_token_stream: &dyn quote::ToTokens,
@@ -1281,7 +1281,7 @@ impl In {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                     &ident,
                     &postgresql_type_or_json_type,
                     &where_operator_type_type_token_stream,
@@ -1330,7 +1330,7 @@ impl In {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &non_optional_field_type,
@@ -4095,7 +4095,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
                 &postgresql_type_or_json_type,
                 &self_upper_camel_case,
             ),
-            impl_deserialize_token_stream: &generate_impl_deserialize_for_vec_token_stream(
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                 &postgresql_json_type,
                 &postgresql_type_or_json_type,
                 &postgresql_json_array_element_type,
