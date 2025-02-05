@@ -130,18 +130,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     ]
             #   }
             # },
-            # {
-            #   "LengthMoreThan": {
-            #     "logical_operator": "Or",
-            #     "length_more_than": 0
-            #   }
-            # },
             {
-              "LengthEqual": {
+              "LengthMoreThan": {
                 "logical_operator": "Or",
-                "length_more_than": 3
+                "value": 2
               }
             }
+            # ,
+            # {
+            #   "LengthEqual": {
+            #     "logical_operator": "Or",
+            #     "value": 3
+            #   }
+            # }
             # ,
             # {
             #   "PositionEquals": {

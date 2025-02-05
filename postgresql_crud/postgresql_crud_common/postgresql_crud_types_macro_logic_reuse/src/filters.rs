@@ -2104,7 +2104,6 @@ fn generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
-    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;//todo rename it
     let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
     let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = {
         let value = format!(
@@ -2116,15 +2115,15 @@ fn generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
         value.parse::<proc_macro2::TokenStream>().unwrap()
     };
     quote::quote!{
-        if #length_more_than_snake_case >= 0 {
+        if #value_snake_case >= 0 {
             Ok(Self{
                 logical_operator,
-                #length_more_than_snake_case
+                #value_snake_case
             })
         }
         else {
             Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#length_is_negative_upper_camel_case {
-                #value_snake_case: #length_more_than_snake_case,
+                #value_snake_case,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
@@ -2203,7 +2202,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                         {
                             match __value {
                                 "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                "length_more_than" => _serde::__private::Ok(__Field::__field1),
+                                "value" => _serde::__private::Ok(__Field::__field1),
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -2216,7 +2215,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                         {
                             match __value {
                                 b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                b"length_more_than" => _serde::__private::Ok(__Field::__field1),
+                                b"value" => _serde::__private::Ok(__Field::__field1),
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -2326,7 +2325,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                                         if _serde::__private::Option::is_some(&__field1) {
                                             return _serde::__private::Err(
                                                 <__A::Error as _serde::de::Error>::duplicate_field(
-                                                    "length_more_than",
+                                                    "value",
                                                 ),
                                             );
                                         }
@@ -2352,7 +2351,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                             let __field1 = match __field1 {
                                 _serde::__private::Some(__field1) => __field1,
                                 _serde::__private::None => {
-                                    _serde::__private::de::missing_field("length_more_than")?
+                                    _serde::__private::de::missing_field("value")?
                                 }
                             };
                             match #postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case::try_new(__field0, __field1) {
@@ -2364,7 +2363,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                     #[doc(hidden)]
                     const FIELDS: &'static [&'static str] = &[
                         "logical_operator",
-                        "length_more_than",
+                        "value",
                     ];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
@@ -2383,16 +2382,16 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
     }
 }
 fn generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7() -> proc_macro2::TokenStream {
-    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
     quote::quote!{
-        #length_more_than_snake_case: #std_primitive_i64_token_stream,
+        #value_snake_case: #std_primitive_i64_token_stream,
     }
 }
 fn generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f() -> proc_macro2::TokenStream {
-    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-    quote::quote!{length_more_than: #core_default_default_default}
+    quote::quote!{#value_snake_case: #core_default_default_default}
 }
 enum LengthOperator {
     Equal,
@@ -2430,10 +2429,10 @@ fn generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd
     }
 }
 fn generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a5139() -> proc_macro2::TokenStream {
-    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     quote::quote!{
-        #query_snake_case = #query_snake_case.bind(self.#length_more_than_snake_case);
+        #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
         #query_snake_case
     }
 }
