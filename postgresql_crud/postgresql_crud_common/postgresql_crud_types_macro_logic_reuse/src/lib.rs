@@ -1221,6 +1221,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                 &postgresql_json_type,
             );
+            let length_equal = crate::filters::LengthEqual;
+            let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                &postgresql_json_type,
+            );
 
             enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
                 Some {
@@ -1300,11 +1304,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = {
                 let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
                 vec.push(&length_more_than);
+                vec.push(&length_equal);
                 vec
             };
             let mut common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = {
                 let mut vec: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
                 vec.push(postgresql_json_type_ident_where_element_length_more_than_token_stream);
+                vec.push(postgresql_json_type_ident_where_element_length_equal_token_stream);
                 vec
             };
 
