@@ -12,6 +12,15 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
+fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, ident: &dyn quote::ToTokens, filter: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    let value = format!(
+        "{postgresql_type_or_json_type}{}{}",
+        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+        filter
+    );
+    value.parse::<proc_macro2::TokenStream>().unwrap()
+}
+
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
     postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -946,14 +955,11 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
     vec_type_token_stream: &dyn quote::ToTokens,
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn quote::ToTokens = &{
-        let value = format!(
-            "{postgresql_type_or_json_type}{}{}",
-            naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            filter
-        );
-        value.parse::<proc_macro2::TokenStream>().unwrap()
-    };
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+        &postgresql_type_or_json_type,
+        &ident,
+        &filter,
+    );
     let (
         struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
         struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
@@ -1403,14 +1409,11 @@ fn generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
     regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = {
-        let value = format!(
-            "{postgresql_type_or_json_type}{}{}",
-            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            regular_expression.name_upper_camel_case(),
-        );
-        value.parse::<proc_macro2::TokenStream>().unwrap()
-    };
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+        &postgresql_type_or_json_type,
+        &ident,
+        &regular_expression.name_upper_camel_case(),
+    );
     let (
         struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
         struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
@@ -2109,14 +2112,11 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case = {
-        let value = format!(
-            "{postgresql_type_or_json_type}{}{}",
-            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            filter,
-        );
-        value.parse::<proc_macro2::TokenStream>().unwrap()
-    };
+    let postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+        &postgresql_type_or_json_type,
+        &ident,
+        &filter,
+    );
     let (
         struct_postgresql_type_or_json_type_ident_where_element_filter_than_double_quotes_token_stream,
         struct_postgresql_type_or_json_type_ident_where_element_filter_than_with_2_elements_double_quotes_token_stream,
@@ -3948,15 +3948,11 @@ fn generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = {
-        let value = format!(
-            "{postgresql_type_or_json_type}{}{}{}",
-            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            naming::PositionUpperCamelCase,
-            regular_expression.name_upper_camel_case(),
-        );
-        value.parse::<proc_macro2::TokenStream>().unwrap()
-    };
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+        &postgresql_type_or_json_type,
+        &ident,
+        &format!("{}{}", naming::PositionUpperCamelCase, regular_expression.name_upper_camel_case()),
+    );
     generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
         &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
         &token_patterns::StdStringString,
