@@ -3556,7 +3556,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
         };
     }
 }
-fn generate_position_filter_additional_type_declaration_token_stream(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
     let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
@@ -3565,7 +3565,7 @@ fn generate_position_filter_additional_type_declaration_token_stream(value_type_
         #position_snake_case: #std_primitive_i32_token_stream,
     }
 }
-fn generate_position_filter_additional_default_initialization_token_stream(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
@@ -3649,7 +3649,7 @@ impl BitVecPositionEquals {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdPrimitiveBool);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdPrimitiveBool);
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -3670,7 +3670,7 @@ impl BitVecPositionEquals {
                 ),
             },
             &additional_type_declaration_token_stream,
-            &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CoreDefaultDefaultDefault),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(),
         )
@@ -3781,7 +3781,7 @@ impl PositionEquals {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -3804,7 +3804,7 @@ impl PositionEquals {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &generate_position_filter_additional_default_initialization_token_stream(&{
+            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&{
                 let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
                     let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
                     let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -3843,7 +3843,7 @@ impl PositionGreaterThan {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&postgresql_json_array_element_type);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -3866,7 +3866,7 @@ impl PositionGreaterThan {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &generate_position_filter_additional_default_initialization_token_stream(&{
+            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&{
                 let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
                     let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
                     let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -3970,7 +3970,7 @@ fn generate_position_regular_expression_postgresql_json_type_tokens_where_elemen
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-    let additional_type_declaration_token_stream = generate_position_filter_additional_type_declaration_token_stream(&token_patterns::StdStringString);
+    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdStringString);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -3992,7 +3992,7 @@ fn generate_position_regular_expression_postgresql_json_type_tokens_where_elemen
         },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &additional_type_declaration_token_stream,
-        &generate_position_filter_additional_default_initialization_token_stream(&token_patterns::CoreDefaultDefaultDefault),
+        &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CoreDefaultDefaultDefault),
         &generate_position_regular_expression_try_generate_bind_increments_token_stream(&regular_expression),
         &generate_position_regular_expression_bind_value_to_query_token_stream(),
     )
