@@ -21,6 +21,10 @@ fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_c
     value.parse::<proc_macro2::TokenStream>().unwrap()
 }
 
+fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
+    &token_patterns::StdPrimitiveI32
+}
+
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
     postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -2071,11 +2075,11 @@ impl GreaterThanCurrentTime {
 fn generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
-    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;//todo maybe use i32 for now? just to remove possible js number max value overflow
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote!{
         #length_is_negative_upper_camel_case {
             #[eo_to_std_string_string_serialize_deserialize]
-            #value_snake_case: #std_primitive_i64_token_stream,
+            #value_snake_case: #temporary_json_number_type,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
     }
@@ -2122,7 +2126,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
         struct_postgresql_type_or_json_type_ident_where_element_filter_than_with_2_elements_double_quotes_token_stream,
         postgresql_type_or_json_type_ident_where_element_filter_than_double_quotes_token_stream
     ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case, 2);
-    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote! {
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2249,7 +2253,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                                 }
                             };
                             let __field1 = match _serde::de::SeqAccess::next_element::<
-                                #std_primitive_i64_token_stream,
+                                #temporary_json_number_type,
                             >(&mut __seq)? {
                                 _serde::__private::Some(__value) => __value,
                                 _serde::__private::None => {
@@ -2277,7 +2281,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                             let mut __field0: _serde::__private::Option<
                                 crate::LogicalOperator,
                             > = _serde::__private::None;
-                            let mut __field1: _serde::__private::Option<#std_primitive_i64_token_stream> = _serde::__private::None;
+                            let mut __field1: _serde::__private::Option<#temporary_json_number_type> = _serde::__private::None;
                             while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                 __Field,
                             >(&mut __map)? {
@@ -2306,7 +2310,7 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
                                         }
                                         __field1 = _serde::__private::Some(
                                             _serde::de::MapAccess::next_value::<
-                                                #std_primitive_i64_token_stream,
+                                                #temporary_json_number_type,
                                             >(&mut __map)?,
                                         );
                                     }
@@ -2358,9 +2362,9 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
 }
 fn generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
-    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote!{
-        #value_snake_case: #std_primitive_i64_token_stream,
+        #value_snake_case: #temporary_json_number_type,
     }
 }
 fn generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f() -> proc_macro2::TokenStream {
@@ -2987,7 +2991,7 @@ impl RangeLength {
         };
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
-        let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+        let temporary_json_number_type = temporary_json_number_type();
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -2998,12 +3002,12 @@ impl RangeLength {
                 try_new_error_named_variants_token_stream: &quote::quote!{
                     #length_is_negative_or_zero_upper_camel_case {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #value_snake_case: #std_primitive_i64_token_stream,
+                        #value_snake_case: #temporary_json_number_type,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                 },
                 try_new_additional_input_parameters_token_stream: &quote::quote!{
-                    #value_snake_case: #std_primitive_i64_token_stream
+                    #value_snake_case: #temporary_json_number_type
                 },
                 try_new_content_token_stream: &{
                     let postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -3155,7 +3159,7 @@ impl RangeLength {
                                                 }
                                             };
                                             let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                #std_primitive_i64_token_stream,
+                                                #temporary_json_number_type,
                                             >(&mut __seq)? {
                                                 _serde::__private::Some(__value) => __value,
                                                 _serde::__private::None => {
@@ -3183,7 +3187,7 @@ impl RangeLength {
                                             let mut __field0: _serde::__private::Option<
                                                 crate::LogicalOperator,
                                             > = _serde::__private::None;
-                                            let mut __field1: _serde::__private::Option<#std_primitive_i64_token_stream> = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<#temporary_json_number_type> = _serde::__private::None;
                                             while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                                 __Field,
                                             >(&mut __map)? {
@@ -3210,7 +3214,7 @@ impl RangeLength {
                                                         }
                                                         __field1 = _serde::__private::Some(
                                                             _serde::de::MapAccess::next_value::<
-                                                                #std_primitive_i64_token_stream,
+                                                                #temporary_json_number_type,
                                                             >(&mut __map)?,
                                                         );
                                                     }
@@ -3258,7 +3262,7 @@ impl RangeLength {
                     }
                 },
             },
-            &quote::quote!{#value_snake_case: #std_primitive_i64_token_stream},//todo try_new - check length > 0
+            &quote::quote!{#value_snake_case: #temporary_json_number_type},//todo try_new - check length > 0
             &{
                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
                 quote::quote!{#value_snake_case: #core_default_default_default}
@@ -3291,11 +3295,11 @@ impl RangeLength {
 fn generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;
     let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
-    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote!{
         #position_is_less_than_zero_upper_camel_case {
             #[eo_to_std_string_string_serialize_deserialize]
-            #position_snake_case: #std_primitive_i32_token_stream,
+            #position_snake_case: #temporary_json_number_type,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
     }
@@ -3332,7 +3336,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
         struct_postgresql_type_or_json_type_ident_where_element_filter_with_2_elements_double_quotes_token_stream,
         postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream
     ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, 2);
-    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote! {
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3477,7 +3481,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                 }
                             };
                             let __field2 = match _serde::de::SeqAccess::next_element::<
-                                #std_primitive_i32_token_stream,
+                                #temporary_json_number_type,
                             >(&mut __seq)? {
                                 _serde::__private::Some(__value) => __value,
                                 _serde::__private::None => {
@@ -3506,7 +3510,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                 crate::LogicalOperator,
                             > = _serde::__private::None;
                             let mut __field1: _serde::__private::Option<#value_type_token_stream> = _serde::__private::None;
-                            let mut __field2: _serde::__private::Option<#std_primitive_i32_token_stream> = _serde::__private::None;
+                            let mut __field2: _serde::__private::Option<#temporary_json_number_type> = _serde::__private::None;
                             while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                 __Field,
                             >(&mut __map)? {
@@ -3547,7 +3551,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
                                         }
                                         __field2 = _serde::__private::Some(
                                             _serde::de::MapAccess::next_value::<
-                                                #std_primitive_i32_token_stream,
+                                                #temporary_json_number_type,
                                             >(&mut __map)?,
                                         );
                                     }
@@ -3607,10 +3611,10 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
 fn generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
-    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    let temporary_json_number_type = temporary_json_number_type();
     quote::quote!{
         #value_snake_case: #value_type_token_stream,
-        #position_snake_case: #std_primitive_i32_token_stream,
+        #position_snake_case: #temporary_json_number_type,
     }
 }
 fn generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -3630,6 +3634,9 @@ impl WhereOperatorName for BitVecPositionEquals {
     }
 }
 impl BitVecPositionEquals {
+    fn std_primitive_bool() -> token_patterns::StdPrimitiveBool {
+        token_patterns::StdPrimitiveBool
+    }
     fn generate_impl_deserialize_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -3641,7 +3648,7 @@ impl BitVecPositionEquals {
         };
         generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
             &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
-            &token_patterns::StdPrimitiveBool,
+            &Self::std_primitive_bool(),
         )
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
@@ -3697,7 +3704,7 @@ impl BitVecPositionEquals {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdPrimitiveBool);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&Self::std_primitive_bool());
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
