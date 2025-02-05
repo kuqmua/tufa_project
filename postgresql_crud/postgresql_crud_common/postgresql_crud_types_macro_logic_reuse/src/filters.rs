@@ -1354,6 +1354,12 @@ enum RegularExpression {
     CaseInsensitive
 }
 impl RegularExpression {
+    fn name_upper_camel_case(&self) -> &'static str {
+        match &self {
+            RegularExpression::CaseSensitive => "CaseSensitiveRegularExpression",
+            RegularExpression::CaseInsensitive => "CaseInsensitiveRegularExpression",
+        }
+    }
     fn stringified(&self) -> &'static str {
         match &self {
             RegularExpression::CaseSensitive => "",
@@ -1377,23 +1383,14 @@ fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
 ) -> proc_macro2::TokenStream {
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_type_ident_where_element_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &(regular_expression,postgresql_type_or_json_type) {
-        (
-            RegularExpression::CaseSensitive,
-            crate::PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            crate::PostgresqlTypeOrJsonType::PostgresqlType,
-        ) => &naming::parameter::PostgresqlTypeSelfWhereElementCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseSensitive,
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (
-            RegularExpression::CaseInsensitive,
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        ) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+    let postgresql_type_ident_where_element_filter_try_new_error_named_upper_camel_case = {
+        let value = format!(
+            "{postgresql_type_or_json_type}{}{}{}",
+            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            regular_expression.name_upper_camel_case(),
+            naming::TryNewErrorNamedUpperCamelCase
+        );
+        value.parse::<proc_macro2::TokenStream>().unwrap()
     };
     quote::quote!{
         if !#value_snake_case.is_empty() {
@@ -1403,7 +1400,7 @@ fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
             })
         }
         else {
-            Err(#postgresql_type_ident_where_element_regular_expression_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
+            Err(#postgresql_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
