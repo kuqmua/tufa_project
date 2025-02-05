@@ -3949,15 +3949,19 @@ fn generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_position_regular_expression_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match (&postgresql_type_or_json_type, &regular_expression) {
-        (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseSensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseSensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseSensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = {
+        let value = format!(
+            "{postgresql_type_or_json_type}{}{}{}{}",
+            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            naming::PositionUpperCamelCase,
+            regular_expression.name_upper_camel_case(),
+            naming::TryNewErrorNamedUpperCamelCase
+        );
+        value.parse::<proc_macro2::TokenStream>().unwrap()
     };
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
         &ident,
-        &postgresql_type_or_json_type_ident_where_element_position_regular_expression_try_new_error_named_upper_camel_case,
+        &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
     )
 }
 fn generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(
