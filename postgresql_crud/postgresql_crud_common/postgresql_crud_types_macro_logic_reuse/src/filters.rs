@@ -2502,6 +2502,9 @@ impl WhereOperatorName for LengthMoreThan {
     }
 }
 impl LengthMoreThan {
+    fn length_operator() -> LengthOperator {
+        LengthOperator::More
+    }
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
@@ -2511,7 +2514,7 @@ impl LengthMoreThan {
             &WhereOperatorName::upper_camel_case(self),
             ident,
             is_nullable,
-            &LengthOperator::More,
+            &Self::length_operator(),
         )
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -2521,7 +2524,7 @@ impl LengthMoreThan {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_61c9bbf6_474d_4040_b849_f12e84e8e47e(
             &WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
-            &LengthOperator::More,
+            &Self::length_operator(),
         )
     }
 }
