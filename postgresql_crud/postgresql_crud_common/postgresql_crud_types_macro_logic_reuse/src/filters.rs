@@ -1667,7 +1667,7 @@ fn generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
         };
     }
 }
-fn generate_regular_expression_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
+fn generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let std_string_string = token_patterns::StdStringString;
     quote::quote!{#value_snake_case: #std_string_string}
@@ -1739,7 +1739,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
             ident: &ident,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
-            try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
+            try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
             try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
                 &regular_expression,
@@ -1751,7 +1751,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
                 &postgresql_type_or_json_type,
             ),
         },
-        &generate_regular_expression_additional_type_declaration_token_stream(),
+        &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_regular_expression_additional_default_initialization_token_stream(),
         &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
         &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
@@ -1775,7 +1775,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
             ident: &ident,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
-            try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
+            try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
             try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
                 &regular_expression,
@@ -1788,7 +1788,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
             ),
         },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
-        &generate_regular_expression_additional_type_declaration_token_stream(),
+        &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_regular_expression_additional_default_initialization_token_stream(),
         &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
         &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
