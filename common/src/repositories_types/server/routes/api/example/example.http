@@ -40,17 +40,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 0,
-      "std_primitive_bool": false,
-      "std_string_string": "",
       "std_vec_vec_std_primitive_i8": [
-        1,2,3,4
+        0,1,2,4
       ],
       "std_vec_vec_std_primitive_bool": [
-        false, true, false
+        false, true, false, true
       ],
       "std_vec_vec_std_string_string": [
-        "cat", "dog", "fox"
+        "cat", "dog", "fox", "bird"
       ]
     }
   }
@@ -121,132 +118,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "StdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "GreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "Between": {
-      #           "logical_operator": "Or",
-      #           "start": 0,
-      #           "end": 0
-      #         }
-      #       },
-      #       {
-      #         "In": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdPrimitiveBool": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": false
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdStringString": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "CaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "StdVecVecStdPrimitiveI8": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       # {
-      #       #   "Equal": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       0
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "length_more_than": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionEquals": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       {
-      #         "ContainsAllElementsOfArray": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             1,4
-      #           ]
-      #         }
-      #       }
-      #       # ,
-      #       # {
-      #       #   "PositionGreaterThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0,
-      #       #     "position": 0
-      #       #   }
-      #       # }
-      #     ]
-      #   }
-      # }
-      # ,
       {
-        "StdVecVecStdPrimitiveBool": {
+        "StdVecVecStdPrimitiveI8": {
           "logical_operator": "Or",
           "value": [
             # {
             #   "Equal": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       false
+            #       0
             #     ]
             #   }
             # },
@@ -259,69 +139,141 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             # {
             #   "PositionEquals": {
             #     "logical_operator": "Or",
-            #     "value": false,
+            #     "value": 0,
             #     "position": 0
             #   }
             # },
+            # {
+            #   "ContainsAllElementsOfArray": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # }
+            # ,
             {
-              "ContainsAllElementsOfArray": {
+              "ContainedInArray": {
                 "logical_operator": "Or",
                 "value": [
-                  false, true
+                  4
                 ]
               }
             }
+            # ,
+            # {
+            #   "PositionGreaterThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0,
+            #     "position": 0
+            #   }
+            # }
           ]
         }
       }
       # ,
       # {
+      #   "StdVecVecStdPrimitiveBool": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       # {
+      #       #   "Equal": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       false
+      #       #     ]
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "LengthMoreThan": {
+      #       #     "logical_operator": "Or",
+      #       #     "length_more_than": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "PositionEquals": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": false,
+      #       #     "position": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "ContainsAllElementsOfArray": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       false
+      #       #     ]
+      #       #   }
+      #       # },
+      #       {
+      #         "ContainedInArray": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             false
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # }
+      # ,
+      # {
       #   "StdVecVecStdStringString": {
       #     "logical_operator": "Or",
       #     "value": [
+      #       # {
+      #       #   "Equal": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       ""
+      #       #     ]
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "LengthMoreThan": {
+      #       #     "logical_operator": "Or",
+      #       #     "length_more_than": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "PositionEquals": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": "",
+      #       #     "position": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "ContainsAllElementsOfArray": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       ""
+      #       #     ]
+      #       #   }
+      #       # },
       #       {
-      #         "Equal": {
+      #         "ContainedInArray": {
       #           "logical_operator": "Or",
       #           "value": [
-      #             ""
+      #             "cat", "dog", "fox"
       #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "length_more_than": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "ContainsAllElementsOfArray": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             ""
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "PositionCaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionCaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
       #         }
       #       }
+      #       # ,
+      #       # {
+      #       #   "PositionCaseSensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": "",
+      #       #     "position": 0
+      #       #   }
+      #       # }
+      #       # ,
+      #       # {
+      #       #   "PositionCaseInsensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": "",
+      #       #     "position": 0
+      #       #   }
+      #       # }
       #     ]
       #   }
       # }
@@ -333,36 +285,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     # },
     {
       "object_animal_as_jsonb_not_null": [
-        # {
-        #   "std_primitive_i8": {}
-        # },
-        # {
-        #   "std_primitive_bool": {}
-        # },
-        # {
-        #   "std_string_string": {}
-        # },
         {
           "std_vec_vec_std_primitive_i8": {
             "pagination": {
-              "limit": 70,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "std_vec_vec_std_primitive_bool": {
-            "pagination": {
-              "limit": 3,
+              "limit": 10,
               "offset": 0
             }
           }
         }
         # ,
         # {
+        #   "std_vec_vec_std_primitive_bool": {
+        #     "pagination": {
+        #       "limit": 10,
+        #       "offset": 0
+        #     }
+        #   }
+        # }
+        # ,
+        # {
         #   "std_vec_vec_std_string_string": {
         #     "pagination": {
-        #       "limit": 3,
+        #       "limit": 10,
         #       "offset": 0
         #     }
         #   }
@@ -377,7 +321,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 3,
+    "limit": 10,
     "offset": 0
   }
 }
