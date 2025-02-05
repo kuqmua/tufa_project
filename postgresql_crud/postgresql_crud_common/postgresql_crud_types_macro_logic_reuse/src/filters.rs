@@ -4074,6 +4074,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
     postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    format_handle_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
@@ -4115,7 +4116,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
             };
             crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
         }),
-        &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
+        &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&format_handle_token_stream),
         &generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1b(),
     )
 }
@@ -4136,6 +4137,7 @@ impl ContainsAllElementsOfArray {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
             postgresql_json_array_element_type,
+            &quote::quote!{"{}({} @> ${})"},
         )
     }
 }
