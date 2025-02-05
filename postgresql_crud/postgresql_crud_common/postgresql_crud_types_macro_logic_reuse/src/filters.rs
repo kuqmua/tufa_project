@@ -292,7 +292,7 @@ impl GreaterThan {
         quote::quote!{#value_snake_case: #initialization_token_stream}
     }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} > ${})"})
+        generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} > ${})"})
     }
     fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
@@ -1885,7 +1885,7 @@ impl Before {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} < ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} < ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2593,7 +2593,7 @@ impl ValueIsContainedWithinRange {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2632,7 +2632,7 @@ impl ContainsAnotherRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2671,7 +2671,7 @@ impl StrictlyToLeftOfRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} &< ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} &< ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2710,7 +2710,7 @@ impl StrictlyToRightOfRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} &> ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} &> ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2750,7 +2750,7 @@ impl IncludedLowerBound {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(lower({}) = ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2790,7 +2790,7 @@ impl ExcludedUpperBound {
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(upper({}) = ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case #range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream);
                 #query_snake_case
@@ -2829,7 +2829,7 @@ impl GreaterThanLowerBound {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} > ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} > ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2868,7 +2868,7 @@ impl OverlapWithRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} && ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} && ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -2907,7 +2907,7 @@ impl AdjacentWithRange {
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             },
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} -|- ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} -|- ${})"}),
             &quote::quote!{
                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
                 #query_snake_case
@@ -4036,7 +4036,7 @@ impl PositionCaseInsensitiveRegularExpression {
     }
 }
 
-fn generate_try_generate_bind_increments_increment_checked_add_token_stream(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let element_snake_case = naming::ElementSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
@@ -4124,7 +4124,7 @@ impl ContainsAllElementsOfArray {
                 };
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
-            &generate_try_generate_bind_increments_increment_checked_add_token_stream(&quote::quote!{"{}({} @> ${})"}),
+            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
                 quote::quote!{sqlx::types::Json(#element_snake_case)}
