@@ -1677,7 +1677,7 @@ fn generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{#value_snake_case: #core_default_default_default}
 }
-fn generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(
+fn generate_postgresql_type_self_where_try_generate_bind_increments_token_stream_2cc03745_9c77_4be3_8819_e948868a7603(
     regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
 ) -> proc_macro2::TokenStream {
@@ -1753,7 +1753,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         },
         &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f05_03241c037d04(),
-        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
+        &generate_postgresql_type_self_where_try_generate_bind_increments_token_stream_2cc03745_9c77_4be3_8819_e948868a7603(&regular_expression, &postgresql_type_or_json_type),
         &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
     )
 }
@@ -1790,7 +1790,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f05_03241c037d04(),
-        &generate_regular_expression_postgresql_type_self_where_try_generate_bind_increments_token_stream(&regular_expression, &postgresql_type_or_json_type),
+        &generate_postgresql_type_self_where_try_generate_bind_increments_token_stream_2cc03745_9c77_4be3_8819_e948868a7603(&regular_expression, &postgresql_type_or_json_type),
         &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
     )
 }
