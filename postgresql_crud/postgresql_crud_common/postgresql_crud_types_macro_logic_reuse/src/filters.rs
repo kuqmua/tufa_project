@@ -1716,7 +1716,7 @@ fn generate_postgresql_type_self_where_try_generate_bind_increments_token_stream
         }
     }
 }
-fn generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+fn generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54_cd7f_49bf_a8fa_39dae7512b3e() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     quote::quote!{
@@ -1754,7 +1754,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f05_03241c037d04(),
         &generate_postgresql_type_self_where_try_generate_bind_increments_token_stream_2cc03745_9c77_4be3_8819_e948868a7603(&regular_expression, &postgresql_type_or_json_type),
-        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
+        &generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54_cd7f_49bf_a8fa_39dae7512b3e()
     )
 }
 fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -1791,7 +1791,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
         &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
         &generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f05_03241c037d04(),
         &generate_postgresql_type_self_where_try_generate_bind_increments_token_stream_2cc03745_9c77_4be3_8819_e948868a7603(&regular_expression, &postgresql_type_or_json_type),
-        &generate_regular_expression_postgresql_type_self_where_bind_value_to_query_token_stream()
+        &generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54_cd7f_49bf_a8fa_39dae7512b3e()
     )
 }
 pub struct CaseSensitiveRegularExpression;
