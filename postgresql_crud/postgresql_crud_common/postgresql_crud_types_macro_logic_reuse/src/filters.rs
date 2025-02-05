@@ -107,12 +107,12 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     }
 }
 
-fn generate_impl_deserialize_with_3_elements_token_stream(
+fn generate_impl_deserialize_with_3_elements_and_try_new_token_stream(
     postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     value_type_token_stream: &dyn quote::ToTokens,
-    first_field: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    second_field: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    third_field: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    first_field: &dyn std::fmt::Display,
+    second_field: &dyn std::fmt::Display,
+    third_field: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
     let (
         struct_postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream,
@@ -120,6 +120,9 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
         postgresql_type_or_json_type_ident_where_element_filter_double_quotes_token_stream
     ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, 3);
     let temporary_json_number_type = temporary_json_number_type();
+    let first_field_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&first_field);
+    let second_field_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&second_field);
+    let third_field_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&third_field);
     quote::quote! {
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -176,9 +179,9 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                "value" => _serde::__private::Ok(__Field::__field1),
-                                "position" => _serde::__private::Ok(__Field::__field2),
+                                #first_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field0),
+                                #second_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field1),
+                                #third_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field2),
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -190,9 +193,9 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                b"value" => _serde::__private::Ok(__Field::__field1),
-                                b"position" => _serde::__private::Ok(__Field::__field2),
+                                b #first_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field0),
+                                b #second_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field1),
+                                b #third_field_double_quotes_token_stream => _serde::__private::Ok(__Field::__field2),
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -302,7 +305,7 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                                         if _serde::__private::Option::is_some(&__field0) {
                                             return _serde::__private::Err(
                                                 <__A::Error as _serde::de::Error>::duplicate_field(
-                                                    "logical_operator",
+                                                    #first_field_double_quotes_token_stream,
                                                 ),
                                             );
                                         }
@@ -315,7 +318,7 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                                     __Field::__field1 => {
                                         if _serde::__private::Option::is_some(&__field1) {
                                             return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("value"),
+                                                <__A::Error as _serde::de::Error>::duplicate_field(#second_field_double_quotes_token_stream),
                                             );
                                         }
                                         __field1 = _serde::__private::Some(
@@ -328,7 +331,7 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                                         if _serde::__private::Option::is_some(&__field2) {
                                             return _serde::__private::Err(
                                                 <__A::Error as _serde::de::Error>::duplicate_field(
-                                                    "position",
+                                                    #third_field_double_quotes_token_stream,
                                                 ),
                                             );
                                         }
@@ -348,19 +351,19 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                             let __field0 = match __field0 {
                                 _serde::__private::Some(__field0) => __field0,
                                 _serde::__private::None => {
-                                    _serde::__private::de::missing_field("logical_operator")?
+                                    _serde::__private::de::missing_field(#first_field_double_quotes_token_stream)?
                                 }
                             };
                             let __field1 = match __field1 {
                                 _serde::__private::Some(__field1) => __field1,
                                 _serde::__private::None => {
-                                    _serde::__private::de::missing_field("value")?
+                                    _serde::__private::de::missing_field(#second_field_double_quotes_token_stream)?
                                 }
                             };
                             let __field2 = match __field2 {
                                 _serde::__private::Some(__field2) => __field2,
                                 _serde::__private::None => {
-                                    _serde::__private::de::missing_field("position")?
+                                    _serde::__private::de::missing_field(#third_field_double_quotes_token_stream)?
                                 }
                             };
                             match #postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case::try_new(__field0, __field1, __field2) {
@@ -371,9 +374,9 @@ fn generate_impl_deserialize_with_3_elements_token_stream(
                     }
                     #[doc(hidden)]
                     const FIELDS: &'static [&'static str] = &[
-                        "logical_operator",
-                        "value",
-                        "position",
+                        #first_field_double_quotes_token_stream,
+                        #second_field_double_quotes_token_stream,
+                        #third_field_double_quotes_token_stream,
                     ];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
