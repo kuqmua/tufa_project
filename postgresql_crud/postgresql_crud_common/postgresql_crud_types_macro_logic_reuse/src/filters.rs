@@ -2098,6 +2098,402 @@ fn generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0
         },
     }
 }
+fn generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let postgresql_type_or_json_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
+        crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+    };
+    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
+    quote::quote!{
+        if #length_more_than_snake_case >= 0 {
+            Ok(Self{
+                logical_operator,
+                #length_more_than_snake_case
+            })
+        }
+        else {
+            Err(#postgresql_type_or_json_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case::#length_is_negative_upper_camel_case {
+                #value_snake_case: #length_more_than_snake_case,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
+    ident: &dyn quote::ToTokens,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
+        crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident),
+        crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident),
+    };
+    let (
+        struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
+        struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
+        postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream
+    ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2);
+    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+    quote::quote! {
+        const _: () = {
+            #[allow(unused_extern_crates, clippy::useless_attribute)]
+            extern crate serde as _serde;
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case {
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    #[allow(non_camel_case_types)]
+                    #[doc(hidden)]
+                    enum __Field {
+                        __field0,
+                        __field1,
+                        __ignore,
+                    }
+                    #[doc(hidden)]
+                    struct __FieldVisitor;
+                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                        type Value = __Field;
+                        fn expecting(
+                            &self,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
+                        ) -> _serde::__private::fmt::Result {
+                            _serde::__private::Formatter::write_str(
+                                __formatter,
+                                "field identifier",
+                            )
+                        }
+                        fn visit_u64<__E>(
+                            self,
+                            __value: u64,
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                        fn visit_str<__E>(
+                            self,
+                            __value: &str,
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                "length_more_than" => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                        fn visit_bytes<__E>(
+                            self,
+                            __value: &[u8],
+                        ) -> _serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: _serde::de::Error,
+                        {
+                            match __value {
+                                b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                                b"length_more_than" => _serde::__private::Ok(__Field::__field1),
+                                _ => _serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                    }
+                    impl<'de> _serde::Deserialize<'de> for __Field {
+                        #[inline]
+                        fn deserialize<__D>(
+                            __deserializer: __D,
+                        ) -> _serde::__private::Result<Self, __D::Error>
+                        where
+                            __D: _serde::Deserializer<'de>,
+                        {
+                            _serde::Deserializer::deserialize_identifier(
+                                __deserializer,
+                                __FieldVisitor,
+                            )
+                        }
+                    }
+                    #[doc(hidden)]
+                    struct __Visitor<'de> {
+                        marker: _serde::__private::PhantomData<
+                            #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case,
+                        >,
+                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                    }
+                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                        type Value = #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case;
+                        fn expecting(
+                            &self,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
+                        ) -> _serde::__private::fmt::Result {
+                            _serde::__private::Formatter::write_str(
+                                __formatter,
+                                #struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
+                            )
+                        }
+                        #[inline]
+                        fn visit_seq<__A>(
+                            self,
+                            mut __seq: __A,
+                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        where
+                            __A: _serde::de::SeqAccess<'de>,
+                        {
+                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                crate::LogicalOperator,
+                            >(&mut __seq)? {
+                                _serde::__private::Some(__value) => __value,
+                                _serde::__private::None => {
+                                    return _serde::__private::Err(
+                                        _serde::de::Error::invalid_length(
+                                            0usize,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
+                                        ),
+                                    );
+                                }
+                            };
+                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                #std_primitive_i64_token_stream,
+                            >(&mut __seq)? {
+                                _serde::__private::Some(__value) => __value,
+                                _serde::__private::None => {
+                                    return _serde::__private::Err(
+                                        _serde::de::Error::invalid_length(
+                                            1usize,
+                                            &#struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
+                                        ),
+                                    );
+                                }
+                            };
+                            match #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case::try_new(__field0, __field1) {
+                                Ok(value) => _serde::__private::Ok(value),
+                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                            }
+                        }
+                        #[inline]
+                        fn visit_map<__A>(
+                            self,
+                            mut __map: __A,
+                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        where
+                            __A: _serde::de::MapAccess<'de>,
+                        {
+                            let mut __field0: _serde::__private::Option<
+                                crate::LogicalOperator,
+                            > = _serde::__private::None;
+                            let mut __field1: _serde::__private::Option<#std_primitive_i64_token_stream> = _serde::__private::None;
+                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                __Field,
+                            >(&mut __map)? {
+                                match __key {
+                                    __Field::__field0 => {
+                                        if _serde::__private::Option::is_some(&__field0) {
+                                            return _serde::__private::Err(
+                                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                                    "logical_operator",
+                                                ),
+                                            );
+                                        }
+                                        __field0 = _serde::__private::Some(
+                                            _serde::de::MapAccess::next_value::<
+                                                crate::LogicalOperator,
+                                            >(&mut __map)?,
+                                        );
+                                    }
+                                    __Field::__field1 => {
+                                        if _serde::__private::Option::is_some(&__field1) {
+                                            return _serde::__private::Err(
+                                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                                    "length_more_than",
+                                                ),
+                                            );
+                                        }
+                                        __field1 = _serde::__private::Some(
+                                            _serde::de::MapAccess::next_value::<
+                                                #std_primitive_i64_token_stream,
+                                            >(&mut __map)?,
+                                        );
+                                    }
+                                    _ => {
+                                        let _ = _serde::de::MapAccess::next_value::<
+                                            _serde::de::IgnoredAny,
+                                        >(&mut __map)?;
+                                    }
+                                }
+                            }
+                            let __field0 = match __field0 {
+                                _serde::__private::Some(__field0) => __field0,
+                                _serde::__private::None => {
+                                    _serde::__private::de::missing_field("logical_operator")?
+                                }
+                            };
+                            let __field1 = match __field1 {
+                                _serde::__private::Some(__field1) => __field1,
+                                _serde::__private::None => {
+                                    _serde::__private::de::missing_field("length_more_than")?
+                                }
+                            };
+                            match #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case::try_new(__field0, __field1) {
+                                Ok(value) => _serde::__private::Ok(value),
+                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                            }
+                        }
+                    }
+                    #[doc(hidden)]
+                    const FIELDS: &'static [&'static str] = &[
+                        "logical_operator",
+                        "length_more_than",
+                    ];
+                    _serde::Deserializer::deserialize_struct(
+                        __deserializer,
+                        #postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
+                        FIELDS,
+                        __Visitor {
+                            marker: _serde::__private::PhantomData::<
+                                #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case,
+                            >,
+                            lifetime: _serde::__private::PhantomData,
+                        },
+                    )
+                }
+            }
+        };
+    }
+}
+fn generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7() -> proc_macro2::TokenStream {
+    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+    quote::quote!{
+        #length_more_than_snake_case: #std_primitive_i64_token_stream,
+    }
+}
+fn generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f() -> proc_macro2::TokenStream {
+    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+    quote::quote!{length_more_than: #core_default_default_default}
+}
+enum LengthOperator {
+    Eq,
+    More,
+}
+impl LengthOperator {
+    fn postgresql_operator(&self) -> &'static str {
+        match self {
+            Self::Eq => "=",
+            Self::More => ">",
+        }
+    }
+}
+fn generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd3e0133f4bf(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, length_operator: &LengthOperator) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let format_handle_token_stream = {
+        let function = match &postgresql_type_or_json_type {
+            crate::PostgresqlTypeOrJsonType::PostgresqlType => "length",
+            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => "jsonb_array_length",
+        };
+        generate_quotes::double_quotes_token_stream(&format!("{{}}({function}({{}}) {} ${{}})", length_operator.postgresql_operator()))
+    };
+    quote::quote!{
+        match #increment_snake_case.checked_add(1) {
+            Some(#value_snake_case) => {
+                *#increment_snake_case = #value_snake_case;
+                Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
+            }
+            None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+}
+fn generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a5139() -> proc_macro2::TokenStream {
+    let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(self.#length_more_than_snake_case);
+        #query_snake_case
+    }
+}
+fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn quote::ToTokens,
+    is_nullable: &crate::IsNullable,
+    length_operator: &LengthOperator,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
+    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7();
+    generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        &ident,
+        &self_upper_camel_case,
+        &is_nullable,
+        crate::ShouldWhereElementFieldsBePublic::False {
+            ident: &ident,
+            postfix: &self_upper_camel_case,
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
+            try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+            try_new_content_token_stream: &generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
+                &ident,
+                &postgresql_type_or_json_type,
+            ),
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
+                &ident,
+                &postgresql_type_or_json_type,
+            )
+        },
+        &additional_type_declaration_token_stream,
+        &generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f(),
+        &generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd3e0133f4bf(&postgresql_type_or_json_type, length_operator),
+        &generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a5139()
+    )
+}
+fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_61c9bbf6_474d_4040_b849_f12e84e8e47e(
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    postgresql_json_type: &crate::PostgresqlJsonType,
+    length_operator: &LengthOperator,
+) -> proc_macro2::TokenStream {
+    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
+        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7();
+    generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+        &postgresql_type_or_json_type,
+        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        crate::ShouldWhereElementFieldsBePublic::False {
+            ident: &postgresql_json_type,
+            postfix: &self_upper_camel_case,
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
+            try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+            try_new_content_token_stream: &generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
+                &postgresql_json_type,
+                &postgresql_type_or_json_type,
+            ),
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
+                &postgresql_json_type,
+                &postgresql_type_or_json_type,
+            )
+        },
+        &crate::ShouldDeriveSchemarsJsonSchema::True,
+        &additional_type_declaration_token_stream,
+        &generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f(),
+        &generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd3e0133f4bf(&postgresql_type_or_json_type, length_operator),
+        &generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a5139()
+    )
+}
 
 pub struct LengthMoreThan;
 impl WhereOperatorName for LengthMoreThan {
@@ -2106,401 +2502,26 @@ impl WhereOperatorName for LengthMoreThan {
     }
 }
 impl LengthMoreThan {
-    fn length_is_negative_upper_camel_case() -> naming::LengthIsNegativeUpperCamelCase {
-        naming::LengthIsNegativeUpperCamelCase
-    }
-    fn length_is_negative_snake_case() -> naming::LengthIsNegativeSnakeCase {
-        naming::LengthIsNegativeSnakeCase
-    }
-    fn length_more_than_snake_case() -> naming::LengthMoreThanSnakeCase {
-        naming::LengthMoreThanSnakeCase
-    }
-    fn std_primitive_i64_token_stream() -> proc_macro2::TokenStream {
-        quote::quote!{std::primitive::i64}
-    }
-    fn generate_try_new_content_token_stream(
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let postgresql_type_or_json_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementLengthMoreThanTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
-        let length_more_than_snake_case = Self::length_more_than_snake_case();
-        let length_is_negative_upper_camel_case = Self::length_is_negative_upper_camel_case();
-        quote::quote!{
-            if #length_more_than_snake_case >= 0 {
-                Ok(Self{
-                    logical_operator,
-                    #length_more_than_snake_case
-                })
-            }
-            else {
-                Err(#postgresql_type_or_json_type_ident_where_element_length_more_than_try_new_error_named_upper_camel_case::#length_is_negative_upper_camel_case {
-                    #value_snake_case: #length_more_than_snake_case,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
-    }
-    fn generate_impl_deserialize_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementLengthMoreThanUpperCamelCase::from_tokens(&ident),
-        };
-        let (
-            struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
-            struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
-            postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream
-        ) = crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case, 2);
-        let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
-        quote::quote! {
-            const _: () = {
-                #[allow(unused_extern_crates, clippy::useless_attribute)]
-                extern crate serde as _serde;
-                #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case {
-                    fn deserialize<__D>(
-                        __deserializer: __D,
-                    ) -> _serde::__private::Result<Self, __D::Error>
-                    where
-                        __D: _serde::Deserializer<'de>,
-                    {
-                        #[allow(non_camel_case_types)]
-                        #[doc(hidden)]
-                        enum __Field {
-                            __field0,
-                            __field1,
-                            __ignore,
-                        }
-                        #[doc(hidden)]
-                        struct __FieldVisitor;
-                        impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                            type Value = __Field;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    "field identifier",
-                                )
-                            }
-                            fn visit_u64<__E>(
-                                self,
-                                __value: u64,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    0u64 => _serde::__private::Ok(__Field::__field0),
-                                    1u64 => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_str<__E>(
-                                self,
-                                __value: &str,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    "length_more_than" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_bytes<__E>(
-                                self,
-                                __value: &[u8],
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    b"length_more_than" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                        }
-                        impl<'de> _serde::Deserialize<'de> for __Field {
-                            #[inline]
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: _serde::Deserializer<'de>,
-                            {
-                                _serde::Deserializer::deserialize_identifier(
-                                    __deserializer,
-                                    __FieldVisitor,
-                                )
-                            }
-                        }
-                        #[doc(hidden)]
-                        struct __Visitor<'de> {
-                            marker: _serde::__private::PhantomData<
-                                #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case,
-                            >,
-                            lifetime: _serde::__private::PhantomData<&'de ()>,
-                        }
-                        impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter<'_>,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    #struct_postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
-                                )
-                            }
-                            #[inline]
-                            fn visit_seq<__A>(
-                                self,
-                                mut __seq: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::SeqAccess<'de>,
-                            {
-                                let __field0 = match _serde::de::SeqAccess::next_element::<
-                                    crate::LogicalOperator,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                0usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                let __field1 = match _serde::de::SeqAccess::next_element::<
-                                    #std_primitive_i64_token_stream,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                1usize,
-                                                &#struct_postgresql_type_or_json_type_ident_where_element_length_more_than_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                            #[inline]
-                            fn visit_map<__A>(
-                                self,
-                                mut __map: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::MapAccess<'de>,
-                            {
-                                let mut __field0: _serde::__private::Option<
-                                    crate::LogicalOperator,
-                                > = _serde::__private::None;
-                                let mut __field1: _serde::__private::Option<#std_primitive_i64_token_stream> = _serde::__private::None;
-                                while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                    __Field,
-                                >(&mut __map)? {
-                                    match __key {
-                                        __Field::__field0 => {
-                                            if _serde::__private::Option::is_some(&__field0) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field(
-                                                        "logical_operator",
-                                                    ),
-                                                );
-                                            }
-                                            __field0 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    crate::LogicalOperator,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        __Field::__field1 => {
-                                            if _serde::__private::Option::is_some(&__field1) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field(
-                                                        "length_more_than",
-                                                    ),
-                                                );
-                                            }
-                                            __field1 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    #std_primitive_i64_token_stream,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        _ => {
-                                            let _ = _serde::de::MapAccess::next_value::<
-                                                _serde::de::IgnoredAny,
-                                            >(&mut __map)?;
-                                        }
-                                    }
-                                }
-                                let __field0 = match __field0 {
-                                    _serde::__private::Some(__field0) => __field0,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("logical_operator")?
-                                    }
-                                };
-                                let __field1 = match __field1 {
-                                    _serde::__private::Some(__field1) => __field1,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("length_more_than")?
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => _serde::__private::Ok(value),
-                                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                        }
-                        #[doc(hidden)]
-                        const FIELDS: &'static [&'static str] = &[
-                            "logical_operator",
-                            "length_more_than",
-                        ];
-                        _serde::Deserializer::deserialize_struct(
-                            __deserializer,
-                            #postgresql_type_or_json_type_ident_where_element_length_more_than_double_quotes_token_stream,
-                            FIELDS,
-                            __Visitor {
-                                marker: _serde::__private::PhantomData::<
-                                    #postgresql_type_or_json_type_ident_where_element_length_more_than_upper_camel_case,
-                                >,
-                                lifetime: _serde::__private::PhantomData,
-                            },
-                        )
-                    }
-                }
-            };
-        }
-    }
-    fn generate_additional_type_declaration_token_stream() -> proc_macro2::TokenStream {
-        let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
-        let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();
-        quote::quote!{
-            #length_more_than_snake_case: #std_primitive_i64_token_stream,
-        }
-    }
-    fn generate_additional_default_initialization_token_stream() -> proc_macro2::TokenStream {
-        let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
-        let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-        quote::quote!{length_more_than: #core_default_default_default}
-    }
-    fn generate_try_generate_bind_increments_token_stream(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType) -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let format_handle_token_stream = {
-            let function = match &postgresql_type_or_json_type {
-                crate::PostgresqlTypeOrJsonType::PostgresqlType => "length",
-                crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => "jsonb_array_length",
-            };
-            generate_quotes::double_quotes_token_stream(&format!("{{}}({function}({{}}) > ${{}})"))
-        };
-        quote::quote!{
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case))
-                }
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
-            }
-        }
-    }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let length_more_than_snake_case = naming::LengthMoreThanSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(self.#length_more_than_snake_case);
-            #query_snake_case
-        }
-    }
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &self_upper_camel_case,
-            &is_nullable,
-            crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
-                    &ident,
-                    &postgresql_type_or_json_type,
-                ),
-                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
-                    &ident,
-                    &postgresql_type_or_json_type,
-                )
-            },
-            &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(),
-            &Self::generate_try_generate_bind_increments_token_stream(&postgresql_type_or_json_type),
-            &Self::generate_bind_value_to_query_token_stream()
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
+            &WhereOperatorName::upper_camel_case(self),
+            ident,
+            is_nullable,
+            &LengthOperator::More,
         )
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &postgresql_json_type,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
-                    &postgresql_json_type,
-                    &postgresql_type_or_json_type,
-                ),
-                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
-                    &postgresql_json_type,
-                    &postgresql_type_or_json_type,
-                )
-            },
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(),
-            &Self::generate_try_generate_bind_increments_token_stream(&postgresql_type_or_json_type),
-            &Self::generate_bind_value_to_query_token_stream()
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_61c9bbf6_474d_4040_b849_f12e84e8e47e(
+            &WhereOperatorName::upper_camel_case(self),
+            postgresql_json_type,
+            &LengthOperator::More,
         )
     }
 }
