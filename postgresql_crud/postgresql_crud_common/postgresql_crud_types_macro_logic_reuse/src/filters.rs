@@ -1362,7 +1362,7 @@ impl RegularExpression {
     }
 }
 
-fn generate_regular_expression_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
+fn generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9() -> proc_macro2::TokenStream {
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     quote::quote!{
         #is_empty_upper_camel_case {
@@ -1370,7 +1370,7 @@ fn generate_regular_expression_try_new_error_named_variants_token_stream() -> pr
         }
     }
 }
-fn generate_regular_expression_try_new_content_token_stream(
+fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
     ident: &dyn quote::ToTokens,
     regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -1738,9 +1738,9 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_regular_expression_try_new_error_named_variants_token_stream(),
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
             try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
-            try_new_content_token_stream: &generate_regular_expression_try_new_content_token_stream(
+            try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
@@ -1774,9 +1774,9 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_regular_expression_try_new_error_named_variants_token_stream(),
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
             try_new_additional_input_parameters_token_stream: &generate_regular_expression_additional_type_declaration_token_stream(),
-            try_new_content_token_stream: &generate_regular_expression_try_new_content_token_stream(
+            try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
