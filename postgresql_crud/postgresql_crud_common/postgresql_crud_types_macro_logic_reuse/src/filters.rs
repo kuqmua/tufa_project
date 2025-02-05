@@ -2384,13 +2384,13 @@ fn generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0
     quote::quote!{length_more_than: #core_default_default_default}
 }
 enum LengthOperator {
-    Eq,
+    Equal,
     More,
 }
 impl LengthOperator {
     fn postgresql_operator(&self) -> &'static str {
         match self {
-            Self::Eq => "=",
+            Self::Equal => "=",
             Self::More => ">",
         }
     }
@@ -2493,6 +2493,40 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         &generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd3e0133f4bf(&postgresql_type_or_json_type, length_operator),
         &generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a5139()
     )
+}
+
+pub struct LengthEqual;
+impl WhereOperatorName for LengthEqual {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::LengthEqualUpperCamelCase
+    }
+}
+impl LengthEqual {
+    fn length_operator() -> LengthOperator {
+        LengthOperator::Equal
+    }
+    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        ident: &dyn quote::ToTokens,
+        is_nullable: &crate::IsNullable,
+    ) -> proc_macro2::TokenStream {
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
+            &WhereOperatorName::upper_camel_case(self),
+            ident,
+            is_nullable,
+            &Self::length_operator(),
+        )
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        postgresql_json_type: &crate::PostgresqlJsonType,
+    ) -> proc_macro2::TokenStream {
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_61c9bbf6_474d_4040_b849_f12e84e8e47e(
+            &WhereOperatorName::upper_camel_case(self),
+            postgresql_json_type,
+            &Self::length_operator(),
+        )
+    }
 }
 
 pub struct LengthMoreThan;
