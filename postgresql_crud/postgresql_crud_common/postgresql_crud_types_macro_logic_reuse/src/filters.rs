@@ -900,7 +900,7 @@ fn generate_try_new_error_named_variants_for_vec_token_stream(not_unique_value_t
         },
     }
 }
-fn generate_try_new_content_for_vec_token_stream(
+fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     filter: &dyn std::fmt::Display,
@@ -1276,7 +1276,7 @@ impl In {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&where_operator_type_type_token_stream),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                     &ident,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
@@ -1325,7 +1325,7 @@ impl In {
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&non_optional_field_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
@@ -4090,7 +4090,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&postgresql_json_array_element_type),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-            try_new_content_token_stream: &generate_try_new_content_for_vec_token_stream(
+            try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                 &postgresql_json_type,
                 &postgresql_type_or_json_type,
                 &self_upper_camel_case,
