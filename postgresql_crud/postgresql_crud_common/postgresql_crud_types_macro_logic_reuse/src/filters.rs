@@ -1409,7 +1409,7 @@ fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
         }
     }
 }
-fn generate_regular_expression_impl_deserialize_token_stream(
+fn generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
     ident: &dyn quote::ToTokens,
     regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
@@ -1745,7 +1745,7 @@ fn generate_regular_expression_postgresql_type_tokens_where_element_variant_hand
                 &regular_expression,
                 &postgresql_type_or_json_type,
             ),
-            impl_deserialize_token_stream: &generate_regular_expression_impl_deserialize_token_stream(
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
@@ -1781,7 +1781,7 @@ fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant
                 &regular_expression,
                 &postgresql_type_or_json_type,
             ),
-            impl_deserialize_token_stream: &generate_regular_expression_impl_deserialize_token_stream(
+            impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
                 &ident,
                 &regular_expression,
                 &postgresql_type_or_json_type,
