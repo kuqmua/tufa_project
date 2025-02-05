@@ -2086,6 +2086,19 @@ impl GreaterThanCurrentTime {
     }
 }
 
+fn generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
+    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;//todo maybe use i32 for now? just to remove possible js number max value overflow
+    quote::quote!{
+        #length_is_negative_upper_camel_case {
+            #[eo_to_std_string_string_serialize_deserialize]
+            #value_snake_case: #std_primitive_i64_token_stream,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        },
+    }
+}
+
 pub struct LengthMoreThan;
 impl WhereOperatorName for LengthMoreThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2104,18 +2117,6 @@ impl LengthMoreThan {
     }
     fn std_primitive_i64_token_stream() -> proc_macro2::TokenStream {
         quote::quote!{std::primitive::i64}
-    }
-    fn generate_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let length_is_negative_upper_camel_case = Self::length_is_negative_upper_camel_case();
-        let std_primitive_i64_token_stream = Self::std_primitive_i64_token_stream();//todo maybe use i32 for now? just to remove possible js number max value overflow
-        quote::quote!{
-            #length_is_negative_upper_camel_case {
-                #[eo_to_std_string_string_serialize_deserialize]
-                #value_snake_case: #std_primitive_i64_token_stream,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            },
-        }
     }
     fn generate_try_new_content_token_stream(
         ident: &dyn quote::ToTokens,
@@ -2449,7 +2450,7 @@ impl LengthMoreThan {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &ident,
@@ -2484,7 +2485,7 @@ impl LengthMoreThan {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
                     &postgresql_json_type,
