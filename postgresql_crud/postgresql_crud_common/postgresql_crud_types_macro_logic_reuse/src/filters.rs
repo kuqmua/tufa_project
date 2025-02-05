@@ -3239,8 +3239,8 @@ impl RangeLength {
         )
     }
 }
-//todo maybe rename it as primitive element position filter? or something
-fn generate_position_filter_try_new_error_named_variants_token_stream() -> proc_macro2::TokenStream {
+
+fn generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;
     let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
     let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
@@ -3252,7 +3252,7 @@ fn generate_position_filter_try_new_error_named_variants_token_stream() -> proc_
         },
     }
 }
-fn generate_position_filter_try_new_content_token_stream(
+fn generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type_ident_where_element_position_filter_try_new_error_named_upper_camel_case: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -3275,7 +3275,7 @@ fn generate_position_filter_try_new_content_token_stream(
         }
     }
 }
-fn generate_position_filter_impl_deserialize_token_stream(
+fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
     postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     value_type_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -3591,7 +3591,7 @@ impl BitVecPositionEquals {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBitVecPositionEqualsUpperCamelCase::from_tokens(&ident),
             crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBitVecPositionEqualsUpperCamelCase::from_tokens(&ident),
         };
-        generate_position_filter_impl_deserialize_token_stream(
+        generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
             &postgresql_type_or_json_type_ident_where_element_bit_vec_position_equals_upper_camel_case,
             &token_patterns::StdPrimitiveBool,
         )
@@ -3657,7 +3657,7 @@ impl BitVecPositionEquals {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &ident,
@@ -3692,7 +3692,7 @@ fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    generate_position_filter_try_new_content_token_stream(
+    generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
         &ident,
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
     )
@@ -3712,7 +3712,7 @@ fn generate_impl_deserialize_position_sqlx_types_json_token_stream(
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    generate_position_filter_impl_deserialize_token_stream(
+    generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
         &quote::quote!{#postgresql_type_or_json_type_ident_where_element_position_equals_upper_camel_case},
         postgresql_json_array_element_type
     )
@@ -3788,7 +3788,7 @@ impl PositionEquals {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &postgresql_json_type,
@@ -3850,7 +3850,7 @@ impl PositionGreaterThan {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
                     &postgresql_json_type,
@@ -3895,7 +3895,7 @@ fn generate_position_regular_expression_try_new_content_token_stream(
         (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
     };
-    generate_position_filter_try_new_content_token_stream(
+    generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
         &ident,
         &postgresql_type_or_json_type_ident_where_element_position_regular_expression_try_new_error_named_upper_camel_case,
     )
@@ -3911,7 +3911,7 @@ fn generate_position_regular_expression_impl_deserialize_token_stream(
         (crate::PostgresqlTypeOrJsonType::PostgresqlType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
         (crate::PostgresqlTypeOrJsonType::PostgresqlJsonType, RegularExpression::CaseInsensitive) => &naming::parameter::PostgresqlJsonTypeSelfWhereElementPositionCaseInsensitiveRegularExpressionUpperCamelCase::from_tokens(&ident),
     };
-    generate_position_filter_impl_deserialize_token_stream(
+    generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
         &postgresql_type_or_json_type_ident_where_element_position_regular_expression_upper_camel_case,
         &token_patterns::StdStringString,
     )
@@ -3977,7 +3977,7 @@ fn generate_position_regular_expression_postgresql_json_type_tokens_where_elemen
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type,
             postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_position_filter_try_new_error_named_variants_token_stream(),
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
             try_new_content_token_stream: &generate_position_regular_expression_try_new_content_token_stream(
                 &postgresql_json_type,
