@@ -1193,7 +1193,7 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
         };
     }
 }
-fn generate_additional_type_declaration_for_vec_token_stream(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote!{
         #value_snake_case: std::vec::Vec<#vec_type_token_stream>
@@ -1266,7 +1266,7 @@ impl In {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let additional_type_declaration_token_stream = generate_additional_type_declaration_for_vec_token_stream(&where_operator_type_type_token_stream);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&where_operator_type_type_token_stream);
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -1316,7 +1316,7 @@ impl In {
             .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let non_optional_field_type = postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle);
-        let additional_type_declaration_token_stream = generate_additional_type_declaration_for_vec_token_stream(&non_optional_field_type);
+        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
@@ -4081,7 +4081,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let additional_type_declaration_token_stream = generate_additional_type_declaration_for_vec_token_stream(&postgresql_json_array_element_type);
+    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_array_element_type);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
