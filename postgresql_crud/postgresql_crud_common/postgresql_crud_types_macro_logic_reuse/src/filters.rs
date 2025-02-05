@@ -3697,7 +3697,7 @@ fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
     )
 }
-fn generate_impl_deserialize_position_sqlx_types_json_token_stream(
+fn generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(
     ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
@@ -3717,7 +3717,7 @@ fn generate_impl_deserialize_position_sqlx_types_json_token_stream(
         postgresql_json_array_element_type
     )
 }
-fn generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf799072747d(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -3748,7 +3748,7 @@ fn generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(f
         }
     }
 }
-fn generate_bind_value_to_query_position_sqlx_types_json_token_stream() -> proc_macro2::TokenStream {
+fn generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
@@ -3767,7 +3767,7 @@ impl WhereOperatorName for PositionEquals {
 }
 impl PositionEquals {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} = ${})"})
+        generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf799072747d(&quote::quote!{"{}({}->${} = ${})"})
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3795,7 +3795,7 @@ impl PositionEquals {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &generate_impl_deserialize_position_sqlx_types_json_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &postgresql_json_array_element_type,
@@ -3816,7 +3816,7 @@ impl PositionEquals {
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &generate_bind_value_to_query_position_sqlx_types_json_token_stream()
+            &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2()
         )
     }
 }
@@ -3829,7 +3829,7 @@ impl WhereOperatorName for PositionGreaterThan {
 }
 impl PositionGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_position_sqlx_types_json_token_stream(&quote::quote!{"{}({}->${} > ${})"})
+        generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf799072747d(&quote::quote!{"{}({}->${} > ${})"})
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3857,7 +3857,7 @@ impl PositionGreaterThan {
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &generate_impl_deserialize_position_sqlx_types_json_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &postgresql_json_array_element_type,
@@ -3878,7 +3878,7 @@ impl PositionGreaterThan {
                 crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
             }),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &generate_bind_value_to_query_position_sqlx_types_json_token_stream()
+            &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2()
         )
     }
 }
