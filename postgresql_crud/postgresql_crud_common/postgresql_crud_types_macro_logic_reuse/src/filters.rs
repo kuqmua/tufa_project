@@ -1757,7 +1757,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf
         &generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54_cd7f_49bf_a8fa_39dae7512b3e()
     )
 }
-fn generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_8b498c22_facc_478f_9fef_2d155c68b6fa(
     ident: &dyn quote::ToTokens,
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -1817,7 +1817,7 @@ impl CaseSensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_8b498c22_facc_478f_9fef_2d155c68b6fa(
             &ident,
             &RegularExpression::CaseSensitive,
             WhereOperatorName::upper_camel_case(self),
@@ -1847,7 +1847,7 @@ impl CaseInsensitiveRegularExpression {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_8b498c22_facc_478f_9fef_2d155c68b6fa(
             &ident,
             &RegularExpression::CaseInsensitive,
             WhereOperatorName::upper_camel_case(self),
