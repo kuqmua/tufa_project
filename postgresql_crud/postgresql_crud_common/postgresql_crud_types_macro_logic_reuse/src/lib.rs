@@ -1245,6 +1245,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let position_case_insensitive_regular_expression = crate::filters::PositionCaseInsensitiveRegularExpression;
             let contains_all_elements_of_array = crate::filters::ContainsAllElementsOfArray;
             let contained_in_array = crate::filters::ContainedInArray;
+            let overlaps_with_array = crate::filters::OverlapsWithArray;
 
             let (
                 maybe_postgresql_json_type_ident_where_element_position_equals,
@@ -1253,6 +1254,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
                 maybe_postgresql_json_type_ident_where_element_contained_in_array,
+                maybe_postgresql_json_type_ident_where_element_overlaps_with_array,
              ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type) {
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
@@ -1279,8 +1281,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         where_operator_name: &contained_in_array,
                         token_stream: contained_in_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &overlaps_with_array,
+                        token_stream: overlaps_with_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                    },
                 ),
                 Err(_) => (
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
@@ -1314,6 +1321,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             //     common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
             //     common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
             // }
+            if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_overlaps_with_array {
+                common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
+                common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
+            }
 
             // let = Equal;
             // let = GreaterThan;

@@ -4162,3 +4162,24 @@ impl ContainedInArray {
         )
     }
 }
+
+pub struct OverlapsWithArray;
+impl WhereOperatorName for OverlapsWithArray {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::OverlapsWithArrayUpperCamelCase
+    }
+}
+impl OverlapsWithArray {
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
+            WhereOperatorName::upper_camel_case(self),
+            postgresql_json_type,
+            postgresql_json_array_element_type,
+            &quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"},
+        )
+    }
+}

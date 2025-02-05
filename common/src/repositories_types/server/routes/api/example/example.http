@@ -150,13 +150,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       0
             #     ]
             #   }
-            # }
-            # ,
+            # },
             {
-              "ContainedInArray": {
+              "OverlapsWithArray": {
                 "logical_operator": "Or",
                 "value": [
-                  4
+                  1,3
                 ]
               }
             }
@@ -176,37 +175,37 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "StdVecVecStdPrimitiveBool": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       # {
-      #       #   "Equal": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       false
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "length_more_than": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionEquals": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": false,
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "ContainsAllElementsOfArray": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       false
-      #       #     ]
-      #       #   }
-      #       # },
       #       {
-      #         "ContainedInArray": {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             false
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "LengthMoreThan": {
+      #           "logical_operator": "Or",
+      #           "length_more_than": 0
+      #         }
+      #       },
+      #       {
+      #         "PositionEquals": {
+      #           "logical_operator": "Or",
+      #           "value": false,
+      #           "position": 0
+      #         }
+      #       },
+      #       {
+      #         "ContainsAllElementsOfArray": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             false
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "OverlapsWithArray": {
       #           "logical_operator": "Or",
       #           "value": [
       #             false
@@ -215,65 +214,62 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       }
       #     ]
       #   }
-      # }
-      # ,
+      # },
       # {
       #   "StdVecVecStdStringString": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       # {
-      #       #   "Equal": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       ""
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "length_more_than": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionEquals": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": "",
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "ContainsAllElementsOfArray": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       ""
-      #       #     ]
-      #       #   }
-      #       # },
       #       {
-      #         "ContainedInArray": {
+      #         "Equal": {
       #           "logical_operator": "Or",
       #           "value": [
-      #             "cat", "dog", "fox"
+      #             ""
       #           ]
       #         }
+      #       },
+      #       {
+      #         "LengthMoreThan": {
+      #           "logical_operator": "Or",
+      #           "length_more_than": 0
+      #         }
+      #       },
+      #       {
+      #         "PositionEquals": {
+      #           "logical_operator": "Or",
+      #           "value": "",
+      #           "position": 0
+      #         }
+      #       },
+      #       {
+      #         "ContainsAllElementsOfArray": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             ""
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "OverlapsWithArray": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             ""
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "PositionCaseSensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": "",
+      #           "position": 0
+      #         }
+      #       },
+      #       {
+      #         "PositionCaseInsensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": "",
+      #           "position": 0
+      #         }
       #       }
-      #       # ,
-      #       # {
-      #       #   "PositionCaseSensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": "",
-      #       #     "position": 0
-      #       #   }
-      #       # }
-      #       # ,
-      #       # {
-      #       #   "PositionCaseInsensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": "",
-      #       #     "position": 0
-      #       #   }
-      #       # }
       #     ]
       #   }
       # }
@@ -288,7 +284,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "std_vec_vec_std_primitive_i8": {
             "pagination": {
-              "limit": 10,
+              "limit": 30,
               "offset": 0
             }
           }
@@ -297,16 +293,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "std_vec_vec_std_primitive_bool": {
         #     "pagination": {
-        #       "limit": 10,
+        #       "limit": 3,
         #       "offset": 0
         #     }
         #   }
-        # }
-        # ,
+        # },
         # {
         #   "std_vec_vec_std_string_string": {
         #     "pagination": {
-        #       "limit": 10,
+        #       "limit": 3,
         #       "offset": 0
         #     }
         #   }
@@ -321,7 +316,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 10,
+    "limit": 30,
     "offset": 0
   }
 }
