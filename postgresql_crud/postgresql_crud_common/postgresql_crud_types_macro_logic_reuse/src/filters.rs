@@ -885,7 +885,7 @@ impl Between {
     }
 }
 
-fn generate_try_new_error_named_variants_for_vec_token_stream(not_unique_value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+fn generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(not_unique_value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
@@ -1274,7 +1274,7 @@ impl In {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&where_operator_type_type_token_stream),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&where_operator_type_type_token_stream),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                     &ident,
@@ -1323,7 +1323,7 @@ impl In {
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&non_optional_field_type),
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&non_optional_field_type),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                     &postgresql_json_type,
@@ -4088,7 +4088,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type,
             postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_for_vec_token_stream(&postgresql_json_array_element_type),
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&postgresql_json_array_element_type),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
             try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                 &postgresql_json_type,
