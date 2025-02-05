@@ -1724,7 +1724,7 @@ fn generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54
         #query_snake_case
     }
 }
-fn generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
+fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
     ident: &dyn quote::ToTokens,
     is_nullable: &crate::IsNullable,
     regular_expression: &RegularExpression,
@@ -1806,7 +1806,7 @@ impl CaseSensitiveRegularExpression {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
             &ident,
             &is_nullable,
             &RegularExpression::CaseSensitive,
@@ -1836,7 +1836,7 @@ impl CaseInsensitiveRegularExpression {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        generate_regular_expression_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
             &ident,
             &is_nullable,
             &RegularExpression::CaseInsensitive,
