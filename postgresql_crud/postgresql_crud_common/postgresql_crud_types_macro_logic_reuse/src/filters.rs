@@ -676,10 +676,11 @@ impl Between {
         let end_snake_case = naming::EndSnakeCase;
         let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
         let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
-        let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBetweenTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
+        let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
+            "{postgresql_type_or_json_type}{}{}",
+            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+            &naming::BetweenUpperCamelCase,
+        ));
         quote::quote!{
             if 
                 #start_snake_case
