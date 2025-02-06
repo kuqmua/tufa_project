@@ -649,6 +649,9 @@ impl WhereOperatorName for Between {
     }
 }
 impl Between {
+    fn between_upper_camel_case() -> naming::BetweenUpperCamelCase {
+        naming::BetweenUpperCamelCase
+    }
     fn generate_try_new_error_named_variants_token_stream(
         between_try_new_error_type: &BetweenTryNewErrorType,
         type_token_stream: &dyn quote::ToTokens,
@@ -679,7 +682,7 @@ impl Between {
         let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
             "{postgresql_type_or_json_type}{}{}",
             &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            &naming::BetweenUpperCamelCase,
+            &Self::between_upper_camel_case(),
         ));
         quote::quote!{
             if 
@@ -709,10 +712,11 @@ impl Between {
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
         element_type_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-            crate::PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::PostgresqlTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident),
-            crate::PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereElementBetweenUpperCamelCase::from_tokens(&ident),
-        };
+        let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+            &postgresql_type_or_json_type,
+            &ident,
+            &Self::between_upper_camel_case(),
+        );
         generate_impl_deserialize_with_try_new_token_stream(
             &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
             &[
