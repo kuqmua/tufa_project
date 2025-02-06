@@ -2196,17 +2196,23 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
         &postgresql_type_or_json_type,
         &ident,
         &filter,
     );
-    generate_impl_deserialize_with_2_elements_and_try_new_token_stream(
-        &postgresql_type_or_json_type_ident_where_element_filter_than_upper_camel_case,
-        &naming::LogicalOperatorSnakeCase,
-        &quote::quote!{crate::LogicalOperator},
-        &naming::ValueSnakeCase,
-        &temporary_json_number_type()
+    generate_impl_deserialize_with_try_new_token_stream(
+        &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
+        &[
+            Field {
+                field_name: &naming::LogicalOperatorSnakeCase,
+                field_type: &quote::quote!{crate::LogicalOperator},
+            },
+            Field {
+                field_name: &naming::ValueSnakeCase,
+                field_type: &temporary_json_number_type(),
+            },
+        ],
     )
 }
 fn generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7() -> proc_macro2::TokenStream {
@@ -2875,12 +2881,18 @@ impl RangeLength {
                         }
                     }
                 },
-                impl_deserialize_token_stream: &generate_impl_deserialize_with_2_elements_and_try_new_token_stream(
+                impl_deserialize_token_stream: &generate_impl_deserialize_with_try_new_token_stream(
                     &naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident),
-                    &naming::LogicalOperatorSnakeCase,
-                    &quote::quote!{crate::LogicalOperator},
-                    &naming::ValueSnakeCase,
-                    &temporary_json_number_type
+                    &[
+                        Field {
+                            field_name: &naming::LogicalOperatorSnakeCase,
+                            field_type: &quote::quote!{crate::LogicalOperator},
+                        },
+                        Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &temporary_json_number_type,
+                        },
+                    ],
                 ),
             },
             &quote::quote!{#value_snake_case: #temporary_json_number_type},//todo try_new - check length > 0
