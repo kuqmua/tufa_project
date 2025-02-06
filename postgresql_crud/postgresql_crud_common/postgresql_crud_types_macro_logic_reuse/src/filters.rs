@@ -47,7 +47,11 @@ fn generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(ide
 
 fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
     //todo possible js number max value overflow
-    &token_patterns::StdPrimitiveI64
+    //some of types must use i64
+    &token_patterns::StdPrimitiveI32
+}
+fn array_length_type_token_stream() -> token_patterns::StdPrimitiveI64 {
+    token_patterns::StdPrimitiveI64
 }
 
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1627,11 +1631,11 @@ impl GreaterThanCurrentTime {
 fn generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
-    let temporary_json_number_type = temporary_json_number_type();
+    let array_length_type_token_stream = array_length_type_token_stream();
     quote::quote!{
         #length_is_negative_upper_camel_case {
             #[eo_to_std_string_string_serialize_deserialize]
-            #value_snake_case: #temporary_json_number_type,
+            #value_snake_case: #array_length_type_token_stream,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
     }
@@ -1682,16 +1686,16 @@ fn generate_impl_deserialize_token_stream_d64c9ce5_9574_4d05_9cae_b17a39b681e6(
             },
             Field {
                 field_name: &naming::ValueSnakeCase,
-                field_type: &temporary_json_number_type(),
+                field_type: &array_length_type_token_stream(),
             },
         ],
     )
 }
 fn generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
-    let temporary_json_number_type = temporary_json_number_type();
+    let array_length_type_token_stream = array_length_type_token_stream();
     quote::quote!{
-        #value_snake_case: #temporary_json_number_type,
+        #value_snake_case: #array_length_type_token_stream,
     }
 }
 fn generate_additional_default_initialization_token_stream_432a20e5_249e_4ea9_b0b3_4a9b4937dd9f() -> proc_macro2::TokenStream {
