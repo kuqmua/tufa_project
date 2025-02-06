@@ -775,7 +775,7 @@ fn generate_impl_deserialize_with_try_new_token_stream<'a>(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #(#visit_u64_match_variants_token_stream),*
+                                #(#visit_u64_match_variants_token_stream),*,
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -787,7 +787,7 @@ fn generate_impl_deserialize_with_try_new_token_stream<'a>(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #(#visit_str_match_variants_token_stream),*
+                                #(#visit_str_match_variants_token_stream),*,
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -799,7 +799,7 @@ fn generate_impl_deserialize_with_try_new_token_stream<'a>(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #(#visit_bytes_match_variants_token_stream),*
+                                #(#visit_bytes_match_variants_token_stream),*,
                                 _ => _serde::__private::Ok(__Field::__ignore),
                             }
                         }
@@ -1486,12 +1486,18 @@ fn generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
         &ident,
         &filter,
     );
-    generate_impl_deserialize_with_2_elements_and_try_new_token_stream(
+    generate_impl_deserialize_with_try_new_token_stream(
         &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
-        &naming::LogicalOperatorSnakeCase,
-        &quote::quote!{crate::LogicalOperator},
-        &naming::ValueSnakeCase,
-        &quote::quote!{std::vec::Vec<#vec_type_token_stream>}
+        &[
+            Field {
+                field_name: &naming::LogicalOperatorSnakeCase,
+                field_type: &quote::quote!{crate::LogicalOperator},
+            },
+            Field {
+                field_name: &naming::ValueSnakeCase,
+                field_type: &quote::quote!{std::vec::Vec<#vec_type_token_stream>},
+            },
+        ],
     )
 }
 fn generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(vec_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
