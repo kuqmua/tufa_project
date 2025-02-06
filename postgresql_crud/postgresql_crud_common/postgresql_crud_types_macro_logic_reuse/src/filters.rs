@@ -12,13 +12,15 @@ enum IsNullablePostgresqlType<'a> {
     PostgresqlJsonType,
 }
 
-fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, ident: &dyn quote::ToTokens, filter: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    let value = format!(
+fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, ident: &dyn quote::ToTokens, filter: &dyn std::fmt::Display) -> std::string::String {
+    format!(
         "{postgresql_type_or_json_type}{}{}",
         &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
         filter
-    );
-    value.parse::<proc_macro2::TokenStream>().unwrap()
+    )
+}
+fn generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, ident: &dyn quote::ToTokens, filter: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(postgresql_type_or_json_type, ident, filter).parse::<proc_macro2::TokenStream>().unwrap()
 }
 
 fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
@@ -677,11 +679,13 @@ impl Between {
         let end_snake_case = naming::EndSnakeCase;
         let try_new_error_named_compare_symbol_token_stream = between_try_new_error_type.try_new_error_named_compare_symbol_token_stream();
         let try_new_error_named_upper_camel_case_token_stream = between_try_new_error_type.try_new_error_named_upper_camel_case_token_stream();
-        let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-            "{postgresql_type_or_json_type}{}{}",
-            &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            &WhereOperatorName::upper_camel_case(self),
-        ));
+        let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+            &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+                postgresql_type_or_json_type,
+                &ident,
+                &WhereOperatorName::upper_camel_case(self),
+            )
+        );
         quote::quote!{
             if 
                 #start_snake_case
