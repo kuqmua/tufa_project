@@ -649,9 +649,6 @@ impl WhereOperatorName for Between {
     }
 }
 impl Between {
-    fn between_upper_camel_case() -> naming::BetweenUpperCamelCase {
-        naming::BetweenUpperCamelCase
-    }
     fn generate_try_new_error_named_variants_token_stream(
         between_try_new_error_type: &BetweenTryNewErrorType,
         type_token_stream: &dyn quote::ToTokens,
@@ -670,6 +667,7 @@ impl Between {
         }
     }
     fn generate_try_new_content_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
         between_try_new_error_type: &BetweenTryNewErrorType,
@@ -682,7 +680,7 @@ impl Between {
         let postgresql_type_or_json_type_ident_where_element_between_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
             "{postgresql_type_or_json_type}{}{}",
             &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-            &Self::between_upper_camel_case(),
+            &WhereOperatorName::upper_camel_case(self),
         ));
         quote::quote!{
             if 
@@ -708,6 +706,7 @@ impl Between {
         }
     }
     fn generate_impl_deserialize_token_stream(
+        &self,
         ident: &dyn quote::ToTokens,
         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
         element_type_token_stream: &dyn quote::ToTokens,
@@ -715,7 +714,7 @@ impl Between {
         let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
             &postgresql_type_or_json_type,
             &ident,
-            &Self::between_upper_camel_case(),
+            &WhereOperatorName::upper_camel_case(self),
         );
         generate_impl_deserialize_with_try_new_token_stream(
             &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
@@ -812,13 +811,13 @@ impl Between {
                     &where_operator_type_type_token_stream,
                 ),
                 try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &self.generate_try_new_content_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
                     &between_try_new_error_type,
                     &quote::quote!{#where_operator_type_additional_bind_token_stream #should_add_dot_zero},
                 ),
-                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &ident,
                     &postgresql_type_or_json_type,
                     &where_operator_type_type_token_stream,
@@ -866,13 +865,13 @@ impl Between {
                     &non_optional_field_type,
                 ),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &Self::generate_try_new_content_token_stream(
+                try_new_content_token_stream: &self.generate_try_new_content_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &between_try_new_error_type,
                     &proc_macro2::TokenStream::new(),
                 ),
-                impl_deserialize_token_stream: &Self::generate_impl_deserialize_token_stream(
+                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
                     &postgresql_json_type,
                     &postgresql_type_or_json_type,
                     &non_optional_field_type,
