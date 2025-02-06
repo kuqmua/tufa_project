@@ -39,6 +39,11 @@ fn generate_postgresql_type_or_json_type_self_where_element_filter_try_new_error
         &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(postgresql_type_or_json_type, ident, filter).parse::<proc_macro2::TokenStream>().unwrap()
     )
 }
+fn generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(ident: &dyn quote::ToTokens, filter: &dyn naming::StdFmtDisplayPlusQuoteToTokens) -> proc_macro2::TokenStream {
+    let value = format!("{}{filter}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 
 fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
     //todo possible js number max value overflow
@@ -86,7 +91,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
 
 fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-    postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case: &dyn quote::ToTokens,
+    postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case: &dyn quote::ToTokens,
     should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
@@ -95,14 +100,14 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_ident_where_element_tokens_token_stream = crate::generate_postgresql_type_tokens_where_element_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
         &should_where_element_fields_be_public,
         &should_implement_schemars_json_schema,
         &additional_type_declaration_token_stream,
     );
     let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(postgresql_type_or_json_type);
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = crate::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
         &{
             let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
                 crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
@@ -114,7 +119,7 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
         },
     );
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream = crate::generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
         &postgresql_type_self_where_try_generate_bind_increments_token_stream,
         &postgresql_type_self_where_bind_value_to_query_token_stream
     );
@@ -521,11 +526,7 @@ impl Equal {
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
         let (
             postgresql_json_type_handle,
@@ -533,7 +534,7 @@ impl Equal {
         ) = postgresql_json_type.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type),
@@ -605,18 +606,14 @@ impl GreaterThan {
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let (
             postgresql_json_type_handle,
             postgresql_json_type_pattern
         ) = postgresql_json_type.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
@@ -861,11 +858,7 @@ impl Between {
         postgresql_json_type: &crate::PostgresqlJsonType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let (
             postgresql_json_type_handle,
@@ -875,7 +868,7 @@ impl Between {
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
@@ -1109,16 +1102,12 @@ impl In {
 
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let non_optional_field_type = postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle);
         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
@@ -1320,15 +1309,11 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident));
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&ident, self_upper_camel_case);
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_json_type_ident_where_element_filter_upper_camel_case,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
@@ -1801,16 +1786,12 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     postgresql_json_type: &crate::PostgresqlJsonType,
     length_operator: &LengthOperator,
 ) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_3dae697f_0b51_4a93_901f_6cef909d74e7();
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
-        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_json_type_ident_where_element_filter_upper_camel_case,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type,
             postfix: &self_upper_camel_case,
@@ -2692,16 +2673,12 @@ impl PositionEquals {
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
@@ -2754,16 +2731,12 @@ impl PositionGreaterThan {
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-            let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
-            &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+            &postgresql_json_type_ident_where_element_filter_upper_camel_case,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type,
                 postfix: &self_upper_camel_case,
@@ -2879,16 +2852,12 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     postgresql_json_type: &crate::PostgresqlJsonType,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdStringString);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
-        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_json_type_ident_where_element_filter_upper_camel_case,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type,
             postfix: &self_upper_camel_case,
@@ -2992,15 +2961,11 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     format_handle_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-    let postgresql_json_type_ident_where_element_tokens_upper_camel_case = {
-        let value = format!("{}{self_upper_camel_case}", &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_json_type));
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let postgresql_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case);
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_array_element_type);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
-        &postgresql_json_type_ident_where_element_tokens_upper_camel_case,
+        &postgresql_json_type_ident_where_element_filter_upper_camel_case,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type,
             postfix: &self_upper_camel_case,
