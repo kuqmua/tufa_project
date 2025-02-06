@@ -1719,12 +1719,18 @@ fn generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
         &ident,
         &regular_expression.name_upper_camel_case(),
     );
-    generate_impl_deserialize_with_2_elements_and_try_new_token_stream(
+    generate_impl_deserialize_with_try_new_token_stream(
         &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
-        &naming::LogicalOperatorSnakeCase,
-        &quote::quote!{crate::LogicalOperator},
-        &naming::ValueSnakeCase,
-        &token_patterns::StdStringString
+        &[
+            Field {
+                field_name: &naming::LogicalOperatorSnakeCase,
+                field_type: &quote::quote!{crate::LogicalOperator},
+            },
+            Field {
+                field_name: &naming::ValueSnakeCase,
+                field_type: &token_patterns::StdStringString,
+            },
+        ],
     )
 }
 fn generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9() -> proc_macro2::TokenStream {
