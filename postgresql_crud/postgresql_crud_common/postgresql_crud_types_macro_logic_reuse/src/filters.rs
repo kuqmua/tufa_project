@@ -45,13 +45,12 @@ fn generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(ide
     .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 
-fn temporary_json_number_type() -> &'static dyn quote::ToTokens {
-    //todo possible js number max value overflow
-    //some of types must use i64
-    &token_patterns::StdPrimitiveI32
-}
+//todo possible js number max value overflow
 fn array_length_type_token_stream() -> token_patterns::StdPrimitiveI64 {
     token_patterns::StdPrimitiveI64
+}
+fn array_position_type_token_stream() -> token_patterns::StdPrimitiveI32 {
+    token_patterns::StdPrimitiveI32
 }
 
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -2317,7 +2316,7 @@ impl RangeLength {
         };
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
-        let temporary_json_number_type = temporary_json_number_type();
+        let array_position_type_token_stream = array_position_type_token_stream();
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
@@ -2328,12 +2327,12 @@ impl RangeLength {
                 try_new_error_named_variants_token_stream: &quote::quote!{
                     #length_is_negative_or_zero_upper_camel_case {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #value_snake_case: #temporary_json_number_type,
+                        #value_snake_case: #array_position_type_token_stream,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                 },
                 try_new_additional_input_parameters_token_stream: &quote::quote!{
-                    #value_snake_case: #temporary_json_number_type
+                    #value_snake_case: #array_position_type_token_stream
                 },
                 try_new_content_token_stream: &{
                     let postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -2361,12 +2360,12 @@ impl RangeLength {
                         },
                         Field {
                             field_name: &naming::ValueSnakeCase,
-                            field_type: &temporary_json_number_type,
+                            field_type: &array_position_type_token_stream,
                         },
                     ],
                 ),
             },
-            &quote::quote!{#value_snake_case: #temporary_json_number_type},//todo try_new - check length > 0
+            &quote::quote!{#value_snake_case: #array_position_type_token_stream},//todo try_new - check length > 0
             &{
                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
                 quote::quote!{#value_snake_case: #core_default_default_default}
@@ -2399,11 +2398,11 @@ impl RangeLength {
 fn generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;
     let position_is_less_than_zero_upper_camel_case = naming::PositionIsLessThanZeroUpperCamelCase;
-    let temporary_json_number_type = temporary_json_number_type();
+    let array_position_type_token_stream = array_position_type_token_stream();
     quote::quote!{
         #position_is_less_than_zero_upper_camel_case {
             #[eo_to_std_string_string_serialize_deserialize]
-            #position_snake_case: #temporary_json_number_type,
+            #position_snake_case: #array_position_type_token_stream,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
     }
@@ -2448,7 +2447,7 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
             },
             Field {
                 field_name: &naming::PositionSnakeCase,
-                field_type: &temporary_json_number_type(),
+                field_type: &array_position_type_token_stream(),
             },
         ],
     )
@@ -2456,10 +2455,10 @@ fn generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
 fn generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let position_snake_case = naming::PositionSnakeCase;
-    let temporary_json_number_type = temporary_json_number_type();
+    let array_position_type_token_stream = array_position_type_token_stream();
     quote::quote!{
         #value_snake_case: #value_type_token_stream,
-        #position_snake_case: #temporary_json_number_type,
+        #position_snake_case: #array_position_type_token_stream,
     }
 }
 fn generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(value_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
