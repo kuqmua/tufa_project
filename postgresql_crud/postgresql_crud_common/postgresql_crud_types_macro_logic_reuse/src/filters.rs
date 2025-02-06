@@ -922,11 +922,13 @@ fn generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
     let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
     let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-        "{postgresql_type_or_json_type}{}{}",
-        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-        filter,
-    ));
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+        &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+            postgresql_type_or_json_type,
+            &ident,
+            filter,
+        )
+    );
     quote::quote!{
         if #value_snake_case.is_empty() {
             return Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
@@ -1167,11 +1169,13 @@ fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
 ) -> proc_macro2::TokenStream {
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-        "{postgresql_type_or_json_type}{}{}",
-        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-        regular_expression.name_upper_camel_case(),
-    ));
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+        &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+            postgresql_type_or_json_type,
+            &ident,
+            &regular_expression.name_upper_camel_case(),
+        )
+    );
     quote::quote!{
         if !#value_snake_case.is_empty() {
             Ok(Self {
@@ -1648,11 +1652,13 @@ fn generate_try_new_content_token_stream_dcd7743b_821a_494a_8657_bbd7a8831020(
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let length_is_negative_upper_camel_case = naming::LengthIsNegativeUpperCamelCase;
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-        "{postgresql_type_or_json_type}{}{}",
-        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-        filter,
-    ));
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+        &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+            postgresql_type_or_json_type,
+            &ident,
+            filter,
+        )
+    );
     quote::quote!{
         if #value_snake_case >= 0 {
             Ok(Self{
@@ -2589,11 +2595,13 @@ fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-        "{postgresql_type_or_json_type}{}{}",
-        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-        filter,
-    ));
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+        &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+            postgresql_type_or_json_type,
+            &ident,
+            filter,
+        )
+    );
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
         &ident,
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
@@ -2791,12 +2799,13 @@ fn generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(&format!(
-        "{postgresql_type_or_json_type}{}{}{}",
-        &naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
-        naming::PositionUpperCamelCase,
-        regular_expression.name_upper_camel_case(),
-    ));
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = naming::parameter::SelfTryNewErrorNamedUpperCamelCase::from_display(
+        &generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_stringified(
+            postgresql_type_or_json_type,
+            &ident,
+            &format!("{}{}", naming::PositionUpperCamelCase, regular_expression.name_upper_camel_case()),
+        )
+    );
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
         &ident,
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
