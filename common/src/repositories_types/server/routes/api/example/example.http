@@ -179,10 +179,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "position": 0
             #   }
             # },
+            # {
+            #   "ContainsElementCaseSensitiveRegularExpression": {
+            #     "logical_operator": "Or",
+            #     "value": ""
+            #   }
+            # },
             {
-              "ContainsElementCaseSensitiveRegularExpression": {
+              "ContainsElementCaseInsensitiveRegularExpression": {
                 "logical_operator": "Or",
-                "value": "^dog$"
+                "value": ""
               }
             }
           ]
@@ -214,7 +220,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 3,
+    "limit": 30,
     "offset": 0
   }
 }
