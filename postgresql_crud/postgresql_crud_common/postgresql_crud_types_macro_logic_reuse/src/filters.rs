@@ -3115,3 +3115,12 @@ impl AllElementsGreaterThan {
         )
     }
 }
+
+
+
+
+// contains_element_CaseSensitiveRegularExpression
+// contains_element_CaseInsensitiveRegularExpression
+
+// all_elements_CaseSensitiveRegularExpression
+// all_elements_CaseInsensitiveRegularExpression
