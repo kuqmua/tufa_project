@@ -117,6 +117,49 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "logical_operator": "Or",
           "value": [
             # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # },
+            # {
+            #   "LengthEqual": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
+            # {
+            #   "LengthMoreThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
+            # {
+            #   "PositionEquals": {
+            #     "logical_operator": "Or",
+            #     "value": 0,
+            #     "position": 0
+            #   }
+            # },
+            # {
+            #   "ContainsAllElementsOfArray": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # },
+            # {
+            #   "OverlapsWithArray": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # },
+            # {
             #   "PositionGreaterThan": {
             #     "logical_operator": "Or",
             #     "value": 0,
@@ -126,7 +169,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "ContainsElementGreaterThan": {
                 "logical_operator": "Or",
-                "value": 6
+                "value": 0
               }
             }
           ]
