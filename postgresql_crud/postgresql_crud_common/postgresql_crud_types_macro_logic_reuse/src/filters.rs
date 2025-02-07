@@ -558,6 +558,14 @@ impl Equal {
     }
 }
 
+fn generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let query_snake_case = naming::QuerySnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(#bind_token_stream);
+        #query_snake_case
+    }
+}
+
 pub struct GreaterThan;
 impl WhereOperatorName for GreaterThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -567,13 +575,6 @@ impl WhereOperatorName for GreaterThan {
 impl GreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} > ${})"})
-    }
-    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let query_snake_case = naming::QuerySnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-            #query_snake_case
-        }
     }
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -589,7 +590,7 @@ impl GreaterThan {
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
                 let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
                 quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
@@ -612,7 +613,7 @@ impl GreaterThan {
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote!{sqlx::types::Json(self.#value_snake_case)}
             }),
@@ -3059,13 +3060,6 @@ impl ContainsElementGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"})
     }
-    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let query_snake_case = naming::QuerySnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-            #query_snake_case
-        }
-    }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3081,7 +3075,7 @@ impl ContainsElementGreaterThan {
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote!{sqlx::types::Json(self.#value_snake_case)}
             }),
@@ -3099,13 +3093,6 @@ impl AllElementsGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"})
     }
-    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let query_snake_case = naming::QuerySnakeCase;
-        quote::quote!{
-            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
-            #query_snake_case
-        }
-    }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3121,7 +3108,7 @@ impl AllElementsGreaterThan {
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(&{
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote!{sqlx::types::Json(self.#value_snake_case)}
             }),
