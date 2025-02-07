@@ -1158,15 +1158,15 @@ fn generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7
 }
 fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
     ident: &dyn quote::ToTokens,
-    regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_try_new_error_named_upper_camel_case_stringified(
         postgresql_type_or_json_type,
         &ident,
-        &regular_expression.name_upper_camel_case(),
+        &filter,
     );
     quote::quote!{
         if !#value_snake_case.is_empty() {
@@ -1184,13 +1184,13 @@ fn generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
 }
 fn generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
     ident: &dyn quote::ToTokens,
-    regular_expression: &RegularExpression,
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+    filter: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
         &postgresql_type_or_json_type,
         &ident,
-        &regular_expression.name_upper_camel_case(),
+        &filter,
     );
     generate_impl_deserialize_with_try_new_token_stream(
         &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
@@ -1270,6 +1270,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
+    let regular_expression_name_upper_camel_case = regular_expression.name_upper_camel_case();
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
@@ -1281,13 +1282,13 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf
             try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
             try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
-                &regular_expression,
                 &postgresql_type_or_json_type,
+                &regular_expression_name_upper_camel_case,
             ),
             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
                 &ident,
-                &regular_expression,
                 &postgresql_type_or_json_type,
+                &regular_expression_name_upper_camel_case,
             ),
         },
         &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
@@ -1302,6 +1303,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+    let regular_expression_name_upper_camel_case = regular_expression.name_upper_camel_case();
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&ident, self_upper_camel_case),
@@ -1312,13 +1314,13 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
             try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
             try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                 &ident,
-                &regular_expression,
                 &postgresql_type_or_json_type,
+                &regular_expression_name_upper_camel_case,
             ),
             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
                 &ident,
-                &regular_expression,
                 &postgresql_type_or_json_type,
+                &regular_expression_name_upper_camel_case,
             ),
         },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
@@ -3154,68 +3156,6 @@ impl AllElementsGreaterThan {
     }
 }
 
-fn generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
-    let regular_expression_stringified = regular_expression.stringified();
-    generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&
-        generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}) as el where substring(el::text from 2 for length(el::text) - 2) ~{regular_expression_stringified} ${{}}))"))
-    )
-}
-
-fn generate_try_new_content_token_stream_9c03960c_4efb_4c03_b95e_fac068816388(
-    ident: &dyn quote::ToTokens,
-    // regular_expression: &RegularExpression,
-    filter: & dyn std::fmt::Display,
-    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-) -> proc_macro2::TokenStream {
-    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_try_new_error_named_upper_camel_case_stringified(
-        postgresql_type_or_json_type,
-        &ident,
-        &filter,
-        // &format!("{}{}", naming::ContainsElementUpperCamelCase, &regular_expression.name_upper_camel_case())
-    );
-    quote::quote!{
-        if !#value_snake_case.is_empty() {
-            Ok(Self {
-                logical_operator,
-                #value_snake_case,
-            })
-        }
-        else {
-            Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-}
-fn generate_impl_deserialize_token_stream_6585266f_04b8_4fcd_9d4c_95ee63156a01(
-    ident: &dyn quote::ToTokens,
-    // regular_expression: &RegularExpression,
-    filter: &dyn std::fmt::Display,
-    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
-        &postgresql_type_or_json_type,
-        &ident,
-        // &format!("{}{}", naming::ContainsElementUpperCamelCase, &regular_expression.name_upper_camel_case())
-        &filter,
-    );
-    generate_impl_deserialize_with_try_new_token_stream(
-        &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
-        &[
-            Field {
-                field_name: &naming::LogicalOperatorSnakeCase,
-                field_type: &quote::quote!{crate::LogicalOperator},
-            },
-            Field {
-                field_name: &naming::ValueSnakeCase,
-                field_type: &token_patterns::StdStringString,
-            },
-        ],
-    )
-}
-
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3231,17 +3171,15 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
                 try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
-                try_new_content_token_stream: &generate_try_new_content_token_stream_9c03960c_4efb_4c03_b95e_fac068816388(
+                try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
                     &postgresql_json_type,
-                    // &regular_expression,
-                    &self_upper_camel_case,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 ),
-                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_6585266f_04b8_4fcd_9d4c_95ee63156a01(
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
                     &postgresql_json_type,
-                    // &regular_expression,
-                    &self_upper_camel_case,
                     &postgresql_type_or_json_type,
+                    &self_upper_camel_case,
                 )
             },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
@@ -3252,6 +3190,13 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
             let value_snake_case = naming::ValueSnakeCase;
             quote::quote!{self.#value_snake_case}
         }),
+    )
+}
+
+fn generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
+    let regular_expression_stringified = regular_expression.stringified();
+    generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&
+        generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}) as el where substring(el::text from 2 for length(el::text) - 2) ~{regular_expression_stringified} ${{}}))"))
     )
 }
 
