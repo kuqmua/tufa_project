@@ -3171,6 +3171,29 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::True,
+        
+        
+            // False {
+            //     ident: &postgresql_json_type,
+            //     postfix: &self_upper_camel_case,
+            //     try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
+            //     try_new_additional_input_parameters_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
+            //         &ident,
+            //         regular_expression: &RegularExpression,
+            //         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+            //     ),
+            //     try_new_content_token_stream: &self.generate_try_new_content_token_stream(
+            //         &ident,
+            //         &postgresql_type_or_json_type,
+            //         &between_try_new_error_type,
+            //         &quote::quote!{#where_operator_type_additional_bind_token_stream #should_add_dot_zero},
+            //     ),
+            //     impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
+            //         &ident,
+            //         &postgresql_type_or_json_type,
+            //         &where_operator_type_type_token_stream,
+            //     ),
+            // },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&token_patterns::StdStringString),
         &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&token_patterns::CoreDefaultDefaultDefault),
@@ -3189,8 +3212,11 @@ impl WhereOperatorName for ContainsElementCaseSensitiveRegularExpression {
     }
 }
 impl ContainsElementCaseSensitiveRegularExpression {
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseSensitive
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(&RegularExpression::CaseSensitive)
+        generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(&Self::regular_expression())
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3211,8 +3237,11 @@ impl WhereOperatorName for ContainsElementCaseInsensitiveRegularExpression {
     }
 }
 impl ContainsElementCaseInsensitiveRegularExpression {
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseInsensitive
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(&RegularExpression::CaseInsensitive)
+        generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(&Self::regular_expression())
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3240,8 +3269,11 @@ impl WhereOperatorName for AllElementsCaseSensitiveRegularExpression {
     }
 }
 impl AllElementsCaseSensitiveRegularExpression {
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseSensitive
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&RegularExpression::CaseSensitive)
+        generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&Self::regular_expression())
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3262,8 +3294,11 @@ impl WhereOperatorName for AllElementsCaseInsensitiveRegularExpression {
     }
 }
 impl AllElementsCaseInsensitiveRegularExpression {
+    fn regular_expression() -> RegularExpression {
+        RegularExpression::CaseInsensitive
+    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&RegularExpression::CaseInsensitive)
+        generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&Self::regular_expression())
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
