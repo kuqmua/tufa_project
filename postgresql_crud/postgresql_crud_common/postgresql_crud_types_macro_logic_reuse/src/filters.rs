@@ -3164,7 +3164,7 @@ fn generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_07
     let regular_expression_stringified = regular_expression.stringified();
     generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&
         generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}) as el where substring(el::text from 2 for length(el::text) - 2) ~{regular_expression_stringified} ${{}}))"))
-    ) 
+    )
 }
 //todo impl_try_from coz "" (empty string) as regular expression returns all elements
 pub struct ContainsElementCaseSensitiveRegularExpression;
@@ -3209,6 +3209,46 @@ impl WhereOperatorName for ContainsElementCaseInsensitiveRegularExpression {
 impl ContainsElementCaseInsensitiveRegularExpression {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_075ee40e2428(&RegularExpression::CaseInsensitive)
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
+        let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
+            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, WhereOperatorName::upper_camel_case(self)),
+            crate::ShouldWhereElementFieldsBePublic::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&token_patterns::StdStringString),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&token_patterns::CoreDefaultDefaultDefault),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
+                let value_snake_case = naming::ValueSnakeCase;
+                quote::quote!{self.#value_snake_case}
+            }),
+        )
+    }
+}
+
+fn generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
+    let regular_expression_stringified = regular_expression.stringified();
+    generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&
+        generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}) as el where substring(el::text from 2 for length(el::text) - 2) !~{regular_expression_stringified} ${{}}))"))
+    )
+}
+
+pub struct AllElementsCaseSensitiveRegularExpression;
+impl WhereOperatorName for AllElementsCaseSensitiveRegularExpression {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase
+    }
+}
+impl AllElementsCaseSensitiveRegularExpression {
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&RegularExpression::CaseSensitive)
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
