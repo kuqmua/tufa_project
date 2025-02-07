@@ -610,8 +610,8 @@ impl GreaterThan {
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, WhereOperatorName::upper_camel_case(self)),
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle)),
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.wrapper_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -857,7 +857,7 @@ impl Between {
             postgresql_json_type_handle,
             postgresql_json_type_pattern
         ) = postgresql_json_type.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        let non_optional_field_type = postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle);
+        let non_optional_field_type = postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle);
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
@@ -884,7 +884,7 @@ impl Between {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &Self::generate_additional_default_initialization_token_stream(&crate::PostgresqlJsonTypePattern::from(postgresql_json_type).non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+            &Self::generate_additional_default_initialization_token_stream(&crate::PostgresqlJsonTypePattern::from(postgresql_json_type).wrapper_non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &{
                 let start_snake_case = naming::StartSnakeCase;
@@ -1091,11 +1091,11 @@ impl In {
             postgresql_json_type_handle,
             postgresql_json_type_pattern
         ) = postgresql_json_type.to_postgresql_json_type_handle_and_postgresql_json_type_pattern();
-        let field_type = postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
+        let field_type = postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle);
 
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let non_optional_field_type = postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle);
+        let non_optional_field_type = postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle);
         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
@@ -1119,7 +1119,7 @@ impl In {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &generate_additional_default_initialization_token_stream_e46171d1_2c28_450b_85a8_80293ebe69f8(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream_e46171d1_2c28_450b_85a8_80293ebe69f8(&postgresql_json_type_pattern.wrapper_non_optional_initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let element_snake_case = naming::ElementSnakeCase;
@@ -3083,9 +3083,6 @@ impl AllElementsEqual {
     }
 }
 
-//todo if array contains equals
-//todo all elements equals
-
 pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3099,8 +3096,8 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
-        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)),
-        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle)),
+        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.wrapper_non_optional_initialization_token_stream(&postgresql_json_type_handle)),
         try_generate_bind_increments_token_stream,
         &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
             let value_snake_case = naming::ValueSnakeCase;
