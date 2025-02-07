@@ -41,7 +41,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
       "std_vec_vec_std_primitive_i8": [
-        10
+        1,2,3,4,5,6
       ]
     }
   }
@@ -166,10 +166,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "position": 0
             #   }
             # },
+            # {
+            #   "ContainsElementGreaterThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
             {
-              "ContainsElementGreaterThan": {
+              "AllElementsGreaterThan": {
                 "logical_operator": "Or",
-                "value": 0
+                "value": 5
               }
             }
           ]

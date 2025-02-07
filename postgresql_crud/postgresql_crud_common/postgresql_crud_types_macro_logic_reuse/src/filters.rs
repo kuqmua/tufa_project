@@ -3049,8 +3049,6 @@ impl OverlapsWithArray {
     }
 }
 
-// SELECT * FROM table_name WHERE 5 > ALL(array_column);
-
 pub struct ContainsElementGreaterThan;
 impl WhereOperatorName for ContainsElementGreaterThan {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -3060,6 +3058,46 @@ impl WhereOperatorName for ContainsElementGreaterThan {
 impl ContainsElementGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"})
+    }
+    fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let query_snake_case = naming::QuerySnakeCase;
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(#bind_token_stream);
+            #query_snake_case
+        }
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
+        let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
+            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, WhereOperatorName::upper_camel_case(self)),
+            crate::ShouldWhereElementFieldsBePublic::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.non_optional_field_type(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::generate_bind_value_to_query_token_stream(&{
+                let value_snake_case = naming::ValueSnakeCase;
+                quote::quote!{sqlx::types::Json(self.#value_snake_case)}
+            }),
+        )
+    }
+}
+
+pub struct AllElementsGreaterThan;
+impl WhereOperatorName for AllElementsGreaterThan {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::AllElementsGreaterThanUpperCamelCase
+    }
+}
+impl AllElementsGreaterThan {
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"})
     }
     fn generate_bind_value_to_query_token_stream(bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
