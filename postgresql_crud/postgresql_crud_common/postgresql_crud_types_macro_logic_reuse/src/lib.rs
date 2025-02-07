@@ -1289,6 +1289,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let contains_element_case_sensitive_regular_expression = crate::filters::ContainsElementCaseSensitiveRegularExpression;
             let contains_element_case_insensitive_regular_expression = crate::filters::ContainsElementCaseInsensitiveRegularExpression;
             let all_elements_case_sensitive_regular_expression = crate::filters::AllElementsCaseSensitiveRegularExpression;
+            let all_elements_case_insensitive_regular_expression = crate::filters::AllElementsCaseInsensitiveRegularExpression;
 
             let (
                 maybe_postgresql_json_type_ident_where_element_position_equals,
@@ -1304,6 +1305,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression,
              ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type) {
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
@@ -1358,8 +1360,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         where_operator_name: &all_elements_case_sensitive_regular_expression,
                         token_stream: all_elements_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
                     },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &all_elements_case_insensitive_regular_expression,
+                        token_stream: all_elements_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                    },
                 ),
                 Err(_) => (
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
@@ -1632,6 +1639,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     filters_token_stream.push(token_stream);
                 }
                 if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression {
+                    filters_variants.push(where_operator_name);
+                    filters_token_stream.push(token_stream);
+                }
+                if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression {
                     filters_variants.push(where_operator_name);
                     filters_token_stream.push(token_stream);
                 }
