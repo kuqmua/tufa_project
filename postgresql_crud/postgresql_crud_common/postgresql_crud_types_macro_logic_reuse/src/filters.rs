@@ -3049,8 +3049,6 @@ impl OverlapsWithArray {
     }
 }
 
-
-// SELECT * FROM table_name WHERE 10 < ANY(array_column);
 // SELECT * FROM table_name WHERE 5 > ALL(array_column);
 
 pub struct ContainsElementGreaterThan;

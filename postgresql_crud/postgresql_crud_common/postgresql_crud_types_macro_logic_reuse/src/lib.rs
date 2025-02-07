@@ -1518,18 +1518,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 generated
             };
             let generate_postgresql_json_type_where_element_vec_bool_token_stream = || {
+                let mut filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let mut filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
-                    &{
-                        let vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                        vec
-                    },
+                    &filters_variants,
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
-                    #(#common_postgresql_json_type_vec_filters_token_stream)*
-
+                    #(#filters_token_stream)*
                     #postgresql_json_type_ident_where_element_token_stream
                 };
                 // if ident == "" {
@@ -1539,27 +1537,24 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 generated
             };
             let generate_postgresql_json_type_where_element_vec_string_token_stream = || {
+                let mut filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let mut filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
+                if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression {
+                    filters_variants.push(where_operator_name);
+                    filters_token_stream.push(token_stream);
+                }
+                if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression {
+                    filters_variants.push(where_operator_name);
+                    filters_token_stream.push(token_stream);
+                }
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
-                    &{
-                        let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression {
-                            vec.push(where_operator_name);
-                        }
-                        if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream: _ } = maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression {
-                            vec.push(where_operator_name);
-                        }
-                        vec
-                    },
+                    &filters_variants,
                     &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
-                    #(#common_postgresql_json_type_vec_filters_token_stream)*
-
-                    #maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression
-                    #maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression
-
+                    #(#filters_token_stream)*
                     #postgresql_json_type_ident_where_element_token_stream
                 };
                 // if ident == "" {
