@@ -3122,6 +3122,11 @@ impl AllElementsGreaterThan {
 }
 
 
+//todo check if array contains null
+//todo check if all elements are null
+
+//todo if array contains equals
+//todo all elements equals
 
 
 // contains_element_CaseSensitiveRegularExpression
