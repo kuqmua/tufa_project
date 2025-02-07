@@ -3050,6 +3050,42 @@ impl OverlapsWithArray {
     }
 }
 
+pub struct AllElementsEqual;
+impl WhereOperatorName for AllElementsEqual {
+    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        &naming::AllElementsEqualUpperCamelCase
+    }
+}
+impl AllElementsEqual {
+    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+        generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"})
+    }
+    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        &self,
+        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+    ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
+        let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
+        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+            &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
+            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, WhereOperatorName::upper_camel_case(self)),
+            crate::ShouldWhereElementFieldsBePublic::True,
+            &crate::ShouldDeriveSchemarsJsonSchema::True,
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.wrapper_initialization_token_stream(&postgresql_json_type_handle)),
+            &Self::generate_try_generate_bind_increments_token_stream(),
+            &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
+                let value_snake_case = naming::ValueSnakeCase;
+                quote::quote!{sqlx::types::Json(self.#value_snake_case)}
+            }),
+        )
+    }
+}
+
+//todo if array contains equals
+//todo all elements equals
+
 pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
@@ -3120,13 +3156,6 @@ impl AllElementsGreaterThan {
         )
     }
 }
-
-
-//todo check if array contains null
-//todo check if all elements are null
-
-//todo if array contains equals
-//todo all elements equals
 
 
 // contains_element_CaseSensitiveRegularExpression
