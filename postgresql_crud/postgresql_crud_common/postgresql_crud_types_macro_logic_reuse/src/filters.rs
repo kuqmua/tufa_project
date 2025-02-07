@@ -3161,42 +3161,92 @@ fn generate_try_generate_bind_increments_token_stream_638cde09_f452_4c37_bd62_07
     )
 }
 
-//todo impl_try_from coz "" (empty string) as regular expression returns all elements
+fn generate_try_new_content_token_stream_9c03960c_4efb_4c03_b95e_fac068816388(
+    ident: &dyn quote::ToTokens,
+    // regular_expression: &RegularExpression,
+    filter: & dyn std::fmt::Display,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+) -> proc_macro2::TokenStream {
+    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_try_new_error_named_upper_camel_case_stringified(
+        postgresql_type_or_json_type,
+        &ident,
+        &filter,
+        // &format!("{}{}", naming::ContainsElementUpperCamelCase, &regular_expression.name_upper_camel_case())
+    );
+    quote::quote!{
+        if !#value_snake_case.is_empty() {
+            Ok(Self {
+                logical_operator,
+                #value_snake_case,
+            })
+        }
+        else {
+            Err(#postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+fn generate_impl_deserialize_token_stream_6585266f_04b8_4fcd_9d4c_95ee63156a01(
+    ident: &dyn quote::ToTokens,
+    // regular_expression: &RegularExpression,
+    filter: &dyn std::fmt::Display,
+    postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case = generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(
+        &postgresql_type_or_json_type,
+        &ident,
+        // &format!("{}{}", naming::ContainsElementUpperCamelCase, &regular_expression.name_upper_camel_case())
+        &filter,
+    );
+    generate_impl_deserialize_with_try_new_token_stream(
+        &postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case,
+        &[
+            Field {
+                field_name: &naming::LogicalOperatorSnakeCase,
+                field_type: &quote::quote!{crate::LogicalOperator},
+            },
+            Field {
+                field_name: &naming::ValueSnakeCase,
+                field_type: &token_patterns::StdStringString,
+            },
+        ],
+    )
+}
+
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type: &crate::PostgresqlJsonType,
-    try_generate_bind_increments_token_stream: &proc_macro2::TokenStream
+    try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
+    regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::True,
-        
-        
-            // False {
-            //     ident: &postgresql_json_type,
-            //     postfix: &self_upper_camel_case,
-            //     try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
-            //     try_new_additional_input_parameters_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
-            //         &ident,
-            //         regular_expression: &RegularExpression,
-            //         postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
-            //     ),
-            //     try_new_content_token_stream: &self.generate_try_new_content_token_stream(
-            //         &ident,
-            //         &postgresql_type_or_json_type,
-            //         &between_try_new_error_type,
-            //         &quote::quote!{#where_operator_type_additional_bind_token_stream #should_add_dot_zero},
-            //     ),
-            //     impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(
-            //         &ident,
-            //         &postgresql_type_or_json_type,
-            //         &where_operator_type_type_token_stream,
-            //     ),
-            // },
+        crate::ShouldWhereElementFieldsBePublic::False {
+                ident: &postgresql_json_type,
+                postfix: &self_upper_camel_case,
+                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
+                try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
+                try_new_content_token_stream: &generate_try_new_content_token_stream_9c03960c_4efb_4c03_b95e_fac068816388(
+                    &postgresql_json_type,
+                    // &regular_expression,
+                    &self_upper_camel_case,
+                    &postgresql_type_or_json_type,
+                ),
+                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_6585266f_04b8_4fcd_9d4c_95ee63156a01(
+                    &postgresql_json_type,
+                    // &regular_expression,
+                    &self_upper_camel_case,
+                    &postgresql_type_or_json_type,
+                )
+            },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
-        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&token_patterns::StdStringString),
-        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&token_patterns::CoreDefaultDefaultDefault),
+        &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
+        &generate_additional_default_initialization_token_stream_ca12ef3a_dd45_4195_9f05_03241c037d04(),
         try_generate_bind_increments_token_stream,
         &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
             let value_snake_case = naming::ValueSnakeCase;
@@ -3226,6 +3276,7 @@ impl ContainsElementCaseSensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
             &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::regular_expression(),
         )
     }
 }
@@ -3251,6 +3302,7 @@ impl ContainsElementCaseInsensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
             &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::regular_expression(),
         )
     }
 }
@@ -3283,6 +3335,7 @@ impl AllElementsCaseSensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
             &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::regular_expression(),
         )
     }
 }
@@ -3308,6 +3361,7 @@ impl AllElementsCaseInsensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type,
             &Self::generate_try_generate_bind_increments_token_stream(),
+            &Self::regular_expression(),
         )
     }
 }

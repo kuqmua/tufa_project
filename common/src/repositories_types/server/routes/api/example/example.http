@@ -184,25 +184,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
-            # },
+            # }
+            # ,
             # {
             #   "ContainsElementCaseInsensitiveRegularExpression": {
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
-            # },
+            # }
+            # ,
             # {
             #   "AllElementsCaseSensitiveRegularExpression": {
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
-            # },
-            {
-              "AllElementsCaseInsensitiveRegularExpression": {
-                "logical_operator": "Or",
-                "value": "^dog$"
-              }
-            }
+            # }
+            # ,
+            # {
+            #   "AllElementsCaseInsensitiveRegularExpression": {
+            #     "logical_operator": "Or",
+            #     "value": ""
+            #   }
+            # }
           ]
         }
       }
@@ -240,7 +243,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 ### 
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
-content-type: application/json
+content-type: application/jsonNOT EXISTS (
+    SELECT 1
+    FROM jsonb_array_elements(your_jsonb_column) AS elem
+    WHERE elem::text !~ '^cat$'
+)
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
