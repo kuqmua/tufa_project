@@ -40,8 +40,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_vec_vec_std_option_option_std_primitive_i8": [
-        3,3,3,3
+      "std_vec_vec_std_option_option_std_string_string": [
+        "cat", "dog", "fox"
       ]
     }
   }
@@ -113,18 +113,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "StdVecVecStdOptionOptionStdPrimitiveI8": {
+        "StdVecVecStdOptionOptionStdStringString": {
           "logical_operator": "Or",
           "value": [
             # {
             #   "Equal": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       0
+            #       ""
             #     ]
             #   }
-            # }
-            # ,
+            # },
             # {
             #   "LengthEqual": {
             #     "logical_operator": "Or",
@@ -140,7 +139,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             # {
             #   "PositionEquals": {
             #     "logical_operator": "Or",
-            #     "value": 0,
+            #     "value": "",
             #     "position": 0
             #   }
             # },
@@ -148,7 +147,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #   "ContainsAllElementsOfArray": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       0
+            #       ""
             #     ]
             #   }
             # },
@@ -156,35 +155,36 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #   "OverlapsWithArray": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       0
+            #       ""
             #     ]
             #   }
             # },
             # {
             #   "AllElementsEqual": {
             #     "logical_operator": "Or",
-            #     "value": 0
+            #     "value": ""
             #   }
             # },
             # {
-            #   "PositionGreaterThan": {
+            #   "PositionCaseSensitiveRegularExpression": {
             #     "logical_operator": "Or",
-            #     "value": 0,
+            #     "value": "",
             #     "position": 0
             #   }
             # },
             # {
-            #   "ContainsElementGreaterThan": {
+            #   "PositionCaseInsensitiveRegularExpression": {
             #     "logical_operator": "Or",
-            #     "value": 0
+            #     "value": "",
+            #     "position": 0
             #   }
             # },
-            # {
-            #   "AllElementsGreaterThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # }
+            {
+              "ContainsElementCaseSensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": "^dog$"
+              }
+            }
           ]
         }
       }
@@ -197,7 +197,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_vec_vec_std_option_option_std_primitive_i8": {
+          "std_vec_vec_std_option_option_std_string_string": {
             "pagination": {
               "limit": 30,
               "offset": 0
@@ -214,7 +214,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 30,
+    "limit": 3,
     "offset": 0
   }
 }
