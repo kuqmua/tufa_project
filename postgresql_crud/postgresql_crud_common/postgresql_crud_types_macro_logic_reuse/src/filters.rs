@@ -379,6 +379,15 @@ fn generate_impl_deserialize_with_try_new_token_stream<'a>(
     }
 }
 
+fn generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{pub #value_snake_case: #type_token_stream}
+}
+fn generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{#value_snake_case: #initialization_token_stream}
+}
+
 pub struct Equal;
 impl WhereOperatorName for Equal {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -386,14 +395,6 @@ impl WhereOperatorName for Equal {
     }
 }
 impl Equal {
-    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{pub #value_snake_case: #type_token_stream}
-    }
-    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{#value_snake_case: #initialization_token_stream}
-    }
     fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
@@ -499,8 +500,8 @@ impl Equal {
                     ),
                     should_where_element_fields_be_public,
                     &should_implement_schemars_json_schema,
-                    &Self::generate_additional_type_declaration_token_stream(&where_operator_type.std_option_option_type_token_stream()),
-                    &Self::generate_additional_default_initialization_token_stream(&where_operator_type.std_option_option_default_initialization_token_stream()),
+                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
+                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
                     &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
                     &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
                 )
@@ -516,8 +517,8 @@ impl Equal {
                     ),
                     should_where_element_fields_be_public,
                     &should_implement_schemars_json_schema,
-                    &Self::generate_additional_type_declaration_token_stream(&where_operator_type.type_token_stream()),
-                    &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
+                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
+                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
                     &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
                     &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
                 )
@@ -539,8 +540,8 @@ impl Equal {
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type),
-            &Self::generate_additional_default_initialization_token_stream(&{
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&{
                 let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
                     let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
                     let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
@@ -564,14 +565,6 @@ impl WhereOperatorName for GreaterThan {
     }
 }
 impl GreaterThan {
-    fn generate_additional_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{pub #value_snake_case: #type_token_stream}
-    }
-    fn generate_additional_default_initialization_token_stream(initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        quote::quote!{#value_snake_case: #initialization_token_stream}
-    }
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} > ${})"})
     }
@@ -593,8 +586,8 @@ impl GreaterThan {
             WhereOperatorName::upper_camel_case(self),
             &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
-            &Self::generate_additional_type_declaration_token_stream(&where_operator_type.type_token_stream()),
-            &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -617,8 +610,8 @@ impl GreaterThan {
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &Self::generate_additional_type_declaration_token_stream(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
-            &Self::generate_additional_default_initialization_token_stream(&postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle)),
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.field_type(&postgresql_json_type_handle)),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::generate_bind_value_to_query_token_stream(&{
                 let value_snake_case = naming::ValueSnakeCase;
