@@ -194,30 +194,6 @@ impl PostgresqlJsonTypePattern {
         }
     }
 }
-impl std::convert::From<&PostgresqlJsonTypePatternSpecific> for PostgresqlJsonTypePattern {
-    fn from(value: &PostgresqlJsonTypePatternSpecific) -> Self {
-        match value {
-            PostgresqlJsonTypePatternSpecific::FullTypePathNumber => Self::FullTypePath,
-            PostgresqlJsonTypePatternSpecific::FullTypePathBool => Self::FullTypePath,
-            PostgresqlJsonTypePatternSpecific::FullTypePathString => Self::FullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathNumber => Self::StdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathBool => Self::StdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathString => Self::StdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber => Self::StdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool => Self::StdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString => Self::StdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber => Self::StdOptionOptionStdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool => Self::StdOptionOptionStdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString => Self::StdOptionOptionStdVecVecFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber => Self::StdVecVecStdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool => Self::StdVecVecStdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString => Self::StdVecVecStdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-            PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath,
-        }
-    }
-}
 impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
     fn from(value: &PostgresqlJsonType) -> Self {
         match value {
