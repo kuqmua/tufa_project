@@ -17,22 +17,27 @@ enum PostgresqlJsonTypeHandle {
     UuidUuid,
 }
 impl PostgresqlJsonTypeHandle {
-    fn field_type(&self) -> proc_macro2::TokenStream {
+    fn field_type_stringified(&self) -> std::string::String {
         match &self {
-            Self::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
-            Self::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
-            Self::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
-            Self::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
-            Self::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
-            Self::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
-            Self::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
-            Self::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
-            Self::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
-            Self::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
-            Self::StdPrimitiveBool => quote::quote!{std::primitive::bool},
-            Self::StdStringString => quote::quote!{std::string::String},
-            Self::UuidUuid => quote::quote!{uuid::Uuid}
+            Self::StdPrimitiveI8 => std::string::String::from("std::primitive::i8"),
+            Self::StdPrimitiveI16 => std::string::String::from("std::primitive::i16"),
+            Self::StdPrimitiveI32 => std::string::String::from("std::primitive::i32"),
+            Self::StdPrimitiveI64 => std::string::String::from("std::primitive::i64"),
+            Self::StdPrimitiveU8 => std::string::String::from("std::primitive::u8"),
+            Self::StdPrimitiveU16 => std::string::String::from("std::primitive::u16"),
+            Self::StdPrimitiveU32 => std::string::String::from("std::primitive::u32"),
+            Self::StdPrimitiveU64 => std::string::String::from("std::primitive::u64"),
+            Self::StdPrimitiveF32 => std::string::String::from("std::primitive::f32"),
+            Self::StdPrimitiveF64 => std::string::String::from("std::primitive::f64"),
+            Self::StdPrimitiveBool => std::string::String::from("std::primitive::bool"),
+            Self::StdStringString => std::string::String::from("std::string::String"),
+            Self::UuidUuid => std::string::String::from("uuid::Uuid"),
         }
+    }
+    fn field_type(&self) -> proc_macro2::TokenStream {
+        self.field_type_stringified()
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
     }
     fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
@@ -176,6 +181,17 @@ impl PostgresqlJsonTypePattern {
     }
     fn wrapper_non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
         self.handle_non_optional_initialization_token_stream(postgresql_json_type_handle, true)
+    }
+
+    fn prefix_stringified(&self) -> std::string::String {
+        match &self {
+            Self::FullTypePath => std::string::String::default(),
+            Self::StdOptionOptionFullTypePath => std::string::String::from("StdOptionOption"),
+            Self::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
+            Self::StdOptionOptionStdVecVecFullTypePath => std::string::String::from("StdOptionOptionStdVecVec"),
+            Self::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
+            Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdOptionOptionStdVecVecStdOptionOption"),
+        }
     }
 }
 impl std::convert::From<&PostgresqlJsonTypePatternSpecific> for PostgresqlJsonTypePattern {
