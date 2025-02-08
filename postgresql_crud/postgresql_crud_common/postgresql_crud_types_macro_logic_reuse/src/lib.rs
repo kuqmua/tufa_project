@@ -769,14 +769,6 @@ enum PostgresqlJsonType {
     StdOptionOptionStdVecVecStdOptionOptionStdStringString,
     StdOptionOptionStdVecVecStdOptionOptionUuidUuid,
 }
-impl quote::ToTokens for PostgresqlJsonType {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.to_string()
-        .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream"))
-        .to_tokens(tokens)
-    }
-}
 
 #[proc_macro]
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -786,7 +778,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_type);
         let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(&postgresql_json_type_handle);
 
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &postgresql_json_type;
+        let ident: &dyn quote::ToTokens = &postgresql_json_type_ident_wrapper;
         let field_type = &postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
 
         let ident_token_stream = {
