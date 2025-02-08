@@ -1,6 +1,25 @@
 mod filters;
 
-#[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+struct PostgresqlJsonTypeVariant {
+    postgresql_json_type_handle: PostgresqlJsonTypeHandle,
+    postgresql_json_type_pattern: PostgresqlJsonTypePattern,
+}
+impl PostgresqlJsonTypeVariant {
+    fn all_variants() -> std::vec::Vec<Self> {
+        let mut acc = vec![];
+        for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
+            for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
+                acc.push(Self {
+                    postgresql_json_type_handle: postgresql_json_type_handle.clone(),
+                    postgresql_json_type_pattern,
+                });
+            }
+        }
+        acc
+    }
+}
+
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypeHandle {
     StdPrimitiveI8,
     StdPrimitiveI16,
@@ -14,7 +33,7 @@ enum PostgresqlJsonTypeHandle {
     StdPrimitiveF64,
     StdPrimitiveBool,
     StdStringString,
-    UuidUuid,
+    UuidUuid
 }
 impl PostgresqlJsonTypeHandle {
     fn field_type_stringified(&self) -> std::string::String {
@@ -160,7 +179,7 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypePattern {
     FullTypePath,
     StdOptionOptionFullTypePath,
@@ -773,7 +792,10 @@ enum PostgresqlJsonType {
 #[proc_macro]
 pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    fn generate_postgresql_json_type_handle_token_stream(postgresql_json_type: &PostgresqlJsonType) -> proc_macro2::TokenStream {
+    fn generate_postgresql_json_type_handle_token_stream(
+        postgresql_json_type: &PostgresqlJsonType,
+        // postgresql_json_type_variant: &PostgresqlJsonTypeVariant
+    ) -> proc_macro2::TokenStream {
         let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_type);
         let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_type);
         let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(&postgresql_json_type_handle);
