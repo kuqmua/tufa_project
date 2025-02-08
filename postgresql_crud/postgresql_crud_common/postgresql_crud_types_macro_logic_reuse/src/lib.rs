@@ -1216,7 +1216,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 );
                 let in_handle = crate::filters::In;
                 let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_json_type,
+                    &postgresql_json_type_handle,
+                    &postgresql_json_type_pattern,
                 );
                 //todo write wrapper around it with reuse parameters
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
