@@ -984,11 +984,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             
             let length_equal = crate::filters::LengthEqual;
             let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_json_type,
+                &postgresql_json_type_handle,
+                &postgresql_json_type_pattern,
             );
             let length_more_than = crate::filters::LengthMoreThan;
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_json_type,
+                &postgresql_json_type_handle,
+                &postgresql_json_type_pattern,
             );
 
             enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
