@@ -676,39 +676,6 @@ impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeP
         }
     }
 }
-impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypePatternSpecific {
-    fn from(value: &PostgresqlJsonArrayElementType) -> Self {
-        match value {
-            PostgresqlJsonArrayElementType::StdPrimitiveI8 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI16 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI64 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU8 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU16 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU64 |
-            PostgresqlJsonArrayElementType::StdPrimitiveF32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::FullTypePathNumber,
-            PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::FullTypePathBool,
-            PostgresqlJsonArrayElementType::StdStringString |
-            PostgresqlJsonArrayElementType::UuidUuid => Self::FullTypePathString,
-
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdOptionOptionFullTypePathNumber,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdOptionOptionFullTypePathBool,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString |
-            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self::StdOptionOptionFullTypePathString,
-        }
-    }
-}
 
 #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonType {
