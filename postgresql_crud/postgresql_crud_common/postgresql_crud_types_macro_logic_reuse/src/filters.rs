@@ -2719,27 +2719,29 @@ impl PositionGreaterThan {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
-            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
+            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
             crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &postgresql_json_type,
+                ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
                 try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
-                    &postgresql_json_type,
+                    &postgresql_json_type_ident_wrapper,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(
-                    &postgresql_json_type,
+                    &postgresql_json_type_ident_wrapper,
                     &postgresql_type_or_json_type,
                     &postgresql_json_array_element_type,
                     &self_upper_camel_case,
@@ -2840,26 +2842,28 @@ fn generate_bind_value_to_query_token_stream_32f8f7cf_128f_474a_8e53_f0f0dec3720
 }
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type: &crate::PostgresqlJsonType,
+    postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+    postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdStringString);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
-        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
+        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::False {
-            ident: &postgresql_json_type,
+            ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
             try_new_content_token_stream: &generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
-                &postgresql_json_type,
+                &postgresql_json_type_ident_wrapper,
                 &postgresql_type_or_json_type,
                 &regular_expression,
             ),
             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(
-                &postgresql_json_type,
+                &postgresql_json_type_ident_wrapper,
                 &postgresql_type_or_json_type,
                 &regular_expression,
             )
@@ -2881,11 +2885,13 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
 impl PositionCaseSensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
-            &postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &RegularExpression::CaseSensitive,
         )
     }
@@ -2900,11 +2906,13 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
 impl PositionCaseInsensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
-            &postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &RegularExpression::CaseInsensitive,
         )
     }
@@ -2946,27 +2954,29 @@ fn generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1
 }
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type: &crate::PostgresqlJsonType,
+    postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+    postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     format_handle_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_array_element_type);
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
-        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
+        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::False {
-            ident: &postgresql_json_type,
+            ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&postgresql_json_array_element_type),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
             try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
-                &postgresql_json_type,
+                &postgresql_json_type_ident_wrapper,
                 &postgresql_type_or_json_type,
                 &self_upper_camel_case,
             ),
             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
-                &postgresql_json_type,
+                &postgresql_json_type_ident_wrapper,
                 &postgresql_type_or_json_type,
                 &postgresql_json_array_element_type,
                 &self_upper_camel_case,
@@ -2999,12 +3009,14 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
 impl ContainsAllElementsOfArray {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             postgresql_json_array_element_type,
             &quote::quote!{"{}({} @> ${})"},
         )
@@ -3020,12 +3032,14 @@ impl WhereOperatorName for ContainedInArray {
 impl ContainedInArray {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             postgresql_json_array_element_type,
             &quote::quote!{"{}({} <@ ${})"},
         )
@@ -3041,12 +3055,14 @@ impl WhereOperatorName for OverlapsWithArray {
 impl OverlapsWithArray {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             postgresql_json_array_element_type,
             &quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"},
         )
@@ -3065,14 +3081,17 @@ impl AllElementsEqual {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_array_element_type);
         let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, WhereOperatorName::upper_camel_case(self)),
+            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
+                &postgresql_json_type_ident_wrapper,
+                WhereOperatorName::upper_camel_case(self),
+            ),
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle)),
@@ -3088,7 +3107,7 @@ impl AllElementsEqual {
 
 pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type: &crate::PostgresqlJsonType,
+    postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
     postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
@@ -3096,7 +3115,10 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
     let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_array_element_type);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
+        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
+            &postgresql_json_type_ident_wrapper,
+            self_upper_camel_case,
+        ),
         crate::ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle)),
@@ -3121,12 +3143,12 @@ impl ContainsElementGreaterThan {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            &postgresql_json_type_ident_wrapper,
             postgresql_json_array_element_type,
             &Self::generate_try_generate_bind_increments_token_stream()
         )
@@ -3145,12 +3167,12 @@ impl AllElementsGreaterThan {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
         postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_ident_wrapper,
             postgresql_json_array_element_type,
             &Self::generate_try_generate_bind_increments_token_stream()
         )
@@ -3159,26 +3181,28 @@ impl AllElementsGreaterThan {
 
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type: &crate::PostgresqlJsonType,
+    postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+    postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type, self_upper_camel_case),
+        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::False {
-                ident: &postgresql_json_type,
+                ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
                 try_new_additional_input_parameters_token_stream: &generate_additional_type_declaration_token_stream_10e900fc_d0fd_45ae_9d09_d4042ebf37c9(),
                 try_new_content_token_stream: &generate_try_new_content_token_stream_87985e52_7a0a_4c62_8328_cc23a015d7fd(
-                    &postgresql_json_type,
+                    &postgresql_json_type_ident_wrapper,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 ),
                 impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_31de3e8b_5624_4906_b34f_e3e20968640c(
-                    &postgresql_json_type,
+                    &postgresql_json_type_ident_wrapper,
                     &postgresql_type_or_json_type,
                     &self_upper_camel_case,
                 )
@@ -3216,11 +3240,13 @@ impl ContainsElementCaseSensitiveRegularExpression {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::regular_expression(),
         )
@@ -3242,11 +3268,13 @@ impl ContainsElementCaseInsensitiveRegularExpression {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::regular_expression(),
         )
@@ -3275,11 +3303,13 @@ impl AllElementsCaseSensitiveRegularExpression {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::regular_expression(),
         )
@@ -3301,11 +3331,13 @@ impl AllElementsCaseInsensitiveRegularExpression {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type: &crate::PostgresqlJsonType,
+        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
+        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type,
+            postgresql_json_type_handle,
+            postgresql_json_type_pattern,
             &Self::generate_try_generate_bind_increments_token_stream(),
             &Self::regular_expression(),
         )
