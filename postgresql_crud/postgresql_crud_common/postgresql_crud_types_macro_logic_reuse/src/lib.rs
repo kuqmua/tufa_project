@@ -1044,7 +1044,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 Ok(value) => (
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_equals,
-                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_json_type, &value)
+                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                            &value,
+                        )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_greater_than,
