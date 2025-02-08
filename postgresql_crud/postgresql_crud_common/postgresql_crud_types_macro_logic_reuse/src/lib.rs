@@ -282,6 +282,11 @@ impl PostgresqlJsonTypePattern {
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdOptionOptionStdVecVecStdOptionOption"),
         }
     }
+    fn postgresql_json_type_ident_wrapper(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
+        format!("{}{postgresql_json_type_handle}", self.prefix_stringified())
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap()
+    }
 }
 impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypePattern {
     fn from(value: &PostgresqlJsonType) -> Self {
@@ -959,11 +964,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &postgresql_json_type_ident_where_upper_camel_case
         );
         let postgresql_json_type_ident_where_element_token_stream = {
+            let postgresql_json_type_handle = crate::PostgresqlJsonTypeHandle::from(postgresql_json_type);
+            let postgresql_json_type_pattern = crate::PostgresqlJsonTypePattern::from(postgresql_json_type);
+
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             
             let equal = crate::filters::Equal;
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_json_type,
+                &postgresql_json_type_handle,
+                &postgresql_json_type_pattern,
             );
 
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
@@ -1196,12 +1205,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 //todo maybe remove ident, field_type from arguments. variant is enough
                 let greater_than = crate::filters::GreaterThan;
                 let postgresql_json_type_ident_where_element_greater_than_token_stream = greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_json_type,
+                    &postgresql_json_type_handle,
+                    &postgresql_json_type_pattern,
                 );
                 let between = crate::filters::Between;
                 let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                     &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                    &postgresql_json_type,
+                    &postgresql_json_type_handle,
+                    &postgresql_json_type_pattern,
                 );
                 let in_handle = crate::filters::In;
                 let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
