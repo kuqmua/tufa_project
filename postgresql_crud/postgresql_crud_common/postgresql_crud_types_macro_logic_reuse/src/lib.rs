@@ -248,62 +248,6 @@ impl PostgresqlJsonTypePattern {
         .unwrap()
     }
 }
-enum PostgresqlJsonTypePatternSpecific {
-    FullTypePathNumber,
-    FullTypePathBool,
-    FullTypePathString,
-    StdOptionOptionFullTypePathNumber,
-    StdOptionOptionFullTypePathBool,
-    StdOptionOptionFullTypePathString,
-    StdVecVecFullTypePathNumber,
-    StdVecVecFullTypePathBool,
-    StdVecVecFullTypePathString,
-    StdOptionOptionStdVecVecFullTypePathNumber,
-    StdOptionOptionStdVecVecFullTypePathBool,
-    StdOptionOptionStdVecVecFullTypePathString,
-    StdVecVecStdOptionOptionFullTypePathNumber,
-    StdVecVecStdOptionOptionFullTypePathBool,
-    StdVecVecStdOptionOptionFullTypePathString,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
-    StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
-}
-impl std::convert::From<&PostgresqlJsonTypeVariant> for PostgresqlJsonTypePatternSpecific {
-    fn from(value: &PostgresqlJsonTypeVariant) -> Self {
-        match &value.postgresql_json_type_pattern {
-            PostgresqlJsonTypePattern::FullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::FullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::FullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::FullTypePathString,
-            },
-            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::StdOptionOptionFullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::StdOptionOptionFullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::StdOptionOptionFullTypePathString,
-            },
-            PostgresqlJsonTypePattern::StdVecVecFullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::StdVecVecFullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::StdVecVecFullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::StdVecVecFullTypePathString,
-            },
-            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::StdOptionOptionStdVecVecFullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::StdOptionOptionStdVecVecFullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::StdOptionOptionStdVecVecFullTypePathString,
-            },
-            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::StdVecVecStdOptionOptionFullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::StdVecVecStdOptionOptionFullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::StdVecVecStdOptionOptionFullTypePathString,
-            },
-            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => match PostgresqlJsonTypeSpecific::from(&value.postgresql_json_type_handle) {
-                PostgresqlJsonTypeSpecific::Number => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber,
-                PostgresqlJsonTypeSpecific::Bool => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool,
-                PostgresqlJsonTypeSpecific::String => Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString,
-            },
-        }
-    }
-}
 
 #[derive(Debug, strum_macros::Display)]
 enum PostgresqlJsonArrayElementType {
@@ -1068,26 +1012,21 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            match &PostgresqlJsonTypePatternSpecific::from(postgresql_json_type_variant) {
-                PostgresqlJsonTypePatternSpecific::FullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::FullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::FullTypePathString => generate_postgresql_json_type_where_element_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_string_token_stream(),
-                
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdVecVecStdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathNumber => generate_postgresql_json_type_where_element_vec_number_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathBool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
-                PostgresqlJsonTypePatternSpecific::StdOptionOptionStdVecVecStdOptionOptionFullTypePathString => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+            match &postgresql_json_type_variant.postgresql_json_type_pattern {
+                PostgresqlJsonTypePattern::FullTypePath |
+                PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => match &postgresql_json_type_variant.postgresql_json_type_specific {
+                    PostgresqlJsonTypeSpecific::Number => generate_postgresql_json_type_where_element_number_token_stream(),
+                    PostgresqlJsonTypeSpecific::Bool => generate_postgresql_json_type_where_element_bool_token_stream(),
+                    PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_string_token_stream(),
+                },
+                PostgresqlJsonTypePattern::StdVecVecFullTypePath |
+                PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath |
+                PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath |
+                PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => match &postgresql_json_type_variant.postgresql_json_type_specific {
+                    PostgresqlJsonTypeSpecific::Number => generate_postgresql_json_type_where_element_vec_number_token_stream(),
+                    PostgresqlJsonTypeSpecific::Bool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
+                    PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+                },
             }
         };
         let postgresql_json_type_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
