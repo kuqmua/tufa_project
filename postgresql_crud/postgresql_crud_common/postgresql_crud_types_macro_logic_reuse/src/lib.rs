@@ -656,6 +656,23 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let all_elements_case_sensitive_regular_expression = crate::filters::AllElementsCaseSensitiveRegularExpression;
             let all_elements_case_insensitive_regular_expression = crate::filters::AllElementsCaseInsensitiveRegularExpression;
 
+
+            let (
+                l
+            ) = match postgresql_json_type_variant.try_into_vec_element_type() {
+                Ok(value) => (
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &position_case_insensitive_regular_expression,
+                        token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    }
+                ),
+                Err(_) => (
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None
+                )
+            };
             let (
                 maybe_postgresql_json_type_ident_where_element_position_equals,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
