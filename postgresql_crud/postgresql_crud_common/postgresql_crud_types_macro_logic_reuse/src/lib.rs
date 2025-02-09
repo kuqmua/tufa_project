@@ -658,19 +658,141 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
 
             let (
-                l
+                // maybe_postgresql_json_type_ident_where_element_position_equals,
+                // maybe_postgresql_json_type_ident_where_element_position_greater_than,
+                maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
+                // maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
+                // maybe_postgresql_json_type_ident_where_element_contained_in_array,
+                // maybe_postgresql_json_type_ident_where_element_overlaps_with_array,
+                // maybe_postgresql_json_type_ident_where_element_all_elements_equal,
+                // maybe_postgresql_json_type_ident_where_element_contains_element_greater_than,
+                // maybe_postgresql_json_type_ident_where_element_all_elements_greater_than,
+                maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression,
+                maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression,
             ) = match postgresql_json_type_variant.try_into_vec_element_type() {
                 Ok(value) => (
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &position_equals,
+                    //     token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_handle,
+                    //         &postgresql_json_type_pattern,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &position_greater_than,
+                    //     token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_handle,
+                    //         &postgresql_json_type_pattern,
+                    //         &value,
+                    //     )
+                    // },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &position_case_sensitive_regular_expression,
+                        token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_case_insensitive_regular_expression,
                         token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                             &postgresql_json_type_handle,
                             &postgresql_json_type_pattern,
                         )
-                    }
+                    },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &contains_all_elements_of_array,
+                    //     token_stream: contains_all_elements_of_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_handle,
+                    //         &postgresql_json_type_pattern,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &contained_in_array,
+                    //     token_stream: contained_in_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_handle,
+                    //         &postgresql_json_type_pattern,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &overlaps_with_array,
+                    //     token_stream: overlaps_with_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_handle,
+                    //         &postgresql_json_type_pattern,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &all_elements_equal,
+                    //     token_stream: all_elements_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_ident_wrapper,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &contains_element_greater_than,
+                    //     token_stream: contains_element_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_ident_wrapper,
+                    //         &value,
+                    //     )
+                    // },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &all_elements_greater_than,
+                    //     token_stream: all_elements_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                    //         &postgresql_json_type_ident_wrapper,
+                    //         &value,
+                    //     )
+                    // },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &contains_element_case_sensitive_regular_expression,
+                        token_stream: contains_element_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &contains_element_case_insensitive_regular_expression,
+                        token_stream: contains_element_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &all_elements_case_sensitive_regular_expression,
+                        token_stream: all_elements_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &all_elements_case_insensitive_regular_expression,
+                        token_stream: all_elements_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_handle,
+                            &postgresql_json_type_pattern,
+                        )
+                    },
                 ),
                 Err(_) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                 )
             };
             let (
