@@ -34,6 +34,15 @@ impl PostgresqlJsonTypeVariant {
             }),
         }
     }
+    fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
+        format!(
+            "{}{}",
+            self.postgresql_json_type_handle,
+            self.postgresql_json_type_pattern.prefix_stringified()
+        )
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap()
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -665,6 +674,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression,
             ) = match postgresql_json_type_variant.try_into_vec_element_type() {
                 Ok(value) => (
+                    //todo maybe should use value type in regular expression
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_case_sensitive_regular_expression,
                         token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
