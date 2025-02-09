@@ -20,6 +20,20 @@ impl PostgresqlJsonTypeVariant {
         }
         acc
     }
+    fn try_into_vec_element_type(&self) -> Result<Self, ()> {
+        match &self.postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::FullTypePath |
+            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => Err(()),
+            PostgresqlJsonTypePattern::StdVecVecFullTypePath |
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath |
+            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath |
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => Ok(Self {
+                postgresql_json_type_handle: self.postgresql_json_type_handle.clone(),
+                postgresql_json_type_pattern: self.postgresql_json_type_pattern.clone(),
+                postgresql_json_type_specific: self.postgresql_json_type_specific.clone(),
+            }),
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -119,7 +133,7 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
     }
 }
 
-#[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypePattern {
     FullTypePath,
     StdOptionOptionFullTypePath,
