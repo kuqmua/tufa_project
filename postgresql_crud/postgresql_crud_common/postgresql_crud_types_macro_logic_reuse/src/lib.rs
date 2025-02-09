@@ -37,8 +37,8 @@ impl PostgresqlJsonTypeVariant {
     fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
         format!(
             "{}{}",
+            self.postgresql_json_type_pattern.prefix_stringified(),
             self.postgresql_json_type_handle,
-            self.postgresql_json_type_pattern.prefix_stringified()
         )
         .parse::<proc_macro2::TokenStream>()
         .unwrap()
@@ -666,6 +666,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let all_elements_case_insensitive_regular_expression = crate::filters::AllElementsCaseInsensitiveRegularExpression;
 
             let (
+                maybe_postgresql_json_type_ident_where_element_position_equals,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression,
@@ -675,6 +676,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             ) = match postgresql_json_type_variant.try_into_vec_element_type() {
                 Ok(value) => (
                     //todo maybe should use value type in regular expression
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &position_equals,
+                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_variant,
+                            &value,
+                        )
+                    },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_case_sensitive_regular_expression,
                         token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -725,10 +733,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                 )
             };
             let (
-                maybe_postgresql_json_type_ident_where_element_position_equals,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
                 maybe_postgresql_json_type_ident_where_element_contained_in_array,
@@ -738,14 +746,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_all_elements_greater_than,
              ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type_variant) {
                 Ok(value) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        where_operator_name: &position_equals,
-                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
-                            &value,
-                        )
-                    },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_greater_than,
                         token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -801,7 +801,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 Err(_) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
