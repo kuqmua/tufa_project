@@ -3042,15 +3042,16 @@ impl WhereOperatorName for ContainedInArray {
 impl ContainedInArray {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
-        postgresql_json_array_element_type: &crate::PostgresqlJsonArrayElementType,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
+        postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
+        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type_handle,
             postgresql_json_type_pattern,
-            postgresql_json_array_element_type,
+            &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
             &quote::quote!{"{}({} <@ ${})"},
         )
     }

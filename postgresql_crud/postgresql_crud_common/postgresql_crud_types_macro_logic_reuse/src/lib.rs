@@ -671,6 +671,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
+                maybe_postgresql_json_type_ident_where_element_contained_in_array,
+
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression,
@@ -709,6 +711,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &contains_all_elements_of_array,
                         token_stream: contains_all_elements_of_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_json_type_variant,
+                            &value,
+                        )
+                    },
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                        where_operator_name: &contained_in_array,
+                        token_stream: contained_in_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                             &postgresql_json_type_variant,
                             &value,
                         )
@@ -753,24 +762,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                 )
             };
             let (
-                maybe_postgresql_json_type_ident_where_element_contained_in_array,
                 maybe_postgresql_json_type_ident_where_element_overlaps_with_array,
                 maybe_postgresql_json_type_ident_where_element_all_elements_equal,
                 maybe_postgresql_json_type_ident_where_element_contains_element_greater_than,
                 maybe_postgresql_json_type_ident_where_element_all_elements_greater_than,
              ) = match PostgresqlJsonArrayElementType::try_from(postgresql_json_type_variant) {
                 Ok(value) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        where_operator_name: &contained_in_array,
-                        token_stream: contained_in_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
-                            &value,
-                        )
-                    },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &overlaps_with_array,
                         token_stream: overlaps_with_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -802,7 +803,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 Err(_) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
