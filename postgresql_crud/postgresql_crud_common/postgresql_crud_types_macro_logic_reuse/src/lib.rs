@@ -3,15 +3,18 @@ mod filters;
 struct PostgresqlJsonTypeVariant {
     postgresql_json_type_handle: PostgresqlJsonTypeHandle,
     postgresql_json_type_pattern: PostgresqlJsonTypePattern,
+    postgresql_json_type_specific: PostgresqlJsonTypeSpecific,
 }
 impl PostgresqlJsonTypeVariant {
     fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
         for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
+            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_handle);
             for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                 acc.push(Self {
                     postgresql_json_type_handle: postgresql_json_type_handle.clone(),
                     postgresql_json_type_pattern,
+                    postgresql_json_type_specific: postgresql_json_type_specific.clone(),
                 });
             }
         }
@@ -19,6 +22,7 @@ impl PostgresqlJsonTypeVariant {
     }
 }
 
+#[derive(Debug, Clone)]
 enum PostgresqlJsonTypeSpecific {
     Number,
     Bool,
