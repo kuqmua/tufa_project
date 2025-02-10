@@ -2958,19 +2958,20 @@ fn generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
-    postgresql_json_array_element_type: &dyn quote::ToTokens,
+    postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     format_handle_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_array_element_type);
     let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
+    let postgresql_json_type_array_element_ident_wrapper = postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper();
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
+    let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_type_array_element_ident_wrapper);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
-            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&postgresql_json_array_element_type),
+            try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&postgresql_json_type_array_element_ident_wrapper),
             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
             try_new_content_token_stream: &generate_try_new_content_token_stream_83fd9d8a_51ab_4c3c_97fc_be2258f730fc(
                 &postgresql_json_type_ident_wrapper,
@@ -2980,7 +2981,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_45e71974_8062_4f69_9296_248692666dde(
                 &postgresql_json_type_ident_wrapper,
                 &postgresql_type_or_json_type,
-                &postgresql_json_array_element_type,
+                &postgresql_json_type_array_element_ident_wrapper,
                 &self_upper_camel_case,
             ),
         },
@@ -3017,7 +3018,7 @@ impl ContainsAllElementsOfArray {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type_variant,
-            &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
+            &postgresql_json_type_variant_array_element,
             &quote::quote!{"{}({} @> ${})"},
         )
     }
@@ -3038,7 +3039,7 @@ impl ContainedInArray {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type_variant,
-            &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
+            &postgresql_json_type_variant_array_element,
             &quote::quote!{"{}({} <@ ${})"},
         )
     }
@@ -3059,7 +3060,7 @@ impl OverlapsWithArray {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
             &postgresql_json_type_variant,
-            &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
+            &postgresql_json_type_variant_array_element,
             &quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"},
         )
     }
@@ -3080,8 +3081,8 @@ impl AllElementsEqual {
         postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_pattern = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
-        let postgresql_json_type_handle = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
+        let postgresql_json_type_pattern_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
+        let postgresql_json_type_handle_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
@@ -3090,8 +3091,8 @@ impl AllElementsEqual {
             ),
             crate::ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle)),
-            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.wrapper_initialization_token_stream(&postgresql_json_type_handle)),
+            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern_array_element.wrapper_field_type(&postgresql_json_type_handle_array_element)),
+            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern_array_element.wrapper_initialization_token_stream(&postgresql_json_type_handle_array_element)),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
                 let value_snake_case = naming::ValueSnakeCase;
@@ -3108,8 +3109,8 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
     try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
-    let postgresql_json_type_pattern = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
-    let postgresql_json_type_handle = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
+    let postgresql_json_type_pattern_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
+    let postgresql_json_type_handle_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
@@ -3118,8 +3119,8 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
         ),
         crate::ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
-        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle)),
-        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern.wrapper_non_optional_initialization_token_stream(&postgresql_json_type_handle)),
+        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_pattern_array_element.wrapper_non_optional_field_type(&postgresql_json_type_handle_array_element)),
+        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_pattern_array_element.wrapper_non_optional_initialization_token_stream(&postgresql_json_type_handle_array_element)),
         try_generate_bind_increments_token_stream,
         &generate_bind_value_to_query_token_stream_b05d3cac_2799_40d9_996a_745e7a1b6ba7(&{
             let value_snake_case = naming::ValueSnakeCase;
