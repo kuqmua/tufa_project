@@ -336,19 +336,6 @@ impl PostgresqlJsonTypePattern {
         }
     }
 
-    fn field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        self.handle_field_type(postgresql_json_type_handle, false)
-    }
-    fn non_optional_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        self.handle_non_optional_field_type(postgresql_json_type_handle, false)
-    }
-    fn initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        self.handle_initialization_token_stream(postgresql_json_type_handle, false)
-    }
-    fn non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        self.handle_non_optional_initialization_token_stream(postgresql_json_type_handle, false)
-    }
-
     fn wrapper_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
         self.handle_field_type(postgresql_json_type_handle, true)
     }
@@ -529,7 +516,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
 
         let ident: &dyn quote::ToTokens = &postgresql_json_type_ident_wrapper;
-        let field_type = &postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
+        let field_type = &postgresql_json_type_variant.field_type();
 
         let ident_token_stream = {
             let maybe_derive_schemars_json_schema_token_stream = {
@@ -633,7 +620,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
             &{
-                let content_token_stream = postgresql_json_type_pattern.initialization_token_stream(&postgresql_json_type_handle);
+                let content_token_stream = postgresql_json_type_variant.initialization_token_stream();
                 quote::quote!{
                     Self(#content_token_stream)
                 }
