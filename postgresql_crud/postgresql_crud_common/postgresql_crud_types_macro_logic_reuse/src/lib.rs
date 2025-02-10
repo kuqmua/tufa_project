@@ -60,93 +60,96 @@ impl PostgresqlJsonTypeVariant {
             PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>>},
         }
     }
-    // fn handle_non_optional_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-    //     match &self {
-    //         PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
-    //             quote::quote!{#postgresql_json_type_handle}
-    //         }
-    //         else {
-    //             postgresql_json_type_handle.field_type()
-    //         },
-    //         PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{#postgresql_json_type_handle},
-    //         PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
-    //         PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
-    //     }
-    // }
-    // fn handle_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-    //     let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-    //         let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-    //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-    //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-    //         quote::quote! {
-    //             crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-    //         }
-    //     };
-    //     match &self {
-    //         PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
-    //             quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
-    //         }
-    //         else {
-    //             postgresql_json_type_handle.full_type_path_initialization_token_stream()
-    //         },
-    //         PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)},
-    //         PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream])},
-    //         PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)]},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)])},
-    //     }
-    // }
-    // fn handle_non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle, is_wrapper: std::primitive::bool ) -> proc_macro2::TokenStream {
-    //     let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-    //         let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-    //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-    //         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-    //         quote::quote! {
-    //             crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-    //         }
-    //     };
-    //     match &self {
-    //         PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
-    //             quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
-    //         }
-    //         else {
-    //             postgresql_json_type_handle.full_type_path_initialization_token_stream()
-    //         },
-    //         PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream},
-    //         PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-    //         PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-    //         PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-    //     }
-    // }
+    fn handle_non_optional_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        match &self.postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
+                quote::quote!{#postgresql_json_type_handle}
+            }
+            else {
+                postgresql_json_type_handle.field_type()
+            },
+            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{#postgresql_json_type_handle},
+            PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+        }
+    }
+    fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            }
+        };
+        match &self.postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
+                quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
+            }
+            else {
+                postgresql_json_type_handle.full_type_path_initialization_token_stream()
+            },
+            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)},
+            PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{Some(vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream])},
+            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)]},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{Some(vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)])},
+        }
+    }
+    fn handle_non_optional_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            }
+        };
+        match &self.postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::FullTypePath => if is_wrapper {
+                quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
+            }
+            else {
+                postgresql_json_type_handle.full_type_path_initialization_token_stream()
+            },
+            PostgresqlJsonTypePattern::StdOptionOptionFullTypePath => quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream},
+            PostgresqlJsonTypePattern::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            PostgresqlJsonTypePattern::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            PostgresqlJsonTypePattern::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+        }
+    }
 
-    // fn field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_field_type(postgresql_json_type_handle, false)
-    // }
-    // fn non_optional_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_non_optional_field_type(postgresql_json_type_handle, false)
-    // }
-    // fn initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_initialization_token_stream(postgresql_json_type_handle, false)
-    // }
-    // fn non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_non_optional_initialization_token_stream(postgresql_json_type_handle, false)
-    // }
+    fn field_type(&self) -> proc_macro2::TokenStream {
+        self.handle_field_type(false)
+    }
+    fn non_optional_field_type(&self) -> proc_macro2::TokenStream {
+        self.handle_non_optional_field_type(false)
+    }
+    fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        self.handle_initialization_token_stream(false)
+    }
+    fn non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        self.handle_non_optional_initialization_token_stream(false)
+    }
 
-    // fn wrapper_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_field_type(postgresql_json_type_handle, true)
-    // }
-    // fn wrapper_non_optional_field_type(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_non_optional_field_type(postgresql_json_type_handle, true)
-    // }
-    // fn wrapper_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_initialization_token_stream(postgresql_json_type_handle, true)
-    // }
-    // fn wrapper_non_optional_initialization_token_stream(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-    //     self.handle_non_optional_initialization_token_stream(postgresql_json_type_handle, true)
-    // }
+    fn wrapper_field_type(&self) -> proc_macro2::TokenStream {
+        self.handle_field_type(true)
+    }
+    fn wrapper_non_optional_field_type(&self) -> proc_macro2::TokenStream {
+        self.handle_non_optional_field_type(true)
+    }
+    fn wrapper_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        self.handle_initialization_token_stream(true)
+    }
+    fn wrapper_non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        self.handle_non_optional_initialization_token_stream(true)
+    }
 }
 
 #[derive(Debug, Clone)]
