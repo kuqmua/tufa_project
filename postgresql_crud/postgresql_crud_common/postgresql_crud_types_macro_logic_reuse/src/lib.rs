@@ -611,8 +611,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             
             let equal = crate::filters::Equal;
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_json_type_handle,
-                &postgresql_json_type_pattern,
+                &postgresql_json_type_variant,
             );
 
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
