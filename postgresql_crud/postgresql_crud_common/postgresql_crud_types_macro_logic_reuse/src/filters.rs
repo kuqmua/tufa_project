@@ -3073,8 +3073,6 @@ impl AllElementsEqual {
         postgresql_json_type_ident_wrapper: &proc_macro2::TokenStream,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_pattern_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
-        let postgresql_json_type_handle_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
@@ -3101,8 +3099,6 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
     try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
-    let postgresql_json_type_pattern_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_pattern;
-    let postgresql_json_type_handle_array_element = &postgresql_json_type_variant_array_element.postgresql_json_type_handle;
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
