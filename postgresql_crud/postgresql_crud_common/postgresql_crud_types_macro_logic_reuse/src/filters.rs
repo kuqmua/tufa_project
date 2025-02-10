@@ -2663,10 +2663,7 @@ impl PositionEquals {
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
-
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
+        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let postgresql_json_type_ident_wrapper_array_element = postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper();
 
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
@@ -2728,10 +2725,7 @@ impl PositionGreaterThan {
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
-        //todo use .postgresql_json_type_ident_wrapper() instead
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
+        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let postgresql_json_type_ident_wrapper_array_element = postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper();
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
@@ -2963,14 +2957,13 @@ fn generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1
 }
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-    postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+    postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     postgresql_json_array_element_type: &dyn quote::ToTokens,
     format_handle_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_0bec460b_9b9e_46ba_9b8f_42392c528735(&postgresql_json_array_element_type);
-    let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
@@ -3021,12 +3014,9 @@ impl ContainsAllElementsOfArray {
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern,
+            &postgresql_json_type_variant,
             &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
             &quote::quote!{"{}({} @> ${})"},
         )
@@ -3045,12 +3035,9 @@ impl ContainedInArray {
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern,
+            &postgresql_json_type_variant,
             &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
             &quote::quote!{"{}({} <@ ${})"},
         )
@@ -3069,12 +3056,9 @@ impl OverlapsWithArray {
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
             WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern,
+            &postgresql_json_type_variant,
             &postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper(),
             &quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"},
         )
