@@ -1082,9 +1082,10 @@ impl In {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
+        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         let field_type = postgresql_json_type_pattern.wrapper_field_type(&postgresql_json_type_handle);
         let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
