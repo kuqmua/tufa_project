@@ -227,6 +227,43 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
 }
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+enum IsOptional {
+    True,
+    False,
+}
+impl IsOptional {
+    fn prefix_stringified(&self) -> std::string::String {
+        match &self {
+            Self::True => std::string::String::from("StdOptionOption"),
+            Self::False => std::string::String::default(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+enum PostgresqlJsonTypePatternSomethingSomething {
+    FullTypePath,
+    StdVecVecFullTypePath,
+    StdVecVecStdOptionOptionFullTypePath,
+}
+
+#[derive(Debug, Clone)]
+struct PostgresqlJsonTypePatternSomething {
+    is_optional: IsOptional,
+    postgresql_json_type_pattern_something_something: PostgresqlJsonTypePatternSomethingSomething,
+}
+impl PostgresqlJsonTypePatternSomething {
+    fn prefix_stringified(&self) -> std::string::String {
+        let value = match &self.postgresql_json_type_pattern_something_something {
+            PostgresqlJsonTypePatternSomethingSomething::FullTypePath => std::string::String::default(),
+            PostgresqlJsonTypePatternSomethingSomething::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
+            PostgresqlJsonTypePatternSomethingSomething::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
+        };
+        format!("{}{value}", &self.is_optional.prefix_stringified())
+    }
+}
+
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypePattern {
     FullTypePath,
     StdOptionOptionFullTypePath,
