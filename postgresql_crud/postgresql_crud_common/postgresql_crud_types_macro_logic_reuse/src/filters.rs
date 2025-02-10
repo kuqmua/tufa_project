@@ -596,13 +596,14 @@ impl GreaterThan {
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
+        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
+        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
-                &postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle), 
+                &postgresql_json_type_variant.postgresql_json_type_ident_wrapper(), 
                 WhereOperatorName::upper_camel_case(self),
             ),
             crate::ShouldWhereElementFieldsBePublic::True,
@@ -846,12 +847,13 @@ impl Between {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         between_try_new_error_type: &BetweenTryNewErrorType,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
+        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
+        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
+        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let non_optional_field_type = postgresql_json_type_pattern.wrapper_non_optional_field_type(&postgresql_json_type_handle);
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
