@@ -698,15 +698,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_case_sensitive_regular_expression,
                         token_stream: position_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_case_insensitive_regular_expression,
                         token_stream: position_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {

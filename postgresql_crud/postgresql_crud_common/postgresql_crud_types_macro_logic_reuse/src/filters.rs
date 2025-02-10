@@ -2842,11 +2842,10 @@ fn generate_bind_value_to_query_token_stream_32f8f7cf_128f_474a_8e53_f0f0dec3720
 }
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-    postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+    postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
-    let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(postgresql_json_type_handle);
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&token_patterns::StdStringString);
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
@@ -2885,13 +2884,11 @@ impl WhereOperatorName for PositionCaseSensitiveRegularExpression {
 impl PositionCaseSensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern,
+            postgresql_json_type_variant,
             &RegularExpression::CaseSensitive,
         )
     }
@@ -2906,13 +2903,11 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
 impl PositionCaseInsensitiveRegularExpression {
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
-        postgresql_json_type_handle: &crate::PostgresqlJsonTypeHandle,
-        postgresql_json_type_pattern: &crate::PostgresqlJsonTypePattern,
+        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(
             &WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_handle,
-            postgresql_json_type_pattern,
+            postgresql_json_type_variant,
             &RegularExpression::CaseInsensitive,
         )
     }
