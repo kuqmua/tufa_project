@@ -598,8 +598,6 @@ impl GreaterThan {
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(
@@ -851,8 +849,6 @@ impl Between {
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let non_optional_field_type = postgresql_json_type_variant.wrapper_non_optional_field_type();
         let additional_type_declaration_token_stream = Self::generate_additional_type_declaration_token_stream(&non_optional_field_type);
@@ -1084,8 +1080,6 @@ impl In {
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
-        let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
         let field_type = postgresql_json_type_variant.wrapper_field_type();
         let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
