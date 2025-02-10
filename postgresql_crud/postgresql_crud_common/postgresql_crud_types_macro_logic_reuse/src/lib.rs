@@ -265,11 +265,6 @@ impl PostgresqlJsonTypePattern {
             Self::StdOptionOptionStdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdOptionOptionStdVecVecStdOptionOption"),
         }
     }
-    fn postgresql_json_type_ident_wrapper(&self, postgresql_json_type_handle: &PostgresqlJsonTypeHandle) -> proc_macro2::TokenStream {
-        format!("{}{postgresql_json_type_handle}", self.prefix_stringified())
-        .parse::<proc_macro2::TokenStream>()
-        .unwrap()
-    }
 }
 
 #[derive(Debug, strum_macros::Display)]
@@ -424,7 +419,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     fn generate_postgresql_json_type_handle_token_stream(postgresql_json_type_variant: &PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
         let postgresql_json_type_handle = &postgresql_json_type_variant.postgresql_json_type_handle;
         let postgresql_json_type_pattern = &postgresql_json_type_variant.postgresql_json_type_pattern;
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_pattern.postgresql_json_type_ident_wrapper(&postgresql_json_type_handle);
+        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
 
         let ident: &dyn quote::ToTokens = &postgresql_json_type_ident_wrapper;
         let field_type = &postgresql_json_type_pattern.field_type(&postgresql_json_type_handle);
@@ -752,29 +747,25 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &contains_element_case_sensitive_regular_expression,
                         token_stream: contains_element_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &contains_element_case_insensitive_regular_expression,
                         token_stream: contains_element_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &all_elements_case_sensitive_regular_expression,
                         token_stream: all_elements_case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &all_elements_case_insensitive_regular_expression,
                         token_stream: all_elements_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-                            &postgresql_json_type_handle,
-                            &postgresql_json_type_pattern,
+                            &postgresql_json_type_variant,
                         )
                     },
                 ),
