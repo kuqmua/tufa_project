@@ -46,7 +46,7 @@ pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
     logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>,
     //here
-    postgresql_json_type_std_vec_vec_uuid_uuid_where: PostgresqlJsonTypeStdVecVecUuidUuidWhere,
+    postgresql_json_type_std_vec_vec_uuid_uuid_where: Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere>,
 }
 #[derive(
     Debug,
@@ -71,7 +71,7 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
     fn try_new(
         logical_operator: crate::LogicalOperator, 
         value: std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>,
-        postgresql_json_type_std_vec_vec_uuid_uuid_where: PostgresqlJsonTypeStdVecVecUuidUuidWhere,
+        postgresql_json_type_std_vec_vec_uuid_uuid_where: Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere>,
     ) -> Result<Self, PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed> {
         if value.is_empty() {
             return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
@@ -186,7 +186,7 @@ const _: () = {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere with 3 elements"));
                         }
                     };
-                    let __field2 = match _serde::de::SeqAccess::next_element::<PostgresqlJsonTypeStdVecVecUuidUuidWhere>(&mut __seq)? {
+                    let __field2 = match _serde::de::SeqAccess::next_element::<Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere with 3 elements"));
@@ -204,7 +204,7 @@ const _: () = {
                 {
                     let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
                     let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>> = _serde::__private::None;
-                    let mut __field2: _serde::__private::Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere> = _serde::__private::None;
+                    let mut __field2: _serde::__private::Option<Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere>> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
                             __Field::__field0 => {
@@ -223,7 +223,7 @@ const _: () = {
                                 if _serde::__private::Option::is_some(&__field2) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_json_type_std_vec_vec_uuid_uuid_where"));
                                 }
-                                __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<PostgresqlJsonTypeStdVecVecUuidUuidWhere>(&mut __map)?);
+                                __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<Option<PostgresqlJsonTypeStdVecVecUuidUuidWhere>>(&mut __map)?);
                             }
                             _ => {
                                 let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
@@ -292,7 +292,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-            postgresql_json_type_std_vec_vec_uuid_uuid_where: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            postgresql_json_type_std_vec_vec_uuid_uuid_where: Some(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
         }
     }
 }
