@@ -3,19 +3,16 @@ mod filters;
 struct PostgresqlJsonTypeVariant {
     postgresql_json_type_handle: PostgresqlJsonTypeHandle,
     postgresql_json_type_pattern: PostgresqlJsonTypePattern,
-    postgresql_json_type_specific: PostgresqlJsonTypeSpecific,
 }
 impl PostgresqlJsonTypeVariant {
     fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
         let postgresql_json_type_pattern_array = PostgresqlJsonTypePattern::all_variants();
         for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
-            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_handle);
             for postgresql_json_type_pattern in &postgresql_json_type_pattern_array {
                 acc.push(Self {
                     postgresql_json_type_handle: postgresql_json_type_handle.clone(),
                     postgresql_json_type_pattern: postgresql_json_type_pattern.clone(),
-                    postgresql_json_type_specific: postgresql_json_type_specific.clone(),
                 });
             }
         }
@@ -28,7 +25,6 @@ impl PostgresqlJsonTypeVariant {
             PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => Ok(Self {
                 postgresql_json_type_handle: self.postgresql_json_type_handle.clone(),
                 postgresql_json_type_pattern: self.postgresql_json_type_pattern.clone(),
-                postgresql_json_type_specific: self.postgresql_json_type_specific.clone(),
             }),
         }
     }
@@ -964,14 +960,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
+            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
             match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-                PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_variant.postgresql_json_type_specific {
+                PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => generate_postgresql_json_type_where_element_number_token_stream(),
                     PostgresqlJsonTypeSpecific::Bool => generate_postgresql_json_type_where_element_bool_token_stream(),
                     PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_string_token_stream(),
                 },
                 PostgresqlJsonTypePatternType::StdVecVecFullTypePath |
-                PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => match &postgresql_json_type_variant.postgresql_json_type_specific {
+                PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => generate_postgresql_json_type_where_element_vec_number_token_stream(),
                     PostgresqlJsonTypeSpecific::Bool => generate_postgresql_json_type_where_element_vec_bool_token_stream(),
                     PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_vec_string_token_stream(),
@@ -1110,6 +1107,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     let variants_token_stream = 
     PostgresqlJsonTypeVariant::all_variants()
     // [
+    //     // PostgresqlJsonTypeVariant {
+    //     //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::StdPrimitiveI8,
+    //     //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+    //     //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+    //     //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
+    //     //     },
+    //     //     postgresql_json_type_specific: PostgresqlJsonTypeSpecific::Number,
+    //     // }
     // ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
