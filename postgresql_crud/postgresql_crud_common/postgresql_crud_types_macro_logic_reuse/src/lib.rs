@@ -1064,6 +1064,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
         //     },
         // },
+
         PostgresqlJsonTypeVariant {
             postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
             postgresql_json_type_pattern: PostgresqlJsonTypePattern {
@@ -1092,6 +1093,20 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
             },
         },
+        // PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+        //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+        //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath,
+        //     },
+        // },
+        // PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+        //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
+        //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath,
+        //     },
+        // },
     ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
@@ -1101,6 +1116,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //      println!("{generated}");
     //      println!("-------");
     //  }
+    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
+    //     &generated,
+    // );
     generated.into()
 }
 
