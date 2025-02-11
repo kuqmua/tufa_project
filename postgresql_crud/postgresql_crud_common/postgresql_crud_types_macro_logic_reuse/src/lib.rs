@@ -242,7 +242,7 @@ impl PostgresqlJsonTypePatternIsOptional {
 }
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-enum PostgresqlJsonTypePatternSomethingSomething {
+enum PostgresqlJsonTypePatternType {
     FullTypePath,
     StdVecVecFullTypePath,
     StdVecVecStdOptionOptionFullTypePath,
@@ -251,25 +251,25 @@ enum PostgresqlJsonTypePatternSomethingSomething {
 #[derive(Debug, Clone)]
 struct PostgresqlJsonTypePatternSomething {
     postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional,
-    postgresql_json_type_pattern_something_something: PostgresqlJsonTypePatternSomethingSomething,
+    postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType,
 }
 impl PostgresqlJsonTypePatternSomething {
     fn prefix_stringified(&self) -> std::string::String {
-        let value = match &self.postgresql_json_type_pattern_something_something {
-            PostgresqlJsonTypePatternSomethingSomething::FullTypePath => std::string::String::default(),
-            PostgresqlJsonTypePatternSomethingSomething::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
-            PostgresqlJsonTypePatternSomethingSomething::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
+        let value = match &self.postgresql_json_type_pattern_type {
+            PostgresqlJsonTypePatternType::FullTypePath => std::string::String::default(),
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
+            PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
         };
         format!("{}{value}", &self.postgresql_json_type_pattern_is_optional.prefix_stringified())
     }
     fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
         let postgresql_json_type_pattern_is_optional_array = PostgresqlJsonTypePatternIsOptional::into_array();
-        for postgresql_json_type_pattern_something_something in PostgresqlJsonTypePatternSomethingSomething::into_array() {
+        for postgresql_json_type_pattern_type in PostgresqlJsonTypePatternType::into_array() {
             for postgresql_json_type_pattern_is_optional in &postgresql_json_type_pattern_is_optional_array {
                 acc.push(Self {
                     postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional.clone(),
-                    postgresql_json_type_pattern_something_something: postgresql_json_type_pattern_something_something.clone(),
+                    postgresql_json_type_pattern_type: postgresql_json_type_pattern_type.clone(),
                 });
             }
         }
