@@ -40,8 +40,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_vec_vec_std_option_option_std_string_string": [
-        "cat", "dog", "fox"
+      "uuid_uuid": "65c71d0f-6911-4c26-b9dc-bf1b9f768df9",
+      "std_vec_vec_uuid_uuid": [
+        "ad7ffba7-9486-419f-b44f-039edfe82991"
       ]
     }
   }
@@ -112,15 +113,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "UuidUuid": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": "a512d163-fa44-4c6c-9b64-eef07e74edb0"
+      #         }
+      #       },
+      #       {
+      #         "CaseSensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": ""
+      #         }
+      #       },
+      #       {
+      #         "CaseInsensitiveRegularExpression": {
+      #           "logical_operator": "Or",
+      #           "value": ""
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
       {
-        "StdVecVecStdOptionOptionStdStringString": {
+        "StdVecVecUuidUuid": {
           "logical_operator": "Or",
           "value": [
             # {
             #   "Equal": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       ""
+            #       "25cf822d-fde6-4650-84e1-0149dce936db"
             #     ]
             #   }
             # },
@@ -130,16 +156,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "value": 0
             #   }
             # },
-            # {
-            #   "LengthMoreThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
+            {
+              "LengthMoreThan": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+            # ,
             # {
             #   "PositionEquals": {
             #     "logical_operator": "Or",
-            #     "value": "",
+            #     "value": [
+            #       "6affe05c-a1e5-4fc4-a9bf-1c5618b0485a"
+            #     ],
             #     "position": 0
             #   }
             # },
@@ -147,7 +176,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #   "ContainsAllElementsOfArray": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       ""
+            #       [
+            #         "95fd8663-9363-47c0-a627-046c0d62239c"
+            #       ]
             #     ]
             #   }
             # },
@@ -155,14 +186,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #   "OverlapsWithArray": {
             #     "logical_operator": "Or",
             #     "value": [
-            #       ""
+            #       [
+            #         "9d3b30dc-c90b-455f-be76-2daac689ff23"
+            #       ]
             #     ]
             #   }
             # },
             # {
             #   "AllElementsEqual": {
             #     "logical_operator": "Or",
-            #     "value": ""
+            #     "value": [
+            #       "f6d4bf5a-5dda-455a-9ccb-db80e54516f9"
+            #     ]
             #   }
             # },
             # {
@@ -184,41 +219,41 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
-            # }
-            # ,
+            # },
             # {
             #   "ContainsElementCaseInsensitiveRegularExpression": {
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
-            # }
-            # ,
+            # },
             # {
             #   "AllElementsCaseSensitiveRegularExpression": {
             #     "logical_operator": "Or",
             #     "value": ""
             #   }
+            # },
+            # {
+            #   "AllElementsCaseInsensitiveRegularExpression": {
+            #     "logical_operator": "Or",
+            #     "value": ""
+            #   }
             # }
-            # ,
-            {
-              "AllElementsCaseInsensitiveRegularExpression": {
-                "logical_operator": "Or",
-                "value": "srer"
-              }
-            }
           ]
         }
       }
     ]
   },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
-    # },
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_vec_vec_std_option_option_std_string_string": {
+          "uuid_uuid": {}
+        },
+        {
+          "std_vec_vec_uuid_uuid": {
             "pagination": {
               "limit": 3,
               "offset": 0
@@ -243,11 +278,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 ### 
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
-content-type: application/jsonNOT EXISTS (
-    SELECT 1
-    FROM jsonb_array_elements(your_jsonb_column) AS elem
-    WHERE elem::text !~ '^cat$'
-)
+content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
