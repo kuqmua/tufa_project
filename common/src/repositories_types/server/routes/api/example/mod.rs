@@ -221,8 +221,9 @@ pub struct Example {
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
+    pub uuid_uuid: postgresql_crud::postgresql_json_type::UuidUuid,
     //todo check field max length in postgresql
-    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
+    // pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::postgresql_json_type::StdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::postgresql_json_type::StdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::postgresql_json_type::StdPrimitiveI64,

@@ -1105,17 +1105,58 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         generated
     }
     let variants_token_stream = 
-    PostgresqlJsonTypeVariant::all_variants()
-    // [
-    //     // PostgresqlJsonTypeVariant {
-    //     //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::StdPrimitiveI8,
-    //     //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
-    //     //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
-    //     //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
-    //     //     },
-    //     //     postgresql_json_type_specific: PostgresqlJsonTypeSpecific::Number,
-    //     // }
-    // ]
+    // PostgresqlJsonTypeVariant::all_variants()
+    [
+        // PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::StdPrimitiveI8,
+        //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+        //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
+        //     },
+        // },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
+            },
+        },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
+            },
+        },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath,
+            },
+        },
+        PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
+                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath,
+            },
+        },
+    ]
     .into_iter().map(|element|generate_postgresql_json_type_handle_token_stream(&element));
     let generated = quote::quote! {
         #(#variants_token_stream)*
@@ -1124,6 +1165,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //      println!("{generated}");
     //      println!("-------");
     //  }
+            // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //     "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
+            //     &generated,
+            // );
     generated.into()
 }
 
