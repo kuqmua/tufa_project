@@ -27,11 +27,13 @@ Deserialize,
     schemars :: JsonSchema,
 )]
 pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader {
+    postgresql_json_type_std_vec_vec_uuid_uuid_field_reader: PostgresqlJsonTypeStdVecVecUuidUuidFieldReader,
     pagination: crate::pagination::Pagination,
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
+            postgresql_json_type_std_vec_vec_uuid_uuid_field_reader: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             pagination: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
