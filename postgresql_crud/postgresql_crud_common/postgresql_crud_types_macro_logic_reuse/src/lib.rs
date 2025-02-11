@@ -39,59 +39,83 @@ impl PostgresqlJsonTypeVariant {
     }
 
     fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let value = {
-            let postgresql_json_type_handle = &self.postgresql_json_type_handle;
-            let postgresql_json_type_handle_token_stream = quote::quote!{#postgresql_json_type_handle};
-            match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-                PostgresqlJsonTypePatternType::FullTypePath => if is_wrapper {
-                    postgresql_json_type_handle_token_stream
-                }
-                else {
-                    match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
-                        PostgresqlJsonTypePatternIsOptional::False => postgresql_json_type_handle.field_type(),
-                        PostgresqlJsonTypePatternIsOptional::True => postgresql_json_type_handle_token_stream,
-                    }
-                },
-                PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle_token_stream>},
-                PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle_token_stream>>},
+        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::FullTypePath) => if is_wrapper {
+                quote::quote!{#postgresql_json_type_handle}
             }
-        };
-        match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
-            PostgresqlJsonTypePatternIsOptional::False => value,
-            PostgresqlJsonTypePatternIsOptional::True => quote::quote!{std::option::Option<#value>},
+            else {
+                postgresql_json_type_handle.field_type()
+            },
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::FullTypePath) => quote::quote!{std::option::Option<#postgresql_json_type_handle>},
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
+
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => {
+                let value = {
+                    format!("{}{postgresql_json_type_handle}", &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type.prefix_stringified())
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+                };
+                quote::quote!{std::option::Option<#value>}
+            },
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => {
+                let value = {
+                    format!("{}{postgresql_json_type_handle}", &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional.prefix_stringified())
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+                };
+                quote::quote!{std::vec::Vec<#value>}
+                // quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>}
+            },
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => {
+                let value = {
+                    format!(
+                        "{}{postgresql_json_type_handle}",
+                        &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type.prefix_stringified(),
+                        // &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional.prefix_stringified(),
+                    )
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+                };
+                quote::quote!{std::option::Option<#value>}
+                // quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>>}
+            },
         }
     }
     fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let value = {
-            let postgresql_json_type_handle = &self.postgresql_json_type_handle;
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-                quote::quote! {
-                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-                }
-            };
-            match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-                PostgresqlJsonTypePatternType::FullTypePath => if is_wrapper {
-                    crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
-                }
-                else {
-                    match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
-                        PostgresqlJsonTypePatternIsOptional::False => postgresql_json_type_handle.full_type_path_initialization_token_stream(),
-                        PostgresqlJsonTypePatternIsOptional::True => crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
-                    }
-                },
-                PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
-                PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => quote::quote!{vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)]},
+        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            quote::quote! {
+                crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
             }
         };
-        match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
-            PostgresqlJsonTypePatternIsOptional::False => value,
-            PostgresqlJsonTypePatternIsOptional::True => quote::quote!{Some(#value)},
+        //todo better code reuse
+        match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::FullTypePath) => if is_wrapper {
+                quote::quote!{#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
+            }
+            else {
+                postgresql_json_type_handle.full_type_path_initialization_token_stream()
+            },
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::FullTypePath) => quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)},
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]},
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => {
+                // quote::quote!{Some(vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream])}
+                quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)}
+            },
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => {
+                // quote::quote!{vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)]}
+                quote::quote!{vec![#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream]}
+            },
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => {
+                // quote::quote!{Some(vec![Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)])}
+                quote::quote!{Some(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream)}
+            },
         }
     }
-
     fn field_type(&self) -> proc_macro2::TokenStream {
         self.handle_field_type(false)
     }
@@ -247,6 +271,16 @@ enum PostgresqlJsonTypePatternType {
     StdVecVecFullTypePath,
     StdVecVecStdOptionOptionFullTypePath,
 }
+impl PostgresqlJsonTypePatternType {
+    fn prefix_stringified(&self) -> std::string::String {
+        match &self {
+            //todo maybe reuse from naming:: ?
+            PostgresqlJsonTypePatternType::FullTypePath => std::string::String::default(),
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
+            PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
+        }
+    }
+}
 
 #[derive(Debug, Clone)]
 struct PostgresqlJsonTypePattern {
@@ -255,12 +289,11 @@ struct PostgresqlJsonTypePattern {
 }
 impl PostgresqlJsonTypePattern {
     fn prefix_stringified(&self) -> std::string::String {
-        let value = match &self.postgresql_json_type_pattern_type {
-            PostgresqlJsonTypePatternType::FullTypePath => std::string::String::default(),
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
-            PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
-        };
-        format!("{}{value}", &self.postgresql_json_type_pattern_is_optional.prefix_stringified())
+        format!(
+            "{}{}",
+            &self.postgresql_json_type_pattern_is_optional.prefix_stringified(),
+            &self.postgresql_json_type_pattern_type.prefix_stringified(),
+        )
     }
     fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
