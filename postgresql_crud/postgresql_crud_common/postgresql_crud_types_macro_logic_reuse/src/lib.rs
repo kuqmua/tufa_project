@@ -270,24 +270,24 @@ impl PostgresqlJsonTypePattern {
 }
 
 #[derive(Debug)]
-struct PostgresqlJsonArrayElementTypeSomething {
+struct PostgresqlJsonArrayElementType {
     postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional,
     postgresql_json_type_handle: PostgresqlJsonTypeHandle,
 }
-impl std::fmt::Display for PostgresqlJsonArrayElementTypeSomething {
+impl std::fmt::Display for PostgresqlJsonArrayElementType {
     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(formatter, "{}{}", &self.postgresql_json_type_pattern_is_optional.prefix_stringified(), &self.postgresql_json_type_handle)
     }
 }
-impl quote::ToTokens for PostgresqlJsonArrayElementTypeSomething {
+impl quote::ToTokens for PostgresqlJsonArrayElementType {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         self.to_string()
         .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonArrayElementTypeSomething to proc_macro2::TokenStream"))
+        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonArrayElementType to proc_macro2::TokenStream"))
         .to_tokens(tokens)
     }
 }
-impl std::convert::TryFrom<&PostgresqlJsonTypeVariant> for PostgresqlJsonArrayElementTypeSomething {
+impl std::convert::TryFrom<&PostgresqlJsonTypeVariant> for PostgresqlJsonArrayElementType {
     type Error = ();
     fn try_from(value: &PostgresqlJsonTypeVariant) -> Result<Self, Self::Error> {
         let generate_self = |postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional|{
@@ -353,165 +353,16 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeVariant> for PostgresqlJsonArrayEl
         }
     }
 }
-impl std::convert::From<&PostgresqlJsonArrayElementTypeSomething> for PostgresqlJsonTypeHandle {
-    fn from(value: &PostgresqlJsonArrayElementTypeSomething) -> Self {
-        value.postgresql_json_type_handle.clone()
-    }
-}
-impl std::convert::From<&PostgresqlJsonArrayElementTypeSomething> for PostgresqlJsonTypePattern {
-    fn from(value: &PostgresqlJsonArrayElementTypeSomething) -> Self {
-        Self {
-            postgresql_json_type_pattern_is_optional: value.postgresql_json_type_pattern_is_optional.clone(),
-            postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
-        }
-    }
-}
-
-#[derive(Debug, strum_macros::Display)]
-enum PostgresqlJsonArrayElementType {
-    StdPrimitiveI8,
-    StdPrimitiveI16,
-    StdPrimitiveI32,
-    StdPrimitiveI64,
-    StdPrimitiveU8,
-    StdPrimitiveU16,
-    StdPrimitiveU32,
-    StdPrimitiveU64,
-    StdPrimitiveF32,
-    StdPrimitiveF64,
-    StdPrimitiveBool,
-    StdStringString,
-    UuidUuid,
-
-    StdOptionOptionStdPrimitiveI8,
-    StdOptionOptionStdPrimitiveI16,
-    StdOptionOptionStdPrimitiveI32,
-    StdOptionOptionStdPrimitiveI64,
-    StdOptionOptionStdPrimitiveU8,
-    StdOptionOptionStdPrimitiveU16,
-    StdOptionOptionStdPrimitiveU32,
-    StdOptionOptionStdPrimitiveU64,
-    StdOptionOptionStdPrimitiveF32,
-    StdOptionOptionStdPrimitiveF64,
-    StdOptionOptionStdPrimitiveBool,
-    StdOptionOptionStdStringString,
-    StdOptionOptionUuidUuid,
-}
-impl quote::ToTokens for PostgresqlJsonArrayElementType {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.to_string()
-        .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonArrayElementType to proc_macro2::TokenStream"))
-        .to_tokens(tokens)
-    }
-}
-impl std::convert::TryFrom<&PostgresqlJsonTypeVariant> for PostgresqlJsonArrayElementType {
-    type Error = ();
-    fn try_from(value: &PostgresqlJsonTypeVariant) -> Result<Self, Self::Error> {
-        match &value.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-            PostgresqlJsonTypePatternType::FullTypePath => Err(()),
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => match &value.postgresql_json_type_handle {
-                PostgresqlJsonTypeHandle::StdPrimitiveI8 => Ok(Self::StdPrimitiveI8),
-                PostgresqlJsonTypeHandle::StdPrimitiveI16 => Ok(Self::StdPrimitiveI16),
-                PostgresqlJsonTypeHandle::StdPrimitiveI32 => Ok(Self::StdPrimitiveI32),
-                PostgresqlJsonTypeHandle::StdPrimitiveI64 => Ok(Self::StdPrimitiveI64),
-                PostgresqlJsonTypeHandle::StdPrimitiveU8 => Ok(Self::StdPrimitiveU8),
-                PostgresqlJsonTypeHandle::StdPrimitiveU16 => Ok(Self::StdPrimitiveU16),
-                PostgresqlJsonTypeHandle::StdPrimitiveU32 => Ok(Self::StdPrimitiveU32),
-                PostgresqlJsonTypeHandle::StdPrimitiveU64 => Ok(Self::StdPrimitiveU64),
-                PostgresqlJsonTypeHandle::StdPrimitiveF32 => Ok(Self::StdPrimitiveF32),
-                PostgresqlJsonTypeHandle::StdPrimitiveF64 => Ok(Self::StdPrimitiveF64),
-                PostgresqlJsonTypeHandle::StdPrimitiveBool => Ok(Self::StdPrimitiveBool),
-                PostgresqlJsonTypeHandle::StdStringString => Ok(Self::StdStringString),
-                PostgresqlJsonTypeHandle::UuidUuid => Ok(Self::UuidUuid),
-            },
-            PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => match &value.postgresql_json_type_handle {
-                PostgresqlJsonTypeHandle::StdPrimitiveI8 => Ok(Self::StdOptionOptionStdPrimitiveI8),
-                PostgresqlJsonTypeHandle::StdPrimitiveI16 => Ok(Self::StdOptionOptionStdPrimitiveI16),
-                PostgresqlJsonTypeHandle::StdPrimitiveI32 => Ok(Self::StdOptionOptionStdPrimitiveI32),
-                PostgresqlJsonTypeHandle::StdPrimitiveI64 => Ok(Self::StdOptionOptionStdPrimitiveI64),
-                PostgresqlJsonTypeHandle::StdPrimitiveU8 => Ok(Self::StdOptionOptionStdPrimitiveU8),
-                PostgresqlJsonTypeHandle::StdPrimitiveU16 => Ok(Self::StdOptionOptionStdPrimitiveU16),
-                PostgresqlJsonTypeHandle::StdPrimitiveU32 => Ok(Self::StdOptionOptionStdPrimitiveU32),
-                PostgresqlJsonTypeHandle::StdPrimitiveU64 => Ok(Self::StdOptionOptionStdPrimitiveU64),
-                PostgresqlJsonTypeHandle::StdPrimitiveF32 => Ok(Self::StdOptionOptionStdPrimitiveF32),
-                PostgresqlJsonTypeHandle::StdPrimitiveF64 => Ok(Self::StdOptionOptionStdPrimitiveF64),
-                PostgresqlJsonTypeHandle::StdPrimitiveBool => Ok(Self::StdOptionOptionStdPrimitiveBool),
-                PostgresqlJsonTypeHandle::StdStringString => Ok(Self::StdOptionOptionStdStringString),
-                PostgresqlJsonTypeHandle::UuidUuid => Ok(Self::StdOptionOptionUuidUuid),
-            },
-        }
-    }
-}
 impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypeHandle {
     fn from(value: &PostgresqlJsonArrayElementType) -> Self {
-        match &value {
-            PostgresqlJsonArrayElementType::StdPrimitiveI8 => Self::StdPrimitiveI8,
-            PostgresqlJsonArrayElementType::StdPrimitiveI16 => Self::StdPrimitiveI16,
-            PostgresqlJsonArrayElementType::StdPrimitiveI32 => Self::StdPrimitiveI32,
-            PostgresqlJsonArrayElementType::StdPrimitiveI64 => Self::StdPrimitiveI64,
-            PostgresqlJsonArrayElementType::StdPrimitiveU8 => Self::StdPrimitiveU8,
-            PostgresqlJsonArrayElementType::StdPrimitiveU16 => Self::StdPrimitiveU16,
-            PostgresqlJsonArrayElementType::StdPrimitiveU32 => Self::StdPrimitiveU32,
-            PostgresqlJsonArrayElementType::StdPrimitiveU64 => Self::StdPrimitiveU64,
-            PostgresqlJsonArrayElementType::StdPrimitiveF32 => Self::StdPrimitiveF32,
-            PostgresqlJsonArrayElementType::StdPrimitiveF64 => Self::StdPrimitiveF64,
-            PostgresqlJsonArrayElementType::StdPrimitiveBool => Self::StdPrimitiveBool,
-            PostgresqlJsonArrayElementType::StdStringString => Self::StdStringString,
-            PostgresqlJsonArrayElementType::UuidUuid => Self::UuidUuid,
-
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 => Self::StdPrimitiveI8,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 => Self::StdPrimitiveI16,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 => Self::StdPrimitiveI32,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 => Self::StdPrimitiveI64,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 => Self::StdPrimitiveU8,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 => Self::StdPrimitiveU16,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 => Self::StdPrimitiveU32,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 => Self::StdPrimitiveU64,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 => Self::StdPrimitiveF32,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 => Self::StdPrimitiveF64,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool => Self::StdPrimitiveBool,
-            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString => Self::StdStringString,
-            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self::UuidUuid,
-        }
+        value.postgresql_json_type_handle.clone()
     }
 }
 impl std::convert::From<&PostgresqlJsonArrayElementType> for PostgresqlJsonTypePattern {
     fn from(value: &PostgresqlJsonArrayElementType) -> Self {
-        match value {
-            PostgresqlJsonArrayElementType::StdPrimitiveI8 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI16 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveI64 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU8 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU16 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveU64 |
-            PostgresqlJsonArrayElementType::StdPrimitiveF32 |
-            PostgresqlJsonArrayElementType::StdPrimitiveF64 |
-            PostgresqlJsonArrayElementType::StdPrimitiveBool |
-            PostgresqlJsonArrayElementType::StdStringString |
-            PostgresqlJsonArrayElementType::UuidUuid => Self {
-                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::False,
-                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
-            },
-
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI8 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI16 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveI64 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU8 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU16 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveU64 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF32 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveF64 |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdPrimitiveBool |
-            PostgresqlJsonArrayElementType::StdOptionOptionStdStringString |
-            PostgresqlJsonArrayElementType::StdOptionOptionUuidUuid => Self {
-                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
-                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
-            },
+        Self {
+            postgresql_json_type_pattern_is_optional: value.postgresql_json_type_pattern_is_optional.clone(),
+            postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::FullTypePath,
         }
     }
 }
