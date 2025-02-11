@@ -228,11 +228,11 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
 }
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-enum IsOptional {
+enum PostgresqlJsonTypePatternIsOptional {
     True,
     False,
 }
-impl IsOptional {
+impl PostgresqlJsonTypePatternIsOptional {
     fn prefix_stringified(&self) -> std::string::String {
         match &self {
             Self::True => std::string::String::from("StdOptionOption"),
@@ -250,7 +250,7 @@ enum PostgresqlJsonTypePatternSomethingSomething {
 
 #[derive(Debug, Clone)]
 struct PostgresqlJsonTypePatternSomething {
-    is_optional: IsOptional,
+    postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional,
     postgresql_json_type_pattern_something_something: PostgresqlJsonTypePatternSomethingSomething,
 }
 impl PostgresqlJsonTypePatternSomething {
@@ -260,22 +260,21 @@ impl PostgresqlJsonTypePatternSomething {
             PostgresqlJsonTypePatternSomethingSomething::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
             PostgresqlJsonTypePatternSomethingSomething::StdVecVecStdOptionOptionFullTypePath => std::string::String::from("StdVecVecStdOptionOption"),
         };
-        format!("{}{value}", &self.is_optional.prefix_stringified())
+        format!("{}{value}", &self.postgresql_json_type_pattern_is_optional.prefix_stringified())
     }
-    // fn all_variants() -> std::vec::Vec<Self> {
-    //     let mut acc = vec![];
-    //     for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
-    //         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_handle);
-    //         for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
-    //             acc.push(Self {
-    //                 postgresql_json_type_handle: postgresql_json_type_handle.clone(),
-    //                 postgresql_json_type_pattern,
-    //                 postgresql_json_type_specific: postgresql_json_type_specific.clone(),
-    //             });
-    //         }
-    //     }
-    //     acc
-    // }
+    fn all_variants() -> std::vec::Vec<Self> {
+        let mut acc = vec![];
+        let postgresql_json_type_pattern_is_optional_array = PostgresqlJsonTypePatternIsOptional::into_array();
+        for postgresql_json_type_pattern_something_something in PostgresqlJsonTypePatternSomethingSomething::into_array() {
+            for postgresql_json_type_pattern_is_optional in &postgresql_json_type_pattern_is_optional_array {
+                acc.push(Self {
+                    postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional.clone(),
+                    postgresql_json_type_pattern_something_something: postgresql_json_type_pattern_something_something.clone(),
+                });
+            }
+        }
+        acc
+    }
 }
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
