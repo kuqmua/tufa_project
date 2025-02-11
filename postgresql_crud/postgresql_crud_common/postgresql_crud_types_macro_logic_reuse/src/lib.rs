@@ -270,6 +270,88 @@ enum PostgresqlJsonTypePatternType {
     FullTypePath,
     StdVecVecFullTypePath,
     StdVecVecStdOptionOptionFullTypePath,
+
+    // StdVecVecStdVecVecFullTypePath,
+    // StdVecVecStdVecVecStdOptionOptionFullTypePath,
+    // StdVecVecStdOptionOptionStdVecVecFullTypePath,
+    // StdVecVecStdOptionOptionStdVecVecStdOptionOptionFullTypePath,
+
+
+//     i8
+//     Option<i8>
+    
+//     Vec<i8>
+//     Option<Vec<i8>>
+
+//     Vec<Option<i8>>
+//     Option<Vec<Option<i8>>>
+
+//     Vec<Vec<i8>>
+//     Option<Vec<Vec<i8>>>
+
+//     Vec<Option<Vec<i8>>>
+//     Option<Vec<Option<Vec<i8>>>>
+
+//     Vec<Vec<Option<i8>>>
+//     Option<Vec<Vec<Option<i8>>>>
+
+//     Vec<Option<Vec<Option<i8>>>>
+//     Option<Vec<Option<Vec<Option<i8>>>>>
+
+
+
+
+
+
+//     i8  - I8
+//     Option<i8> - OptionI8
+
+// //
+
+//     Vec<I8> - VecI8
+//     Option<VecI8> - OptionVecI8
+
+//     Vec<OptionI8> - VecOptionI8
+//     Option<VecOptionI8> - OptionVecOptionI8
+
+// //
+
+//     Vec<VecI8> - VecVecI8
+//     Option<VecVecI8> - OptionVecVecI8
+
+//     Vec<OptionVecI8> - VecOptionVecI8
+//     Option<VecOptionVecI8> - OptionVecOptionVecI8
+
+//     Vec<VecOptionI8> - VecVecOptionI8
+//     Option<VecVecOptionI8> - OptionVecVecOptionI8
+
+//     Vec<OptionVecOptionI8> - VecOptionVecOptionI8
+//     Option<VecOptionVecOptionI8> - OptionVecOptionVecOptionI8
+
+// ///////////
+
+
+
+//     i8  - I8
+// //
+
+//     Vec<I8> - VecI8
+
+// //
+
+//     Vec<VecI8> - VecVecI8
+
+
+
+
+
+}
+
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+enum PostgresqlJsonTypePatternType {
+    FullTypePath,
+    StdVecVecFullTypePath,
+    StdVecVecStdOptionOptionFullTypePath,
 }
 impl PostgresqlJsonTypePatternType {
     fn prefix_stringified(&self) -> std::string::String {
@@ -1210,10 +1292,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //      println!("{generated}");
     //      println!("-------");
     //  }
-            // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            //     "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-            //     &generated,
-            // );
     generated.into()
 }
 
