@@ -39,22 +39,26 @@ impl PostgresqlJsonTypeVariant {
     }
 
     fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
-        let wrap_into_std_option_option = |value: &dyn quote::ToTokens|{
-             quote::quote!{std::option::Option<#value>}
-        };
-        match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::FullTypePath) => if is_wrapper {
-                quote::quote!{#postgresql_json_type_handle}
+        let value = {
+            let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+            let postgresql_json_type_handle_token_stream = quote::quote!{#postgresql_json_type_handle};
+            match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
+                PostgresqlJsonTypePatternType::FullTypePath => if is_wrapper {
+                    postgresql_json_type_handle_token_stream
+                }
+                else {
+                    match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
+                        PostgresqlJsonTypePatternIsOptional::False => postgresql_json_type_handle.field_type(),
+                        PostgresqlJsonTypePatternIsOptional::True => postgresql_json_type_handle_token_stream,
+                    }
+                },
+                PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote!{std::vec::Vec<#postgresql_json_type_handle_token_stream>},
+                PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath => quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle_token_stream>>},
             }
-            else {
-                postgresql_json_type_handle.field_type()
-            },
-            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::FullTypePath) => wrap_into_std_option_option(&postgresql_json_type_handle),
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => quote::quote!{std::vec::Vec<#postgresql_json_type_handle>},
-            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => wrap_into_std_option_option(&quote::quote!{std::vec::Vec<#postgresql_json_type_handle>}),
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>},
-            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecStdOptionOptionFullTypePath) => wrap_into_std_option_option(&quote::quote!{std::vec::Vec<std::option::Option<#postgresql_json_type_handle>>}),
+        };
+        match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional {
+            PostgresqlJsonTypePatternIsOptional::False => value,
+            PostgresqlJsonTypePatternIsOptional::True => quote::quote!{std::option::Option<#value>},
         }
     }
     fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
