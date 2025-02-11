@@ -21,7 +21,9 @@ impl PostgresqlJsonTypeVariant {
     fn try_into_vec_element_type(&self) -> Result<Self, ()> {
         match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
             PostgresqlJsonTypePatternType::FullTypePath => Err(()),
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => Ok(Self {
+            //todo maybe wrong
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath |
+            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => Ok(Self {
                 postgresql_json_type_handle: self.postgresql_json_type_handle.clone(),
                 postgresql_json_type_pattern: self.postgresql_json_type_pattern.clone(),
             }),
@@ -236,6 +238,7 @@ impl PostgresqlJsonTypePatternIsOptional {
 enum PostgresqlJsonTypePatternType {
     FullTypePath,
     StdVecVecFullTypePath,
+    StdVecVecStdVecVecFullTypePath,
 }
 impl PostgresqlJsonTypePatternType {
     fn prefix_stringified(&self) -> std::string::String {
@@ -243,6 +246,7 @@ impl PostgresqlJsonTypePatternType {
             //todo maybe reuse from naming:: ?
             PostgresqlJsonTypePatternType::FullTypePath => std::string::String::default(),
             PostgresqlJsonTypePatternType::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
+            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => std::string::String::from("StdVecVecStdVecVec"),
         }
     }
 }
