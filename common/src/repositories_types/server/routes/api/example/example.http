@@ -84,38 +84,38 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  # "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
+  "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "In": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
+        }
+      }
+    ]
+  },
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
@@ -128,7 +128,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   [
-                    "7c2ab843-b931-453d-b4db-6b86a454a536"
+                    "81e7c167-082a-4a61-ab24-11b195d5ef2d"
                   ]
                 ]
               }
@@ -139,7 +139,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "Equal": {
                 "logical_operator": "Or",
                 "value": [
-                  "563b3b77-4b3e-46d0-b88f-5e7511758b51"
+                  "611a7eda-006d-49a3-9006-fe5f91362b57"
                 ]
               }
             },
@@ -159,7 +159,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "PositionEquals": {
                 "logical_operator": "Or",
                 "value": [
-                  "c711c8e9-dab1-416c-8177-0ee0e2979596"
+                  "1b65bd82-f760-4b72-9581-e62bc6f98932"
                 ],
                 "position": 0
               }
@@ -169,7 +169,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   [
-                    "ad6fade3-27be-4173-afe9-79921f6b69d3"
+                    "0c8a5bcd-de38-4947-8e36-e8c3f6e86658"
                   ]
                 ]
               }
@@ -179,7 +179,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   [
-                    "7df07ed5-ed66-47ca-b76f-2d40413acebf"
+                    "1c1e2e7d-d245-41ba-9a16-8a8042ded8f5"
                   ]
                 ]
               }
@@ -188,7 +188,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "AllElementsEqual": {
                 "logical_operator": "Or",
                 "value": [
-                  "fa050a1a-e672-4cbd-8d9f-96e6d16ef085"
+                  "7701f8c7-88c1-4ad2-a4c4-556d17f1020b"
                 ]
               }
             },
@@ -236,9 +236,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
-    # },
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
@@ -270,7 +270,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   }
 }
 
-### 
+###
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
 content-type: application/json
