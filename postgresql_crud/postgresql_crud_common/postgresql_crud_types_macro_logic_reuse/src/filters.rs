@@ -2456,13 +2456,13 @@ fn generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_99
     }
 }
 
-pub struct BitVecPositionEquals;
-impl WhereOperatorName for BitVecPositionEquals {
+pub struct BitVecPositionEqual;
+impl WhereOperatorName for BitVecPositionEqual {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::BitVecPositionEqualsUpperCamelCase
+        &naming::BitVecPositionEqualUpperCamelCase
     }
 }
-impl BitVecPositionEquals {
+impl BitVecPositionEqual {
     fn std_primitive_bool() -> token_patterns::StdPrimitiveBool {
         token_patterns::StdPrimitiveBool
     }
@@ -2639,13 +2639,13 @@ fn generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a
     }
 }
 
-pub struct PositionEquals;
-impl WhereOperatorName for PositionEquals {
+pub struct PositionEqual;
+impl WhereOperatorName for PositionEqual {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::PositionEqualsUpperCamelCase
+        &naming::PositionEqualUpperCamelCase
     }
 }
-impl PositionEquals {
+impl PositionEqual {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf799072747d(&quote::quote!{"{}({}->${} = ${})"})
     }

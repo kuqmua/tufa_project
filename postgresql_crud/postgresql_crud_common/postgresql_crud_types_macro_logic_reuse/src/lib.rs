@@ -528,7 +528,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &postgresql_json_type_variant,
             );
 
-            let position_equals = crate::filters::PositionEquals;
+            let position_equal = crate::filters::PositionEqual;
             let position_greater_than = crate::filters::PositionGreaterThan;
             let position_case_sensitive_regular_expression = crate::filters::PositionCaseSensitiveRegularExpression;
             let position_case_insensitive_regular_expression = crate::filters::PositionCaseInsensitiveRegularExpression;
@@ -544,7 +544,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let all_elements_case_insensitive_regular_expression = crate::filters::AllElementsCaseInsensitiveRegularExpression;
 
             let (
-                maybe_postgresql_json_type_ident_where_element_position_equals,
+                maybe_postgresql_json_type_ident_where_element_position_equal,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
@@ -563,8 +563,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 Ok(value) => (
                     //todo maybe should use value type in regular expression
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        where_operator_name: &position_equals,
-                        token_stream: position_equals.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+                        where_operator_name: &position_equal,
+                        token_stream: position_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
                             &postgresql_json_type_variant,
                             &value,
                         )
@@ -686,7 +686,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 vec
             };
 
-            if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_equals {
+            if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_equal {
                 common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
                 common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
             }
@@ -4898,8 +4898,8 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let bit_vec_position_equals = crate::filters::BitVecPositionEquals;
-        let postgresql_type_tokens_where_element_bit_vec_position_equals_token_stream = bit_vec_position_equals.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
+        let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
             &is_nullable,
         );
@@ -4908,12 +4908,12 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
             &ident,
             &vec![
                 &equal,
-                &bit_vec_position_equals,
+                &bit_vec_position_equal,
             ]
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_bit_vec_position_equals_token_stream
+            #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     });
