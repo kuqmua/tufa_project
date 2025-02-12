@@ -132,101 +132,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           ],
           "dimension_2": [
             {
-              "Equal": {
+              "EqualSecondDimension": {
                 "logical_operator": "Or",
                 "value": [
                   "9b2dbe63-d3fe-4e5a-8cdf-7f6f15beb65b"
                 ]
               }
             }
-            # ,
-            # {
-            #   "LengthEqual": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "LengthMoreThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "PositionEquals": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       "25c40c14-9fca-419c-ba51-14e4404cab1e"
-            #     ],
-            #     "position": 0
-            #   }
-            # },
-            # {
-            #   "ContainsAllElementsOfArray": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       [
-            #         "512b985c-08d7-44b9-aa24-9cdb2db38b67"
-            #       ]
-            #     ]
-            #   }
-            # },
-            # {
-            #   "OverlapsWithArray": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       [
-            #         "380edb41-b3b7-4fa8-80e4-479302b30837"
-            #       ]
-            #     ]
-            #   }
-            # },
-            # {
-            #   "AllElementsEqual": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       "8ed414c5-d36d-40dd-896f-f16d13650ba5"
-            #     ]
-            #   }
-            # },
-            # {
-            #   "PositionCaseSensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": "",
-            #     "position": 0
-            #   }
-            # },
-            # {
-            #   "PositionCaseInsensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": "",
-            #     "position": 0
-            #   }
-            # },
-            # {
-            #   "ContainsElementCaseSensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": ""
-            #   }
-            # },
-            # {
-            #   "ContainsElementCaseInsensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": ""
-            #   }
-            # },
-            # {
-            #   "AllElementsCaseSensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": ""
-            #   }
-            # },
-            # {
-            #   "AllElementsCaseInsensitiveRegularExpression": {
-            #     "logical_operator": "Or",
-            #     "value": ""
-            #   }
-            # }
           ]
         }
       }
