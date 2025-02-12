@@ -122,118 +122,115 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       {
         "StdVecVecStdVecVecUuidUuid": {
           "logical_operator": "Or",
-          "value": [
+          "dimension_1": [
             {
               "Equal": {
                 "logical_operator": "Or",
                 "value": [
                   [
-                    "bd6245f1-7fa6-41bf-8862-4b4c1223f1a3"
+                    "7c2ab843-b931-453d-b4db-6b86a454a536"
                   ]
                 ]
               }
             }
           ],
-          "postgresql_json_type_std_vec_vec_uuid_uuid_where": {
-            "logical_operator": "Or",
-            "value": [
-              {
-                "Equal": {
-                  "logical_operator": "Or",
-                  "value": [
-                    "efe95773-a145-439f-98cd-0df028dda559"
-                  ]
-                }
-              },
-              {
-                "LengthEqual": {
-                  "logical_operator": "Or",
-                  "value": 0
-                }
-              },
-              {
-                "LengthMoreThan": {
-                  "logical_operator": "Or",
-                  "value": 0
-                }
-              },
-              {
-                "PositionEquals": {
-                  "logical_operator": "Or",
-                  "value": [
-                    "3c02858a-cff5-4178-b6dd-a803df97ed3b"
-                  ],
-                  "position": 0
-                }
-              },
-              {
-                "ContainsAllElementsOfArray": {
-                  "logical_operator": "Or",
-                  "value": [
-                    [
-                      "b9c61b3c-b623-4082-afb4-fd2d55d02ecb"
-                    ]
-                  ]
-                }
-              },
-              {
-                "OverlapsWithArray": {
-                  "logical_operator": "Or",
-                  "value": [
-                    [
-                      "0ab54c02-b5bb-4180-b32f-ee2b511c5067"
-                    ]
-                  ]
-                }
-              },
-              {
-                "AllElementsEqual": {
-                  "logical_operator": "Or",
-                  "value": [
-                    "35d207a7-a823-46dd-8a53-83c051b68593"
-                  ]
-                }
-              },
-              {
-                "PositionCaseSensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": "",
-                  "position": 0
-                }
-              },
-              {
-                "PositionCaseInsensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": "",
-                  "position": 0
-                }
-              },
-              {
-                "ContainsElementCaseSensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": ""
-                }
-              },
-              {
-                "ContainsElementCaseInsensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": ""
-                }
-              },
-              {
-                "AllElementsCaseSensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": ""
-                }
-              },
-              {
-                "AllElementsCaseInsensitiveRegularExpression": {
-                  "logical_operator": "Or",
-                  "value": ""
-                }
+          "dimension_2": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": [
+                  "563b3b77-4b3e-46d0-b88f-5e7511758b51"
+                ]
               }
-            ]
-          }
+            },
+            {
+              "LengthEqual": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            },
+            {
+              "LengthMoreThan": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            },
+            {
+              "PositionEquals": {
+                "logical_operator": "Or",
+                "value": [
+                  "c711c8e9-dab1-416c-8177-0ee0e2979596"
+                ],
+                "position": 0
+              }
+            },
+            {
+              "ContainsAllElementsOfArray": {
+                "logical_operator": "Or",
+                "value": [
+                  [
+                    "ad6fade3-27be-4173-afe9-79921f6b69d3"
+                  ]
+                ]
+              }
+            },
+            {
+              "OverlapsWithArray": {
+                "logical_operator": "Or",
+                "value": [
+                  [
+                    "7df07ed5-ed66-47ca-b76f-2d40413acebf"
+                  ]
+                ]
+              }
+            },
+            {
+              "AllElementsEqual": {
+                "logical_operator": "Or",
+                "value": [
+                  "fa050a1a-e672-4cbd-8d9f-96e6d16ef085"
+                ]
+              }
+            },
+            {
+              "PositionCaseSensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": "",
+                "position": 0
+              }
+            },
+            {
+              "PositionCaseInsensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": "",
+                "position": 0
+              }
+            },
+            {
+              "ContainsElementCaseSensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": ""
+              }
+            },
+            {
+              "ContainsElementCaseInsensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": ""
+              }
+            },
+            {
+              "AllElementsCaseSensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": ""
+              }
+            },
+            {
+              "AllElementsCaseInsensitiveRegularExpression": {
+                "logical_operator": "Or",
+                "value": ""
+              }
+            }
+          ]
         }
       }
     ]
