@@ -441,6 +441,119 @@ fn generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2
         IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
     }
 }
+fn generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
+        quote::quote!{
+            #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
+        }
+    };
+    let additional_content_token_stream = match &is_nullable_postgresql_type {
+        IsNullablePostgresqlType::NullablePostgresqlType {
+            where_operator_type,
+        } => {
+            let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+            quote::quote!{
+                if let Some(#value_snake_case) = self.#value_snake_case {
+                    #query_snake_case = #query_snake_case.bind(#value_snake_case #where_operator_type_additional_bind_token_stream);
+                }
+            }
+        },
+        IsNullablePostgresqlType::NotNullPostgresqlType {
+            where_operator_type,
+        } => generate_query_equals_query_bind_token_stream(&{
+            let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+            quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
+        }),
+        //todo maybe instead of wrapping into sqlx::types::Json - impl Encode? 
+        IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
+    };
+    quote::quote!{
+        #additional_content_token_stream
+        #query_snake_case
+    }
+}
+fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn quote::ToTokens,
+    is_nullable: &crate::IsNullable,
+    where_operator_type: &crate::WhereOperatorType,
+    dimension: &Dimension,
+) -> proc_macro2::TokenStream {
+    let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
+        let value = format!("{prefix}{self_upper_camel_case}");
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
+    let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
+    let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
+    match &is_nullable {
+        crate::IsNullable::True => {
+            let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
+                where_operator_type: &where_operator_type,
+            };
+            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+                &postgresql_type_or_json_type,
+                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+                ),
+                should_where_element_fields_be_public,
+                &should_implement_schemars_json_schema,
+                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
+                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
+                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
+                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+            )
+        },
+        crate::IsNullable::False => {
+            let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
+                where_operator_type: &where_operator_type,
+            };
+            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+                &postgresql_type_or_json_type,
+                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+                    &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
+                ),
+                should_where_element_fields_be_public,
+                &should_implement_schemars_json_schema,
+                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
+                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
+                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
+                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+            )
+        }
+    }
+}
+fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(
+    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
+    dimension: &Dimension,
+) -> proc_macro2::TokenStream {
+    let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
+    let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
+    generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+        &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
+        &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
+        crate::ShouldWhereElementFieldsBePublic::True,
+        &crate::ShouldDeriveSchemarsJsonSchema::True,
+        &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_ident_wrapper),
+        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&{
+            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                quote::quote! {
+                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                }
+            };
+            crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
+        }),
+        &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, &dimension),
+        &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+    )
+}
 
 pub struct Equal;
 impl WhereOperatorName for Equal {
@@ -449,44 +562,8 @@ impl WhereOperatorName for Equal {
     }
 }
 impl Equal {
-    fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(
-            is_nullable_postgresql_type,
-            &Dimension::First,
-        )
-    }
-    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
-            quote::quote!{
-                #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
-            }
-        };
-        let additional_content_token_stream = match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type,
-            } => {
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{
-                    if let Some(#value_snake_case) = self.#value_snake_case {
-                        #query_snake_case = #query_snake_case.bind(#value_snake_case #where_operator_type_additional_bind_token_stream);
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType {
-                where_operator_type,
-            } => generate_query_equals_query_bind_token_stream(&{
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-            }),
-            //todo maybe instead of wrapping into sqlx::types::Json - impl Encode? 
-            IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
-        };
-        quote::quote!{
-            #additional_content_token_stream
-            #query_snake_case
-        }
+    fn dimension() -> Dimension {
+        Dimension::First
     }
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -494,78 +571,22 @@ impl Equal {
         is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
-        let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
-            let postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens = WhereOperatorName::upper_camel_case(self);
-            let value = format!("{prefix}{postfix}");
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
-        let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
-        match &is_nullable {
-            crate::IsNullable::True => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
-                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            },
-            crate::IsNullable::False => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
-                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            }
-        }
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+            WhereOperatorName::upper_camel_case(self),
+            ident,
+            is_nullable,
+            where_operator_type,
+            &Self::dimension(),
+        )
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::True,
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_ident_wrapper),
-            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-                    quote::quote! {
-                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-                    }
-                };
-                crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
-            }),
-            &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-            &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(
+            WhereOperatorName::upper_camel_case(self),
+            postgresql_json_type_variant,
+            &Self::dimension(),
         )
     }
 }
@@ -3338,44 +3359,8 @@ impl WhereOperatorName for EqualSecondDimension {
     }
 }
 impl EqualSecondDimension {
-    fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(
-            is_nullable_postgresql_type,
-            &Dimension::Second,
-        )
-    }
-    fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let generate_query_equals_query_bind_token_stream = |bind_content_token_stream: &proc_macro2::TokenStream|{
-            quote::quote!{
-                #query_snake_case = #query_snake_case.bind(#bind_content_token_stream);
-            }
-        };
-        let additional_content_token_stream = match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type,
-            } => {
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{
-                    if let Some(#value_snake_case) = self.#value_snake_case {
-                        #query_snake_case = #query_snake_case.bind(#value_snake_case #where_operator_type_additional_bind_token_stream);
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType {
-                where_operator_type,
-            } => generate_query_equals_query_bind_token_stream(&{
-                let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-                quote::quote!{self.#value_snake_case #where_operator_type_additional_bind_token_stream}
-            }),
-            //todo maybe instead of wrapping into sqlx::types::Json - impl Encode? 
-            IsNullablePostgresqlType::PostgresqlJsonType => generate_query_equals_query_bind_token_stream(&quote::quote!{sqlx::types::Json(self.#value_snake_case)}),
-        };
-        quote::quote!{
-            #additional_content_token_stream
-            #query_snake_case
-        }
+    fn dimension() -> Dimension {
+        Dimension::Second
     }
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
@@ -3383,78 +3368,22 @@ impl EqualSecondDimension {
         is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
-        let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display|{
-            let postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens = WhereOperatorName::upper_camel_case(self);
-            let value = format!("{prefix}{postfix}");
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-        let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
-        let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
-        match &is_nullable {
-            crate::IsNullable::True => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
-                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            },
-            crate::IsNullable::False => {
-                let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
-                    where_operator_type: &where_operator_type,
-                };
-                generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                    &postgresql_type_or_json_type,
-                    &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                    ),
-                    should_where_element_fields_be_public,
-                    &should_implement_schemars_json_schema,
-                    &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
-                    &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
-                    &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-                    &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
-                )
-            }
-        }
+        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+            WhereOperatorName::upper_camel_case(self),
+            ident,
+            is_nullable,
+            where_operator_type,
+            &Self::dimension(),
+        )
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let is_nullable_postgresql_type = IsNullablePostgresqlType::PostgresqlJsonType;
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
-            &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::True,
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_ident_wrapper),
-            &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-                    quote::quote! {
-                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-                    }
-                };
-                crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream
-            }),
-            &Self::generate_try_generate_bind_increments_token_stream(&is_nullable_postgresql_type),
-            &Self::generate_bind_value_to_query_token_stream(&is_nullable_postgresql_type),
+        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(
+            WhereOperatorName::upper_camel_case(self),
+            postgresql_json_type_variant,
+            &Self::dimension(),
         )
     }
 }
