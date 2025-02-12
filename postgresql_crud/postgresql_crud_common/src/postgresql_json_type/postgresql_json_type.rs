@@ -58,12 +58,23 @@ Error,
     error_occurence_lib :: ErrorOccurence,
 )]
 pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
-    IsEmpty {
+    NoDimensionFilters {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUnique {
+    Dimension1IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Dimension1NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
-        dimension_1: PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement,
+        element: PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Dimension2IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Dimension2NotUnique {
+        #[eo_to_std_string_string_serialize_deserialize]
+        element: PostgresqlJsonTypeStdVecVecUuidUuidWhereElement,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -73,10 +84,13 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
         dimension_1: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>,
         dimension_2: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElement>>,
     ) -> Result<Self, PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed> {
+        if let (None, None) = (&dimension_1, &dimension_2) {
+            return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::NoDimensionFilters { code_occurence: error_occurence_lib::code_occurence!() });
+        }
         //todo change logic
         if let Some(value) = &dimension_1 {
             if value.is_empty() {
-                return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
             }
             {
                 let mut acc = vec![];
@@ -84,8 +98,26 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
                     if !acc.contains(&element) {
                         acc.push(element);
                     } else {
-                        return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::NotUnique {
-                            dimension_1: element.clone(),
+                        return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1NotUnique {
+                            element: element.clone(),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+            }
+        }
+        if let Some(value) = &dimension_2 {
+            if value.is_empty() {
+                return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+            {
+                let mut acc = vec![];
+                for element in value {
+                    if !acc.contains(&element) {
+                        acc.push(element);
+                    } else {
+                        return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2NotUnique {
+                            element: element.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
