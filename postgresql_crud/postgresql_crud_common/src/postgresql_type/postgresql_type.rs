@@ -1,4 +1,3 @@
-const INT2: &std::primitive::str = "int2";
 const INT4: &std::primitive::str = "int4";
 const INT8: &std::primitive::str = "int8";
 const FLOAT4: &std::primitive::str = "float4";
@@ -32,21 +31,6 @@ const CIDR: &std::primitive::str = "cidr";
 const MACADDR: &std::primitive::str = "macaddr";
 const BIT: &std::primitive::str = "bit";
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
-struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {INT2}")
-    }
-}
 #[derive(
     Debug,
     Clone,
@@ -712,5 +696,24 @@ struct SqlxTypesBitVecAsPostgresqlVarbit(crate::postgresql_type::postgresql_base
 impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlVarbit {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} {BIT} VARYING(9)")//todo number elements support. //todo not its work only if number % 8 = 0 coz std::primitive::u8 initialization, conversion and serde
+    }
+}
+
+//////////////////////////////
+
+const INT2: &std::primitive::str = "int2";
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+)]
+struct StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
+impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} {INT2}")
     }
 }
