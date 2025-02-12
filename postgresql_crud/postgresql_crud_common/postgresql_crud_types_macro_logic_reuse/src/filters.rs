@@ -388,6 +388,60 @@ fn generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91
     quote::quote!{#value_snake_case: #initialization_token_stream}
 }
 
+enum Dimension {
+    First,
+    Second,
+}
+fn generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(is_nullable_postgresql_type: &IsNullablePostgresqlType, dimension: &Dimension) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let match_increment_checked_add_token_stream = {
+        let increment_snake_case = naming::IncrementSnakeCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let format_handle_token_stream = match &dimension {
+            Dimension::First => generate_quotes::double_quotes_token_stream(&"{}({} = ${})"),
+            Dimension::Second => generate_quotes::double_quotes_token_stream(&"{}(exists (select 1 from jsonb_array_elements({}) as el where el = ${}))"),
+        };
+        quote::quote!{
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    Ok(format!(
+                        #format_handle_token_stream,
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                        #increment_snake_case
+                    ))
+                },
+                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        }
+    };
+    match &is_nullable_postgresql_type {
+        IsNullablePostgresqlType::NullablePostgresqlType {
+            where_operator_type: _,
+        } => {
+            quote::quote!{
+                if self.#value_snake_case.is_some() {
+                    #match_increment_checked_add_token_stream
+                }
+                else {
+                    Ok(format!(
+                        "{}({} is null)",
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        #column_snake_case,
+                    ))
+                }
+            }
+        },
+        IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
+        IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
+    }
+}
+
 pub struct Equal;
 impl WhereOperatorName for Equal {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -396,49 +450,10 @@ impl WhereOperatorName for Equal {
 }
 impl Equal {
     fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let match_increment_checked_add_token_stream = {
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}({} = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            }
-        };
-        match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type: _,
-            } => {
-                quote::quote!{
-                    if self.#value_snake_case.is_some() {
-                        #match_increment_checked_add_token_stream
-                    }
-                    else {
-                        Ok(format!(
-                            "{}({} is null)",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                        ))
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
-            IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
-        }
+        generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(
+            is_nullable_postgresql_type,
+            &Dimension::First,
+        )
     }
     fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
@@ -3324,49 +3339,10 @@ impl WhereOperatorName for EqualSecondDimension {
 }
 impl EqualSecondDimension {
     fn generate_try_generate_bind_increments_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let match_increment_checked_add_token_stream = {
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            quote::quote!{
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(exists (select 1 from jsonb_array_elements({}) as el where el = ${}))",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            }
-        };
-        match &is_nullable_postgresql_type {
-            IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type: _,
-            } => {
-                quote::quote!{
-                    if self.#value_snake_case.is_some() {
-                        #match_increment_checked_add_token_stream
-                    }
-                    else {
-                        Ok(format!(
-                            "{}({} is null)",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                        ))
-                    }
-                }
-            },
-            IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type: _, } => match_increment_checked_add_token_stream,
-            IsNullablePostgresqlType::PostgresqlJsonType => match_increment_checked_add_token_stream,
-        }
+        generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(
+            is_nullable_postgresql_type,
+            &Dimension::Second,
+        )
     }
     fn generate_bind_value_to_query_token_stream(is_nullable_postgresql_type: &IsNullablePostgresqlType) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
