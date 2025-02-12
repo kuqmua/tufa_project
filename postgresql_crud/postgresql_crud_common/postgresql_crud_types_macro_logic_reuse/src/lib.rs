@@ -826,7 +826,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &filters_variants,
-                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &postgresql_json_type_ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
@@ -845,7 +845,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &filters_variants,
-                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &postgresql_json_type_ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
@@ -888,7 +888,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &ident,
                     &filters_variants,
-                    &naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    &postgresql_json_type_ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote!{
@@ -921,7 +921,90 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
         };
         //
+        // let postgresql_json_type_ident_where_element_second_dimension_token_stream = {
+        //     let postgresql_json_type_ident_where_element_second_dimension_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementSecondDimensionUpperCamelCase::from_tokens(&ident);
+            
+        //     let equal_second_dimension = crate::filters::EqualSecondDimension;
+        //     let postgresql_json_type_ident_where_element_equal_second_dimension_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+        //         &postgresql_json_type_variant,
+        //     );
 
+        //     let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
+        //         &equal_second_dimension,
+        //     ];
+        //     let mut common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![
+        //         postgresql_json_type_ident_where_element_equal_token_stream
+        //     ];
+
+        //     let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = {
+        //         let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
+        //         vec
+        //     };
+        //     let mut common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = {
+        //         let mut vec: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
+        //         vec
+        //     };
+
+        //     let generate_postgresql_json_type_where_element_string_second_dimension_token_stream = || {
+        //         let postgresql_json_type_ident_where_element_second_dimension_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+        //             &ident,
+        //             &{
+        //                 let vec = common_postgresql_json_type_filters_variants.clone();
+        //                 vec
+        //             },
+        //             &postgresql_json_type_ident_where_element_second_dimension_upper_camel_case,
+        //             &ShouldDeriveSchemarsJsonSchema::True,
+        //         );
+        //         let generated = quote::quote!{
+        //             #(#common_postgresql_json_type_filters_token_stream)*
+
+        //             #postgresql_json_type_ident_where_element_second_dimension_token_stream
+        //         };
+        //         // if ident == "" {
+        //         //     println!("{generated}");
+        //         //     println!("-------");
+        //         // }
+        //         generated
+        //     };
+
+        //     let generate_postgresql_json_type_where_element_vec_string_second_dimension_token_stream = || {
+        //         let filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+        //         let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
+        //         let postgresql_json_type_ident_where_element_second_dimension_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
+        //             &ident,
+        //             &filters_variants,
+        //             &postgresql_json_type_ident_where_element_second_dimension_upper_camel_case,
+        //             &ShouldDeriveSchemarsJsonSchema::True,
+        //         );
+        //         let generated = quote::quote!{
+        //             #(#filters_token_stream)*
+        //             #postgresql_json_type_ident_where_element_token_stream
+        //         };
+        //         // if ident == "" {
+        //         //     println!("{generated}");
+        //         //     println!("-------");
+        //         // }
+        //         generated
+        //     };
+        //     let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
+        //     match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
+        //         PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {
+        //             PostgresqlJsonTypeSpecific::Number => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::Bool => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::String => proc_macro2::TokenStream::new(),
+        //         },
+        //         PostgresqlJsonTypePatternType::StdVecVecFullTypePath => match &postgresql_json_type_specific {
+        //             PostgresqlJsonTypeSpecific::Number => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::Bool => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+        //         },
+        //         PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => match &postgresql_json_type_specific {
+        //             PostgresqlJsonTypeSpecific::Number => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::Bool => proc_macro2::TokenStream::new(),
+        //             PostgresqlJsonTypeSpecific::String => generate_postgresql_json_type_where_element_vec_string_token_stream(),
+        //         },
+        //     }
+        // };
         //
         let postgresql_json_type_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_json_type_ident_option_to_update_upper_camel_case, &ident);
