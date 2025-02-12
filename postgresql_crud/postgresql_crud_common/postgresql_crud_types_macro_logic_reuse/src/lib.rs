@@ -487,6 +487,23 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &postgresql_json_type_ident_where_element_upper_camel_case,
             &postgresql_json_type_ident_where_upper_camel_case
         );
+        enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
+            Some {
+                where_operator_name: &'a dyn crate::filters::WhereOperatorName,
+                token_stream: proc_macro2::TokenStream,
+            },
+            None,
+        }
+        impl quote::ToTokens for MaybePostgresqlJsonTypeIdentWhereElementFilter<'_> {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                match &self {
+                    Self::Some { where_operator_name: _, token_stream } => {
+                        token_stream.to_tokens(tokens)
+                    },
+                    Self::None => proc_macro2::TokenStream::new().to_tokens(tokens)
+                }
+            }
+        }
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             
@@ -511,23 +528,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &postgresql_json_type_variant,
             );
 
-            enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
-                Some {
-                    where_operator_name: &'a dyn crate::filters::WhereOperatorName,
-                    token_stream: proc_macro2::TokenStream,
-                },
-                None,
-            }
-            impl quote::ToTokens for MaybePostgresqlJsonTypeIdentWhereElementFilter<'_> {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    match &self {
-                        Self::Some { where_operator_name: _, token_stream } => {
-                            token_stream.to_tokens(tokens)
-                        },
-                        Self::None => proc_macro2::TokenStream::new().to_tokens(tokens)
-                    }
-                }
-            }
             let position_equals = crate::filters::PositionEquals;
             let position_greater_than = crate::filters::PositionGreaterThan;
             let position_case_sensitive_regular_expression = crate::filters::PositionCaseSensitiveRegularExpression;
@@ -920,6 +920,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
             }
         };
+        //
+
+        //
         let postgresql_json_type_ident_option_to_update_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_option_to_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_json_type_ident_option_to_update_upper_camel_case, &ident);
         let postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase::from_tokens(&ident);
