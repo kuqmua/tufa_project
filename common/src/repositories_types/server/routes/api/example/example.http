@@ -40,13 +40,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_vec_vec_uuid_uuid": [
-        "3b1b60bd-a9e7-4aa5-aaf2-628d4f245d6d",
-        "0a968ae4-07ad-440d-9c4a-8cb8f99e4d06"
-      ],
       "std_vec_vec_std_vec_vec_uuid_uuid": [
         [
-          "3f295768-46c2-4057-b4d3-b4062c79f587"
+          "60ef1a46-3d86-4dab-a3de-959b5fe210f9",
+          "573bc263-7a5e-481a-b522-5d6454e7e0f5"
+        ],
+        [
+          "b831b841-b535-4e2c-98a5-a4db288b2b88",
+          "a544ae9c-2db3-4127-ad6b-5d33b2fbfada"
         ]
       ]
     }
@@ -118,108 +119,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "StdVecVecUuidUuid": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             "899b73d8-6b11-4962-92a8-654860969eca"
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "LengthEqual": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "LengthMoreThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionEquals": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             "bea9773f-073f-451a-87c8-48d8760b8f8f"
-      #           ],
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "ContainsAllElementsOfArray": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             [
-      #               "2f6dc539-e9a7-4d6a-9053-58f66d0c0ad8"
-      #             ]
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "OverlapsWithArray": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             [
-      #               "fe4e0410-76c1-48db-b8ec-f542cf70be56"
-      #             ]
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "AllElementsEqual": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             "9d15b7c0-eb51-4f98-86e4-e34369d9cdb9"
-      #           ]
-      #         }
-      #       },
-      #       {
-      #         "PositionCaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "PositionCaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": "",
-      #           "position": 0
-      #         }
-      #       },
-      #       {
-      #         "ContainsElementCaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "ContainsElementCaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "AllElementsCaseSensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       },
-      #       {
-      #         "AllElementsCaseInsensitiveRegularExpression": {
-      #           "logical_operator": "Or",
-      #           "value": ""
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
       {
         "StdVecVecStdVecVecUuidUuid": {
           "logical_operator": "Or",
@@ -229,112 +128,110 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   [
-                    "3f295768-46c2-4057-b4d3-b4062c79f587"
+                    "bd6245f1-7fa6-41bf-8862-4b4c1223f1a3"
                   ]
                 ]
               }
             }
-          ]
-          ,
+          ],
           "postgresql_json_type_std_vec_vec_uuid_uuid_where": {
             "logical_operator": "Or",
             "value": [
-              # {
-              #   "Equal": {
-              #     "logical_operator": "Or",
-              #     "value": [
-              #       "297676f2-b7d3-4a10-bd20-0ff43b8af0c6"
-              #     ]
-              #   }
-              # },
+              {
+                "Equal": {
+                  "logical_operator": "Or",
+                  "value": [
+                    "efe95773-a145-439f-98cd-0df028dda559"
+                  ]
+                }
+              },
               {
                 "LengthEqual": {
                   "logical_operator": "Or",
-                  "value": 2
+                  "value": 0
+                }
+              },
+              {
+                "LengthMoreThan": {
+                  "logical_operator": "Or",
+                  "value": 0
+                }
+              },
+              {
+                "PositionEquals": {
+                  "logical_operator": "Or",
+                  "value": [
+                    "3c02858a-cff5-4178-b6dd-a803df97ed3b"
+                  ],
+                  "position": 0
+                }
+              },
+              {
+                "ContainsAllElementsOfArray": {
+                  "logical_operator": "Or",
+                  "value": [
+                    [
+                      "b9c61b3c-b623-4082-afb4-fd2d55d02ecb"
+                    ]
+                  ]
+                }
+              },
+              {
+                "OverlapsWithArray": {
+                  "logical_operator": "Or",
+                  "value": [
+                    [
+                      "0ab54c02-b5bb-4180-b32f-ee2b511c5067"
+                    ]
+                  ]
+                }
+              },
+              {
+                "AllElementsEqual": {
+                  "logical_operator": "Or",
+                  "value": [
+                    "35d207a7-a823-46dd-8a53-83c051b68593"
+                  ]
+                }
+              },
+              {
+                "PositionCaseSensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": "",
+                  "position": 0
+                }
+              },
+              {
+                "PositionCaseInsensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": "",
+                  "position": 0
+                }
+              },
+              {
+                "ContainsElementCaseSensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": ""
+                }
+              },
+              {
+                "ContainsElementCaseInsensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": ""
+                }
+              },
+              {
+                "AllElementsCaseSensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": ""
+                }
+              },
+              {
+                "AllElementsCaseInsensitiveRegularExpression": {
+                  "logical_operator": "Or",
+                  "value": ""
                 }
               }
-              # ,
-              # {
-              #   "LengthMoreThan": {
-              #     "logical_operator": "Or",
-              #     "value": 0
-              #   }
-              # },
-              # {
-              #   "PositionEquals": {
-              #     "logical_operator": "Or",
-              #     "value": [
-              #       "3109ea0c-00fb-42a3-9c1f-b3f473b45d2a"
-              #     ],
-              #     "position": 0
-              #   }
-              # },
-              # {
-              #   "ContainsAllElementsOfArray": {
-              #     "logical_operator": "Or",
-              #     "value": [
-              #       [
-              #         "650eee0c-1be2-4c4c-a66f-ec572e7157e7"
-              #       ]
-              #     ]
-              #   }
-              # },
-              # {
-              #   "OverlapsWithArray": {
-              #     "logical_operator": "Or",
-              #     "value": [
-              #       [
-              #         "caf1576c-4720-4409-b92c-b58e06a6eda3"
-              #       ]
-              #     ]
-              #   }
-              # },
-              # {
-              #   "AllElementsEqual": {
-              #     "logical_operator": "Or",
-              #     "value": [
-              #       "89f142cf-84d3-4a13-8e5c-f3edd4173535"
-              #     ]
-              #   }
-              # },
-              # {
-              #   "PositionCaseSensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": "",
-              #     "position": 0
-              #   }
-              # },
-              # {
-              #   "PositionCaseInsensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": "",
-              #     "position": 0
-              #   }
-              # },
-              # {
-              #   "ContainsElementCaseSensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": ""
-              #   }
-              # },
-              # {
-              #   "ContainsElementCaseInsensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": ""
-              #   }
-              # },
-              # {
-              #   "AllElementsCaseSensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": ""
-              #   }
-              # },
-              # {
-              #   "AllElementsCaseInsensitiveRegularExpression": {
-              #     "logical_operator": "Or",
-              #     "value": ""
-              #   }
-              # }
             ]
           }
         }
@@ -342,19 +239,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
-    },
+    # {
+    #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    # },
     {
       "object_animal_as_jsonb_not_null": [
-        {
-          "std_vec_vec_uuid_uuid": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
         {
           "std_vec_vec_std_vec_vec_uuid_uuid": {
             "postgresql_json_type_std_vec_vec_uuid_uuid_field_reader": {
