@@ -255,7 +255,7 @@ const _: () = {
                                 __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>>(&mut __map)?);
                             }
                             __Field::__field2 => {
-                                if _serde::__private::Option::is_some(&__field1) {
+                                if _serde::__private::Option::is_some(&__field2) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("dimension_2"));
                                 }
                                 __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElement>>>(&mut __map)?);
@@ -314,11 +314,29 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
                 }
             }
         }
+        if let Some(value) = &self.dimension_2 {
+            for element in value {
+                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                    Ok(value) => {
+                        acc.push_str(&format!("{value} "));
+                        is_need_to_add_logical_operator_inner_handle = true;
+                    }
+                    Err(error) => {
+                        return Err(error);
+                    }
+                }
+            }
+        }
         let _ = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         if let Some(value) = self.dimension_1 {
+            for element in value {
+                query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+            }
+        }
+        if let Some(value) = self.dimension_2 {
             for element in value {
                 query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
             }
@@ -459,3 +477,56 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         query
     }
 }
+
+
+
+// select 
+//   jsonb_build_object(
+//     'std_vec_vec_std_vec_vec_uuid_uuid', 
+//     jsonb_build_object(
+//       'value', 
+//       (
+//         select 
+//           jsonb_agg(value) 
+//         from 
+//           jsonb_array_elements(
+//             (
+//               select 
+//                 object_animal_as_jsonb_not_null -> 'std_vec_vec_std_vec_vec_uuid_uuid'
+//             )
+//           ) with ordinality 
+//         where 
+//           ordinality between 0 
+//           and 3
+//       )
+//     )
+//   ) as object_animal_as_jsonb_not_null 
+// from 
+//   example 
+// where 
+//   (
+//     (
+//       (
+//         object_animal_as_jsonb_not_null -> 'std_vec_vec_std_vec_vec_uuid_uuid' = '[
+//                   [
+//                     "eb08bda0-8d14-4c91-97d2-e33b62112dbb",
+//                     "ad3f9c9b-87cc-4a0f-94aa-b272f033486e"
+//                   ]
+//                 ]'::jsonb
+//       ) 
+//       or 
+// 	  (
+
+// EXISTS (
+//   SELECT 1
+//   FROM jsonb_array_elements(object_animal_as_jsonb_not_null -> 'std_vec_vec_std_vec_vec_uuid_uuid') AS element
+//   WHERE element = '["9b2dbe63-d3fe-4e5a-8cdf-7f6f15beb65b"]'::jsonb
+// )
+
+//       )
+//     )
+//   ) 
+// order by 
+//   std_primitive_i64_as_postgresql_big_serial_not_null_primary_key asc 
+// limit 
+//   3 offset 0
