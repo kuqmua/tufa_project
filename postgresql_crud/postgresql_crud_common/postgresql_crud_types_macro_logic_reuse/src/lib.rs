@@ -1848,7 +1848,7 @@ fn generate_postgresql_base_type_tokens(
             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                 "{{{value_snake_case}}}{}",
                 if is_not_null {
-                    " NOT NULL"
+                    " not null"
                 }
                 else {
                     ""
@@ -2555,10 +2555,10 @@ fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
         PostgresqlTypeNullableOrNotNull::Nullable => &ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream,
         PostgresqlTypeNullableOrNotNull::NotNull => &match is_primary_key {
             IsPrimaryKey::True => quote::quote!{
-                format!("{} NOT NULL {}", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream, crate::maybe_primary_key(is_primary_key))
+                format!("{} not null {}", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream, crate::maybe_primary_key(is_primary_key))
             },
             IsPrimaryKey::False => quote::quote!{
-                format!("{} NOT NULL", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
+                format!("{} not null", #ident_as_crate_create_table_column_query_part_create_table_column_query_part_column_is_primary_key_token_stream)
             }
         },
     };

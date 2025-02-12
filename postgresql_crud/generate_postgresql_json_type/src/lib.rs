@@ -4909,9 +4909,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream = {
-                            let create_table_query_part_for_tokens_stringified = match &postgresql_type {
-                                PostgresqlType::JsonbNullable => "JSONB",
-                                PostgresqlType::JsonbNotNull => "JSONB NOT NULL",
+                            let jsonb = "jsonb";
+                            let create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display = match &postgresql_type {
+                                PostgresqlType::JsonbNullable => &jsonb,
+                                PostgresqlType::JsonbNotNull => &format!("{jsonb} not null"),
                             };
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")

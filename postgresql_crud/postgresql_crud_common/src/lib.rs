@@ -115,7 +115,7 @@ pub trait CreateTableColumnQueryPart {
 }
 pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
     if is_primary_key {
-        " PRIMARY KEY"
+        "primary key"
     } else {
         ""
     }
