@@ -761,30 +761,30 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         }
 //     }
 // }
-impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        let mut acc = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                acc.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        Ok(acc)
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.0);
-        query
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2 {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
+// impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         let mut acc = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 acc.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.0);
+//         query
+//     }
+// }
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(::core::default::Default::default())
+//     }
+// }
 impl StdPrimitiveI16AsPostgresqlInt2 {
     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
         format!("{value} not null")

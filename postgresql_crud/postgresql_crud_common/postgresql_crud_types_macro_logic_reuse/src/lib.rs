@@ -4940,6 +4940,15 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
+    let self_snake_case = naming::SelfSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let acc_snake_case = naming::AccSnakeCase;
+    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+
     enum PostgresqlType {
         StdPrimitiveI16AsPostgresqlInt2,
         StdPrimitiveI32AsPostgresqlInt4,
@@ -5104,16 +5113,13 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
 
-    let self_snake_case = naming::SelfSnakeCase;
-    let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
-    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-    let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
         &ident,
-        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+        &quote::quote!{"{self:?}"}
     );
     let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
         &ident,
-        &quote::quote!{format!("{self}")}
+        &quote::quote!{self.to_string()}
     );
     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
         &ident,
@@ -5123,12 +5129,43 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &ident,
         &field_type
     );
+    let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        &ident,
+        &{
+            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+            quote::quote! {
+                let mut #acc_snake_case = std::string::String::default();
+                match #increment_snake_case.checked_add(1) {
+                    Some(#value_snake_case) => {
+                        *#increment_snake_case = #value_snake_case;
+                        #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                    }
+                    None => {
+                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                Ok(#acc_snake_case)
+            }
+        },
+        &quote::quote! {
+            #query_snake_case = #query_snake_case.bind(self.0);
+            #query_snake_case
+        }
+    );
+    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{Self(#core_default_default_default_token_stream)},
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
-        #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+        #impl_std_fmt_display_for_ident_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
+        #impl_crate_bind_query_for_ident_token_stream
+        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
