@@ -5298,7 +5298,12 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     ////
     let generate_postgresql_type_initialized_by_tokens_handle = |postgresql_type_initialized_by_tokens: PostgresqlTypeInitializedByTokens| {
         let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
-            let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
+            let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                PostgresqlTypeNullableOrNotNull::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+            };
+            
+            // &postgresql_type_nullable_or_not_null.postgresql_type_field_type_where_element_upper_camel_case(&field_type);
             let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
             let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
                 PostgresqlTypeNullableOrNotNull::Nullable => &std_option_option_ident_upper_camel_case,
@@ -5751,23 +5756,23 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             let generated = quote::quote! {
                 #self_token_stream
 
-                // #postgresql_type_ident_column_token_stream
+                #postgresql_type_ident_column_token_stream
 
-                // #postgresql_type_ident_to_create_token_stream
+                #postgresql_type_ident_to_create_token_stream
 
-                // #postgresql_type_ident_to_read_token_stream
+                #postgresql_type_ident_to_read_token_stream
 
-                // #postgresql_type_ident_to_update_token_stream
+                #postgresql_type_ident_to_update_token_stream
 
-                // #postgresql_type_ident_to_update_query_part_error_named_token_stream
+                #postgresql_type_ident_to_update_query_part_error_named_token_stream
 
-                // #postgresql_type_ident_to_delete_token_stream
+                #postgresql_type_ident_to_delete_token_stream
 
-                // #postgresql_type_ident_where_element_token_stream
+                #postgresql_type_ident_where_element_token_stream
 
-                // #postgresql_type_ident_where_token_stream
+                #postgresql_type_ident_where_token_stream
 
-                // #impl_postgresql_type_for_ident_token_stream
+                #impl_postgresql_type_for_ident_token_stream
             };
             generated.into()
         };
