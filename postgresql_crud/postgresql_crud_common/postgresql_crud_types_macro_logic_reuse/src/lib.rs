@@ -5244,6 +5244,56 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+    //////
+    let generated_number_filters = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+        let where_operator_type_field_type = WhereOperatorType::FieldType {
+            field_type: &field_type,
+            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        };
+        let equal = crate::filters::Equal;
+        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let greater_than = crate::filters::GreaterThan;
+        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let between = crate::filters::Between;
+        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+            &crate::filters::ShouldAddDotZero::False,
+        );
+        let in_handle = crate::filters::In;
+        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+            &ident,
+            &is_nullable,
+            &where_operator_type_field_type,
+        );
+        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+            is_nullable,
+            &ident,
+            &vec![
+                &equal,
+                &greater_than,
+                &between,
+                &in_handle,
+            ]
+        );
+        quote::quote! {
+            #postgresql_type_tokens_where_element_equal_token_stream
+            #postgresql_type_tokens_where_element_greater_than_token_stream
+            #postgresql_type_tokens_where_element_between_token_stream
+            #postgresql_type_tokens_where_element_in_token_stream
+            #postgresql_type_tokens_where_element_token_stream
+        }
+    });
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5265,6 +5315,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_token_stream
         #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+
+        #generated_number_filters
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
