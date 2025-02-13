@@ -5179,6 +5179,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &std_option_option_ident_upper_camel_case,
         &std_option_option_ident_token_stream
     );
+    let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+        &std_option_option_ident_upper_camel_case,
+        &std_option_option_ident_token_stream
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5190,7 +5194,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_ident_create_table_query_part_handle_token_stream
         #struct_std_option_option_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
-
+        #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

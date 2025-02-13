@@ -801,14 +801,14 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
 //     }
 // }
-impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error),
-        }
-    }
-}
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(error) => Err(error),
+//         }
+//     }
+// }
 impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
