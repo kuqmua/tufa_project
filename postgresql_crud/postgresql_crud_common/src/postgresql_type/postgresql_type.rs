@@ -843,11 +843,11 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         format!("{value}")
 //     }
 // }
-impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
-    type PostgresqlBaseTypeSelf = Self;
-    type PostgresqlBaseTypeStdOptionOptionSelf = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
-}
+// impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
+//     type PostgresqlBaseTypeSelf = Self;
+//     type PostgresqlBaseTypeStdOptionOptionSelf = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
+// }
 /////
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {

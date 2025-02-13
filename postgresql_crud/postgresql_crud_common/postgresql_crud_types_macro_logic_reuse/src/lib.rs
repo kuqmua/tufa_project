@@ -5213,6 +5213,20 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+    //maybe useless
+    let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_self_traits_for_ident_token_stream = {
+        quote::quote!{
+            impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypeSelfTraits<'_> for #ident {}
+        }
+    };
+    let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_for_ident_token_stream = {
+        quote::quote!{
+            impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseType<'_> for #ident {
+                type PostgresqlBaseTypeSelf = Self;
+                type PostgresqlBaseTypeStdOptionOptionSelf = #std_option_option_ident_upper_camel_case;
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5228,6 +5242,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_crate_bind_query_for_std_option_option_ident_token_stream
         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
         #impl_std_option_option_ident_create_table_query_part_handle_token_stream
+        #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_self_traits_for_ident_token_stream
+        #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
