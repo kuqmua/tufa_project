@@ -4948,6 +4948,24 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+    let default_try_generate_bind_increments_token_stream = {
+        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+        quote::quote! {
+            let mut #acc_snake_case = std::string::String::default();
+            match #increment_snake_case.checked_add(1) {
+                Some(#value_snake_case) => {
+                    *#increment_snake_case = #value_snake_case;
+                    #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                }
+                None => {
+                    return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+            Ok(#acc_snake_case)
+        }
+    };
 
     enum PostgresqlType {
         StdPrimitiveI16AsPostgresqlInt2,
@@ -5131,24 +5149,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     );
     let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
         &ident,
-        &{
-            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-            quote::quote! {
-                let mut #acc_snake_case = std::string::String::default();
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                    }
-                    None => {
-                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-                Ok(#acc_snake_case)
-            }
-        },
+        &default_try_generate_bind_increments_token_stream,
         &quote::quote! {
             #query_snake_case = #query_snake_case.bind(self.0);
             #query_snake_case
@@ -5183,6 +5184,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &std_option_option_ident_upper_camel_case,
         &std_option_option_ident_token_stream
     );
+    let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+        &std_option_option_ident_upper_camel_case,
+        &default_try_generate_bind_increments_token_stream,
+        &quote::quote! {
+            #query_snake_case = #query_snake_case.bind(match self.0 {
+                Some(#value_snake_case) => Some(#value_snake_case.0),
+                None => None,
+            });
+            #query_snake_case
+        }
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5195,6 +5207,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #struct_std_option_option_ident_token_stream
         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
+        #impl_crate_bind_query_for_std_option_option_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
