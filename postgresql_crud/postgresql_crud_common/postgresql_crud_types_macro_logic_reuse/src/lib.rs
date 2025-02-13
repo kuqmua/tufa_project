@@ -5797,6 +5797,20 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         // .into()
     };
     let postgresql_type_initialized_by_tokens_token_stream = generate_postgresql_type_initialized_by_tokens_handle(PostgresqlTypeInitializedByTokens::InitializedByClient);
+
+    let is_primary_key = IsPrimaryKey::False;
+    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeNullableOrNotNull::Nullable,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
+    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+       &PostgresqlTypeNullableOrNotNull::NotNull,
+        &ident,
+        &field_type,
+        &is_primary_key,
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5822,6 +5836,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #generated_number_filters
 
         #postgresql_type_initialized_by_tokens_token_stream
+
+        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
+        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
