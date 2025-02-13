@@ -38,11 +38,13 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
+    "std_primitive_i16_as_small_int2_nullable": 0,
+    "std_primitive_i16_as_small_int2_not_null": 0,
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
       "std_vec_vec_std_vec_vec_uuid_uuid": [
         [
-          "9b2dbe63-d3fe-4e5a-8cdf-7f6f15beb65b"
+          "7e231ab7-8646-4193-9e87-5fe991dd2de8"
         ]
       ]
     }
@@ -79,6 +81,71 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
+  # "std_primitive_i16_as_small_int2_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "std_primitive_i16_as_small_int2_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
   # "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -111,53 +178,52 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "object_animal_as_jsonb_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "StdVecVecStdVecVecUuidUuid": {
-          "logical_operator": "Or",
-          "dimension_1": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  [
-                    "eb08bda0-8d14-4c91-97d2-e33b62112dbb",
-                    "ad3f9c9b-87cc-4a0f-94aa-b272f033486e"
-                  ]
-                ]
-              }
-            }
-          ],
-          "dimension_2": [
-            {
-              "EqualSecondDimension": {
-                "logical_operator": "Or",
-                "value": [
-                  "9b2dbe63-d3fe-4e5a-8cdf-7f6f15beb65b"
-                ]
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
+  # "object_animal_as_jsonb_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "StdVecVecStdVecVecUuidUuid": {
+  #         "logical_operator": "Or",
+  #         "dimension_1": [
+  #           {
+  #             "Equal": {
+  #               "logical_operator": "Or",
+  #               "value": [
+  #                 [
+  #                   "7b2ac734-d4db-4108-a3f3-49baa351bccc"
+  #                 ]
+  #               ]
+  #             }
+  #           }
+  #         ],
+  #         "dimension_2": [
+  #           {
+  #             "EqualSecondDimension": {
+  #               "logical_operator": "Or",
+  #               "value": [
+  #                 "8ad4c8d1-6ace-4794-b21d-76727e3eadc8"
+  #               ]
+  #             }
+  #           }
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   "select": [
-    # {
-    #   "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
-    # },
+    {
+      "std_primitive_i16_as_small_int2_nullable": null
+    },
+    {
+      "std_primitive_i16_as_small_int2_not_null": null
+    },
+    {
+      "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
           "std_vec_vec_std_vec_vec_uuid_uuid": {
-            "postgresql_json_type_std_vec_vec_uuid_uuid_field_reader": {
-              "pagination": {
-                "limit": 3,
-                "offset": 0
-              }
-            },
             "pagination": {
               "limit": 3,
               "offset": 0
