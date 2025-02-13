@@ -5103,8 +5103,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+
+    let self_snake_case = naming::SelfSnakeCase;
+    let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
+    let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+        &ident,
+        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+    );
+    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{format!("{self}")}
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
+        #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

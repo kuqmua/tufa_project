@@ -740,11 +740,11 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 // }
 
 // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2 {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
+// impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self:#?}")
+//     }
+// }
 impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
