@@ -5237,6 +5237,13 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+    let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
+        quote::quote!{
+            impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypePrimaryKey<'_> for #ident {
+                type PostgresqlBaseTypeSelf = Self;
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5257,6 +5264,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
         #impl_sqlx_postgres_pg_has_array_type_for_token_stream
+        #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

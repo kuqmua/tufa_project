@@ -859,9 +859,9 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         <std::primitive::i16 as sqlx::postgres::PgHasArrayType>::array_type_info()
 //     }
 // }
-impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypePrimaryKey<'_> for StdPrimitiveI16AsPostgresqlInt2 {
-    type PostgresqlBaseTypeSelf = Self;
-}
+// impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypePrimaryKey<'_> for StdPrimitiveI16AsPostgresqlInt2 {
+//     type PostgresqlBaseTypeSelf = Self;
+// }
 /////
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementEqual {
