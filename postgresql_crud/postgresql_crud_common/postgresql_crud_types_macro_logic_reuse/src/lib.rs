@@ -5040,6 +5040,55 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
         }
+        fn postgresql_query_type(&self) -> &'static std::primitive::str {
+            match &self {
+                Self::StdPrimitiveI16AsPostgresqlInt2 => "int2",
+                Self::StdPrimitiveI32AsPostgresqlInt4 => "int4",
+                Self::StdPrimitiveI64AsPostgresqlInt8 => "int8",
+                Self::StdPrimitiveF32AsPostgresqlFloat4 => "float4",
+                Self::StdPrimitiveF64AsPostgresqlFloat8 => "float8",
+                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "smallserial",
+                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "serial",
+                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "bigserial",
+                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "money",
+                Self::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
+                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
+                Self::StdPrimitiveBoolAsPostgresqlBool => "bool",
+                Self::StdStringStringAsPostgresqlCharN => "char(10)",
+                Self::StdStringStringAsPostgresqlVarchar => "varchar(8)",
+                Self::StdStringStringAsPostgresqlText => "text",
+                // Self::StdStringStringAsPostgresqlCiText => "citext",
+                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
+                Self::SqlxTypesTimeDateAsPostgresqlDate => "date",
+                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
+                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "time",
+                Self::SqlxTypesTimeTimeAsPostgresqlTime => "time",
+                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "interval",
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "tsrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "tsrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "tstzrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "tstzrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "tstzrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "daterange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "daterange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "numrange",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "numrange",
+                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "timestamp",
+                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "timestamp",
+                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "timestamptz",
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "timestamptz",
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "timestamptz",
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "uuid",
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "uuid",
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
+                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
+                Self::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",
+                Self::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
+            }
+        }
     }
 // StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 // StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
