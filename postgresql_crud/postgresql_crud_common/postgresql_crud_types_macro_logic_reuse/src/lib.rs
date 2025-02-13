@@ -5227,6 +5227,16 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     };
+    let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
+    let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
+        quote::quote!{
+            impl sqlx::postgres::PgHasArrayType for #ident {
+                fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                    <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+                }
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5244,6 +5254,9 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_std_option_option_ident_create_table_query_part_handle_token_stream
         #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_self_traits_for_ident_token_stream
         #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_for_ident_token_stream
+
+        #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
+        #impl_sqlx_postgres_pg_has_array_type_for_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

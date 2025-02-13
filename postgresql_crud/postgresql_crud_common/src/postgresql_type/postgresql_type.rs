@@ -849,16 +849,16 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //     type PostgresqlBaseTypeStdOptionOptionSelf = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
 // }
 /////
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-}
-impl sqlx::postgres::PgHasArrayType for StdPrimitiveI16AsPostgresqlInt2 {
-    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-        <std::primitive::i16 as sqlx::postgres::PgHasArrayType>::array_type_info()
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+// }
+// impl sqlx::postgres::PgHasArrayType for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+//         <std::primitive::i16 as sqlx::postgres::PgHasArrayType>::array_type_info()
+//     }
+// }
 impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypePrimaryKey<'_> for StdPrimitiveI16AsPostgresqlInt2 {
     type PostgresqlBaseTypeSelf = Self;
 }
