@@ -5090,17 +5090,21 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     }
-    let _token_stream = {
+    let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
+    let impl_crate_create_table_column_query_part_for_ident_token_stream = {
+        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+            &format!("{{column}} {}", postgresql_type.postgresql_query_type())
+        );
         quote::quote!{
             impl crate::CreateTableColumnQueryPart for #ident {
                 fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-                    format!("{column} int2")
+                    format!(#format_handle_token_stream)
                 }
             }
         }
     };
     let generated = quote::quote!{
-
+        #impl_crate_create_table_column_query_part_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
