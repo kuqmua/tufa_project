@@ -5115,10 +5115,15 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &ident,
         &quote::quote!{format!("{self}")}
     );
+    let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+        &ident,
+        &field_type
+    );
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
+        #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

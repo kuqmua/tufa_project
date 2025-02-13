@@ -745,14 +745,14 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         format!("{self:#?}")
 //     }
 // }
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
+// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
