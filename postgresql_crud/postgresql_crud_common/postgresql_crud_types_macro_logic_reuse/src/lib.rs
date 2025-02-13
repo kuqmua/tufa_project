@@ -5158,6 +5158,15 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &ident,
         &quote::quote!{Self(#core_default_default_default_token_stream)},
     );
+    let impl_ident_create_table_query_part_handle_token_stream = {
+        quote::quote!{
+            impl #ident {
+                pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+                     format!("{value} not null")
+                }
+            }
+        }
+    };
     let generated = quote::quote!{
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
@@ -5166,6 +5175,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
         #impl_crate_bind_query_for_ident_token_stream
         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+        #impl_ident_create_table_query_part_handle_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

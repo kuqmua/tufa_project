@@ -785,11 +785,11 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         Self(::core::default::Default::default())
 //     }
 // }
-impl StdPrimitiveI16AsPostgresqlInt2 {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        format!("{value} not null")
-    }
-}
+// impl StdPrimitiveI16AsPostgresqlInt2 {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         format!("{value} not null")
+//     }
+// }
 //todo warning
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub(crate) struct StdOptionOptionStdPrimitiveI16AsPostgresqlInt2(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2>);
