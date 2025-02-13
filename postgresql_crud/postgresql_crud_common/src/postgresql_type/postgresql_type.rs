@@ -791,16 +791,16 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //     }
 // }
 //todo warning
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub(crate) struct StdOptionOptionStdPrimitiveI16AsPostgresqlInt2(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2>);
-impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::option::Option<std::primitive::i16> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::option::Option<std::primitive::i16> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub(crate) struct StdOptionOptionStdPrimitiveI16AsPostgresqlInt2(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2>);
+// impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
