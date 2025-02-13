@@ -181,21 +181,21 @@ enum PostgresqlJsonTypeHandle {
     UuidUuid
 }
 impl PostgresqlJsonTypeHandle {
-    fn field_type_stringified(&self) -> std::string::String {
+    fn field_type_stringified(&self) -> &'static std::primitive::str {
         match &self {
-            Self::StdPrimitiveI8 => std::string::String::from("std::primitive::i8"),
-            Self::StdPrimitiveI16 => std::string::String::from("std::primitive::i16"),
-            Self::StdPrimitiveI32 => std::string::String::from("std::primitive::i32"),
-            Self::StdPrimitiveI64 => std::string::String::from("std::primitive::i64"),
-            Self::StdPrimitiveU8 => std::string::String::from("std::primitive::u8"),
-            Self::StdPrimitiveU16 => std::string::String::from("std::primitive::u16"),
-            Self::StdPrimitiveU32 => std::string::String::from("std::primitive::u32"),
-            Self::StdPrimitiveU64 => std::string::String::from("std::primitive::u64"),
-            Self::StdPrimitiveF32 => std::string::String::from("std::primitive::f32"),
-            Self::StdPrimitiveF64 => std::string::String::from("std::primitive::f64"),
-            Self::StdPrimitiveBool => std::string::String::from("std::primitive::bool"),
-            Self::StdStringString => std::string::String::from("std::string::String"),
-            Self::UuidUuid => std::string::String::from("uuid::Uuid"),
+            Self::StdPrimitiveI8 => "std::primitive::i8",
+            Self::StdPrimitiveI16 => "std::primitive::i16",
+            Self::StdPrimitiveI32 => "std::primitive::i32",
+            Self::StdPrimitiveI64 => "std::primitive::i64",
+            Self::StdPrimitiveU8 => "std::primitive::u8",
+            Self::StdPrimitiveU16 => "std::primitive::u16",
+            Self::StdPrimitiveU32 => "std::primitive::u32",
+            Self::StdPrimitiveU64 => "std::primitive::u64",
+            Self::StdPrimitiveF32 => "std::primitive::f32",
+            Self::StdPrimitiveF64 => "std::primitive::f64",
+            Self::StdPrimitiveBool => "std::primitive::bool",
+            Self::StdStringString => "std::string::String",
+            Self::UuidUuid => "uuid::Uuid",
         }
     }
     fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -4986,9 +4986,61 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         SqlxTypesBitVecAsPostgresqlBit,
         SqlxTypesBitVecAsPostgresqlVarbit,
     }
-    // impl PostgresqlType {
-
-    // }
+    impl PostgresqlType {
+        fn field_type_stringified(&self) -> &'static std::primitive::str {
+            match &self {
+                Self::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
+                Self::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
+                Self::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
+                Self::StdPrimitiveF32AsPostgresqlFloat4 => "std::primitive::f32",
+                Self::StdPrimitiveF64AsPostgresqlFloat8 => "std::primitive::f64",
+                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "std::primitive::i16",
+                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "std::primitive::i32",
+                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "std::primitive::i64",
+                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "sqlx::postgres::types::PgMoney",
+                Self::SqlxTypesDecimalAsPostgresqlNumeric => "sqlx::types::Decimal",
+                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => "sqlx::types::BigDecimal",
+                Self::StdPrimitiveBoolAsPostgresqlBool => "std::primitive::bool",
+                Self::StdStringStringAsPostgresqlCharN => "std::string::String",
+                Self::StdStringStringAsPostgresqlVarchar => "std::string::String",
+                Self::StdStringStringAsPostgresqlText => "std::string::String",
+                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "std::vec::Vec<std::primitive::u8>",
+                Self::SqlxTypesTimeDateAsPostgresqlDate => "sqlx::types::time::Date",
+                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => "sqlx::types::chrono::NaiveDate",
+                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "sqlx::types::chrono::NaiveTime",
+                Self::SqlxTypesTimeTimeAsPostgresqlTime => "sqlx::types::time::Time",
+                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "sqlx::postgres::types::PgInterval",
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "sqlx::postgres::types::PgRange<std::primitive::i32>",
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "sqlx::postgres::types::PgRange<std::primitive::i64>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::time::Date>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::Decimal>",
+                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>",
+                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "sqlx::types::chrono::NaiveDateTime",
+                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "sqlx::types::time::PrimitiveDateTime",
+                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "sqlx::types::time::OffsetDateTime",
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>",
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>",
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "sqlx::types::uuid::Uuid",
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "sqlx::types::uuid::Uuid",
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "sqlx::types::ipnetwork::IpNetwork",
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "sqlx::types::ipnetwork::IpNetwork",
+                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
+                Self::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
+                Self::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
+            }
+        }
+        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
+            self.field_type_stringified()
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+        }
+    }
 // StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 // StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 // StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
