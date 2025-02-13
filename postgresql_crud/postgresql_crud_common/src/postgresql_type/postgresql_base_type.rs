@@ -4593,25 +4593,26 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
     PartialEq,
     serde::Serialize,
     serde::Deserialize,
+    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeTokens,
     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokens,
     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypePrimaryKeyTokens,
     // postgresql_crud_types_macro_logic_reuse::PostgresqlBaseTypeTokensWhereElementNumber,
 )]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI16 {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
+// impl error_occurence_lib::ToStdStringString for StdPrimitiveI16 {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self:#?}")
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
 impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
@@ -4649,6 +4650,7 @@ impl StdPrimitiveI16 {
         format!("{value} not null")
     }
 }
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub(crate) struct StdOptionOptionStdPrimitiveI16(pub std::option::Option<StdPrimitiveI16>);
 impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveI16 {

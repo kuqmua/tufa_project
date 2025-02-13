@@ -4942,6 +4942,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let ident = &syn_derive_input.ident;
     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
+    let self_snake_case = naming::SelfSnakeCase;
+    let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
+    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+        &ident,
+        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+    );
+    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+        &ident,
+        &quote::quote!{format!("{self}")}
+    );
+    let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+        &ident,
+        &field_type
+    );
+
 // StdPrimitiveI16AsPostgresqlInt2(crate::postgresql_type::postgresql_base_type::StdPrimitiveI16);
 // StdPrimitiveI32AsPostgresqlInt4(crate::postgresql_type::postgresql_base_type::StdPrimitiveI32);
 // StdPrimitiveI64AsPostgresqlInt8(crate::postgresql_type::postgresql_base_type::StdPrimitiveI64);
@@ -5465,6 +5481,11 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     // };
     // let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
     let generated = quote::quote!{
+        #impl_std_fmt_display_for_ident_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
+        #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
+
+
         // #maybe_ident_nullable_token_stream
         // #ident_not_null_token_stream
     };
