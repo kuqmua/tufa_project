@@ -838,11 +838,11 @@ struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
 //         ))
 //     }
 // }
-impl StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        format!("{value}")
-    }
-}
+// impl StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         format!("{value}")
+//     }
+// }
 impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
 impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
     type PostgresqlBaseTypeSelf = Self;
