@@ -5890,8 +5890,116 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_sqlx_types_chrono_naive_time_token_stream = 
-        // let where_element_sqlx_types_time_time_token_stream = 
+        let where_element_sqlx_types_chrono_naive_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_field_type = WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+            };
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let greater_than = crate::filters::GreaterThan;
+            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::False,
+            );
+            let current_time = crate::filters::CurrentTime;
+            let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
+            let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                    &current_time,
+                    &greater_than_current_time,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_greater_than_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_current_time_token_stream
+                #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
+        let where_element_sqlx_types_time_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_field_type = WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
+            };
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let greater_than = crate::filters::GreaterThan;
+            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::False,
+            );
+            let current_time = crate::filters::CurrentTime;
+            let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
+            let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                    &current_time,
+                    &greater_than_current_time,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_greater_than_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_current_time_token_stream
+                #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         // let where_element_sqlx_postgres_types_pg_interval_token_stream = 
         // let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = 
         // let where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = 
@@ -5932,8 +6040,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
             PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => where_element_sqlx_types_time_date_token_stream,
             PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => where_element_sqlx_types_chrono_naive_date_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2::TokenStream::new(),
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => where_element_sqlx_types_chrono_naive_time_token_stream,
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => where_element_sqlx_types_time_time_token_stream,
             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2::TokenStream::new(),
