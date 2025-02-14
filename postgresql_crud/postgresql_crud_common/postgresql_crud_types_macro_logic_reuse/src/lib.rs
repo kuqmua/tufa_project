@@ -5700,7 +5700,28 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_bool_token_stream = 
+        let where_element_bool_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                },
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         // let where_element_std_string_string_token_stream = 
         // let where_element_std_vec_vec_std_primitive_u8_token_stream = 
         // let where_element_sqlx_types_time_date_token_stream = 
@@ -5740,7 +5761,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
             PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => where_element_sqlx_types_decimal_token_stream,
             PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => where_element_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => where_element_bool_token_stream,
             PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2::TokenStream::new(),
             PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2::TokenStream::new(),
             PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2::TokenStream::new(),
