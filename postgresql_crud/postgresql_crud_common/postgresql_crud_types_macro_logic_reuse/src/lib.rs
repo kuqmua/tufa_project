@@ -5524,55 +5524,103 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
 
-    let generated_number_filters = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let in_handle = crate::filters::In;
-        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &in_handle,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_in_token_stream
-            #postgresql_type_tokens_where_element_token_stream
+   let maybe_number_filters_token_stream = {
+        let generated_number_filters = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_field_type = WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+            };
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let greater_than = crate::filters::GreaterThan;
+            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::False,
+            );
+            let in_handle = crate::filters::In;
+            let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                    &in_handle,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_greater_than_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_in_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
+        match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => generated_number_filters,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => generated_number_filters,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => generated_number_filters,
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => generated_number_filters,
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => generated_number_filters,
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2::TokenStream::new(),
         }
-    });
+    };
 
     let generate_postgresql_type_initialized_by_tokens_handle = |postgresql_type_initialized_by_tokens: PostgresqlTypeInitializedByTokens| {
         let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
@@ -6096,7 +6144,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #maybe_primary_key_tokens_token_stream
 
-        #generated_number_filters
+        #maybe_number_filters_token_stream
 
         #postgresql_type_initialized_by_tokens_token_stream
 
