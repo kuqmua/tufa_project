@@ -6381,7 +6381,43 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = 
+        let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident,
+            );
+            let before = crate::filters::Before;
+            let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::False,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &before,
+                    &between,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_before_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         // let where_element_sqlx_types_uuid_uuid_token_stream = 
         // let where_element_sqlx_types_ipnetwork_ip_network_token_stream = 
         // let where_element_sqlx_types_mac_address_mac_address_token_stream = 
@@ -6423,7 +6459,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
             PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => where_element_sqlx_types_time_offset_date_time_token_stream,
             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2::TokenStream::new(),
