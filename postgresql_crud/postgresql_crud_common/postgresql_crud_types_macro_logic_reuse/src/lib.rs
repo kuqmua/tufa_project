@@ -5455,22 +5455,78 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     let postgresql_base_type_tokens = generate_postgresql_base_type_tokens(
         &postgresql_type.std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream()
     ); 
-
-    let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
-    let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
-        quote::quote!{
-            impl sqlx::postgres::PgHasArrayType for #ident {
-                fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                    <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+    let maybe_primary_key_tokens_token_stream = {
+        let primary_key_token_stream = {
+            let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
+            let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
+                quote::quote!{
+                    impl sqlx::postgres::PgHasArrayType for #ident {
+                        fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                            <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+                        }
+                    }
                 }
+            };
+            let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
+                let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
+                let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+                quote::quote!{
+                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
+                        type #postgresql_base_type_self_upper_camel_case = Self;
+                    }
+                }
+            };
+            quote::quote!{
+                #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
+                #impl_sqlx_postgres_pg_has_array_type_for_token_stream
+                #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
             }
-        }
-    };
-    let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_base_type_trait::PostgresqlBaseTypePrimaryKey<'_> for #ident {
-                type PostgresqlBaseTypeSelf = Self;
-            }
+        };
+        match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => primary_key_token_stream,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney |
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
+            PostgresqlType::StdStringStringAsPostgresqlCharN |
+            PostgresqlType::StdStringStringAsPostgresqlVarchar |
+            PostgresqlType::StdStringStringAsPostgresqlText |
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea |
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate |
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime |
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime |
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval |
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange |
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp |
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp |
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz |
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => primary_key_token_stream,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr |
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr |
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2::TokenStream::new(),
         }
     };
 
@@ -6044,9 +6100,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #postgresql_base_type_tokens
 
-        #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
-        #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-        #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+        #maybe_primary_key_tokens_token_stream
 
         #generated_number_filters
 
