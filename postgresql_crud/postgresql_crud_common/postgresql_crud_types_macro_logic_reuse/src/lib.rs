@@ -6038,7 +6038,133 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = 
+
+        let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
+            generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let range_type_token_stream = range_type.type_token_stream();
+                let range_type_should_impl_range_length = range_type.should_impl_range_length();
+                let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
+                let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let value_snake_case = naming::ValueSnakeCase;
+                let column_snake_case = naming::ColumnSnakeCase;
+                let query_snake_case = naming::QuerySnakeCase;
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                    crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                };
+                let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+                let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                    &WhereOperatorType::Ident(&ident),
+                );
+                let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
+                let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                    &range_type_token_stream,
+                    &range_type_should_impl_range_length,
+                    &range_type_default_initialization_token_stream,
+                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                );
+                let contains_another_range = crate::filters::ContainsAnotherRange;
+                let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                let strictly_to_left_of_range = crate::filters::StrictlyToLeftOfRange;
+                let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                let strictly_to_right_of_range = crate::filters::StrictlyToRightOfRange;
+                let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                let included_lower_bound = crate::filters::IncludedLowerBound;
+                let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                    &range_type_token_stream,
+                    &range_type_default_initialization_token_stream,
+                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                );
+                let excluded_upper_bound = crate::filters::ExcludedUpperBound;
+                let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                    &range_type_token_stream,
+                    &range_type_default_initialization_token_stream,
+                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                );
+                let greater_than_lower_bound = crate::filters::GreaterThanLowerBound;
+                let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                let overlap_with_range = crate::filters::OverlapWithRange;
+                let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                let adjacent_with_range = crate::filters::AdjacentWithRange;
+                let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &ident,
+                    &is_nullable,
+                );
+                //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
+                let range_length = crate::filters::RangeLength;
+                let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
+                    ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &ident,
+                        &is_nullable,
+                    ),
+                    ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
+                };
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &ident,
+                    &{
+                        let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
+                            &equal,
+                            &value_is_contained_within_range,
+                            &contains_another_range,
+                            &strictly_to_left_of_range,
+                            &strictly_to_right_of_range,
+                            &included_lower_bound,
+                            &excluded_upper_bound,
+                            &greater_than_lower_bound,
+                            &overlap_with_range,
+                            &adjacent_with_range,
+                        ];
+                        if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
+                            value.push(&range_length);
+                        }
+                        value
+                    }
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
+                    #postgresql_type_tokens_where_element_contains_another_range_token_stream
+                    #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
+                    #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
+                    #postgresql_type_tokens_where_element_included_lower_bound_token_stream
+                    #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
+                    #postgresql_type_tokens_where_element_overlap_with_range_token_stream
+                    #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
+                    #maybe_postgresql_type_tokens_where_element_range_length_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            })
+        };
+
+        let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::I32);
+        
         // let where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = 
         // let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = 
         // let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = 
@@ -6080,7 +6206,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => where_element_sqlx_types_chrono_naive_time_token_stream,
             PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => where_element_sqlx_types_time_time_token_stream,
             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2::TokenStream::new(),
