@@ -6515,7 +6515,38 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_sqlx_types_bit_vec_token_stream = 
+        let where_element_sqlx_types_bit_vec_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let increment_snake_case = naming::IncrementSnakeCase;
+            let value_snake_case = naming::ValueSnakeCase;
+            let column_snake_case = naming::ColumnSnakeCase;
+            let query_snake_case = naming::QuerySnakeCase;
+            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+            let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &WhereOperatorType::Ident(&ident),
+            );
+            let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
+            let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &bit_vec_position_equal,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         match &postgresql_type {
             PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => where_element_number_token_stream,
             PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => where_element_number_token_stream,
@@ -6559,8 +6590,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
             PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2::TokenStream::new(),
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => where_element_sqlx_types_bit_vec_token_stream,
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => where_element_sqlx_types_bit_vec_token_stream,
         }
     };
 
