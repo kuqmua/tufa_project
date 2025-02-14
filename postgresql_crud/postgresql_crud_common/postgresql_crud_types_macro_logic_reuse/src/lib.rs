@@ -5747,7 +5747,42 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
-        // let where_element_std_vec_vec_std_primitive_u8_token_stream = 
+        let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                },
+            );
+            let length_more_than = crate::filters::LengthMoreThan;
+            let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
+            let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &length_more_than,
+                    &equal_to_encoded_string_representation,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_length_more_than_token_stream
+                #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         // let where_element_sqlx_types_time_date_token_stream = 
         // let where_element_sqlx_types_chrono_naive_date_token_stream = 
         // let where_element_sqlx_types_chrono_naive_time_token_stream = 
@@ -5789,7 +5824,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::StdStringStringAsPostgresqlCharN => where_element_std_string_string_token_stream,
             PostgresqlType::StdStringStringAsPostgresqlVarchar => where_element_std_string_string_token_stream,
             PostgresqlType::StdStringStringAsPostgresqlText => where_element_std_string_string_token_stream,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2::TokenStream::new(),
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
             PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2::TokenStream::new(),
