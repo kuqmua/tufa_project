@@ -5169,94 +5169,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 Self::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
             }
         }
-        fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream(&self) -> proc_macro2::TokenStream {
-            let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-            let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
-                &core_default_default_default_token_stream,
-                &core_default_default_default_token_stream,
-            );
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 |
-                Self::StdPrimitiveI32AsPostgresqlInt4 |
-                Self::StdPrimitiveI64AsPostgresqlInt8 |
-                Self::StdPrimitiveF32AsPostgresqlFloat4 |
-                Self::StdPrimitiveF64AsPostgresqlFloat8 |
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => quote::quote!{#core_default_default_default_token_stream},
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default_token_stream)},
-                Self::SqlxTypesDecimalAsPostgresqlNumeric |
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric |
-                Self::StdPrimitiveBoolAsPostgresqlBool |
-                Self::StdStringStringAsPostgresqlCharN |
-                Self::StdStringStringAsPostgresqlVarchar |
-                Self::StdStringStringAsPostgresqlText => quote::quote!{#core_default_default_default_token_stream},
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => quote::quote!{vec![#core_default_default_default_token_stream]},
-                Self::SqlxTypesTimeDateAsPostgresqlDate => sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream(),
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate |
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => quote::quote!{#core_default_default_default_token_stream},
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => {
-                    let value = token_patterns::SqlxTypesTimeTimeMidnight;
-                    quote::quote!{#value}
-                },
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => {
-                    quote::quote!{sqlx::postgres::types::PgInterval {
-                        months: #core_default_default_default_token_stream,
-                        days: #core_default_default_default_token_stream,
-                        microseconds: #core_default_default_default_token_stream,
-                    }}
-                },
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => {
-                    let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
-                    generate_sqlx_postgres_types_pg_range_token_steram(
-                        &sqlx_types_time_primitive_date_time_new_token_stream,
-                        &sqlx_types_time_primitive_date_time_new_token_stream,
-                    )
-                },
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => {
-                    let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-                    generate_sqlx_postgres_types_pg_range_token_steram(
-                        &sqlx_types_time_offset_date_time_unix_epoch,
-                        &sqlx_types_time_offset_date_time_unix_epoch,
-                    )
-                },
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => {
-                    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-                    generate_sqlx_postgres_types_pg_range_token_steram(
-                        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                    )
-                },
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => quote::quote!{#core_default_default_default_token_stream},
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => sqlx_types_time_primitive_date_time_new_token_stream(),
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => {
-                    let value = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-                    quote::quote!{#value}
-                },
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => quote::quote!{#core_default_default_default_token_stream},
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => sqlx_types_ipnetwork_ip_network_v4_token_stream(),
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => quote::quote!{#core_default_default_default_token_stream},
-                Self::SqlxTypesBitVecAsPostgresqlBit |
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => quote::quote!{{
-                    let mut value = sqlx::types::BitVec::new();
-                    value.push(false);
-                    value
-                }}
-            }
-        }
     }
     let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
     let impl_crate_create_table_column_query_part_for_ident_token_stream = {
@@ -5366,7 +5278,91 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident,
                     &{
-                        let initialization_token_stream = postgresql_type.std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream();
+                        let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
+                            &core_default_default_default_token_stream,
+                            &core_default_default_default_token_stream,
+                        );
+                        let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
+                            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
+                            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
+                            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
+                            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
+                            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 |
+                            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
+                            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
+                            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default_token_stream)},
+                            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
+                            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
+                            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
+                            PostgresqlType::StdStringStringAsPostgresqlCharN |
+                            PostgresqlType::StdStringStringAsPostgresqlVarchar |
+                            PostgresqlType::StdStringStringAsPostgresqlText => &core_default_default_default_token_stream,
+                            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &quote::quote!{vec![#core_default_default_default_token_stream]},
+                            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream(),
+                            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+                            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &core_default_default_default_token_stream,
+                            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &{
+                                let value = token_patterns::SqlxTypesTimeTimeMidnight;
+                                quote::quote!{#value}
+                            },
+                            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
+                                quote::quote!{sqlx::postgres::types::PgInterval {
+                                    months: #core_default_default_default_token_stream,
+                                    days: #core_default_default_default_token_stream,
+                                    microseconds: #core_default_default_default_token_stream,
+                                }}
+                            },
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &{
+                                let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
+                                generate_sqlx_postgres_types_pg_range_token_steram(
+                                    &sqlx_types_time_primitive_date_time_new_token_stream,
+                                    &sqlx_types_time_primitive_date_time_new_token_stream,
+                                )
+                            },
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &{
+                                let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+                                generate_sqlx_postgres_types_pg_range_token_steram(
+                                    &sqlx_types_time_offset_date_time_unix_epoch,
+                                    &sqlx_types_time_offset_date_time_unix_epoch,
+                                )
+                            },
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &{
+                                let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
+                                generate_sqlx_postgres_types_pg_range_token_steram(
+                                    &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                                    &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                                )
+                            },
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+
+                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
+                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream(),
+                            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &{
+                                let value = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+                                quote::quote!{#value}
+                            },
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
+                            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
+                            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &core_default_default_default_token_stream,
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &sqlx_types_ipnetwork_ip_network_v4_token_stream(),
+                            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
+                            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
+                            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
+                                let mut value = sqlx::types::BitVec::new();
+                                value.push(false);
+                                value
+                            }}
+                        };
                         quote::quote!{Self(#initialization_token_stream)}
                     },
                 ),
