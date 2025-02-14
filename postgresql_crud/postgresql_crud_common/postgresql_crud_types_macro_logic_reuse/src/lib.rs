@@ -5621,6 +5621,76 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
+        let where_element_sqlx_types_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_field_type = WhereOperatorType::FieldType {
+                field_type: &field_type,
+                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+            };
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let greater_than = crate::filters::GreaterThan;
+            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_field_type,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::False,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_greater_than_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
+        // let where_element_sqlx_types_big_decimal_token_stream = 
+        // let where_element_bool_token_stream = 
+        // let where_element_std_string_string_token_stream = 
+        // let where_element_std_vec_vec_std_primitive_u8_token_stream = 
+        // let where_element_sqlx_types_time_date_token_stream = 
+        // let where_element_sqlx_types_chrono_naive_date_token_stream = 
+        // let where_element_sqlx_types_chrono_naive_time_token_stream = 
+        // let where_element_sqlx_types_time_time_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_interval_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = 
+        // let where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = 
+        // let where_element_sqlx_types_chrono_naive_date_time_token_stream = 
+        // let where_element_sqlx_types_time_primitive_date_time_token_stream = 
+        // let where_element_sqlx_types_time_offset_date_time_token_stream = 
+        // let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = 
+        // let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = 
+        // let where_element_sqlx_types_uuid_uuid_token_stream = 
+        // let where_element_sqlx_types_ipnetwork_ip_network_token_stream = 
+        // let where_element_sqlx_types_mac_address_mac_address_token_stream = 
+        // let where_element_sqlx_types_bit_vec_token_stream = 
         match &postgresql_type {
             PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => where_element_number_token_stream,
             PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => where_element_number_token_stream,
@@ -5631,7 +5701,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
             PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => where_element_sqlx_types_decimal_token_stream,
             PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
             PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2::TokenStream::new(),
             PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2::TokenStream::new(),
