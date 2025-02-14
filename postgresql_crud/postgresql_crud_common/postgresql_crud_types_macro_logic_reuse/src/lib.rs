@@ -5524,8 +5524,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
 
-   let maybe_number_filters_token_stream = {
-        let generated_number_filters = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+   let where_element_token_stream = {
+        let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let where_operator_type_field_type = WhereOperatorType::FieldType {
                 field_type: &field_type,
                 default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -5574,16 +5574,63 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 #postgresql_type_tokens_where_element_token_stream
             }
         });
+        let where_element_sqlx_postgres_types_pg_money_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+        
+            let equal = crate::filters::Equal;
+            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident,
+            );
+            let greater_than = crate::filters::GreaterThan;
+            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident
+            );
+            let between = crate::filters::Between;
+            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident,
+                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                &crate::filters::ShouldAddDotZero::True,
+            );
+            let in_handle = crate::filters::In;
+            let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                &ident,
+                &is_nullable,
+                &where_operator_type_ident,
+            );
+            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                is_nullable,
+                &ident,
+                &vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                    &in_handle,
+                ]
+            );
+            quote::quote! {
+                #postgresql_type_tokens_where_element_equal_token_stream
+                #postgresql_type_tokens_where_element_greater_than_token_stream
+                #postgresql_type_tokens_where_element_between_token_stream
+                #postgresql_type_tokens_where_element_in_token_stream
+                #postgresql_type_tokens_where_element_token_stream
+            }
+        });
         match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => generated_number_filters,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => generated_number_filters,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => generated_number_filters,
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => generated_number_filters,
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => generated_number_filters,
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => where_element_number_token_stream,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => where_element_number_token_stream,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => where_element_number_token_stream,
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => where_element_number_token_stream,
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => where_element_number_token_stream,
             PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
             PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
             PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2::TokenStream::new(),
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
             PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
             PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2::TokenStream::new(),
             PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2::TokenStream::new(),
@@ -6144,7 +6191,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
 
         #maybe_primary_key_tokens_token_stream
 
-        #maybe_number_filters_token_stream
+        #where_element_token_stream
 
         #postgresql_type_initialized_by_tokens_token_stream
 
