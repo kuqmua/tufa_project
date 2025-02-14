@@ -5277,9 +5277,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         &quote::quote!{"{self:?}"}
     );
 
-    let generate_postgresql_base_type_tokens = |
-        impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream: &dyn quote::ToTokens,
-    | {
+    let postgresql_base_type_tokens = {
         panic_location::panic_location();
         let std_option_option_ident_token_stream = quote::quote!{std::option::Option<#ident>};
         let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
@@ -5367,7 +5365,10 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             (
                 generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident,
-                    &quote::quote!{Self(#impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream)},
+                    &{
+                        let initialization_token_stream = postgresql_type.std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream();
+                        quote::quote!{Self(#initialization_token_stream)}
+                    },
                 ),
                 generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &std_option_option_ident_upper_camel_case,
@@ -5452,9 +5453,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         };
         generated
     };
-    let postgresql_base_type_tokens = generate_postgresql_base_type_tokens(
-        &postgresql_type.std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream()
-    ); 
     let maybe_primary_key_tokens_token_stream = {
         let primary_key_token_stream = {
             let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
