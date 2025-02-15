@@ -5255,11 +5255,46 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 }
             }
         };
-        // let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
-        //     quote::quote!{
-                
-        //     }
-        // };
+        let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
+            quote::quote!{
+                const _: () = {
+                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                    extern crate serde as _serde;
+                    #[automatically_derived]
+                    impl _serde::Serialize for #ident {
+                        fn serialize<__S>(
+                            &self,
+                            __serializer: __S,
+                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                        where
+                            __S: _serde::Serializer,
+                        {
+                            let mut __serde_state = _serde::Serializer::serialize_struct(
+                                __serializer,
+                                #ident_double_quotes_token_stream,
+                                false as usize + 1 + 1 + 1,
+                            )?;
+                            _serde::ser::SerializeStruct::serialize_field(
+                                &mut __serde_state,
+                                "year",
+                                &self.0.year(),
+                            )?;
+                            _serde::ser::SerializeStruct::serialize_field(
+                                &mut __serde_state,
+                                "month",
+                                &self.0.month(),
+                            )?;
+                            _serde::ser::SerializeStruct::serialize_field(
+                                &mut __serde_state,
+                                "day",
+                                &self.0.day(),
+                            )?;
+                            _serde::ser::SerializeStruct::end(__serde_state)
+                        }
+                    }
+                };
+            }
+        };
         // let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
         //     quote::quote!{
                 
