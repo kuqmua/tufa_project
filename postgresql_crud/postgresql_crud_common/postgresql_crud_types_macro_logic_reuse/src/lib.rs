@@ -5310,11 +5310,21 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 }
             }
         };
-        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
-        //     quote::quote!{
-                
-        //     }
-        // };
+        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
+            quote::quote!{
+                impl serde::Serialize for #ident {
+                    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+                    where
+                        S: serde::Serializer,
+                    {
+                        let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+                        serde::ser::SerializeStruct::end(serde_state)
+                    }
+                }
+            }
+        };
         // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
         //     quote::quote!{
                 
