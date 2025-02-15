@@ -5239,16 +5239,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         };
 
-        // let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
-        //     quote::quote!{
-
-        //     }
-        // };
-        // let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
-        //     quote::quote!{
-                
-        //     }
-        // };
+        let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
+            quote::quote!{
+                impl serde::Serialize for #ident {
+                    fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                    where
+                        __S: serde::Serializer,
+                    {
+                        let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
+                        let mut __serde_state = serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &NumBigintBigInt(bigint))?;
+                        serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "scale", &exponent)?;
+                        serde::ser::SerializeStruct::end(__serde_state)
+                    }
+                }
+            }
+        };
         // let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
         //     quote::quote!{
                 
