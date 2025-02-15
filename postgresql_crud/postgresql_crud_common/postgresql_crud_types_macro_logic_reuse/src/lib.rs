@@ -5238,6 +5238,98 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 }
             }
         };
+
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+        // let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = {
+        //     quote::quote!{
+                
+        //     }
+        // };
+
         match &postgresql_type {
             PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new,
             PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new,
