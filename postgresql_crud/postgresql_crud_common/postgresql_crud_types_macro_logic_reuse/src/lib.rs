@@ -5238,7 +5238,6 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 }
             }
         };
-
         let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
             quote::quote!{
                 impl serde::Serialize for #ident {
@@ -5295,11 +5294,22 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 };
             }
         };
-        // let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
-        //     quote::quote!{
-                
-        //     }
-        // };
+        let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
+            quote::quote!{
+                impl serde::Serialize for #ident {
+                    fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+                    where
+                        S: serde::Serializer,
+                    {
+                        let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1 + 1)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "months", &self.0.months)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "days", &self.0.days)?;
+                        serde::ser::SerializeStruct::serialize_field(&mut serde_state, "microseconds", &self.0.microseconds)?;
+                        serde::ser::SerializeStruct::end(serde_state)
+                    }
+                }
+            }
+        };
         // let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
         //     quote::quote!{
                 
