@@ -5219,57 +5219,73 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                 Self::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new,
             }
         }
-        fn maybe_impl_serde_serialize_token_stream(&self) -> proc_macro2::TokenStream {
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new,
-                Self::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new,
-                Self::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new,
-                Self::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new,
-                Self::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new,
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new,
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new,
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new,
-                Self::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new,
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new,
-                Self::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new,
-                Self::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new,
-                Self::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new,
-                Self::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new,
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new,
-                Self::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new,
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new,
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new,
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new,
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new,
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new,
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new,
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new,
-                Self::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new,
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new,
-            }
-        }
     }
     let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
+
+    let generate_maybe_impl_serde_serialize_token_stream = {
+        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
+
+        let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+        let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
+            quote::quote!{
+                impl serde::Serialize for #ident {
+                    fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                    where
+                        __S: serde::Serializer,
+                    {
+                        serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
+                    }
+                }
+            }
+        };
+        match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new,
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new,
+            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new,
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new,
+            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new,
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new,
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new,
+        }
+    };
+    
     let impl_crate_create_table_column_query_part_for_ident_token_stream = {
         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
             &format!("{{column}} {}", postgresql_type.postgresql_query_type())
