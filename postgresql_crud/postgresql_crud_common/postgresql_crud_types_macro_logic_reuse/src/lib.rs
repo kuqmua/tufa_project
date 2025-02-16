@@ -11262,6 +11262,88 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         &is_primary_key,
     );
 
+    let postgresql_type_create_table_column_query_part_token_stream = {
+        let postgresql_type_create_table_column_query_part_tokens = {
+            let is_primary_key = IsPrimaryKey::False;
+            let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+               &PostgresqlTypeNullableOrNotNull::Nullable,
+                &ident,
+                &field_type,
+                &is_primary_key,
+            );
+            let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+               &PostgresqlTypeNullableOrNotNull::NotNull,
+                &ident,
+                &field_type,
+                &is_primary_key,
+            );
+            let generated = quote::quote!{
+                #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
+                #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+            };
+            generated
+        };
+        let postgresql_type_create_table_column_query_part_primary_key_tokens = {
+            let is_primary_key = IsPrimaryKey::True;
+            let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+               &PostgresqlTypeNullableOrNotNull::NotNull,
+                &ident,
+                &field_type,
+                &is_primary_key,
+            );
+            let generated = quote::quote!{
+                #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+            };
+            generated.into()
+        };
+        match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdStringStringAsPostgresqlCharN => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdStringStringAsPostgresqlText => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => postgresql_type_create_table_column_query_part_tokens,
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => postgresql_type_create_table_column_query_part_tokens,
+        }
+    };
+
     let generated = quote::quote!{
         #ident_token_stream
         #maybe_impl_serde_serialize_token_stream
@@ -11278,8 +11360,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
         #postgresql_type_initialized_by_tokens_token_stream
 
-        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
-        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+        #postgresql_type_create_table_column_query_part_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
