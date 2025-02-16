@@ -2009,7 +2009,7 @@ impl PostgresqlTypeNullableOrNotNull {
         };
         quote::quote!{#value}
     }
-    fn ident_handle(&self, ident: &syn::Ident) -> proc_macro2::TokenStream {
+    fn ident_handle(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let value: &dyn quote::ToTokens = match &self {
             Self::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&ident),
             Self::NotNull => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident),
@@ -2544,8 +2544,8 @@ enum IsPrimaryKey {
 }
 fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
     postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull,
-    ident: &syn::Ident,
-    field_type: &syn::Type,
+    ident: &dyn quote::ToTokens,
+    field_type: &dyn quote::ToTokens,
     is_primary_key: &IsPrimaryKey,
 ) -> proc_macro2::TokenStream {
     let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
@@ -3172,9 +3172,9 @@ impl IsValueTypePub {
 }
 
 enum WhereOperatorType<'a> {
-    Ident(&'a syn::Ident),
+    Ident(&'a dyn quote::ToTokens),
     FieldType {
-        field_type: &'a syn::Type,
+        field_type: &'a dyn quote::ToTokens,
         default_initialization_token_stream: &'a dyn quote::ToTokens,
     },
 }
@@ -4950,14 +4950,9 @@ pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_
     generated.into()
 }
 
-
-#[proc_macro_derive(PostgresqlTypeTokens)]
-pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro]
+pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
 
     let self_snake_case = naming::SelfSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -4990,6 +4985,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     };
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
+    #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
         StdPrimitiveI16AsPostgresqlInt2,
         StdPrimitiveI32AsPostgresqlInt4,
@@ -5238,7 +5234,33 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
             }
         }
     }
+    impl quote::ToTokens for PostgresqlType {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            self.to_string()
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream"))
+            .to_tokens(tokens)
+        }
+    }
     let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
+
+    let ident = &postgresql_type;
+    let field_type = postgresql_type.field_type_token_stream();
+
+    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
+
+    let ident_token_stream = {
+        quote::quote!{
+            #[derive(
+                Debug,
+                Clone,
+                PartialEq,
+                serde::Serialize,
+                serde::Deserialize,
+            )]
+            struct #ident(#field_type);
+        }
+    };
 
     let maybe_impl_serde_serialize_token_stream = {
         let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
@@ -11201,6 +11223,8 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
     );
 
     let generated = quote::quote!{
+        #ident_token_stream
+
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
 
