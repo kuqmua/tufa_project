@@ -5195,18 +5195,66 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
             }
         };
+        let maybe_derive_serde_deserialize_token_stream = {
+            let serde_deserialize_comma_token_stream = quote::quote!{serde::Deserialize,};
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlText => serde_deserialize_comma_token_stream,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_deserialize_comma_token_stream,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+            }
+        };
         quote::quote!{
             #[derive(
                 Debug,
                 Clone,
                 PartialEq,
                 #maybe_derive_serde_serialize_token_stream
-                serde::Deserialize,
+                #maybe_derive_serde_deserialize_token_stream
             )]
             struct #ident(#field_type);
         }
     };
-
     let maybe_impl_serde_serialize_token_stream = {
         let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
 
@@ -11216,6 +11264,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     let generated = quote::quote!{
         #ident_token_stream
+        #maybe_impl_serde_serialize_token_stream
+        #maybe_impl_serde_deserialize_token_stream
 
         #impl_crate_create_table_column_query_part_for_ident_token_stream
         #impl_std_fmt_display_for_ident_token_stream
