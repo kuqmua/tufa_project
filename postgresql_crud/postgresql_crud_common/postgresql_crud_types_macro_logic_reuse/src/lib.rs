@@ -11344,6 +11344,208 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         }
     };
 
+    let maybe_postgresql_type_primary_key_token_stream = {
+        let postgresql_type_primary_key_token_stream = {
+            let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
+            let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
+            let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
+
+            let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
+            let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
+
+            let increment_snake_case = naming::IncrementSnakeCase;
+            let query_snake_case = naming::QuerySnakeCase;
+            let self_snake_case = naming::SelfSnakeCase;
+            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+            let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
+            let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
+
+            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                quote::quote!{
+                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
+                }
+            };
+            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+            let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
+            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+            };
+            let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+            };
+            let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
+            let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_create_token_stream = {
+                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_create_upper_camel_case,
+                    &field_type
+                );
+                quote::quote! {
+                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
+                }
+            };
+            let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_read_token_stream = {
+                let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_read_upper_camel_case,
+                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                );
+                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_read_upper_camel_case,
+                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                );
+                quote::quote! {
+                    #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream
+                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
+                }
+            };
+            let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_update_token_stream = {
+                let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                );
+                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                    &quote::quote!{format!("{self}")}
+                );
+                let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
+                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                    &field_type
+                );
+                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                    &field_type
+                );
+                quote::quote! {
+                    #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream
+                    #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                }
+            };
+            let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_delete_token_stream = {
+                let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+                    Visibility::Pub,
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &field_type_struct_content_token_stream,
+                    false,
+                    true,
+                );
+                let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                );
+                let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                );
+                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &quote::quote!{format!("{self}")}
+                );
+                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &field_type
+                );
+                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &field_type
+                );
+                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                );
+                quote::quote!{
+                    #postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
+                }
+            };
+            let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
+                let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident);
+                quote::quote!{
+                    impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
+                        type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
+                        type PostgresqlTypeSelfToRead = #postgresql_type_ident_not_null_to_read_upper_camel_case;
+                        type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_not_null_to_update_upper_camel_case;
+                        type PostgresqlTypeSelfToDelete = #postgresql_type_ident_not_null_to_delete_upper_camel_case;
+                    }
+                }
+            };
+            //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
+            let generated = quote::quote! {
+                #postgresql_type_ident_not_null_to_create_token_stream
+
+                #postgresql_type_ident_not_null_to_read_token_stream
+
+                #postgresql_type_ident_not_null_to_update_token_stream
+
+                #postgresql_type_ident_not_null_to_delete_token_stream
+
+                #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
+            };
+            generated
+        };
+        match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_primary_key_token_stream,
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+        }
+    };
+
     let generated = quote::quote!{
         #ident_token_stream
         #maybe_impl_serde_serialize_token_stream
@@ -11361,6 +11563,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #postgresql_type_initialized_by_tokens_token_stream
 
         #postgresql_type_create_table_column_query_part_token_stream
+
+        #maybe_postgresql_type_primary_key_token_stream
     };
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
