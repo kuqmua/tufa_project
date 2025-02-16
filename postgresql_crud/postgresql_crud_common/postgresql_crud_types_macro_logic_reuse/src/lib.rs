@@ -5033,59 +5033,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesBitVecAsPostgresqlVarbit,
     }
     impl PostgresqlType {
-        fn field_type_stringified(&self) -> &'static std::primitive::str {
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
-                Self::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
-                Self::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
-                Self::StdPrimitiveF32AsPostgresqlFloat4 => "std::primitive::f32",
-                Self::StdPrimitiveF64AsPostgresqlFloat8 => "std::primitive::f64",
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "std::primitive::i16",
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "std::primitive::i32",
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "std::primitive::i64",
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "sqlx::postgres::types::PgMoney",
-                Self::SqlxTypesDecimalAsPostgresqlNumeric => "sqlx::types::Decimal",
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => "sqlx::types::BigDecimal",
-                Self::StdPrimitiveBoolAsPostgresqlBool => "std::primitive::bool",
-                Self::StdStringStringAsPostgresqlCharN => "std::string::String",
-                Self::StdStringStringAsPostgresqlVarchar => "std::string::String",
-                Self::StdStringStringAsPostgresqlText => "std::string::String",
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "std::vec::Vec<std::primitive::u8>",
-                Self::SqlxTypesTimeDateAsPostgresqlDate => "sqlx::types::time::Date",
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => "sqlx::types::chrono::NaiveDate",
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "sqlx::types::chrono::NaiveTime",
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => "sqlx::types::time::Time",
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "sqlx::postgres::types::PgInterval",
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "sqlx::postgres::types::PgRange<std::primitive::i32>",
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "sqlx::postgres::types::PgRange<std::primitive::i64>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::time::Date>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::Decimal>",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>",
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "sqlx::types::chrono::NaiveDateTime",
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "sqlx::types::time::PrimitiveDateTime",
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "sqlx::types::time::OffsetDateTime",
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>",
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>",
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "sqlx::types::uuid::Uuid",
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "sqlx::types::uuid::Uuid",
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "sqlx::types::ipnetwork::IpNetwork",
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "sqlx::types::ipnetwork::IpNetwork",
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
-                Self::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
-            }
-        }
-        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
-            self.field_type_stringified()
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
-        }
         fn postgresql_query_type(&self) -> &'static std::primitive::str {
             match &self {
                 Self::StdPrimitiveI16AsPostgresqlInt2 => "int2",
@@ -5183,56 +5130,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 Self::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
             }
         }
-        fn maybe_derive_serde_serialize_token_stream(&self) -> proc_macro2::TokenStream {
-            let serde_serialize_comma_token_stream = quote::quote!{serde::Serialize,};
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveI32AsPostgresqlInt4 => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveI64AsPostgresqlInt8 => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveF32AsPostgresqlFloat4 => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveF64AsPostgresqlFloat8 => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new,
-                Self::SqlxTypesDecimalAsPostgresqlNumeric => serde_serialize_comma_token_stream,
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new,
-                Self::StdPrimitiveBoolAsPostgresqlBool => serde_serialize_comma_token_stream,
-                Self::StdStringStringAsPostgresqlCharN => serde_serialize_comma_token_stream,
-                Self::StdStringStringAsPostgresqlVarchar => serde_serialize_comma_token_stream,
-                Self::StdStringStringAsPostgresqlText => serde_serialize_comma_token_stream,
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_serialize_comma_token_stream,
-                Self::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_serialize_comma_token_stream,
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new,
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,//todo maybe impl serialize mannually
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new,
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new,
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_serialize_comma_token_stream,
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_serialize_comma_token_stream,
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new,
-                Self::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new,
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new,
-            }
-        }
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -5245,17 +5142,114 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
 
     let ident = &postgresql_type;
-    let field_type = postgresql_type.field_type_token_stream();
-
+    let field_type = {
+        let value = match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "std::primitive::f32",
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "std::primitive::f64",
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "std::primitive::i16",
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "std::primitive::i32",
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "std::primitive::i64",
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "sqlx::postgres::types::PgMoney",
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "sqlx::types::Decimal",
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "sqlx::types::BigDecimal",
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "std::primitive::bool",
+            PostgresqlType::StdStringStringAsPostgresqlCharN => "std::string::String",
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => "std::string::String",
+            PostgresqlType::StdStringStringAsPostgresqlText => "std::string::String",
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "std::vec::Vec<std::primitive::u8>",
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "sqlx::types::time::Date",
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "sqlx::types::chrono::NaiveDate",
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "sqlx::types::chrono::NaiveTime",
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "sqlx::types::time::Time",
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "sqlx::postgres::types::PgInterval",
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "sqlx::postgres::types::PgRange<std::primitive::i32>",
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "sqlx::postgres::types::PgRange<std::primitive::i64>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::time::Date>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::Decimal>",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>",
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "sqlx::types::chrono::NaiveDateTime",
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "sqlx::types::time::PrimitiveDateTime",
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "sqlx::types::time::OffsetDateTime",
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>",
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>",
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "sqlx::types::uuid::Uuid",
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "sqlx::types::uuid::Uuid",
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "sqlx::types::ipnetwork::IpNetwork",
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "sqlx::types::ipnetwork::IpNetwork",
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
+        };
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+    };
     let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
 
     let ident_token_stream = {
+        let maybe_derive_serde_serialize_token_stream = {
+            let serde_serialize_comma_token_stream = quote::quote!{serde::Serialize,};
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_serialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => serde_serialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_serialize_comma_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlText => serde_serialize_comma_token_stream,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,//todo maybe impl serialize mannually
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_serialize_comma_token_stream,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+            }
+        };
         quote::quote!{
             #[derive(
                 Debug,
                 Clone,
                 PartialEq,
-                serde::Serialize,
+                #maybe_derive_serde_serialize_token_stream
                 serde::Deserialize,
             )]
             struct #ident(#field_type);
