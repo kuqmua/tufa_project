@@ -2949,20 +2949,37 @@ impl ShouldWhereElementFieldsBePublic<'_> {
         }
     }
 }
+
+fn generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(
+    postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+) -> proc_macro2::TokenStream {
+    generate_quotes::double_quotes_token_stream(
+        &format!(
+            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case}"
+        )
+    )
+}
+fn generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+    postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    length: std::primitive::usize,
+) -> proc_macro2::TokenStream {
+    generate_quotes::double_quotes_token_stream(
+        &format!(
+            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"
+        )
+    )
+}
 fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (
     proc_macro2::TokenStream,
     proc_macro2::TokenStream,
     proc_macro2::TokenStream
 ) {
-    let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-        &format!(
-            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case}"
-        )
+    let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(
+        postgresql_type_ident_where_element_tokens_upper_camel_case
     );
-    let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
-        &format!(
-            "struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"
-        )
+    let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+        postgresql_type_ident_where_element_tokens_upper_camel_case,
+        length,
     );
     let postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
         &postgresql_type_ident_where_element_tokens_upper_camel_case
@@ -5820,26 +5837,32 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
         }
     };
     let maybe_impl_serde_deserialize_token_stream = {
+        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
+        let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&ident);
         let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
+            let struct_ident_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                &ident,
+                1,
+            );
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgMoney {
+                    impl<'de> serde::Deserialize<'de> for #ident {
                         fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
                         where
                             __D: serde::Deserializer<'de>,
                         {
                             #[doc(hidden)]
                             struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<SqlxPostgresTypesPgMoney>,
+                                marker: serde::__private::PhantomData<#ident>,
                                 lifetime: serde::__private::PhantomData<&'de ()>,
                             }
                             impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgMoney;
+                                type Value = #ident;
                                 fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxPostgresTypesPgMoney")
+                                    serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
                                 }
                                 #[inline]
                                 fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
@@ -5847,7 +5870,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                                     __E: serde::Deserializer<'de>,
                                 {
                                     let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                                    serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
+                                    serde::__private::Ok(#ident(sqlx::postgres::types::PgMoney(__field0)))
                                 }
                                 #[inline]
                                 fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -5857,17 +5880,17 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                                         serde::__private::Some(__value) => __value,
                                         serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxPostgresTypesPgMoney with 1 element"));
+                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_elements_double_quotes_token_stream));
                                         }
                                     };
-                                    serde::__private::Ok(SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(__field0)))
+                                    serde::__private::Ok(#ident(sqlx::postgres::types::PgMoney(__field0)))
                                 }
                             }
                             serde::Deserializer::deserialize_newtype_struct(
                                 __deserializer,
-                                "SqlxPostgresTypesPgMoney",
+                                #ident_double_quotes_token_stream,
                                 __Visitor {
-                                    marker: serde::__private::PhantomData::<SqlxPostgresTypesPgMoney>,
+                                    marker: serde::__private::PhantomData::<#ident>,
                                     lifetime: serde::__private::PhantomData,
                                 },
                             )
@@ -6011,7 +6034,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                             const FIELDS: &'static [&'static str] = &["digits", "scale"];
                             serde::Deserializer::deserialize_struct(
                                 __deserializer,
-                                "SqlxTypesBigDecimal",
+                                #ident_double_quotes_token_stream,
                                 FIELDS,
                                 __Visitor {
                                     marker: serde::__private::PhantomData::<SqlxTypesBigDecimal>,
@@ -6269,7 +6292,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                             const FIELDS: &'static [&'static str] = &["year", "month", "day"];
                             _serde::Deserializer::deserialize_struct(
                                 __deserializer,
-                                "SqlxTypesTimeDate",
+                                #ident_double_quotes_token_stream,
                                 FIELDS,
                                 __Visitor {
                                     marker: _serde::__private::PhantomData::<SqlxTypesTimeDate>,
@@ -6374,7 +6397,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                                 }
                             }
                             const FIELDS: &[&str] = &["months", "days", "microseconds"];
-                            deserializer.deserialize_struct("SqlxPostgresTypesPgInterval", FIELDS, SqlxPostgresTypesPgIntervalVisitor)
+                            deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgIntervalVisitor)
                         }
                     }
                 };
@@ -6462,7 +6485,7 @@ pub fn postgresql_type_tokens(input: proc_macro::TokenStream) -> proc_macro::Tok
                                 }
                             }
                             const FIELDS: &[&str] = &["start", "end"];
-                            deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI32", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
+                            deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
                         }
                     }
                 };
