@@ -5033,55 +5033,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesBitVecAsPostgresqlVarbit,
     }
     impl PostgresqlType {
-        fn postgresql_query_type(&self) -> &'static std::primitive::str {
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 => "int2",
-                Self::StdPrimitiveI32AsPostgresqlInt4 => "int4",
-                Self::StdPrimitiveI64AsPostgresqlInt8 => "int8",
-                Self::StdPrimitiveF32AsPostgresqlFloat4 => "float4",
-                Self::StdPrimitiveF64AsPostgresqlFloat8 => "float8",
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "smallserial",
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "serial",
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "bigserial",
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "money",
-                Self::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
-                Self::StdPrimitiveBoolAsPostgresqlBool => "bool",
-                Self::StdStringStringAsPostgresqlCharN => "char(10)",
-                Self::StdStringStringAsPostgresqlVarchar => "varchar(8)",
-                Self::StdStringStringAsPostgresqlText => "text",
-                // Self::StdStringStringAsPostgresqlCiText => "citext",
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
-                Self::SqlxTypesTimeDateAsPostgresqlDate => "date",
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "time",
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => "time",
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "interval",
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "tsrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "tsrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "tstzrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "tstzrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "tstzrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "daterange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "daterange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "numrange",
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "numrange",
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "timestamp",
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "timestamp",
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "timestamptz",
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "timestamptz",
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "timestamptz",
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "uuid",
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "uuid",
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
-                Self::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
-            }
-        }
         fn postgresql_type_initialized_by_tokens(&self) -> PostgresqlTypeInitializedByTokens {
             match &self {
                 Self::StdPrimitiveI16AsPostgresqlInt2 => PostgresqlTypeInitializedByTokens::InitializedByClient,
@@ -9279,8 +9230,55 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     };
     
     let impl_crate_create_table_column_query_part_for_ident_token_stream = {
+        let postgresql_query_type = match &postgresql_type {
+            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "int2",
+            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "int4",
+            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "int8",
+            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "float4",
+            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "float8",
+            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "smallserial",
+            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "serial",
+            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "bigserial",
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "money",
+            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
+            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
+            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "bool",
+            PostgresqlType::StdStringStringAsPostgresqlCharN => "char(10)",
+            PostgresqlType::StdStringStringAsPostgresqlVarchar => "varchar(8)",
+            PostgresqlType::StdStringStringAsPostgresqlText => "text",
+            // PostgresqlType::StdStringStringAsPostgresqlCiText => "citext",
+            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
+            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "date",
+            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "time",
+            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "time",
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "interval",
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "tsrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "tsrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "tstzrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "tstzrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "tstzrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "daterange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "daterange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "numrange",
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "numrange",
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "timestamp",
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "timestamp",
+            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "timestamptz",
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "timestamptz",
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "timestamptz",
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "uuid",
+            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "uuid",
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",//todo
+            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
+        };
         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-            &format!("{{column}} {}", postgresql_type.postgresql_query_type())
+            &format!("{{column}} {postgresql_query_type}")
         );
         quote::quote!{
             impl crate::CreateTableColumnQueryPart for #ident {
