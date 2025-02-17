@@ -80,8 +80,8 @@ pub struct Example {
     pub sqlx_types_decimal_as_numeric_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesDecimalAsPostgresqlNumericNullable,
     pub sqlx_types_decimal_as_numeric_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesDecimalAsPostgresqlNumericNotNull,
 
-    // pub sqlx_types_big_decimal_as_numeric_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBigDecimalAsPostgresqlNumericNullable,
-    // pub sqlx_types_big_decimal_as_numeric_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBigDecimalAsPostgresqlNumericNotNull,
+    pub sqlx_types_big_decimal_as_numeric_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBigDecimalAsPostgresqlNumericNullable,
+    pub sqlx_types_big_decimal_as_numeric_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBigDecimalAsPostgresqlNumericNotNull,
 
     // pub std_primitive_bool_as_bool_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNullable,
     // pub std_primitive_bool_as_bool_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull,

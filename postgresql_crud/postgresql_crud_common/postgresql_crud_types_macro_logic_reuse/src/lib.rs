@@ -5157,7 +5157,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => serde_deserialize_comma_token_stream,
-                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
                     PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_deserialize_comma_token_stream,
                     PostgresqlType::StdStringStringAsPostgresqlCharN => serde_deserialize_comma_token_stream,
                     PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_deserialize_comma_token_stream,
@@ -11553,7 +11553,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
     let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
-    // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
+    let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
     // let h12 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
     // let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
     // let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar);
@@ -11590,7 +11590,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //       "PostgresqlTypeTokens",
-            //       &h10,
+            //       &h11,
             //   );
     let generated = quote::quote!{
         #h1
@@ -11603,7 +11603,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h8
         #h9
         #h10
-        // #h11
+        #h11
         // #h12
         // #h13
         // #h14
