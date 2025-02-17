@@ -5803,17 +5803,27 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let maybe_impl_serde_deserialize_token_stream = {
             let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
             let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&postgresql_type);
+            let struct_ident_with_one_element_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                &postgresql_type,
+                1,
+            );
+            let struct_ident_with_two_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                &postgresql_type,
+                2,
+            );
+            let struct_ident_with_three_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                &postgresql_type,
+                3,
+            );
+            let ident_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
-                let struct_ident_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
-                    &postgresql_type,
-                    1,
-                );
                 quote::quote!{
                     const _: () = {
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for #postgresql_type{
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
                             where
                                 __D: serde::Deserializer<'de>,
@@ -5844,7 +5854,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                                             serde::__private::Some(__value) => __value,
                                             serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_elements_double_quotes_token_stream));
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
                                             }
                                         };
                                         serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
@@ -5869,7 +5879,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
                             where
                                 __D: serde::Deserializer<'de>,
@@ -5930,13 +5940,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 }
                                 #[doc(hidden)]
                                 struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<SqlxTypesBigDecimal>,
+                                    marker: serde::__private::PhantomData<#postgresql_type>,
                                     lifetime: serde::__private::PhantomData<&'de ()>,
                                 }
                                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = SqlxTypesBigDecimal;
+                                    type Value = #postgresql_type;
                                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesBigDecimal")
+                                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
                                     }
                                     #[inline]
                                     fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -5946,16 +5956,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         let __field0 = match serde::de::SeqAccess::next_element::<NumBigintBigInt>(&mut __seq)? {
                                             serde::__private::Some(__value) => __value,
                                             serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxTypesBigDecimal with 2 elements"));
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
                                             }
                                         };
                                         let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                                             serde::__private::Some(__value) => __value,
                                             serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxTypesBigDecimal with 2 elements"));
+                                                return serde::__private::Err(serde::de::Error::invalid_length(1usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
                                             }
                                         };
-                                        serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
                                     }
                                     #[inline]
                                     fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -5991,7 +6001,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                             serde::__private::Some(__field1) => __field1,
                                             serde::__private::None => serde::__private::de::missing_field("scale")?,
                                         };
-                                        serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
                                     }
                                 }
                                 #[doc(hidden)]
@@ -6001,7 +6011,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     #ident_double_quotes_token_stream,
                                     FIELDS,
                                     __Visitor {
-                                        marker: serde::__private::PhantomData::<SqlxTypesBigDecimal>,
+                                        marker: serde::__private::PhantomData::<#postgresql_type>,
                                         lifetime: serde::__private::PhantomData,
                                     },
                                 )
@@ -6017,7 +6027,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeDate {
+                        impl<'de> _serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<__D>(
                                 __deserializer: __D,
                             ) -> _serde::__private::Result<Self, __D::Error>
@@ -6104,18 +6114,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 }
                                 #[doc(hidden)]
                                 struct __Visitor<'de> {
-                                    marker: _serde::__private::PhantomData<SqlxTypesTimeDate>,
+                                    marker: _serde::__private::PhantomData<#postgresql_type>,
                                     lifetime: _serde::__private::PhantomData<&'de ()>,
                                 }
                                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = SqlxTypesTimeDate;
+                                    type Value = #postgresql_type;
                                     fn expecting(
                                         &self,
                                         __formatter: &mut _serde::__private::Formatter<'_>,
                                     ) -> _serde::__private::fmt::Result {
                                         _serde::__private::Formatter::write_str(
                                             __formatter,
-                                            "struct SqlxTypesTimeDate",
+                                            #struct_ident_double_quotes_token_stream,
                                         )
                                     }
                                     #[inline]
@@ -6134,7 +6144,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 return _serde::__private::Err(
                                                     _serde::de::Error::invalid_length(
                                                         0usize,
-                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
                                                     ),
                                                 );
                                             }
@@ -6147,7 +6157,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 return _serde::__private::Err(
                                                     _serde::de::Error::invalid_length(
                                                         1usize,
-                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
                                                     ),
                                                 );
                                             }
@@ -6160,12 +6170,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 return _serde::__private::Err(
                                                     _serde::de::Error::invalid_length(
                                                         2usize,
-                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
                                                     ),
                                                 );
                                             }
                                         };
-                                        match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
+                                        match #postgresql_type::try_new(__field0, __field1, __field2) {
                                             Ok(value) => _serde::__private::Ok(value),
                                             Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                         }
@@ -6246,7 +6256,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 _serde::__private::de::missing_field("day")?
                                             }
                                         };
-                                        match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
+                                        match #postgresql_type::try_new(__field0, __field1, __field2) {
                                             Ok(value) => _serde::__private::Ok(value),
                                             Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                         }
@@ -6259,7 +6269,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     #ident_double_quotes_token_stream,
                                     FIELDS,
                                     __Visitor {
-                                        marker: _serde::__private::PhantomData::<SqlxTypesTimeDate>,
+                                        marker: _serde::__private::PhantomData::<#postgresql_type>,
                                         lifetime: _serde::__private::PhantomData,
                                     },
                                 )
@@ -6274,7 +6284,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
                             where
                                 D: serde::Deserializer<'de>,
@@ -6310,22 +6320,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         deserializer.deserialize_identifier(FieldVisitor)
                                     }
                                 }
-                                struct SqlxPostgresTypesPgIntervalVisitor;
-                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgIntervalVisitor {
-                                    type Value = SqlxPostgresTypesPgInterval;
+                                struct #ident_visitor_upper_camel_case;
+                                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                                    type Value = #postgresql_type;
                                     fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        formatter.write_str("struct SqlxPostgresTypesPgInterval")
+                                        formatter.write_str(#struct_ident_double_quotes_token_stream)
                                     }
-                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::SeqAccess<'de>,
                                     {
                                         let months = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                         let days = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
                                         let microseconds = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
-                                        Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
                                     }
-                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+                                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::MapAccess<'de>,
                                     {
@@ -6357,11 +6367,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
                                         let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
                                         let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
-                                        Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
                                     }
                                 }
                                 const FIELDS: &[&str] = &["months", "days", "microseconds"];
-                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgIntervalVisitor)
+                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                             }
                         }
                     };
@@ -6373,7 +6383,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
                             where
                                 D: serde::Deserializer<'de>,
@@ -6407,21 +6417,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         deserializer.deserialize_identifier(FieldVisitor)
                                     }
                                 }
-                                struct SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor;
-                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor {
-                                    type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32;
+                                struct #ident_visitor_upper_camel_case;
+                                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                                    type Value = #postgresql_type;
                                     fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI32")
+                                        formatter.write_str(#struct_ident_double_quotes_token_stream)
                                     }
-                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::SeqAccess<'de>,
                                     {
                                         let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                         let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
                                     }
-                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
+                                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::MapAccess<'de>,
                                     {
@@ -6445,11 +6455,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         }
                                         let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
                                         let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
                                     }
                                 }
                                 const FIELDS: &[&str] = &["start", "end"];
-                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
+                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                             }
                         }
                     };
@@ -6461,7 +6471,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
                             where
                                 D: serde::Deserializer<'de>,
@@ -6495,21 +6505,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         deserializer.deserialize_identifier(FieldVisitor)
                                     }
                                 }
-                                struct SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor;
-                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor {
-                                    type Value = SqlxPostgresTypesPgRangeStdPrimitiveI64;
+                                struct #ident_visitor_upper_camel_case;
+                                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                                    type Value = #postgresql_type;
                                     fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI64")
+                                        formatter.write_str(#struct_ident_double_quotes_token_stream)
                                     }
-                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::SeqAccess<'de>,
                                     {
                                         let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                         let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
                                     }
-                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+                                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
                                     where
                                         V: serde::de::MapAccess<'de>,
                                     {
@@ -6533,11 +6543,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         }
                                         let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
                                         let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
                                     }
                                 }
                                 const FIELDS: &[&str] = &["start", "end"];
-                                deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI64", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor)
+                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                             }
                         }
                     };
@@ -6549,8 +6559,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
                         extern crate serde as _serde;
                         #[automatically_derived]
-                        impl<'de> _serde::Deserialize<'de>
-                        for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+                        impl<'de> _serde::Deserialize<'de> for #postgresql_type {
                             fn deserialize<__D>(
                                 __deserializer: __D,
                             ) -> _serde::__private::Result<Self, __D::Error>
@@ -6634,19 +6643,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #[doc(hidden)]
                                 struct __Visitor<'de> {
                                     marker: _serde::__private::PhantomData<
-                                        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+                                        #postgresql_type,
                                     >,
                                     lifetime: _serde::__private::PhantomData<&'de ()>,
                                 }
                                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime;
+                                    type Value = #postgresql_type;
                                     fn expecting(
                                         &self,
                                         __formatter: &mut _serde::__private::Formatter<'_>,
                                     ) -> _serde::__private::fmt::Result {
                                         _serde::__private::Formatter::write_str(
                                             __formatter,
-                                            "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
+                                            #struct_ident_double_quotes_token_stream,
                                         )
                                     }
                                     #[inline]
@@ -6665,7 +6674,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 return _serde::__private::Err(
                                                     _serde::de::Error::invalid_length(
                                                         0usize,
-                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
+                                                        &#struct_ident_with_two_elements_double_quotes_token_stream,
                                                     ),
                                                 );
                                             }
@@ -6678,12 +6687,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 return _serde::__private::Err(
                                                     _serde::de::Error::invalid_length(
                                                         1usize,
-                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
+                                                        &#struct_ident_with_two_elements_double_quotes_token_stream,
                                                     ),
                                                 );
                                             }
                                         };
-                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
+                                        _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
                                             start: __field0,
                                             end: __field1,
                                         }))
@@ -6749,7 +6758,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                 _serde::__private::de::missing_field("end")?
                                             }
                                         };
-                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
+                                        _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
                                             start: __field0,
                                             end: __field1,
                                         }))
@@ -6759,11 +6768,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 const FIELDS: &'static [&'static str] = &["start", "end"];
                                 _serde::Deserializer::deserialize_struct(
                                     __deserializer,
-                                    "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
+                                    #ident_double_quotes_token_stream,
                                     FIELDS,
                                     __Visitor {
                                         marker: _serde::__private::PhantomData::<
-                                            SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+                                            #postgresql_type,
                                         >,
                                         lifetime: _serde::__private::PhantomData,
                                     },
@@ -11554,7 +11563,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
     let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
-    // let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
+    let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
     // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
     // let h12 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
     // let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
@@ -11592,7 +11601,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //       "PostgresqlTypeTokens",
-            //       &h6,
+            //       &h10,
             //   );
     let generated = quote::quote!{
         #h1

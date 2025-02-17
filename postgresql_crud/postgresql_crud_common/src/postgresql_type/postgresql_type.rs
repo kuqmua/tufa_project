@@ -170,21 +170,21 @@ const BIT: &std::primitive::str = "bit";
 //         format!("{column} {MONEY}")
 //     }
 // }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
-struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
-impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {NUMERIC}")
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+// )]
+// struct SqlxTypesDecimalAsPostgresqlNumeric(crate::postgresql_type::postgresql_base_type::SqlxTypesDecimal);
+// impl crate::CreateTableColumnQueryPart for SqlxTypesDecimalAsPostgresqlNumeric {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {NUMERIC}")
+//     }
+// }
 #[derive(
     Debug,
     Clone,
@@ -736,3 +736,6 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlVarbit {
 /////////////////////////////////////////
 /////////////////////////////////////////
 postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
+
+
+///////////////////////
