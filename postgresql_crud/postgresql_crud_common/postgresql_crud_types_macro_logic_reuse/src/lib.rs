@@ -11685,8 +11685,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz);
     // let h36 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz);
     // let h37 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz);
-    // let h38 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
-    // let h39 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
+    let h38 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
+    let h39 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
     let h40 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
     let h41 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
     let h42 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
@@ -11735,8 +11735,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h35
         // #h36
         // #h37
-        // #h38
-        // #h39
+        #h38
+        #h39
         #h40
         #h41
         #h42

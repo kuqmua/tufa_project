@@ -608,37 +608,37 @@ impl crate::CreateTableColumnQueryPart for SqlxTypesChronoDateTimeSqlxTypesChron
         format!("{column} {TIMESTAMPTZ}")
     }
 }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingUuidGenerateV4FunctionByPostgresqlTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
-)]
-struct SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
-impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {UUID}")
-    }
-}
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
-struct SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
-impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {UUID}")
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedUsingUuidGenerateV4FunctionByPostgresqlTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypePrimaryKeyTokens,
+// )]
+// struct SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
+// impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {UUID}")
+//     }
+// }
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+// )]
+// struct SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient(crate::postgresql_type::postgresql_base_type::SqlxTypesUuidUuid);
+// impl crate::CreateTableColumnQueryPart for SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {UUID}")
+//     }
+// }
 // #[derive(
 //     Debug,
 //     Clone,
