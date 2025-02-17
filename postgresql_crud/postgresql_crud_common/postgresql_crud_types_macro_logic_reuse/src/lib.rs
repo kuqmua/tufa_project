@@ -5042,7 +5042,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     }
     let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
 
-    let ident = &postgresql_type;
     let field_type = {
         let value = match &postgresql_type {
             PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
@@ -5093,7 +5092,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
     };
-    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
+    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&postgresql_type);
 
     let ident_token_stream = {
         let maybe_derive_serde_serialize_token_stream = {
@@ -5202,11 +5201,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #maybe_derive_serde_serialize_token_stream
                 #maybe_derive_serde_deserialize_token_stream
             )]
-            struct #ident(#field_type);
+            struct #postgresql_type(#field_type);
         }
     };
     let maybe_impl_serde_serialize_token_stream = {
-        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
+        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
 
         let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
             quote::quote!{
@@ -5214,7 +5213,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
                         where
                             __S: serde::Serializer,
@@ -5231,7 +5230,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
                         where
                             __S: serde::Serializer,
@@ -5252,7 +5251,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5292,7 +5291,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
                         where
                             S: serde::Serializer,
@@ -5313,7 +5312,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
                         where
                             S: serde::Serializer,
@@ -5333,7 +5332,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
                         where
                             S: serde::Serializer,
@@ -5353,7 +5352,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5388,7 +5387,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5432,7 +5431,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     extern crate serde as _serde;
                     #[automatically_derived]
                     impl _serde::Serialize
-                    for #ident {
+                    for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5468,7 +5467,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     extern crate serde as _serde;
                     #[automatically_derived]
                     impl _serde::Serialize
-                    for #ident {
+                    for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5503,7 +5502,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5546,7 +5545,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5581,7 +5580,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5624,7 +5623,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5659,7 +5658,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5702,7 +5701,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
                         where
                             __S: serde::Serializer,
@@ -5719,7 +5718,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl serde::Serialize for #ident {
+                    impl serde::Serialize for #postgresql_type{
                         fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
                         where
                             __S: serde::Serializer,
@@ -5736,7 +5735,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl _serde::Serialize for #ident {
+                    impl _serde::Serialize for #postgresql_type{
                         fn serialize<__S>(
                             &self,
                             __serializer: __S,
@@ -5802,11 +5801,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         }
     };
     let maybe_impl_serde_deserialize_token_stream = {
-        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
-        let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&ident);
+        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
+        let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&postgresql_type);
         let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
             let struct_ident_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
-                &ident,
+                &postgresql_type,
                 1,
             );
             quote::quote!{
@@ -5814,18 +5813,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for #ident {
+                    impl<'de> serde::Deserialize<'de> for #postgresql_type{
                         fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
                         where
                             __D: serde::Deserializer<'de>,
                         {
                             #[doc(hidden)]
                             struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<#ident>,
+                                marker: serde::__private::PhantomData<#postgresql_type>,
                                 lifetime: serde::__private::PhantomData<&'de ()>,
                             }
                             impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = #ident;
+                                type Value = #postgresql_type;
                                 fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
                                 }
@@ -5835,7 +5834,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     __E: serde::Deserializer<'de>,
                                 {
                                     let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                                    serde::__private::Ok(#ident(sqlx::postgres::types::PgMoney(__field0)))
+                                    serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
                                 }
                                 #[inline]
                                 fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -5848,14 +5847,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                             return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_elements_double_quotes_token_stream));
                                         }
                                     };
-                                    serde::__private::Ok(#ident(sqlx::postgres::types::PgMoney(__field0)))
+                                    serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
                                 }
                             }
                             serde::Deserializer::deserialize_newtype_struct(
                                 __deserializer,
                                 #ident_double_quotes_token_stream,
                                 __Visitor {
-                                    marker: serde::__private::PhantomData::<#ident>,
+                                    marker: serde::__private::PhantomData::<#postgresql_type>,
                                     lifetime: serde::__private::PhantomData,
                                 },
                             )
@@ -9279,7 +9278,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             &format!("{{column}} {postgresql_query_type}")
         );
         quote::quote!{
-            impl crate::CreateTableColumnQueryPart for #ident {
+            impl crate::CreateTableColumnQueryPart for #postgresql_type{
                 fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
                     format!(#format_handle_token_stream)
                 }
@@ -9288,19 +9287,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     };
 
     let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-        &ident,
+        &postgresql_type,
         &quote::quote!{"{self:?}"}
     );
 
     let postgresql_base_type_tokens = {
         panic_location::panic_location();
-        let std_option_option_ident_token_stream = quote::quote!{std::option::Option<#ident>};
+        let std_option_option_ident_token_stream = quote::quote!{std::option::Option<#postgresql_type>};
         let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &ident,
+            &postgresql_type,
             &quote::quote!{self.to_string()},
         );
         let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &ident,
+            &postgresql_type,
             &field_type
         );
         let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
@@ -9308,12 +9307,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             &std_option_option_ident_token_stream
         );
         let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &ident,
+            &postgresql_type,
             &field_type
         );
         let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
             &std_option_option_ident_upper_camel_case,
-            &quote::quote! {std::option::Option<#ident>}
+            &quote::quote! {std::option::Option<#postgresql_type>}
         );
         let self_zero_token_stream = {
             let self_snake_case = naming::SelfSnakeCase;
@@ -9342,7 +9341,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         };
         let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &ident,
+            &postgresql_type,
             &try_generate_bind_increments_token_stream,
             &quote::quote! {
                 #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
@@ -9363,7 +9362,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
             Visibility::PubCrate,
             &std_option_option_ident_upper_camel_case,
-            &quote::quote!{(pub std::option::Option<#ident>);},
+            &quote::quote!{(pub std::option::Option<#postgresql_type>);},
             false,
             true,
         );
@@ -9379,7 +9378,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
             (
                 generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &{
                         let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
                             &core_default_default_default_token_stream,
@@ -9506,7 +9505,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             (
                 generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-                    &ident,
+                    &postgresql_type,
                     true,
                 ),
                 generate_impl_crate_create_table_query_part_for_tokens_token_stream(
@@ -9518,7 +9517,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
             let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
             quote::quote!{
-                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
+                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
             }
         };
         let impl_postgresql_base_type_for_ident_token_stream = {
@@ -9526,7 +9525,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
             let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
             quote::quote! {
-                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #ident {
+                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
                     type #postgresql_base_type_self_upper_camel_case = Self;
                     type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
                 }
@@ -9554,10 +9553,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     };
     let maybe_primary_key_tokens_token_stream = {
         let primary_key_token_stream = {
-            let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
+            let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type);
             let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
                 quote::quote!{
-                    impl sqlx::postgres::PgHasArrayType for #ident {
+                    impl sqlx::postgres::PgHasArrayType for #postgresql_type{
                         fn array_type_info() -> sqlx::postgres::PgTypeInfo {
                             <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
                         }
@@ -9568,7 +9567,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
                 let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
                 quote::quote!{
-                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
+                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type{
                         type #postgresql_base_type_self_upper_camel_case = Self;
                     }
                 }
@@ -9635,19 +9634,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9655,13 +9654,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let in_handle = crate::filters::In;
             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -9678,23 +9677,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_postgres_types_pg_money_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
         
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9702,13 +9701,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let in_handle = crate::filters::In;
             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -9731,19 +9730,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9751,7 +9750,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -9766,22 +9765,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_big_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9789,7 +9788,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -9806,7 +9805,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let where_element_bool_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &WhereOperatorType::FieldType {
                     field_type: &field_type,
@@ -9815,7 +9814,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                 ]
@@ -9828,17 +9827,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let where_element_std_string_string_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &case_sensitive_regular_expression,
                     &case_insensitive_regular_expression,
@@ -9853,7 +9852,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &WhereOperatorType::FieldType {
                     field_type: &field_type,
@@ -9862,17 +9861,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let length_more_than = crate::filters::LengthMoreThan;
             let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
             let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &length_more_than,
@@ -9887,22 +9886,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_time_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9910,17 +9909,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_date = crate::filters::CurrentDate;
             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -9945,19 +9944,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -9965,17 +9964,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_date = crate::filters::CurrentDate;
             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10000,19 +9999,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10020,17 +10019,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_time = crate::filters::CurrentTime;
             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10055,19 +10054,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10075,17 +10074,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_time = crate::filters::CurrentTime;
             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10104,22 +10103,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartIsEqualToEnd,
@@ -10127,7 +10126,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10159,13 +10158,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
-                    &WhereOperatorType::Ident(&ident),
+                    &WhereOperatorType::Ident(&postgresql_type),
                 );
                 let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
                 let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                     &range_type_token_stream,
                     &range_type_should_impl_range_length,
@@ -10174,22 +10173,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
                 let contains_another_range = crate::filters::ContainsAnotherRange;
                 let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 let strictly_to_left_of_range = crate::filters::StrictlyToLeftOfRange;
                 let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 let strictly_to_right_of_range = crate::filters::StrictlyToRightOfRange;
                 let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 let included_lower_bound = crate::filters::IncludedLowerBound;
                 let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                     &range_type_token_stream,
                     &range_type_default_initialization_token_stream,
@@ -10197,7 +10196,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
                 let excluded_upper_bound = crate::filters::ExcludedUpperBound;
                 let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                     &range_type_token_stream,
                     &range_type_default_initialization_token_stream,
@@ -10205,31 +10204,31 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
                 let greater_than_lower_bound = crate::filters::GreaterThanLowerBound;
                 let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 let overlap_with_range = crate::filters::OverlapWithRange;
                 let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 let adjacent_with_range = crate::filters::AdjacentWithRange;
                 let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &ident,
+                    &postgresql_type,
                     &is_nullable,
                 );
                 //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
                 let range_length = crate::filters::RangeLength;
                 let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
                     ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &ident,
+                        &postgresql_type,
                         &is_nullable,
                     ),
                     ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
                 };
                 let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                     is_nullable,
-                    &ident,
+                    &postgresql_type,
                     &{
                         let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                             &equal,
@@ -10284,19 +10283,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10304,17 +10303,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_timestamp = crate::filters::CurrentTimestamp;
             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10340,19 +10339,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_field_type,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10360,17 +10359,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let current_timestamp = crate::filters::CurrentTimestamp;
             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10389,21 +10388,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_time_offset_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let before = crate::filters::Before;
             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10433,7 +10432,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &before,
@@ -10448,21 +10447,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let before = crate::filters::Before;
             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10470,7 +10469,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &before,
@@ -10485,21 +10484,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let before = crate::filters::Before;
             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let between = crate::filters::Between;
             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
@@ -10507,7 +10506,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &before,
@@ -10524,23 +10523,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let where_element_sqlx_types_uuid_uuid_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
-                &WhereOperatorType::Ident(&ident),
+                &WhereOperatorType::Ident(&postgresql_type),
             );
             let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &case_sensitive_regular_expression,
@@ -10557,7 +10556,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let where_element_sqlx_types_ipnetwork_ip_network_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &WhereOperatorType::FieldType {
                     field_type: &field_type,
@@ -10566,7 +10565,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                 ]
@@ -10577,32 +10576,32 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         });
         let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&ident);
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident,
             );
             let greater_than = crate::filters::GreaterThan;
             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
                 &where_operator_type_ident
             );
             let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &greater_than,
@@ -10627,18 +10626,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
             let equal = crate::filters::Equal;
             let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
-                &WhereOperatorType::Ident(&ident),
+                &WhereOperatorType::Ident(&postgresql_type),
             );
             let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
             let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
+                &postgresql_type,
                 &is_nullable,
             );
             let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                 is_nullable,
-                &ident,
+                &postgresql_type,
                 &vec![
                     &equal,
                     &bit_vec_position_equal,
@@ -10747,13 +10746,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         };
         let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
             let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
-                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident),
-                PostgresqlTypeNullableOrNotNull::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident),
+                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
+                PostgresqlTypeNullableOrNotNull::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
             };
-            let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
+            let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&postgresql_type);
             let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
                 PostgresqlTypeNullableOrNotNull::Nullable => &std_option_option_ident_upper_camel_case,
-                PostgresqlTypeNullableOrNotNull::NotNull => &ident,
+                PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type,
             };
 
             let postgresql_type_ident_column_upper_camel_case = naming::parameter::PostgresqlTypeSelfColumnUpperCamelCase::from_tokens(&ident_handle);
@@ -11239,13 +11238,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let is_primary_key = IsPrimaryKey::False;
     let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
        &PostgresqlTypeNullableOrNotNull::Nullable,
-        &ident,
+        &postgresql_type,
         &field_type,
         &is_primary_key,
     );
     let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
        &PostgresqlTypeNullableOrNotNull::NotNull,
-        &ident,
+        &postgresql_type,
         &field_type,
         &is_primary_key,
     );
@@ -11255,13 +11254,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let is_primary_key = IsPrimaryKey::False;
             let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                &PostgresqlTypeNullableOrNotNull::Nullable,
-                &ident,
+                &postgresql_type,
                 &field_type,
                 &is_primary_key,
             );
             let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                &PostgresqlTypeNullableOrNotNull::NotNull,
-                &ident,
+                &postgresql_type,
                 &field_type,
                 &is_primary_key,
             );
@@ -11275,7 +11274,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let is_primary_key = IsPrimaryKey::True;
             let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                &PostgresqlTypeNullableOrNotNull::NotNull,
-                &ident,
+                &postgresql_type,
                 &field_type,
                 &is_primary_key,
             );
@@ -11364,7 +11363,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
             };
             let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-            let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_ident_not_null_to_create_token_stream = {
                 let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                     &postgresql_type_ident_not_null_to_create_upper_camel_case,
@@ -11374,7 +11373,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
                 }
             };
-            let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_ident_not_null_to_read_token_stream = {
                 let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
                     &postgresql_type_ident_not_null_to_read_upper_camel_case,
@@ -11390,7 +11389,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
                 }
             };
-            let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_ident_not_null_to_update_token_stream = {
                 let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
                     &postgresql_type_ident_not_null_to_update_upper_camel_case,
@@ -11417,7 +11416,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
                 }
             };
-            let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&ident);
+            let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_ident_not_null_to_delete_token_stream = {
                 let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
                     Visibility::Pub,
@@ -11462,7 +11461,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
-                let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident);
+                let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
                 quote::quote!{
                     impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
                         type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
