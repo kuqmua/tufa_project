@@ -109,11 +109,11 @@ pub struct Example {
     pub sqlx_types_time_date_as_date_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeDateAsPostgresqlDateNullable,
     pub sqlx_types_time_date_as_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeDateAsPostgresqlDateNotNull,
 
-    // pub sqlx_types_chrono_naive_date_as_date_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNullable,
-    // pub sqlx_types_chrono_naive_date_as_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
+    pub sqlx_types_chrono_naive_date_as_date_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNullable,
+    pub sqlx_types_chrono_naive_date_as_date_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
 
-    // pub sqlx_types_chrono_naive_time_as_time_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNullable,
-    // pub sqlx_types_chrono_naive_time_as_time_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
+    pub sqlx_types_chrono_naive_time_as_time_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNullable,
+    pub sqlx_types_chrono_naive_time_as_time_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
 
     // pub sqlx_types_time_time_as_time_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeTimeAsPostgresqlTimeNullable,
     // pub sqlx_types_time_time_as_time_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
