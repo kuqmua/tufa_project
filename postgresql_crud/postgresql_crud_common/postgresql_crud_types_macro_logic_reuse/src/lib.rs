@@ -5040,5120 +5040,5588 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             .to_tokens(tokens)
         }
     }
-    let postgresql_type = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
 
-    let field_type = {
-        let value = match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "std::primitive::f32",
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "std::primitive::f64",
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "std::primitive::i16",
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "std::primitive::i32",
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "std::primitive::i64",
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "sqlx::postgres::types::PgMoney",
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "sqlx::types::Decimal",
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "sqlx::types::BigDecimal",
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "std::primitive::bool",
-            PostgresqlType::StdStringStringAsPostgresqlCharN => "std::string::String",
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => "std::string::String",
-            PostgresqlType::StdStringStringAsPostgresqlText => "std::string::String",
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "std::vec::Vec<std::primitive::u8>",
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "sqlx::types::time::Date",
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "sqlx::types::chrono::NaiveDate",
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "sqlx::types::chrono::NaiveTime",
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "sqlx::types::time::Time",
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "sqlx::postgres::types::PgInterval",
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "sqlx::postgres::types::PgRange<std::primitive::i32>",
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "sqlx::postgres::types::PgRange<std::primitive::i64>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::time::Date>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::Decimal>",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>",
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "sqlx::types::chrono::NaiveDateTime",
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "sqlx::types::time::PrimitiveDateTime",
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "sqlx::types::time::OffsetDateTime",
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>",
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>",
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "sqlx::types::uuid::Uuid",
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "sqlx::types::uuid::Uuid",
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "sqlx::types::ipnetwork::IpNetwork",
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "sqlx::types::ipnetwork::IpNetwork",
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
+    let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
+        let field_type = {
+            let value = match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "std::primitive::f32",
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "std::primitive::f64",
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "std::primitive::i16",
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "std::primitive::i32",
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "std::primitive::i64",
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "sqlx::postgres::types::PgMoney",
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "sqlx::types::Decimal",
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "sqlx::types::BigDecimal",
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "std::primitive::bool",
+                PostgresqlType::StdStringStringAsPostgresqlCharN => "std::string::String",
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => "std::string::String",
+                PostgresqlType::StdStringStringAsPostgresqlText => "std::string::String",
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "std::vec::Vec<std::primitive::u8>",
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "sqlx::types::time::Date",
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "sqlx::types::chrono::NaiveDate",
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "sqlx::types::chrono::NaiveTime",
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "sqlx::types::time::Time",
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "sqlx::postgres::types::PgInterval",
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "sqlx::postgres::types::PgRange<std::primitive::i32>",
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "sqlx::postgres::types::PgRange<std::primitive::i64>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "sqlx::postgres::types::PgRange<sqlx::types::time::Date>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::Decimal>",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>",
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "sqlx::types::chrono::NaiveDateTime",
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "sqlx::types::time::PrimitiveDateTime",
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "sqlx::types::time::OffsetDateTime",
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>",
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>",
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "sqlx::types::uuid::Uuid",
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "sqlx::types::uuid::Uuid",
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "sqlx::types::ipnetwork::IpNetwork",
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "sqlx::types::ipnetwork::IpNetwork",
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
+            };
+            value.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
         };
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
-    };
-    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&postgresql_type);
+        let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&postgresql_type);
 
-    let ident_token_stream = {
-        let maybe_derive_serde_serialize_token_stream = {
-            let serde_serialize_comma_token_stream = quote::quote!{serde::Serialize,};
-            match &postgresql_type {
-                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_serialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlCharN => serde_serialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_serialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlText => serde_serialize_comma_token_stream,
-                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,//todo maybe impl serialize mannually
-                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_serialize_comma_token_stream,
-                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+        let ident_token_stream = {
+            let maybe_derive_serde_serialize_token_stream = {
+                let serde_serialize_comma_token_stream = quote::quote!{serde::Serialize,};
+                match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlCharN => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlText => serde_serialize_comma_token_stream,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,//todo maybe impl serialize mannually
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_serialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+                }
+            };
+            let maybe_derive_serde_deserialize_token_stream = {
+                let serde_deserialize_comma_token_stream = quote::quote!{serde::Deserialize,};
+                match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlCharN => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdStringStringAsPostgresqlText => serde_deserialize_comma_token_stream,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_deserialize_comma_token_stream,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+                }
+            };
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    PartialEq,
+                    #maybe_derive_serde_serialize_token_stream
+                    #maybe_derive_serde_deserialize_token_stream
+                )]
+                struct #postgresql_type(#field_type);
             }
         };
-        let maybe_derive_serde_deserialize_token_stream = {
-            let serde_deserialize_comma_token_stream = quote::quote!{serde::Deserialize,};
+        let maybe_impl_serde_serialize_token_stream = {
+            let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
+
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: serde::Serializer,
+                            {
+                                serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: serde::Serializer,
+                            {
+                                let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
+                                let mut __serde_state = serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &NumBigintBigInt(bigint))?;
+                                serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "scale", &exponent)?;
+                                serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "year",
+                                    &self.0.year(),
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "month",
+                                    &self.0.month(),
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "day",
+                                    &self.0.day(),
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+                            where
+                                S: serde::Serializer,
+                            {
+                                let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1 + 1)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "months", &self.0.months)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "days", &self.0.days)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "microseconds", &self.0.microseconds)?;
+                                serde::ser::SerializeStruct::end(serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+                            where
+                                S: serde::Serializer,
+                            {
+                                let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+                                serde::ser::SerializeStruct::end(serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
+                            where
+                                S: serde::Serializer,
+                            {
+                                let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+                                serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+                                serde::ser::SerializeStruct::end(serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &self.0.start,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &self.0.end,
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &match self.0.start {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),//todo how to reuse naming?
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &match self.0.end {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize
+                        for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &self.0.start,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &self.0.end,
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize
+                        for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &self.0.start,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &self.0.end,
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &match self.0.start {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &match self.0.end {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &self.0.start,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &self.0.end,
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &match self.0.start {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &match self.0.end {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &self.0.start,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &self.0.end,
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                let mut __serde_state = _serde::Serializer::serialize_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    false as usize + 1 + 1,
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "start",
+                                    &match self.0.start.clone() {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "end",
+                                    &match self.0.end.clone() {
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                    },
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: serde::Serializer,
+                            {
+                                serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.to_string())
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: serde::Serializer,
+                            {
+                                serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.bytes())
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type{
+                            fn serialize<__S>(
+                                &self,
+                                __serializer: __S,
+                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                _serde::Serializer::serialize_newtype_struct(
+                                    __serializer,
+                                    #ident_double_quotes_token_stream,
+                                    &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
+                                )
+                            }
+                        }
+                    };
+                }
+            };
             match &postgresql_type {
-                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream,
                 PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlCharN => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlVarchar => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdStringStringAsPostgresqlText => serde_deserialize_comma_token_stream,
-                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
-                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => serde_deserialize_comma_token_stream,
-                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
-                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => impl_serde_serialize_for_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => impl_serde_serialize_for_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
             }
         };
-        quote::quote!{
-            #[derive(
-                Debug,
-                Clone,
-                PartialEq,
-                #maybe_derive_serde_serialize_token_stream
-                #maybe_derive_serde_deserialize_token_stream
-            )]
-            struct #postgresql_type(#field_type);
-        }
-    };
-    let maybe_impl_serde_serialize_token_stream = {
-        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
-
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: serde::Serializer,
-                        {
-                            serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: serde::Serializer,
-                        {
-                            let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
-                            let mut __serde_state = serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &NumBigintBigInt(bigint))?;
-                            serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "scale", &exponent)?;
-                            serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "year",
-                                &self.0.year(),
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "month",
-                                &self.0.month(),
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "day",
-                                &self.0.day(),
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
-                        where
-                            S: serde::Serializer,
-                        {
-                            let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1 + 1)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "months", &self.0.months)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "days", &self.0.days)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "microseconds", &self.0.microseconds)?;
-                            serde::ser::SerializeStruct::end(serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
-                        where
-                            S: serde::Serializer,
-                        {
-                            let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
-                            serde::ser::SerializeStruct::end(serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<S>(&self, serializer: S) -> serde::__private::Result<S::Ok, S::Error>
-                        where
-                            S: serde::Serializer,
-                        {
-                            let mut serde_state = serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
-                            serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
-                            serde::ser::SerializeStruct::end(serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &self.0.start,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &self.0.end,
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &match self.0.start {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),//todo how to reuse naming?
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &match self.0.end {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize
-                    for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &self.0.start,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &self.0.end,
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize
-                    for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &self.0.start,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &self.0.end,
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &match self.0.start {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &match self.0.end {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTime(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTime(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &self.0.start,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &self.0.end,
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &match self.0.start {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &match self.0.end {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDate(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDate(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &self.0.start,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &self.0.end,
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                false as usize + 1 + 1,
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "start",
-                                &match self.0.start.clone() {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::serialize_field(
-                                &mut __serde_state,
-                                "end",
-                                &match self.0.end.clone() {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            )?;
-                            _serde::ser::SerializeStruct::end(__serde_state)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: serde::Serializer,
-                        {
-                            serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.to_string())
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(&self, __serializer: __S) -> serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: serde::Serializer,
-                        {
-                            serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.bytes())
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl _serde::Serialize for #postgresql_type{
-                        fn serialize<__S>(
-                            &self,
-                            __serializer: __S,
-                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                        where
-                            __S: _serde::Serializer,
-                        {
-                            _serde::Serializer::serialize_newtype_struct(
-                                __serializer,
-                                #ident_double_quotes_token_stream,
-                                &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => impl_serde_serialize_for_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => impl_serde_serialize_for_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
-        }
-    };
-    let maybe_impl_serde_deserialize_token_stream = {
-        let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
-        let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&postgresql_type);
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
-            let struct_ident_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
-                &postgresql_type,
-                1,
-            );
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for #postgresql_type{
-                        fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: serde::Deserializer<'de>,
-                        {
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<#postgresql_type>,
-                                lifetime: serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = #postgresql_type;
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
+        let maybe_impl_serde_deserialize_token_stream = {
+            let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
+            let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream(&postgresql_type);
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
+                let struct_ident_with_number_elements_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                    &postgresql_type,
+                    1,
+                );
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for #postgresql_type{
+                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: serde::Deserializer<'de>,
+                            {
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: serde::__private::PhantomData<#postgresql_type>,
+                                    lifetime: serde::__private::PhantomData<&'de ()>,
                                 }
-                                #[inline]
-                                fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                                where
-                                    __E: serde::Deserializer<'de>,
-                                {
-                                    let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                                    serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                                        serde::__private::Some(__value) => __value,
-                                        serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_elements_double_quotes_token_stream));
-                                        }
-                                    };
-                                    serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-                                }
-                            }
-                            serde::Deserializer::deserialize_newtype_struct(
-                                __deserializer,
-                                #ident_double_quotes_token_stream,
-                                __Visitor {
-                                    marker: serde::__private::PhantomData::<#postgresql_type>,
-                                    lifetime: serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
-                        fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl serde::de::Visitor<'_> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, "field identifier")
-                                }
-                                fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => serde::__private::Ok(__Field::__field0),
-                                        1u64 => serde::__private::Ok(__Field::__field1),
-                                        _ => serde::__private::Ok(__Field::__ignore),
+                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = #postgresql_type;
+                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
                                     }
-                                }
-                                fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: serde::de::Error,
-                                {
-                                    match __value {
-                                        "digits" => serde::__private::Ok(__Field::__field0),
-                                        "scale" => serde::__private::Ok(__Field::__field1),
-                                        _ => serde::__private::Ok(__Field::__ignore),
+                                    #[inline]
+                                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                                    where
+                                        __E: serde::Deserializer<'de>,
+                                    {
+                                        let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
+                                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
                                     }
-                                }
-                                fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: serde::de::Error,
-                                {
-                                    match __value {
-                                        b"digits" => serde::__private::Ok(__Field::__field0),
-                                        b"scale" => serde::__private::Ok(__Field::__field1),
-                                        _ => serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: serde::Deserializer<'de>,
-                                {
-                                    serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<SqlxTypesBigDecimal>,
-                                lifetime: serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxTypesBigDecimal;
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesBigDecimal")
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match serde::de::SeqAccess::next_element::<NumBigintBigInt>(&mut __seq)? {
-                                        serde::__private::Some(__value) => __value,
-                                        serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxTypesBigDecimal with 2 elements"));
-                                        }
-                                    };
-                                    let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                                        serde::__private::Some(__value) => __value,
-                                        serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxTypesBigDecimal with 2 elements"));
-                                        }
-                                    };
-                                    serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: serde::__private::Option<NumBigintBigInt> = serde::__private::None;
-                                    let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
-                                    while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if serde::__private::Option::is_some(&__field0) {
-                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("digits"));
-                                                }
-                                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<NumBigintBigInt>(&mut __map)?);
+                                    #[inline]
+                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                                            serde::__private::Some(__value) => __value,
+                                            serde::__private::None => {
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_elements_double_quotes_token_stream));
                                             }
-                                            __Field::__field1 => {
-                                                if serde::__private::Option::is_some(&__field1) {
-                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("scale"));
-                                                }
-                                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                                        };
+                                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
+                                    }
+                                }
+                                serde::Deserializer::deserialize_newtype_struct(
+                                    __deserializer,
+                                    #ident_double_quotes_token_stream,
+                                    __Visitor {
+                                        marker: serde::__private::PhantomData::<#postgresql_type>,
+                                        lifetime: serde::__private::PhantomData,
+                                    },
+                                )
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxTypesBigDecimal {
+                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
+                                }
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl serde::de::Visitor<'_> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__formatter, "field identifier")
+                                    }
+                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => serde::__private::Ok(__Field::__field0),
+                                            1u64 => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            "digits" => serde::__private::Ok(__Field::__field0),
+                                            "scale" => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"digits" => serde::__private::Ok(__Field::__field0),
+                                            b"scale" => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                }
+                                impl<'de> serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: serde::Deserializer<'de>,
+                                    {
+                                        serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: serde::__private::PhantomData<SqlxTypesBigDecimal>,
+                                    lifetime: serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxTypesBigDecimal;
+                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesBigDecimal")
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match serde::de::SeqAccess::next_element::<NumBigintBigInt>(&mut __seq)? {
+                                            serde::__private::Some(__value) => __value,
+                                            serde::__private::None => {
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxTypesBigDecimal with 2 elements"));
                                             }
-                                            _ => {
-                                                let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                                        };
+                                        let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                                            serde::__private::Some(__value) => __value,
+                                            serde::__private::None => {
+                                                return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxTypesBigDecimal with 2 elements"));
+                                            }
+                                        };
+                                        serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: serde::__private::Option<NumBigintBigInt> = serde::__private::None;
+                                        let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                                        while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if serde::__private::Option::is_some(&__field0) {
+                                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("digits"));
+                                                    }
+                                                    __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<NumBigintBigInt>(&mut __map)?);
+                                                }
+                                                __Field::__field1 => {
+                                                    if serde::__private::Option::is_some(&__field1) {
+                                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("scale"));
+                                                    }
+                                                    __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                                                }
+                                                _ => {
+                                                    let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                                                }
                                             }
                                         }
+                                        let __field0 = match __field0 {
+                                            serde::__private::Some(__field0) => __field0,
+                                            serde::__private::None => serde::__private::de::missing_field("digits")?,
+                                        };
+                                        let __field1 = match __field1 {
+                                            serde::__private::Some(__field1) => __field1,
+                                            serde::__private::None => serde::__private::de::missing_field("scale")?,
+                                        };
+                                        serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
                                     }
-                                    let __field0 = match __field0 {
-                                        serde::__private::Some(__field0) => __field0,
-                                        serde::__private::None => serde::__private::de::missing_field("digits")?,
-                                    };
-                                    let __field1 = match __field1 {
-                                        serde::__private::Some(__field1) => __field1,
-                                        serde::__private::None => serde::__private::de::missing_field("scale")?,
-                                    };
-                                    serde::__private::Ok(SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(__field0.0, __field1)))
                                 }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["digits", "scale"];
+                                serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    #ident_double_quotes_token_stream,
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: serde::__private::PhantomData::<SqlxTypesBigDecimal>,
+                                        lifetime: serde::__private::PhantomData,
+                                    },
+                                )
                             }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["digits", "scale"];
-                            serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                #ident_double_quotes_token_stream,
-                                FIELDS,
-                                __Visitor {
-                                    marker: serde::__private::PhantomData::<SqlxTypesBigDecimal>,
-                                    lifetime: serde::__private::PhantomData,
-                                },
-                            )
                         }
-                    }
-                };
-            }
-        };
-        //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
-        let impl_serde_deserialize_for_sqlx_types_time_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeDate {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __field2,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
+            let impl_serde_deserialize_for_sqlx_types_time_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeDate {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __field2,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        2u64 => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "year" => _serde::__private::Ok(__Field::__field0),
-                                        "month" => _serde::__private::Ok(__Field::__field1),
-                                        "day" => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"year" => _serde::__private::Ok(__Field::__field0),
-                                        b"month" => _serde::__private::Ok(__Field::__field1),
-                                        b"day" => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<SqlxTypesTimeDate>,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxTypesTimeDate;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxTypesTimeDate",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::i32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxTypesTimeDate with 3 elements",
-                                                ),
-                                            );
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            2u64 => _serde::__private::Ok(__Field::__field2),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        time::Month,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxTypesTimeDate with 3 elements",
-                                                ),
-                                            );
+                                    }
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "year" => _serde::__private::Ok(__Field::__field0),
+                                            "month" => _serde::__private::Ok(__Field::__field1),
+                                            "day" => _serde::__private::Ok(__Field::__field2),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::u8,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    2usize,
-                                                    &"struct SqlxTypesTimeDate with 3 elements",
-                                                ),
-                                            );
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"year" => _serde::__private::Ok(__Field::__field0),
+                                            b"month" => _serde::__private::Ok(__Field::__field1),
+                                            b"day" => _serde::__private::Ok(__Field::__field2),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
-                                        Ok(value) => _serde::__private::Ok(value),
-                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                     }
                                 }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<time::Month> = _serde::__private::None;
-                                    let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("year"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::primitive::i32,
-                                                    >(&mut __map)?,
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<SqlxTypesTimeDate>,
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxTypesTimeDate;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxTypesTimeDate",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::primitive::i32,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                    ),
                                                 );
                                             }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("month"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        time::Month,
-                                                    >(&mut __map)?,
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            time::Month,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                    ),
                                                 );
                                             }
-                                            __Field::__field2 => {
-                                                if _serde::__private::Option::is_some(&__field2) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("day"),
-                                                    );
-                                                }
-                                                __field2 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::primitive::u8,
-                                                    >(&mut __map)?,
+                                        };
+                                        let __field2 = match _serde::de::SeqAccess::next_element::<
+                                            std::primitive::u8,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        2usize,
+                                                        &"struct SqlxTypesTimeDate with 3 elements",
+                                                    ),
                                                 );
                                             }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                        };
+                                        match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
+                                            Ok(value) => _serde::__private::Ok(value),
+                                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("year")?
-                                        }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("month")?
-                                        }
-                                    };
-                                    let __field2 = match __field2 {
-                                        _serde::__private::Some(__field2) => __field2,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("day")?
-                                        }
-                                    };
-                                    match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
-                                        Ok(value) => _serde::__private::Ok(value),
-                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                    }
-                                }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["year", "month", "day"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                #ident_double_quotes_token_stream,
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<SqlxTypesTimeDate>,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
-                        fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-                        where
-                            D: serde::Deserializer<'de>,
-                        {
-                            enum Field {
-                                Months,
-                                Days,
-                                Microseconds,
-                            }
-                            impl<'de> serde::Deserialize<'de> for Field {
-                                fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-                                where
-                                    D: serde::Deserializer<'de>,
-                                {
-                                    struct FieldVisitor;
-                                    impl serde::de::Visitor<'_> for FieldVisitor {
-                                        type Value = Field;
-                                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                            formatter.write_str("`months` or `days` or `microseconds`")
-                                        }
-                                        fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                        where
-                                            E: serde::de::Error,
-                                        {
-                                            match value {
-                                                "months" => Ok(Field::Months),
-                                                "days" => Ok(Field::Days),
-                                                "microseconds" => Ok(Field::Microseconds),
-                                                _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                            }
-                                        }
-                                    }
-                                    deserializer.deserialize_identifier(FieldVisitor)
-                                }
-                            }
-                            struct SqlxPostgresTypesPgIntervalVisitor;
-                            impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgIntervalVisitor {
-                                type Value = SqlxPostgresTypesPgInterval;
-                                fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    formatter.write_str("struct SqlxPostgresTypesPgInterval")
-                                }
-                                fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
-                                where
-                                    V: serde::de::SeqAccess<'de>,
-                                {
-                                    let months = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                    let days = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                    let microseconds = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
-                                    Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
-                                }
-                                fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
-                                where
-                                    V: serde::de::MapAccess<'de>,
-                                {
-                                    let mut months = None;
-                                    let mut days = None;
-                                    let mut microseconds = None;
-                                    while let Some(key) = map.next_key()? {
-                                        match key {
-                                            Field::Months => {
-                                                if months.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("months"));
-                                                }
-                                                months = Some(map.next_value()?);
-                                            }
-                                            Field::Days => {
-                                                if days.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("days"));
-                                                }
-                                                days = Some(map.next_value()?);
-                                            }
-                                            Field::Microseconds => {
-                                                if microseconds.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("microseconds"));
-                                                }
-                                                microseconds = Some(map.next_value()?);
-                                            }
-                                        }
-                                    }
-                                    let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
-                                    let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
-                                    let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
-                                    Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
-                                }
-                            }
-                            const FIELDS: &[&str] = &["months", "days", "microseconds"];
-                            deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgIntervalVisitor)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-                        fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-                        where
-                            D: serde::Deserializer<'de>,
-                        {
-                            enum Field {
-                                Start,
-                                End,
-                            }
-                            impl<'de> serde::Deserialize<'de> for Field {
-                                fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-                                where
-                                    D: serde::Deserializer<'de>,
-                                {
-                                    struct FieldVisitor;
-                                    impl serde::de::Visitor<'_> for FieldVisitor {
-                                        type Value = Field;
-                                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                            formatter.write_str("`start` or `end`")
-                                        }
-                                        fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                        where
-                                            E: serde::de::Error,
-                                        {
-                                            match value {
-                                                "start" => Ok(Field::Start),
-                                                "end" => Ok(Field::End),
-                                                _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                            }
-                                        }
-                                    }
-                                    deserializer.deserialize_identifier(FieldVisitor)
-                                }
-                            }
-                            struct SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor;
-                            impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor {
-                                type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32;
-                                fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI32")
-                                }
-                                fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
-                                where
-                                    V: serde::de::SeqAccess<'de>,
-                                {
-                                    let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                    let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                    Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
-                                }
-                                fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
-                                where
-                                    V: serde::de::MapAccess<'de>,
-                                {
-                                    let mut start = None;
-                                    let mut end = None;
-                                    while let Some(key) = map.next_key()? {
-                                        match key {
-                                            Field::Start => {
-                                                if start.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("start"));
-                                                }
-                                                start = Some(map.next_value()?);
-                                            }
-                                            Field::End => {
-                                                if end.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("end"));
-                                                }
-                                                end = Some(map.next_value()?);
-                                            }
-                                        }
-                                    }
-                                    let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
-                                    let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                                    Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
-                                }
-                            }
-                            const FIELDS: &[&str] = &["start", "end"];
-                            deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-                        fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-                        where
-                            D: serde::Deserializer<'de>,
-                        {
-                            enum Field {
-                                Start,
-                                End,
-                            }
-                            impl<'de> serde::Deserialize<'de> for Field {
-                                fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-                                where
-                                    D: serde::Deserializer<'de>,
-                                {
-                                    struct FieldVisitor;
-                                    impl serde::de::Visitor<'_> for FieldVisitor {
-                                        type Value = Field;
-                                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                            formatter.write_str("`start` or `end`")
-                                        }
-                                        fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                        where
-                                            E: serde::de::Error,
-                                        {
-                                            match value {
-                                                "start" => Ok(Field::Start),
-                                                "end" => Ok(Field::End),
-                                                _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                            }
-                                        }
-                                    }
-                                    deserializer.deserialize_identifier(FieldVisitor)
-                                }
-                            }
-                            struct SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor;
-                            impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor {
-                                type Value = SqlxPostgresTypesPgRangeStdPrimitiveI64;
-                                fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI64")
-                                }
-                                fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
-                                where
-                                    V: serde::de::SeqAccess<'de>,
-                                {
-                                    let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                    let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                    Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
-                                }
-                                fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
-                                where
-                                    V: serde::de::MapAccess<'de>,
-                                {
-                                    let mut start = None;
-                                    let mut end = None;
-                                    while let Some(key) = map.next_key()? {
-                                        match key {
-                                            Field::Start => {
-                                                if start.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("start"));
-                                                }
-                                                start = Some(map.next_value()?);
-                                            }
-                                            Field::End => {
-                                                if end.is_some() {
-                                                    return Err(serde::de::Error::duplicate_field("end"));
-                                                }
-                                                end = Some(map.next_value()?);
-                                            }
-                                        }
-                                    }
-                                    let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
-                                    let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                                    Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
-                                }
-                            }
-                            const FIELDS: &[&str] = &["start", "end"];
-                            deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI64", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor)
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
-                                }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<time::Month> = _serde::__private::None;
+                                        let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("year"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::primitive::i32,
+                                                        >(&mut __map)?,
                                                     );
                                                 }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("month"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            time::Month,
+                                                        >(&mut __map)?,
                                                     );
                                                 }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                                    >(&mut __map)?,
-                                                );
+                                                __Field::__field2 => {
+                                                    if _serde::__private::Option::is_some(&__field2) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("day"),
+                                                        );
+                                                    }
+                                                    __field2 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::primitive::u8,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
                                             }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("year")?
                                             }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("month")?
+                                            }
+                                        };
+                                        let __field2 = match __field2 {
+                                            _serde::__private::Some(__field2) => __field2,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("day")?
+                                            }
+                                        };
+                                        match SqlxTypesTimeDate::try_new(__field0, __field1, __field2) {
+                                            Ok(value) => _serde::__private::Ok(value),
+                                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
-                                        }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
                                 }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["year", "month", "day"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    #ident_double_quotes_token_stream,
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<SqlxTypesTimeDate>,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
                             }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgInterval {
+                            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+                            where
+                                D: serde::Deserializer<'de>,
+                            {
+                                enum Field {
+                                    Months,
+                                    Days,
+                                    Microseconds,
+                                }
+                                impl<'de> serde::Deserialize<'de> for Field {
+                                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                                    where
+                                        D: serde::Deserializer<'de>,
+                                    {
+                                        struct FieldVisitor;
+                                        impl serde::de::Visitor<'_> for FieldVisitor {
+                                            type Value = Field;
+                                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                                formatter.write_str("`months` or `days` or `microseconds`")
+                                            }
+                                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                                            where
+                                                E: serde::de::Error,
+                                            {
+                                                match value {
+                                                    "months" => Ok(Field::Months),
+                                                    "days" => Ok(Field::Days),
+                                                    "microseconds" => Ok(Field::Microseconds),
+                                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                                                }
+                                            }
+                                        }
+                                        deserializer.deserialize_identifier(FieldVisitor)
+                                    }
+                                }
+                                struct SqlxPostgresTypesPgIntervalVisitor;
+                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgIntervalVisitor {
+                                    type Value = SqlxPostgresTypesPgInterval;
+                                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                        formatter.write_str("struct SqlxPostgresTypesPgInterval")
+                                    }
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+                                    where
+                                        V: serde::de::SeqAccess<'de>,
+                                    {
+                                        let months = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                                        let days = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                                        let microseconds = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
+                                        Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                                    }
+                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgInterval, V::Error>
+                                    where
+                                        V: serde::de::MapAccess<'de>,
+                                    {
+                                        let mut months = None;
+                                        let mut days = None;
+                                        let mut microseconds = None;
+                                        while let Some(key) = map.next_key()? {
+                                            match key {
+                                                Field::Months => {
+                                                    if months.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("months"));
+                                                    }
+                                                    months = Some(map.next_value()?);
+                                                }
+                                                Field::Days => {
+                                                    if days.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("days"));
+                                                    }
+                                                    days = Some(map.next_value()?);
+                                                }
+                                                Field::Microseconds => {
+                                                    if microseconds.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("microseconds"));
+                                                    }
+                                                    microseconds = Some(map.next_value()?);
+                                                }
+                                            }
+                                        }
+                                        let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
+                                        let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
+                                        let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
+                                        Ok(SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                                    }
+                                }
+                                const FIELDS: &[&str] = &["months", "days", "microseconds"];
+                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgIntervalVisitor)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+                            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+                            where
+                                D: serde::Deserializer<'de>,
+                            {
+                                enum Field {
+                                    Start,
+                                    End,
+                                }
+                                impl<'de> serde::Deserialize<'de> for Field {
+                                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                                    where
+                                        D: serde::Deserializer<'de>,
+                                    {
+                                        struct FieldVisitor;
+                                        impl serde::de::Visitor<'_> for FieldVisitor {
+                                            type Value = Field;
+                                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                                formatter.write_str("`start` or `end`")
+                                            }
+                                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                                            where
+                                                E: serde::de::Error,
+                                            {
+                                                match value {
+                                                    "start" => Ok(Field::Start),
+                                                    "end" => Ok(Field::End),
+                                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                                                }
+                                            }
+                                        }
+                                        deserializer.deserialize_identifier(FieldVisitor)
+                                    }
+                                }
+                                struct SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor;
+                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor {
+                                    type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32;
+                                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                        formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI32")
+                                    }
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
+                                    where
+                                        V: serde::de::SeqAccess<'de>,
+                                    {
+                                        let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                                        let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
+                                    }
+                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32, V::Error>
+                                    where
+                                        V: serde::de::MapAccess<'de>,
+                                    {
+                                        let mut start = None;
+                                        let mut end = None;
+                                        while let Some(key) = map.next_key()? {
+                                            match key {
+                                                Field::Start => {
+                                                    if start.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("start"));
+                                                    }
+                                                    start = Some(map.next_value()?);
+                                                }
+                                                Field::End => {
+                                                    if end.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("end"));
+                                                    }
+                                                    end = Some(map.next_value()?);
+                                                }
+                                            }
+                                        }
+                                        let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
+                                        let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
+                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange { start, end }))
+                                    }
+                                }
+                                const FIELDS: &[&str] = &["start", "end"];
+                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32Visitor)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+                            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+                            where
+                                D: serde::Deserializer<'de>,
+                            {
+                                enum Field {
+                                    Start,
+                                    End,
+                                }
+                                impl<'de> serde::Deserialize<'de> for Field {
+                                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                                    where
+                                        D: serde::Deserializer<'de>,
+                                    {
+                                        struct FieldVisitor;
+                                        impl serde::de::Visitor<'_> for FieldVisitor {
+                                            type Value = Field;
+                                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                                formatter.write_str("`start` or `end`")
+                                            }
+                                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                                            where
+                                                E: serde::de::Error,
+                                            {
+                                                match value {
+                                                    "start" => Ok(Field::Start),
+                                                    "end" => Ok(Field::End),
+                                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                                                }
+                                            }
+                                        }
+                                        deserializer.deserialize_identifier(FieldVisitor)
+                                    }
+                                }
+                                struct SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor;
+                                impl<'de> serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor {
+                                    type Value = SqlxPostgresTypesPgRangeStdPrimitiveI64;
+                                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                        formatter.write_str("struct SqlxPostgresTypesPgRangeStdPrimitiveI64")
+                                    }
+                                    fn visit_seq<V>(self, mut seq: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+                                    where
+                                        V: serde::de::SeqAccess<'de>,
+                                    {
+                                        let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                                        let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+                                    }
+                                    fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI64, V::Error>
+                                    where
+                                        V: serde::de::MapAccess<'de>,
+                                    {
+                                        let mut start = None;
+                                        let mut end = None;
+                                        while let Some(key) = map.next_key()? {
+                                            match key {
+                                                Field::Start => {
+                                                    if start.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("start"));
+                                                    }
+                                                    start = Some(map.next_value()?);
+                                                }
+                                                Field::End => {
+                                                    if end.is_some() {
+                                                        return Err(serde::de::Error::duplicate_field("end"));
+                                                    }
+                                                    end = Some(map.next_value()?);
+                                                }
+                                            }
+                                        }
+                                        let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
+                                        let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
+                                        Ok(SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange { start, end }))
+                                    }
+                                }
+                                const FIELDS: &[&str] = &["start", "end"];
+                                deserializer.deserialize_struct("SqlxPostgresTypesPgRangeStdPrimitiveI64", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI64Visitor)
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
+                                }
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
+                                    }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                }
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                        >,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                        >,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<
-                                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<
-                                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                            >,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                            >,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                            >,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                            >,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<
+                                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                                            >,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<
+                                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                                                            >,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                        >,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<
-                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                        >,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<
-                                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<
-                                                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                            >,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                            >,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                            >,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<
+                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                            >,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<
+                                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                                            >,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<
+                                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                                                            >,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimeOffsetDateTime>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de>
-                    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de>
+                        for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesTimeDate;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesTimeDate>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesTimeDate",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesTimeDate;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesTimeDate>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesTimeDate",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesDecimal;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesDecimal",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::Decimal>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesDecimal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<sqlx::types::Decimal>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesDecimal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::Decimal>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<sqlx::types::Decimal>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::Decimal>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<sqlx::types::Decimal>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange {
-                                        start: __field0,
-                                        end: __field1,
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesDecimal",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesDecimal,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesDecimal;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesDecimal",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::Decimal>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesDecimal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<sqlx::types::Decimal>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesDecimal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::Decimal>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<sqlx::types::Decimal>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::Decimal>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<sqlx::types::Decimal>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange {
+                                            start: __field0,
+                                            end: __field1,
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesDecimal",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[allow(non_camel_case_types)]
+                                #[doc(hidden)]
+                                enum __Field {
+                                    __field0,
+                                    __field1,
+                                    __ignore,
                                 }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                #[doc(hidden)]
+                                struct __FieldVisitor;
+                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
                                     }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"start" => _serde::__private::Ok(__Field::__field0),
-                                        b"end" => _serde::__private::Ok(__Field::__field1),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<
-                                    SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal with 2 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                    > = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::collections::Bound<SqlxTypesBigDecimal>,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("start")?
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("end")?
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => _serde::__private::Ok(__Field::__field0),
+                                            b"end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
                                         }
-                                    };
-                                    _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange {
-                                        start: match __field0 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                        end: match __field1 {
-                                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                        },
-                                    }))
+                                    }
                                 }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                "SqlxPostgresTypesPgRangeSqlxTypesBigDecimal",
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
+                                impl<'de> _serde::Deserialize<'de> for __Field {
+                                    #[inline]
+                                    fn deserialize<__D>(
+                                        __deserializer: __D,
+                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        _serde::Deserializer::deserialize_identifier(
+                                            __deserializer,
+                                            __FieldVisitor,
+                                        )
+                                    }
+                                }
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<
                                         SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
                                     >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        1usize,
+                                                        &"struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal with 2 elements",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_map<__A>(
+                                        self,
+                                        mut __map: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::MapAccess<'de>,
+                                    {
+                                        let mut __field0: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                        > = _serde::__private::None;
+                                        let mut __field1: _serde::__private::Option<
+                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                        > = _serde::__private::None;
+                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                            __Field,
+                                        >(&mut __map)? {
+                                            match __key {
+                                                __Field::__field0 => {
+                                                    if _serde::__private::Option::is_some(&__field0) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                        );
+                                                    }
+                                                    __field0 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                __Field::__field1 => {
+                                                    if _serde::__private::Option::is_some(&__field1) {
+                                                        return _serde::__private::Err(
+                                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                        );
+                                                    }
+                                                    __field1 = _serde::__private::Some(
+                                                        _serde::de::MapAccess::next_value::<
+                                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                                        >(&mut __map)?,
+                                                    );
+                                                }
+                                                _ => {
+                                                    let _ = _serde::de::MapAccess::next_value::<
+                                                        _serde::de::IgnoredAny,
+                                                    >(&mut __map)?;
+                                                }
+                                            }
+                                        }
+                                        let __field0 = match __field0 {
+                                            _serde::__private::Some(__field0) => __field0,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("start")?
+                                            }
+                                        };
+                                        let __field1 = match __field1 {
+                                            _serde::__private::Some(__field1) => __field1,
+                                            _serde::__private::None => {
+                                                _serde::__private::de::missing_field("end")?
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange {
+                                            start: match __field0 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                            end: match __field1 {
+                                                std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                                            },
+                                        }))
+                                    }
+                                }
+                                #[doc(hidden)]
+                                const FIELDS: &'static [&'static str] = &["start", "end"];
+                                _serde::Deserializer::deserialize_struct(
+                                    __deserializer,
+                                    "SqlxPostgresTypesPgRangeSqlxTypesBigDecimal",
+                                    FIELDS,
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<
+                                            SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
                         }
-                    }
-                };
+                    };
+                }
+            };
+            // let impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream = {
+            //     quote::quote!{
+            //         const _: () = {
+            //             #[allow(unused_extern_crates, clippy::useless_attribute)]
+            //             extern crate serde as _serde;
+            //             #[automatically_derived]
+            //             impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
+            //                 fn deserialize<__D>(
+            //                     __deserializer: __D,
+            //                 ) -> _serde::__private::Result<Self, __D::Error>
+            //                 where
+            //                     __D: _serde::Deserializer<'de>,
+            //                 {
+            //                     #[allow(non_camel_case_types)]
+            //                     #[doc(hidden)]
+            //                     enum __Field {
+            //                         __field0,
+            //                         __field1,
+            //                         __field2,
+            //                         __ignore,
+            //                     }
+            //                     #[doc(hidden)]
+            //                     struct __FieldVisitor;
+            //                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+            //                         type Value = __Field;
+            //                         fn expecting(
+            //                             &self,
+            //                             __formatter: &mut _serde::__private::Formatter,
+            //                         ) -> _serde::__private::fmt::Result {
+            //                             _serde::__private::Formatter::write_str(
+            //                                 __formatter,
+            //                                 "field identifier",
+            //                             )
+            //                         }
+            //                         fn visit_u64<__E>(
+            //                             self,
+            //                             __value: u64,
+            //                         ) -> _serde::__private::Result<Self::Value, __E>
+            //                         where
+            //                             __E: _serde::de::Error,
+            //                         {
+            //                             match __value {
+            //                                 0u64 => _serde::__private::Ok(__Field::__field0),
+            //                                 1u64 => _serde::__private::Ok(__Field::__field1),
+            //                                 2u64 => _serde::__private::Ok(__Field::__field2),
+            //                                 _ => _serde::__private::Ok(__Field::__ignore),
+            //                             }
+            //                         }
+            //                         fn visit_str<__E>(
+            //                             self,
+            //                             __value: &str,
+            //                         ) -> _serde::__private::Result<Self::Value, __E>
+            //                         where
+            //                             __E: _serde::de::Error,
+            //                         {
+            //                             match __value {
+            //                                 "date" => _serde::__private::Ok(__Field::__field0),
+            //                                 "time" => _serde::__private::Ok(__Field::__field1),
+            //                                 "offset" => _serde::__private::Ok(__Field::__field2),
+            //                                 _ => _serde::__private::Ok(__Field::__ignore),
+            //                             }
+            //                         }
+            //                         fn visit_bytes<__E>(
+            //                             self,
+            //                             __value: &[u8],
+            //                         ) -> _serde::__private::Result<Self::Value, __E>
+            //                         where
+            //                             __E: _serde::de::Error,
+            //                         {
+            //                             match __value {
+            //                                 b"date" => _serde::__private::Ok(__Field::__field0),
+            //                                 b"time" => _serde::__private::Ok(__Field::__field1),
+            //                                 b"offset" => _serde::__private::Ok(__Field::__field2),
+            //                                 _ => _serde::__private::Ok(__Field::__ignore),
+            //                             }
+            //                         }
+            //                     }
+            //                     impl<'de> _serde::Deserialize<'de> for __Field {
+            //                         #[inline]
+            //                         fn deserialize<__D>(
+            //                             __deserializer: __D,
+            //                         ) -> _serde::__private::Result<Self, __D::Error>
+            //                         where
+            //                             __D: _serde::Deserializer<'de>,
+            //                         {
+            //                             _serde::Deserializer::deserialize_identifier(
+            //                                 __deserializer,
+            //                                 __FieldVisitor,
+            //                             )
+            //                         }
+            //                     }
+            //                     #[doc(hidden)]
+            //                     struct __Visitor<'de> {
+            //                         marker: _serde::__private::PhantomData<SqlxTypesTimeOffsetDateTime>,
+            //                         lifetime: _serde::__private::PhantomData<&'de ()>,
+            //                     }
+            //                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+            //                         type Value = SqlxTypesTimeOffsetDateTime;
+            //                         fn expecting(
+            //                             &self,
+            //                             __formatter: &mut _serde::__private::Formatter,
+            //                         ) -> _serde::__private::fmt::Result {
+            //                             _serde::__private::Formatter::write_str(
+            //                                 __formatter,
+            //                                 "struct SqlxTypesTimeOffsetDateTime",
+            //                             )
+            //                         }
+            //                         #[inline]
+            //                         fn visit_seq<__A>(
+            //                             self,
+            //                             mut __seq: __A,
+            //                         ) -> _serde::__private::Result<Self::Value, __A::Error>
+            //                         where
+            //                             __A: _serde::de::SeqAccess<'de>,
+            //                         {
+            //                             let __field0 = match _serde::de::SeqAccess::next_element::<
+            //                                 sqlx::types::time::Date,
+            //                             >(&mut __seq)? {
+            //                                 _serde::__private::Some(__value) => __value,
+            //                                 _serde::__private::None => {
+            //                                     return _serde::__private::Err(
+            //                                         _serde::de::Error::invalid_length(
+            //                                             0usize,
+            //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
+            //                                         ),
+            //                                     );
+            //                                 }
+            //                             };
+            //                             let __field1 = match _serde::de::SeqAccess::next_element::<
+            //                                 sqlx::types::time::Time,
+            //                             >(&mut __seq)? {
+            //                                 _serde::__private::Some(__value) => __value,
+            //                                 _serde::__private::None => {
+            //                                     return _serde::__private::Err(
+            //                                         _serde::de::Error::invalid_length(
+            //                                             1usize,
+            //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
+            //                                         ),
+            //                                     );
+            //                                 }
+            //                             };
+            //                             let __field2 = match _serde::de::SeqAccess::next_element::<
+            //                                 sqlx::types::time::UtcOffset,
+            //                             >(&mut __seq)? {
+            //                                 _serde::__private::Some(__value) => __value,
+            //                                 _serde::__private::None => {
+            //                                     return _serde::__private::Err(
+            //                                         _serde::de::Error::invalid_length(
+            //                                             2usize,
+            //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
+            //                                         ),
+            //                                     );
+            //                                 }
+            //                             };
+            //                             _serde::__private::Ok(SqlxTypesTimeOffsetDateTime {
+            //                                 date: __field0,
+            //                                 time: __field1,
+            //                                 offset: __field2,
+            //                             })
+            //                         }
+            //                         #[inline]
+            //                         fn visit_map<__A>(
+            //                             self,
+            //                             mut __map: __A,
+            //                         ) -> _serde::__private::Result<Self::Value, __A::Error>
+            //                         where
+            //                             __A: _serde::de::MapAccess<'de>,
+            //                         {
+            //                             let mut __field0: _serde::__private::Option<
+            //                                 sqlx::types::time::Date,
+            //                             > = _serde::__private::None;
+            //                             let mut __field1: _serde::__private::Option<
+            //                                 sqlx::types::time::Time,
+            //                             > = _serde::__private::None;
+            //                             let mut __field2: _serde::__private::Option<
+            //                                 sqlx::types::time::UtcOffset,
+            //                             > = _serde::__private::None;
+            //                             while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+            //                                 __Field,
+            //                             >(&mut __map)? {
+            //                                 match __key {
+            //                                     __Field::__field0 => {
+            //                                         if _serde::__private::Option::is_some(&__field0) {
+            //                                             return _serde::__private::Err(
+            //                                                 <__A::Error as _serde::de::Error>::duplicate_field("date"),
+            //                                             );
+            //                                         }
+            //                                         __field0 = _serde::__private::Some(
+            //                                             _serde::de::MapAccess::next_value::<
+            //                                                 sqlx::types::time::Date,
+            //                                             >(&mut __map)?,
+            //                                         );
+            //                                     }
+            //                                     __Field::__field1 => {
+            //                                         if _serde::__private::Option::is_some(&__field1) {
+            //                                             return _serde::__private::Err(
+            //                                                 <__A::Error as _serde::de::Error>::duplicate_field("time"),
+            //                                             );
+            //                                         }
+            //                                         __field1 = _serde::__private::Some(
+            //                                             _serde::de::MapAccess::next_value::<
+            //                                                 sqlx::types::time::Time,
+            //                                             >(&mut __map)?,
+            //                                         );
+            //                                     }
+            //                                     __Field::__field2 => {
+            //                                         if _serde::__private::Option::is_some(&__field2) {
+            //                                             return _serde::__private::Err(
+            //                                                 <__A::Error as _serde::de::Error>::duplicate_field("offset"),
+            //                                             );
+            //                                         }
+            //                                         __field2 = _serde::__private::Some(
+            //                                             _serde::de::MapAccess::next_value::<
+            //                                                 sqlx::types::time::UtcOffset,
+            //                                             >(&mut __map)?,
+            //                                         );
+            //                                     }
+            //                                     _ => {
+            //                                         let _ = _serde::de::MapAccess::next_value::<
+            //                                             _serde::de::IgnoredAny,
+            //                                         >(&mut __map)?;
+            //                                     }
+            //                                 }
+            //                             }
+            //                             let __field0 = match __field0 {
+            //                                 _serde::__private::Some(__field0) => __field0,
+            //                                 _serde::__private::None => {
+            //                                     _serde::__private::de::missing_field("date")?
+            //                                 }
+            //                             };
+            //                             let __field1 = match __field1 {
+            //                                 _serde::__private::Some(__field1) => __field1,
+            //                                 _serde::__private::None => {
+            //                                     _serde::__private::de::missing_field("time")?
+            //                                 }
+            //                             };
+            //                             let __field2 = match __field2 {
+            //                                 _serde::__private::Some(__field2) => __field2,
+            //                                 _serde::__private::None => {
+            //                                     _serde::__private::de::missing_field("offset")?
+            //                                 }
+            //                             };
+            //                             _serde::__private::Ok(SqlxTypesTimeOffsetDateTime {
+            //                                 date: __field0,
+            //                                 time: __field1,
+            //                                 offset: __field2,
+            //                             })
+            //                         }
+            //                     }
+            //                     #[doc(hidden)]
+            //                     const FIELDS: &'static [&'static str] = &["date", "time", "offset"];
+            //                     _serde::Deserializer::deserialize_struct(
+            //                         __deserializer,
+            //                         "SqlxTypesTimeOffsetDateTime",
+            //                         FIELDS,
+            //                         __Visitor {
+            //                             marker: _serde::__private::PhantomData::<
+            //                                 SqlxTypesTimeOffsetDateTime,
+            //                             >,
+            //                             lifetime: _serde::__private::PhantomData,
+            //                         },
+            //                     )
+            //                 }
+            //             }
+            //         };
+            //     }
+            // };
+            let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
+                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: serde::Deserializer<'de>,
+                            {
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: serde::__private::PhantomData<SqlxTypesUuidUuid>,
+                                    lifetime: serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxTypesUuidUuid;
+                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesUuidUuid")
+                                    }
+                                    #[inline]
+                                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                                    where
+                                        __E: serde::Deserializer<'de>,
+                                    {
+                                        let __field0: std::string::String = <std::string::String as serde::Deserialize>::deserialize(__e)?;
+                                        serde::__private::Ok(SqlxTypesUuidUuid(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                                            Ok(value) => value,
+                                            Err(error) => {
+                                                return Err(serde::de::Error::custom(error));
+                                            }
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
+                                            serde::__private::Some(__value) => __value,
+                                            serde::__private::None => {
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesUuidUuid with 1 element"));
+                                            }
+                                        };
+                                        serde::__private::Ok(SqlxTypesUuidUuid(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                                            Ok(value) => value,
+                                            Err(error) => {
+                                                return Err(serde::de::Error::custom(error));
+                                            }
+                                        }))
+                                    }
+                                }
+                                serde::Deserializer::deserialize_newtype_struct(
+                                    __deserializer,
+                                    "SqlxTypesUuidUuid",
+                                    __Visitor {
+                                        marker: serde::__private::PhantomData::<SqlxTypesUuidUuid>,
+                                        lifetime: serde::__private::PhantomData,
+                                    },
+                                )
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
+                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: serde::Deserializer<'de>,
+                            {
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: serde::__private::PhantomData<SqlxTypesMacAddressMacAddress>,
+                                    lifetime: serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxTypesMacAddressMacAddress;
+                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesMacAddressMacAddress")
+                                    }
+                                    #[inline]
+                                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                                    where
+                                        __E: serde::Deserializer<'de>,
+                                    {
+                                        let __field0: [std::primitive::u8; 6] = <[std::primitive::u8; 6] as serde::Deserialize>::deserialize(__e)?;
+                                        serde::__private::Ok(SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new(__field0)))
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
+                                            serde::__private::Some(__value) => __value,
+                                            serde::__private::None => {
+                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesMacAddressMacAddress with 1 element"));
+                                            }
+                                        };
+                                        serde::__private::Ok(SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new(__field0)))
+                                    }
+                                }
+                                serde::Deserializer::deserialize_newtype_struct(
+                                    __deserializer,
+                                    "SqlxTypesMacAddressMacAddress",
+                                    __Visitor {
+                                        marker: serde::__private::PhantomData::<SqlxTypesMacAddressMacAddress>,
+                                        lifetime: serde::__private::PhantomData,
+                                    },
+                                )
+                            }
+                        }
+                    };
+                }
+            };
+            let impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream = {
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVec {
+                            fn deserialize<__D>(
+                                __deserializer: __D,
+                            ) -> _serde::__private::Result<Self, __D::Error>
+                            where
+                                __D: _serde::Deserializer<'de>,
+                            {
+                                #[doc(hidden)]
+                                struct __Visitor<'de> {
+                                    marker: _serde::__private::PhantomData<SqlxTypesBitVec>,
+                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                }
+                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                    type Value = SqlxTypesBitVec;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "tuple struct SqlxTypesBitVec",
+                                        )
+                                    }
+                                    #[inline]
+                                    fn visit_newtype_struct<__E>(
+                                        self,
+                                        __e: __E,
+                                    ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                    where
+                                        __E: _serde::Deserializer<'de>,
+                                    {
+                                        let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
+                                            std::primitive::bool,
+                                        > as _serde::Deserialize>::deserialize(__e)?;
+                                        _serde::__private::Ok(SqlxTypesBitVec({
+                                            let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                                            __field0.into_iter().enumerate().for_each(|(index, element)|{
+                                                bit_vec.set(index, element);
+                                            });
+                                            bit_vec
+                                        }))
+                                    }
+                                    #[inline]
+                                    fn visit_seq<__A>(
+                                        self,
+                                        mut __seq: __A,
+                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: _serde::de::SeqAccess<'de>,
+                                    {
+                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                            std::vec::Vec<std::primitive::bool>,
+                                        >(&mut __seq)? {
+                                            _serde::__private::Some(__value) => __value,
+                                            _serde::__private::None => {
+                                                return _serde::__private::Err(
+                                                    _serde::de::Error::invalid_length(
+                                                        0usize,
+                                                        &"tuple struct SqlxTypesBitVec with 1 element",
+                                                    ),
+                                                );
+                                            }
+                                        };
+                                        _serde::__private::Ok(SqlxTypesBitVec({
+                                            let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                                            __field0.into_iter().enumerate().for_each(|(index, element)|{
+                                                bit_vec.set(index, element);
+                                            });
+                                            bit_vec
+                                        }))
+                                    }
+                                }
+                                _serde::Deserializer::deserialize_newtype_struct(
+                                    __deserializer,
+                                    "SqlxTypesBitVec",
+                                    __Visitor {
+                                        marker: _serde::__private::PhantomData::<SqlxTypesBitVec>,
+                                        lifetime: _serde::__private::PhantomData,
+                                    },
+                                )
+                            }
+                        }
+                    };
+                }
+            };
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => impl_serde_deserialize_for_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
             }
         };
-        // let impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream = {
-        //     quote::quote!{
-        //         const _: () = {
-        //             #[allow(unused_extern_crates, clippy::useless_attribute)]
-        //             extern crate serde as _serde;
-        //             #[automatically_derived]
-        //             impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeOffsetDateTime {
-        //                 fn deserialize<__D>(
-        //                     __deserializer: __D,
-        //                 ) -> _serde::__private::Result<Self, __D::Error>
-        //                 where
-        //                     __D: _serde::Deserializer<'de>,
-        //                 {
-        //                     #[allow(non_camel_case_types)]
-        //                     #[doc(hidden)]
-        //                     enum __Field {
-        //                         __field0,
-        //                         __field1,
-        //                         __field2,
-        //                         __ignore,
-        //                     }
-        //                     #[doc(hidden)]
-        //                     struct __FieldVisitor;
-        //                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-        //                         type Value = __Field;
-        //                         fn expecting(
-        //                             &self,
-        //                             __formatter: &mut _serde::__private::Formatter,
-        //                         ) -> _serde::__private::fmt::Result {
-        //                             _serde::__private::Formatter::write_str(
-        //                                 __formatter,
-        //                                 "field identifier",
-        //                             )
-        //                         }
-        //                         fn visit_u64<__E>(
-        //                             self,
-        //                             __value: u64,
-        //                         ) -> _serde::__private::Result<Self::Value, __E>
-        //                         where
-        //                             __E: _serde::de::Error,
-        //                         {
-        //                             match __value {
-        //                                 0u64 => _serde::__private::Ok(__Field::__field0),
-        //                                 1u64 => _serde::__private::Ok(__Field::__field1),
-        //                                 2u64 => _serde::__private::Ok(__Field::__field2),
-        //                                 _ => _serde::__private::Ok(__Field::__ignore),
-        //                             }
-        //                         }
-        //                         fn visit_str<__E>(
-        //                             self,
-        //                             __value: &str,
-        //                         ) -> _serde::__private::Result<Self::Value, __E>
-        //                         where
-        //                             __E: _serde::de::Error,
-        //                         {
-        //                             match __value {
-        //                                 "date" => _serde::__private::Ok(__Field::__field0),
-        //                                 "time" => _serde::__private::Ok(__Field::__field1),
-        //                                 "offset" => _serde::__private::Ok(__Field::__field2),
-        //                                 _ => _serde::__private::Ok(__Field::__ignore),
-        //                             }
-        //                         }
-        //                         fn visit_bytes<__E>(
-        //                             self,
-        //                             __value: &[u8],
-        //                         ) -> _serde::__private::Result<Self::Value, __E>
-        //                         where
-        //                             __E: _serde::de::Error,
-        //                         {
-        //                             match __value {
-        //                                 b"date" => _serde::__private::Ok(__Field::__field0),
-        //                                 b"time" => _serde::__private::Ok(__Field::__field1),
-        //                                 b"offset" => _serde::__private::Ok(__Field::__field2),
-        //                                 _ => _serde::__private::Ok(__Field::__ignore),
-        //                             }
-        //                         }
-        //                     }
-        //                     impl<'de> _serde::Deserialize<'de> for __Field {
-        //                         #[inline]
-        //                         fn deserialize<__D>(
-        //                             __deserializer: __D,
-        //                         ) -> _serde::__private::Result<Self, __D::Error>
-        //                         where
-        //                             __D: _serde::Deserializer<'de>,
-        //                         {
-        //                             _serde::Deserializer::deserialize_identifier(
-        //                                 __deserializer,
-        //                                 __FieldVisitor,
-        //                             )
-        //                         }
-        //                     }
-        //                     #[doc(hidden)]
-        //                     struct __Visitor<'de> {
-        //                         marker: _serde::__private::PhantomData<SqlxTypesTimeOffsetDateTime>,
-        //                         lifetime: _serde::__private::PhantomData<&'de ()>,
-        //                     }
-        //                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-        //                         type Value = SqlxTypesTimeOffsetDateTime;
-        //                         fn expecting(
-        //                             &self,
-        //                             __formatter: &mut _serde::__private::Formatter,
-        //                         ) -> _serde::__private::fmt::Result {
-        //                             _serde::__private::Formatter::write_str(
-        //                                 __formatter,
-        //                                 "struct SqlxTypesTimeOffsetDateTime",
-        //                             )
-        //                         }
-        //                         #[inline]
-        //                         fn visit_seq<__A>(
-        //                             self,
-        //                             mut __seq: __A,
-        //                         ) -> _serde::__private::Result<Self::Value, __A::Error>
-        //                         where
-        //                             __A: _serde::de::SeqAccess<'de>,
-        //                         {
-        //                             let __field0 = match _serde::de::SeqAccess::next_element::<
-        //                                 sqlx::types::time::Date,
-        //                             >(&mut __seq)? {
-        //                                 _serde::__private::Some(__value) => __value,
-        //                                 _serde::__private::None => {
-        //                                     return _serde::__private::Err(
-        //                                         _serde::de::Error::invalid_length(
-        //                                             0usize,
-        //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
-        //                                         ),
-        //                                     );
-        //                                 }
-        //                             };
-        //                             let __field1 = match _serde::de::SeqAccess::next_element::<
-        //                                 sqlx::types::time::Time,
-        //                             >(&mut __seq)? {
-        //                                 _serde::__private::Some(__value) => __value,
-        //                                 _serde::__private::None => {
-        //                                     return _serde::__private::Err(
-        //                                         _serde::de::Error::invalid_length(
-        //                                             1usize,
-        //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
-        //                                         ),
-        //                                     );
-        //                                 }
-        //                             };
-        //                             let __field2 = match _serde::de::SeqAccess::next_element::<
-        //                                 sqlx::types::time::UtcOffset,
-        //                             >(&mut __seq)? {
-        //                                 _serde::__private::Some(__value) => __value,
-        //                                 _serde::__private::None => {
-        //                                     return _serde::__private::Err(
-        //                                         _serde::de::Error::invalid_length(
-        //                                             2usize,
-        //                                             &"struct SqlxTypesTimeOffsetDateTime with 3 elements",
-        //                                         ),
-        //                                     );
-        //                                 }
-        //                             };
-        //                             _serde::__private::Ok(SqlxTypesTimeOffsetDateTime {
-        //                                 date: __field0,
-        //                                 time: __field1,
-        //                                 offset: __field2,
-        //                             })
-        //                         }
-        //                         #[inline]
-        //                         fn visit_map<__A>(
-        //                             self,
-        //                             mut __map: __A,
-        //                         ) -> _serde::__private::Result<Self::Value, __A::Error>
-        //                         where
-        //                             __A: _serde::de::MapAccess<'de>,
-        //                         {
-        //                             let mut __field0: _serde::__private::Option<
-        //                                 sqlx::types::time::Date,
-        //                             > = _serde::__private::None;
-        //                             let mut __field1: _serde::__private::Option<
-        //                                 sqlx::types::time::Time,
-        //                             > = _serde::__private::None;
-        //                             let mut __field2: _serde::__private::Option<
-        //                                 sqlx::types::time::UtcOffset,
-        //                             > = _serde::__private::None;
-        //                             while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-        //                                 __Field,
-        //                             >(&mut __map)? {
-        //                                 match __key {
-        //                                     __Field::__field0 => {
-        //                                         if _serde::__private::Option::is_some(&__field0) {
-        //                                             return _serde::__private::Err(
-        //                                                 <__A::Error as _serde::de::Error>::duplicate_field("date"),
-        //                                             );
-        //                                         }
-        //                                         __field0 = _serde::__private::Some(
-        //                                             _serde::de::MapAccess::next_value::<
-        //                                                 sqlx::types::time::Date,
-        //                                             >(&mut __map)?,
-        //                                         );
-        //                                     }
-        //                                     __Field::__field1 => {
-        //                                         if _serde::__private::Option::is_some(&__field1) {
-        //                                             return _serde::__private::Err(
-        //                                                 <__A::Error as _serde::de::Error>::duplicate_field("time"),
-        //                                             );
-        //                                         }
-        //                                         __field1 = _serde::__private::Some(
-        //                                             _serde::de::MapAccess::next_value::<
-        //                                                 sqlx::types::time::Time,
-        //                                             >(&mut __map)?,
-        //                                         );
-        //                                     }
-        //                                     __Field::__field2 => {
-        //                                         if _serde::__private::Option::is_some(&__field2) {
-        //                                             return _serde::__private::Err(
-        //                                                 <__A::Error as _serde::de::Error>::duplicate_field("offset"),
-        //                                             );
-        //                                         }
-        //                                         __field2 = _serde::__private::Some(
-        //                                             _serde::de::MapAccess::next_value::<
-        //                                                 sqlx::types::time::UtcOffset,
-        //                                             >(&mut __map)?,
-        //                                         );
-        //                                     }
-        //                                     _ => {
-        //                                         let _ = _serde::de::MapAccess::next_value::<
-        //                                             _serde::de::IgnoredAny,
-        //                                         >(&mut __map)?;
-        //                                     }
-        //                                 }
-        //                             }
-        //                             let __field0 = match __field0 {
-        //                                 _serde::__private::Some(__field0) => __field0,
-        //                                 _serde::__private::None => {
-        //                                     _serde::__private::de::missing_field("date")?
-        //                                 }
-        //                             };
-        //                             let __field1 = match __field1 {
-        //                                 _serde::__private::Some(__field1) => __field1,
-        //                                 _serde::__private::None => {
-        //                                     _serde::__private::de::missing_field("time")?
-        //                                 }
-        //                             };
-        //                             let __field2 = match __field2 {
-        //                                 _serde::__private::Some(__field2) => __field2,
-        //                                 _serde::__private::None => {
-        //                                     _serde::__private::de::missing_field("offset")?
-        //                                 }
-        //                             };
-        //                             _serde::__private::Ok(SqlxTypesTimeOffsetDateTime {
-        //                                 date: __field0,
-        //                                 time: __field1,
-        //                                 offset: __field2,
-        //                             })
-        //                         }
-        //                     }
-        //                     #[doc(hidden)]
-        //                     const FIELDS: &'static [&'static str] = &["date", "time", "offset"];
-        //                     _serde::Deserializer::deserialize_struct(
-        //                         __deserializer,
-        //                         "SqlxTypesTimeOffsetDateTime",
-        //                         FIELDS,
-        //                         __Visitor {
-        //                             marker: _serde::__private::PhantomData::<
-        //                                 SqlxTypesTimeOffsetDateTime,
-        //                             >,
-        //                             lifetime: _serde::__private::PhantomData,
-        //                         },
-        //                     )
-        //                 }
-        //             }
-        //         };
-        //     }
-        // };
-        let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxTypesUuidUuid {
-                        fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: serde::Deserializer<'de>,
-                        {
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<SqlxTypesUuidUuid>,
-                                lifetime: serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxTypesUuidUuid;
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesUuidUuid")
-                                }
-                                #[inline]
-                                fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                                where
-                                    __E: serde::Deserializer<'de>,
-                                {
-                                    let __field0: std::string::String = <std::string::String as serde::Deserialize>::deserialize(__e)?;
-                                    serde::__private::Ok(SqlxTypesUuidUuid(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
-                                        Ok(value) => value,
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
-                                        serde::__private::Some(__value) => __value,
-                                        serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesUuidUuid with 1 element"));
-                                        }
-                                    };
-                                    serde::__private::Ok(SqlxTypesUuidUuid(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
-                                        Ok(value) => value,
-                                        Err(error) => {
-                                            return Err(serde::de::Error::custom(error));
-                                        }
-                                    }))
-                                }
-                            }
-                            serde::Deserializer::deserialize_newtype_struct(
-                                __deserializer,
-                                "SqlxTypesUuidUuid",
-                                __Visitor {
-                                    marker: serde::__private::PhantomData::<SqlxTypesUuidUuid>,
-                                    lifetime: serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> serde::Deserialize<'de> for SqlxTypesMacAddressMacAddress {
-                        fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: serde::Deserializer<'de>,
-                        {
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: serde::__private::PhantomData<SqlxTypesMacAddressMacAddress>,
-                                lifetime: serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxTypesMacAddressMacAddress;
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesMacAddressMacAddress")
-                                }
-                                #[inline]
-                                fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                                where
-                                    __E: serde::Deserializer<'de>,
-                                {
-                                    let __field0: [std::primitive::u8; 6] = <[std::primitive::u8; 6] as serde::Deserialize>::deserialize(__e)?;
-                                    serde::__private::Ok(SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new(__field0)))
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
-                                        serde::__private::Some(__value) => __value,
-                                        serde::__private::None => {
-                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesMacAddressMacAddress with 1 element"));
-                                        }
-                                    };
-                                    serde::__private::Ok(SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new(__field0)))
-                                }
-                            }
-                            serde::Deserializer::deserialize_newtype_struct(
-                                __deserializer,
-                                "SqlxTypesMacAddressMacAddress",
-                                __Visitor {
-                                    marker: serde::__private::PhantomData::<SqlxTypesMacAddressMacAddress>,
-                                    lifetime: serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        let impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream = {
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVec {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<SqlxTypesBitVec>,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxTypesBitVec;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "tuple struct SqlxTypesBitVec",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_newtype_struct<__E>(
-                                    self,
-                                    __e: __E,
-                                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                                where
-                                    __E: _serde::Deserializer<'de>,
-                                {
-                                    let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
-                                        std::primitive::bool,
-                                    > as _serde::Deserialize>::deserialize(__e)?;
-                                    _serde::__private::Ok(SqlxTypesBitVec({
-                                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                                        __field0.into_iter().enumerate().for_each(|(index, element)|{
-                                            bit_vec.set(index, element);
-                                        });
-                                        bit_vec
-                                    }))
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::vec::Vec<std::primitive::bool>,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"tuple struct SqlxTypesBitVec with 1 element",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    _serde::__private::Ok(SqlxTypesBitVec({
-                                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                                        __field0.into_iter().enumerate().for_each(|(index, element)|{
-                                            bit_vec.set(index, element);
-                                        });
-                                        bit_vec
-                                    }))
-                                }
-                            }
-                            _serde::Deserializer::deserialize_newtype_struct(
-                                __deserializer,
-                                "SqlxTypesBitVec",
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<SqlxTypesBitVec>,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => impl_serde_deserialize_for_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
-        }
-    };
     
-    let impl_crate_create_table_column_query_part_for_ident_token_stream = {
-        let postgresql_query_type = match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "int2",
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "int4",
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "int8",
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "float4",
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "float8",
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "smallserial",
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "serial",
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "bigserial",
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "money",
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "bool",
-            PostgresqlType::StdStringStringAsPostgresqlCharN => "char(10)",
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => "varchar(8)",
-            PostgresqlType::StdStringStringAsPostgresqlText => "text",
-            // PostgresqlType::StdStringStringAsPostgresqlCiText => "citext",
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "date",
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "time",
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "time",
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "interval",
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "tsrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "tsrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "tstzrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "tstzrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "tstzrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "daterange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "daterange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "numrange",
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "numrange",
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "timestamp",
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "timestamp",
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "timestamptz",
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "timestamptz",
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "timestamptz",
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "uuid",
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "uuid",
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",//todo
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
-        };
-        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-            &format!("{{column}} {postgresql_query_type}")
-        );
-        quote::quote!{
-            impl crate::CreateTableColumnQueryPart for #postgresql_type{
-                fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-                    format!(#format_handle_token_stream)
-                }
-            }
-        }
-    };
-
-    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-        &postgresql_type,
-        &quote::quote!{"{self:?}"}
-    );
-
-    let postgresql_base_type_tokens = {
-        panic_location::panic_location();
-        let std_option_option_ident_token_stream = quote::quote!{std::option::Option<#postgresql_type>};
-        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_type,
-            &quote::quote!{self.to_string()},
-        );
-        let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type,
-            &field_type
-        );
-        let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &std_option_option_ident_upper_camel_case,
-            &std_option_option_ident_token_stream
-        );
-        let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type,
-            &field_type
-        );
-        let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &std_option_option_ident_upper_camel_case,
-            &quote::quote! {std::option::Option<#postgresql_type>}
-        );
-        let self_zero_token_stream = {
-            let self_snake_case = naming::SelfSnakeCase;
-            quote::quote!{#self_snake_case.0}
-        };
-        let query_snake_case = naming::QuerySnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let try_generate_bind_increments_token_stream = {
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let acc_snake_case = naming::AccSnakeCase;
-            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-            quote::quote! {
-                let mut #acc_snake_case = std::string::String::default();
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                    }
-                    None => {
-                        return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                }
-                Ok(#acc_snake_case)
-            }
-        };
-        let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type,
-            &try_generate_bind_increments_token_stream,
-            &quote::quote! {
-                #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
-                #query_snake_case
-            }
-        );
-        let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &std_option_option_ident_upper_camel_case,
-            &try_generate_bind_increments_token_stream,
-            &quote::quote! {
-                #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
-                    Some(#value_snake_case) => Some(#value_snake_case.0),
-                    None => None
-                });
-                #query_snake_case
-            }
-        );
-        let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
-            Visibility::PubCrate,
-            &std_option_option_ident_upper_camel_case,
-            &quote::quote!{(pub std::option::Option<#postgresql_type>);},
-            false,
-            true,
-        );
-        let (
-            impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream,
-            impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-        ) = {
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                quote::quote! {crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case}
+        let impl_crate_create_table_column_query_part_for_ident_token_stream = {
+            let postgresql_query_type = match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "int2",
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "int4",
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "int8",
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => "float4",
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => "float8",
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => "smallserial",
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => "serial",
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => "bigserial",
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => "money",
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "bool",
+                PostgresqlType::StdStringStringAsPostgresqlCharN => "char(10)",
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => "varchar(8)",
+                PostgresqlType::StdStringStringAsPostgresqlText => "text",
+                // PostgresqlType::StdStringStringAsPostgresqlCiText => "citext",
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "date",
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => "time",
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => "time",
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => "interval",
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => "tsrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => "tsrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => "tstzrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => "tstzrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => "tstzrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => "daterange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => "daterange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => "numrange",
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => "numrange",
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => "timestamp",
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => "timestamp",
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => "timestamptz",
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => "timestamptz",
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => "timestamptz",
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => "uuid",
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => "uuid",
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",//todo
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
             };
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-            (
-                generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type,
-                    &{
-                        let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
-                            &core_default_default_default_token_stream,
-                            &core_default_default_default_token_stream,
-                        );
-                        let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
-                            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
-                            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
-                            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
-                            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
-                            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 |
-                            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
-                            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
-                            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default_token_stream)},
-                            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
-                            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
-                            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
-                            PostgresqlType::StdStringStringAsPostgresqlCharN |
-                            PostgresqlType::StdStringStringAsPostgresqlVarchar |
-                            PostgresqlType::StdStringStringAsPostgresqlText => &core_default_default_default_token_stream,
-                            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &quote::quote!{vec![#core_default_default_default_token_stream]},
-                            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream(),
-                            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
-                            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &{
-                                let value = token_patterns::SqlxTypesTimeTimeMidnight;
-                                quote::quote!{#value}
-                            },
-                            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
-                                quote::quote!{sqlx::postgres::types::PgInterval {
-                                    months: #core_default_default_default_token_stream,
-                                    days: #core_default_default_default_token_stream,
-                                    microseconds: #core_default_default_default_token_stream,
+            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                &format!("{{column}} {postgresql_query_type}")
+            );
+            quote::quote!{
+                impl crate::CreateTableColumnQueryPart for #postgresql_type{
+                    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+                        format!(#format_handle_token_stream)
+                    }
+                }
+            }
+        };
+
+        let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+            &postgresql_type,
+            &quote::quote!{"{self:?}"}
+        );
+
+        let postgresql_base_type_tokens = {
+            panic_location::panic_location();
+            let std_option_option_ident_token_stream = quote::quote!{std::option::Option<#postgresql_type>};
+            let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                &postgresql_type,
+                &quote::quote!{self.to_string()},
+            );
+            let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                &postgresql_type,
+                &field_type
+            );
+            let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case,
+                &std_option_option_ident_token_stream
+            );
+            let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                &postgresql_type,
+                &field_type
+            );
+            let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case,
+                &quote::quote! {std::option::Option<#postgresql_type>}
+            );
+            let self_zero_token_stream = {
+                let self_snake_case = naming::SelfSnakeCase;
+                quote::quote!{#self_snake_case.0}
+            };
+            let query_snake_case = naming::QuerySnakeCase;
+            let value_snake_case = naming::ValueSnakeCase;
+            let try_generate_bind_increments_token_stream = {
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let acc_snake_case = naming::AccSnakeCase;
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                quote::quote! {
+                    let mut #acc_snake_case = std::string::String::default();
+                    match #increment_snake_case.checked_add(1) {
+                        Some(#value_snake_case) => {
+                            *#increment_snake_case = #value_snake_case;
+                            #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                        }
+                        None => {
+                            return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                    Ok(#acc_snake_case)
+                }
+            };
+            let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                &postgresql_type,
+                &try_generate_bind_increments_token_stream,
+                &quote::quote! {
+                    #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
+                    #query_snake_case
+                }
+            );
+            let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                &std_option_option_ident_upper_camel_case,
+                &try_generate_bind_increments_token_stream,
+                &quote::quote! {
+                    #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
+                        Some(#value_snake_case) => Some(#value_snake_case.0),
+                        None => None
+                    });
+                    #query_snake_case
+                }
+            );
+            let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
+                Visibility::PubCrate,
+                &std_option_option_ident_upper_camel_case,
+                &quote::quote!{(pub std::option::Option<#postgresql_type>);},
+                false,
+                true,
+            );
+            let (
+                impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream,
+                impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+            ) = {
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                    quote::quote! {crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case}
+                };
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                (
+                    generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type,
+                        &{
+                            let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
+                                &core_default_default_default_token_stream,
+                                &core_default_default_default_token_stream,
+                            );
+                            let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
+                                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
+                                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
+                                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
+                                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
+                                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 |
+                                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
+                                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
+                                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default_token_stream)},
+                                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
+                                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
+                                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
+                                PostgresqlType::StdStringStringAsPostgresqlCharN |
+                                PostgresqlType::StdStringStringAsPostgresqlVarchar |
+                                PostgresqlType::StdStringStringAsPostgresqlText => &core_default_default_default_token_stream,
+                                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &quote::quote!{vec![#core_default_default_default_token_stream]},
+                                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream(),
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &{
+                                    let value = token_patterns::SqlxTypesTimeTimeMidnight;
+                                    quote::quote!{#value}
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
+                                    quote::quote!{sqlx::postgres::types::PgInterval {
+                                        months: #core_default_default_default_token_stream,
+                                        days: #core_default_default_default_token_stream,
+                                        microseconds: #core_default_default_default_token_stream,
+                                    }}
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &{
+                                    let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
+                                    generate_sqlx_postgres_types_pg_range_token_steram(
+                                        &sqlx_types_time_primitive_date_time_new_token_stream,
+                                        &sqlx_types_time_primitive_date_time_new_token_stream,
+                                    )
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &{
+                                    let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+                                    generate_sqlx_postgres_types_pg_range_token_steram(
+                                        &sqlx_types_time_offset_date_time_unix_epoch,
+                                        &sqlx_types_time_offset_date_time_unix_epoch,
+                                    )
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &{
+                                    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
+                                    generate_sqlx_postgres_types_pg_range_token_steram(
+                                        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                                        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                                    )
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
+
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream(),
+                                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &{
+                                    let value = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
+                                    quote::quote!{#value}
+                                },
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
+                                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
+                                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &sqlx_types_ipnetwork_ip_network_v4_token_stream(),
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
+                                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
+                                    let mut value = sqlx::types::BitVec::new();
+                                    value.push(false);
+                                    value
                                 }}
-                            },
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &{
-                                let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
-                                generate_sqlx_postgres_types_pg_range_token_steram(
-                                    &sqlx_types_time_primitive_date_time_new_token_stream,
-                                    &sqlx_types_time_primitive_date_time_new_token_stream,
-                                )
-                            },
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &{
-                                let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-                                generate_sqlx_postgres_types_pg_range_token_steram(
-                                    &sqlx_types_time_offset_date_time_unix_epoch,
-                                    &sqlx_types_time_offset_date_time_unix_epoch,
-                                )
-                            },
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &{
-                                let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-                                generate_sqlx_postgres_types_pg_range_token_steram(
-                                    &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                                    &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                                )
-                            },
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
-
-                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream(),
-                            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &{
-                                let value = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-                                quote::quote!{#value}
-                            },
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
-                            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
-                            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &sqlx_types_ipnetwork_ip_network_v4_token_stream(),
-                            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
-                            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
-                                let mut value = sqlx::types::BitVec::new();
-                                value.push(false);
-                                value
-                            }}
-                        };
-                        quote::quote!{Self(#initialization_token_stream)}
-                    },
-                ),
-                generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &std_option_option_ident_upper_camel_case,
-                    &quote::quote!{Self(
-                        Some(
-                            #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-                        )
-                    )},
+                            };
+                            quote::quote!{Self(#initialization_token_stream)}
+                        },
+                    ),
+                    generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &std_option_option_ident_upper_camel_case,
+                        &quote::quote!{Self(
+                            Some(
+                                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                            )
+                        )},
+                    )
                 )
-            )
-        };
-        let (
-            impl_crate_create_table_query_part_for_ident_token_stream,
-            impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
-        ) = {
-            let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
-                ident_token_stream: &dyn quote::ToTokens,
-                is_not_null: std::primitive::bool,
-            |{
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                    "{{{value_snake_case}}}{}",
-                    if is_not_null {
-                        " not null"
-                    }
-                    else {
-                        ""
-                    }
-                ));
-                quote::quote!{
-                    impl #ident_token_stream {
-                        pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-                            format!(#format_handle_token_stream)
+            };
+            let (
+                impl_crate_create_table_query_part_for_ident_token_stream,
+                impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
+            ) = {
+                let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
+                    ident_token_stream: &dyn quote::ToTokens,
+                    is_not_null: std::primitive::bool,
+                |{
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                        "{{{value_snake_case}}}{}",
+                        if is_not_null {
+                            " not null"
+                        }
+                        else {
+                            ""
+                        }
+                    ));
+                    quote::quote!{
+                        impl #ident_token_stream {
+                            pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+                                format!(#format_handle_token_stream)
+                            }
                         }
                     }
-                }
-            };
-            (
-                generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-                    &postgresql_type,
-                    true,
-                ),
-                generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-                    &std_option_option_ident_upper_camel_case,
-                    false,
+                };
+                (
+                    generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+                        &postgresql_type,
+                        true,
+                    ),
+                    generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+                        &std_option_option_ident_upper_camel_case,
+                        false,
+                    )
                 )
-            )
-        };
-        let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-            let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
-            quote::quote!{
-                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
-            }
-        };
-        let impl_postgresql_base_type_for_ident_token_stream = {
-            let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
-            let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-            let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
-            quote::quote! {
-                impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
-                    type #postgresql_base_type_self_upper_camel_case = Self;
-                    type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
-                }
-            }
-        };
-        let generated = quote::quote! {
-            #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
-            #impl_crate_bind_query_for_ident_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
-            #impl_crate_create_table_query_part_for_ident_token_stream
-
-            #pub_crate_struct_std_option_option_ident_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
-            #impl_crate_bind_query_for_std_option_option_ident_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-            #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
-        
-            #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-            #impl_postgresql_base_type_for_ident_token_stream
-        };
-        generated
-    };
-    let maybe_primary_key_tokens_token_stream = {
-        let primary_key_token_stream = {
-            let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type);
-            let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
+            };
+            let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
+                let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
                 quote::quote!{
-                    impl sqlx::postgres::PgHasArrayType for #postgresql_type{
-                        fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                            <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
-                        }
-                    }
+                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
                 }
             };
-            let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
-                let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
+            let impl_postgresql_base_type_for_ident_token_stream = {
+                let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
                 let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type{
+                let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
+                quote::quote! {
+                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
                         type #postgresql_base_type_self_upper_camel_case = Self;
+                        type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
                     }
                 }
             };
-            quote::quote!{
-                #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
-                #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-                #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+            let generated = quote::quote! {
+                #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
+                #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
+                #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
+                #impl_crate_bind_query_for_ident_token_stream
+                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+                #impl_crate_create_table_query_part_for_ident_token_stream
+
+                #pub_crate_struct_std_option_option_ident_token_stream
+                #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
+                #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
+                #impl_crate_bind_query_for_std_option_option_ident_token_stream
+                #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+                #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
+        
+                #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
+                #impl_postgresql_base_type_for_ident_token_stream
+            };
+            generated
+        };
+        let maybe_primary_key_tokens_token_stream = {
+            let primary_key_token_stream = {
+                let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type);
+                let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
+                    quote::quote!{
+                        impl sqlx::postgres::PgHasArrayType for #postgresql_type{
+                            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+                            }
+                        }
+                    }
+                };
+                let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
+                    let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
+                    let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+                    quote::quote!{
+                        impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type{
+                            type #postgresql_base_type_self_upper_camel_case = Self;
+                        }
+                    }
+                };
+                quote::quote!{
+                    #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
+                    #impl_sqlx_postgres_pg_has_array_type_for_token_stream
+                    #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+                }
+            };
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2::TokenStream::new(),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => primary_key_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney |
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
+                PostgresqlType::StdStringStringAsPostgresqlCharN |
+                PostgresqlType::StdStringStringAsPostgresqlVarchar |
+                PostgresqlType::StdStringStringAsPostgresqlText |
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea |
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate |
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime |
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime |
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange |
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp |
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp |
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz |
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => primary_key_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr |
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr |
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2::TokenStream::new(),
             }
         };
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 |
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 |
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 |
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 |
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2::TokenStream::new(),
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => primary_key_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney |
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
-            PostgresqlType::StdStringStringAsPostgresqlCharN |
-            PostgresqlType::StdStringStringAsPostgresqlVarchar |
-            PostgresqlType::StdStringStringAsPostgresqlText |
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea |
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate |
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate |
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime |
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime |
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval |
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange |
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp |
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp |
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz |
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2::TokenStream::new(),
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => primary_key_token_stream,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr |
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr |
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2::TokenStream::new(),
-        }
-    };
 
-   let where_element_token_stream = {
-        let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let in_handle = crate::filters::In;
-            let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &in_handle,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_in_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_postgres_types_pg_money_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+        let where_element_token_stream = {
+            let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let in_handle = crate::filters::In;
+                let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &in_handle,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_in_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_postgres_types_pg_money_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
         
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::True,
-            );
-            let in_handle = crate::filters::In;
-            let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &in_handle,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_in_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_big_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_bool_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &WhereOperatorType::FieldType {
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::True,
+                );
+                let in_handle = crate::filters::In;
+                let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &in_handle,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_in_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
                     field_type: &field_type,
                     default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-                },
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_std_string_string_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &case_sensitive_regular_expression,
-                    &case_insensitive_regular_expression,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &WhereOperatorType::FieldType {
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_big_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_bool_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &WhereOperatorType::FieldType {
+                        field_type: &field_type,
+                        default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                    },
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_std_string_string_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &case_sensitive_regular_expression,
+                        &case_insensitive_regular_expression,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &WhereOperatorType::FieldType {
+                        field_type: &field_type,
+                        default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                    },
+                );
+                let length_more_than = crate::filters::LengthMoreThan;
+                let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
+                let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &length_more_than,
+                        &equal_to_encoded_string_representation,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_length_more_than_token_stream
+                    #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_time_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_date = crate::filters::CurrentDate;
+                let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
+                let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_date,
+                        &greater_than_current_date,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_date_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_chrono_naive_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
                     field_type: &field_type,
                     default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-                },
-            );
-            let length_more_than = crate::filters::LengthMoreThan;
-            let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
-            let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &length_more_than,
-                    &equal_to_encoded_string_representation,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_length_more_than_token_stream
-                #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_time_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_date = crate::filters::CurrentDate;
-            let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
-            let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_date,
-                    &greater_than_current_date,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_date_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_chrono_naive_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_date = crate::filters::CurrentDate;
-            let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
-            let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_date,
-                    &greater_than_current_date,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_date_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_chrono_naive_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_time = crate::filters::CurrentTime;
-            let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
-            let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_time,
-                    &greater_than_current_time,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_time_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_time_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_time = crate::filters::CurrentTime;
-            let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
-            let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_time,
-                    &greater_than_current_time,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_time_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartIsEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_date = crate::filters::CurrentDate;
+                let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
+                let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_date,
+                        &greater_than_current_date,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_date_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_chrono_naive_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_time = crate::filters::CurrentTime;
+                let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
+                let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_time,
+                        &greater_than_current_time,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_time_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_time_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_time = crate::filters::CurrentTime;
+                let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
+                let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_time,
+                        &greater_than_current_time,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_time_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartIsEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
 
-        let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
-            generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let range_type_token_stream = range_type.type_token_stream();
-                let range_type_should_impl_range_length = range_type.should_impl_range_length();
-                let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
-                let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
+            let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
+                generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                    let range_type_token_stream = range_type.type_token_stream();
+                    let range_type_should_impl_range_length = range_type.should_impl_range_length();
+                    let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
+                    let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
+                    let increment_snake_case = naming::IncrementSnakeCase;
+                    let value_snake_case = naming::ValueSnakeCase;
+                    let column_snake_case = naming::ColumnSnakeCase;
+                    let query_snake_case = naming::QuerySnakeCase;
+                    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                        crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                    };
+                    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+                    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+                    let equal = crate::filters::Equal;
+                    let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                        &WhereOperatorType::Ident(&postgresql_type),
+                    );
+                    let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
+                    let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                        &range_type_token_stream,
+                        &range_type_should_impl_range_length,
+                        &range_type_default_initialization_token_stream,
+                        &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                    );
+                    let contains_another_range = crate::filters::ContainsAnotherRange;
+                    let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    let strictly_to_left_of_range = crate::filters::StrictlyToLeftOfRange;
+                    let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    let strictly_to_right_of_range = crate::filters::StrictlyToRightOfRange;
+                    let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    let included_lower_bound = crate::filters::IncludedLowerBound;
+                    let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                        &range_type_token_stream,
+                        &range_type_default_initialization_token_stream,
+                        &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                    );
+                    let excluded_upper_bound = crate::filters::ExcludedUpperBound;
+                    let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                        &range_type_token_stream,
+                        &range_type_default_initialization_token_stream,
+                        &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                    );
+                    let greater_than_lower_bound = crate::filters::GreaterThanLowerBound;
+                    let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    let overlap_with_range = crate::filters::OverlapWithRange;
+                    let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    let adjacent_with_range = crate::filters::AdjacentWithRange;
+                    let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                        &postgresql_type,
+                        &is_nullable,
+                    );
+                    //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
+                    let range_length = crate::filters::RangeLength;
+                    let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
+                        ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            &postgresql_type,
+                            &is_nullable,
+                        ),
+                        ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
+                    };
+                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                        is_nullable,
+                        &postgresql_type,
+                        &{
+                            let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
+                                &equal,
+                                &value_is_contained_within_range,
+                                &contains_another_range,
+                                &strictly_to_left_of_range,
+                                &strictly_to_right_of_range,
+                                &included_lower_bound,
+                                &excluded_upper_bound,
+                                &greater_than_lower_bound,
+                                &overlap_with_range,
+                                &adjacent_with_range,
+                            ];
+                            if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
+                                value.push(&range_length);
+                            }
+                            value
+                        }
+                    );
+                    quote::quote! {
+                        #postgresql_type_tokens_where_element_equal_token_stream
+                        #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
+                        #postgresql_type_tokens_where_element_contains_another_range_token_stream
+                        #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
+                        #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
+                        #postgresql_type_tokens_where_element_included_lower_bound_token_stream
+                        #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
+                        #postgresql_type_tokens_where_element_overlap_with_range_token_stream
+                        #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
+                        #maybe_postgresql_type_tokens_where_element_range_length_token_stream
+                        #postgresql_type_tokens_where_element_token_stream
+                    }
+                })
+            };
+
+            let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::I32);
+            let where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::I64);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+            let where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+            let where_element_sqlx_types_chrono_naive_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_timestamp = crate::filters::CurrentTimestamp;
+                let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
+                let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_timestamp,
+                        &greater_than_current_timestamp,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_timestamp_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_time_primitive_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
+                let where_operator_type_field_type = WhereOperatorType::FieldType {
+                    field_type: &field_type,
+                    default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
+                };
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_field_type,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let current_timestamp = crate::filters::CurrentTimestamp;
+                let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
+                let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                        &current_timestamp,
+                        &greater_than_current_timestamp,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_current_timestamp_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_time_offset_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let before = crate::filters::Before;
+                let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                // todo
+                // -- Values after the current timestamp
+                // SELECT *
+                // FROM your_table
+                // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
+
+                // -- Values equal to the current date (ignoring time)
+                // SELECT *
+                // FROM your_table
+                // WHERE your_timestamptz_column::date = CURRENT_DATE;
+                // 6. Time Zone Conversion
+                // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
+
+                // -- Compare with a specific timestamp in another time zone
+                // SELECT *
+                // FROM your_table
+                // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
+
+                // -- Values after a timestamp in a different time zone
+                // SELECT *
+                // FROM your_table
+                // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &before,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_before_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let before = crate::filters::Before;
+                let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &before,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_before_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let before = crate::filters::Before;
+                let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let between = crate::filters::Between;
+                let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                    &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                    &crate::filters::ShouldAddDotZero::False,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &before,
+                        &between,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_before_token_stream
+                    #postgresql_type_tokens_where_element_between_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_uuid_uuid_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &WhereOperatorType::Ident(&postgresql_type),
+                );
+                let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &case_sensitive_regular_expression,
+                        &case_insensitive_regular_expression,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_ipnetwork_ip_network_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &WhereOperatorType::FieldType {
+                        field_type: &field_type,
+                        default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+                    },
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
+                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
+                let equal = crate::filters::Equal;
+                let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident,
+                );
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                    &where_operator_type_ident
+                );
+                let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
+                let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &is_nullable,
+                );
+                let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
+                    is_nullable,
+                    &postgresql_type,
+                    &vec![
+                        &equal,
+                        &greater_than,
+                        &case_sensitive_regular_expression,
+                        &case_insensitive_regular_expression,
+                    ]
+                );
+                quote::quote! {
+                    #postgresql_type_tokens_where_element_equal_token_stream
+                    #postgresql_type_tokens_where_element_greater_than_token_stream
+                    #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+                    #postgresql_type_tokens_where_element_token_stream
+                }
+            });
+            let where_element_sqlx_types_bit_vec_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
                 let increment_snake_case = naming::IncrementSnakeCase;
                 let value_snake_case = naming::ValueSnakeCase;
                 let column_snake_case = naming::ColumnSnakeCase;
                 let query_snake_case = naming::QuerySnakeCase;
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                    crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                };
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
                 let equal = crate::filters::Equal;
@@ -10162,636 +10630,352 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &is_nullable,
                     &WhereOperatorType::Ident(&postgresql_type),
                 );
-                let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
-                let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                    &range_type_token_stream,
-                    &range_type_should_impl_range_length,
-                    &range_type_default_initialization_token_stream,
-                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-                );
-                let contains_another_range = crate::filters::ContainsAnotherRange;
-                let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
+                let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
                     &is_nullable,
                 );
-                let strictly_to_left_of_range = crate::filters::StrictlyToLeftOfRange;
-                let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                );
-                let strictly_to_right_of_range = crate::filters::StrictlyToRightOfRange;
-                let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                );
-                let included_lower_bound = crate::filters::IncludedLowerBound;
-                let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                    &range_type_token_stream,
-                    &range_type_default_initialization_token_stream,
-                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-                );
-                let excluded_upper_bound = crate::filters::ExcludedUpperBound;
-                let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                    &range_type_token_stream,
-                    &range_type_default_initialization_token_stream,
-                    &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-                );
-                let greater_than_lower_bound = crate::filters::GreaterThanLowerBound;
-                let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                );
-                let overlap_with_range = crate::filters::OverlapWithRange;
-                let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                );
-                let adjacent_with_range = crate::filters::AdjacentWithRange;
-                let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                    &postgresql_type,
-                    &is_nullable,
-                );
-                //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
-                let range_length = crate::filters::RangeLength;
-                let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
-                    ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &is_nullable,
-                    ),
-                    ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
-                };
                 let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
                     is_nullable,
                     &postgresql_type,
-                    &{
-                        let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
-                            &equal,
-                            &value_is_contained_within_range,
-                            &contains_another_range,
-                            &strictly_to_left_of_range,
-                            &strictly_to_right_of_range,
-                            &included_lower_bound,
-                            &excluded_upper_bound,
-                            &greater_than_lower_bound,
-                            &overlap_with_range,
-                            &adjacent_with_range,
-                        ];
-                        if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
-                            value.push(&range_length);
-                        }
-                        value
-                    }
+                    &vec![
+                        &equal,
+                        &bit_vec_position_equal,
+                    ]
                 );
                 quote::quote! {
                     #postgresql_type_tokens_where_element_equal_token_stream
-                    #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
-                    #postgresql_type_tokens_where_element_contains_another_range_token_stream
-                    #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
-                    #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-                    #postgresql_type_tokens_where_element_included_lower_bound_token_stream
-                    #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
-                    #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
-                    #postgresql_type_tokens_where_element_overlap_with_range_token_stream
-                    #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
-                    #maybe_postgresql_type_tokens_where_element_range_length_token_stream
+                    #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
                     #postgresql_type_tokens_where_element_token_stream
                 }
-            })
+            });
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => where_element_number_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => where_element_number_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => where_element_sqlx_types_decimal_token_stream,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => where_element_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => where_element_bool_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => where_element_std_string_string_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => where_element_std_string_string_token_stream,
+                PostgresqlType::StdStringStringAsPostgresqlText => where_element_std_string_string_token_stream,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => where_element_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => where_element_sqlx_types_chrono_naive_date_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => where_element_sqlx_types_chrono_naive_time_token_stream,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => where_element_sqlx_types_time_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => where_element_sqlx_types_chrono_naive_date_time_token_stream,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => where_element_sqlx_types_time_offset_date_time_token_stream,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => where_element_sqlx_types_bit_vec_token_stream,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => where_element_sqlx_types_bit_vec_token_stream,
+            }
         };
 
-        let where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::I32);
-        let where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::I64);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
-        let where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
-        let where_element_sqlx_types_chrono_naive_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+        let postgresql_type_initialized_by_tokens_token_stream = {
+            let postgresql_type_initialized_by_tokens = match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlText => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
             };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_timestamp = crate::filters::CurrentTimestamp;
-            let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
-            let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_timestamp,
-                    &greater_than_current_timestamp,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_timestamp_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_time_primitive_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
-            let where_operator_type_field_type = WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
-            };
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_field_type,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let current_timestamp = crate::filters::CurrentTimestamp;
-            let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
-            let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &between,
-                    &current_timestamp,
-                    &greater_than_current_timestamp,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_current_timestamp_token_stream
-                #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_time_offset_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let before = crate::filters::Before;
-            let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            // todo
-            // -- Values after the current timestamp
-            // SELECT *
-            // FROM your_table
-            // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
+            let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
+                let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                    PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
+                    PostgresqlTypeNullableOrNotNull::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
+                };
+                let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&postgresql_type);
+                let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                    PostgresqlTypeNullableOrNotNull::Nullable => &std_option_option_ident_upper_camel_case,
+                    PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type,
+                };
 
-            // -- Values equal to the current date (ignoring time)
-            // SELECT *
-            // FROM your_table
-            // WHERE your_timestamptz_column::date = CURRENT_DATE;
-            // 6. Time Zone Conversion
-            // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
+                let postgresql_type_ident_column_upper_camel_case = naming::parameter::PostgresqlTypeSelfColumnUpperCamelCase::from_tokens(&ident_handle);
 
-            // -- Compare with a specific timestamp in another time zone
-            // SELECT *
-            // FROM your_table
-            // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
+                let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
+                let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
+                let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
 
-            // -- Values after a timestamp in a different time zone
-            // SELECT *
-            // FROM your_table
-            // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &before,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_before_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let before = crate::filters::Before;
-            let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &before,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_before_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let before = crate::filters::Before;
-            let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let between = crate::filters::Between;
-            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-                &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                &crate::filters::ShouldAddDotZero::False,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &before,
-                    &between,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_before_token_stream
-                #postgresql_type_tokens_where_element_between_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_uuid_uuid_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &WhereOperatorType::Ident(&postgresql_type),
-            );
-            let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &case_sensitive_regular_expression,
-                    &case_insensitive_regular_expression,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_ipnetwork_ip_network_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &WhereOperatorType::FieldType {
-                    field_type: &field_type,
-                    default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-                },
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident,
-            );
-            let greater_than = crate::filters::GreaterThan;
-            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &where_operator_type_ident
-            );
-            let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-            let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &greater_than,
-                    &case_sensitive_regular_expression,
-                    &case_insensitive_regular_expression,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_greater_than_token_stream
-                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        let where_element_sqlx_types_bit_vec_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let value_snake_case = naming::ValueSnakeCase;
-            let column_snake_case = naming::ColumnSnakeCase;
-            let query_snake_case = naming::QuerySnakeCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-            let equal = crate::filters::Equal;
-            let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-                &WhereOperatorType::Ident(&postgresql_type),
-            );
-            let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
-            let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &postgresql_type,
-                &is_nullable,
-            );
-            let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-                is_nullable,
-                &postgresql_type,
-                &vec![
-                    &equal,
-                    &bit_vec_position_equal,
-                ]
-            );
-            quote::quote! {
-                #postgresql_type_tokens_where_element_equal_token_stream
-                #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
-                #postgresql_type_tokens_where_element_token_stream
-            }
-        });
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => where_element_number_token_stream,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => where_element_number_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => where_element_sqlx_types_decimal_token_stream,
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => where_element_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => where_element_bool_token_stream,
-            PostgresqlType::StdStringStringAsPostgresqlCharN => where_element_std_string_string_token_stream,
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => where_element_std_string_string_token_stream,
-            PostgresqlType::StdStringStringAsPostgresqlText => where_element_std_string_string_token_stream,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => where_element_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => where_element_sqlx_types_chrono_naive_date_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => where_element_sqlx_types_chrono_naive_time_token_stream,
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => where_element_sqlx_types_time_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => where_element_sqlx_types_chrono_naive_date_time_token_stream,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => where_element_sqlx_types_time_offset_date_time_token_stream,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => where_element_sqlx_types_bit_vec_token_stream,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => where_element_sqlx_types_bit_vec_token_stream,
-        }
-    };
+                let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
+                let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
 
-    let postgresql_type_initialized_by_tokens_token_stream = {
-        let postgresql_type_initialized_by_tokens = match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdStringStringAsPostgresqlCharN => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdStringStringAsPostgresqlText => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => PostgresqlTypeInitializedByTokens::InitializedByClient,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
-        };
-        let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
-            let postgresql_type_field_type_where_element_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
-                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
-                PostgresqlTypeNullableOrNotNull::NotNull => &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type),
-            };
-            let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&postgresql_type);
-            let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
-                PostgresqlTypeNullableOrNotNull::Nullable => &std_option_option_ident_upper_camel_case,
-                PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type,
-            };
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let query_snake_case = naming::QuerySnakeCase;
+                let self_snake_case = naming::SelfSnakeCase;
+                let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+                let ok_std_string_string_from_default_token_stream = quote::quote!{Ok(std::string::String::from("DEFAULT"))};
+                let ok_std_string_string_from_uuid_generate_v4_token_stream = quote::quote!{Ok(std::string::String::from("uuid_generate_v4()"))};
+                let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
+                let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
 
-            let postgresql_type_ident_column_upper_camel_case = naming::parameter::PostgresqlTypeSelfColumnUpperCamelCase::from_tokens(&ident_handle);
-
-            let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-            let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-            let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
-
-            let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
-            let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
-
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let query_snake_case = naming::QuerySnakeCase;
-            let self_snake_case = naming::SelfSnakeCase;
-            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
-            let ok_std_string_string_from_default_token_stream = quote::quote!{Ok(std::string::String::from("DEFAULT"))};
-            let ok_std_string_string_from_uuid_generate_v4_token_stream = quote::quote!{Ok(std::string::String::from("uuid_generate_v4()"))};
-            let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
-            let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
-
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                quote::quote!{
-                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
-                }
-            };
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-            let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-            };
-            let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-            let self_core_default_default_default_token_stream = quote::quote!{Self(#core_default_default_default_token_stream)};
-            let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-            };
-            let self_token_stream = {
-                let ident_token_stream = {
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                    quote::quote!{
+                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
+                    }
+                };
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                };
+                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+                let self_core_default_default_default_token_stream = quote::quote!{Self(#core_default_default_default_token_stream)};
+                let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                    Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+                };
+                let self_token_stream = {
+                    let ident_token_stream = {
+                        quote::quote!{
+                            #[derive(
+                                Debug,
+                                Clone,
+                                PartialEq,
+                                serde::Serialize,
+                                serde::Deserialize,
+                            )]
+                            pub struct #ident_handle(#field_type_handle);
+                        }
+                    };
+                    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                        &ident_handle,
+                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                    );
+                    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                        &ident_handle,
+                        &quote::quote!{format!("{self}")}
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_handle,
+                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    );
+                    //todo maybe not need it, maybe refactor later
+                    let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &ident_handle,
+                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                    );
+                    let impl_ident_create_table_query_part_handle_token_stream = {
+                        quote::quote!{
+                            impl #ident_handle {
+                                pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+                                    #field_type_handle::create_table_query_part_handle(value)
+                                }
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        #ident_token_stream
+                        #impl_std_fmt_display_for_ident_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+                        #impl_crate_bind_query_for_ident_token_stream
+                        #impl_ident_create_table_query_part_handle_token_stream
+                    }
+                };
+                let pub_snake_case = naming::PubSnakeCase;
+                let postgresql_type_ident_column_token_stream = {
+                    let pub_struct_postgresql_type_ident_column_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_column_upper_camel_case,
+                        &quote::quote!{;},
+                        true,
+                        true,
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_column_upper_camel_case,
+                        &token_patterns::CoreDefaultDefaultDefault,
+                    );
+                    quote::quote! {
+                        #pub_struct_postgresql_type_ident_column_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream
+                    }
+                };
+                let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
+                let postgresql_type_self_column_query_part_token_stream = {
+                    let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
+                    quote::quote!{
+                        fn postgresql_type_self_column_query_part(
+                            #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
+                            column: &std::primitive::str,
+                        ) -> std::string::String {
+                            column.to_string()
+                        }
+                    }
+                };
+                let value_snake_case = naming::ValueSnakeCase;
+                let field_type_struct_content_token_stream = quote::quote!{(#field_type_handle);};
+                let empty_struct_content_token_stream = quote::quote!{(());};
+                let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_to_create_token_stream = {
+                    let postgresql_type_ident_to_create_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_to_create_upper_camel_case,
+                        match &postgresql_type_initialized_by_tokens {
+                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &empty_struct_content_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_struct_content_token_stream,
+                        },
+                        false,
+                        true,
+                    );
+                    let impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_ident_to_create_upper_camel_case,
+                        match &postgresql_type_initialized_by_tokens {
+                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &ok_std_string_string_from_default_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &ok_std_string_string_from_uuid_generate_v4_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                        },
+                        match &postgresql_type_initialized_by_tokens {
+                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
+                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &query_snake_case,
+                            PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                        },
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_to_create_upper_camel_case,
+                        match &postgresql_type_initialized_by_tokens {
+                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &self_core_default_default_default_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &self_core_default_default_default_token_stream,
+                            PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                        },
+                    );
+                    let impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream = {
+                        let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
+                        quote::quote!{
+                            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_ident_to_create_upper_camel_case {}
+                        }
+                    };
+                    quote::quote! {
+                        #postgresql_type_ident_to_create_token_stream
+                        #impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream
+                        #impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream
+                    }
+                };
+                let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_to_read_token_stream = {
+                    let postgresql_type_ident_to_read_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_to_read_upper_camel_case,
+                        &field_type_struct_content_token_stream,
+                        false,
+                        true,
+                    );
+                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_to_read_upper_camel_case,
+                        &field_type_handle
+                    );
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_to_read_upper_camel_case,
+                        &field_type_handle
+                    );
+                    let impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream = {
+                        let postgresql_type_self_to_read_traits_upper_camel_case = naming::PostgresqlTypeSelfToReadTraitsUpperCamelCase;
+                        quote::quote!{
+                            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_read_traits_upper_camel_case<'_> for #postgresql_type_ident_to_read_upper_camel_case {}
+                        }
+                    };
+                    quote::quote! {
+                        #postgresql_type_ident_to_read_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
+                        #impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream
+                    }
+                };
+                let postgresql_type_ident_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_to_update_token_stream = {
+                    let postgresql_type_ident_to_update_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_to_update_upper_camel_case,
+                        &field_type_struct_content_token_stream,
+                        false,
+                        true,
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_to_update_upper_camel_case,
+                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    );
+                    let impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream = {
+                        let postgresql_type_self_to_update_traits_upper_camel_case = naming::PostgresqlTypeSelfToUpdateTraitsUpperCamelCase;
+                        quote::quote!{
+                            impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #postgresql_type_ident_to_update_upper_camel_case {}
+                        }
+                    };
+                    quote::quote! {
+                        #postgresql_type_ident_to_update_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream
+                        #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
+                    }
+                };
+                let postgresql_type_ident_to_update_query_part_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_to_update_query_part_error_named_token_stream = {
                     quote::quote!{
                         #[derive(
                             Debug,
@@ -10800,764 +10984,586 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             serde::Serialize,
                             serde::Deserialize,
                         )]
-                        pub struct #ident_handle(#field_type_handle);
-                    }
-                };
-                let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                    &ident_handle,
-                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                    &ident_handle,
-                    &quote::quote!{format!("{self}")}
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_handle,
-                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                );
-                //todo maybe not need it, maybe refactor later
-                let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &ident_handle,
-                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                );
-                let impl_ident_create_table_query_part_handle_token_stream = {
-                    quote::quote!{
-                        impl #ident_handle {
-                            pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-                                #field_type_handle::create_table_query_part_handle(value)
-                            }
+                        pub enum #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case {
+                            Todo//todo
                         }
                     }
                 };
-                quote::quote!{
-                    #ident_token_stream
-                    #impl_std_fmt_display_for_ident_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
-                    #impl_crate_bind_query_for_ident_token_stream
-                    #impl_ident_create_table_query_part_handle_token_stream
-                }
-            };
-            let pub_snake_case = naming::PubSnakeCase;
-            let postgresql_type_ident_column_token_stream = {
-                let pub_struct_postgresql_type_ident_column_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_column_upper_camel_case,
-                    &quote::quote!{;},
-                    true,
-                    true,
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_column_upper_camel_case,
-                    &token_patterns::CoreDefaultDefaultDefault,
-                );
-                quote::quote! {
-                    #pub_struct_postgresql_type_ident_column_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_column_token_stream
-                }
-            };
-            let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
-            let postgresql_type_self_column_query_part_token_stream = {
-                let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
-                quote::quote!{
-                    fn postgresql_type_self_column_query_part(
-                        #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
-                        column: &std::primitive::str,
-                    ) -> std::string::String {
-                        column.to_string()
-                    }
-                }
-            };
-            let value_snake_case = naming::ValueSnakeCase;
-            let field_type_struct_content_token_stream = quote::quote!{(#field_type_handle);};
-            let empty_struct_content_token_stream = quote::quote!{(());};
-            let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_to_create_token_stream = {
-                let postgresql_type_ident_to_create_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_to_create_upper_camel_case,
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &empty_struct_content_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_struct_content_token_stream,
-                    },
-                    false,
-                    true,
-                );
-                let impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &postgresql_type_ident_to_create_upper_camel_case,
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &ok_std_string_string_from_default_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &ok_std_string_string_from_uuid_generate_v4_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                    },
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &query_snake_case,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                    },
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_to_create_upper_camel_case,
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &self_core_default_default_default_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &self_core_default_default_default_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    },
-                );
-                let impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream = {
-                    let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
+                let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+                let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
+                let postgresql_type_self_to_update_query_part_token_stream = {
+                    let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
+                    let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
+                    //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
+                    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
+                    let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
+                    let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
+                    let increment_snake_case = naming::IncrementSnakeCase;
                     quote::quote!{
-                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_ident_to_create_upper_camel_case {}
+                        fn #postgresql_type_self_to_update_query_part_snake_case(
+                            //few parameters usefull only with json types. maybe refactor it later
+                            #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
+                            #jsonb_set_accumulator_snake_case: &std::primitive::str,
+                            #jsonb_set_target_snake_case: &std::primitive::str,
+                            #jsonb_set_path_snake_case: &std::primitive::str,
+                            #increment_snake_case: &mut std::primitive::u64
+                        ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
+                            //todo remove .unwrap()
+                            Ok(#crate_bind_query_try_generate_bind_increments_token_stream(&#postgresql_type_self_to_update_snake_case.0, #increment_snake_case).unwrap())
+                        }
                     }
                 };
-                quote::quote! {
-                    #postgresql_type_ident_to_create_token_stream
-                    #impl_crate_bind_query_for_postgresql_type_ident_to_create_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_create_token_stream
-                    #impl_postgresql_type_self_to_create_traits_for_postgresql_type_ident_to_create_token_stream
-                }
-            };
-            let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_to_read_token_stream = {
-                let postgresql_type_ident_to_read_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_to_read_upper_camel_case,
-                    &field_type_struct_content_token_stream,
-                    false,
-                    true,
-                );
-                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_to_read_upper_camel_case,
-                    &field_type_handle
-                );
-                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_to_read_upper_camel_case,
-                    &field_type_handle
-                );
-                let impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream = {
-                    let postgresql_type_self_to_read_traits_upper_camel_case = naming::PostgresqlTypeSelfToReadTraitsUpperCamelCase;
+                let postgresql_type_self_to_update_bind_query_part_token_stream = {
+                    let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
+                    let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
                     quote::quote!{
-                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_read_traits_upper_camel_case<'_> for #postgresql_type_ident_to_read_upper_camel_case {}
+                        fn #postgresql_type_self_to_update_bind_query_part<'a>(
+                            #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
+                            query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                        ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            #crate_bind_query_bind_value_to_query_token_stream(#postgresql_type_self_to_update_snake_case.0, #query_snake_case)
+                        }
                     }
                 };
-                quote::quote! {
-                    #postgresql_type_ident_to_read_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_read_token_stream
-                    #impl_postgresql_type_self_to_read_traits_for_postgresql_type_ident_to_read_token_stream
-                }
-            };
-            let postgresql_type_ident_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_to_update_token_stream = {
-                let postgresql_type_ident_to_update_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_to_update_upper_camel_case,
-                    &field_type_struct_content_token_stream,
-                    false,
-                    true,
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_to_update_upper_camel_case,
-                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                );
-                let impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream = {
-                    let postgresql_type_self_to_update_traits_upper_camel_case = naming::PostgresqlTypeSelfToUpdateTraitsUpperCamelCase;
+                let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_to_delete_token_stream = {
+                    let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &field_type_struct_content_token_stream,
+                        false,
+                        true,
+                    );
+                    let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    );
+                    let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                    );
+                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &quote::quote!{format!("{self}")}
+                    );
+                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &field_type_handle
+                    );
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_to_delete_upper_camel_case,
+                        &field_type_handle
+                    );
                     quote::quote!{
-                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_update_traits_upper_camel_case<'_> for #postgresql_type_ident_to_update_upper_camel_case {}
+                        #postgresql_type_ident_to_delete_token_stream
+                        #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+                        #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
                     }
                 };
-                quote::quote! {
-                    #postgresql_type_ident_to_update_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_update_token_stream
-                    #impl_postgresql_type_self_to_update_traits_for_postgresql_type_ident_to_update_token_stream
-                }
-            };
-            let postgresql_type_ident_to_update_query_part_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_to_update_query_part_error_named_token_stream = {
-                quote::quote!{
-                    #[derive(
-                        Debug,
-                        Clone,
-                        PartialEq,
-                        serde::Serialize,
-                        serde::Deserialize,
-                    )]
-                    pub enum #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case {
-                        Todo//todo
-                    }
-                }
-            };
-            let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
-            let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
-            let postgresql_type_self_to_update_query_part_token_stream = {
-                let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
-                let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
-                //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
-                let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-                let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
-                let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-                let increment_snake_case = naming::IncrementSnakeCase;
-                quote::quote!{
-                    fn #postgresql_type_self_to_update_query_part_snake_case(
-                        //few parameters usefull only with json types. maybe refactor it later
-                        #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
-                        #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                        #jsonb_set_target_snake_case: &std::primitive::str,
-                        #jsonb_set_path_snake_case: &std::primitive::str,
-                        #increment_snake_case: &mut std::primitive::u64
-                    ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
-                        //todo remove .unwrap()
-                        Ok(#crate_bind_query_try_generate_bind_increments_token_stream(&#postgresql_type_self_to_update_snake_case.0, #increment_snake_case).unwrap())
-                    }
-                }
-            };
-            let postgresql_type_self_to_update_bind_query_part_token_stream = {
-                let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
-                let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
-                quote::quote!{
-                    fn #postgresql_type_self_to_update_bind_query_part<'a>(
-                        #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
-                        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        #crate_bind_query_bind_value_to_query_token_stream(#postgresql_type_self_to_update_snake_case.0, #query_snake_case)
-                    }
-                }
-            };
-            let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_to_delete_token_stream = {
-                let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &field_type_struct_content_token_stream,
-                    false,
-                    true,
-                );
-                let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                );
-                let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &quote::quote!{format!("{self}")}
-                );
-                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &field_type_handle
-                );
-                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_to_delete_upper_camel_case,
-                    &field_type_handle
-                );
-                quote::quote!{
-                    #postgresql_type_ident_to_delete_token_stream
-                    #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-                    #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
-                }
-            };
-            let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
-            let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_where_element_token_stream = {
+                let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
                 let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident_handle);
                 let postgresql_type_ident_where_element_token_stream = {
-                    quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub struct #postgresql_type_ident_where_element_upper_camel_case(pub #postgresql_type_field_type_where_element_upper_camel_case);
-                    }
-                };
-                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-                    &postgresql_type_ident_where_element_upper_camel_case,
-                    &{
-                        let column_snake_case = naming::ColumnSnakeCase;
-                        let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
-                        quote::quote!{
-                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
-                                &self.0,
-                                #increment_snake_case,
-                                #column_snake_case,
-                                #is_need_to_add_logical_operator_snake_case,
+                    let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident_handle);
+                    let postgresql_type_ident_where_element_token_stream = {
+                        quote::quote! {
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                            pub struct #postgresql_type_ident_where_element_upper_camel_case(pub #postgresql_type_field_type_where_element_upper_camel_case);
+                        }
+                    };
+                    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_upper_camel_case,
+                        &{
+                            let column_snake_case = naming::ColumnSnakeCase;
+                            let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+                            quote::quote!{
+                                crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                                    &self.0,
+                                    #increment_snake_case,
+                                    #column_snake_case,
+                                    #is_need_to_add_logical_operator_snake_case,
+                                )
+                            }
+                        },
+                        &quote::quote!{
+                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                                self.0,
+                                #query_snake_case
                             )
                         }
-                    },
-                    &quote::quote!{
-                        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
-                            self.0,
-                            #query_snake_case
-                        )
+                    );
+                    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_upper_camel_case
+                    );
+                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_upper_camel_case,
+                        &quote::quote!{format!("{self:#?}")},
+                    );
+                    let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_where_element_upper_camel_case,
+                        &quote::quote!{
+                            <#postgresql_type_field_type_where_element_upper_camel_case as crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|element| Self(element)).collect()
+                        },
+                    );
+                    quote::quote! {
+                        #postgresql_type_ident_where_element_token_stream
+                        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_token_stream
+                        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream
+                        #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream
                     }
-                );
-                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
-                    &postgresql_type_ident_where_element_upper_camel_case
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                };
+                let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident_handle);
+                let postgresql_type_ident_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
+                    &PostgresqlTypeOrJsonType::PostgresqlType,
+                    &ident_handle,
                     &postgresql_type_ident_where_element_upper_camel_case,
-                    &quote::quote!{format!("{self:#?}")},
+                    &postgresql_type_ident_where_upper_camel_case
                 );
-                let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_where_element_upper_camel_case,
-                    &quote::quote!{
-                        <#postgresql_type_field_type_where_element_upper_camel_case as crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|element| Self(element)).collect()
-                    },
-                );
-                quote::quote! {
-                    #postgresql_type_ident_where_element_token_stream
-                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_token_stream
-                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_ident_where_element_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_where_element_token_stream
-                    #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_token_stream
-                }
-            };
-            let postgresql_type_ident_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&ident_handle);
-            let postgresql_type_ident_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
-                &PostgresqlTypeOrJsonType::PostgresqlType,
-                &ident_handle,
-                &postgresql_type_ident_where_element_upper_camel_case,
-                &postgresql_type_ident_where_upper_camel_case
-            );
 
-            let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
-            let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
-            let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
-                let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
-                quote::quote!{
-                    fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
-                        #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
-                        increment: &mut std::primitive::u64,
-                        column: &dyn std::fmt::Display,
-                        is_need_to_add_logical_operator: std::primitive::bool,
-                    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-                        let mut acc = std::string::String::default();
-                        let mut is_need_to_add_logical_operator_inner_handle = false;
-                        for element in &#postgresql_type_self_where_snake_case.value {
-                            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                                Ok(value) => {
-                                    acc.push_str(&format!("{value} "));
-                                    is_need_to_add_logical_operator_inner_handle = true;
-                                }
-                                Err(error) => {
-                                    return Err(error);
+                let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
+                let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
+                let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
+                    let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
+                    quote::quote!{
+                        fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
+                            #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
+                            increment: &mut std::primitive::u64,
+                            column: &dyn std::fmt::Display,
+                            is_need_to_add_logical_operator: std::primitive::bool,
+                        ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                            let mut acc = std::string::String::default();
+                            let mut is_need_to_add_logical_operator_inner_handle = false;
+                            for element in &#postgresql_type_self_where_snake_case.value {
+                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                                    Ok(value) => {
+                                        acc.push_str(&format!("{value} "));
+                                        is_need_to_add_logical_operator_inner_handle = true;
+                                    }
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
                                 }
                             }
+                            let _ = acc.pop();
+                            Ok(format!("{}({acc})", &#postgresql_type_self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                         }
-                        let _ = acc.pop();
-                        Ok(format!("{}({acc})", &#postgresql_type_self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                     }
-                }
-            };
-            let postgresql_type_self_where_bind_value_to_query_token_stream = {
-                let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
-                quote::quote!{
-                    fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
-                        #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
-                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        for element in postgresql_type_self_where.value {
-                            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                };
+                let postgresql_type_self_where_bind_value_to_query_token_stream = {
+                    let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
+                    quote::quote!{
+                        fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
+                            #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
+                            mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                        ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            for element in postgresql_type_self_where.value {
+                                query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                            }
+                            query
                         }
-                        query
                     }
-                }
-            };
-            let impl_postgresql_type_for_ident_token_stream = {
-                let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-                let self_upper_camel_case = naming::SelfUpperCamelCase;
-                let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
-                let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
-                let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
-                let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #ident_handle {
-                        type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
-                        type #postgresql_type_self_column_upper_camel_case = #postgresql_type_ident_column_upper_camel_case;
-                        #postgresql_type_self_column_query_part_token_stream
-                        type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_ident_to_create_upper_camel_case;
-                        type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
-                        type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;
-                        type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case;
-                        #postgresql_type_self_to_update_query_part_token_stream
-                        #postgresql_type_self_to_update_bind_query_part_token_stream
-                        type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_ident_where_element_upper_camel_case;
-                        type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
-                        #postgresql_type_self_where_try_generate_bind_increments_token_stream
-                        #postgresql_type_self_where_bind_value_to_query_token_stream
+                };
+                let impl_postgresql_type_for_ident_token_stream = {
+                    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+                    let self_upper_camel_case = naming::SelfUpperCamelCase;
+                    let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
+                    let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
+                    let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
+                    let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
+                    quote::quote!{
+                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #ident_handle {
+                            type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
+                            type #postgresql_type_self_column_upper_camel_case = #postgresql_type_ident_column_upper_camel_case;
+                            #postgresql_type_self_column_query_part_token_stream
+                            type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_ident_to_create_upper_camel_case;
+                            type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_ident_to_read_upper_camel_case;
+                            type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_ident_to_update_upper_camel_case;
+                            type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_ident_to_update_query_part_error_named_upper_camel_case;
+                            #postgresql_type_self_to_update_query_part_token_stream
+                            #postgresql_type_self_to_update_bind_query_part_token_stream
+                            type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_ident_where_element_upper_camel_case;
+                            type #postgresql_type_self_where_upper_camel_case = #postgresql_type_ident_where_upper_camel_case;
+                            #postgresql_type_self_where_try_generate_bind_increments_token_stream
+                            #postgresql_type_self_where_bind_value_to_query_token_stream
+                        }
                     }
-                }
+                };
+                //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
+                let generated = quote::quote! {
+                    #self_token_stream
+
+                    #postgresql_type_ident_column_token_stream
+
+                    #postgresql_type_ident_to_create_token_stream
+
+                    #postgresql_type_ident_to_read_token_stream
+
+                    #postgresql_type_ident_to_update_token_stream
+
+                    #postgresql_type_ident_to_update_query_part_error_named_token_stream
+
+                    #postgresql_type_ident_to_delete_token_stream
+
+                    #postgresql_type_ident_where_element_token_stream
+
+                    #postgresql_type_ident_where_token_stream
+
+                    #impl_postgresql_type_for_ident_token_stream
+                };
+                generated.into()
             };
-            //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
-            let generated = quote::quote! {
-                #self_token_stream
-
-                #postgresql_type_ident_column_token_stream
-
-                #postgresql_type_ident_to_create_token_stream
-
-                #postgresql_type_ident_to_read_token_stream
-
-                #postgresql_type_ident_to_update_token_stream
-
-                #postgresql_type_ident_to_update_query_part_error_named_token_stream
-
-                #postgresql_type_ident_to_delete_token_stream
-
-                #postgresql_type_ident_where_element_token_stream
-
-                #postgresql_type_ident_where_token_stream
-
-                #impl_postgresql_type_for_ident_token_stream
+            //i think its logical - auto generated types in postgresql cannot be null? right? 
+            let maybe_ident_nullable_token_stream = match &postgresql_type_initialized_by_tokens {
+                PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => proc_macro2::TokenStream::new(),
+                PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => proc_macro2::TokenStream::new(),
+                PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable),
             };
-            generated.into()
+            let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
+            let generated = quote::quote!{
+                #maybe_ident_nullable_token_stream
+                #ident_not_null_token_stream
+            };
+            generated
         };
-        //i think its logical - auto generated types in postgresql cannot be null? right? 
-        let maybe_ident_nullable_token_stream = match &postgresql_type_initialized_by_tokens {
-            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => proc_macro2::TokenStream::new(),
-            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => proc_macro2::TokenStream::new(),
-            PostgresqlTypeInitializedByTokens::InitializedByClient => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable),
+
+        let is_primary_key = IsPrimaryKey::False;
+        let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+           &PostgresqlTypeNullableOrNotNull::Nullable,
+            &postgresql_type,
+            &field_type,
+            &is_primary_key,
+        );
+        let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+           &PostgresqlTypeNullableOrNotNull::NotNull,
+            &postgresql_type,
+            &field_type,
+            &is_primary_key,
+        );
+
+        let postgresql_type_create_table_column_query_part_token_stream = {
+            let postgresql_type_create_table_column_query_part_tokens = {
+                let is_primary_key = IsPrimaryKey::False;
+                let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+                   &PostgresqlTypeNullableOrNotNull::Nullable,
+                    &postgresql_type,
+                    &field_type,
+                    &is_primary_key,
+                );
+                let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+                   &PostgresqlTypeNullableOrNotNull::NotNull,
+                    &postgresql_type,
+                    &field_type,
+                    &is_primary_key,
+                );
+                let generated = quote::quote!{
+                    #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
+                    #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+                };
+                generated
+            };
+            let postgresql_type_create_table_column_query_part_primary_key_tokens = {
+                let is_primary_key = IsPrimaryKey::True;
+                let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
+                   &PostgresqlTypeNullableOrNotNull::NotNull,
+                    &postgresql_type,
+                    &field_type,
+                    &is_primary_key,
+                );
+                let generated = quote::quote!{
+                    #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
+                };
+                generated.into()
+            };
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdStringStringAsPostgresqlText => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => postgresql_type_create_table_column_query_part_tokens,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => postgresql_type_create_table_column_query_part_tokens,
+            }
         };
-        let ident_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
+
+        let maybe_postgresql_type_primary_key_token_stream = {
+            let postgresql_type_primary_key_token_stream = {
+                let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
+                let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
+                let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
+
+                let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
+                let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
+
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let query_snake_case = naming::QuerySnakeCase;
+                let self_snake_case = naming::SelfSnakeCase;
+                let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+                let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
+                let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
+
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                    quote::quote!{
+                        crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
+                    }
+                };
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
+                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                };
+                let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                    Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+                };
+                let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
+                let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&postgresql_type);
+                let postgresql_type_ident_not_null_to_create_token_stream = {
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_create_upper_camel_case,
+                        &field_type
+                    );
+                    quote::quote! {
+                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
+                    }
+                };
+                let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&postgresql_type);
+                let postgresql_type_ident_not_null_to_read_token_stream = {
+                    let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_read_upper_camel_case,
+                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_read_upper_camel_case,
+                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    );
+                    quote::quote! {
+                        #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
+                    }
+                };
+                let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&postgresql_type);
+                let postgresql_type_ident_not_null_to_update_token_stream = {
+                    let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                    );
+                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                        &quote::quote!{format!("{self}")}
+                    );
+                    let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
+                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                        &field_type
+                    );
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_update_upper_camel_case,
+                        &field_type
+                    );
+                    quote::quote! {
+                        #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream
+                        #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
+                    }
+                };
+                let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
+                let postgresql_type_ident_not_null_to_delete_token_stream = {
+                    let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+                        Visibility::Pub,
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &field_type_struct_content_token_stream,
+                        false,
+                        true,
+                    );
+                    let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                    );
+                    let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                    );
+                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &quote::quote!{format!("{self}")}
+                    );
+                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &field_type
+                    );
+                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &field_type
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                    );
+                    quote::quote!{
+                        #postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
+                    }
+                };
+                let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
+                    let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
+                    quote::quote!{
+                        impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
+                            type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
+                            type PostgresqlTypeSelfToRead = #postgresql_type_ident_not_null_to_read_upper_camel_case;
+                            type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_not_null_to_update_upper_camel_case;
+                            type PostgresqlTypeSelfToDelete = #postgresql_type_ident_not_null_to_delete_upper_camel_case;
+                        }
+                    }
+                };
+                //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
+                let generated = quote::quote! {
+                    #postgresql_type_ident_not_null_to_create_token_stream
+
+                    #postgresql_type_ident_not_null_to_read_token_stream
+
+                    #postgresql_type_ident_not_null_to_update_token_stream
+
+                    #postgresql_type_ident_not_null_to_delete_token_stream
+
+                    #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
+                };
+                generated
+            };
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_primary_key_token_stream,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
+            }
+        };
+
         let generated = quote::quote!{
-            #maybe_ident_nullable_token_stream
-            #ident_not_null_token_stream
+            #ident_token_stream
+            #maybe_impl_serde_serialize_token_stream
+            #maybe_impl_serde_deserialize_token_stream
+
+            #impl_crate_create_table_column_query_part_for_ident_token_stream
+            #impl_std_fmt_display_for_ident_token_stream
+
+            #postgresql_base_type_tokens
+
+            #maybe_primary_key_tokens_token_stream
+
+            #where_element_token_stream
+
+            #postgresql_type_initialized_by_tokens_token_stream
+
+            #postgresql_type_create_table_column_query_part_token_stream
+
+            #maybe_postgresql_type_primary_key_token_stream
         };
+        // if ident == "" {
+        //       macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //           "PostgresqlTypeTokens",
+        //           &generated,
+        //       );
+        /// }
         generated
     };
-
-    let is_primary_key = IsPrimaryKey::False;
-    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeNullableOrNotNull::Nullable,
-        &postgresql_type,
-        &field_type,
-        &is_primary_key,
-    );
-    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeNullableOrNotNull::NotNull,
-        &postgresql_type,
-        &field_type,
-        &is_primary_key,
-    );
-
-    let postgresql_type_create_table_column_query_part_token_stream = {
-        let postgresql_type_create_table_column_query_part_tokens = {
-            let is_primary_key = IsPrimaryKey::False;
-            let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-               &PostgresqlTypeNullableOrNotNull::Nullable,
-                &postgresql_type,
-                &field_type,
-                &is_primary_key,
-            );
-            let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-               &PostgresqlTypeNullableOrNotNull::NotNull,
-                &postgresql_type,
-                &field_type,
-                &is_primary_key,
-            );
-            let generated = quote::quote!{
-                #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
-                #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
-            };
-            generated
-        };
-        let postgresql_type_create_table_column_query_part_primary_key_tokens = {
-            let is_primary_key = IsPrimaryKey::True;
-            let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-               &PostgresqlTypeNullableOrNotNull::NotNull,
-                &postgresql_type,
-                &field_type,
-                &is_primary_key,
-            );
-            let generated = quote::quote!{
-                #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
-            };
-            generated.into()
-        };
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdStringStringAsPostgresqlCharN => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdStringStringAsPostgresqlText => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_create_table_column_query_part_primary_key_tokens,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => postgresql_type_create_table_column_query_part_tokens,
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => postgresql_type_create_table_column_query_part_tokens,
-        }
-    };
-
-    let maybe_postgresql_type_primary_key_token_stream = {
-        let postgresql_type_primary_key_token_stream = {
-            let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-            let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-            let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
-
-            let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
-            let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
-
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let query_snake_case = naming::QuerySnakeCase;
-            let self_snake_case = naming::SelfSnakeCase;
-            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
-            let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
-            let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
-
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-                quote::quote!{
-                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
-                }
-            };
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-            let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-            };
-            let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-            };
-            let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-            let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&postgresql_type);
-            let postgresql_type_ident_not_null_to_create_token_stream = {
-                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_create_upper_camel_case,
-                    &field_type
-                );
-                quote::quote! {
-                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
-                }
-            };
-            let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&postgresql_type);
-            let postgresql_type_ident_not_null_to_read_token_stream = {
-                let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_read_upper_camel_case,
-                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_read_upper_camel_case,
-                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                );
-                quote::quote! {
-                    #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
-                }
-            };
-            let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&postgresql_type);
-            let postgresql_type_ident_not_null_to_update_token_stream = {
-                let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                    &quote::quote!{format!("{self}")}
-                );
-                let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
-                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                    &field_type
-                );
-                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                    &field_type
-                );
-                quote::quote! {
-                    #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream
-                    #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-                }
-            };
-            let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
-            let postgresql_type_ident_not_null_to_delete_token_stream = {
-                let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &field_type_struct_content_token_stream,
-                    false,
-                    true,
-                );
-                let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                    &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                );
-                let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &quote::quote!{format!("{self}")}
-                );
-                let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &field_type
-                );
-                let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &field_type
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                    &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                );
-                quote::quote!{
-                    #postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
-                }
-            };
-            let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
-                let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
-                        type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
-                        type PostgresqlTypeSelfToRead = #postgresql_type_ident_not_null_to_read_upper_camel_case;
-                        type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_not_null_to_update_upper_camel_case;
-                        type PostgresqlTypeSelfToDelete = #postgresql_type_ident_not_null_to_delete_upper_camel_case;
-                    }
-                }
-            };
-            //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
-            let generated = quote::quote! {
-                #postgresql_type_ident_not_null_to_create_token_stream
-
-                #postgresql_type_ident_not_null_to_read_token_stream
-
-                #postgresql_type_ident_not_null_to_update_token_stream
-
-                #postgresql_type_ident_not_null_to_delete_token_stream
-
-                #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
-            };
-            generated
-        };
-        match &postgresql_type {
-            PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
-            PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
-            PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_primary_key_token_stream,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_primary_key_token_stream,
-            PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
-            PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
-        }
-    };
-
+    let f = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
     let generated = quote::quote!{
-        #ident_token_stream
-        #maybe_impl_serde_serialize_token_stream
-        #maybe_impl_serde_deserialize_token_stream
-
-        #impl_crate_create_table_column_query_part_for_ident_token_stream
-        #impl_std_fmt_display_for_ident_token_stream
-
-        #postgresql_base_type_tokens
-
-        #maybe_primary_key_tokens_token_stream
-
-        #where_element_token_stream
-
-        #postgresql_type_initialized_by_tokens_token_stream
-
-        #postgresql_type_create_table_column_query_part_token_stream
-
-        #maybe_postgresql_type_primary_key_token_stream
+        #f
     };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlTypeTokens",
-    //         &generated,
-    //     );
-    // }
     generated.into()
 }
