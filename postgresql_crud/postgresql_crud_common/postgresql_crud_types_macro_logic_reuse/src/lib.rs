@@ -11690,8 +11690,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h40 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
     // let h41 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
     // let h42 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
-    // let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
-    // let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
+    let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
+    let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
             //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //       "PostgresqlTypeTokens",
@@ -11740,8 +11740,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h40
         // #h41
         // #h42
-        // #h43
-        // #h44
+        #h43
+        #h44
     };
     generated.into()
 }
