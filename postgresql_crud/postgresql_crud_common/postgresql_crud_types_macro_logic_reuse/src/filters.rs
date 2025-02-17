@@ -1929,7 +1929,7 @@ impl EqualToEncodedStringRepresentation {
             &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
-                pub encode_format: EncodeFormat,
+                pub encode_format: crate::postgresql_type::postgresql_base_type::EncodeFormat,
                 pub encoded_string_representation: std::string::String,
             },
             &{

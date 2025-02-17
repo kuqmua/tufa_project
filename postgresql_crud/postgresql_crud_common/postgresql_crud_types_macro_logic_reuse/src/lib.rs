@@ -3588,24 +3588,25 @@ pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(in
             &ident,
             &is_nullable,
         );
-        let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
-        let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
+        //commented just to migrate to new macro type (path wasnt the same to EncodeFormat)
+        // let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
+        // let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        //     &ident,
+        //     &is_nullable,
+        // );
         let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
             is_nullable,
             &ident,
             &vec![
                 &equal,
                 &length_more_than,
-                &equal_to_encoded_string_representation,
+                // &equal_to_encoded_string_representation,
             ]
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
             #postgresql_type_tokens_where_element_length_more_than_token_stream
-            #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
+            // #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
             #postgresql_type_tokens_where_element_token_stream
         }
     });
@@ -11558,7 +11559,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
     let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar);
     let h15 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlText);
-    // let h16 = generate_postgresql_type_token_stream(PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea);
+    let h16 = generate_postgresql_type_token_stream(PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea);
     // let h17 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate);
     // let h18 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
     // let h19 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime);
@@ -11590,7 +11591,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //       "PostgresqlTypeTokens",
-            //       &h11,
+            //       &h16,
             //   );
     let generated = quote::quote!{
         #h1
@@ -11608,7 +11609,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h13
         #h14
         #h15
-        // #h16
+        #h16
         // #h17
         // #h18
         // #h19
