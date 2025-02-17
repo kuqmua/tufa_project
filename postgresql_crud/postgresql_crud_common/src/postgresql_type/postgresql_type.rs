@@ -200,21 +200,21 @@ const BIT: &std::primitive::str = "bit";
 //         format!("{column} {NUMERIC}")
 //     }
 // }
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
-    postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
-)]
-struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} {BOOL}")
-    }
-}
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeInitializedByClientTokens,
+//     postgresql_crud_types_macro_logic_reuse::PostgresqlTypeCreateTableColumnQueryPartTokens,
+// )]
+// struct StdPrimitiveBoolAsPostgresqlBool(crate::postgresql_type::postgresql_base_type::StdPrimitiveBool);
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveBoolAsPostgresqlBool {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} {BOOL}")
+//     }
+// }
 #[derive(
     Debug,
     Clone,
