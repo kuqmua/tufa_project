@@ -11362,12 +11362,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
                     Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                 };
-                let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
+                let postgresql_type_struct_content_token_stream = quote::quote!{(#postgresql_type);};
                 let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&postgresql_type);
                 let postgresql_type_ident_not_null_to_create_token_stream = {
                     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_create_upper_camel_case,
-                        &field_type
+                        &postgresql_type,
                     );
                     quote::quote! {
                         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
@@ -11402,11 +11402,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
                     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                        &field_type
+                        &postgresql_type,
                     );
                     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_update_upper_camel_case,
-                        &field_type
+                        &postgresql_type,
                     );
                     quote::quote! {
                         #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
@@ -11421,7 +11421,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
                         Visibility::Pub,
                         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &field_type_struct_content_token_stream,
+                        &postgresql_type_struct_content_token_stream,
                         false,
                         true,
                     );
@@ -11440,11 +11440,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &field_type
+                        &postgresql_type,
                     );
                     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &field_type
+                        &postgresql_type,
                     );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
@@ -11566,7 +11566,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h3 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
     let h4 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
     let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
-    // let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
+    let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
     // let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
     // let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     // let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
@@ -11605,13 +11605,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h42 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
     // let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
     // let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
+
     let generated = quote::quote!{
         #h1
         #h2
-        // #h3
-        // #h4
-        // #h5
-        // #h6
+        #h3
+        #h4
+        #h5
+        #h6
         // #h7
         // #h8
         // #h9
