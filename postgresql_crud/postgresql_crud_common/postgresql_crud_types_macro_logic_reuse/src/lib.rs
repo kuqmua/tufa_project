@@ -5562,6 +5562,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
+            let serde_deserializer_deserialize_newtype_struct_token_stream = quote::quote! {
+                _serde::Deserializer::deserialize_newtype_struct(
+                    __deserializer,
+                    #ident_double_quotes_token_stream,
+                    __Visitor {
+                        marker: serde::__private::PhantomData::<#postgresql_type>,
+                        lifetime: serde::__private::PhantomData,
+                    },
+                )
+            };
+
             let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
                     const _: () = {
@@ -5611,14 +5622,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
                     }
                 }
-                serde::Deserializer::deserialize_newtype_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    __Visitor {
-                        marker: serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_newtype_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -8451,14 +8455,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }))
                     }
                 }
-                serde::Deserializer::deserialize_newtype_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    __Visitor {
-                        marker: serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_newtype_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #struct_visitor_token_stream
@@ -8489,14 +8486,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
                     }
                 }
-                serde::Deserializer::deserialize_newtype_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    __Visitor {
-                        marker: serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_newtype_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #struct_visitor_token_stream
@@ -8560,14 +8550,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }))
                     }
                 }
-                _serde::Deserializer::deserialize_newtype_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_newtype_struct_token_stream
             });
             match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
