@@ -5563,20 +5563,24 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
-                // let fields_token_stream = {
-                //     let number = match &parameter_number {
-                //         ParameterNumber::Two => 2,
-                //         ParameterNumber::Three => 3,
-                //     };
-                //     let 1..
-                //     quote::quote!{}
-                // };
+                let fields_token_stream = {
+                    let number = match &parameter_number {
+                        ParameterNumber::Two => 2,
+                        ParameterNumber::Three => 3,
+                    };
+                    let value = (1..number).collect::<std::vec::Vec<std::primitive::u8>>();
+                    let fields_token_stream = value.iter().enumerate().map(|(index, element)|{
+                        format!("__{}{index}", naming::FieldSnakeCase)
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap()
+                    });
+                    quote::quote!{#(#fields_token_stream),*}
+                };
                 quote::quote!{
                     #[allow(non_camel_case_types)]
                     #[doc(hidden)]
                     enum __Field {
-                        __field0,
-                        __field1,
+                        #fields_token_stream,
                         __ignore,
                     }
                 }
@@ -5626,6 +5630,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                 }
             };
+
+            let parameter_number_two = ParameterNumber::Two;
+            let parameter_number_three = ParameterNumber::Three;
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
