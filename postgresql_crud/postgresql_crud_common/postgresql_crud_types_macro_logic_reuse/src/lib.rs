@@ -5329,9 +5329,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
-            });
+            let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 #value_token_stream)}
+            };
+
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_serialize_for_tokens(
+                &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.0})
+            );
             let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
                 let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
                 let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
@@ -5575,12 +5579,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
-            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.to_string())
-            });
-            let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.bytes())
-            });
+            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_tokens(
+                &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.to_string()})
+            );
+            let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_serialize_for_tokens(
+                &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.bytes()})
+            );
             let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
                 _serde::Serializer::serialize_newtype_struct(
                     __serializer,
