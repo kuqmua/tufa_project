@@ -5438,11 +5438,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         extern crate serde as _serde;
                         #[automatically_derived]
                         impl _serde::Serialize for #postgresql_type{
-                            fn serialize<S>(&self, serializer: S) -> _serde::__private::Result<S::Ok, S::Error>
+                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
                             where
-                                S: _serde::Serializer,
+                                __S: _serde::Serializer,
                             {
-                                let mut serde_state = _serde::Serializer::serialize_struct(serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
                                 _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
                                 _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
                                 _serde::ser::SerializeStruct::end(serde_state)
