@@ -5311,8 +5311,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         };
         let maybe_impl_serde_serialize_token_stream = {
             let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
-
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = {
+            let generate_impl_serde_serialize_for_tokens = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
                     const _: () = {
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -5323,12 +5322,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             where
                                 __S: _serde::Serializer,
                             {
-                                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
+                                #content_token_stream
                             }
                         }
                     };
                 }
             };
+
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
+            });
             let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
                 quote::quote!{
                     const _: () = {
