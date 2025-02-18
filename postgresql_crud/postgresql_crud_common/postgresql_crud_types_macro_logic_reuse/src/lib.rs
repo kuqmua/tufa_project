@@ -5563,17 +5563,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
-                let fields_token_stream = match &parameter_number {
-                    ParameterNumber::Two => quote::quote!{
-                        __field0,
-                        __field1,
-                    },
-                    ParameterNumber::Three => quote::quote!{
-                        __field0,
-                        __field1,
-                        __field2,
-                    },
-                };
+                // let fields_token_stream = {
+                //     let number = match &parameter_number {
+                //         ParameterNumber::Two => 2,
+                //         ParameterNumber::Three => 3,
+                //     };
+                //     let 1..
+                //     quote::quote!{}
+                // };
                 quote::quote!{
                     #[allow(non_camel_case_types)]
                     #[doc(hidden)]
