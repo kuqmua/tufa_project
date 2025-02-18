@@ -5554,211 +5554,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let ident_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
 
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
-                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<#postgresql_type>,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #postgresql_type;
-                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                                    }
-                                    #[inline]
-                                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                                    where
-                                        __E: serde::Deserializer<'de>,
-                                    {
-                                        let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                                            }
-                                        };
-                                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-                                    }
-                                }
-                                serde::Deserializer::deserialize_newtype_struct(
-                                    __deserializer,
-                                    #ident_double_quotes_token_stream,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<#postgresql_type>,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
-                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: serde::Deserializer<'de>,
-                            {
-                                #[allow(non_camel_case_types)]
-                                #[doc(hidden)]
-                                enum __Field {
-                                    __field0,
-                                    __field1,
-                                    __ignore,
-                                }
-                                #[doc(hidden)]
-                                struct __FieldVisitor;
-                                impl serde::de::Visitor<'_> for __FieldVisitor {
-                                    type Value = __Field;
-                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__formatter, "field identifier")
-                                    }
-                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            "digits" => serde::__private::Ok(__Field::__field0),
-                                            "scale" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"digits" => serde::__private::Ok(__Field::__field0),
-                                            b"scale" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                }
-                                impl<'de> serde::Deserialize<'de> for __Field {
-                                    #[inline]
-                                    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                                    where
-                                        __D: serde::Deserializer<'de>,
-                                    {
-                                        serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                    }
-                                }
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: serde::__private::PhantomData<#postgresql_type>,
-                                    lifetime: serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #postgresql_type;
-                                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match serde::de::SeqAccess::next_element::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
-                                            }
-                                        };
-                                        let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                                            serde::__private::Some(__value) => __value,
-                                            serde::__private::None => {
-                                                return serde::__private::Err(serde::de::Error::invalid_length(1usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
-                                            }
-                                        };
-                                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
-                                    }
-                                    #[inline]
-                                    fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: serde::de::MapAccess<'de>,
-                                    {
-                                        let mut __field0: serde::__private::Option<crate::postgresql_type::postgresql_base_type::NumBigintBigInt> = serde::__private::None;
-                                        let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
-                                        while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                            match __key {
-                                                __Field::__field0 => {
-                                                    if serde::__private::Option::is_some(&__field0) {
-                                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("digits"));
-                                                    }
-                                                    __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __map)?);
-                                                }
-                                                __Field::__field1 => {
-                                                    if serde::__private::Option::is_some(&__field1) {
-                                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("scale"));
-                                                    }
-                                                    __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
-                                                }
-                                                _ => {
-                                                    let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                                                }
-                                            }
-                                        }
-                                        let __field0 = match __field0 {
-                                            serde::__private::Some(__field0) => __field0,
-                                            serde::__private::None => serde::__private::de::missing_field("digits")?,
-                                        };
-                                        let __field1 = match __field1 {
-                                            serde::__private::Some(__field1) => __field1,
-                                            serde::__private::None => serde::__private::de::missing_field("scale")?,
-                                        };
-                                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
-                                    }
-                                }
-                                #[doc(hidden)]
-                                const FIELDS: &'static [&'static str] = &["digits", "scale"];
-                                serde::Deserializer::deserialize_struct(
-                                    __deserializer,
-                                    #ident_double_quotes_token_stream,
-                                    FIELDS,
-                                    __Visitor {
-                                        marker: serde::__private::PhantomData::<#postgresql_type>,
-                                        lifetime: serde::__private::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    };
-                }
-            };
-            //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
-            let impl_serde_deserialize_for_sqlx_types_time_date_token_stream = {
+            ////
+            let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
                     const _: () = {
                         #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -5771,437 +5568,589 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             where
                                 __D: _serde::Deserializer<'de>,
                             {
-                                #[allow(non_camel_case_types)]
-                                #[doc(hidden)]
-                                enum __Field {
-                                    __field0,
-                                    __field1,
-                                    __field2,
-                                    __ignore,
+                                #content_token_stream
+                            }
+                        }
+                    };
+                }
+            };
+
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: serde::__private::PhantomData<#postgresql_type>,
+                    lifetime: serde::__private::PhantomData<&'de ()>,
+                }
+                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                    type Value = #postgresql_type;
+                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
+                    }
+                    #[inline]
+                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                    where
+                        __E: serde::Deserializer<'de>,
+                    {
+                        let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
+                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
+                    }
+                    #[inline]
+                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: serde::de::SeqAccess<'de>,
+                    {
+                        let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                            serde::__private::Some(__value) => __value,
+                            serde::__private::None => {
+                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                            }
+                        };
+                        serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
+                    }
+                }
+                serde::Deserializer::deserialize_newtype_struct(
+                    __deserializer,
+                    #ident_double_quotes_token_stream,
+                    __Visitor {
+                        marker: serde::__private::PhantomData::<#postgresql_type>,
+                        lifetime: serde::__private::PhantomData,
+                    },
+                )
+            });
+            let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                #[allow(non_camel_case_types)]
+                #[doc(hidden)]
+                enum __Field {
+                    __field0,
+                    __field1,
+                    __ignore,
+                }
+                #[doc(hidden)]
+                struct __FieldVisitor;
+                impl serde::de::Visitor<'_> for __FieldVisitor {
+                    type Value = __Field;
+                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                        serde::__private::Formatter::write_str(__formatter, "field identifier")
+                    }
+                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: serde::de::Error,
+                    {
+                        match __value {
+                            0u64 => serde::__private::Ok(__Field::__field0),
+                            1u64 => serde::__private::Ok(__Field::__field1),
+                            _ => serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: serde::de::Error,
+                    {
+                        match __value {
+                            "digits" => serde::__private::Ok(__Field::__field0),
+                            "scale" => serde::__private::Ok(__Field::__field1),
+                            _ => serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: serde::de::Error,
+                    {
+                        match __value {
+                            b"digits" => serde::__private::Ok(__Field::__field0),
+                            b"scale" => serde::__private::Ok(__Field::__field1),
+                            _ => serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                }
+                impl<'de> serde::Deserialize<'de> for __Field {
+                    #[inline]
+                    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: serde::Deserializer<'de>,
+                    {
+                        serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                    }
+                }
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: serde::__private::PhantomData<#postgresql_type>,
+                    lifetime: serde::__private::PhantomData<&'de ()>,
+                }
+                impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+                    type Value = #postgresql_type;
+                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                        serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
+                    }
+                    #[inline]
+                    fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: serde::de::SeqAccess<'de>,
+                    {
+                        let __field0 = match serde::de::SeqAccess::next_element::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __seq)? {
+                            serde::__private::Some(__value) => __value,
+                            serde::__private::None => {
+                                return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
+                            }
+                        };
+                        let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                            serde::__private::Some(__value) => __value,
+                            serde::__private::None => {
+                                return serde::__private::Err(serde::de::Error::invalid_length(1usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
+                            }
+                        };
+                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                    }
+                    #[inline]
+                    fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: serde::de::MapAccess<'de>,
+                    {
+                        let mut __field0: serde::__private::Option<crate::postgresql_type::postgresql_base_type::NumBigintBigInt> = serde::__private::None;
+                        let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                        while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                            match __key {
+                                __Field::__field0 => {
+                                    if serde::__private::Option::is_some(&__field0) {
+                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("digits"));
+                                    }
+                                    __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __map)?);
                                 }
-                                #[doc(hidden)]
-                                struct __FieldVisitor;
-                                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                    type Value = __Field;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
+                                __Field::__field1 => {
+                                    if serde::__private::Option::is_some(&__field1) {
+                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("scale"));
                                     }
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => _serde::__private::Ok(__Field::__field0),
-                                            1u64 => _serde::__private::Ok(__Field::__field1),
-                                            2u64 => _serde::__private::Ok(__Field::__field2),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_str<__E>(
-                                        self,
-                                        __value: &str,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            "year" => _serde::__private::Ok(__Field::__field0),
-                                            "month" => _serde::__private::Ok(__Field::__field1),
-                                            "day" => _serde::__private::Ok(__Field::__field2),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
-                                    fn visit_bytes<__E>(
-                                        self,
-                                        __value: &[u8],
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"year" => _serde::__private::Ok(__Field::__field0),
-                                            b"month" => _serde::__private::Ok(__Field::__field1),
-                                            b"day" => _serde::__private::Ok(__Field::__field2),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
                                 }
-                                impl<'de> _serde::Deserialize<'de> for __Field {
-                                    #[inline]
-                                    fn deserialize<__D>(
-                                        __deserializer: __D,
-                                    ) -> _serde::__private::Result<Self, __D::Error>
-                                    where
-                                        __D: _serde::Deserializer<'de>,
-                                    {
-                                        _serde::Deserializer::deserialize_identifier(
-                                            __deserializer,
-                                            __FieldVisitor,
-                                        )
-                                    }
+                                _ => {
+                                    let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                                 }
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: _serde::__private::PhantomData<#postgresql_type>,
-                                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                                }
-                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #postgresql_type;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            #struct_ident_double_quotes_token_stream,
-                                        )
+                            }
+                        }
+                        let __field0 = match __field0 {
+                            serde::__private::Some(__field0) => __field0,
+                            serde::__private::None => serde::__private::de::missing_field("digits")?,
+                        };
+                        let __field1 = match __field1 {
+                            serde::__private::Some(__field1) => __field1,
+                            serde::__private::None => serde::__private::de::missing_field("scale")?,
+                        };
+                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                    }
+                }
+                #[doc(hidden)]
+                const FIELDS: &'static [&'static str] = &["digits", "scale"];
+                serde::Deserializer::deserialize_struct(
+                    __deserializer,
+                    #ident_double_quotes_token_stream,
+                    FIELDS,
+                    __Visitor {
+                        marker: serde::__private::PhantomData::<#postgresql_type>,
+                        lifetime: serde::__private::PhantomData,
+                    },
+                )
+            });
+            //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
+            let impl_serde_deserialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                #[allow(non_camel_case_types)]
+                #[doc(hidden)]
+                enum __Field {
+                    __field0,
+                    __field1,
+                    __field2,
+                    __ignore,
+                }
+                #[doc(hidden)]
+                struct __FieldVisitor;
+                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                    type Value = __Field;
+                    fn expecting(
+                        &self,
+                        __formatter: &mut _serde::__private::Formatter<'_>,
+                    ) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(
+                            __formatter,
+                            "field identifier",
+                        )
+                    }
+                    fn visit_u64<__E>(
+                        self,
+                        __value: u64,
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            0u64 => _serde::__private::Ok(__Field::__field0),
+                            1u64 => _serde::__private::Ok(__Field::__field1),
+                            2u64 => _serde::__private::Ok(__Field::__field2),
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_str<__E>(
+                        self,
+                        __value: &str,
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            "year" => _serde::__private::Ok(__Field::__field0),
+                            "month" => _serde::__private::Ok(__Field::__field1),
+                            "day" => _serde::__private::Ok(__Field::__field2),
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_bytes<__E>(
+                        self,
+                        __value: &[u8],
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            b"year" => _serde::__private::Ok(__Field::__field0),
+                            b"month" => _serde::__private::Ok(__Field::__field1),
+                            b"day" => _serde::__private::Ok(__Field::__field2),
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                }
+                impl<'de> _serde::Deserialize<'de> for __Field {
+                    #[inline]
+                    fn deserialize<__D>(
+                        __deserializer: __D,
+                    ) -> _serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: _serde::Deserializer<'de>,
+                    {
+                        _serde::Deserializer::deserialize_identifier(
+                            __deserializer,
+                            __FieldVisitor,
+                        )
+                    }
+                }
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: _serde::__private::PhantomData<#postgresql_type>,
+                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                }
+                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                    type Value = #postgresql_type;
+                    fn expecting(
+                        &self,
+                        __formatter: &mut _serde::__private::Formatter<'_>,
+                    ) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(
+                            __formatter,
+                            #struct_ident_double_quotes_token_stream,
+                        )
+                    }
+                    #[inline]
+                    fn visit_seq<__A>(
+                        self,
+                        mut __seq: __A,
+                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: _serde::de::SeqAccess<'de>,
+                    {
+                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::i32,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        0usize,
+                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                    ),
+                                );
+                            }
+                        };
+                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                            time::Month,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        1usize,
+                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                    ),
+                                );
+                            }
+                        };
+                        let __field2 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::u8,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        2usize,
+                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                    ),
+                                );
+                            }
+                        };
+                        match #postgresql_type::try_new(__field0, __field1, __field2) {
+                            Ok(value) => _serde::__private::Ok(value),
+                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        }
+                    }
+                    #[inline]
+                    fn visit_map<__A>(
+                        self,
+                        mut __map: __A,
+                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: _serde::de::MapAccess<'de>,
+                    {
+                        let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
+                        let mut __field1: _serde::__private::Option<time::Month> = _serde::__private::None;
+                        let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                            __Field,
+                        >(&mut __map)? {
+                            match __key {
+                                __Field::__field0 => {
+                                    if _serde::__private::Option::is_some(&__field0) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("year"),
+                                        );
                                     }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: _serde::de::SeqAccess<'de>,
-                                    {
-                                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                                    __field0 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
                                             std::primitive::i32,
-                                        >(&mut __seq)? {
-                                            _serde::__private::Some(__value) => __value,
-                                            _serde::__private::None => {
-                                                return _serde::__private::Err(
-                                                    _serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field1 => {
+                                    if _serde::__private::Option::is_some(&__field1) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("month"),
+                                        );
+                                    }
+                                    __field1 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
                                             time::Month,
-                                        >(&mut __seq)? {
-                                            _serde::__private::Some(__value) => __value,
-                                            _serde::__private::None => {
-                                                return _serde::__private::Err(
-                                                    _serde::de::Error::invalid_length(
-                                                        1usize,
-                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        let __field2 = match _serde::de::SeqAccess::next_element::<
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field2 => {
+                                    if _serde::__private::Option::is_some(&__field2) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("day"),
+                                        );
+                                    }
+                                    __field2 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
                                             std::primitive::u8,
-                                        >(&mut __seq)? {
-                                            _serde::__private::Some(__value) => __value,
-                                            _serde::__private::None => {
-                                                return _serde::__private::Err(
-                                                    _serde::de::Error::invalid_length(
-                                                        2usize,
-                                                        &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
-                                        };
-                                        match #postgresql_type::try_new(__field0, __field1, __field2) {
-                                            Ok(value) => _serde::__private::Ok(value),
-                                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                        }
-                                    }
-                                    #[inline]
-                                    fn visit_map<__A>(
-                                        self,
-                                        mut __map: __A,
-                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                    where
-                                        __A: _serde::de::MapAccess<'de>,
-                                    {
-                                        let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
-                                        let mut __field1: _serde::__private::Option<time::Month> = _serde::__private::None;
-                                        let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
-                                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                            __Field,
-                                        >(&mut __map)? {
-                                            match __key {
-                                                __Field::__field0 => {
-                                                    if _serde::__private::Option::is_some(&__field0) {
-                                                        return _serde::__private::Err(
-                                                            <__A::Error as _serde::de::Error>::duplicate_field("year"),
-                                                        );
-                                                    }
-                                                    __field0 = _serde::__private::Some(
-                                                        _serde::de::MapAccess::next_value::<
-                                                            std::primitive::i32,
-                                                        >(&mut __map)?,
-                                                    );
-                                                }
-                                                __Field::__field1 => {
-                                                    if _serde::__private::Option::is_some(&__field1) {
-                                                        return _serde::__private::Err(
-                                                            <__A::Error as _serde::de::Error>::duplicate_field("month"),
-                                                        );
-                                                    }
-                                                    __field1 = _serde::__private::Some(
-                                                        _serde::de::MapAccess::next_value::<
-                                                            time::Month,
-                                                        >(&mut __map)?,
-                                                    );
-                                                }
-                                                __Field::__field2 => {
-                                                    if _serde::__private::Option::is_some(&__field2) {
-                                                        return _serde::__private::Err(
-                                                            <__A::Error as _serde::de::Error>::duplicate_field("day"),
-                                                        );
-                                                    }
-                                                    __field2 = _serde::__private::Some(
-                                                        _serde::de::MapAccess::next_value::<
-                                                            std::primitive::u8,
-                                                        >(&mut __map)?,
-                                                    );
-                                                }
-                                                _ => {
-                                                    let _ = _serde::de::MapAccess::next_value::<
-                                                        _serde::de::IgnoredAny,
-                                                    >(&mut __map)?;
-                                                }
-                                            }
-                                        }
-                                        let __field0 = match __field0 {
-                                            _serde::__private::Some(__field0) => __field0,
-                                            _serde::__private::None => {
-                                                _serde::__private::de::missing_field("year")?
-                                            }
-                                        };
-                                        let __field1 = match __field1 {
-                                            _serde::__private::Some(__field1) => __field1,
-                                            _serde::__private::None => {
-                                                _serde::__private::de::missing_field("month")?
-                                            }
-                                        };
-                                        let __field2 = match __field2 {
-                                            _serde::__private::Some(__field2) => __field2,
-                                            _serde::__private::None => {
-                                                _serde::__private::de::missing_field("day")?
-                                            }
-                                        };
-                                        match #postgresql_type::try_new(__field0, __field1, __field2) {
-                                            Ok(value) => _serde::__private::Ok(value),
-                                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                                        }
-                                    }
+                                        >(&mut __map)?,
+                                    );
                                 }
-                                #[doc(hidden)]
-                                const FIELDS: &'static [&'static str] = &["year", "month", "day"];
-                                _serde::Deserializer::deserialize_struct(
-                                    __deserializer,
-                                    #ident_double_quotes_token_stream,
-                                    FIELDS,
-                                    __Visitor {
-                                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                                        lifetime: _serde::__private::PhantomData,
-                                    },
-                                )
+                                _ => {
+                                    let _ = _serde::de::MapAccess::next_value::<
+                                        _serde::de::IgnoredAny,
+                                    >(&mut __map)?;
+                                }
                             }
                         }
-                    };
+                        let __field0 = match __field0 {
+                            _serde::__private::Some(__field0) => __field0,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("year")?
+                            }
+                        };
+                        let __field1 = match __field1 {
+                            _serde::__private::Some(__field1) => __field1,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("month")?
+                            }
+                        };
+                        let __field2 = match __field2 {
+                            _serde::__private::Some(__field2) => __field2,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("day")?
+                            }
+                        };
+                        match #postgresql_type::try_new(__field0, __field1, __field2) {
+                            Ok(value) => _serde::__private::Ok(value),
+                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        }
+                    }
                 }
-            };
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
-                            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+                #[doc(hidden)]
+                const FIELDS: &'static [&'static str] = &["year", "month", "day"];
+                _serde::Deserializer::deserialize_struct(
+                    __deserializer,
+                    #ident_double_quotes_token_stream,
+                    FIELDS,
+                    __Visitor {
+                        marker: _serde::__private::PhantomData::<#postgresql_type>,
+                        lifetime: _serde::__private::PhantomData,
+                    },
+                )
+            });
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                enum Field {
+                    Months,
+                    Days,
+                    Microseconds,
+                }
+                impl<'de> serde::Deserialize<'de> for Field {
+                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        struct FieldVisitor;
+                        impl serde::de::Visitor<'_> for FieldVisitor {
+                            type Value = Field;
+                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                formatter.write_str("`months` or `days` or `microseconds`")
+                            }
+                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
                             where
-                                D: serde::Deserializer<'de>,
+                                E: serde::de::Error,
                             {
-                                enum Field {
-                                    Months,
-                                    Days,
-                                    Microseconds,
+                                match value {
+                                    "months" => Ok(Field::Months),
+                                    "days" => Ok(Field::Days),
+                                    "microseconds" => Ok(Field::Microseconds),
+                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                                 }
-                                impl<'de> serde::Deserialize<'de> for Field {
-                                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-                                    where
-                                        D: serde::Deserializer<'de>,
-                                    {
-                                        struct FieldVisitor;
-                                        impl serde::de::Visitor<'_> for FieldVisitor {
-                                            type Value = Field;
-                                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                                formatter.write_str("`months` or `days` or `microseconds`")
-                                            }
-                                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                            where
-                                                E: serde::de::Error,
-                                            {
-                                                match value {
-                                                    "months" => Ok(Field::Months),
-                                                    "days" => Ok(Field::Days),
-                                                    "microseconds" => Ok(Field::Microseconds),
-                                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                                }
-                                            }
-                                        }
-                                        deserializer.deserialize_identifier(FieldVisitor)
-                                    }
-                                }
-                                struct #ident_visitor_upper_camel_case;
-                                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
-                                    type Value = #postgresql_type;
-                                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        formatter.write_str(#struct_ident_double_quotes_token_stream)
-                                    }
-                                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
-                                    where
-                                        V: serde::de::SeqAccess<'de>,
-                                    {
-                                        let months = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                        let days = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                        let microseconds = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
-                                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
-                                    }
-                                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
-                                    where
-                                        V: serde::de::MapAccess<'de>,
-                                    {
-                                        let mut months = None;
-                                        let mut days = None;
-                                        let mut microseconds = None;
-                                        while let Some(key) = map.next_key()? {
-                                            match key {
-                                                Field::Months => {
-                                                    if months.is_some() {
-                                                        return Err(serde::de::Error::duplicate_field("months"));
-                                                    }
-                                                    months = Some(map.next_value()?);
-                                                }
-                                                Field::Days => {
-                                                    if days.is_some() {
-                                                        return Err(serde::de::Error::duplicate_field("days"));
-                                                    }
-                                                    days = Some(map.next_value()?);
-                                                }
-                                                Field::Microseconds => {
-                                                    if microseconds.is_some() {
-                                                        return Err(serde::de::Error::duplicate_field("microseconds"));
-                                                    }
-                                                    microseconds = Some(map.next_value()?);
-                                                }
-                                            }
-                                        }
-                                        let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
-                                        let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
-                                        let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
-                                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
-                                    }
-                                }
-                                const FIELDS: &[&str] = &["months", "days", "microseconds"];
-                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                             }
                         }
-                    };
+                        deserializer.deserialize_identifier(FieldVisitor)
+                    }
                 }
-            };
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl<'de> serde::Deserialize<'de> for #postgresql_type {
-                            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+                struct #ident_visitor_upper_camel_case;
+                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                    type Value = #postgresql_type;
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        formatter.write_str(#struct_ident_double_quotes_token_stream)
+                    }
+                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
+                    where
+                        V: serde::de::SeqAccess<'de>,
+                    {
+                        let months = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                        let days = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                        let microseconds = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
+                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                    }
+                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
+                    where
+                        V: serde::de::MapAccess<'de>,
+                    {
+                        let mut months = None;
+                        let mut days = None;
+                        let mut microseconds = None;
+                        while let Some(key) = map.next_key()? {
+                            match key {
+                                Field::Months => {
+                                    if months.is_some() {
+                                        return Err(serde::de::Error::duplicate_field("months"));
+                                    }
+                                    months = Some(map.next_value()?);
+                                }
+                                Field::Days => {
+                                    if days.is_some() {
+                                        return Err(serde::de::Error::duplicate_field("days"));
+                                    }
+                                    days = Some(map.next_value()?);
+                                }
+                                Field::Microseconds => {
+                                    if microseconds.is_some() {
+                                        return Err(serde::de::Error::duplicate_field("microseconds"));
+                                    }
+                                    microseconds = Some(map.next_value()?);
+                                }
+                            }
+                        }
+                        let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
+                        let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
+                        let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
+                        Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                    }
+                }
+                const FIELDS: &[&str] = &["months", "days", "microseconds"];
+                __deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
+            });
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                enum Field {
+                    Start,
+                    End,
+                }
+                impl<'de> serde::Deserialize<'de> for Field {
+                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        struct FieldVisitor;
+                        impl serde::de::Visitor<'_> for FieldVisitor {
+                            type Value = Field;
+                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                formatter.write_str("`start` or `end`")
+                            }
+                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
                             where
-                                D: serde::Deserializer<'de>,
+                                E: serde::de::Error,
                             {
-                                enum Field {
-                                    Start,
-                                    End,
+                                match value {
+                                    "start" => Ok(Field::Start),
+                                    "end" => Ok(Field::End),
+                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                                 }
-                                impl<'de> serde::Deserialize<'de> for Field {
-                                    fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
-                                    where
-                                        D: serde::Deserializer<'de>,
-                                    {
-                                        struct FieldVisitor;
-                                        impl serde::de::Visitor<'_> for FieldVisitor {
-                                            type Value = Field;
-                                            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                                formatter.write_str("`start` or `end`")
-                                            }
-                                            fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                            where
-                                                E: serde::de::Error,
-                                            {
-                                                match value {
-                                                    "start" => Ok(Field::Start),
-                                                    "end" => Ok(Field::End),
-                                                    _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                                }
-                                            }
-                                        }
-                                        deserializer.deserialize_identifier(FieldVisitor)
-                                    }
-                                }
-                                struct #ident_visitor_upper_camel_case;
-                                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
-                                    type Value = #postgresql_type;
-                                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        formatter.write_str(#struct_ident_double_quotes_token_stream)
-                                    }
-                                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
-                                    where
-                                        V: serde::de::SeqAccess<'de>,
-                                    {
-                                        let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                        let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
-                                    }
-                                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
-                                    where
-                                        V: serde::de::MapAccess<'de>,
-                                    {
-                                        let mut start = None;
-                                        let mut end = None;
-                                        while let Some(key) = map.next_key()? {
-                                            match key {
-                                                Field::Start => {
-                                                    if start.is_some() {
-                                                        return Err(serde::de::Error::duplicate_field("start"));
-                                                    }
-                                                    start = Some(map.next_value()?);
-                                                }
-                                                Field::End => {
-                                                    if end.is_some() {
-                                                        return Err(serde::de::Error::duplicate_field("end"));
-                                                    }
-                                                    end = Some(map.next_value()?);
-                                                }
-                                            }
-                                        }
-                                        let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
-                                        let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
-                                    }
-                                }
-                                const FIELDS: &[&str] = &["start", "end"];
-                                deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                             }
                         }
-                    };
+                        deserializer.deserialize_identifier(FieldVisitor)
+                    }
                 }
-            };
+                struct #ident_visitor_upper_camel_case;
+                impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                    type Value = #postgresql_type;
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        formatter.write_str(#struct_ident_double_quotes_token_stream)
+                    }
+                    fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
+                    where
+                        V: serde::de::SeqAccess<'de>,
+                    {
+                        let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                        let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                    }
+                    fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
+                    where
+                        V: serde::de::MapAccess<'de>,
+                    {
+                        let mut start = None;
+                        let mut end = None;
+                        while let Some(key) = map.next_key()? {
+                            match key {
+                                Field::Start => {
+                                    if start.is_some() {
+                                        return Err(serde::de::Error::duplicate_field("start"));
+                                    }
+                                    start = Some(map.next_value()?);
+                                }
+                                Field::End => {
+                                    if end.is_some() {
+                                        return Err(serde::de::Error::duplicate_field("end"));
+                                    }
+                                    end = Some(map.next_value()?);
+                                }
+                            }
+                        }
+                        let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
+                        let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
+                        Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                    }
+                }
+                const FIELDS: &[&str] = &["start", "end"];
+                __deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
+            });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
                 quote::quote!{
                     const _: () = {
