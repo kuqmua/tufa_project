@@ -5332,533 +5332,262 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
                 _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 .0)
             });
-            let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
-                                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &crate::postgresql_type::postgresql_base_type::NumBigintBigInt(bigint))?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "scale", &exponent)?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_types_time_date_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "year",
-                                    &self.0.year(),
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "month",
-                                    &self.0.month(),
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "day",
-                                    &self.0.day(),
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1 + 1)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "months", &self.0.months)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "days", &self.0.days)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "microseconds", &self.0.microseconds)?;
-                                _serde::ser::SerializeStruct::end(serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: serde::Serializer,
-                            {
-                                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
-                                _serde::ser::SerializeStruct::end(serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
-                                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
-                                _serde::ser::SerializeStruct::end(serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &self.0.start,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &self.0.end,
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &match self.0.start {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),//todo how to reuse naming?
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &match self.0.end {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &self.0.start,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &self.0.end,
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &self.0.start,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &self.0.end,
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &match self.0.start {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &match self.0.end {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &self.0.start,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &self.0.end,
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &match self.0.start {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDateAsPostgresqlDate(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDateAsPostgresqlDate(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &match self.0.end {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDateAsPostgresqlDate(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDateAsPostgresqlDate(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &self.0.start,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &self.0.end,
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                let mut __serde_state = _serde::Serializer::serialize_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    false as usize + 1 + 1,
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "start",
-                                    &match self.0.start.clone() {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::serialize_field(
-                                    &mut __serde_state,
-                                    "end",
-                                    &match self.0.end.clone() {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
-                                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                    },
-                                )?;
-                                _serde::ser::SerializeStruct::end(__serde_state)
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.to_string())
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.bytes())
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = {
-                quote::quote!{
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl _serde::Serialize for #postgresql_type{
-                            fn serialize<__S>(
-                                &self,
-                                __serializer: __S,
-                            ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                            where
-                                __S: _serde::Serializer,
-                            {
-                                _serde::Serializer::serialize_newtype_struct(
-                                    __serializer,
-                                    #ident_double_quotes_token_stream,
-                                    &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
-                                )
-                            }
-                        }
-                    };
-                }
-            };
+            let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &crate::postgresql_type::postgresql_base_type::NumBigintBigInt(bigint))?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "scale", &exponent)?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "year",
+                    &self.0.year(),
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "month",
+                    &self.0.month(),
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "day",
+                    &self.0.day(),
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "months", &self.0.months)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "days", &self.0.days)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "microseconds", &self.0.microseconds)?;
+                _serde::ser::SerializeStruct::end(serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+                _serde::ser::SerializeStruct::end(serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut serde_state, "end", &self.0.end)?;
+                _serde::ser::SerializeStruct::end(serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &self.0.start,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &self.0.end,
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &match self.0.start {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),//todo how to reuse naming?
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &match self.0.end {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &self.0.start,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &self.0.end,
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &self.0.start,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &self.0.end,
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &match self.0.start {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &match self.0.end {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &self.0.start,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &self.0.end,
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &match self.0.start {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDateAsPostgresqlDate(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDateAsPostgresqlDate(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &match self.0.end {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimeDateAsPostgresqlDate(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimeDateAsPostgresqlDate(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &self.0.start,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &self.0.end,
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                let mut __serde_state = _serde::Serializer::serialize_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    false as usize + 1 + 1,
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "start",
+                    &match self.0.start.clone() {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "end",
+                    &match self.0.end.clone() {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                )?;
+                _serde::ser::SerializeStruct::end(__serde_state)
+            });
+            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.to_string())
+            });
+            let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                _serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0.bytes())
+            });
+            let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
+                _serde::Serializer::serialize_newtype_struct(
+                    __serializer,
+                    #ident_double_quotes_token_stream,
+                    &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
+                )
+            });
             match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
                 PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
