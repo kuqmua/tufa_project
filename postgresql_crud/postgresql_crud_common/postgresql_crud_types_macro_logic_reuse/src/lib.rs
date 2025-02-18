@@ -5562,6 +5562,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
+            let serde_deserializer_deserialize_struct_token_stream = {
+                quote::quote!{
+                    _serde::Deserializer::deserialize_struct(
+                        __deserializer,
+                        #ident_double_quotes_token_stream,
+                        FIELDS,
+                        __Visitor {
+                            marker: _serde::__private::PhantomData::<#postgresql_type>,
+                            lifetime: _serde::__private::PhantomData,
+                        },
+                    )
+                }
+            };
+
             let serde_deserializer_deserialize_newtype_struct_token_stream = quote::quote! {
                 _serde::Deserializer::deserialize_newtype_struct(
                     __deserializer,
@@ -5981,15 +5995,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["year", "month", "day"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 enum Field {
@@ -6419,17 +6425,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -6642,15 +6638,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -6859,15 +6847,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -7076,15 +7056,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<#postgresql_type>,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -7297,17 +7269,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -7504,17 +7466,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -7727,17 +7679,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -7934,17 +7876,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #[allow(non_camel_case_types)]
@@ -8157,17 +8089,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 #[doc(hidden)]
                 const FIELDS: &'static [&'static str] = &["start", "end"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    #ident_double_quotes_token_stream,
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private::PhantomData::<
-                            #postgresql_type,
-                        >,
-                        lifetime: _serde::__private::PhantomData,
-                    },
-                )
+                #serde_deserializer_deserialize_struct_token_stream
             });
             // let impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
             //     #[allow(non_camel_case_types)]
@@ -8404,17 +8326,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //     }
             //     #[doc(hidden)]
             //     const FIELDS: &'static [&'static str] = &["date", "time", "offset"];
-            //     _serde::Deserializer::deserialize_struct(
-            //         __deserializer,
-            //         #ident_double_quotes_token_stream,
-            //         FIELDS,
-            //         __Visitor {
-            //             marker: _serde::__private::PhantomData::<
-            //                 #postgresql_type,
-            //             >,
-            //             lifetime: _serde::__private::PhantomData,
-            //         },
-            //     )
+            //     #serde_deserializer_deserialize_struct_token_stream
             // });
             let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                 #struct_visitor_token_stream
