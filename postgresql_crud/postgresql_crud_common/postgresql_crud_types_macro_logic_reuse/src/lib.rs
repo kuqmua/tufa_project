@@ -5554,7 +5554,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             );
             let ident_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
 
-            ////
+            let struct_visitor_token_stream = quote::quote! {
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: serde::__private::PhantomData<#postgresql_type>,
+                    lifetime: serde::__private::PhantomData<&'de ()>,
+                }
+            };
+
             let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
                     const _: () = {
@@ -5576,11 +5583,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -5672,11 +5675,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -5830,11 +5829,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -6300,13 +6295,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -6513,13 +6502,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -6740,13 +6723,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -6963,13 +6940,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -7186,13 +7157,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -7415,13 +7380,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -7628,13 +7587,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -7857,13 +7810,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -8070,13 +8017,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         )
                     }
                 }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<
-                        #postgresql_type,
-                    >,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
@@ -8303,11 +8244,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //             )
             //         }
             //     }
-            //     #[doc(hidden)]
-            //     struct __Visitor<'de> {
-            //         marker: _serde::__private::PhantomData<#postgresql_type>,
-            //         lifetime: _serde::__private::PhantomData<&'de ()>,
-            //     }
+            //     #struct_visitor_token_stream
             //     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
             //         type Value = #postgresql_type;
             //         fn expecting(
@@ -8476,11 +8413,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //     )
             // });
             let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -8528,11 +8461,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             });
             let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -8570,11 +8499,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             });
             let impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<#postgresql_type>,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
-                }
+                #struct_visitor_token_stream
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = #postgresql_type;
                     fn expecting(
