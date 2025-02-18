@@ -533,7 +533,15 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["contains", "element"],
     ["equal", "second", "dimension"],
     ["from", "calendar", "date"],
-    ["less", "than", "minimum", "postgresql", "value"]
+    ["less", "than", "minimum", "postgresql", "value"],
+    ["digits"],
+    ["scale"],
+    ["year"],
+    ["month"],
+    ["day"],
+    ["months"],
+    ["days"],
+    ["microseconds"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
