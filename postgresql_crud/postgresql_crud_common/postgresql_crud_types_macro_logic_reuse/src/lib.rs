@@ -4042,7 +4042,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDateAsPostgresqlDate},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimal},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumeric},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -5780,8 +5780,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     &mut __serde_state,
                                     "start",
                                     &match self.0.start.clone() {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
                                         std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                                     },
                                 )?;
@@ -5789,8 +5789,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     &mut __serde_state,
                                     "end",
                                     &match self.0.end.clone() {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimal(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimal(value)),
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesBigDecimalAsPostgresqlNumeric(value)),
                                         std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                                     },
                                 )?;
@@ -8670,7 +8670,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
                                         let __field0 = match _serde::de::SeqAccess::next_element::<
-                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                         >(&mut __seq)? {
                                             _serde::__private::Some(__value) => __value,
                                             _serde::__private::None => {
@@ -8683,7 +8683,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                             }
                                         };
                                         let __field1 = match _serde::de::SeqAccess::next_element::<
-                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                         >(&mut __seq)? {
                                             _serde::__private::Some(__value) => __value,
                                             _serde::__private::None => {
@@ -8717,10 +8717,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         __A: _serde::de::MapAccess<'de>,
                                     {
                                         let mut __field0: _serde::__private::Option<
-                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                         > = _serde::__private::None;
                                         let mut __field1: _serde::__private::Option<
-                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                         > = _serde::__private::None;
                                         while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                             __Field,
@@ -8734,7 +8734,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                     }
                                                     __field0 = _serde::__private::Some(
                                                         _serde::de::MapAccess::next_value::<
-                                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                                         >(&mut __map)?,
                                                     );
                                                 }
@@ -8746,7 +8746,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                     }
                                                     __field1 = _serde::__private::Some(
                                                         _serde::de::MapAccess::next_value::<
-                                                            std::collections::Bound<SqlxTypesBigDecimal>,
+                                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
                                                         >(&mut __map)?,
                                                     );
                                                 }
@@ -11680,7 +11680,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h29 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange);
     let h30 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange);
     let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange);
-    // let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
+    let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
     let h33 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp);
     let h34 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp);
     let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz);
@@ -11694,10 +11694,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
     let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
-            //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            //       "PostgresqlTypeTokens",
-            //       &h30,
-            //   );
     let generated = quote::quote!{
         #h1
         #h2
@@ -11730,7 +11726,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h29
         #h30
         #h31
-        // #h32
+        #h32
         #h33
         #h34
         #h35
