@@ -5309,6 +5309,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
             }
         };
+        enum ParameterNumber {
+            Two,
+            Three,
+        }
         let maybe_impl_serde_serialize_token_stream = {
             let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
             let generate_impl_serde_serialize_for_tokens = |content_token_stream: &dyn quote::ToTokens|{
@@ -5332,10 +5336,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #ident_double_quotes_token_stream, &self.0 #value_token_stream)}
             };
-            enum ParameterNumber {
-                Two,
-                Three,
-            }
             let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
                 let parameter_number_token_stream = match parameter_number {
                     ParameterNumber::Two => quote::quote!{+ 1 + 1},
@@ -5559,6 +5559,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 struct __Visitor<'de> {
                     marker: serde::__private::PhantomData<#postgresql_type>,
                     lifetime: serde::__private::PhantomData<&'de ()>,
+                }
+            };
+
+            let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
+                let fields_token_stream = match &parameter_number {
+                    ParameterNumber::Two => quote::quote!{
+                        __field0,
+                        __field1,
+                    },
+                    ParameterNumber::Three => quote::quote!{
+                        __field0,
+                        __field1,
+                        __field2,
+                    },
+                };
+                quote::quote!{
+                    #[allow(non_camel_case_types)]
+                    #[doc(hidden)]
+                    enum __Field {
+                        __field0,
+                        __field1,
+                        __ignore,
+                    }
                 }
             };
 
