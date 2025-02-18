@@ -5386,21 +5386,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::ser::SerializeStruct::end(serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "start",
-                    &self.0.start,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "end",
-                    &self.0.end,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "end", &self.0.end)?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
@@ -5430,39 +5418,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "start",
-                    &self.0.start,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "end",
-                    &self.0.end,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "end", &self.0.end)?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "start",
-                    &self.0.start,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "end",
-                    &self.0.end,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "end", &self.0.end)?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
@@ -5492,21 +5456,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "start",
-                    &self.0.start,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "end",
-                    &self.0.end,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "end", &self.0.end)?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
@@ -5536,29 +5488,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "start",
-                    &self.0.start,
-                )?;
-                _serde::ser::SerializeStruct::serialize_field(
-                    &mut __serde_state,
-                    "end",
-                    &self.0.end,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "start", &self.0.start)?;
+                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "end", &self.0.end)?;
                 _serde::ser::SerializeStruct::end(__serde_state)
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_tokens(&quote::quote!{
-                let mut __serde_state = _serde::Serializer::serialize_struct(
-                    __serializer,
-                    #ident_double_quotes_token_stream,
-                    false as usize + 1 + 1,
-                )?;
+                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_double_quotes_token_stream, false as usize + 1 + 1)?;
                 _serde::ser::SerializeStruct::serialize_field(
                     &mut __serde_state,
                     "start",
