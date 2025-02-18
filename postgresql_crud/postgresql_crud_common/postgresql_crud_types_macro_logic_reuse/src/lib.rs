@@ -5355,6 +5355,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let start_snake_case = naming::StartSnakeCase;
             let end_snake_case = naming::EndSnakeCase;
+            let serde_ser_serialize_struct_end_token_stream = quote::quote!{_serde::ser::SerializeStruct::end(__serde_state)};
             let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = {
                 let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{&self.0.#value_token_stream}
@@ -5365,7 +5366,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_state_initialization_two_fields_token_stream
                     #start_serialize_field_token_stream
                     #end_serialize_field_token_stream
-                    _serde::ser::SerializeStruct::end(__serde_state)
+                    #serde_ser_serialize_struct_end_token_stream
                 }
             };
             let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |
@@ -5397,7 +5398,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_state_initialization_two_fields_token_stream
                     #start_serialize_field_token_stream
                     #end_serialize_field_token_stream
-                    _serde::ser::SerializeStruct::end(__serde_state)
+                    #serde_ser_serialize_struct_end_token_stream
                 }
             };
 
@@ -5412,7 +5413,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_state_initialization_two_fields_token_stream
                     #digits_serialize_field_token_stream
                     #scale_serialize_field_token_stream
-                    _serde::ser::SerializeStruct::end(__serde_state)
+                    #serde_ser_serialize_struct_end_token_stream
                 }
             });
             let impl_serde_serialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_tokens(&{
@@ -5430,7 +5431,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #year_serialize_field_token_stream
                     #month_serialize_field_token_stream
                     #day_serialize_field_token_stream
-                    _serde::ser::SerializeStruct::end(__serde_state)
+                    #serde_ser_serialize_struct_end_token_stream
                 }
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_serialize_for_tokens(&{
@@ -5442,7 +5443,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #months_serialize_field_token_stream
                     #days_serialize_field_token_stream
                     #microseconds_serialize_field_token_stream
-                    _serde::ser::SerializeStruct::end(__serde_state)
+                    #serde_ser_serialize_struct_end_token_stream
                 }
             });
             let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_serialize_for_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
