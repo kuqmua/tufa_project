@@ -4040,7 +4040,7 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTime},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTime},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp},
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimal},
         }
@@ -4128,15 +4128,16 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &is_nullable,
             &WhereOperatorType::Ident(&ident),
         );
-        let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
-        let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &range_type_token_stream,
-            &range_type_should_impl_range_length,
-            &range_type_default_initialization_token_stream,
-            &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-        );
+        //commented just for path compatibility with new macro
+        // let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
+        // let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+        //     &ident,
+        //     &is_nullable,
+        //     &range_type_token_stream,
+        //     &range_type_should_impl_range_length,
+        //     &range_type_default_initialization_token_stream,
+        //     &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+        // );
         let contains_another_range = crate::filters::ContainsAnotherRange;
         let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
             &ident,
@@ -4198,7 +4199,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
             &{
                 let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                     &equal,
-                    &value_is_contained_within_range,
+                    // &value_is_contained_within_range,
                     &contains_another_range,
                     &strictly_to_left_of_range,
                     &strictly_to_right_of_range,
@@ -4216,7 +4217,7 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
         );
         quote::quote! {
             #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
+            // #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
             #postgresql_type_tokens_where_element_contains_another_range_token_stream
             #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
             #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
@@ -5508,8 +5509,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     &mut __serde_state,
                                     "start",
                                     &match self.0.start {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),//todo how to reuse naming?
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),//todo how to reuse naming?
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
                                         std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                                     },
                                 )?;
@@ -5517,8 +5518,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     &mut __serde_state,
                                     "end",
                                     &match self.0.end {
-                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTime(value)),
-                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTime(value)),
+                                        std::collections::Bound::Included(value) => std::collections::Bound::Included(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
+                                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(value)),
                                         std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                                     },
                                 )?;
@@ -7000,7 +7001,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
                                         let __field0 = match _serde::de::SeqAccess::next_element::<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                         >(&mut __seq)? {
                                             _serde::__private::Some(__value) => __value,
                                             _serde::__private::None => {
@@ -7013,7 +7014,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                             }
                                         };
                                         let __field1 = match _serde::de::SeqAccess::next_element::<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                         >(&mut __seq)? {
                                             _serde::__private::Some(__value) => __value,
                                             _serde::__private::None => {
@@ -7047,10 +7048,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         __A: _serde::de::MapAccess<'de>,
                                     {
                                         let mut __field0: _serde::__private::Option<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                         > = _serde::__private::None;
                                         let mut __field1: _serde::__private::Option<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                         > = _serde::__private::None;
                                         while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                             __Field,
@@ -7064,7 +7065,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                     }
                                                     __field0 = _serde::__private::Some(
                                                         _serde::de::MapAccess::next_value::<
-                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                                         >(&mut __map)?,
                                                     );
                                                 }
@@ -7076,7 +7077,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                                     }
                                                     __field1 = _serde::__private::Some(
                                                         _serde::de::MapAccess::next_value::<
-                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTime>,
+                                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
                                                         >(&mut __map)?,
                                                     );
                                                 }
@@ -10261,6 +10262,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &range_type_default_initialization_token_stream,
                         &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
                     );
+                    // if let PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange = &postgresql_type {
+                    //     println!("{postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream}")
+                    // }
                     let contains_another_range = crate::filters::ContainsAnotherRange;
                     let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -11672,7 +11676,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h22 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
     let h23 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
     let h24 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange);
-    // let h25 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange);
+    let h25 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange);
     let h26 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange);
     let h27 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange);
     // let h28 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange);
@@ -11695,7 +11699,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             //   macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //       "PostgresqlTypeTokens",
-            //       &h17,
+            //       &h25,
             //   );
     let generated = quote::quote!{
         #h1
@@ -11722,7 +11726,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h22
         #h23
         #h24
-        // #h25
+        #h25
         #h26
         #h27
         // #h28
