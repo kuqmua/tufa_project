@@ -5353,9 +5353,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_token_stream, #third_parameter_token_stream)?;}
             };
 
+            let start_snake_case = naming::StartSnakeCase;
+            let end_snake_case = naming::EndSnakeCase;
             let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = {
-                let start_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::StartSnakeCase, &quote::quote!{&self.0.start});
-                let end_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::EndSnakeCase, &quote::quote!{&self.0.end});
+                let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{&self.0.#value_token_stream}
+                };
+                let start_serialize_field_token_stream = generate_serialize_field_token_stream(&start_snake_case, &generate_self_zero_tokens_token_stream(&start_snake_case));
+                let end_serialize_field_token_stream = generate_serialize_field_token_stream(&end_snake_case, &generate_self_zero_tokens_token_stream(&end_snake_case));
                 quote::quote!{
                     #serde_state_initialization_two_fields_token_stream
                     #start_serialize_field_token_stream
@@ -5373,21 +5378,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 else {
                     proc_macro2::TokenStream::new()
                 };
-                let start_serialize_field_token_stream = generate_serialize_field_token_stream(
-                    &naming::StartSnakeCase,
-                    &quote::quote!{&match self.0.start #maybe_clone_token_stream {
+                let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{&match self.0.#value_token_stream #maybe_clone_token_stream {
                         std::collections::Bound::Included(value) => std::collections::Bound::Included(#type_token_stream(value)),
                         std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(#type_token_stream(value)),
                         std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                     }}
+                };
+                let start_serialize_field_token_stream = generate_serialize_field_token_stream(
+                    &start_snake_case,
+                    &generate_self_zero_match_tokens_token_stream(&start_snake_case)
                 );
                 let end_serialize_field_token_stream = generate_serialize_field_token_stream(
-                    &naming::EndSnakeCase,
-                    &quote::quote!{&match self.0.end #maybe_clone_token_stream {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(#type_token_stream(value)),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(#type_token_stream(value)),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    }}
+                    &end_snake_case,
+                    &generate_self_zero_match_tokens_token_stream(&end_snake_case)
                 );
                 quote::quote!{
                     #serde_state_initialization_two_fields_token_stream
@@ -5412,9 +5416,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let impl_serde_serialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_tokens(&{
-                let year_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::YearSnakeCase, &quote::quote!{&self.0.year()});
-                let month_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MonthSnakeCase, &quote::quote!{&self.0.month()});
-                let day_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DaySnakeCase, &quote::quote!{&self.0.day()});
+                let year_snake_case = naming::YearSnakeCase;
+                let month_snake_case = naming::MonthSnakeCase;
+                let day_snake_case = naming::DaySnakeCase;
+                let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{&self.0.#value_token_stream()}
+                };
+                let year_serialize_field_token_stream = generate_serialize_field_token_stream(&year_snake_case, &generate_self_zero_tokens_token_stream(&year_snake_case));
+                let month_serialize_field_token_stream = generate_serialize_field_token_stream(&month_snake_case, &generate_self_zero_tokens_token_stream(&month_snake_case));
+                let day_serialize_field_token_stream = generate_serialize_field_token_stream(&day_snake_case, &generate_self_zero_tokens_token_stream(&day_snake_case));
                 quote::quote!{
                     #serde_state_initialization_three_fields_token_stream
                     #year_serialize_field_token_stream
