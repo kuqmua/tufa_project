@@ -5653,6 +5653,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_expecting_months_or_days_or_microseconds_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
                 serde::__private::Formatter::write_str(__formatter, "`months` or `days` or `microseconds`")
             });
+            let fn_expecting_start_or_end_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
+                serde::__private::Formatter::write_str(__formatter, "`start` or `end`")
+            });
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
@@ -6112,9 +6115,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             struct FieldVisitor;
                             impl serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
-                                fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    formatter.write_str("`start` or `end`")
-                                }
+                                #fn_expecting_start_or_end_token_stream
                                 fn visit_str<E>(self, value: &str) -> Result<Field, E>
                                 where
                                     E: serde::de::Error,
@@ -6186,9 +6187,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             struct FieldVisitor;
                             impl serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
-                                fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    formatter.write_str("`start` or `end`")
-                                }
+                                #fn_expecting_start_or_end_token_stream
                                 fn visit_str<E>(self, value: &str) -> Result<Field, E>
                                 where
                                     E: serde::de::Error,
