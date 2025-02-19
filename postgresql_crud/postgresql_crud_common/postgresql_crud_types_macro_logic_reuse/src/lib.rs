@@ -5659,7 +5659,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#postgresql_type(#content_token_stream))}};
+            let generate_field0_deserialize_token_stream = |type_token_stream: &dyn quote::ToTokens|{quote::quote!{let __field0 = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;}};
             let fn_visit_newtype_struct_pg_money_token_stream = generate_fn_visit_newtype_struct_token_stream(&{
+                let field0_deserialize_token_stream = generate_field0_deserialize_token_stream(&token_patterns::StdPrimitiveI64);
                 let serde_private_ok_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});
                 quote::quote!{
                     let __field0 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
@@ -5667,6 +5669,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let fn_visit_newtype_struct_uuid_token_stream = generate_fn_visit_newtype_struct_token_stream(&{
+                let field0_deserialize_token_stream = generate_field0_deserialize_token_stream(&token_patterns::StdStringString);
                 let serde_private_ok_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&__field0) {
                     Ok(value) => value,
                     Err(error) => {
@@ -5674,18 +5677,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }});
                 quote::quote!{
-                    let __field0 = <std::string::String as serde::Deserialize>::deserialize(__e)?;
+                    #field0_deserialize_token_stream
                     #serde_private_ok_token_stream
                 }
             });
             let fn_visit_newtype_struct_mac_address_token_stream = generate_fn_visit_newtype_struct_token_stream(&{
+                let field0_deserialize_token_stream = generate_field0_deserialize_token_stream(&quote::quote!{[std::primitive::u8; 6]});
                 let serde_private_ok_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{sqlx::types::mac_address::MacAddress::new(__field0)});
                 quote::quote!{
-                    let __field0 = <[std::primitive::u8; 6] as serde::Deserialize>::deserialize(__e)?;
+                    #field0_deserialize_token_stream
                     #serde_private_ok_token_stream
                 }
             });
             let fn_visit_newtype_struct_bit_vec_token_stream = generate_fn_visit_newtype_struct_token_stream(&{
+                let field0_deserialize_token_stream = generate_field0_deserialize_token_stream(&quote::quote!{std::vec::Vec<std::primitive::bool>});
                 let serde_private_ok_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{{
                     let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
                     __field0.into_iter().enumerate().for_each(|(index, element)|{
@@ -5694,7 +5699,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     bit_vec
                 }});
                 quote::quote!{
-                    let __field0 = <std::vec::Vec<std::primitive::bool> as _serde::Deserialize>::deserialize(__e)?;
+                    #field0_deserialize_token_stream
                     #serde_private_ok_token_stream
                 }
             });
