@@ -5778,9 +5778,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
                 Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
             });
-            // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                
-            // });
+            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+            });
             // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                 
             // });
@@ -6267,14 +6269,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
-                        fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
-                        where
-                            V: serde::de::SeqAccess<'de>,
-                        {
-                            let start = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                            let end = seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                            Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
-                        }
+                        #fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
                         fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
                         where
                             V: serde::de::MapAccess<'de>,
