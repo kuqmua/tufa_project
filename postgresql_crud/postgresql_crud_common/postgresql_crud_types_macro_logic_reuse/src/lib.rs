@@ -5827,6 +5827,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case: __field0, #end_snake_case: __field1 }};
+            let sqlx_postgres_types_pg_range_bound_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange {
+                #start_snake_case: match __field0 {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
+                #end_snake_case: match __field1 {
+                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                },
+            }};
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
@@ -5865,18 +5877,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream,
                     ])
                 };
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgRange {
-                    start: match __field0 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                    end: match __field1 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                }});
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -5918,20 +5919,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &std_collections_bound_sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_token_stream,
                     ])
                 };
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    sqlx::postgres::types::PgRange {
-                        #start_snake_case: match __field0 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                        #end_snake_case: match __field1 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                    }
-                });
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -5959,20 +5947,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &std_collections_bound_sqlx_types_time_date_as_postgresql_date_token_stream,
                     ])
                 };
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    sqlx::postgres::types::PgRange {
-                        #start_snake_case: match __field0 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                        #end_snake_case: match __field1 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                    }
-                });
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -6000,20 +5975,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &token_stream,
                     ])
                 };
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    sqlx::postgres::types::PgRange {
-                        #start_snake_case: match __field0 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                        #end_snake_case: match __field1 {
-                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        },
-                    }
-                });
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -6691,10 +6653,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: __field0,
-                                end: __field1,
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -6830,18 +6789,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: match __field0 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                                end: match __field1 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -6985,10 +6933,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: __field0,
-                                end: __field1,
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7132,10 +7077,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: __field0,
-                                end: __field1,
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7271,18 +7213,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: match __field0 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                                end: match __field1 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7418,10 +7349,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: __field0,
-                                end: __field1,
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7557,18 +7485,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: match __field0 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                                end: match __field1 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7704,10 +7621,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: __field0,
-                                end: __field1,
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
@@ -7843,18 +7757,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                     _serde::__private::de::missing_field("end")?
                                 }
                             };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: match __field0 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                                end: match __field1 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            }))
+                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
                         }
                     }
                     #[doc(hidden)]
