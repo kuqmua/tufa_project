@@ -6157,12 +6157,51 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     offset: __field2,
                 })
             });
-            // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                
-            // });
-            // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                
-            // });
+            let fn_visit_seq_sqlx_types_uuid_uuid_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                    }
+                };
+                serde::__private::Ok(#postgresql_type(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(error));
+                    }
+                }))
+            });
+            let fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                    }
+                };
+                serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
+            });
+            let fn_visit_seq_sqlx_types_bit_vec_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                let __field0 = match _serde::de::SeqAccess::next_element::<
+                    std::vec::Vec<std::primitive::bool>,
+                >(&mut __seq)? {
+                    _serde::__private::Some(__value) => __value,
+                    _serde::__private::None => {
+                        return _serde::__private::Err(
+                            _serde::de::Error::invalid_length(
+                                0usize,
+                                &#struct_ident_with_one_element_double_quotes_token_stream,
+                            ),
+                        );
+                    }
+                };
+                _serde::__private::Ok(#postgresql_type({
+                    let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                    __field0.into_iter().enumerate().for_each(|(index, element)|{
+                        bit_vec.set(index, element);
+                    });
+                    bit_vec
+                }))
+            });
             // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                 
             // });
@@ -8115,24 +8154,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_newtype_struct_uuid_token_stream
-                        #[inline]
-                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                                }
-                            };
-                            serde::__private::Ok(#postgresql_type(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(serde::de::Error::custom(error));
-                                }
-                            }))
-                        }
+                        #fn_visit_seq_sqlx_types_uuid_uuid_token_stream
                     }
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
@@ -8144,19 +8166,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_newtype_struct_mac_address_token_stream
-                        #[inline]
-                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
-                                serde::__private::Some(__value) => __value,
-                                serde::__private::None => {
-                                    return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                                }
-                            };
-                            serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
-                        }
+                        #fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream
                     }
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
@@ -8168,35 +8178,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_newtype_struct_bit_vec_token_stream
-                        #[inline]
-                        fn visit_seq<__A>(
-                            self,
-                            mut __seq: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match _serde::de::SeqAccess::next_element::<
-                                std::vec::Vec<std::primitive::bool>,
-                            >(&mut __seq)? {
-                                _serde::__private::Some(__value) => __value,
-                                _serde::__private::None => {
-                                    return _serde::__private::Err(
-                                        _serde::de::Error::invalid_length(
-                                            0usize,
-                                            &#struct_ident_with_one_element_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            _serde::__private::Ok(#postgresql_type({
-                                let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                                __field0.into_iter().enumerate().for_each(|(index, element)|{
-                                    bit_vec.set(index, element);
-                                });
-                                bit_vec
-                            }))
-                        }
+                        #fn_visit_seq_sqlx_types_bit_vec_token_stream
                     }
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
