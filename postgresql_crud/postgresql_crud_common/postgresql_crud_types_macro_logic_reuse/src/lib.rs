@@ -5310,6 +5310,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         };
         enum ParameterNumber {
+            One,
             Two,
             Three,
         }
@@ -5338,6 +5339,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
                 let parameter_number_token_stream = match parameter_number {
+                    ParameterNumber::One => quote::quote!{+ 1 + 1},
                     ParameterNumber::Two => quote::quote!{+ 1 + 1},
                     ParameterNumber::Three => quote::quote!{+ 1 + 1 + 1},
                 };
@@ -5565,6 +5567,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
                 let fields_token_stream = {
                     let number = match &parameter_number {
+                        ParameterNumber::One => 1,
                         ParameterNumber::Two => 2,
                         ParameterNumber::Three => 3,
                     };
@@ -5700,6 +5703,38 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
+
+            let generate_field0_serde_de_seq_access_next_element_token_stream = |
+                parameter_number_for_field_index_name: &ParameterNumber,
+                parameter_number_for_error_message: &ParameterNumber,
+                type_token_stream: &dyn quote::ToTokens,
+            |{
+                let field_index_name_token_stream = {
+                    let index: std::primitive::u8 = match parameter_number_for_field_index_name {
+                        ParameterNumber::One => 0,
+                        ParameterNumber::Two => 1,
+                        ParameterNumber::Three => 2,
+                    };
+                    //todo reuse
+                    format!("__{}{index}", naming::FieldSnakeCase)
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap()
+                };
+                let struct_ident_with_number_of_elements_double_quotes_token_stream: &dyn quote::ToTokens = match &parameter_number_for_error_message {
+                    ParameterNumber::One => &struct_ident_with_one_element_double_quotes_token_stream,
+                    ParameterNumber::Two => &struct_ident_with_two_elements_double_quotes_token_stream,
+                    ParameterNumber::Three => &struct_ident_with_three_elements_double_quotes_token_stream,
+                };
+                quote::quote!{
+                    let #field_index_name_token_stream = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_of_elements_double_quotes_token_stream));
+                        }
+                    };
+                }
+            };
+
             let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});
                 quote::quote!{
@@ -6280,7 +6315,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
 
 
-            
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
