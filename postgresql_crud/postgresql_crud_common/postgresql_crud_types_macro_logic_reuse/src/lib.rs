@@ -5637,14 +5637,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let enum_field_two_token_stream = generate_enum_field_token_stream(&parameter_number_two);
             let enum_field_three_token_stream = generate_enum_field_token_stream(&parameter_number_three);
 
+            let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{
+                     fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                        #content_token_stream
+                    }
+                }
+            };
+            let fn_expecting_serde_private_formatter_write_str_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
+                serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
+            });
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_serde_private_formatter_write_str_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
@@ -5723,9 +5732,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_serde_private_formatter_write_str_token_stream
                         #[inline]
                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                         where
@@ -8321,9 +8328,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_serde_private_formatter_write_str_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
@@ -8364,9 +8369,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_serde_private_formatter_write_str_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
