@@ -5647,7 +5647,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_expecting_months_or_days_or_microseconds_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`months` or `days` or `microseconds`"});
             let fn_expecting_start_or_end_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`start` or `end`"});
 
+            let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#postgresql_type(#content_token_stream))}};
             let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(content_token_stream);
                 quote::quote!{
                     #[inline]
                     fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
@@ -5655,7 +5657,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         __E: serde::Deserializer<'de>,
                     {
                         let __field0 = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
-                        serde::__private::Ok(#postgresql_type(#content_token_stream))
+                        #serde_private_ok_postgresql_type_token_stream
                     }
                 }
             };
@@ -5698,513 +5700,548 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                    }
-                };
-                serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-            });
-            let fn_visit_seq_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match serde::de::SeqAccess::next_element::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
-                    }
-                };
-                let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
-                    }
-                };
-                serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
-            });
-            let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::primitive::i32,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    time::Month,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field2 = match _serde::de::SeqAccess::next_element::<
-                    std::primitive::u8,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                2usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                match #postgresql_type::try_new(__field0, __field1, __field2) {
-                    Ok(value) => _serde::__private::Ok(value),
-                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+            let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                        }
+                    };
+                    serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
                 }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let months = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                let days = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                let microseconds = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
-                Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+            let fn_visit_seq_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match serde::de::SeqAccess::next_element::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
+                        }
+                    };
+                    let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(1usize, &#struct_ident_with_two_elements_double_quotes_token_stream));
+                        }
+                    };
+                    serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+            let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::i32,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        time::Month,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field2 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::u8,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    2usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    match #postgresql_type::try_new(__field0, __field1, __field2) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+            let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let months = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                    let days = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                    let microseconds = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(2, &self))?;
+                    Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: __field0,
-                    end: __field1,
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                    let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                    Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: match __field0 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                    end: match __field1 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                    let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                    Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                    >,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                    >,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: __field0,
-                    end: __field1,
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: __field0,
+                        end: __field1,
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                    >,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                    >,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: __field0,
-                    end: __field1,
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: match __field0 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                        end: match __field1 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: match __field0 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                    end: match __field1 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<
+                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                        >,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<
+                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                        >,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: __field0,
+                        end: __field1,
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: __field0,
-                    end: __field1,
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<
+                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                        >,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<
+                            sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                        >,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: __field0,
+                        end: __field1,
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: match __field0 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                    end: match __field1 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: match __field0 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                        end: match __field1 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::Decimal>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<sqlx::types::Decimal>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: __field0,
-                    end: __field1,
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::chrono::NaiveDate>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: __field0,
+                        end: __field1,
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_two_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                    start: match __field0 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                    end: match __field1 {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    },
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: match __field0 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                        end: match __field1 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_types_time_offset_date_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    sqlx::types::time::Date,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field1 = match _serde::de::SeqAccess::next_element::<
-                    sqlx::types::time::Time,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                1usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                let __field2 = match _serde::de::SeqAccess::next_element::<
-                    sqlx::types::time::UtcOffset,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                2usize,
-                                &#struct_ident_with_three_elements_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type {
-                    date: __field0,
-                    time: __field1,
-                    offset: __field2,
-                })
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::Decimal>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<sqlx::types::Decimal>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: __field0,
+                        end: __field1,
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_types_uuid_uuid_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                    }
-                };
-                serde::__private::Ok(#postgresql_type(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(error));
-                    }
-                }))
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_two_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                        start: match __field0 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                        end: match __field1 {
+                            std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                            std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        },
+                    }))
+                }
             });
-            let fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
-                    }
-                };
-                serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
+            let fn_visit_seq_sqlx_types_time_offset_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        sqlx::types::time::Date,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        sqlx::types::time::Time,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    let __field2 = match _serde::de::SeqAccess::next_element::<
+                        sqlx::types::time::UtcOffset,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    2usize,
+                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type {
+                        date: __field0,
+                        time: __field1,
+                        offset: __field2,
+                    })
+                }
             });
-            let fn_visit_seq_sqlx_types_bit_vec_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                let __field0 = match _serde::de::SeqAccess::next_element::<
-                    std::vec::Vec<std::primitive::bool>,
-                >(&mut __seq)? {
-                    _serde::__private::Some(__value) => __value,
-                    _serde::__private::None => {
-                        return _serde::__private::Err(
-                            _serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_with_one_element_double_quotes_token_stream,
-                            ),
-                        );
-                    }
-                };
-                _serde::__private::Ok(#postgresql_type({
-                    let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                    __field0.into_iter().enumerate().for_each(|(index, element)|{
-                        bit_vec.set(index, element);
-                    });
-                    bit_vec
-                }))
+            let fn_visit_seq_sqlx_types_uuid_uuid_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                        }
+                    };
+                    serde::__private::Ok(#postgresql_type(match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                        Ok(value) => value,
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(error));
+                        }
+                    }))
+                }
             });
-            // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                
-            // });
+            let fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match serde::de::SeqAccess::next_element::<[std::primitive::u8; 6]>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_one_element_double_quotes_token_stream));
+                        }
+                    };
+                    serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
+                }
+            });
+            let fn_visit_seq_sqlx_types_bit_vec_token_stream = generate_fn_visit_seq_token_stream(&{
+                quote::quote!{
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::vec::Vec<std::primitive::bool>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &#struct_ident_with_one_element_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(#postgresql_type({
+                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                        __field0.into_iter().enumerate().for_each(|(index, element)|{
+                            bit_vec.set(index, element);
+                        });
+                        bit_vec
+                    }))
+                }
+            });
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
