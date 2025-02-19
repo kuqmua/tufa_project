@@ -5664,7 +5664,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let field0_deserialize_token_stream = generate_field0_deserialize_token_stream(&token_patterns::StdPrimitiveI64);
                 let serde_private_ok_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});
                 quote::quote!{
-                    let __field0 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
+                    #field0_deserialize_token_stream
                     #serde_private_ok_token_stream
                 }
             });
