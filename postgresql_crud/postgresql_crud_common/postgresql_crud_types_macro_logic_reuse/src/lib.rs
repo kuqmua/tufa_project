@@ -5650,6 +5650,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_expecting_field_identifier_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
                 serde::__private::Formatter::write_str(__formatter, "field identifier")
             });
+            // let fn_expecting__token_stream = generate_fn_expecting_token_stream(&quote::quote!{
+                
+            // });
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
@@ -5872,15 +5875,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -6056,9 +6051,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct #ident_visitor_upper_camel_case;
                     impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
                         type Value = #postgresql_type;
-                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            formatter.write_str(#struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                         where
                             V: serde::de::SeqAccess<'de>,
@@ -6141,9 +6134,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct #ident_visitor_upper_camel_case;
                     impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
                         type Value = #postgresql_type;
-                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            formatter.write_str(#struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                         where
                             V: serde::de::SeqAccess<'de>,
@@ -6217,9 +6208,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct #ident_visitor_upper_camel_case;
                     impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
                         type Value = #postgresql_type;
-                        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            formatter.write_str(#struct_ident_double_quotes_token_stream)
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         fn visit_seq<V>(self, mut seq: V) -> Result<#postgresql_type, V::Error>
                         where
                             V: serde::de::SeqAccess<'de>,
@@ -6324,15 +6313,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -6509,15 +6490,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -6710,15 +6683,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -6907,15 +6872,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -7104,15 +7061,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -7305,15 +7254,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -7490,15 +7431,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -7691,15 +7624,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -7876,15 +7801,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
@@ -8080,15 +7997,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #struct_visitor_token_stream
             //         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
             //             type Value = #postgresql_type;
-            //             fn expecting(
-            //                 &self,
-            //                 __formatter: &mut _serde::__private::Formatter,
-            //             ) -> _serde::__private::fmt::Result {
-            //                 _serde::__private::Formatter::write_str(
-            //                     __formatter,
-            //                     #struct_ident_double_quotes_token_stream,
-            //                 )
-            //             }
+            //             #fn_expecting_struct_ident_double_quotes_token_stream
             //             #[inline]
             //             fn visit_seq<__A>(
             //                 self,
@@ -8313,15 +8222,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_double_quotes_token_stream,
-                            )
-                        }
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(
                             self,
