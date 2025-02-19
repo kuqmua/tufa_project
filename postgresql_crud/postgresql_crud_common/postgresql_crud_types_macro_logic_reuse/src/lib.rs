@@ -5644,8 +5644,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let fn_expecting_serde_private_formatter_write_str_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
+            let fn_expecting_struct_ident_double_quotes_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
                 serde::__private::Formatter::write_str(__formatter, #struct_ident_double_quotes_token_stream)
+            });
+            let fn_expecting_field_identifier_token_stream = generate_fn_expecting_token_stream(&quote::quote!{
+                serde::__private::Formatter::write_str(__formatter, "field identifier")
             });
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
@@ -5653,7 +5656,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        #fn_expecting_serde_private_formatter_write_str_token_stream
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
@@ -5686,9 +5689,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl serde::de::Visitor<'_> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                            serde::__private::Formatter::write_str(__formatter, "field identifier")
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
                         where
                             __E: serde::de::Error,
@@ -5732,7 +5733,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        #fn_expecting_serde_private_formatter_write_str_token_stream
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                         where
@@ -8328,7 +8329,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        #fn_expecting_serde_private_formatter_write_str_token_stream
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
@@ -8369,7 +8370,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
-                        #fn_expecting_serde_private_formatter_write_str_token_stream
+                        #fn_expecting_struct_ident_double_quotes_token_stream
                         #[inline]
                         fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
                         where
