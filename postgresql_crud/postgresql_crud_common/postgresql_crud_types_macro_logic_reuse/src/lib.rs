@@ -5704,7 +5704,30 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-
+            let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]|{
+                let error_message_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
+                    &postgresql_type,
+                    vec_token_stream.len(),
+                );
+                let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
+                    //todo reuse
+                    let field_index_name_token_stream = format!("__{}{index}", naming::FieldSnakeCase)
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap();
+                    let index_usize_token_stream = format!("{index}usize")
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap();
+                    quote::quote!{
+                        let #field_index_name_token_stream = match serde::de::SeqAccess::next_element::<#element>(&mut __seq)? {
+                            serde::__private::Some(__value) => __value,
+                            serde::__private::None => {
+                                return serde::__private::Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
+                            }
+                        };
+                    }
+                });
+                quote::quote!{#(#fields_initialization_token_stream)*}
+            };
             let generate_field0_serde_de_seq_access_next_element_token_stream = |
                 parameter_number_for_field_index_name: &ParameterNumber,
                 parameter_number_for_error_message: &ParameterNumber,
@@ -5721,6 +5744,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     .parse::<proc_macro2::TokenStream>()
                     .unwrap()
                 };
+                let index_usize_token_stream = {
+                    let index: std::primitive::u8 = match parameter_number_for_field_index_name {
+                        ParameterNumber::One => 0,
+                        ParameterNumber::Two => 1,
+                        ParameterNumber::Three => 2,
+                    };
+                    //todo reuse
+                    format!("{index}usize")
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap()
+                };
                 let struct_ident_with_number_of_elements_double_quotes_token_stream: &dyn quote::ToTokens = match &parameter_number_for_error_message {
                     ParameterNumber::One => &struct_ident_with_one_element_double_quotes_token_stream,
                     ParameterNumber::Two => &struct_ident_with_two_elements_double_quotes_token_stream,
@@ -5730,83 +5764,41 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let #field_index_name_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
                         serde::__private::Some(__value) => __value,
                         serde::__private::None => {
-                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &#struct_ident_with_number_of_elements_double_quotes_token_stream));
+                            return serde::__private::Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#struct_ident_with_number_of_elements_double_quotes_token_stream));
                         }
                     };
                 }
             };
 
             let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
-                let field_zero_token_stream = generate_field0_serde_de_seq_access_next_element_token_stream(
-                    &parameter_number_one,
-                    &parameter_number_one,
+                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &token_patterns::StdPrimitiveI64,
-                );
+                ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});
                 quote::quote!{
-                    #field_zero_token_stream
+                    #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
             let fn_visit_seq_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
-                let field_zero_token_stream = generate_field0_serde_de_seq_access_next_element_token_stream(
-                    &parameter_number_one,
-                    &parameter_number_two,
+                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt},
-                );
-                let field_one_token_stream = generate_field0_serde_de_seq_access_next_element_token_stream(
-                    &parameter_number_two,
-                    &parameter_number_two,
                     &token_patterns::StdPrimitiveI64,
-                );
+                ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::types::BigDecimal::new(__field0.0, __field1)});
                 quote::quote!{
-                    #field_zero_token_stream
-                    #field_one_token_stream
+                    #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
             let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
+                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                    &token_patterns::StdPrimitiveI32,
+                    &quote::quote!{time::Month},
+                    &token_patterns::StdPrimitiveU8,
+                ]);
                 quote::quote!{
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::i32,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                ),
-                            );
-                        }
-                    };
-                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                        time::Month,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    1usize,
-                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                ),
-                            );
-                        }
-                    };
-                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u8,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    2usize,
-                                    &#struct_ident_with_three_elements_double_quotes_token_stream,
-                                ),
-                            );
-                        }
-                    };
+                    #fields_initialization_token_stream
                     match #postgresql_type::try_new(__field0, __field1, __field2) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))

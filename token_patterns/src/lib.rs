@@ -247,6 +247,48 @@ impl quote::ToTokens for StdPrimitiveBool {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveU8;
+impl quote::ToTokens for StdPrimitiveU8 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::u8}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveIU6;
+impl quote::ToTokens for StdPrimitiveIU6 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::u16}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveU32;
+impl quote::ToTokens for StdPrimitiveU32 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::u32}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveU64;
+impl quote::ToTokens for StdPrimitiveU64 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::u64}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveI8;
+impl quote::ToTokens for StdPrimitiveI8 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::i8}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveI16;
+impl quote::ToTokens for StdPrimitiveI16 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::i16}.to_tokens(tokens)
+    }
+}
+#[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveI32;
 impl quote::ToTokens for StdPrimitiveI32 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
