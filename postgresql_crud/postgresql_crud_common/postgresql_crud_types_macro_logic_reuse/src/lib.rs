@@ -5671,6 +5671,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }))
             });
+            let fn_visit_newtype_struct_mac_address_token_stream = generate_fn_visit_newtype_struct_token_stream(&quote::quote!{
+                let __field0: [std::primitive::u8; 6] = <[std::primitive::u8; 6] as serde::Deserialize>::deserialize(__e)?;
+                serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
+            });
+            let fn_visit_newtype_struct_bit_vec_token_stream = generate_fn_visit_newtype_struct_token_stream(&quote::quote!{
+                let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
+                    std::primitive::bool,
+                > as _serde::Deserialize>::deserialize(__e)?;
+                _serde::__private::Ok(#postgresql_type({
+                    let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                    __field0.into_iter().enumerate().for_each(|(index, element)|{
+                        bit_vec.set(index, element);
+                    });
+                    bit_vec
+                }))
+            });
 
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
@@ -8185,14 +8201,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
-                        #[inline]
-                        fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                        where
-                            __E: serde::Deserializer<'de>,
-                        {
-                            let __field0: [std::primitive::u8; 6] = <[std::primitive::u8; 6] as serde::Deserialize>::deserialize(__e)?;
-                            serde::__private::Ok(#postgresql_type(sqlx::types::mac_address::MacAddress::new(__field0)))
-                        }
+                        #fn_visit_newtype_struct_mac_address_token_stream
                         #[inline]
                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                         where
@@ -8216,25 +8225,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
-                        #[inline]
-                        fn visit_newtype_struct<__E>(
-                            self,
-                            __e: __E,
-                        ) -> _serde::__private::Result<Self::Value, __E::Error>
-                        where
-                            __E: _serde::Deserializer<'de>,
-                        {
-                            let __field0: std::vec::Vec<std::primitive::bool> = <std::vec::Vec<
-                                std::primitive::bool,
-                            > as _serde::Deserialize>::deserialize(__e)?;
-                            _serde::__private::Ok(#postgresql_type({
-                                let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                                __field0.into_iter().enumerate().for_each(|(index, element)|{
-                                    bit_vec.set(index, element);
-                                });
-                                bit_vec
-                            }))
-                        }
+                        #fn_visit_newtype_struct_bit_vec_token_stream
                         #[inline]
                         fn visit_seq<__A>(
                             self,
