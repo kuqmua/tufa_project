@@ -5927,9 +5927,46 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     end: __field1,
                 }))
             });
-            // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                
-            // });
+            let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                let __field0 = match _serde::de::SeqAccess::next_element::<
+                    std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
+                >(&mut __seq)? {
+                    _serde::__private::Some(__value) => __value,
+                    _serde::__private::None => {
+                        return _serde::__private::Err(
+                            _serde::de::Error::invalid_length(
+                                0usize,
+                                &#struct_ident_with_two_elements_double_quotes_token_stream,
+                            ),
+                        );
+                    }
+                };
+                let __field1 = match _serde::de::SeqAccess::next_element::<
+                    std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
+                >(&mut __seq)? {
+                    _serde::__private::Some(__value) => __value,
+                    _serde::__private::None => {
+                        return _serde::__private::Err(
+                            _serde::de::Error::invalid_length(
+                                1usize,
+                                &#struct_ident_with_two_elements_double_quotes_token_stream,
+                            ),
+                        );
+                    }
+                };
+                _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
+                    start: match __field0 {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                    end: match __field1 {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    },
+                }))
+            });
             // let fn_visit_seq__token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                 
             // });
@@ -7079,53 +7116,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
-                        #[inline]
-                        fn visit_seq<__A>(
-                            self,
-                            mut __seq: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::SeqAccess<'de>,
-                        {
-                            let __field0 = match _serde::de::SeqAccess::next_element::<
-                                std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                            >(&mut __seq)? {
-                                _serde::__private::Some(__value) => __value,
-                                _serde::__private::None => {
-                                    return _serde::__private::Err(
-                                        _serde::de::Error::invalid_length(
-                                            0usize,
-                                            &#struct_ident_with_two_elements_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            let __field1 = match _serde::de::SeqAccess::next_element::<
-                                std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                            >(&mut __seq)? {
-                                _serde::__private::Some(__value) => __value,
-                                _serde::__private::None => {
-                                    return _serde::__private::Err(
-                                        _serde::de::Error::invalid_length(
-                                            1usize,
-                                            &#struct_ident_with_two_elements_double_quotes_token_stream,
-                                        ),
-                                    );
-                                }
-                            };
-                            _serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgRange {
-                                start: match __field0 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                                end: match __field1 {
-                                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                                },
-                            }))
-                        }
+                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                         #[inline]
                         fn visit_map<__A>(
                             self,
