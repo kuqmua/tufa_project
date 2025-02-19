@@ -5647,20 +5647,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_expecting_months_or_days_or_microseconds_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`months` or `days` or `microseconds`"});
             let fn_expecting_start_or_end_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`start` or `end`"});
 
+            let generate_fn_visit_newtype_struct_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{
+                    #[inline]
+                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                    where
+                        __E: serde::Deserializer<'de>,
+                    {
+                        #content_token_stream
+                    }
+                }
+            };
+            let fn_visit_newtype_struct_pg_money_token_stream = generate_fn_visit_newtype_struct_token_stream(&quote::quote!{
+                let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
+                serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
+            });
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
-                        #[inline]
-                        fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                        where
-                            __E: serde::Deserializer<'de>,
-                        {
-                            let __field0: std::primitive::i64 = <std::primitive::i64 as serde::Deserialize>::deserialize(__e)?;
-                            serde::__private::Ok(#postgresql_type(sqlx::postgres::types::PgMoney(__field0)))
-                        }
+                        #fn_visit_newtype_struct_pg_money_token_stream
                         #[inline]
                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                         where
