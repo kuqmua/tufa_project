@@ -5811,15 +5811,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -6274,15 +6266,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -6467,15 +6451,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -6676,15 +6652,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -6881,15 +6849,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -7086,15 +7046,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -7295,15 +7247,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -7488,15 +7432,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -7697,15 +7633,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -7890,15 +7818,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     struct __FieldVisitor;
                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                         type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
+                        #fn_expecting_field_identifier_token_stream
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
@@ -8099,15 +8019,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         struct __FieldVisitor;
             //         impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
             //             type Value = __Field;
-            //             fn expecting(
-            //                 &self,
-            //                 __formatter: &mut _serde::__private::Formatter,
-            //             ) -> _serde::__private::fmt::Result {
-            //                 _serde::__private::Formatter::write_str(
-            //                     __formatter,
-            //                     "field identifier",
-            //                 )
-            //             }
+            //             #fn_expecting_field_identifier_token_stream
             //             fn visit_u64<__E>(
             //                 self,
             //                 __value: u64,
