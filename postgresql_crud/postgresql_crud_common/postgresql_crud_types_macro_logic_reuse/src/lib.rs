@@ -5815,8 +5815,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
+            let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { start, end }};
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgRange { start, end }});
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
                     let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                     let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
@@ -5824,7 +5825,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgRange { start, end }});
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
                     let start = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                     let end = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
@@ -6500,7 +6501,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             }
                             let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
                             let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                            Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                            Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     const FIELDS: &[&str] = &["start", "end"];
@@ -6565,7 +6566,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             }
                             let start = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
                             let end = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                            Ok(#postgresql_type(sqlx::postgres::types::PgRange { start, end }))
+                            Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
                     const FIELDS: &[&str] = &["start", "end"];
