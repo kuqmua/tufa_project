@@ -5809,17 +5809,26 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             });
-            let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber|{
-                let index_token_stream = match &parameter_number {
-                    ParameterNumber::One => quote::quote!{0},
-                    ParameterNumber::Two => quote::quote!{1},
-                    ParameterNumber::Three => quote::quote!{2},
+
+            let (
+                seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream,
+                seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream,
+                seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream,
+            ) = {
+                let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber|{
+                    let index_token_stream = match &parameter_number {
+                        ParameterNumber::One => quote::quote!{0},
+                        ParameterNumber::Two => quote::quote!{1},
+                        ParameterNumber::Three => quote::quote!{2},
+                    };
+                    quote::quote!{__seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(#index_token_stream, &self))?;}
                 };
-                quote::quote!{__seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(#index_token_stream, &self))?;}
+                (
+                    generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::One),
+                    generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Two),
+                    generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Three),
+                )
             };
-            let seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream = generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::One);
-            let seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream = generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Two);
-            let seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream = generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Three);
             let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgInterval { months, days, microseconds }});
                 //todo
