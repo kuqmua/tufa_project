@@ -6184,7 +6184,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let (
                 fn_visit_map_sqlx_types_big_decimal_token_stream,
-                fn_visit_map_sqlx_types_time_date_token_stream
+                fn_visit_map_sqlx_types_time_date_token_stream,
+                fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
             ) = {
                 let generate_fn_visit_map_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{
@@ -6303,13 +6305,119 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             Ok(value) => _serde::__private::Ok(value),
                             Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                         }
+                    }),
+                    generate_fn_visit_map_token_stream(&quote::quote!{
+                        let mut __field0: _serde::__private::Option<
+                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                        > = _serde::__private::None;
+                        let mut __field1: _serde::__private::Option<
+                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                        > = _serde::__private::None;
+                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                            __Field,
+                        >(&mut __map)? {
+                            match __key {
+                                __Field::__field0 => {
+                                    if _serde::__private::Option::is_some(&__field0) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                        );
+                                    }
+                                    __field0 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field1 => {
+                                    if _serde::__private::Option::is_some(&__field1) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                        );
+                                    }
+                                    __field1 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                _ => {
+                                    let _ = _serde::de::MapAccess::next_value::<
+                                        _serde::de::IgnoredAny,
+                                    >(&mut __map)?;
+                                }
+                            }
+                        }
+                        let __field0 = match __field0 {
+                            _serde::__private::Some(__field0) => __field0,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("start")?
+                            }
+                        };
+                        let __field1 = match __field1 {
+                            _serde::__private::Some(__field1) => __field1,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("end")?
+                            }
+                        };
+                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                    }),
+                    generate_fn_visit_map_token_stream(&quote::quote!{
+                        let mut __field0: _serde::__private::Option<
+                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                        > = _serde::__private::None;
+                        let mut __field1: _serde::__private::Option<
+                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                        > = _serde::__private::None;
+                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                            __Field,
+                        >(&mut __map)? {
+                            match __key {
+                                __Field::__field0 => {
+                                    if _serde::__private::Option::is_some(&__field0) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                        );
+                                    }
+                                    __field0 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field1 => {
+                                    if _serde::__private::Option::is_some(&__field1) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                        );
+                                    }
+                                    __field1 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                _ => {
+                                    let _ = _serde::de::MapAccess::next_value::<
+                                        _serde::de::IgnoredAny,
+                                    >(&mut __map)?;
+                                }
+                            }
+                        }
+                        let __field0 = match __field0 {
+                            _serde::__private::Some(__field0) => __field0,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("start")?
+                            }
+                        };
+                        let __field1 = match __field1 {
+                            _serde::__private::Some(__field1) => __field1,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("end")?
+                            }
+                        };
+                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
                     })
-                    // generate_fn_visit_map_token_stream(&quote::quote!{
-                        
-                    // }),
-                    // generate_fn_visit_map_token_stream(&quote::quote!{
-                        
-                    // }),
                     // generate_fn_visit_map_token_stream(&quote::quote!{
                         
                     // }),
@@ -6631,69 +6739,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                        #[inline]
-                        fn visit_map<__A>(
-                            self,
-                            mut __map: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::MapAccess<'de>,
-                        {
-                            let mut __field0: _serde::__private::Option<
-                                std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                            > = _serde::__private::None;
-                            let mut __field1: _serde::__private::Option<
-                                std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                            > = _serde::__private::None;
-                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                __Field,
-                            >(&mut __map)? {
-                                match __key {
-                                    __Field::__field0 => {
-                                        if _serde::__private::Option::is_some(&__field0) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                            );
-                                        }
-                                        __field0 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    __Field::__field1 => {
-                                        if _serde::__private::Option::is_some(&__field1) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                            );
-                                        }
-                                        __field1 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    _ => {
-                                        let _ = _serde::de::MapAccess::next_value::<
-                                            _serde::de::IgnoredAny,
-                                        >(&mut __map)?;
-                                    }
-                                }
-                            }
-                            let __field0 = match __field0 {
-                                _serde::__private::Some(__field0) => __field0,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("start")?
-                                }
-                            };
-                            let __field1 = match __field1 {
-                                _serde::__private::Some(__field1) => __field1,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("end")?
-                                }
-                            };
-                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
-                        }
+                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                     }
                     #[doc(hidden)]
                     const FIELDS: &'static [&'static str] = &["start", "end"];
@@ -6718,69 +6764,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                        #[inline]
-                        fn visit_map<__A>(
-                            self,
-                            mut __map: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::MapAccess<'de>,
-                        {
-                            let mut __field0: _serde::__private::Option<
-                                std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                            > = _serde::__private::None;
-                            let mut __field1: _serde::__private::Option<
-                                std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                            > = _serde::__private::None;
-                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                __Field,
-                            >(&mut __map)? {
-                                match __key {
-                                    __Field::__field0 => {
-                                        if _serde::__private::Option::is_some(&__field0) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                            );
-                                        }
-                                        __field0 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    __Field::__field1 => {
-                                        if _serde::__private::Option::is_some(&__field1) {
-                                            return _serde::__private::Err(
-                                                <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                            );
-                                        }
-                                        __field1 = _serde::__private::Some(
-                                            _serde::de::MapAccess::next_value::<
-                                                std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                                            >(&mut __map)?,
-                                        );
-                                    }
-                                    _ => {
-                                        let _ = _serde::de::MapAccess::next_value::<
-                                            _serde::de::IgnoredAny,
-                                        >(&mut __map)?;
-                                    }
-                                }
-                            }
-                            let __field0 = match __field0 {
-                                _serde::__private::Some(__field0) => __field0,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("start")?
-                                }
-                            };
-                            let __field1 = match __field1 {
-                                _serde::__private::Some(__field1) => __field1,
-                                _serde::__private::None => {
-                                    _serde::__private::de::missing_field("end")?
-                                }
-                            };
-                            _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
-                        }
+                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                     }
                     #[doc(hidden)]
                     const FIELDS: &'static [&'static str] = &["start", "end"];
