@@ -6440,85 +6440,95 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
+                let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = quote::quote!{serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))};
+                let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote!{
+                    match #postgresql_type::try_new(__field0, __field1, __field2) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                };
+                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{_serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))};
+                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = quote::quote!{_serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))};
+                let serde_private_ok_postgresql_type_date_time_offset_token_stream = quote::quote!{
+                    _serde::__private::Ok(#postgresql_type {
+                        date: __field0,
+                        time: __field1,
+                        offset: __field2,
+                    })
+                };
+
                 (
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_types_big_decimal_token_stream
                         #while_some_next_key_field_sqlx_types_big_decimal_token_stream
                         #match_field_initialization_sqlx_types_big_decimal_token_stream
-                        serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))
+                        #serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_types_time_date_token_stream
                         #while_some_next_key_field_sqlx_types_time_date_token_stream
                         #match_field_initialization_sqlx_types_time_date_token_stream
-                        match #postgresql_type::try_new(__field0, __field1, __field2) {
-                            Ok(value) => _serde::__private::Ok(value),
-                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        #match_postgresql_type_try_new_field0_field1_field2_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                         #while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                         #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
-                        _serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))
+                        #serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream
                     }),
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_types_time_offset_date_time_token_stream
                         #while_some_next_key_field_sqlx_types_time_offset_date_time_token_stream
                         #match_field_initialization_sqlx_types_time_offset_date_time_token_stream
-                        _serde::__private::Ok(#postgresql_type {
-                            date: __field0,
-                            time: __field1,
-                            offset: __field2,
-                        })
+                        #serde_private_ok_postgresql_type_date_time_offset_token_stream
                     })
                 )
             };
