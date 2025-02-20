@@ -6300,16 +6300,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let (
                     match_field_initialization_sqlx_types_big_decimal_token_stream,
                     match_field_initialization_sqlx_types_time_date_token_stream,
-                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
-                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
-                    // match_field_initialization_sqlx_types_time_offset_date_time_token_stream
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                    match_field_initialization_sqlx_types_time_offset_date_time_token_stream
                 ) = {
                     let generate_match_field_initialization_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]|{
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
@@ -6343,51 +6343,44 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         generate_match_field_initialization_token_stream(&[
                             (&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream),
                             (&end_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_time_date_as_postgresql_date_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_time_date_as_postgresql_date_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_decimal_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_decimal_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&start_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_postgresql_numeric_token_stream),
+                            (&end_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_postgresql_numeric_token_stream)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&"date", &quote::quote!{}),
+                            (&"time", &quote::quote!{}),
+                            (&"offset", &quote::quote!{}),
                         ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
-                        // generate_match_field_initialization_token_stream(&[
-                        //     (&"", &quote::quote!{}),
-                        //     (&"", &quote::quote!{})
-                        // ])
                     )
                 };
                 (
@@ -6455,31 +6448,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         >(&mut __map)? {
                             match __key {
                                 #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                                // __Field::__field0 => {
-                                //     if _serde::__private::Option::is_some(&__field0) {
-                                //         return _serde::__private::Err(
-                                //             <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                //         );
-                                //     }
-                                //     __field0 = _serde::__private::Some(
-                                //         _serde::de::MapAccess::next_value::<
-                                //             std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                //         >(&mut __map)?,
-                                //     );
-                                // }
-                                // __Field::__field1 => {
-                                //     if _serde::__private::Option::is_some(&__field1) {
-                                //         return _serde::__private::Err(
-                                //             <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                //         );
-                                //     }
-                                //     __field1 = _serde::__private::Some(
-                                //         _serde::de::MapAccess::next_value::<
-                                //             std::collections::Bound<sqlx::types::chrono::NaiveDateTime>,
-                                //         >(&mut __map)?,
-                                //     );
-                                // }
-
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6507,30 +6475,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6558,34 +6503,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<
-                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                            >,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<
-                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-                                            >,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6613,34 +6531,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<
-                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                            >,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<
-                                                sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-                                            >,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6668,30 +6559,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6719,30 +6587,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<sqlx::types::chrono::NaiveDate>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6770,30 +6615,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6821,30 +6643,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<sqlx::types::Decimal>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<sqlx::types::Decimal>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6872,30 +6671,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("start"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("end"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
@@ -6923,42 +6699,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("date"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            sqlx::types::time::Date,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("time"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            sqlx::types::time::Time,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field2 => {
-                                    if _serde::__private::Option::is_some(&__field2) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("offset"),
-                                        );
-                                    }
-                                    __field2 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            sqlx::types::time::UtcOffset,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_types_time_offset_date_time_token_stream
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
