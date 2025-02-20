@@ -6393,6 +6393,53 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
+                let (
+                    match_field_initialization_sqlx_types_big_decimal_token_stream,
+                    match_field_initialization_sqlx_types_time_date_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                    match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                    match_field_initialization_sqlx_types_time_offset_date_time_token_stream
+                ) = {
+                    let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                        let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
+                            let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
+                            //todo reuse
+                            let field_index_name_token_stream = format!("__{}{index}", naming::FieldSnakeCase)
+                                .parse::<proc_macro2::TokenStream>()
+                                .unwrap();
+                            quote::quote!{
+                                let #field_index_name_token_stream = match #field_index_name_token_stream {
+                                    serde::__private::Some(#field_index_name_token_stream) => #field_index_name_token_stream,
+                                    serde::__private::None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
+                                };
+                            }
+                        });
+                        quote::quote!{#(#fields_initialization_token_stream)*}
+                    };
+                    let start_end_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
+                    (
+                        generate_match_field_initialization_token_stream(&[&"digits", &"scale"]),
+                        generate_match_field_initialization_token_stream(&[&"year", &"month", &"day"]),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&start_end_array),
+                        generate_match_field_initialization_token_stream(&[&"date",&"time",&"offset"])
+                    )
+                };
+
                 (
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_types_big_decimal_token_stream
