@@ -6220,6 +6220,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     quote::quote!{#(#fields_initialization_token_stream)*}
                 };
+                let generate_std_collections_bound_token_stream = |type_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{std::collections::Bound<#type_token_stream>}
+                };
                 let field_option_none_initialization_sqlx_types_big_decimal_token_stream = generate_field_option_none_initialization_token_stream(&[
                     &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt},
                     &token_patterns::StdPrimitiveI64,
@@ -6230,63 +6233,63 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &token_patterns::StdPrimitiveU8,
                 ]);
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<sqlx::types::chrono::NaiveDateTime>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDateTime});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<sqlx::types::chrono::NaiveDate>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDate});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<SqlxTypesTimeDateAsPostgresqlDate>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeDateAsPostgresqlDate});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<sqlx::types::Decimal>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::Decimal});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
                     ])
                 };
                 let field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = {
-                    let value = quote::quote!{std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>};
+                    let value = generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumeric});
                     generate_field_option_none_initialization_token_stream(&[
                         &value,
                         &value,
