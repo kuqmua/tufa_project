@@ -5678,7 +5678,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
-            let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#postgresql_type(#content_token_stream))}};
+            let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#content_token_stream)}};
+            let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{generate_serde_private_ok_token_stream(&quote::quote!{#postgresql_type(#content_token_stream)})};
 
             let (
                 fn_visit_newtype_struct_pg_money_token_stream,
@@ -6440,22 +6441,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
-                let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = quote::quote!{serde::__private::Ok(#postgresql_type(sqlx::types::BigDecimal::new(__field0.0, __field1)))};
+                let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::types::BigDecimal::new(__field0.0, __field1)});
                 let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote!{
                     match #postgresql_type::try_new(__field0, __field1, __field2) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                     }
                 };
-                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{_serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))};
-                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = quote::quote!{_serde::__private::Ok(#postgresql_type(#sqlx_postgres_types_pg_range_bound_start_end_token_stream))};
-                let serde_private_ok_postgresql_type_date_time_offset_token_stream = quote::quote!{
-                    _serde::__private::Ok(#postgresql_type {
+                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
+                let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
+                let serde_private_ok_postgresql_type_date_time_offset_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{
+                    #postgresql_type {
                         date: __field0,
                         time: __field1,
                         offset: __field2,
-                    })
-                };
+                    }
+                });
 
                 (
                     generate_fn_visit_map_token_stream(&quote::quote!{
