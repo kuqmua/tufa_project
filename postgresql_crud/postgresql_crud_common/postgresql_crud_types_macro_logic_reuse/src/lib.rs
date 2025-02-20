@@ -6126,6 +6126,45 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let (
+                fn_visit_bytes_digits_scale_token_stream,
+                fn_visit_bytes_year_month_day_token_stream,
+                fn_visit_bytes_start_end_token_stream,
+                fn_visit_bytes_date_time_offset_token_stream
+            ) = {
+                let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                    let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
+                        //todo reuse
+                        let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element))
+                            .parse::<proc_macro2::TokenStream>()
+                            .unwrap();
+                        let field_index_name_token_stream = format!("__{}{index}", naming::FieldSnakeCase)
+                            .parse::<proc_macro2::TokenStream>()
+                            .unwrap();
+                        quote::quote!{
+                            #b_element_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_name_token_stream)
+                        }
+                    });
+                    quote::quote!{
+                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                        where
+                            __E: serde::de::Error,
+                        {
+                            match __value {
+                                #(#fields_token_stream),*,
+                                _ => serde::__private::Ok(__Field::__ignore),
+                            }
+                        }
+                    }
+                };
+                (
+                    generate_fn_visit_bytes_token_stream(&[&"digits", &"scale"]),
+                    generate_fn_visit_bytes_token_stream(&[&"year", &"month", &"day"]),
+                    generate_fn_visit_bytes_token_stream(&[&"start", &"end"]),
+                    generate_fn_visit_bytes_token_stream(&[&"date", &"time", &"offset"])
+                )
+            };
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
@@ -6148,16 +6187,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_digits_scale_token_stream
-                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: serde::de::Error,
-                        {
-                            match __value {
-                                b"digits" => serde::__private::Ok(__Field::__field0),
-                                b"scale" => serde::__private::Ok(__Field::__field1),
-                                _ => serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_digits_scale_token_stream
                     }
                     impl<'de> serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -6234,20 +6264,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_three_token_stream
                         #fn_visit_str_year_month_day_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"year" => _serde::__private::Ok(__Field::__field0),
-                                b"month" => _serde::__private::Ok(__Field::__field1),
-                                b"day" => _serde::__private::Ok(__Field::__field2),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_year_month_day_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -6570,19 +6587,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -6682,19 +6687,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -6794,19 +6787,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -6914,19 +6895,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7034,19 +7003,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7146,19 +7103,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7258,19 +7203,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7370,19 +7303,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7482,19 +7403,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
                         #fn_visit_str_start_end_token_stream
-                        fn visit_bytes<__E>(
-                            self,
-                            __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match __value {
-                                b"start" => _serde::__private::Ok(__Field::__field0),
-                                b"end" => _serde::__private::Ok(__Field::__field1),
-                                _ => _serde::__private::Ok(__Field::__ignore),
-                            }
-                        }
+                        #fn_visit_bytes_start_end_token_stream
                     }
                     impl<'de> _serde::Deserialize<'de> for __Field {
                         #[inline]
@@ -7594,20 +7503,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //             #fn_expecting_field_identifier_token_stream
             //             #fn_visit_u64_three_token_stream
             //             #fn_visit_str_date_time_offset_token_stream
-            //             fn visit_bytes<__E>(
-            //                 self,
-            //                 __value: &[u8],
-            //             ) -> _serde::__private::Result<Self::Value, __E>
-            //             where
-            //                 __E: _serde::de::Error,
-            //             {
-            //                 match __value {
-            //                     b"date" => _serde::__private::Ok(__Field::__field0),
-            //                     b"time" => _serde::__private::Ok(__Field::__field1),
-            //                     b"offset" => _serde::__private::Ok(__Field::__field2),
-            //                     _ => _serde::__private::Ok(__Field::__ignore),
-            //                 }
-            //             }
+            //             #fn_visit_bytes_date_time_offset_token_stream
             //         }
             //         impl<'de> _serde::Deserialize<'de> for __Field {
             //             #[inline]
