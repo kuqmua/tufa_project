@@ -6194,7 +6194,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                 fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
                 fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-
                 fn_visit_map_sqlx_types_time_offset_date_time_token_stream,
             ) = {
                 let generate_fn_visit_map_token_stream = |content_token_stream: &dyn quote::ToTokens|{
@@ -6300,23 +6299,106 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &quote::quote!{sqlx::types::time::Time},
                     &quote::quote!{sqlx::types::time::UtcOffset},
                 ]);
+
+                let (
+                    match_field_initialization_sqlx_types_big_decimal_token_stream,
+                    match_field_initialization_sqlx_types_time_date_token_stream
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                    // match_field_initialization_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                    // match_field_initialization_sqlx_types_time_offset_date_time_token_stream,
+                ) = {
+                    let generate_match_field_initialization_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]|{
+                        let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
+                            let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element.0);
+                            let field_type_token_stream = &element.1;
+                            //todo reuse
+                            let field_index_name_token_stream = format!("__{}{index}", naming::FieldSnakeCase)
+                                .parse::<proc_macro2::TokenStream>()
+                                .unwrap();
+                            quote::quote!{
+                                __Field::#field_index_name_token_stream => {
+                                    if serde::__private::Option::is_some(&#field_index_name_token_stream) {
+                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_double_quotes_token_stream));
+                                    }
+                                    #field_index_name_token_stream = serde::__private::Some(serde::de::MapAccess::next_value::<#field_type_token_stream>(&mut __map)?);
+                                }
+                            }
+                        });
+                        quote::quote!{#(#fields_initialization_token_stream)*}
+                    };
+                    (
+                        generate_match_field_initialization_token_stream(&[
+                            (&"digits", &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt}),
+                            (&"scale", &token_patterns::StdPrimitiveI64)
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            (&"year", &token_patterns::StdPrimitiveI32),
+                            (&"month", &quote::quote!{time::Month}),
+                            (&"day", &token_patterns::StdPrimitiveU8)
+                        ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                        // generate_match_field_initialization_token_stream(&[
+                        //     (&"", &quote::quote!{}),
+                        //     (&"", &quote::quote!{})
+                        // ])
+                    )
+                };
                 (
                     generate_fn_visit_map_token_stream(&quote::quote!{
                         #field_option_none_initialization_sqlx_types_big_decimal_token_stream
                         while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if serde::__private::Option::is_some(&__field0) {
-                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("digits"));
-                                    }
-                                    __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<crate::postgresql_type::postgresql_base_type::NumBigintBigInt>(&mut __map)?);
-                                }
-                                __Field::__field1 => {
-                                    if serde::__private::Option::is_some(&__field1) {
-                                        return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("scale"));
-                                    }
-                                    __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
-                                }
+                                #match_field_initialization_sqlx_types_big_decimal_token_stream
                                 _ => {
                                     let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                                 }
@@ -6338,42 +6420,43 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             __Field,
                         >(&mut __map)? {
                             match __key {
-                                __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("year"),
-                                        );
-                                    }
-                                    __field0 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::primitive::i32,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("month"),
-                                        );
-                                    }
-                                    __field1 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            time::Month,
-                                        >(&mut __map)?,
-                                    );
-                                }
-                                __Field::__field2 => {
-                                    if _serde::__private::Option::is_some(&__field2) {
-                                        return _serde::__private::Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field("day"),
-                                        );
-                                    }
-                                    __field2 = _serde::__private::Some(
-                                        _serde::de::MapAccess::next_value::<
-                                            std::primitive::u8,
-                                        >(&mut __map)?,
-                                    );
-                                }
+                                #match_field_initialization_sqlx_types_time_date_token_stream
+                                // __Field::__field0 => {
+                                //     if _serde::__private::Option::is_some(&__field0) {
+                                //         return _serde::__private::Err(
+                                //             <__A::Error as _serde::de::Error>::duplicate_field("year"),
+                                //         );
+                                //     }
+                                //     __field0 = _serde::__private::Some(
+                                //         _serde::de::MapAccess::next_value::<
+                                //             std::primitive::i32,
+                                //         >(&mut __map)?,
+                                //     );
+                                // }
+                                // __Field::__field1 => {
+                                //     if _serde::__private::Option::is_some(&__field1) {
+                                //         return _serde::__private::Err(
+                                //             <__A::Error as _serde::de::Error>::duplicate_field("month"),
+                                //         );
+                                //     }
+                                //     __field1 = _serde::__private::Some(
+                                //         _serde::de::MapAccess::next_value::<
+                                //             time::Month,
+                                //         >(&mut __map)?,
+                                //     );
+                                // }
+                                // __Field::__field2 => {
+                                //     if _serde::__private::Option::is_some(&__field2) {
+                                //         return _serde::__private::Err(
+                                //             <__A::Error as _serde::de::Error>::duplicate_field("day"),
+                                //         );
+                                //     }
+                                //     __field2 = _serde::__private::Some(
+                                //         _serde::de::MapAccess::next_value::<
+                                //             std::primitive::u8,
+                                //         >(&mut __map)?,
+                                //     );
+                                // }
                                 _ => {
                                     let _ = _serde::de::MapAccess::next_value::<
                                         _serde::de::IgnoredAny,
