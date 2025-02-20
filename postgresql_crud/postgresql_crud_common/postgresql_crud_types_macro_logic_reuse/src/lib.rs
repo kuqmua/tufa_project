@@ -5580,27 +5580,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
-                let fields_token_stream = {
-                    let number = parameter_number.get_std_primitive_u8();
-                    let value = (0..number).collect::<std::vec::Vec<std::primitive::u8>>();
-                    let fields_token_stream = value.iter().map(|element|{
-                        format!("__{}{element}", naming::FieldSnakeCase)
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap()
-                    });
-                    quote::quote!{#(#fields_token_stream),*}
-                };
-                quote::quote!{
-                    #[allow(non_camel_case_types)]
-                    #[doc(hidden)]
-                    enum __Field {
-                        #fields_token_stream,
-                        __ignore,
-                    }
-                }
-            };
-
             let serde_deserializer_deserialize_struct_token_stream = {
                 quote::quote!{
                     _serde::Deserializer::deserialize_struct(
@@ -5650,18 +5629,54 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let parameter_number_two = ParameterNumber::Two;
             let parameter_number_three = ParameterNumber::Three;
 
-            let enum_field_two_token_stream = generate_enum_field_token_stream(&parameter_number_two);
-            let enum_field_three_token_stream = generate_enum_field_token_stream(&parameter_number_three);
-
-            let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                    serde::__private::Formatter::write_str(__formatter, #content_token_stream)
-                }
+            let (
+                enum_field_two_token_stream,
+                enum_field_three_token_stream,
+            ) = {
+                let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
+                    let fields_token_stream = {
+                        let number = parameter_number.get_std_primitive_u8();
+                        let value = (0..number).collect::<std::vec::Vec<std::primitive::u8>>();
+                        let fields_token_stream = value.iter().map(|element|{
+                            format!("__{}{element}", naming::FieldSnakeCase)
+                            .parse::<proc_macro2::TokenStream>()
+                            .unwrap()
+                        });
+                        quote::quote!{#(#fields_token_stream),*}
+                    };
+                    quote::quote!{
+                        #[allow(non_camel_case_types)]
+                        #[doc(hidden)]
+                        enum __Field {
+                            #fields_token_stream,
+                            __ignore,
+                        }
+                    }
+                };
+                (
+                    generate_enum_field_token_stream(&parameter_number_two),
+                    generate_enum_field_token_stream(&parameter_number_three),
+                )
             };
-            let fn_expecting_struct_ident_double_quotes_token_stream = generate_fn_expecting_token_stream(&struct_ident_double_quotes_token_stream);
-            let fn_expecting_field_identifier_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"field identifier"});
-            let fn_expecting_months_or_days_or_microseconds_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`months` or `days` or `microseconds`"});
-            let fn_expecting_start_or_end_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`start` or `end`"});
+
+            let (
+                fn_expecting_struct_ident_double_quotes_token_stream,
+                fn_expecting_field_identifier_token_stream,
+                fn_expecting_months_or_days_or_microseconds_token_stream,
+                fn_expecting_start_or_end_token_stream,
+            ) = {
+                let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
+                    fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                        serde::__private::Formatter::write_str(__formatter, #content_token_stream)
+                    }
+                };
+                (
+                    generate_fn_expecting_token_stream(&struct_ident_double_quotes_token_stream),
+                    generate_fn_expecting_token_stream(&quote::quote!{"field identifier"}),
+                    generate_fn_expecting_token_stream(&quote::quote!{"`months` or `days` or `microseconds`"}),
+                    generate_fn_expecting_token_stream(&quote::quote!{"`start` or `end`"}),
+                )
+            };
 
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#postgresql_type(#content_token_stream))}};
 
