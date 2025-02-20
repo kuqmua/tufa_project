@@ -6165,6 +6165,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let impl_serde_deserialize_for_field_token_stream = quote::quote!{
+                impl<'de> _serde::Deserialize<'de> for __Field {
+                    #[inline]
+                    fn deserialize<__D>(
+                        __deserializer: __D,
+                    ) -> _serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: _serde::Deserializer<'de>,
+                    {
+                        _serde::Deserializer::deserialize_identifier(
+                            __deserializer,
+                            __FieldVisitor,
+                        )
+                    }
+                }
+            };
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
@@ -6189,15 +6206,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_digits_scale_token_stream
                         #fn_visit_bytes_digits_scale_token_stream
                     }
-                    impl<'de> serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: serde::Deserializer<'de>,
-                        {
-                            serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -6266,20 +6275,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_year_month_day_token_stream
                         #fn_visit_bytes_year_month_day_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -6589,20 +6585,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -6689,20 +6672,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -6789,20 +6759,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -6897,20 +6854,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7005,20 +6949,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7105,20 +7036,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7205,20 +7123,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7305,20 +7210,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7405,20 +7297,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_str_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
+                    #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #postgresql_type;
@@ -7505,20 +7384,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //             #fn_visit_str_date_time_offset_token_stream
             //             #fn_visit_bytes_date_time_offset_token_stream
             //         }
-            //         impl<'de> _serde::Deserialize<'de> for __Field {
-            //             #[inline]
-            //             fn deserialize<__D>(
-            //                 __deserializer: __D,
-            //             ) -> _serde::__private::Result<Self, __D::Error>
-            //             where
-            //                 __D: _serde::Deserializer<'de>,
-            //             {
-            //                 _serde::Deserializer::deserialize_identifier(
-            //                     __deserializer,
-            //                     __FieldVisitor,
-            //                 )
-            //             }
-            //         }
+            //         #impl_serde_deserialize_for_field_token_stream
             //         #struct_visitor_token_stream
             //         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
             //             type Value = #postgresql_type;
