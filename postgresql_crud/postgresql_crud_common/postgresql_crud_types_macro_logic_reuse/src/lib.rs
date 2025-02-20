@@ -5664,46 +5664,56 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_expecting_start_or_end_token_stream = generate_fn_expecting_token_stream(&quote::quote!{"`start` or `end`"});
 
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#postgresql_type(#content_token_stream))}};
-            let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(content_token_stream);
-                quote::quote!{
-                    #[inline]
-                    fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-                    where
-                        __E: serde::Deserializer<'de>,
-                    {
-                        let __field0 = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
-                        #serde_private_ok_postgresql_type_token_stream
+
+            let (
+                fn_visit_newtype_struct_pg_money_token_stream,
+                fn_visit_newtype_struct_uuid_token_stream,
+                fn_visit_newtype_struct_mac_address_token_stream,
+                fn_visit_newtype_struct_bit_vec_token_stream,
+            ) = {
+                let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                    let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(content_token_stream);
+                    quote::quote!{
+                        #[inline]
+                        fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                        where
+                            __E: serde::Deserializer<'de>,
+                        {
+                            let __field0 = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
+                            #serde_private_ok_postgresql_type_token_stream
+                        }
                     }
-                }
+                };
+                (
+                    generate_fn_visit_newtype_struct_token_stream(
+                        &token_patterns::StdPrimitiveI64,
+                        &quote::quote!{sqlx::postgres::types::PgMoney(__field0)}
+                    ),
+                    generate_fn_visit_newtype_struct_token_stream(
+                        &token_patterns::StdStringString,
+                        &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(serde::de::Error::custom(error));
+                            }
+                        }}
+                    ),
+                    generate_fn_visit_newtype_struct_token_stream(
+                        &quote::quote!{[std::primitive::u8; 6]},
+                        &quote::quote!{sqlx::types::mac_address::MacAddress::new(__field0)}
+                    ),
+                    generate_fn_visit_newtype_struct_token_stream(
+                        &quote::quote!{std::vec::Vec<std::primitive::bool>},
+                        &quote::quote!{{
+                            let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
+                            __field0.into_iter().enumerate().for_each(|(index, element)|{
+                                bit_vec.set(index, element);
+                            });
+                            bit_vec
+                        }}
+                    )
+                )
             };
-            let fn_visit_newtype_struct_pg_money_token_stream = generate_fn_visit_newtype_struct_token_stream(
-                &token_patterns::StdPrimitiveI64,
-                &quote::quote!{sqlx::postgres::types::PgMoney(__field0)}
-            );
-            let fn_visit_newtype_struct_uuid_token_stream = generate_fn_visit_newtype_struct_token_stream(
-                &token_patterns::StdStringString,
-                &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&__field0) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(error));
-                    }
-                }}
-            );
-            let fn_visit_newtype_struct_mac_address_token_stream = generate_fn_visit_newtype_struct_token_stream(
-                &quote::quote!{[std::primitive::u8; 6]},
-                &quote::quote!{sqlx::types::mac_address::MacAddress::new(__field0)}
-            );
-            let fn_visit_newtype_struct_bit_vec_token_stream = generate_fn_visit_newtype_struct_token_stream(
-                &quote::quote!{std::vec::Vec<std::primitive::bool>},
-                &quote::quote!{{
-                    let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                    __field0.into_iter().enumerate().for_each(|(index, element)|{
-                        bit_vec.set(index, element);
-                    });
-                    bit_vec
-                }}
-            );
 
             let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
@@ -5739,39 +5749,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 });
                 quote::quote!{#(#fields_initialization_token_stream)*}
-            };
-            let generate_field0_serde_de_seq_access_next_element_token_stream = |
-                parameter_number_for_field_index_name: &ParameterNumber,
-                parameter_number_for_error_message: &ParameterNumber,
-                type_token_stream: &dyn quote::ToTokens,
-            |{
-                let field_index_name_token_stream = {
-                    let index: std::primitive::u8 = parameter_number_for_field_index_name.get_index();
-                    //todo reuse
-                    format!("__{}{index}", naming::FieldSnakeCase)
-                    .parse::<proc_macro2::TokenStream>()
-                    .unwrap()
-                };
-                let index_usize_token_stream = {
-                    let index: std::primitive::u8 = parameter_number_for_field_index_name.get_index();
-                    //todo reuse
-                    format!("{index}usize")
-                    .parse::<proc_macro2::TokenStream>()
-                    .unwrap()
-                };
-                let struct_ident_with_number_of_elements_double_quotes_token_stream: &dyn quote::ToTokens = match &parameter_number_for_error_message {
-                    ParameterNumber::One => &struct_ident_with_one_element_double_quotes_token_stream,
-                    ParameterNumber::Two => &struct_ident_with_two_elements_double_quotes_token_stream,
-                    ParameterNumber::Three => &struct_ident_with_three_elements_double_quotes_token_stream,
-                };
-                quote::quote!{
-                    let #field_index_name_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
-                        serde::__private::Some(__value) => __value,
-                        serde::__private::None => {
-                            return serde::__private::Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#struct_ident_with_number_of_elements_double_quotes_token_stream));
-                        }
-                    };
-                }
             };
 
             let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
