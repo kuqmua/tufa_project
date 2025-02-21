@@ -6750,6 +6750,24 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let (
+                field_months_days_microseconds_token_stream,
+                field_start_end_token_stream,
+            ) = {
+                let generate_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
+                    let variants_token_stream = vec_token_stream.iter().map(|element| naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element));
+                    quote::quote!{
+                        enum Field {
+                            #(#variants_token_stream),*
+                        }
+                    }
+                };
+                (
+                    generate_field_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_field_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array)
+                )
+            };
+
+            let (
                 const_fields_sqlx_types_big_decimal_token_stream,
                 const_fields_sqlx_types_time_date_token_stream,
                 const_fields_sqlx_postgres_types_pg_interval_token_stream,
@@ -6835,11 +6853,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
-                    enum Field {
-                        Months,
-                        Days,
-                        Microseconds,
-                    }
+                    #field_months_days_microseconds_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
                         fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
                         where
@@ -6867,10 +6881,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
-                    enum Field {
-                        Start,
-                        End,
-                    }
+                    #field_start_end_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
                         fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
                         where
@@ -6898,10 +6909,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
-                    enum Field {
-                        Start,
-                        End,
-                    }
+                    #field_start_end_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
                         fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
                         where
