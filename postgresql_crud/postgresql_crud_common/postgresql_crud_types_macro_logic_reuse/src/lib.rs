@@ -6538,6 +6538,154 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let (
+                fn_visit_map_sqlx_postgres_types_pg_interval_token_stream,
+                fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+            ) = {
+                let generate_fn_visit_map_token_stream = |
+                    field_option_none_initialization_token_stream: &dyn quote::ToTokens,
+                    while_some_next_key_field_token_stream: &dyn quote::ToTokens,
+                    match_field_initialization_token_stream: &dyn quote::ToTokens,
+                    serde_private_ok_token_stream: &dyn quote::ToTokens,
+                |{
+                    let serde_private_ok_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&serde_private_ok_token_stream);
+                    quote::quote!{
+                        #[inline]
+                        fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
+                        where
+                            V: serde::de::MapAccess<'de>,
+                        {
+                            #field_option_none_initialization_token_stream
+                            #while_some_next_key_field_token_stream
+                            #match_field_initialization_token_stream
+                            #serde_private_ok_token_stream
+                        }
+                    }
+                };
+                
+                let months_snake_case = naming::MonthsSnakeCase;
+                let days_snake_case = naming::DaysSnakeCase;
+                let microseconds_snake_case = naming::MicrosecondsSnakeCase;
+
+                let (
+                    field_option_none_initialization_months_days_microseconds_token_stream,
+                    field_option_none_initialization_start_end_token_stream
+                ) = {
+                    let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]|{
+                        let fields_initialization_token_stream = vec_token_stream.iter().map(|element|{
+                            quote::quote!{
+                                let mut #element = None;
+                            }
+                        });
+                        quote::quote!{#(#fields_initialization_token_stream)*}
+                    };
+                    (
+                        generate_field_option_none_initialization_token_stream(&[
+                            &months_snake_case,
+                            &days_snake_case,
+                            &microseconds_snake_case,
+                        ]),
+                        generate_field_option_none_initialization_token_stream(&[
+                            &start_snake_case,
+                            &end_snake_case,
+                        ])
+                    )
+                };
+
+                let (
+                    while_some_next_key_field_months_days_microseconds_token_stream,
+                    while_some_next_key_field_start_end_token_stream,
+                ) = {
+                    let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn naming::StdFmtDisplayPlusQuoteToTokens)]|{
+                        let fields_initialization_token_stream = vec_token_stream.iter().map(|element|{
+                            let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+                            let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element);
+                            quote::quote!{
+                                Field::#element_upper_camel_case_token_stream => {
+                                    if #element.is_some() {
+                                        return Err(serde::de::Error::duplicate_field(#field_name_double_quotes_token_stream));
+                                    }
+                                    #element = Some(map.next_value()?);
+                                }
+                            }
+                        });
+                        quote::quote!{
+                            while let Some(key) = map.next_key()? {
+                                match key {
+                                    #(#fields_initialization_token_stream)*
+                                }
+                            }
+                        }
+                    };
+                    (
+                        generate_while_some_next_key_field_token_stream(&[
+                            &months_snake_case,
+                            &days_snake_case,
+                            &microseconds_snake_case,
+                        ]),
+                        generate_while_some_next_key_field_token_stream(&[
+                            &start_snake_case,
+                            &end_snake_case,
+                        ]),
+                    )
+                };
+
+                let (
+                    match_field_initialization_months_days_microseconds_token_stream,
+                    match_field_initialization_start_end_token_stream,
+                ) = {
+                    let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
+                        let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
+                            //todo reuse
+                            let field_index_name_token_stream = format!("__{}{index}", naming::FieldSnakeCase)
+                                .parse::<proc_macro2::TokenStream>()
+                                .unwrap();
+                            let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
+                            quote::quote!{
+                                let #field_index_name_token_stream = #element.ok_or_else(|| serde::de::Error::missing_field(#field_name_double_quotes_token_stream))?;
+                            }
+                        });
+                        quote::quote!{#(#fields_initialization_token_stream)*}
+                    };
+                    (
+                        generate_match_field_initialization_token_stream(&[
+                            &months_snake_case,
+                            &days_snake_case,
+                            &microseconds_snake_case,
+                        ]),
+                        generate_match_field_initialization_token_stream(&[
+                            &start_snake_case,
+                            &end_snake_case,
+                        ]),
+                    )
+                };
+                (
+                    generate_fn_visit_map_token_stream(
+                        &field_option_none_initialization_months_days_microseconds_token_stream,
+                        &while_some_next_key_field_months_days_microseconds_token_stream,
+                        &match_field_initialization_months_days_microseconds_token_stream,
+                        &quote::quote!{sqlx::postgres::types::PgInterval {
+                            #months_snake_case: __field0,
+                            #days_snake_case: __field1,
+                            #microseconds_snake_case: __field2,
+                        }},
+                    ),
+                    generate_fn_visit_map_token_stream(
+                        &field_option_none_initialization_start_end_token_stream,
+                        &while_some_next_key_field_start_end_token_stream,
+                        &match_field_initialization_start_end_token_stream,
+                        &sqlx_postgres_types_pg_range_start_end_token_stream,
+                    ),
+                    generate_fn_visit_map_token_stream(
+                        &field_option_none_initialization_start_end_token_stream,
+                        &while_some_next_key_field_start_end_token_stream,
+                        &match_field_initialization_start_end_token_stream,
+                        &sqlx_postgres_types_pg_range_start_end_token_stream,
+                    ),
+                )
+            };
+
+            let (
                 const_fields_sqlx_types_big_decimal_token_stream,
                 const_fields_sqlx_types_time_date_token_stream,
                 const_fields_sqlx_postgres_types_pg_interval_token_stream,
@@ -6658,40 +6806,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream
-                        fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
-                        where
-                            V: serde::de::MapAccess<'de>,
-                        {
-                            let mut months = None;
-                            let mut days = None;
-                            let mut microseconds = None;
-                            while let Some(key) = map.next_key()? {
-                                match key {
-                                    Field::Months => {
-                                        if months.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("months"));
-                                        }
-                                        months = Some(map.next_value()?);
-                                    }
-                                    Field::Days => {
-                                        if days.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("days"));
-                                        }
-                                        days = Some(map.next_value()?);
-                                    }
-                                    Field::Microseconds => {
-                                        if microseconds.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("microseconds"));
-                                        }
-                                        microseconds = Some(map.next_value()?);
-                                    }
-                                }
-                            }
-                            let months = months.ok_or_else(|| serde::de::Error::missing_field("months"))?;
-                            let days = days.ok_or_else(|| serde::de::Error::missing_field("days"))?;
-                            let microseconds = microseconds.ok_or_else(|| serde::de::Error::missing_field("microseconds"))?;
-                            Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
-                        }
+                        #fn_visit_map_sqlx_postgres_types_pg_interval_token_stream
                     }
                     #const_fields_sqlx_postgres_types_pg_interval_token_stream
                     #serde_deserializer_deserialize_struct_ident_visitor_token_stream
@@ -6731,32 +6846,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
-                        fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
-                        where
-                            V: serde::de::MapAccess<'de>,
-                        {
-                            let mut start = None;
-                            let mut end = None;
-                            while let Some(key) = map.next_key()? {
-                                match key {
-                                    Field::Start => {
-                                        if start.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("start"));
-                                        }
-                                        start = Some(map.next_value()?);
-                                    }
-                                    Field::End => {
-                                        if end.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("end"));
-                                        }
-                                        end = Some(map.next_value()?);
-                                    }
-                                }
-                            }
-                            let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
-                            let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                            Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
-                        }
+                        #fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
                     }
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_ident_visitor_token_stream
@@ -6796,32 +6886,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
-                        fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
-                        where
-                            V: serde::de::MapAccess<'de>,
-                        {
-                            let mut start = None;
-                            let mut end = None;
-                            while let Some(key) = map.next_key()? {
-                                match key {
-                                    Field::Start => {
-                                        if start.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("start"));
-                                        }
-                                        start = Some(map.next_value()?);
-                                    }
-                                    Field::End => {
-                                        if end.is_some() {
-                                            return Err(serde::de::Error::duplicate_field("end"));
-                                        }
-                                        end = Some(map.next_value()?);
-                                    }
-                                }
-                            }
-                            let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("start"))?;
-                            let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("end"))?;
-                            Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
-                        }
+                        #fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
                     }
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_ident_visitor_token_stream
