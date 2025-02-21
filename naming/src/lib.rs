@@ -541,7 +541,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["day"],
     ["months"],
     ["days"],
-    ["microseconds"]
+    ["microseconds"],
+    ["date"],
+    ["time"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
