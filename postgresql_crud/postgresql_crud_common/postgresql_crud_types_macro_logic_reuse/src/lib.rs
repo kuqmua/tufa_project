@@ -5593,19 +5593,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            //no trait upcasting yet, so its a duplicate
-            let digits_scale_std_fmt_display_array: [&dyn std::fmt::Display; 2] = [&digits_snake_case, &scale_snake_case];
-            let year_month_day_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
-            let start_end_std_fmt_display_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
-            let date_time_offset_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&date_snake_case, &time_snake_case, &offset_snake_case];
-            let months_days_microseconds_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
-
-            let digits_scale_quote_to_tokens_array: [&dyn quote::ToTokens; 2] = [&digits_snake_case, &scale_snake_case];
-            let year_month_day_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
-            let start_end_quote_to_tokens_array: [&dyn quote::ToTokens; 2] = [&start_snake_case, &end_snake_case];
-            let date_time_offset_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&date_snake_case, &time_snake_case, &offset_snake_case];
-            let months_days_microseconds_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
-
             let digits_scale_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&digits_snake_case, &scale_snake_case];
             let year_month_day_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
             let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
@@ -6136,7 +6123,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 fn_visit_str_start_end_token_stream,
                 fn_visit_str_date_time_offset_token_stream
             ) = {
-                let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                     let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                         //todo reuse
                         let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
@@ -6163,10 +6150,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 (
-                    generate_fn_visit_str_token_stream(&digits_scale_std_fmt_display_array),
-                    generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_array),
-                    generate_fn_visit_str_token_stream(&start_end_std_fmt_display_array),
-                    generate_fn_visit_str_token_stream(&date_time_offset_std_fmt_display_array)
+                    generate_fn_visit_str_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_str_token_stream(&date_time_offset_std_fmt_display_plus_quote_to_tokens_array)
                 )
             };
 
@@ -6176,7 +6163,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 fn_visit_bytes_start_end_token_stream,
                 fn_visit_bytes_date_time_offset_token_stream
             ) = {
-                let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                     let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                         //todo reuse
                         let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element))
@@ -6202,10 +6189,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 (
-                    generate_fn_visit_bytes_token_stream(&digits_scale_std_fmt_display_array),
-                    generate_fn_visit_bytes_token_stream(&year_month_day_std_fmt_display_array),
-                    generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_array),
-                    generate_fn_visit_bytes_token_stream(&date_time_offset_std_fmt_display_array)
+                    generate_fn_visit_bytes_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_bytes_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_bytes_token_stream(&date_time_offset_std_fmt_display_plus_quote_to_tokens_array)
                 )
             };
 
@@ -6469,7 +6456,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     match_field_initialization_start_end_token_stream,
                     match_field_initialization_sqlx_types_time_offset_date_time_token_stream
                 ) = {
-                    let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                    let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                             let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
                             //todo reuse
@@ -6486,10 +6473,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         quote::quote!{#(#fields_initialization_token_stream)*}
                     };
                     (
-                        generate_match_field_initialization_token_stream(&digits_scale_std_fmt_display_array),
-                        generate_match_field_initialization_token_stream(&year_month_day_std_fmt_display_array),
-                        generate_match_field_initialization_token_stream(&start_end_std_fmt_display_array),
-                        generate_match_field_initialization_token_stream(&date_time_offset_std_fmt_display_array)
+                        generate_match_field_initialization_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
+                        generate_match_field_initialization_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
+                        generate_match_field_initialization_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
+                        generate_match_field_initialization_token_stream(&date_time_offset_std_fmt_display_plus_quote_to_tokens_array)
                     )
                 };
 
@@ -6741,20 +6728,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 const_fields_start_end_token_stream,
                 const_fields_sqlx_types_time_offset_date_time_token_stream,
             ) = {
-                let generate_const_fields_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                     let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
                     quote::quote!{
                         #[doc(hidden)]
                         const FIELDS: &'static [&'static str] = &[#(#field_names_token_stream),*];
                     }
                 };
-                let start_end_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
                 (
-                    generate_const_fields_token_stream(&digits_scale_std_fmt_display_array),
-                    generate_const_fields_token_stream(&year_month_day_std_fmt_display_array),
-                    generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_array),
-                    generate_const_fields_token_stream(&start_end_array),
-                    generate_const_fields_token_stream(&date_time_offset_std_fmt_display_array)
+                    generate_const_fields_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_const_fields_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_const_fields_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_const_fields_token_stream(&date_time_offset_std_fmt_display_plus_quote_to_tokens_array)
                 )
             };
 
