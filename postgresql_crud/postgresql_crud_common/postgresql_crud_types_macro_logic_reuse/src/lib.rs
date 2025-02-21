@@ -6451,9 +6451,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             (&end_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_postgresql_numeric_token_stream)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
-                            (&date_snake_case, &quote::quote!{}),
-                            (&time_snake_case, &quote::quote!{}),
-                            (&offset_snake_case, &quote::quote!{}),
+                            (&date_snake_case, &quote::quote!{sqlx::types::time::Date}),
+                            (&time_snake_case, &quote::quote!{sqlx::types::time::Time}),
+                            (&offset_snake_case, &quote::quote!{sqlx::types::time::UtcOffset}),
                         ])
                     )
                 };
