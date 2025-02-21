@@ -6721,6 +6721,24 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            //
+            let generate__token_stream = ||{
+                quote::quote!{
+                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "months" => Ok(Field::Months),
+                            "days" => Ok(Field::Days),
+                            "microseconds" => Ok(Field::Microseconds),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+            };
+            //
+
             let (
                 const_fields_sqlx_types_big_decimal_token_stream,
                 const_fields_sqlx_types_time_date_token_stream,
