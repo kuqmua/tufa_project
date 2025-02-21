@@ -6118,10 +6118,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
             let (
-                fn_visit_str_digits_scale_token_stream,
-                fn_visit_str_year_month_day_token_stream,
-                fn_visit_str_start_end_token_stream,
-                fn_visit_str_date_time_offset_token_stream
+                fn_visit_str_value_digits_scale_token_stream,
+                fn_visit_str_value_year_month_day_token_stream,
+                fn_visit_str_value_start_end_token_stream,
+                fn_visit_str_value_date_time_offset_token_stream
             ) = {
                 let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                     let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
@@ -6154,6 +6154,34 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                     generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                     generate_fn_visit_str_token_stream(&date_time_offset_std_fmt_display_plus_quote_to_tokens_array)
+                )
+            };
+
+            let (
+                fn_visit_str_field_months_days_microseconds_token_stream,
+                fn_visit_str_field_start_end_token_stream
+            ) = {
+                let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
+                    let fields_token_stream = vec_token_stream.iter().map(|element| {
+                        let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+                        let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element);
+                        quote::quote!{#element_double_quotes_token_stream => Ok(Field::#element_upper_camel_case_token_stream)}
+                    });
+                    quote::quote!{
+                        fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                        where
+                            E: serde::de::Error,
+                        {
+                            match value {
+                                #(#fields_token_stream),*,
+                                _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            }
+                        }
+                    }
+                };
+                (
+                    generate_fn_visit_str_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                    generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array)
                 )
             };
 
@@ -6721,24 +6749,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
-            //
-            let generate__token_stream = ||{
-                quote::quote!{
-                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "months" => Ok(Field::Months),
-                            "days" => Ok(Field::Days),
-                            "microseconds" => Ok(Field::Microseconds),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-            };
-            //
-
             let (
                 const_fields_sqlx_types_big_decimal_token_stream,
                 const_fields_sqlx_types_time_date_token_stream,
@@ -6783,7 +6793,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_digits_scale_token_stream
+                        #fn_visit_str_value_digits_scale_token_stream
                         #fn_visit_bytes_digits_scale_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -6808,7 +6818,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_three_token_stream
-                        #fn_visit_str_year_month_day_token_stream
+                        #fn_visit_str_value_year_month_day_token_stream
                         #fn_visit_bytes_year_month_day_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -6839,17 +6849,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             impl serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_months_or_days_or_microseconds_token_stream
-                                fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                where
-                                    E: serde::de::Error,
-                                {
-                                    match value {
-                                        "months" => Ok(Field::Months),
-                                        "days" => Ok(Field::Days),
-                                        "microseconds" => Ok(Field::Microseconds),
-                                        _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                    }
-                                }
+                                #fn_visit_str_field_months_days_microseconds_token_stream
                             }
                             deserializer.deserialize_identifier(FieldVisitor)
                         }
@@ -6880,16 +6880,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             impl serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_start_or_end_token_stream
-                                fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                where
-                                    E: serde::de::Error,
-                                {
-                                    match value {
-                                        "start" => Ok(Field::Start),
-                                        "end" => Ok(Field::End),
-                                        _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                    }
-                                }
+                                #fn_visit_str_field_start_end_token_stream
                             }
                             deserializer.deserialize_identifier(FieldVisitor)
                         }
@@ -6920,16 +6911,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             impl serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_start_or_end_token_stream
-                                fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                where
-                                    E: serde::de::Error,
-                                {
-                                    match value {
-                                        "start" => Ok(Field::Start),
-                                        "end" => Ok(Field::End),
-                                        _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                    }
-                                }
+                                #fn_visit_str_field_start_end_token_stream
                             }
                             deserializer.deserialize_identifier(FieldVisitor)
                         }
@@ -6954,7 +6936,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -6978,7 +6960,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7002,7 +6984,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7026,7 +7008,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7050,7 +7032,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7074,7 +7056,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7098,7 +7080,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7122,7 +7104,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
@@ -7146,7 +7128,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
-                        #fn_visit_str_start_end_token_stream
+                        #fn_visit_str_value_start_end_token_stream
                         #fn_visit_bytes_start_end_token_stream
                     }
                     #impl_serde_deserialize_for_field_token_stream
