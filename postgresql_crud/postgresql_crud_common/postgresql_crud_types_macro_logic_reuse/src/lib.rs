@@ -6542,6 +6542,30 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let (
+                const_fields_sqlx_types_big_decimal_token_stream,
+                const_fields_sqlx_types_time_date_token_stream,
+                const_fields_sqlx_postgres_types_pg_interval_token_stream,
+                const_fields_start_end_token_stream,
+                const_fields_sqlx_types_time_offset_date_time_token_stream,
+            ) = {
+                let generate_const_fields_token_stream = |vec_token_stream: &[&dyn std::fmt::Display]|{
+                    let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
+                    quote::quote!{
+                        #[doc(hidden)]
+                        const FIELDS: &'static [&'static str] = &[#(#field_names_token_stream),*];
+                    }
+                };
+                let start_end_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
+                (
+                    generate_const_fields_token_stream(&[&"digits", &"scale"]),
+                    generate_const_fields_token_stream(&[&"year", &"month", &"day"]),
+                    generate_const_fields_token_stream(&[&"months", &"days", &"microseconds"]),
+                    generate_const_fields_token_stream(&start_end_array),
+                    generate_const_fields_token_stream(&[&"date",&"time",&"offset"])
+                )
+            };
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
@@ -6574,8 +6598,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_types_big_decimal_token_stream
                         #fn_visit_map_sqlx_types_big_decimal_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["digits", "scale"];
+                    #const_fields_sqlx_types_big_decimal_token_stream
                     serde::Deserializer::deserialize_struct(
                         __deserializer,
                         #ident_double_quotes_token_stream,
@@ -6608,8 +6631,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_types_time_date_token_stream
                         #fn_visit_map_sqlx_types_time_date_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["year", "month", "day"];
+                    #const_fields_sqlx_types_time_date_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6684,7 +6706,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             Ok(#postgresql_type(sqlx::postgres::types::PgInterval { months, days, microseconds }))
                         }
                     }
-                    const FIELDS: &[&str] = &["months", "days", "microseconds"];
+                    #const_fields_sqlx_postgres_types_pg_interval_token_stream
                     __deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                 }
             });
@@ -6749,7 +6771,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
-                    const FIELDS: &[&str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     __deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                 }
             });
@@ -6814,7 +6836,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             Ok(#postgresql_type(#sqlx_postgres_types_pg_range_start_end_token_stream))
                         }
                     }
-                    const FIELDS: &[&str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     __deserializer.deserialize_struct(#ident_double_quotes_token_stream, FIELDS, #ident_visitor_upper_camel_case)
                 }
             });
@@ -6838,8 +6860,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6863,8 +6884,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6888,8 +6908,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6913,8 +6932,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6938,8 +6956,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6963,8 +6980,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -6988,8 +7004,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -7013,8 +7028,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -7038,8 +7052,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                         #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                     }
-                    #[doc(hidden)]
-                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                    #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_token_stream
                 }
             });
@@ -7063,8 +7076,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //             #fn_visit_seq_sqlx_types_time_offset_date_time_token_stream
             //             #fn_visit_map_sqlx_types_time_offset_date_time_token_stream
             //         }
-            //         #[doc(hidden)]
-            //         const FIELDS: &'static [&'static str] = &["date", "time", "offset"];
+            //         #const_fields_sqlx_types_time_offset_date_time_token_stream
             //         #serde_deserializer_deserialize_struct_token_stream
             //     }
             // });
