@@ -6158,10 +6158,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 (
-                    generate_fn_visit_str_token_stream(&[&"digits", &"scale"]),
-                    generate_fn_visit_str_token_stream(&[&"year", &"month", &"day"]),
-                    generate_fn_visit_str_token_stream(&[&"start", &"end"]),
-                    generate_fn_visit_str_token_stream(&[&"date", &"time", &"offset"])
+                    generate_fn_visit_str_token_stream(&digits_scale_std_fmt_display_array),
+                    generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_array),
+                    generate_fn_visit_str_token_stream(&start_end_std_fmt_display_array),
+                    generate_fn_visit_str_token_stream(&date_time_offset_std_fmt_display_array)
                 )
             };
 
@@ -6197,10 +6197,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 (
-                    generate_fn_visit_bytes_token_stream(&[&"digits", &"scale"]),
-                    generate_fn_visit_bytes_token_stream(&[&"year", &"month", &"day"]),
-                    generate_fn_visit_bytes_token_stream(&[&"start", &"end"]),
-                    generate_fn_visit_bytes_token_stream(&[&"date", &"time", &"offset"])
+                    generate_fn_visit_bytes_token_stream(&digits_scale_std_fmt_display_array),
+                    generate_fn_visit_bytes_token_stream(&year_month_day_std_fmt_display_array),
+                    generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_array),
+                    generate_fn_visit_bytes_token_stream(&date_time_offset_std_fmt_display_array)
                 )
             };
 
@@ -6406,13 +6406,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     (
                         generate_while_some_next_key_field_token_stream(&[
-                            (&"digits", &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt}),
-                            (&"scale", &token_patterns::StdPrimitiveI64)
+                            (&digits_snake_case, &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt}),
+                            (&scale_snake_case, &token_patterns::StdPrimitiveI64)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
-                            (&"year", &token_patterns::StdPrimitiveI32),
-                            (&"month", &quote::quote!{time::Month}),
-                            (&"day", &token_patterns::StdPrimitiveU8)
+                            (&year_snake_case, &token_patterns::StdPrimitiveI32),
+                            (&month_snake_case, &quote::quote!{time::Month}),
+                            (&day_snake_case, &token_patterns::StdPrimitiveU8)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
                             (&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream),
@@ -6451,9 +6451,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             (&end_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_postgresql_numeric_token_stream)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
-                            (&"date", &quote::quote!{}),
-                            (&"time", &quote::quote!{}),
-                            (&"offset", &quote::quote!{}),
+                            (&date_snake_case, &quote::quote!{}),
+                            (&time_snake_case, &quote::quote!{}),
+                            (&offset_snake_case, &quote::quote!{}),
                         ])
                     )
                 };
