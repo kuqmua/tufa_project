@@ -4972,7 +4972,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let date_snake_case = naming::DateSnakeCase;
     let time_snake_case = naming::TimeSnakeCase;
     let offset_snake_case = naming::OffsetSnakeCase;
-    let scale_snake_case = naming::ScaleSnakeCase;
+    let months_snake_case = naming::MonthsSnakeCase;
+    let days_snake_case = naming::DaysSnakeCase;
+    let microseconds_snake_case = naming::MicrosecondsSnakeCase;
 
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
@@ -5596,16 +5598,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let year_month_day_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
             let start_end_std_fmt_display_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
             let date_time_offset_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&date_snake_case, &time_snake_case, &offset_snake_case];
+            let months_days_microseconds_std_fmt_display_array: [&dyn std::fmt::Display; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
 
             let digits_scale_quote_to_tokens_array: [&dyn quote::ToTokens; 2] = [&digits_snake_case, &scale_snake_case];
             let year_month_day_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
             let start_end_quote_to_tokens_array: [&dyn quote::ToTokens; 2] = [&start_snake_case, &end_snake_case];
             let date_time_offset_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&date_snake_case, &time_snake_case, &offset_snake_case];
+            let months_days_microseconds_quote_to_tokens_array: [&dyn quote::ToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
 
             let digits_scale_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&digits_snake_case, &scale_snake_case];
             let year_month_day_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
             let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
             let date_time_offset_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&date_snake_case, &time_snake_case, &offset_snake_case];
+            let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
 
             let (
                 serde_deserializer_deserialize_struct_visitor_token_stream,
@@ -6480,13 +6485,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         });
                         quote::quote!{#(#fields_initialization_token_stream)*}
                     };
-                    let start_end_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
-                    let digits_scale_array: [&dyn std::fmt::Display; 2] = [&"digits", &"scale"];
                     (
-                        generate_match_field_initialization_token_stream(&[&"digits", &"scale"]),
-                        generate_match_field_initialization_token_stream(&[&"year", &"month", &"day"]),
-                        generate_match_field_initialization_token_stream(&start_end_array),
-                        generate_match_field_initialization_token_stream(&[&"date",&"time",&"offset"])
+                        generate_match_field_initialization_token_stream(&digits_scale_std_fmt_display_array),
+                        generate_match_field_initialization_token_stream(&year_month_day_std_fmt_display_array),
+                        generate_match_field_initialization_token_stream(&start_end_std_fmt_display_array),
+                        generate_match_field_initialization_token_stream(&date_time_offset_std_fmt_display_array)
                     )
                 };
 
@@ -6747,11 +6750,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let start_end_array: [&dyn std::fmt::Display; 2] = [&start_snake_case, &end_snake_case];
                 (
-                    generate_const_fields_token_stream(&[&"digits", &"scale"]),
-                    generate_const_fields_token_stream(&[&"year", &"month", &"day"]),
-                    generate_const_fields_token_stream(&[&"months", &"days", &"microseconds"]),
+                    generate_const_fields_token_stream(&digits_scale_std_fmt_display_array),
+                    generate_const_fields_token_stream(&year_month_day_std_fmt_display_array),
+                    generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_array),
                     generate_const_fields_token_stream(&start_end_array),
-                    generate_const_fields_token_stream(&[&"date",&"time",&"offset"])
+                    generate_const_fields_token_stream(&date_time_offset_std_fmt_display_array)
                 )
             };
 
