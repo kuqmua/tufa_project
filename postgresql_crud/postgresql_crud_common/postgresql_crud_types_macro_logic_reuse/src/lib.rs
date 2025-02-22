@@ -6224,6 +6224,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let serde_deserializer_deserialize_identifier_token_stream = quote::quote!{
+                _serde::Deserializer::deserialize_identifier(
+                    __deserializer,
+                    __FieldVisitor,
+                )
+            };
+
             let impl_serde_deserialize_for_field_token_stream = quote::quote!{
                 impl<'de> _serde::Deserialize<'de> for __Field {
                     #[inline]
@@ -6233,10 +6240,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     where
                         __D: _serde::Deserializer<'de>,
                     {
-                        _serde::Deserializer::deserialize_identifier(
-                            __deserializer,
-                            __FieldVisitor,
-                        )
+                        #serde_deserializer_deserialize_identifier_token_stream
                     }
                 }
             };
@@ -7009,12 +7013,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{
                     #field_months_days_microseconds_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
-                        fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                        fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
                         where
                             D: serde::Deserializer<'de>,
                         {
                             #impl_serde_de_visitor_for_field_visitor_token_stream_31609291_37e6_427f_8d04_d19e2af929f8
-                            deserializer.deserialize_identifier(__FieldVisitor)
+                            #serde_deserializer_deserialize_identifier_token_stream
                         }
                     }
                     #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
