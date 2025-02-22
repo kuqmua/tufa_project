@@ -6944,7 +6944,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             D: serde::Deserializer<'de>,
                         {
                             struct FieldVisitor;
-                            impl serde::de::Visitor<'_> for FieldVisitor {
+                            impl _serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_months_or_days_or_microseconds_token_stream
                                 #fn_visit_str_field_months_days_microseconds_token_stream
@@ -6972,7 +6972,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             D: serde::Deserializer<'de>,
                         {
                             struct FieldVisitor;
-                            impl serde::de::Visitor<'_> for FieldVisitor {
+                            impl _serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_start_or_end_token_stream
                                 #fn_visit_str_field_start_end_token_stream
@@ -7000,7 +7000,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             D: serde::Deserializer<'de>,
                         {
                             struct FieldVisitor;
-                            impl serde::de::Visitor<'_> for FieldVisitor {
+                            impl _serde::de::Visitor<'_> for FieldVisitor {
                                 type Value = Field;
                                 #fn_expecting_start_or_end_token_stream
                                 #fn_visit_str_field_start_end_token_stream
@@ -7009,7 +7009,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                     struct #ident_visitor_upper_camel_case;
-                    impl<'de> serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                    impl<'de> _serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
                         type Value = #postgresql_type;
                         #fn_expecting_struct_ident_double_quotes_token_stream
                         #fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
