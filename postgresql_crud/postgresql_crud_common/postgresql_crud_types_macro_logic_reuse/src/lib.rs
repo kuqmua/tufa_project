@@ -6893,6 +6893,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let generate_impl_serde_de_visitor_for_tokens_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens,
+            |{
+                quote::quote!{
+                    impl<'de> _serde::de::Visitor<'de> for #ident_token_stream {
+                        #content_token_stream
+                    }
+                }
+            };
+
             let (
                 impl_serde_de_visitor_for_field_visitor_token_stream_8ae918a4_5464_4f56_8078_ab475f269079,
                 impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
@@ -6901,12 +6912,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6,
             ) = {
                 let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                    let field_visitor_token_stream = quote::quote!{__FieldVisitor};
+                    let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
+                        &field_visitor_token_stream,
+                        &content_token_stream
+                    );
                     quote::quote!{
                         #[doc(hidden)]
-                        struct __FieldVisitor;
-                        impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                            #content_token_stream
-                        }
+                        struct #field_visitor_token_stream;
+                        #impl_serde_de_visitor_for_tokens_token_stream
                     }
                 };
                 (
@@ -6953,14 +6967,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     first_token_stream: &dyn quote::ToTokens,
                     second_token_stream: &dyn quote::ToTokens,
                 |{
-                    quote::quote!{
-                        struct #ident_visitor_upper_camel_case;
-                        impl<'de> _serde::de::Visitor<'de> for #ident_visitor_upper_camel_case {
+                    let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
+                        &ident_visitor_upper_camel_case,
+                        &quote::quote!{
                             type Value = #postgresql_type;
                             #fn_expecting_struct_ident_double_quotes_token_stream
                             #first_token_stream
                             #second_token_stream
                         }
+                    );
+                    quote::quote!{
+                        struct #ident_visitor_upper_camel_case;
+                        #impl_serde_de_visitor_for_tokens_token_stream
                     }
                 };
                 (
