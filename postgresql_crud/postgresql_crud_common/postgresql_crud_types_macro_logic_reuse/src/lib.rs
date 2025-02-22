@@ -8883,7 +8883,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let value_snake_case = naming::ValueSnakeCase;
                 let field_type_struct_content_token_stream = quote::quote!{(#field_type_handle);};
                 let empty_struct_content_token_stream = quote::quote!{(());};
                 let postgresql_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_tokens(&ident_handle);
