@@ -7669,6 +7669,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 field_type: &field_type,
                 default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
             };
+            let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
             let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -7715,8 +7716,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_postgres_types_pg_money_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-        
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -7799,7 +7798,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_big_decimal_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -7920,7 +7918,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_time_date_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8129,7 +8126,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8186,7 +8182,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
                         &is_nullable,
-                        &WhereOperatorType::Ident(&postgresql_type),
+                        &where_operator_type_ident,
                     );
                     let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
                     let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8410,7 +8406,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_time_offset_date_time_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8469,7 +8464,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8506,7 +8500,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8547,7 +8540,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
                     &is_nullable,
-                    &WhereOperatorType::Ident(&postgresql_type),
+                    &where_operator_type_ident,
                 );
                 let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
                 let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -8598,7 +8591,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             });
             let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-                let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
                 let equal = crate::filters::Equal;
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -8650,7 +8642,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
                     &is_nullable,
-                    &WhereOperatorType::Ident(&postgresql_type),
+                    &where_operator_type_ident,
                 );
                 let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
                 let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
