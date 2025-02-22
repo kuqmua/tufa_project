@@ -6790,15 +6790,109 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let (
+                impl_serde_de_visitor_for_visitor_pg_money_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_types_big_decimal_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                impl_serde_de_visitor_for_visitor_sqlx_types_time_offset_date_time_token_stream,
+                impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream,
+                impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream,
+                impl_serde_de_visitor_for_visitor_bit_vec_token_stream,
+            ) = {
+                let generate_impl_serde_de_visitor_for_visitor_token_stream = |
+                    first_token_stream: &dyn quote::ToTokens,
+                    second_token_stream: &dyn quote::ToTokens,
+                |{
+                    quote::quote!{
+                        impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                            type Value = #postgresql_type;
+                            #fn_expecting_struct_ident_double_quotes_token_stream
+                            #first_token_stream
+                            #second_token_stream
+                        }
+                    }
+                };
+                (
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_newtype_struct_pg_money_token_stream,
+                        &fn_visit_seq_pg_money_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_types_big_decimal_token_stream,
+                        &fn_visit_map_sqlx_types_big_decimal_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_types_time_date_token_stream,
+                        &fn_visit_map_sqlx_types_time_date_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_seq_sqlx_types_time_offset_date_time_token_stream,
+                        &fn_visit_map_sqlx_types_time_offset_date_time_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_newtype_struct_uuid_token_stream,
+                        &fn_visit_seq_sqlx_types_uuid_uuid_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_newtype_struct_mac_address_token_stream,
+                        &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream
+                    ),
+                    generate_impl_serde_de_visitor_for_visitor_token_stream(
+                        &fn_visit_newtype_struct_bit_vec_token_stream,
+                        &fn_visit_seq_sqlx_types_bit_vec_token_stream
+                    ),
+                )
+            };
+
             let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
-                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_newtype_struct_pg_money_token_stream
-                        #fn_visit_seq_pg_money_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_pg_money_token_stream
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
             });
@@ -6807,7 +6901,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #enum_field_two_token_stream
                     #[doc(hidden)]
                     struct __FieldVisitor;
-                    impl serde::de::Visitor<'_> for __FieldVisitor {
+                    impl _serde::de::Visitor<'_> for __FieldVisitor {
                         type Value = __Field;
                         #fn_expecting_field_identifier_token_stream
                         #fn_visit_u64_two_token_stream
@@ -6816,12 +6910,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_types_big_decimal_token_stream
-                        #fn_visit_map_sqlx_types_big_decimal_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_types_big_decimal_token_stream
                     #const_fields_sqlx_types_big_decimal_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -6841,12 +6930,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_types_time_date_token_stream
-                        #fn_visit_map_sqlx_types_time_date_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
                     #const_fields_sqlx_types_time_date_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -6949,12 +7033,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -6973,12 +7052,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -6997,12 +7071,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7021,12 +7090,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7045,12 +7109,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7069,12 +7128,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7093,12 +7147,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7117,12 +7166,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7141,12 +7185,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                     #impl_serde_deserialize_for_field_token_stream
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
-                        #fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
@@ -7165,12 +7204,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         }
             //         #impl_serde_deserialize_for_field_token_stream
             //         #struct_visitor_token_stream
-            //         impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-            //             type Value = #postgresql_type;
-            //             #fn_expecting_struct_ident_double_quotes_token_stream
-            //             #fn_visit_seq_sqlx_types_time_offset_date_time_token_stream
-            //             #fn_visit_map_sqlx_types_time_offset_date_time_token_stream
-            //         }
+            //         #impl_serde_de_visitor_for_visitor_sqlx_types_time_offset_date_time_token_stream
             //         #const_fields_sqlx_types_time_offset_date_time_token_stream
             //         #serde_deserializer_deserialize_struct_visitor_token_stream
             //     }
@@ -7178,36 +7212,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
-                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_newtype_struct_uuid_token_stream
-                        #fn_visit_seq_sqlx_types_uuid_uuid_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
             });
             let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
-                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_newtype_struct_mac_address_token_stream
-                        #fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
             });
             let impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #struct_visitor_token_stream
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #postgresql_type;
-                        #fn_expecting_struct_ident_double_quotes_token_stream
-                        #fn_visit_newtype_struct_bit_vec_token_stream
-                        #fn_visit_seq_sqlx_types_bit_vec_token_stream
-                    }
+                    #impl_serde_de_visitor_for_visitor_bit_vec_token_stream
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
             });
