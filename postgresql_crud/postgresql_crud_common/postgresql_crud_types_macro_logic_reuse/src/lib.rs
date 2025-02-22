@@ -7030,12 +7030,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{
                     #field_start_end_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
-                        fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                        fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
                         where
                             D: serde::Deserializer<'de>,
                         {
                             #impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
-                            deserializer.deserialize_identifier(__FieldVisitor)
+                            #serde_deserializer_deserialize_identifier_token_stream
                         }
                     }
                     #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
@@ -7047,12 +7047,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{
                     #field_start_end_token_stream
                     impl<'de> serde::Deserialize<'de> for Field {
-                        fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+                        fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
                         where
                             D: serde::Deserializer<'de>,
                         {
                             #impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
-                            deserializer.deserialize_identifier(__FieldVisitor)
+                            #serde_deserializer_deserialize_identifier_token_stream
                         }
                     }
                     #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
