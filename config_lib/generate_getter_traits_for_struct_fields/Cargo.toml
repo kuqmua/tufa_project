@@ -1,5 +1,5 @@
 [package]
-edition = "2021"
+edition = "2024"
 name = "generate_getter_traits_for_struct_fields"
 version = "0.1.0"
 

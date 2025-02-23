@@ -1728,231 +1728,191 @@ fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::Der
         panic!("does work only on structs!");
     }
 }
-fn generate_postgresql_base_type_tokens(
-    input: proc_macro::TokenStream,
-    impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
-    let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-    let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-        &ident,
-        &quote::quote!{format!("{self:#?}")},
-    );
-    let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-        &ident,
-        &field_type
-    );
-    let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case,
-        &std_option_option_field_type_token_stream
-    );
-    let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-        &ident,
-        &field_type
-    );
-    let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case,
-        &quote::quote! {std::option::Option<#ident>}
-    );
-    let self_zero_token_stream = {
-        let self_snake_case = naming::SelfSnakeCase;
-        quote::quote!{#self_snake_case.0}
-    };
-    let query_snake_case = naming::QuerySnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let try_generate_bind_increments_token_stream = {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
-        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-        quote::quote! {
-            let mut #acc_snake_case = std::string::String::default();
-            match #increment_snake_case.checked_add(1) {
-                Some(#value_snake_case) => {
-                    *#increment_snake_case = #value_snake_case;
-                    #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                }
-                None => {
-                    return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-            }
-            Ok(#acc_snake_case)
-        }
-    };
-    let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-        &ident,
-        &try_generate_bind_increments_token_stream,
-        &quote::quote! {
-            #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
-            #query_snake_case
-        }
-    );
-    let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-        &std_option_option_ident_upper_camel_case,
-        &try_generate_bind_increments_token_stream,
-        &quote::quote! {
-            #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
-                Some(#value_snake_case) => Some(#value_snake_case.0),
-                None => None
-            });
-            #query_snake_case
-        }
-    );
-    let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
-        Visibility::PubCrate,
-        &std_option_option_ident_upper_camel_case,
-        &quote::quote!{(pub std::option::Option<#ident>);},
-        false,
-        true,
-    );
-    let (
-        impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream,
-        impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-    ) = {
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-            let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-            quote::quote! {crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case}
-        };
-        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-        (
-            generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                &ident,
-                &quote::quote!{Self(#impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream)},
-            ),
-            generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                &std_option_option_ident_upper_camel_case,
-                &quote::quote!{Self(
-                    Some(
-                        #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-                    )
-                )},
-            )
-        )
-    };
-    let (
-        impl_crate_create_table_query_part_for_ident_token_stream,
-        impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
-    ) = {
-        let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
-            ident_token_stream: &dyn quote::ToTokens,
-            is_not_null: std::primitive::bool,
-        |{
-            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                "{{{value_snake_case}}}{}",
-                if is_not_null {
-                    " not null"
-                }
-                else {
-                    ""
-                }
-            ));
-            quote::quote!{
-                impl #ident_token_stream {
-                    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-                        format!(#format_handle_token_stream)
-                    }
-                }
-            }
-        };
-        (
-            generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-                &ident,
-                true,
-            ),
-            generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-                &std_option_option_ident_upper_camel_case,
-                false,
-            )
-        )
-    };
-    let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-        let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
-        }
-    };
-    let impl_postgresql_base_type_for_ident_token_stream = {
-        let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
-        let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-        let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
-        quote::quote! {
-            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #ident {
-                type #postgresql_base_type_self_upper_camel_case = Self;
-                type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
-            }
-        }
-    };
-    let generated = quote::quote! {
-        #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
-        #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
-        #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
-        #impl_crate_bind_query_for_ident_token_stream
-        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
-        #impl_crate_create_table_query_part_for_ident_token_stream
+// fn generate_postgresql_base_type_tokens(
+//     input: proc_macro::TokenStream,
+//     impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream: &dyn quote::ToTokens,
+// ) -> proc_macro::TokenStream {
+//     panic_location::panic_location();
+//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+//     let ident = &syn_derive_input.ident;
+//     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
+//     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
+//     let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
+//     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+//     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+//     let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+//         &ident,
+//         &quote::quote!{format!("{self:#?}")},
+//     );
+//     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+//         &ident,
+//         &field_type
+//     );
+//     let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+//         &std_option_option_ident_upper_camel_case,
+//         &std_option_option_field_type_token_stream
+//     );
+//     let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+//         &ident,
+//         &field_type
+//     );
+//     let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+//         &std_option_option_ident_upper_camel_case,
+//         &quote::quote! {std::option::Option<#ident>}
+//     );
+//     let self_zero_token_stream = {
+//         let self_snake_case = naming::SelfSnakeCase;
+//         quote::quote!{#self_snake_case.0}
+//     };
+//     let query_snake_case = naming::QuerySnakeCase;
+//     let value_snake_case = naming::ValueSnakeCase;
+//     let try_generate_bind_increments_token_stream = {
+//         let increment_snake_case = naming::IncrementSnakeCase;
+//         let acc_snake_case = naming::AccSnakeCase;
+//         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+//         quote::quote! {
+//             let mut #acc_snake_case = std::string::String::default();
+//             match #increment_snake_case.checked_add(1) {
+//                 Some(#value_snake_case) => {
+//                     *#increment_snake_case = #value_snake_case;
+//                     #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+//                 }
+//                 None => {
+//                     return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     });
+//                 }
+//             }
+//             Ok(#acc_snake_case)
+//         }
+//     };
+//     let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+//         &ident,
+//         &try_generate_bind_increments_token_stream,
+//         &quote::quote! {
+//             #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
+//             #query_snake_case
+//         }
+//     );
+//     let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+//         &std_option_option_ident_upper_camel_case,
+//         &try_generate_bind_increments_token_stream,
+//         &quote::quote! {
+//             #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
+//                 Some(#value_snake_case) => Some(#value_snake_case.0),
+//                 None => None
+//             });
+//             #query_snake_case
+//         }
+//     );
+//     let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
+//         Visibility::PubCrate,
+//         &std_option_option_ident_upper_camel_case,
+//         &quote::quote!{(pub std::option::Option<#ident>);},
+//         false,
+//         true,
+//     );
+//     let (
+//         impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream,
+//         impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+//     ) = {
+//         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+//             let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+//             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+//             quote::quote! {crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case}
+//         };
+//         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+//         (
+//             generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+//                 &ident,
+//                 &quote::quote!{Self(#impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream)},
+//             ),
+//             generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+//                 &std_option_option_ident_upper_camel_case,
+//                 &quote::quote!{Self(
+//                     Some(
+//                         #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+//                     )
+//                 )},
+//             )
+//         )
+//     };
+//     let (
+//         impl_crate_create_table_query_part_for_ident_token_stream,
+//         impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
+//     ) = {
+//         let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
+//             ident_token_stream: &dyn quote::ToTokens,
+//             is_not_null: std::primitive::bool,
+//         |{
+//             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+//                 "{{{value_snake_case}}}{}",
+//                 if is_not_null {
+//                     " not null"
+//                 }
+//                 else {
+//                     ""
+//                 }
+//             ));
+//             quote::quote!{
+//                 impl #ident_token_stream {
+//                     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//                         format!(#format_handle_token_stream)
+//                     }
+//                 }
+//             }
+//         };
+//         (
+//             generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+//                 &ident,
+//                 true,
+//             ),
+//             generate_impl_crate_create_table_query_part_for_tokens_token_stream(
+//                 &std_option_option_ident_upper_camel_case,
+//                 false,
+//             )
+//         )
+//     };
+//     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
+//         let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
+//         quote::quote!{
+//             impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
+//         }
+//     };
+//     let impl_postgresql_base_type_for_ident_token_stream = {
+//         let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
+//         let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+//         let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
+//         quote::quote! {
+//             impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #ident {
+//                 type #postgresql_base_type_self_upper_camel_case = Self;
+//                 type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
+//             }
+//         }
+//     };
+//     let generated = quote::quote! {
+//         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
+//         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
+//         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
+//         #impl_crate_bind_query_for_ident_token_stream
+//         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
+//         #impl_crate_create_table_query_part_for_ident_token_stream
 
-        #pub_crate_struct_std_option_option_ident_token_stream
-        #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
-        #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
-        #impl_crate_bind_query_for_std_option_option_ident_token_stream
-        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-        #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
+//         #pub_crate_struct_std_option_option_ident_token_stream
+//         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
+//         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
+//         #impl_crate_bind_query_for_std_option_option_ident_token_stream
+//         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
+//         #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
-        #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-        #impl_postgresql_base_type_for_ident_token_stream
-    };
-    // if ident == "" {
-    //     println!("{generated}");
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokens)]
-pub fn postgresql_base_type_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypePrimaryKeyTokens)]
-pub fn postgresql_base_type_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&ident);
-    let impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream = quote::quote!{
-        impl sqlx::postgres::PgHasArrayType for #ident {
-            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
-            }
-        }
-    };
-    let impl_postgresql_crud_base_type_primary_key_for_ident_token_stream = {
-        let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
-        let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-        quote::quote! {
-            impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #ident {
-                type #postgresql_base_type_self_upper_camel_case = Self;
-            }
-        }
-    };
-    let generated = quote::quote! {
-        #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
-        #impl_sqlx_postgres_pg_has_array_type_for_ident_token_stream
-        #impl_postgresql_crud_base_type_primary_key_for_ident_token_stream
-    };
-    // if ident == "" {
-    //     println!("{generated}");
-    // }
-    generated.into()
-}
+//         #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
+//         #impl_postgresql_base_type_for_ident_token_stream
+//     };
+//     // if ident == "" {
+//     //     println!("{generated}");
+//     // }
+//     generated.into()
+// }
 fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -2525,18 +2485,6 @@ fn generate_postgresql_type_initialized_by_tokens(input: proc_macro::TokenStream
     generated
     // .into()
 }
-#[proc_macro_derive(PostgresqlTypeInitializedUsingUuidGenerateV4FunctionByPostgresqlTokens)]
-pub fn postgresql_type_initialized_using_uuid_generate_v4_function_by_postgresql_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_type_initialized_by_tokens(input, PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql).into()
-}
-#[proc_macro_derive(PostgresqlTypeInitializedUsingDefaultKeywordByPostgresqlTokens)]
-pub fn postgresql_type_initialized_using_default_keyword_by_postgresql_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_type_initialized_by_tokens(input, PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql).into()
-}
-#[proc_macro_derive(PostgresqlTypeInitializedByClientTokens)]
-pub fn postgresql_type_initialized_by_client_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_type_initialized_by_tokens(input, PostgresqlTypeInitializedByTokens::InitializedByClient).into()
-}
 
 enum IsPrimaryKey {
     True,
@@ -2571,223 +2519,7 @@ fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
         }
     }
 }
-#[proc_macro_derive(PostgresqlTypeCreateTableColumnQueryPartTokens)]
-pub fn postgresql_type_create_table_column_query_part_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let is_primary_key = IsPrimaryKey::False;
-    let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeNullableOrNotNull::Nullable,
-        &ident,
-        &field_type,
-        &is_primary_key,
-    );
-    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeNullableOrNotNull::NotNull,
-        &ident,
-        &field_type,
-        &is_primary_key,
-    );
-    let generated = quote::quote!{
-        #impl_crate_create_table_column_query_part_for_ident_nullable_token_stream
-        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
-    };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlTypeCreateTableColumnQueryPartTokens",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens)]
-pub fn postgresql_type_create_table_column_query_part_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let is_primary_key = IsPrimaryKey::True;
-    let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
-       &PostgresqlTypeNullableOrNotNull::NotNull,
-        &ident,
-        &field_type,
-        &is_primary_key,
-    );
-    let generated = quote::quote!{
-        #impl_crate_create_table_column_query_part_for_ident_not_null_token_stream
-    };
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlTypeCreateTableColumnQueryPartPrimaryKeyTokens",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlTypePrimaryKeyTokens)]
-pub fn postgresql_type_primary_key_tokens(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-    let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-    let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
 
-    let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
-    let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
-
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let self_snake_case = naming::SelfSnakeCase;
-    let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
-    let crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream = quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)};
-    let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
-
-    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-        let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-        quote::quote!{
-            crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
-        }
-    };
-    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-    let impl_std_fmt_display_for_tokens_self_zero_content_token_stream = quote::quote!{"{:?}", #self_dot_zero_token_stream};
-    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-        #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-    };
-    let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-        Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-    };
-    let field_type_struct_content_token_stream = quote::quote!{(#field_type);};
-    let postgresql_type_ident_not_null_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToCreateUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_not_null_to_create_token_stream = {
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_create_upper_camel_case,
-            &field_type
-        );
-        quote::quote! {
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_create_token_stream
-        }
-    };
-    let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_not_null_to_read_token_stream = {
-        let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_read_upper_camel_case,
-            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-        );
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_read_upper_camel_case,
-            &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-        );
-        quote::quote! {
-            #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_read_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_read_token_stream
-        }
-    };
-    let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_not_null_to_update_token_stream = {
-        let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_update_upper_camel_case,
-            &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-        );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_update_upper_camel_case,
-            &quote::quote!{format!("{self}")}
-        );
-        let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_ident_not_null_to_update_upper_camel_case);
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_update_upper_camel_case,
-            &field_type
-        );
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_update_upper_camel_case,
-            &field_type
-        );
-        quote::quote! {
-            #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_update_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_update_token_stream
-            #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_update_token_stream
-        }
-    };
-    let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&ident);
-    let postgresql_type_ident_not_null_to_delete_token_stream = {
-        let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-            Visibility::Pub,
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &field_type_struct_content_token_stream,
-            false,
-            true,
-        );
-        let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-            &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-        );
-        let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-        );
-        let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &quote::quote!{format!("{self}")}
-        );
-        let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &field_type
-        );
-        let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &field_type
-        );
-        let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-            &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-            &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-        );
-        quote::quote!{
-            #postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-            #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
-        }
-    };
-    let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
-        let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&ident);
-        quote::quote!{
-            impl crate::postgresql_type::postgresql_type_trait:: PostgresqlTypePrimaryKey<'_> for #ident_not_null {
-                type PostgresqlTypeSelfToCreate = #postgresql_type_ident_not_null_to_create_upper_camel_case;
-                type PostgresqlTypeSelfToRead = #postgresql_type_ident_not_null_to_read_upper_camel_case;
-                type PostgresqlTypeSelfToUpdate = #postgresql_type_ident_not_null_to_update_upper_camel_case;
-                type PostgresqlTypeSelfToDelete = #postgresql_type_ident_not_null_to_delete_upper_camel_case;
-            }
-        }
-    };
-    //todo some implementations only for primary key types. maybe write 2 traits: 1 for typical type and 1 for primary key
-    let generated = quote::quote! {
-        #postgresql_type_ident_not_null_to_create_token_stream
-
-        #postgresql_type_ident_not_null_to_read_token_stream
-
-        #postgresql_type_ident_not_null_to_update_token_stream
-
-        #postgresql_type_ident_not_null_to_delete_token_stream
-
-        #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
-    };
-    // if ident == "" {
-    //     println!("{generated}");
-    //     println!("----------------------");
-    // }
-    generated.into()
-}
 enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,
@@ -3227,397 +2959,6 @@ impl WhereOperatorType<'_> {
     }
 }
 
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementNumber)]
-pub fn postgresql_base_type_tokens_where_element_number(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let in_handle = crate::filters::In;
-        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &in_handle,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_in_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementNumber",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgMoney)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default)}
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_money(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::True,
-        );
-        let in_handle = crate::filters::In;
-        let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &in_handle,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_in_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgMoney",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesDecimal",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBigDecimal",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementBool)]
-pub fn postgresql_base_type_tokens_where_element_bool(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementBool",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdStringString)]
-pub fn postgresql_base_type_tokens_where_element_std_string_string(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &case_sensitive_regular_expression,
-                &case_insensitive_regular_expression,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementStdStringString",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensStdVecVecStdPrimitiveU8)]
-pub fn postgresql_base_type_tokens_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{vec![#core_default_default_default]}
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8)]
-pub fn postgresql_base_type_tokens_where_element_std_vec_vec_std_primitive_u8(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-            },
-        );
-        let length_more_than = crate::filters::LengthMoreThan;
-        let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        //commented just to migrate to new macro type (path wasnt the same to EncodeFormat)
-        // let equal_to_encoded_string_representation = crate::filters::EqualToEncodedStringRepresentation;
-        // let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        //     &ident,
-        //     &is_nullable,
-        // );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &length_more_than,
-                // &equal_to_encoded_string_representation,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_length_more_than_token_stream
-            // #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementStdVecVecStdPrimitiveU8",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
 fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{
@@ -3627,373 +2968,7 @@ fn sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwra
         ).unwrap()//todo 
     }
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream()
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_date = crate::filters::CurrentDate;
-        let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_date,
-                &greater_than_current_date,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_date_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeDate",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_date = crate::filters::CurrentDate;
-        let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_date = crate::filters::GreaterThanCurrentDate;
-        let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_date,
-                &greater_than_current_date,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_date_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDate",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_time = crate::filters::CurrentTime;
-        let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_time,
-                &greater_than_current_time,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_time_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::SqlxTypesTimeTimeMidnight,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::SqlxTypesTimeTimeMidnight,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_time = crate::filters::CurrentTime;
-        let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_time = crate::filters::GreaterThanCurrentTime;
-        let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_time,
-                &greater_than_current_time,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_time_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgInterval)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_interval(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            quote::quote!{sqlx::postgres::types::PgInterval {
-                months: #core_default_default_default,
-                days: #core_default_default_default,
-                microseconds: #core_default_default_default,
-            }}
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgInterval)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_interval(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartIsEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgInterval",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
+
 fn generate_sqlx_postgres_types_pg_range_token_steram(
     start_token_stream: &dyn quote::ToTokens,
     end_token_stream: &dyn quote::ToTokens,
@@ -4003,19 +2978,7 @@ fn generate_sqlx_postgres_types_pg_range_token_steram(
         end: std::ops::Bound::Excluded(#end_token_stream),
     }}
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeDefaultInitialization)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &core_default_default_default,
-                &core_default_default_default,
-            )
-        }
-    )
-}
+
 enum RangeType {
     I32,
     I64,
@@ -4238,27 +3201,6 @@ fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_ran
     // }
     generated.into()
 } 
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i32(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::I32,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI64)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_std_primitive_i64(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::I64,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-    )
-}
 fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
@@ -4268,688 +3210,12 @@ fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenS
         #sqlx_types_time_time_midnight,
     )}
 }
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_primitive_date_time_new_token_stream,
-                &sqlx_types_time_primitive_date_time_new_token_stream,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_offset_date_time_unix_epoch = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_offset_date_time_unix_epoch,
-                &sqlx_types_time_offset_date_time_unix_epoch,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &{
-            let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-            generate_sqlx_postgres_types_pg_range_token_steram(
-                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-            )
-        }
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesTimeDate)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeSqlxTypesBigDecimal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-        input,
-        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesChronoNaiveDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::CoreDefaultDefaultDefault
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_naive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_timestamp = crate::filters::CurrentTimestamp;
-        let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
-        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_timestamp,
-                &greater_than_current_timestamp,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_timestamp_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoNaiveDateTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &sqlx_types_time_primitive_date_time_new_token_stream()
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimePrimitiveDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_primitive_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
-        let where_operator_type_field_type = WhereOperatorType::FieldType {
-            field_type: &field_type,
-            default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
-        };
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_field_type,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let current_timestamp = crate::filters::CurrentTimestamp;
-        let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
-        let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &between,
-                &current_timestamp,
-                &greater_than_current_timestamp,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_current_timestamp_token_stream
-            #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimePrimitiveDateTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_time_offset_date_time(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let before = crate::filters::Before;
-        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        // todo
-        // -- Values after the current timestamp
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
-
-        // -- Values equal to the current date (ignoring time)
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column::date = CURRENT_DATE;
-        // 6. Time Zone Conversion
-        // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
-
-        // -- Compare with a specific timestamp in another time zone
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
-
-        // -- Values after a timestamp in a different time zone
-        // SELECT *
-        // FROM your_table
-        // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &before,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_before_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeOffsetDateTime",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoUtc)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let before = crate::filters::Before;
-        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &before,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_before_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoUtc",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let before = crate::filters::Before;
-        let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let between = crate::filters::Between;
-        let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-            &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-            &crate::filters::ShouldAddDotZero::False,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &before,
-                &between,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_before_token_stream
-            #postgresql_type_tokens_where_element_between_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesChronoDateTimeSqlxTypesChronoLocal",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_uuid_uuid(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::Ident(&ident),
-        );
-        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &case_sensitive_regular_expression,
-                &case_insensitive_regular_expression,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesUuidUuid",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
 fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
-}
-// #[proc_macro_derive(PostgresqlBaseTypeTokensStdNetIpAddr)]
-// pub fn postgresql_base_type_tokens_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     generate_postgresql_base_type_tokens(
-//         input,
-//         &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream()
-//     )
-// }
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementStdNetIpAddr)]
-pub fn postgresql_base_type_tokens_where_element_std_net_ip_addr(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream(),
-            },
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementStdNetIpAddr",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
 }
 fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesIpnetworkIpNetwork)]
-pub fn postgresql_base_type_tokens_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_ipnetwork_ip_network(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::FieldType {
-                field_type: &field_type,
-                default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
-            },
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesIpnetworkIpNetwork",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_mac_address_mac_address(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let where_operator_type_ident = WhereOperatorType::Ident(&ident);
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident,
-        );
-        let greater_than = crate::filters::GreaterThan;
-        let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &where_operator_type_ident
-        );
-        let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let case_insensitive_regular_expression = crate::filters::CaseInsensitiveRegularExpression;
-        let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &greater_than,
-                &case_sensitive_regular_expression,
-                &case_insensitive_regular_expression,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_greater_than_token_stream
-            #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesMacAddressMacAddress",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensSqlxTypesBitVec)]
-pub fn postgresql_base_type_tokens_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    generate_postgresql_base_type_tokens(
-        input,
-        &quote::quote!{{
-            let mut value = sqlx::types::BitVec::new();
-            value.push(false);
-            value
-        }}
-    )
-}
-#[proc_macro_derive(PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec)]
-pub fn postgresql_base_type_tokens_where_element_sqlx_types_bit_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::Ident(&ident),
-        );
-        let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
-        let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &vec![
-                &equal,
-                &bit_vec_position_equal,
-            ]
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesBitVec",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
 }
 
 #[proc_macro]

@@ -5,12 +5,12 @@ homepage = "https://graham.cool/schemars/"
 repository = "https://github.com/GREsau/schemars"
 version = "1.0.0-alpha.14"
 authors = ["Graham Esau <gesau@hotmail.co.uk>"]
-edition = "2021"
+edition = "2024"
 license = "MIT"
 readme = "README.md"
 keywords = ["rust", "json-schema", "serde"]
 categories = ["encoding", "no-std"]
-rust-version = "1.65"
+# rust-version = "1.65"
 
 [dependencies]
 schemars_derive = { version = "=1.0.0-alpha.14", optional = true, path = "../schemars_derive" }

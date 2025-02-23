@@ -1,6 +1,6 @@
 [package]
 authors = ["sergey shmakov <tyfaproject@gmail.com>"] 
-edition = "2021" #maybe cant compile but switch from 2018 to 2021
+edition = "2024" #maybe cant compile but switch from 2018 to 2021
 name = "server" 
 version = "0.1.0" 
 
