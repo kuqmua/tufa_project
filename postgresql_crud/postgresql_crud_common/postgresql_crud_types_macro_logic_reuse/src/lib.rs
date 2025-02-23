@@ -1728,191 +1728,6 @@ fn extract_first_syn_type_from_unnamed_struct<'a>(syn_derive_input: &'a syn::Der
         panic!("does work only on structs!");
     }
 }
-// fn generate_postgresql_base_type_tokens(
-//     input: proc_macro::TokenStream,
-//     impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream: &dyn quote::ToTokens,
-// ) -> proc_macro::TokenStream {
-//     panic_location::panic_location();
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-//     let ident = &syn_derive_input.ident;
-//     let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-//     let std_option_option_field_type_token_stream = quote::quote!{std::option::Option<#field_type>};
-//     let std_option_option_ident_upper_camel_case = naming::parameter::StdOptionOptionSelfUpperCamelCase::from_tokens(&ident);
-//     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-//     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-//     let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-//         &ident,
-//         &quote::quote!{format!("{self:#?}")},
-//     );
-//     let impl_sqlx_type_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-//         &ident,
-//         &field_type
-//     );
-//     let impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-//         &std_option_option_ident_upper_camel_case,
-//         &std_option_option_field_type_token_stream
-//     );
-//     let impl_sqlx_decode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-//         &ident,
-//         &field_type
-//     );
-//     let impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-//         &std_option_option_ident_upper_camel_case,
-//         &quote::quote! {std::option::Option<#ident>}
-//     );
-//     let self_zero_token_stream = {
-//         let self_snake_case = naming::SelfSnakeCase;
-//         quote::quote!{#self_snake_case.0}
-//     };
-//     let query_snake_case = naming::QuerySnakeCase;
-//     let value_snake_case = naming::ValueSnakeCase;
-//     let try_generate_bind_increments_token_stream = {
-//         let increment_snake_case = naming::IncrementSnakeCase;
-//         let acc_snake_case = naming::AccSnakeCase;
-//         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-//         quote::quote! {
-//             let mut #acc_snake_case = std::string::String::default();
-//             match #increment_snake_case.checked_add(1) {
-//                 Some(#value_snake_case) => {
-//                     *#increment_snake_case = #value_snake_case;
-//                     #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-//                 }
-//                 None => {
-//                     return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//             }
-//             Ok(#acc_snake_case)
-//         }
-//     };
-//     let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-//         &ident,
-//         &try_generate_bind_increments_token_stream,
-//         &quote::quote! {
-//             #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
-//             #query_snake_case
-//         }
-//     );
-//     let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-//         &std_option_option_ident_upper_camel_case,
-//         &try_generate_bind_increments_token_stream,
-//         &quote::quote! {
-//             #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
-//                 Some(#value_snake_case) => Some(#value_snake_case.0),
-//                 None => None
-//             });
-//             #query_snake_case
-//         }
-//     );
-//     let pub_crate_struct_std_option_option_ident_token_stream = generate_pub_struct_tokens_token_stream(
-//         Visibility::PubCrate,
-//         &std_option_option_ident_upper_camel_case,
-//         &quote::quote!{(pub std::option::Option<#ident>);},
-//         false,
-//         true,
-//     );
-//     let (
-//         impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream,
-//         impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-//     ) = {
-//         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-//             let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
-//             let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
-//             quote::quote! {crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case}
-//         };
-//         let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
-//         (
-//             generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-//                 &ident,
-//                 &quote::quote!{Self(#impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_token_stream)},
-//             ),
-//             generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-//                 &std_option_option_ident_upper_camel_case,
-//                 &quote::quote!{Self(
-//                     Some(
-//                         #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
-//                     )
-//                 )},
-//             )
-//         )
-//     };
-//     let (
-//         impl_crate_create_table_query_part_for_ident_token_stream,
-//         impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
-//     ) = {
-//         let generate_impl_crate_create_table_query_part_for_tokens_token_stream = |
-//             ident_token_stream: &dyn quote::ToTokens,
-//             is_not_null: std::primitive::bool,
-//         |{
-//             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-//                 "{{{value_snake_case}}}{}",
-//                 if is_not_null {
-//                     " not null"
-//                 }
-//                 else {
-//                     ""
-//                 }
-//             ));
-//             quote::quote!{
-//                 impl #ident_token_stream {
-//                     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-//                         format!(#format_handle_token_stream)
-//                     }
-//                 }
-//             }
-//         };
-//         (
-//             generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-//                 &ident,
-//                 true,
-//             ),
-//             generate_impl_crate_create_table_query_part_for_tokens_token_stream(
-//                 &std_option_option_ident_upper_camel_case,
-//                 false,
-//             )
-//         )
-//     };
-//     let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-//         let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
-//         quote::quote!{
-//             impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #ident {}
-//         }
-//     };
-//     let impl_postgresql_base_type_for_ident_token_stream = {
-//         let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
-//         let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-//         let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
-//         quote::quote! {
-//             impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #ident {
-//                 type #postgresql_base_type_self_upper_camel_case = Self;
-//                 type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
-//             }
-//         }
-//     };
-//     let generated = quote::quote! {
-//         #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
-//         #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
-//         #impl_sqlx_decode_sqlx_postgres_for_ident_token_stream
-//         #impl_crate_bind_query_for_ident_token_stream
-//         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
-//         #impl_crate_create_table_query_part_for_ident_token_stream
-
-//         #pub_crate_struct_std_option_option_ident_token_stream
-//         #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
-//         #impl_sqlx_decode_sqlx_postgres_for_std_option_option_ident_token_stream
-//         #impl_crate_bind_query_for_std_option_option_ident_token_stream
-//         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
-//         #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
-        
-//         #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-//         #impl_postgresql_base_type_for_ident_token_stream
-//     };
-//     // if ident == "" {
-//     //     println!("{generated}");
-//     // }
-//     generated.into()
-// }
 fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -5818,23 +5633,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 )
             };
-            let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-                let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
-                quote::quote!{
-                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
-                }
-            };
-            let impl_postgresql_base_type_for_ident_token_stream = {
-                let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
-                let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-                let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
-                quote::quote! {
-                    impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
-                        type #postgresql_base_type_self_upper_camel_case = Self;
-                        type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
-                    }
-                }
-            };
+            // let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
+            //     let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
+            //     quote::quote!{
+            //         impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
+            //     }
+            // };
+            // let impl_postgresql_base_type_for_ident_token_stream = {
+            //     let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
+            //     let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+            //     let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
+            //     quote::quote! {
+            //         impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
+            //             type #postgresql_base_type_self_upper_camel_case = Self;
+            //             type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
+            //         }
+            //     }
+            // };
             let generated = quote::quote! {
                 #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
@@ -5850,8 +5665,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
                 #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
-                #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-                #impl_postgresql_base_type_for_ident_token_stream
+                // #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
+                // #impl_postgresql_base_type_for_ident_token_stream
             };
             generated
         };
@@ -5867,19 +5682,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
-                    let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
-                    let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-                    quote::quote!{
-                        impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type{
-                            type #postgresql_base_type_self_upper_camel_case = Self;
-                        }
-                    }
-                };
+                // let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
+                //     let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
+                //     let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+                //     quote::quote!{
+                //         impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type{
+                //             type #postgresql_base_type_self_upper_camel_case = Self;
+                //         }
+                //     }
+                // };
                 quote::quote!{
                     #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
                     #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-                    #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+                    // #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
                 }
             };
             match &postgresql_type {
