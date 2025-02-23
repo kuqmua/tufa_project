@@ -437,8 +437,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         postgresql_json_type_self_field_reader: &Self::PostgresqlJsonTypeSelfFieldReader<'_>,
         field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_postgresql_type: std::primitive::bool,
+        _: &std::primitive::str,
+        _: std::primitive::bool,
     ) -> std::string::String {
         println!("fn generate_postgresql_json_type_to_read");
         //todo change
@@ -451,9 +451,9 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
     type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed;
     fn try_generate_postgresql_json_type_to_update(
-        postgresql_json_type_self_option_to_update: &Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
+        _: &Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
+        _: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed> {
