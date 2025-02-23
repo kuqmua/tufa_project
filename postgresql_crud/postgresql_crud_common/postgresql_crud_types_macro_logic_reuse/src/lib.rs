@@ -2706,17 +2706,6 @@ enum IsValueTypePub {
     True,
     False,
 }
-impl IsValueTypePub {
-    fn maybe_pub_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            Self::True => {
-                let value = naming::PubSnakeCase;
-                quote::quote!{#value}
-            },
-            Self::False => proc_macro2::TokenStream::new()
-        }
-    }
-}
 
 enum WhereOperatorType<'a> {
     Ident(&'a dyn quote::ToTokens),
@@ -2878,144 +2867,7 @@ enum ShouldImplRangeLength {
     True,
     False
 }
-fn generate_postgresql_base_type_tokens_where_element_sqlx_postgres_types_pg_range_tokens(
-    input: proc_macro::TokenStream,
-    range_type: RangeType,
-) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let field_type = extract_first_syn_type_from_unnamed_struct(&syn_derive_input);
-    let generated = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
-        let range_type_token_stream = range_type.type_token_stream();
-        let range_type_should_impl_range_length = range_type.should_impl_range_length();
-        let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
-        let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        };
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let equal = crate::filters::Equal;
-        let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &WhereOperatorType::Ident(&ident),
-        );
-        //commented just for path compatibility with new macro
-        // let value_is_contained_within_range = crate::filters::ValueIsContainedWithinRange;
-        // let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        //     &ident,
-        //     &is_nullable,
-        //     &range_type_token_stream,
-        //     &range_type_should_impl_range_length,
-        //     &range_type_default_initialization_token_stream,
-        //     &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-        // );
-        let contains_another_range = crate::filters::ContainsAnotherRange;
-        let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let strictly_to_left_of_range = crate::filters::StrictlyToLeftOfRange;
-        let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let strictly_to_right_of_range = crate::filters::StrictlyToRightOfRange;
-        let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let included_lower_bound = crate::filters::IncludedLowerBound;
-        let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &range_type_token_stream,
-            &range_type_default_initialization_token_stream,
-            &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-        );
-        let excluded_upper_bound = crate::filters::ExcludedUpperBound;
-        let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-            &range_type_token_stream,
-            &range_type_default_initialization_token_stream,
-            &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
-        );
-        let greater_than_lower_bound = crate::filters::GreaterThanLowerBound;
-        let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let overlap_with_range = crate::filters::OverlapWithRange;
-        let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        let adjacent_with_range = crate::filters::AdjacentWithRange;
-        let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-            &ident,
-            &is_nullable,
-        );
-        //todo find out maximum length of range(INT8RANGE, INT4RANGE) in postgresql
-        let range_length = crate::filters::RangeLength;
-        let maybe_postgresql_type_tokens_where_element_range_length_token_stream = match &range_type_should_impl_range_length {
-            ShouldImplRangeLength::True => range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                &ident,
-                &is_nullable,
-            ),
-            ShouldImplRangeLength::False => proc_macro2::TokenStream::new(), 
-        };
-        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_token_stream(
-            is_nullable,
-            &ident,
-            &{
-                let mut value: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
-                    &equal,
-                    // &value_is_contained_within_range,
-                    &contains_another_range,
-                    &strictly_to_left_of_range,
-                    &strictly_to_right_of_range,
-                    &included_lower_bound,
-                    &excluded_upper_bound,
-                    &greater_than_lower_bound,
-                    &overlap_with_range,
-                    &adjacent_with_range,
-                ];
-                if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
-                    value.push(&range_length);
-                }
-                value
-            }
-        );
-        quote::quote! {
-            #postgresql_type_tokens_where_element_equal_token_stream
-            // #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
-            #postgresql_type_tokens_where_element_contains_another_range_token_stream
-            #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
-            #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-            #postgresql_type_tokens_where_element_included_lower_bound_token_stream
-            #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
-            #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
-            #postgresql_type_tokens_where_element_overlap_with_range_token_stream
-            #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
-            #maybe_postgresql_type_tokens_where_element_range_length_token_stream
-            #postgresql_type_tokens_where_element_token_stream
-        }
-    });
-    // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "PostgresqlBaseTypeTokensWhereElementSqlxPostgresTypesPgRangeStdPrimitiveI32OrI64",
-    //         &generated,
-    //     );
-    // }
-    generated.into()
-} 
+
 fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
@@ -3025,9 +2877,9 @@ fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenS
         #sqlx_types_time_time_midnight,
     )}
 }
-fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
-}
+// fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
+//     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
+// }
 fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
     let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
     quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
