@@ -1116,7 +1116,6 @@ impl In {
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     ) -> proc_macro2::TokenStream {
-        let field_type = postgresql_json_type_variant.wrapper_field_type();
         let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
@@ -1429,11 +1428,7 @@ impl Before {
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let query_snake_case = naming::QuerySnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -1974,16 +1969,11 @@ impl ValueIsContainedWithinRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
-        range_type_should_impl_range_length: &crate::ShouldImplRangeLength,
         range_type_default_initialization_token_stream: &dyn quote::ToTokens,
         range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
@@ -3005,20 +2995,20 @@ impl WhereOperatorName for ContainedInArray {
         &naming::ContainedInArrayUpperCamelCase
     }
 }
-impl ContainedInArray {
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
-        postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
-    ) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
-            WhereOperatorName::upper_camel_case(self),
-            &postgresql_json_type_variant,
-            &postgresql_json_type_variant_array_element,
-            &quote::quote!{"{}({} <@ ${})"},
-        )
-    }
-}
+// impl ContainedInArray {
+//     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
+//         &self,
+//         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
+//         postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant,
+//     ) -> proc_macro2::TokenStream {
+//         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(
+//             WhereOperatorName::upper_camel_case(self),
+//             &postgresql_json_type_variant,
+//             &postgresql_json_type_variant_array_element,
+//             &quote::quote!{"{}({} <@ ${})"},
+//         )
+//     }
+// }
 
 pub struct OverlapsWithArray;
 impl WhereOperatorName for OverlapsWithArray {

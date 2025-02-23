@@ -416,7 +416,7 @@ pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdateTryGeneratePo
 impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
     type PostgresqlJsonTypeSelfToCreate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
     fn try_generate_postgresql_json_type_to_create(
-        postgresql_json_type_self_to_create: &Self::PostgresqlJsonTypeSelfToCreate<'_>,
+        _: &Self::PostgresqlJsonTypeSelfToCreate<'_>,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed> {
         match increment.checked_add(1) {

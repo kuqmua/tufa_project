@@ -550,7 +550,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     } else {
         panic!("does work only on structs!");
     };
-    let fields_without_primary_key_len = fields_without_primary_key.len();
+    // let fields_without_primary_key_len = fields_without_primary_key.len();
     let postgresql_type_primary_key_field_type_to_create_upper_camel_case = naming::parameter::PostgresqlTypeSelfToCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let postgresql_type_primary_key_field_type_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let postgresql_type_primary_key_field_type_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
@@ -604,7 +604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
     // let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
     // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
-    let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
+    // let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
     let primary_key_inner_type_token_stream = &primary_key_field.syn_field.ty;
     let postgresql_type_primary_key_field_type_to_update_token_stream = &naming::parameter::PostgresqlTypeSelfToUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     // fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
@@ -1629,17 +1629,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
     let increment_snake_case = naming::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
-    let where_snake_case_qoutes_token_stream = generate_quotes::double_quotes_token_stream(&where_snake_case);
     let and_snake_case = naming::AndSnakeCase;
     let order_by_snake_case = naming::OrderBySnakeCase;
-    let limit_snake_case = naming::LimitSnakeCase;
-    let offset_snake_case = naming::OffsetSnakeCase;
     let in_snake_case = naming::InSnakeCase;
-    let unnest_snake_case = naming::UnnestSnakeCase;
     let response_snake_case = naming::ResponseSnakeCase;
     let status_code_snake_case = naming::StatusCodeSnakeCase;
     let body_snake_case = naming::BodySnakeCase;
-    let limit_and_offset_type_token_stream = quote::quote!{postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlInt8NotNull};
     
     let std_vec_vec_primary_key_field_type_to_create_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_create_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_read_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_read_upper_camel_case>};
@@ -3104,10 +3099,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
-                // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
-                    let mut column_names = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                    let mut column_names = fields.iter().fold(std::string::String::default(), |mut acc, element| {
+                        // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                         acc.push_str(&format!("{}", &element.field_ident));
                         // if incremented_index != fields_without_primary_key_len {
                             acc.push_str(&format!(","));
@@ -3373,7 +3367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let mut column_names = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                    let mut column_names = fields.iter().fold(std::string::String::default(), |mut acc, element| {
                         acc.push_str(&format!("{}", &element.field_ident));
                         acc.push_str({
                             // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
@@ -3387,7 +3381,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         acc
                     });
                     let _ = column_names.pop();
-                    let mut column_increments = fields.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                    let mut column_increments = fields.iter().fold(std::string::String::default(), |mut acc, _| {
                         acc.push_str(&format!("{{}}"));
                         acc.push_str({
                             // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
@@ -3629,9 +3623,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.syn_field.ty;
-                        let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} {{value}} "));
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let bind_query_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
