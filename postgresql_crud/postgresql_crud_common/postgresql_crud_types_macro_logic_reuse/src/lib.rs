@@ -1147,13 +1147,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
             },
         },
-        PostgresqlJsonTypeVariant {
-            postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
-            postgresql_json_type_pattern: PostgresqlJsonTypePattern {
-                postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
-                postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
-            },
-        },
+        // PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
+        //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional::True,
+        //         postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
+        //     },
+        // },
         // PostgresqlJsonTypeVariant {
         //     postgresql_json_type_handle: PostgresqlJsonTypeHandle::UuidUuid,
         //     postgresql_json_type_pattern: PostgresqlJsonTypePattern {
@@ -6916,16 +6916,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // }
         generated
     };
-    let postgresql_type_array = PostgresqlType::into_array().map(|element|generate_postgresql_type_token_stream(element));
+    // let postgresql_type_array = PostgresqlType::into_array().map(|element|generate_postgresql_type_token_stream(element));
     
-    // let h1 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
+    let h1 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
     // let h2 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
     // let h3 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
     // let h4 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
     // let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
     // let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
     // let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
-    // let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
+    let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     // let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
     // let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
     // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
@@ -6963,16 +6963,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
     // let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
     let generated = quote::quote!{
-        #(#postgresql_type_array)*
+        // #(#postgresql_type_array)*
 
-        // #h1
+        #h1
         // #h2
         // #h3
         // #h4
         // #h5
         // #h6
         // #h7
-        // #h8
+        #h8
         // #h9
         // #h10
         // #h11
