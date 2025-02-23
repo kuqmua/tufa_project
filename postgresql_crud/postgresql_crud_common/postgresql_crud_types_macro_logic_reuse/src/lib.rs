@@ -387,7 +387,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) |
             (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) |
             (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) |
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) |
             (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => proc_macro2::TokenStream::new(),
         };
 
@@ -515,9 +514,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                 &equal,
             ];
-            let mut common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![
-                postgresql_json_type_ident_where_element_equal_token_stream
-            ];
+            let common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![postgresql_json_type_ident_where_element_equal_token_stream];
             
             let length_equal = crate::filters::LengthEqual;
             let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
@@ -840,8 +837,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 generated
             };
             let generate_postgresql_json_type_where_element_vec_bool_token_stream = || {
-                let mut filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
-                let mut filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
+                let filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                     &filters_variants,
                     &postgresql_json_type_ident_where_element_upper_camel_case,
@@ -932,23 +929,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = vec![
                 &equal_second_dimension,
             ];
-            let mut common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![
-                postgresql_json_type_ident_where_element_equal_second_dimension_token_stream
-            ];
+            let common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![postgresql_json_type_ident_where_element_equal_second_dimension_token_stream];
 
             // let length_equal_second_dimension = crate::filters::LengthEqualSecondDimension;
             // let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal_second_dimension.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
             //     &postgresql_json_type_variant,
             // );
 
-            let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = {
-                let mut vec: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
-                vec
-            };
-            let mut common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = {
-                let mut vec: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
-                vec
-            };
+            let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
+            let common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
 
             let generate_postgresql_json_type_where_element_vec_string_second_dimension_token_stream = || {
                 let filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
@@ -1097,7 +1086,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
         );
         //todo maybe impl Encode instead of just wrap into sqlx::types::Json
-        let mut generated = quote::quote!{
+        let generated = quote::quote!{
             #ident_token_stream
             #maybe_impl_schemars_json_schema_for_ident_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
@@ -1620,7 +1609,6 @@ fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     field_type_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
-    let field_type_as_sqlx_type_sqlx_postgres_token_stream = quote::quote!{};
     quote::quote! {
         impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -1792,7 +1780,6 @@ enum IsPrimaryKey {
 fn generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
     postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull,
     ident: &dyn quote::ToTokens,
-    field_type: &dyn quote::ToTokens,
     is_primary_key: &IsPrimaryKey,
 ) -> proc_macro2::TokenStream {
     let ident_handle: &dyn quote::ToTokens = &postgresql_type_nullable_or_not_null.ident_handle(&ident);
@@ -2366,9 +2353,6 @@ fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream
 pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
-    let value_snake_case = naming::ValueSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let acc_snake_case = naming::AccSnakeCase;
     let start_snake_case = naming::StartSnakeCase;
     let end_snake_case = naming::EndSnakeCase;
 
@@ -6627,17 +6611,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             generated
         };
 
-        let is_primary_key = IsPrimaryKey::False;
+        // let is_primary_key = IsPrimaryKey::False;
         // let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
         //    &PostgresqlTypeNullableOrNotNull::Nullable,
         //     &postgresql_type,
-        //     &field_type,
         //     &is_primary_key,
         // );
         // let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
         //    &PostgresqlTypeNullableOrNotNull::NotNull,
         //     &postgresql_type,
-        //     &field_type,
         //     &is_primary_key,
         // );
 
@@ -6647,13 +6629,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let impl_crate_create_table_column_query_part_for_ident_nullable_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                    &PostgresqlTypeNullableOrNotNull::Nullable,
                     &postgresql_type,
-                    &field_type,
                     &is_primary_key,
                 );
                 let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                    &PostgresqlTypeNullableOrNotNull::NotNull,
                     &postgresql_type,
-                    &field_type,
                     &is_primary_key,
                 );
                 let generated = quote::quote!{
@@ -6667,7 +6647,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let impl_crate_create_table_column_query_part_for_ident_not_null_token_stream = generate_impl_crate_create_table_column_query_part_for_ident_token_stream(
                    &PostgresqlTypeNullableOrNotNull::NotNull,
                     &postgresql_type,
-                    &field_type,
                     &is_primary_key,
                 );
                 let generated = quote::quote!{

@@ -2012,12 +2012,8 @@ impl ContainsAnotherRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2051,12 +2047,8 @@ impl StrictlyToLeftOfRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2090,7 +2082,6 @@ impl StrictlyToRightOfRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
@@ -2192,12 +2183,8 @@ impl GreaterThanLowerBound {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2231,12 +2218,8 @@ impl OverlapWithRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2270,12 +2253,8 @@ impl AdjacentWithRange {
         ident: &dyn quote::ToTokens,
         is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
         };
@@ -2315,9 +2294,6 @@ impl RangeLength {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
-        let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        };
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
         let array_position_type_token_stream = array_position_type_token_stream();
@@ -2412,7 +2388,6 @@ fn generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aa
     }
 }
 fn generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
-    ident: &dyn quote::ToTokens,
     postgresql_type_or_json_type_ident_where_element_position_filter_try_new_error_named_upper_camel_case: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
@@ -2592,7 +2567,6 @@ fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(
         filter,
     );
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
-        &ident,
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
     )
 }
@@ -2791,7 +2765,6 @@ fn generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(
         &format!("{}{}", naming::PositionUpperCamelCase, regular_expression.name_upper_camel_case()),
     );
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(
-        &ident,
         &postgresql_type_or_json_type_ident_where_element_filter_try_new_error_named_upper_camel_case,
     )
 }
@@ -2927,9 +2900,7 @@ impl PositionCaseInsensitiveRegularExpression {
 }
 
 fn generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let element_snake_case = naming::ElementSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
-    let acc_snake_case = naming::AccSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -2952,7 +2923,6 @@ fn generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_20
     }
 }
 fn generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1b() -> proc_macro2::TokenStream {
-    let element_snake_case = naming::ElementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote!{
@@ -3182,7 +3152,6 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
     try_generate_bind_increments_token_stream: &proc_macro2::TokenStream,
-    regular_expression: &RegularExpression,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlJsonType;
     let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
@@ -3244,7 +3213,6 @@ impl ContainsElementCaseSensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type_variant,
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::regular_expression(),
         )
     }
 }
@@ -3270,7 +3238,6 @@ impl ContainsElementCaseInsensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type_variant,
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::regular_expression(),
         )
     }
 }
@@ -3303,7 +3270,6 @@ impl AllElementsCaseSensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type_variant,
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::regular_expression(),
         )
     }
 }
@@ -3329,7 +3295,6 @@ impl AllElementsCaseInsensitiveRegularExpression {
             WhereOperatorName::upper_camel_case(self),
             postgresql_json_type_variant,
             &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::regular_expression(),
         )
     }
 }

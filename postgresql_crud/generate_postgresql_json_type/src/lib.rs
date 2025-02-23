@@ -4610,9 +4610,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let some_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end")
                             );
-                            let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})")
-                            );
+                            // let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                            //     &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})")
+                            // );
                             quote::quote!{
                                 let mut #object_acc_snake_case = format!(#some_format_handle_token_stream);
                                 #generate_jsonb_set_target_token_stream
@@ -5077,10 +5077,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 match &postgresql_type {
                                     PostgresqlType::JsonbNullable
                                     => {
-                                        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-                                        let postgresql_crud_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream = quote::quote!{
-                                            postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
-                                        };
+                                        // let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+                                        // let postgresql_crud_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream = quote::quote!{
+                                        //     postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                                        // };
                                         let ok_as_postgresql_json_type_token_stream = generate_ok_try_generate_postgresql_json_type_to_create_token_stream(false);
                                         quote::quote!{
                                             match &self.0 {
@@ -5748,7 +5748,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }
                 };
-                let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_nullable_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlType::JsonbNullable);
+                // let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_nullable_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlType::JsonbNullable);
                 let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream = generate_postgresql_json_types_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream(PostgresqlType::JsonbNotNull);
                 quote::quote!{
                     //todo return it
