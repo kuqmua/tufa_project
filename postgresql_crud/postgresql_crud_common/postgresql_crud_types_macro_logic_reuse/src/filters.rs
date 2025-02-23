@@ -1844,18 +1844,18 @@ impl LengthEqual {
     fn length_operator() -> LengthOperator {
         LengthOperator::Equal
     }
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
-    ) -> proc_macro2::TokenStream {
-        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
-            &WhereOperatorName::upper_camel_case(self),
-            ident,
-            is_nullable,
-            &Self::length_operator(),
-        )
-    }
+    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+    //     &self,
+    //     ident: &dyn quote::ToTokens,
+    //     is_nullable: &crate::IsNullable,
+    // ) -> proc_macro2::TokenStream {
+    //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
+    //         &WhereOperatorName::upper_camel_case(self),
+    //         ident,
+    //         is_nullable,
+    //         &Self::length_operator(),
+    //     )
+    // }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
@@ -3345,20 +3345,20 @@ impl EqualSecondDimension {
     fn dimension() -> Dimension {
         Dimension::Second
     }
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-        &self,
-        ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
-        where_operator_type: &crate::WhereOperatorType,
-    ) -> proc_macro2::TokenStream {
-        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
-            WhereOperatorName::upper_camel_case(self),
-            ident,
-            is_nullable,
-            where_operator_type,
-            &Self::dimension(),
-        )
-    }
+    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+    //     &self,
+    //     ident: &dyn quote::ToTokens,
+    //     is_nullable: &crate::IsNullable,
+    //     where_operator_type: &crate::WhereOperatorType,
+    // ) -> proc_macro2::TokenStream {
+    //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+    //         WhereOperatorName::upper_camel_case(self),
+    //         ident,
+    //         is_nullable,
+    //         where_operator_type,
+    //         &Self::dimension(),
+    //     )
+    // }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(
         &self,
         postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
