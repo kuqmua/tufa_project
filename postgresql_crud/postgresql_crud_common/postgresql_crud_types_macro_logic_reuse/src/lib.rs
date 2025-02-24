@@ -4939,6 +4939,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_update_traits_for_std_option_option_ident_token_stream = quote::quote! {
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for #std_option_option_ident_upper_camel_case {}
             };
+            //no delete trait yet
+            // let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_delete_traits_for_postgresql_type_token_stream = quote::quote! {
+            //     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToDeleteTraits<'_> for #postgresql_type {}
+            // };
+            // let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_delete_traits_for_std_option_option_ident_token_stream = quote::quote! {
+            //     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToDeleteTraits<'_> for #std_option_option_ident_upper_camel_case {}
+            // };
             let generated = quote::quote! {
                 #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
@@ -4950,6 +4957,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 // #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_create_traits_for_postgresql_type_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_read_traits_for_postgresql_type_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_update_traits_for_postgresql_type_token_stream
+                // #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_delete_traits_for_postgresql_type_token_stream
 
                 #pub_struct_std_option_option_ident_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_std_option_option_ident_token_stream
@@ -4960,6 +4968,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_read_traits_for_std_option_option_ident_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_update_traits_for_std_option_option_ident_token_stream
+                // #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_delete_traits_for_std_option_option_ident_token_stream
 
                 #impl_postgresql_crud_type_self_type_for_ident_token_stream
                 #impl_postgresql_crud_type_self_type_for_std_option_option_ident_token_stream
@@ -6363,49 +6372,53 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let postgresql_type_ident_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfToDeleteUpperCamelCase::from_tokens(&ident_handle);
-                let postgresql_type_ident_to_delete_token_stream = {
-                    let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-                        Visibility::Pub,
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &field_type_struct_content_token_stream,
-                        false,
-                        true,
-                    );
-                    let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                    );
-                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                    );
-                    let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                    );
-                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &quote::quote!{format!("{self}")}
-                    );
-                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &field_type_handle
-                    );
-                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                        &postgresql_type_ident_to_delete_upper_camel_case,
-                        &field_type_handle
-                    );
-                    quote::quote!{
-                        #postgresql_type_ident_to_delete_token_stream
-                        #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
-                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
-                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
-                        #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
-                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
-                    }
-                };
+                let postgresql_type_ident_to_delete_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    &postgresql_type_ident_to_delete_upper_camel_case,
+                    &field_type_handle
+                );
+                // let postgresql_type_ident_to_delete_token_stream = {
+                //     let postgresql_type_ident_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+                //         Visibility::Pub,
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &field_type_struct_content_token_stream,
+                //         false,
+                //         true,
+                //     );
+                //     let impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                //         &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                //     );
+                //     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                //     );
+                //     let impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                //     );
+                //     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &quote::quote!{format!("{self}")}
+                //     );
+                //     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &field_type_handle
+                //     );
+                //     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                //         &postgresql_type_ident_to_delete_upper_camel_case,
+                //         &field_type_handle
+                //     );
+                //     quote::quote!{
+                //         #postgresql_type_ident_to_delete_token_stream
+                //         #impl_std_fmt_display_for_postgresql_type_ident_to_delete_token_stream
+                //         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_to_delete_token_stream
+                //         #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+                //         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_to_delete_token_stream
+                //         #impl_crate_bind_query_for_postgresql_type_ident_to_delete_token_stream
+                //         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_to_delete_token_stream
+                //     }
+                // };
                 let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident_handle);
                 let postgresql_type_ident_where_element_token_stream = {
                     let postgresql_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&ident_handle);
@@ -6710,50 +6723,51 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&postgresql_type);
                 //optimization
                 let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&postgresql_type);
-                let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
-                let postgresql_type_ident_not_null_to_delete_token_stream = {
-                    let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-                        Visibility::Pub,
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &postgresql_type_struct_content_token_stream,
-                        false,
-                        true,
-                    );
-                    let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
-                        &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                    );
-                    let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
-                    );
-                    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &quote::quote!{format!("{self}")}
-                    );
-                    let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &postgresql_type,
-                    );
-                    let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &postgresql_type,
-                    );
-                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                        &postgresql_type_ident_not_null_to_delete_upper_camel_case,
-                        &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                    );
-                    quote::quote!{
-                        #postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
-                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
-                    }
-                };
+                // let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
+                let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
+                // let postgresql_type_ident_not_null_to_delete_token_stream = {
+                //     let postgresql_type_ident_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
+                //         Visibility::Pub,
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &postgresql_type_struct_content_token_stream,
+                //         false,
+                //         true,
+                //     );
+                //     let impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
+                //         &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                //     );
+                //     let impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &impl_std_fmt_display_for_tokens_self_zero_content_token_stream
+                //     );
+                //     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &quote::quote!{format!("{self}")}
+                //     );
+                //     let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &postgresql_type,
+                //     );
+                //     let impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &postgresql_type,
+                //     );
+                //     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                //         &postgresql_type_ident_not_null_to_delete_upper_camel_case,
+                //         &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                //     );
+                //     quote::quote!{
+                //         #postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_crate_bind_query_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_std_fmt_display_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_not_null_to_delete_token_stream
+                //     }
+                // };
                 let impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream = {
                     let ident_not_null = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
                     quote::quote!{
@@ -6769,7 +6783,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let generated = quote::quote! {
                     #postgresql_type_ident_not_null_to_create_token_stream
 
-                    #postgresql_type_ident_not_null_to_delete_token_stream
+                    // #postgresql_type_ident_not_null_to_delete_token_stream
 
                     #impl_postgresql_crud_base_wrap_type_primary_key_for_ident_not_null_token_stream
                 };
