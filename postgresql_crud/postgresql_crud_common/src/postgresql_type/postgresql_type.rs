@@ -807,9 +807,37 @@ impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {
 }
 impl StdPrimitiveI16AsPostgresqlInt2Nullable {
     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_query_part_handle(value)
+        // StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_query_part_handle(value)
+        format!("{value}")
     }
 }
+
+
+
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2Nullable {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::option::Option<StdPrimitiveI16AsPostgresqlInt2NotNull> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::option::Option<StdPrimitiveI16AsPostgresqlInt2NotNull> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2Nullable {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2NotNull> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {}
+
+
+
+
+
 #[derive(
     Debug,
     Default,
@@ -1194,9 +1222,38 @@ impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {
 }
 impl StdPrimitiveI16AsPostgresqlInt2NotNull {
     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_query_part_handle(value)
+        // StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_query_part_handle(value)
+        format!("{value} not null")
     }
 }
+
+
+
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2NotNull {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2NotNull {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {
+    type PostgresqlBaseTypeSelf = Self;
+    type PostgresqlBaseTypeStdOptionOptionSelf = StdPrimitiveI16AsPostgresqlInt2Nullable;
+}
+
+
 #[derive(
     Debug,
     Default,
