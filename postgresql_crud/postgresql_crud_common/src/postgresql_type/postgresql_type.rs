@@ -1,129 +1,131 @@
 postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
-impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} int2")
-    }
-}
-impl std::fmt::Display for StdPrimitiveI16AsPostgresqlInt2 {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{self:?}")
-    }
-}
-impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2 {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error),
-        }
-    }
-}
-impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2 {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        let mut acc = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                acc.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        Ok(acc)
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.0);
-        query
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2 {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
-    }
-}
-impl StdPrimitiveI16AsPostgresqlInt2 {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        format!("{value} not null")
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct StdOptionOptionStdPrimitiveI16AsPostgresqlInt2(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2>);
-impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error),
-        }
-    }
-}
-impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        let mut acc = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                acc.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
-        }
-        Ok(acc)
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(match self.0 {
-            Some(value) => Some(value.0),
-            None => None,
-        });
-        query
-    }
-}
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(Some(
-            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-        ))
-    }
-}
-impl StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        format!("{value}")
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
-    type PostgresqlBaseTypeSelf = Self;
-    type PostgresqlBaseTypeStdOptionOptionSelf = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct StdPrimitiveI16AsPostgresqlInt2(std::primitive::i16);
+// impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+//         format!("{column} int2")
+//     }
+// }
+// impl std::fmt::Display for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "{self:?}")
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         self.to_string()
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(error) => Err(error),
+//         }
+//     }
+// }
+// impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         let mut acc = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 acc.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.0);
+//         query
+//     }
+// }
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2 {
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(::core::default::Default::default())
+//     }
+// }
+// impl StdPrimitiveI16AsPostgresqlInt2 {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         format!("{value} not null")
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
+
+
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct StdOptionOptionStdPrimitiveI16AsPostgresqlInt2(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2>);
+// impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match <std::option::Option<StdPrimitiveI16AsPostgresqlInt2> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(error) => Err(error),
+//         }
+//     }
+// }
+// impl crate::BindQuery<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         let mut acc = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 acc.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+//             }
+//         }
+//         Ok(acc)
+//     }
+//     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(match self.0 {
+//             Some(value) => Some(value.0),
+//             None => None,
+//         });
+//         query
+//     }
+// }
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(Some(
+//             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+//         ))
+//     }
+// }
+// impl StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         format!("{value}")
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
+//     type PostgresqlBaseTypeSelf = Self;
+//     type PostgresqlBaseTypeStdOptionOptionSelf = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
+// }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementEqual {
     pub logical_operator: crate::LogicalOperator,
@@ -767,7 +769,7 @@ impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefault
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveI16AsPostgresqlInt2Nullable(StdOptionOptionStdPrimitiveI16AsPostgresqlInt2);
+pub struct StdPrimitiveI16AsPostgresqlInt2Nullable(pub std::option::Option<StdPrimitiveI16AsPostgresqlInt2NotNull>);
 impl std::fmt::Display for StdPrimitiveI16AsPostgresqlInt2Nullable {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", self.0)
@@ -780,20 +782,32 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2N
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2Nullable {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+        Self(Some(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()))
     }
 }
 impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        // crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+        }
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        // crate::BindQuery::bind_value_to_query(self.0, query)
+        query = query.bind(match self.0 {
+            Some(value) => Some(value.0),
+            None => None,
+        });
+        query
     }
 }
 impl StdPrimitiveI16AsPostgresqlInt2Nullable {
     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        StdOptionOptionStdPrimitiveI16AsPostgresqlInt2::create_table_query_part_handle(value)
+        StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_query_part_handle(value)
     }
 }
 #[derive(
@@ -812,7 +826,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToCreate(StdOptionOptionStdPrimitiveI16AsPostgresqlInt2);
+pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToCreate(StdPrimitiveI16AsPostgresqlInt2Nullable);
 impl crate::BindQuery<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_generate_bind_increments(&self.0, increment)
@@ -827,13 +841,13 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToCreate {}
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToRead = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToRead = StdPrimitiveI16AsPostgresqlInt2Nullable;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate = StdPrimitiveI16AsPostgresqlInt2Nullable;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdateQueryPartErrorNamed {
     Todo,
 }
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToDelete = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToDelete = StdPrimitiveI16AsPostgresqlInt2Nullable;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement(pub PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement);
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
@@ -1142,7 +1156,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(StdPrimitiveI16AsPostgresqlInt2);
+pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(std::primitive::i16);
 impl std::fmt::Display for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", self.0)
@@ -1155,20 +1169,32 @@ impl error_occurence_lib::ToStdStringString for StdPrimitiveI16AsPostgresqlInt2N
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+        Self(::core::default::Default::default())
     }
 }
 impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        // crate::BindQuery::try_generate_bind_increments(&self.0, increment)
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            }
+            None => {
+                return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        
     }
     fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(self.0, query)
+        // crate::BindQuery::bind_value_to_query(self.0, query)
+        query = query.bind(self.0);
+        query
     }
 }
 impl StdPrimitiveI16AsPostgresqlInt2NotNull {
     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        StdPrimitiveI16AsPostgresqlInt2::create_table_query_part_handle(value)
+        StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_query_part_handle(value)
     }
 }
 #[derive(
@@ -1187,7 +1213,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate(StdPrimitiveI16AsPostgresqlInt2);
+pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate(StdPrimitiveI16AsPostgresqlInt2NotNull);
 impl crate::BindQuery<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         crate::BindQuery::try_generate_bind_increments(&self.0, increment)
@@ -1202,13 +1228,13 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate {}
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead = StdPrimitiveI16AsPostgresqlInt2;
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToUpdate = StdPrimitiveI16AsPostgresqlInt2;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead = StdPrimitiveI16AsPostgresqlInt2NotNull;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToUpdate = StdPrimitiveI16AsPostgresqlInt2NotNull;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToUpdateQueryPartErrorNamed {
     Todo,
 }
-pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToDelete = StdPrimitiveI16AsPostgresqlInt2;
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToDelete = StdPrimitiveI16AsPostgresqlInt2NotNull;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement(pub PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement);
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
@@ -1516,12 +1542,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
     }
 }
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2Nullable {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        <StdPrimitiveI16AsPostgresqlInt2 as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key)
+    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} int2")
     }
 }
+
 impl crate::CreateTableColumnQueryPart for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{} not null", <StdPrimitiveI16AsPostgresqlInt2 as crate::CreateTableColumnQueryPart>::create_table_column_query_part(column, is_primary_key))
+        format!("{column} int2 not null")
     }
 }
