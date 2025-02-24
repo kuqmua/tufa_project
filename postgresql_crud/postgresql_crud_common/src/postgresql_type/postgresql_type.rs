@@ -65,6 +65,8 @@ impl StdPrimitiveI16AsPostgresqlInt2 {
 }
 //optimization
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
+//optimization
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdPrimitiveI16AsPostgresqlInt2 {}
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
@@ -1288,25 +1290,30 @@ pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate = StdPrimi
 //     }
 // }
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToCreate {}
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead(StdPrimitiveI16AsPostgresqlInt2);
-impl sqlx::Decode<'_, sqlx::Postgres> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error),
-        }
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {}
+
+//optimization
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead(StdPrimitiveI16AsPostgresqlInt2);
+
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead = StdPrimitiveI16AsPostgresqlInt2;
+
+// impl sqlx::Decode<'_, sqlx::Postgres> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(error) => Err(error),
+//         }
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <StdPrimitiveI16AsPostgresqlInt2 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToRead {}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToUpdate(StdPrimitiveI16AsPostgresqlInt2);
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToUpdate {
