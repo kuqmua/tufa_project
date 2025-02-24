@@ -4906,17 +4906,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl crate::postgresql_type::postgresql_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
                 }
             };
-            // let impl_postgresql_base_type_for_ident_token_stream = {
-            //     let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
-            //     let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-            //     let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
-            //     quote::quote! {
-            //         impl crate::postgresql_type::postgresql_base_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
-            //             type #postgresql_base_type_self_upper_camel_case = Self;
-            //             type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
-            //         }
-            //     }
-            // };
+            let impl_postgresql_base_type_for_ident_token_stream = {
+                let postgresql_base_type_upper_camel_case = naming::PostgresqlBaseTypeUpperCamelCase;
+                let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+                let postgresql_base_type_std_option_option_self_upper_camel_case = naming::PostgresqlBaseTypeStdOptionOptionSelfUpperCamelCase;
+                quote::quote! {
+                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_base_type_upper_camel_case<'_> for #postgresql_type{
+                        type #postgresql_base_type_self_upper_camel_case = Self;
+                        type #postgresql_base_type_std_option_option_self_upper_camel_case = #std_option_option_ident_upper_camel_case;
+                    }
+                }
+            };
             let generated = quote::quote! {
                 #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_token_stream
@@ -4933,7 +4933,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
                 #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
-                // #impl_postgresql_base_type_for_ident_token_stream
+                #impl_postgresql_base_type_for_ident_token_stream
             };
             generated
         };
