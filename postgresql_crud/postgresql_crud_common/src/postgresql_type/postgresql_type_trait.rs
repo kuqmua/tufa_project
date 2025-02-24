@@ -128,9 +128,8 @@ pub trait PostgresqlBaseType<'a> {
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }
 
-
-// pub trait PostgresqlBaseTypePrimaryKey<'a> {
-//     type PostgresqlBaseTypeSelf: PostgresqlBaseTypeSelfTraits<'a>
-//         + sqlx::Encode<'a, sqlx::Postgres>
-//         + sqlx::postgres::PgHasArrayType;
-// }
+pub trait PostgresqlBaseTypePrimaryKey<'a> {
+    type PostgresqlBaseTypeSelf: PostgresqlBaseTypeSelfTraits<'a>
+        + sqlx::Encode<'a, sqlx::Postgres>
+        + sqlx::postgres::PgHasArrayType;
+}
