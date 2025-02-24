@@ -128,6 +128,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_>
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
 //optimization
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
+//optimization
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for StdOptionOptionStdPrimitiveI16AsPostgresqlInt2 {}
+
+
 
 
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlBaseType<'_> for StdPrimitiveI16AsPostgresqlInt2 {
@@ -866,18 +870,24 @@ pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToRead = StdOption
 // }
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToRead {}
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate(StdOptionOptionStdPrimitiveI16AsPostgresqlInt2);
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate {}
+//optimization
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate(StdOptionOptionStdPrimitiveI16AsPostgresqlInt2);
+
+pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate = StdOptionOptionStdPrimitiveI16AsPostgresqlInt2;
+
+// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate {
+//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+//         Self(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdate {}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToUpdateQueryPartErrorNamed {
     Todo,
 }
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToDelete(StdOptionOptionStdPrimitiveI16AsPostgresqlInt2);
 impl std::fmt::Display for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToDelete {
@@ -1190,10 +1200,12 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
-        Ok(crate::BindQuery::try_generate_bind_increments(&postgresql_type_self_to_update.0, increment).unwrap())
+        //optimization  remove & and .0
+        Ok(crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment).unwrap())
     }
     fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::BindQuery::bind_value_to_query(postgresql_type_self_to_update.0, query)
+        //optimization remove .0
+        crate::BindQuery::bind_value_to_query(postgresql_type_self_to_update, query)
     }
     type PostgresqlTypeSelfWhereElement = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement;
     type PostgresqlTypeSelfWhere = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhere;
