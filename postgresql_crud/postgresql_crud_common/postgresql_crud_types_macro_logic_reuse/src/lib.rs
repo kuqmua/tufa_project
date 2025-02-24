@@ -4923,7 +4923,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            //optimization
             // let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_create_traits_for_postgresql_type_token_stream = quote::quote! {
             //     impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToCreateTraits<'_> for #postgresql_type {}
             // };
@@ -6310,7 +6309,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let postgresql_type_ident_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfToReadUpperCamelCase::from_tokens(&ident_handle);
-                //optimization
                 let postgresql_type_ident_to_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                     &postgresql_type_ident_to_read_upper_camel_case,
                     &field_type_handle
@@ -6721,7 +6719,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let postgresql_type_ident_not_null_to_read_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToReadUpperCamelCase::from_tokens(&postgresql_type);
-                //optimization
                 let postgresql_type_ident_not_null_to_update_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToUpdateUpperCamelCase::from_tokens(&postgresql_type);
                 // let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::SelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
                 let postgresql_type_ident_not_null_to_delete_upper_camel_case = naming::parameter::PostgresqlTypeSelfNotNullToDeleteUpperCamelCase::from_tokens(&postgresql_type);
