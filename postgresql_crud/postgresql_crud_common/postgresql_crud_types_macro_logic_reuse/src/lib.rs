@@ -4900,10 +4900,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 )
             };
-            let impl_postgresql_crud_base_type_self_type_for_ident_token_stream = {
-                let postgresql_base_type_self_traits_upper_camel_case = naming::PostgresqlBaseTypeSelfTraitsUpperCamelCase;
+            let impl_postgresql_crud_type_self_type_for_ident_token_stream = {
+                let postgresql_type_self_traits_upper_camel_case = naming::PostgresqlTypeSelfTraitsUpperCamelCase;
                 quote::quote!{
-                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_base_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
+                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_traits_upper_camel_case<'_> for #postgresql_type{}
                 }
             };
             let impl_postgresql_base_type_for_ident_token_stream = {
@@ -4932,7 +4932,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_std_option_option_ident_token_stream
                 #impl_crate_create_table_query_part_for_std_option_option_ident_token_stream
         
-                #impl_postgresql_crud_base_type_self_type_for_ident_token_stream
+                #impl_postgresql_crud_type_self_type_for_ident_token_stream
                 #impl_postgresql_base_type_for_ident_token_stream
             };
             generated
