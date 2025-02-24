@@ -805,12 +805,12 @@ impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2Nullable {
         query
     }
 }
-impl StdPrimitiveI16AsPostgresqlInt2Nullable {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        // StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_query_part_handle(value)
-        format!("{value}")
-    }
-}
+// impl StdPrimitiveI16AsPostgresqlInt2Nullable {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         // StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_query_part_handle(value)
+//         format!("{value}")
+//     }
+// }
 
 
 
@@ -1220,12 +1220,12 @@ impl crate::BindQuery<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {
         query
     }
 }
-impl StdPrimitiveI16AsPostgresqlInt2NotNull {
-    pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
-        // StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_query_part_handle(value)
-        format!("{value} not null")
-    }
-}
+// impl StdPrimitiveI16AsPostgresqlInt2NotNull {
+//     pub fn create_table_query_part_handle(value: &dyn std::fmt::Display) -> impl std::fmt::Display {
+//         // StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_query_part_handle(value)
+//         format!("{value} not null")
+//     }
+// }
 
 
 
