@@ -121,16 +121,7 @@ pub trait PostgresqlBaseType<'a> {
 }
 
 pub trait PostgresqlBaseTypePrimaryKey<'a> {
-    type PostgresqlBaseTypeSelf: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Type<sqlx::Postgres>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuery<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-
+    type PostgresqlBaseTypeSelf: PostgresqlTypeSelfTraits<'a>
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType;
 }
