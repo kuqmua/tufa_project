@@ -291,22 +291,22 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
       "value": 0
     },
     "std_primitive_i16_as_small_int2_not_null": {
-      "value": 0
+      "value": 2
     }
-    # ,
-    # "object_animal_as_jsonb_not_null": {
-    #   "value": [
-    #     {
-    #       "std_vec_vec_std_vec_vec_uuid_uuid": {
-    #         "value": [
-    #           [
-    #             "6881e448-cab0-4e4a-9381-24815b79fbbd"
-    #           ]
-    #         ]
-    #       }
-    #     }
-    #   ]
-    # }
+    ,
+    "object_animal_as_jsonb_not_null": {
+      "value": [
+        {
+          "std_vec_vec_std_vec_vec_uuid_uuid": {
+            "value": [
+              [
+                "6881e448-cab0-4e4a-9381-24815b79fbbc"
+              ]
+            ]
+          }
+        }
+      ]
+    }
   }
 ]
 
