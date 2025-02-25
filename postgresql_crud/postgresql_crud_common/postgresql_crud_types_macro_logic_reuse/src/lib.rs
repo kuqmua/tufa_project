@@ -2342,6 +2342,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
+    let self_snake_case = naming::SelfSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
 
     let start_snake_case = naming::StartSnakeCase;
     let end_snake_case = naming::EndSnakeCase;
@@ -6844,7 +6846,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
                 PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type_not_null_upper_camel_case,
             };
-            let inner_type_token_stream: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+            let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
                 PostgresqlTypeNullableOrNotNull::Nullable => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
                 PostgresqlTypeNullableOrNotNull::NotNull => &field_type,
             };
@@ -6955,7 +6957,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #maybe_derive_serde_serialize_token_stream
                         #maybe_derive_serde_deserialize_token_stream
                     )]
-                    pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #inner_type_token_stream);
+                    pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #field_type_handle);
                 }
             };
             let maybe_impl_try_new_for_postgresql_type_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
@@ -9137,11 +9139,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let impl_sqlx_type_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
-                &inner_type_token_stream
+                &field_type_handle
             );
             let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
-                &inner_type_token_stream
+                &field_type_handle
             );
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_read_traits_for_postgresql_type_nullable_or_not_null_token_stream = quote::quote! {
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToReadTraits<'_> for #postgresql_type_nullable_or_not_null_upper_camel_case {}
@@ -9315,6 +9317,165 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             else {
                 proc_macro2::TokenStream::new()
             };
+            let postgresql_type_nullable_or_not_null_column_upper_camel_case = naming::parameter::SelfColumnUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_column_token_stream = {
+                let pub_struct_postgresql_type_nullable_or_not_null_column_token_stream = generate_pub_struct_tokens_token_stream(
+                    Visibility::Pub,
+                    &postgresql_type_nullable_or_not_null_column_upper_camel_case,
+                    &quote::quote!{;},
+                    true,
+                    true,
+                );
+                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_column_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_column_upper_camel_case,
+                    &token_patterns::CoreDefaultDefaultDefault,
+                );
+                quote::quote! {
+                    #pub_struct_postgresql_type_nullable_or_not_null_column_token_stream
+                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_column_token_stream
+                }
+            };
+            let postgresql_type_self_column_upper_camel_case = naming::PostgresqlTypeSelfColumnUpperCamelCase;
+            //todo maybe move down
+            let postgresql_type_self_column_query_part_token_stream = {
+                let postgresql_type_self_column_snake_case = naming::PostgresqlTypeSelfColumnSnakeCase;
+                quote::quote!{
+                    fn postgresql_type_self_column_query_part(
+                        #postgresql_type_self_column_snake_case: &Self::#postgresql_type_self_column_upper_camel_case,
+                        column: &std::primitive::str,
+                    ) -> std::string::String {
+                        column.to_string()
+                    }
+                }
+            };
+            let postgresql_type_initialized_by_tokens = match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdStringStringAsPostgresqlText => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => PostgresqlTypeInitializedByTokens::InitializedByClient,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
+            };
+            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+            let field_type_struct_content_token_stream = quote::quote!{(#field_type_handle);};
+            let empty_struct_content_token_stream = quote::quote!{(());};
+            let postgresql_type_nullable_or_not_null_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
+            let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
+            let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
+            let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
+            let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
+            let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
+            let self_core_default_default_default_token_stream = quote::quote!{Self(#core_default_default_default_token_stream)};
+            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                let generate_postgresql_json_type_snake_case = naming::GeneratePostgresqlJsonTypeSnakeCase;
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementUpperCamelCase;
+                quote::quote!{
+                    crate::#generate_postgresql_json_type_snake_case::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_upper_camel_case
+                }
+            };
+            let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = {
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
+                quote::quote!{
+                    #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream::#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case()
+                }
+            };
+            let self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+            };
+            // let postgresql_type_nullable_or_not_null_to_create_token_stream = {
+            //     let alias: &dyn quote::ToTokens = match &postgresql_type_initialized_by_tokens {
+            //         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql |
+            //         PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &quote::quote!{crate::postgresql_type::postgresql_type_trait::PostgresqlTypeToCreateInitializedByPostgresql},
+            //         PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_handle,
+            //     };
+            //     macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_nullable_or_not_null_to_create_upper_camel_case, &alias)
+            // };
+            let postgresql_type_nullable_or_not_null_to_create_token_stream = {
+                let postgresql_type_nullable_or_not_null_to_create_token_stream = generate_pub_struct_tokens_token_stream(
+                    Visibility::Pub,
+                    &postgresql_type_nullable_or_not_null_to_create_upper_camel_case,
+                    match &postgresql_type_initialized_by_tokens {
+                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
+                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &empty_struct_content_token_stream,
+                        PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_struct_content_token_stream,
+                    },
+                    false,
+                    true,
+                );
+                let impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_to_create_upper_camel_case,
+                    &match &postgresql_type_initialized_by_tokens {
+                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => quote::quote!{Ok(std::string::String::from("DEFAULT"))},
+                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => quote::quote!{Ok(std::string::String::from("uuid_generate_v4()"))},
+                        PostgresqlTypeInitializedByTokens::InitializedByClient => quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)},
+                    },
+                    match &postgresql_type_initialized_by_tokens {
+                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
+                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &query_snake_case,
+                        PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
+                    },
+                );
+                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_to_create_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_to_create_upper_camel_case,
+                    match &postgresql_type_initialized_by_tokens {
+                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &self_core_default_default_default_token_stream,
+                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &self_core_default_default_default_token_stream,
+                        PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                    },
+                );
+                let impl_postgresql_type_self_to_create_traits_for_postgresql_type_nullable_or_not_null_to_create_token_stream = {
+                    let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
+                    quote::quote!{
+                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_nullable_or_not_null_to_create_upper_camel_case {}
+                    }
+                };
+                quote::quote! {
+                    #postgresql_type_nullable_or_not_null_to_create_token_stream
+                    #impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_to_create_token_stream
+                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_to_create_token_stream
+                    #impl_postgresql_type_self_to_create_traits_for_postgresql_type_nullable_or_not_null_to_create_token_stream
+                }
+            };
+            /////////////
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
@@ -9331,6 +9492,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_create_table_column_query_part_for_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_primary_key_tokens_token_stream
+                #postgresql_type_nullable_or_not_null_column_token_stream
+                #postgresql_type_nullable_or_not_null_to_create_token_stream
             };
             f
         };
