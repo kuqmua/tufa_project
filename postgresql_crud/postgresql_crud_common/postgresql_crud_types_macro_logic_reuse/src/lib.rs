@@ -6844,11 +6844,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
                 PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type_not_null_upper_camel_case,
             };
+            let inner_type_token_stream: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::Nullable => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
+                PostgresqlTypeNullableOrNotNull::NotNull => &field_type,
+            };
             let pub_struct_postgresql_type_nullable_or_not_null_token_stream = {
-                let inner_type_token_stream: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
-                    PostgresqlTypeNullableOrNotNull::Nullable => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
-                    PostgresqlTypeNullableOrNotNull::NotNull => &field_type,
-                };
                 let maybe_derive_serde_serialize_token_stream = {
                     let serde_serialize_comma_token_stream = quote::quote!{serde::Serialize,};
                     match &postgresql_type {
@@ -9088,30 +9088,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     },
                 ),
             };
-
-
-
-
-
-            // let impl_crate_bind_query_for_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            //     &postgresql_type,
-            //     &try_generate_bind_increments_token_stream,
-            //     &quote::quote! {
-            //         #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
-            //         #query_snake_case
-            //     }
-            // );
-            // let impl_crate_bind_query_for_std_option_option_ident_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-            //     &std_option_option_ident_upper_camel_case,
-            //     &try_generate_bind_increments_token_stream,
-            //     &quote::quote! {
-            //         #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
-            //             Some(#value_snake_case) => Some(#value_snake_case.0),
-            //             None => None
-            //         });
-            //         #query_snake_case
-            //     }
-            // );
             let impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_token_stream = {
                 let self_zero_token_stream = {
                     let self_snake_case = naming::SelfSnakeCase;
@@ -9159,6 +9135,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ),
                 }
             };
+            let impl_sqlx_type_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
+                &postgresql_type_nullable_or_not_null_upper_camel_case,
+                &inner_type_token_stream
+            );
+            let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
+                &postgresql_type_nullable_or_not_null_upper_camel_case,
+                &inner_type_token_stream
+            );
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
@@ -9168,7 +9152,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_token_stream
-                
+                #impl_sqlx_type_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream
+                #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream
             };
             f
         };
