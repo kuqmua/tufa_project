@@ -2427,6 +2427,60 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesBitVecAsPostgresqlBit,
         SqlxTypesBitVecAsPostgresqlVarbit,
     }
+    enum CanBeNullable {
+        True,
+        False
+    }
+    impl PostgresqlType {
+        fn can_be_nullable(&self) -> CanBeNullable {
+            match &self {
+                Self::StdPrimitiveI16AsPostgresqlInt2 => CanBeNullable::True,
+                Self::StdPrimitiveI32AsPostgresqlInt4 => CanBeNullable::True,
+                Self::StdPrimitiveI64AsPostgresqlInt8 => CanBeNullable::True,
+                Self::StdPrimitiveF32AsPostgresqlFloat4 => CanBeNullable::True,
+                Self::StdPrimitiveF64AsPostgresqlFloat8 => CanBeNullable::True,
+                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => CanBeNullable::False,
+                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => CanBeNullable::False,
+                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => CanBeNullable::False,
+                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => CanBeNullable::True,
+                Self::SqlxTypesDecimalAsPostgresqlNumeric => CanBeNullable::True,
+                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => CanBeNullable::True,
+                Self::StdPrimitiveBoolAsPostgresqlBool => CanBeNullable::True,
+                Self::StdStringStringAsPostgresqlCharN => CanBeNullable::True,
+                Self::StdStringStringAsPostgresqlVarchar => CanBeNullable::True,
+                Self::StdStringStringAsPostgresqlText => CanBeNullable::True,
+                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => CanBeNullable::True,
+                Self::SqlxTypesTimeDateAsPostgresqlDate => CanBeNullable::True,
+                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => CanBeNullable::True,
+                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => CanBeNullable::True,
+                Self::SqlxTypesTimeTimeAsPostgresqlTime => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => CanBeNullable::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => CanBeNullable::True,
+                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => CanBeNullable::True,
+                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => CanBeNullable::True,
+                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => CanBeNullable::True,
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => CanBeNullable::True,
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => CanBeNullable::True,
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => CanBeNullable::False,
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => CanBeNullable::True,
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => CanBeNullable::True,
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => CanBeNullable::True,
+                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => CanBeNullable::True,
+                Self::SqlxTypesBitVecAsPostgresqlBit => CanBeNullable::True,
+                Self::SqlxTypesBitVecAsPostgresqlVarbit => CanBeNullable::True,
+            }
+        }
+    }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
@@ -10772,9 +10826,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             f
         };
-        let postgresql_type_nullable_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable);
         let postgresql_type_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
-
+        let maybe_postgresql_type_nullable_token_stream = match &postgresql_type.can_be_nullable() {
+            CanBeNullable::True => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable),
+            CanBeNullable::False => proc_macro2::TokenStream::new()
+        };
         // println!("{}", postgresql_type_nullable_token_stream);
         // println!("{}", postgresql_type_not_null_token_stream);
 
@@ -10800,8 +10856,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             #maybe_postgresql_type_primary_key_token_stream
 
             ///////////////////////////////////////
-
-
+            // #postgresql_type_not_null_token_stream
+            // #maybe_postgresql_type_nullable_token_stream
 
 
         };
