@@ -9475,6 +9475,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_postgresql_type_self_to_create_traits_for_postgresql_type_nullable_or_not_null_to_create_token_stream
                 }
             };
+            let postgresql_type_nullable_or_not_null_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_to_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_nullable_or_not_null_to_read_upper_camel_case,
+                &field_type_handle
+            );
+            let postgresql_type_nullable_or_not_null_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_to_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_nullable_or_not_null_to_update_upper_camel_case,
+                &field_type_handle
+            );
             /////////////
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
@@ -9494,6 +9504,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #maybe_primary_key_tokens_token_stream
                 #postgresql_type_nullable_or_not_null_column_token_stream
                 #postgresql_type_nullable_or_not_null_to_create_token_stream
+                #postgresql_type_nullable_or_not_null_to_read_token_stream
+                #postgresql_type_nullable_or_not_null_to_update_token_stream
             };
             f
         };
