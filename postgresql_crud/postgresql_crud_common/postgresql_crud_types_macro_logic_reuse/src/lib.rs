@@ -9585,9 +9585,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_to_delete_token_stream
             //     }
             // };
-
-
-
             let postgresql_type_nullable_or_not_null_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_where_element_token_stream = {
                 let postgresql_type_nullable_or_not_null_where_element_token_stream = {
@@ -9645,6 +9642,78 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
                 &postgresql_type_nullable_or_not_null_where_upper_camel_case
             );
+            let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
+            let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
+            let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
+                let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
+                quote::quote!{
+                    fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
+                        #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
+                        increment: &mut std::primitive::u64,
+                        column: &dyn std::fmt::Display,
+                        is_need_to_add_logical_operator: std::primitive::bool,
+                    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                        let mut acc = std::string::String::default();
+                        let mut is_need_to_add_logical_operator_inner_handle = false;
+                        for element in &#postgresql_type_self_where_snake_case.value {
+                            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                                Ok(value) => {
+                                    acc.push_str(&format!("{value} "));
+                                    is_need_to_add_logical_operator_inner_handle = true;
+                                }
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        Ok(format!("{}({acc})", &#postgresql_type_self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                    }
+                }
+            };
+            let postgresql_type_self_where_bind_value_to_query_token_stream = {
+                let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
+                quote::quote!{
+                    fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
+                        #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
+                        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        for element in postgresql_type_self_where.value {
+                            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                        }
+                        query
+                    }
+                }
+            };
+
+
+
+
+            let impl_postgresql_type_for_ident_token_stream = {
+                let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+                let self_upper_camel_case = naming::SelfUpperCamelCase;
+                let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
+                let postgresql_type_self_to_create_upper_camel_case = naming::PostgresqlTypeSelfToCreateUpperCamelCase;
+                let postgresql_type_self_to_read_upper_camel_case = naming::PostgresqlTypeSelfToReadUpperCamelCase;
+                let postgresql_type_self_where_element_upper_camel_case = naming::PostgresqlTypeSelfWhereElementUpperCamelCase;
+                quote::quote!{
+                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #postgresql_type_nullable_or_not_null_upper_camel_case {
+                        type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
+                        type #postgresql_type_self_column_upper_camel_case = #postgresql_type_nullable_or_not_null_column_upper_camel_case;
+                        #postgresql_type_self_column_query_part_token_stream
+                        type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_nullable_or_not_null_to_create_upper_camel_case;
+                        type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_nullable_or_not_null_to_read_upper_camel_case;
+                        type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_nullable_or_not_null_to_update_upper_camel_case;
+                        type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_nullable_or_not_null_to_update_query_part_error_named_upper_camel_case;
+                        #postgresql_type_self_to_update_query_part_token_stream
+                        #postgresql_type_self_to_update_bind_query_part_token_stream
+                        type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_nullable_or_not_null_where_element_upper_camel_case;
+                        type #postgresql_type_self_where_upper_camel_case = #postgresql_type_nullable_or_not_null_where_upper_camel_case;
+                        #postgresql_type_self_where_try_generate_bind_increments_token_stream
+                        #postgresql_type_self_where_bind_value_to_query_token_stream
+                    }
+                }
+            };
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
@@ -9669,6 +9738,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream
                 #postgresql_type_nullable_or_not_null_where_element_token_stream
                 #postgresql_type_nullable_or_not_null_where_token_stream
+
+
+
+                #impl_postgresql_type_for_ident_token_stream
             };
             f
         };
