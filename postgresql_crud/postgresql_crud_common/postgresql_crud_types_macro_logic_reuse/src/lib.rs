@@ -6951,7 +6951,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #maybe_derive_serde_serialize_token_stream
                         #maybe_derive_serde_deserialize_token_stream
                     )]
-                    pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #field_type);
+                    pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #inner_type_token_stream);
                 }
             };
             let maybe_impl_try_new_for_postgresql_type_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
@@ -7060,13 +7060,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 },
             };
+            ////
+
+            ////
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
             };
-            println!("{}", f);
             f
         };
+        let postgresql_type_nullable_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable);
+        let postgresql_type_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
+
+        // println!("{}", postgresql_type_nullable_token_stream);
+        // println!("{}", postgresql_type_not_null_token_stream);
 
         let generated = quote::quote!{
             #ident_token_stream
