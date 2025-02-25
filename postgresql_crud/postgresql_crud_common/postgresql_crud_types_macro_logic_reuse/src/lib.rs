@@ -9152,54 +9152,54 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream = quote::quote! {
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {}
             };
+            //todo rename CanBePrimaryKey 
+            let is_primary_key = match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => IsPrimaryKey::True,
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => IsPrimaryKey::True,
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => IsPrimaryKey::True,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => IsPrimaryKey::False,
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => IsPrimaryKey::False,
+                PostgresqlType::StdStringStringAsPostgresqlCharN => IsPrimaryKey::False,
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => IsPrimaryKey::False,
+                PostgresqlType::StdStringStringAsPostgresqlText => IsPrimaryKey::False,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => IsPrimaryKey::True,
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => IsPrimaryKey::False,
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => IsPrimaryKey::False,
+            };
             let impl_crate_create_table_column_query_part_for_postgresql_type_nullable_or_not_null_token_stream = {
-                //todo rename CanBePrimaryKey 
-                let is_primary_key = match &postgresql_type {
-                    PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => IsPrimaryKey::True,
-                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => IsPrimaryKey::True,
-                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => IsPrimaryKey::True,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => IsPrimaryKey::False,
-                    PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => IsPrimaryKey::False,
-                    PostgresqlType::StdStringStringAsPostgresqlCharN => IsPrimaryKey::False,
-                    PostgresqlType::StdStringStringAsPostgresqlVarchar => IsPrimaryKey::False,
-                    PostgresqlType::StdStringStringAsPostgresqlText => IsPrimaryKey::False,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => IsPrimaryKey::True,
-                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => IsPrimaryKey::False,
-                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => IsPrimaryKey::False,
-                };
                 let postgresql_query_type = match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "int2",
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "int4",
@@ -9252,7 +9252,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}");
                 let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type} not_null");
                 let space_additional_parameter = format!(" {{}}");
-                let content_token_stream = match (&postgresql_type_nullable_or_not_null, is_primary_key) {
+                let content_token_stream = match (&postgresql_type_nullable_or_not_null, &is_primary_key) {
                     (PostgresqlTypeNullableOrNotNull::Nullable, IsPrimaryKey::True) => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type}{space_additional_parameter}"));
                         quote::quote!{
@@ -9286,7 +9286,35 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-
+            let maybe_primary_key_tokens_token_stream = if let (PostgresqlTypeNullableOrNotNull::NotNull, IsPrimaryKey::True) = (&postgresql_type_nullable_or_not_null, &is_primary_key) {
+                let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_upper_camel_case);
+                let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
+                    quote::quote!{
+                        impl sqlx::postgres::PgHasArrayType for #postgresql_type_not_null_upper_camel_case {
+                            fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+                                <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+                            }
+                        }
+                    }
+                };
+                let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
+                    let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
+                    let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
+                    quote::quote!{
+                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type_not_null_upper_camel_case {
+                            type #postgresql_base_type_self_upper_camel_case = Self;
+                        }
+                    }
+                };
+                quote::quote!{
+                    #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
+                    #impl_sqlx_postgres_pg_has_array_type_for_token_stream
+                    #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
@@ -9301,7 +9329,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_read_traits_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_to_update_traits_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream
-                #impl_crate_create_table_column_query_part_for_postgresql_type_nullable_or_not_null_token_stream 
+                #impl_crate_create_table_column_query_part_for_postgresql_type_nullable_or_not_null_token_stream
+                #maybe_primary_key_tokens_token_stream
             };
             f
         };
