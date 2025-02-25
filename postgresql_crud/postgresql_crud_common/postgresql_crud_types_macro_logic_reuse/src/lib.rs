@@ -7360,7 +7360,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                                 extern crate serde as _serde;
                                 #[automatically_derived]
-                                impl<'de> _serde::Deserialize<'de> for #postgresql_type {
+                                impl<'de> _serde::Deserialize<'de> for #postgresql_type_not_null_upper_camel_case {
                                     fn deserialize<__D>(
                                         __deserializer: __D,
                                     ) -> _serde::__private::Result<Self, __D::Error>
@@ -8966,11 +8966,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 },
             };
+            let impl_std_fmt_display_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
+                &postgresql_type_nullable_or_not_null_upper_camel_case,
+                &quote::quote!{"{self:?}"}
+            );
+
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
                 #maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream
                 #maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream
+                #impl_std_fmt_display_for_postgresql_type_nullable_or_not_null_token_stream
             };
             f
         };
