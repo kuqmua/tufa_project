@@ -9485,6 +9485,64 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_to_update_upper_camel_case,
                 &field_type_handle
             );
+///////////
+            let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_upper_camel_case = naming::parameter::SelfToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream = {
+                quote::quote!{
+                    #[derive(
+                        Debug,
+                        Clone,
+                        PartialEq,
+                        serde::Serialize,
+                        serde::Deserialize,
+                    )]
+                    pub enum #postgresql_type_nullable_or_not_null_to_update_query_part_error_named_upper_camel_case {
+                        Todo//todo
+                    }
+                }
+            };
+            let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+            let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
+            //todo move it?
+            let postgresql_type_self_to_update_query_part_token_stream = {
+                let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
+                let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
+                //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
+                let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
+                let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
+                let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
+                let increment_snake_case = naming::IncrementSnakeCase;
+                quote::quote!{
+                    fn #postgresql_type_self_to_update_query_part_snake_case(
+                        //few parameters usefull only with json types. maybe refactor it later
+                        #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
+                        #jsonb_set_accumulator_snake_case: &std::primitive::str,
+                        #jsonb_set_target_snake_case: &std::primitive::str,
+                        #jsonb_set_path_snake_case: &std::primitive::str,
+                        #increment_snake_case: &mut std::primitive::u64
+                    ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
+                        //todo remove .unwrap()
+                        Ok(#crate_bind_query_try_generate_bind_increments_token_stream(#postgresql_type_self_to_update_snake_case, #increment_snake_case).unwrap())
+                    }
+                }
+            };
+            let postgresql_type_self_to_update_bind_query_part_token_stream = {
+                let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
+                let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
+                quote::quote!{
+                    fn #postgresql_type_self_to_update_bind_query_part<'a>(
+                        #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
+                        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        #crate_bind_query_bind_value_to_query_token_stream(#postgresql_type_self_to_update_snake_case, #query_snake_case)
+                    }
+                }
+            };
+            let postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_upper_camel_case,
+                &field_type_handle
+            );
             /////////////
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
@@ -9506,6 +9564,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #postgresql_type_nullable_or_not_null_to_create_token_stream
                 #postgresql_type_nullable_or_not_null_to_read_token_stream
                 #postgresql_type_nullable_or_not_null_to_update_token_stream
+                #postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream
+                #postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream
             };
             f
         };
