@@ -9485,7 +9485,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_to_update_upper_camel_case,
                 &field_type_handle
             );
-///////////
             let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_upper_camel_case = naming::parameter::SelfToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream = {
                 quote::quote!{
@@ -9586,7 +9585,59 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_to_delete_token_stream
             //     }
             // };
-            /////////////
+
+
+
+            let postgresql_type_nullable_or_not_null_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_where_element_token_stream = {
+                let postgresql_type_nullable_or_not_null_where_element_token_stream = {
+                    quote::quote! {
+                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                        pub struct #postgresql_type_nullable_or_not_null_where_element_upper_camel_case(pub #postgresql_type_nullable_or_not_null_upper_camel_case);
+                    }
+                };
+                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_nullable_or_not_null_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
+                    &{
+                        let column_snake_case = naming::ColumnSnakeCase;
+                        let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+                        quote::quote!{
+                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                                &self.0,
+                                #increment_snake_case,
+                                #column_snake_case,
+                                #is_need_to_add_logical_operator_snake_case,
+                            )
+                        }
+                    },
+                    &quote::quote!{
+                        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                            self.0,
+                            #query_snake_case
+                        )
+                    }
+                );
+                let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_nullable_or_not_null_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_where_element_upper_camel_case
+                );
+                let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
+                    &quote::quote!{format!("{self:#?}")},
+                );
+                let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                    &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
+                    &quote::quote!{
+                        <#postgresql_type_nullable_or_not_null_upper_camel_case as crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement>::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|element| Self(element)).collect()
+                    },
+                );
+                quote::quote! {
+                    #postgresql_type_nullable_or_not_null_where_element_token_stream
+                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_nullable_or_not_null_where_element_token_stream
+                    #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_nullable_or_not_null_where_element_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_where_element_token_stream
+                    #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_where_element_token_stream
+                }
+            };
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
