@@ -8970,6 +8970,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
                 &quote::quote!{"{self:?}"}
             );
+            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
+                &postgresql_type_nullable_or_not_null_upper_camel_case,
+                &quote::quote!{self.to_string()},
+            );
 
             let f = quote::quote! {
                 #pub_struct_postgresql_type_nullable_or_not_null_token_stream
@@ -8977,6 +8981,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream
                 #maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream
                 #impl_std_fmt_display_for_postgresql_type_nullable_or_not_null_token_stream
+                #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_token_stream
             };
             f
         };
