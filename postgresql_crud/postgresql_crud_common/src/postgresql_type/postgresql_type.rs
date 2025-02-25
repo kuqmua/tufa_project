@@ -1,7 +1,7 @@
 postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(std::primitive::i16);
+pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub std::primitive::i16);
 impl std::fmt::Display for StdPrimitiveI16AsPostgresqlInt2NotNull {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:?}", self.0)

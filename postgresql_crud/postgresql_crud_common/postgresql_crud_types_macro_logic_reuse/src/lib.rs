@@ -6833,6 +6833,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
             }
         };
+        ///////////////////////////////////
+        let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
+            let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
+            let postgresql_type_nullable_or_not_null_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+                PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type_not_null_upper_camel_case,
+            };
+            let pub_struct_postgresql_type_nullable_or_not_null_token_stream = {
+                let inner_type_token_stream: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                    PostgresqlTypeNullableOrNotNull::Nullable => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
+                    PostgresqlTypeNullableOrNotNull::NotNull => &field_type,
+                };
+                quote::quote!{
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                    pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #field_type);
+                }
+            };
+            let f = quote::quote! {
+                #pub_struct_postgresql_type_nullable_or_not_null_token_stream
+            };
+            println!("{}", f);
+            f
+        };
 
         let generated = quote::quote!{
             #ident_token_stream
@@ -6854,6 +6877,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             #postgresql_type_create_table_column_query_part_token_stream
 
             #maybe_postgresql_type_primary_key_token_stream
+
+            ///////////////////////////////////////
+
+
+
+
         };
         // if ident == "" {
         //       macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
