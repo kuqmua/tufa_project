@@ -370,6 +370,15 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 
 
 
+
+
+
+
+
+
+
+
+
 //todo rename PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2 to StdPrimitiveI16AsPostgresqlInt2NotNull
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementEqual {
@@ -399,6 +408,24 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         query
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan {
     pub logical_operator: crate::LogicalOperator,
@@ -1438,15 +1465,15 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         query
     }
 }
-pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan;
-pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementBetween = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementBetween;
-pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementIn = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementIn;
+// pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan;
+// pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementBetween = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementBetween;
+// pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementIn = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementIn;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
-    Equal(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementEqual),
-    GreaterThan(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan),
-    Between(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementBetween),
-    In(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementIn),
+    Equal(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementEqual),
+    GreaterThan(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan),
+    Between(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementBetween),
+    In(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementIn),
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
