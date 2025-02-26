@@ -9760,6 +9760,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type,
                     &where_operator_type_ident
                 );
+                //todo reuse filter declarations
 
                 let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
                     let equal = crate::filters::Equal;
