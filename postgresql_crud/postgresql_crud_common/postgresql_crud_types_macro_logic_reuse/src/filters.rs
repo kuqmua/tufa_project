@@ -56,7 +56,6 @@ fn array_position_type_token_stream() -> token_patterns::StdPrimitiveI32 {
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
     postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    is_nullable: &crate::IsNullable,
     should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
@@ -605,7 +604,6 @@ impl GreaterThan {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
@@ -831,7 +829,6 @@ impl Between {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
@@ -1071,7 +1068,6 @@ impl In {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
@@ -1285,7 +1281,6 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
-        &is_nullable,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
@@ -1422,7 +1417,6 @@ impl Before {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -1453,7 +1447,6 @@ impl CurrentDate {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1485,7 +1478,6 @@ impl GreaterThanCurrentDate {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1517,7 +1509,6 @@ impl CurrentTimestamp {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1549,7 +1540,6 @@ impl GreaterThanCurrentTimestamp {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1581,7 +1571,6 @@ impl CurrentTime {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1613,7 +1602,6 @@ impl GreaterThanCurrentTime {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
@@ -1758,7 +1746,6 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
-        &is_nullable,
         crate::ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
@@ -1908,7 +1895,6 @@ impl EqualToEncodedStringRepresentation {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
                 pub encode_format: crate::postgresql_type::postgresql_base_type::EncodeFormat,
@@ -1964,7 +1950,6 @@ impl ValueIsContainedWithinRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
@@ -1997,7 +1982,6 @@ impl ContainsAnotherRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2032,7 +2016,6 @@ impl StrictlyToLeftOfRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2067,7 +2050,6 @@ impl StrictlyToRightOfRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2102,7 +2084,6 @@ impl IncludedLowerBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
@@ -2135,7 +2116,6 @@ impl ExcludedUpperBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
@@ -2168,7 +2148,6 @@ impl GreaterThanLowerBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2203,7 +2182,6 @@ impl OverlapWithRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2238,7 +2216,6 @@ impl AdjacentWithRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
@@ -2277,7 +2254,6 @@ impl RangeLength {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
@@ -2509,7 +2485,6 @@ impl BitVecPositionEqual {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            &is_nullable,
             crate::ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
