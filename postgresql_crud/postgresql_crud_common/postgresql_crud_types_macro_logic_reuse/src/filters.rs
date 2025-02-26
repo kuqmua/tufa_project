@@ -598,7 +598,6 @@ impl GreaterThan {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -817,7 +816,6 @@ impl Between {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
         between_try_new_error_type: &BetweenTryNewErrorType,
         should_add_dot_zero: &ShouldAddDotZero,
@@ -1058,7 +1056,6 @@ impl In {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
@@ -1272,7 +1269,6 @@ fn generate_postgresql_type_self_where_bind_value_to_query_token_stream_9e47be54
 }
 fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
     ident: &dyn quote::ToTokens,
-    is_nullable: &crate::IsNullable,
     regular_expression: &RegularExpression,
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1346,11 +1342,9 @@ impl CaseSensitiveRegularExpression {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
             &ident,
-            &is_nullable,
             &RegularExpression::CaseSensitive,
             WhereOperatorName::upper_camel_case(self),
         )
@@ -1376,11 +1370,9 @@ impl CaseInsensitiveRegularExpression {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(
             &ident,
-            &is_nullable,
             &RegularExpression::CaseInsensitive,
             WhereOperatorName::upper_camel_case(self),
         )
@@ -1407,7 +1399,6 @@ impl Before {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let value_snake_case = naming::ValueSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -1441,7 +1432,6 @@ impl CurrentDate {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1472,7 +1462,6 @@ impl GreaterThanCurrentDate {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1503,7 +1492,6 @@ impl CurrentTimestamp {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1534,7 +1522,6 @@ impl GreaterThanCurrentTimestamp {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1565,7 +1552,6 @@ impl CurrentTime {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1596,7 +1582,6 @@ impl GreaterThanCurrentTime {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
@@ -1738,7 +1723,6 @@ fn generate_bind_value_to_query_token_stream_724cfe40_ee21_4d5e_adbe_954dc62a513
 fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     ident: &dyn quote::ToTokens,
-    is_nullable: &crate::IsNullable,
     length_operator: &LengthOperator,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
@@ -1816,12 +1800,10 @@ impl LengthEqual {
     // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
     //     &self,
     //     ident: &dyn quote::ToTokens,
-    //     is_nullable: &crate::IsNullable,
     // ) -> proc_macro2::TokenStream {
     //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
     //         &WhereOperatorName::upper_camel_case(self),
     //         ident,
-    //         is_nullable,
     //         &Self::length_operator(),
     //     )
     // }
@@ -1850,12 +1832,10 @@ impl LengthMoreThan {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c7837d_3661_4676_a793_fb84ceaf778e(
             &WhereOperatorName::upper_camel_case(self),
             ident,
-            is_nullable,
             &Self::length_operator(),
         )
     }
@@ -1881,7 +1861,6 @@ impl EqualToEncodedStringRepresentation {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -1940,7 +1919,6 @@ impl ValueIsContainedWithinRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
         range_type_default_initialization_token_stream: &dyn quote::ToTokens,
         range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens,
@@ -1972,7 +1950,6 @@ impl ContainsAnotherRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2006,7 +1983,6 @@ impl StrictlyToLeftOfRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2040,7 +2016,6 @@ impl StrictlyToRightOfRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2074,7 +2049,6 @@ impl IncludedLowerBound {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
         range_type_default_initialization_token_stream: &dyn quote::ToTokens,
         range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens,
@@ -2106,7 +2080,6 @@ impl ExcludedUpperBound {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
         range_type_token_stream: &dyn quote::ToTokens,
         range_type_default_initialization_token_stream: &dyn quote::ToTokens,
         range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens,
@@ -2138,7 +2111,6 @@ impl GreaterThanLowerBound {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2172,7 +2144,6 @@ impl OverlapWithRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2206,7 +2177,6 @@ impl AdjacentWithRange {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
@@ -2240,7 +2210,6 @@ impl RangeLength {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -2477,7 +2446,6 @@ impl BitVecPositionEqual {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
     ) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
@@ -3265,13 +3233,11 @@ impl EqualSecondDimension {
     // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
     //     &self,
     //     ident: &dyn quote::ToTokens,
-    //     is_nullable: &crate::IsNullable,
     //     where_operator_type: &crate::WhereOperatorType,
     // ) -> proc_macro2::TokenStream {
     //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
     //         WhereOperatorName::upper_camel_case(self),
     //         ident,
-    //         is_nullable,
     //         where_operator_type,
     //         &Self::dimension(),
     //     )
