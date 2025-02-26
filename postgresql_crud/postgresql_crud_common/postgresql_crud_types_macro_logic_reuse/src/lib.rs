@@ -10800,7 +10800,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 // #postgresql_type_nullable_or_not_null_where_element_token_stream
                 #postgresql_type_nullable_or_not_null_where_token_stream
 
-                // #impl_postgresql_type_for_ident_token_stream
+                #impl_postgresql_type_for_ident_token_stream
             };
             f
         };
