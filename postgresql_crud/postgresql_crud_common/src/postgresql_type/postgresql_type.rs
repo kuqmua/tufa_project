@@ -109,32 +109,32 @@ postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
 //     Todo,
 // }
 // pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullToDelete = StdPrimitiveI16AsPostgresqlInt2NotNull;
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement(pub PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement);
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
-    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(&self.0, increment, column, is_need_to_add_logical_operator)
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(self.0, query)
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        < PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement as crate
-        :: generate_postgresql_json_type ::
-        AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        > ::
-        all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|
-        element | Self(element)).collect()
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement(pub PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement);
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
+//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(&self.0, increment, column, is_need_to_add_logical_operator)
+//     }
+//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(self.0, query)
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {}
+// impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self:#?}")
+//     }
+// }
+// impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
+//     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+//         < PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement as crate
+//         :: generate_postgresql_json_type ::
+//         AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+//         > ::
+//         all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|
+//         element | Self(element)).collect()
+//     }
+// }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhere {
     logical_operator: crate::LogicalOperator,
@@ -895,13 +895,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement {
+pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
     Equal(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementEqual),
     GreaterThan(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan),
     Between(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementBetween),
     In(PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementIn),
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match &self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
@@ -919,13 +919,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement {}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NotNullWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![
             Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
@@ -1146,33 +1146,33 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
 //     Todo,
 // }
 // pub type PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableToDelete = StdPrimitiveI16AsPostgresqlInt2Nullable;
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement(pub PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement);
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
-    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(&self.0, increment, column, is_need_to_add_logical_operator)
-    }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(self.0, query)
-    }
-}
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        <
-        PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement
-        as crate :: generate_postgresql_json_type ::
-        AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        > ::
-        all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|
-        element | Self(element)).collect()
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement(pub PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement);
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
+//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//         crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(&self.0, increment, column, is_need_to_add_logical_operator)
+//     }
+//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(self.0, query)
+//     }
+// }
+// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {}
+// impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self:#?}")
+//     }
+// }
+// impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
+//     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+//         <
+//         PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement
+//         as crate :: generate_postgresql_json_type ::
+//         AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+//         > ::
+//         all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element().into_iter().map(|
+//         element | Self(element)).collect()
+//     }
+// }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
 pub struct PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhere {
     logical_operator: crate::LogicalOperator,
@@ -1442,13 +1442,13 @@ pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElemen
 pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementBetween = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementBetween;
 pub type PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementIn = PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2WhereElementIn;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub enum PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement {
+pub enum PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
     Equal(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementEqual),
     GreaterThan(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementGreaterThan),
     Between(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementBetween),
     In(PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElementIn),
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match &self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
@@ -1466,13 +1466,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement {}
-impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdOptionOptionStdPrimitiveI16AsPostgresqlInt2WhereElement {
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeStdPrimitiveI16AsPostgresqlInt2NullableWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![
             Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
