@@ -10740,7 +10740,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => where_element_sqlx_types_bit_vec_token_stream,
                 }
             };
-            let postgresql_type_nullable_or_not_null_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
                 &PostgresqlTypeOrJsonType::PostgresqlType,
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
@@ -10856,7 +10856,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
     // let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
     // let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
-    // let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
+    let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     // let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
     // let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
     // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
@@ -10909,7 +10909,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h5
         // #h6
         // #h7
-        // #h8
+        #h8
         // #h9
         // #h10
         // #h11

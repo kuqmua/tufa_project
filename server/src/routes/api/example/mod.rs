@@ -8,8 +8,8 @@ pub(crate) fn routes(app_state: common::repositories_types::server::routes::app_
     axum::Router::new().nest(
         &format!(
             "/{}",
-            "todo",
-            // common::repositories_types::server::routes::api::example::Example::table_name()
+            // "todo",
+            common::repositories_types::server::routes::api::example::Example::table_name()
         ),
         axum::Router::new().merge(crud(app_state)),
     )
@@ -25,16 +25,16 @@ fn crud(app_state: common::repositories_types::server::routes::app_state::DynArc
         //     axum::routing::get(get_root),
         // )
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
-        // .route("/create_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_many_route_logic))
-        // .route("/create_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_many_payload_example_route_logic))
+        .route("/create_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_many_route_logic))
+        .route("/create_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_many_payload_example_route_logic))
         // .route("/create_one", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_one_route_logic))
         // .route("/create_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_one_payload_example_route_logic))
-        // .route("/read_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_read_many_route_logic))
-        // .route("/read_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::read_many_payload_example_route_logic))
+        .route("/read_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_read_many_route_logic))
+        .route("/read_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::read_many_payload_example_route_logic))
         // .route("/read_one", axum::routing::post(common::repositories_types::server::routes::api::example::try_read_one_route_logic))
         // .route("/read_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::read_one_payload_example_route_logic))
-        // .route("/update_many", axum::routing::patch(common::repositories_types::server::routes::api::example::try_update_many_route_logic))
-        // .route("/update_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::update_many_payload_example_route_logic))
+        .route("/update_many", axum::routing::patch(common::repositories_types::server::routes::api::example::try_update_many_route_logic))
+        .route("/update_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::update_many_payload_example_route_logic))
         // .route("/update_one", axum::routing::patch(common::repositories_types::server::routes::api::example::try_update_one_route_logic))
         // .route("/update_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::update_one_payload_example_route_logic))
         //// .route("/delete_many", axum::routing::delete(common::repositories_types::server::routes::api::example::try_delete_many_route_logic))
