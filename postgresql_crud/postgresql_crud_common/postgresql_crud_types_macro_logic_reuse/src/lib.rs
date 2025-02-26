@@ -9028,7 +9028,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let impl_std_fmt_display_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
-                &quote::quote!{"{self:?}"}
+                &quote::quote!{"{self:?}"}//todo maybe make it better with match on types
             );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_nullable_or_not_null_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
@@ -9206,7 +9206,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_type_nullable_or_not_null_upper_camel_case {}
             };
             let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream = quote::quote! {
-                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {}
+                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for #postgresql_type_nullable_or_not_null_upper_camel_case {}
             };
             //todo rename CanBePrimaryKey 
             let is_primary_key = match &postgresql_type {
@@ -9303,10 +9303,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "bit(9)",//todo
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(9)",
                 };
-                let space_not_null = " not_null";
                 let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote!{crate::maybe_primary_key(is_primary_key)};
                 let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}");
-                let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type} not_null");
+                let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
                 let space_additional_parameter = format!(" {{}}");
                 let content_token_stream = match (&postgresql_type_nullable_or_not_null, &is_primary_key) {
                     (PostgresqlTypeNullableOrNotNull::Nullable, IsPrimaryKey::True) => {
@@ -9449,7 +9448,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => PostgresqlTypeInitializedByTokens::InitializedByClient,
             };
             let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
-            let field_type_struct_content_token_stream = quote::quote!{(#field_type_handle);};
+            let postgresql_type_nullable_or_not_null_struct_content_token_stream = quote::quote!{(#postgresql_type_nullable_or_not_null_upper_camel_case);};
             let empty_struct_content_token_stream = quote::quote!{(());};
             let postgresql_type_nullable_or_not_null_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
@@ -9490,7 +9489,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     match &postgresql_type_initialized_by_tokens {
                         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
                         PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &empty_struct_content_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_struct_content_token_stream,
+                        PostgresqlTypeInitializedByTokens::InitializedByClient => &postgresql_type_nullable_or_not_null_struct_content_token_stream,
                     },
                     false,
                     true,
@@ -9532,12 +9531,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_nullable_or_not_null_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_to_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                 &postgresql_type_nullable_or_not_null_to_read_upper_camel_case,
-                &field_type_handle
+                &postgresql_type_nullable_or_not_null_upper_camel_case
             );
             let postgresql_type_nullable_or_not_null_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_to_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                 &postgresql_type_nullable_or_not_null_to_update_upper_camel_case,
-                &field_type_handle
+                &postgresql_type_nullable_or_not_null_upper_camel_case
             );
             let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_upper_camel_case = naming::parameter::SelfToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream = {
@@ -9594,13 +9593,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
             let postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                 &postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_upper_camel_case,
-                &field_type_handle
+                &postgresql_type_nullable_or_not_null_upper_camel_case
             );
             // let postgresql_type_nullable_or_not_null_to_delete_token_stream = {
             //     let postgresql_type_nullable_or_not_null_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
             //         Visibility::Pub,
             //         &postgresql_type_nullable_or_not_null_to_delete_upper_camel_case,
-            //         &field_type_struct_content_token_stream,
+            //         &postgresql_type_nullable_or_not_null_struct_content_token_stream,
             //         false,
             //         true,
             //     );
@@ -10817,12 +10816,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #postgresql_type_nullable_or_not_null_to_update_token_stream
                 #postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream
                 #postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream
-                #postgresql_type_nullable_or_not_null_where_element_token_stream
-                #postgresql_type_nullable_or_not_null_where_token_stream
+                // #postgresql_type_nullable_or_not_null_where_element_token_stream
+                // #postgresql_type_nullable_or_not_null_where_token_stream
 
-                #where_element_token_stream
+                // #where_element_token_stream
 
-                #impl_postgresql_type_for_ident_token_stream
+                // #impl_postgresql_type_for_ident_token_stream
             };
             f
         };
@@ -10835,29 +10834,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // println!("{}", postgresql_type_not_null_token_stream);
 
         let generated = quote::quote!{
-            #ident_token_stream
-            #maybe_impl_try_new_token_stream
-            #maybe_impl_serde_serialize_token_stream
-            #maybe_impl_serde_deserialize_token_stream
+            // #ident_token_stream
+            // #maybe_impl_try_new_token_stream
+            // #maybe_impl_serde_serialize_token_stream
+            // #maybe_impl_serde_deserialize_token_stream
 
-            #impl_crate_create_table_column_query_part_for_ident_token_stream
-            #impl_std_fmt_display_for_ident_token_stream
+            // #impl_crate_create_table_column_query_part_for_ident_token_stream
+            // #impl_std_fmt_display_for_ident_token_stream
 
-            #postgresql_base_type_tokens
+            // #postgresql_base_type_tokens
 
-            #maybe_primary_key_tokens_token_stream
+            // #maybe_primary_key_tokens_token_stream
 
-            #where_element_token_stream
+            // #where_element_token_stream
 
-            #postgresql_type_initialized_by_tokens_token_stream
+            // #postgresql_type_initialized_by_tokens_token_stream
 
-            #postgresql_type_create_table_column_query_part_token_stream
+            // #postgresql_type_create_table_column_query_part_token_stream
 
-            #maybe_postgresql_type_primary_key_token_stream
+            // #maybe_postgresql_type_primary_key_token_stream
 
             ///////////////////////////////////////
-            // #postgresql_type_not_null_token_stream
-            // #maybe_postgresql_type_nullable_token_stream
+            #postgresql_type_not_null_token_stream
+            #maybe_postgresql_type_nullable_token_stream
 
 
         };
@@ -10878,7 +10877,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
     // let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
     // let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
-    let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
+    // let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
     // let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
     // let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
     // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
@@ -10924,14 +10923,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let generated = quote::quote!{
         // #(#postgresql_type_array)*
 
-        // #h1
+        #h1
         // #h2
         // #h3
         // #h4
         // #h5
         // #h6
         // #h7
-        #h8
+        // #h8
         // #h9
         // #h10
         // #h11
