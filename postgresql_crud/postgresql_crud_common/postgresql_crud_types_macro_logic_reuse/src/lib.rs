@@ -9686,13 +9686,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_where_element_token_stream
             //     }
             // };
-            let postgresql_type_nullable_or_not_null_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
-            let postgresql_type_nullable_or_not_null_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
-                &PostgresqlTypeOrJsonType::PostgresqlType,
-                &postgresql_type_nullable_or_not_null_upper_camel_case,
-                &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
-                &postgresql_type_nullable_or_not_null_where_upper_camel_case
-            );
             let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
             let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
             let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
@@ -10747,6 +10740,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => where_element_sqlx_types_bit_vec_token_stream,
                 }
             };
+            let postgresql_type_nullable_or_not_null_where_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
+            let postgresql_type_nullable_or_not_null_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
+                &PostgresqlTypeOrJsonType::PostgresqlType,
+                &postgresql_type_nullable_or_not_null_upper_camel_case,
+                &postgresql_type_nullable_or_not_null_where_element_upper_camel_case,
+                &postgresql_type_nullable_or_not_null_where_upper_camel_case
+            );
 
             let impl_postgresql_type_for_ident_token_stream = {
                 let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
@@ -10795,12 +10795,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #postgresql_type_nullable_or_not_null_to_update_token_stream
                 #postgresql_type_nullable_or_not_null_to_update_query_part_error_named_token_stream
                 #postgresql_type_nullable_or_not_null_upper_camel_case_to_delete_token_stream
-
+                #where_element_token_stream
 
                 // #postgresql_type_nullable_or_not_null_where_element_token_stream
-                // #postgresql_type_nullable_or_not_null_where_token_stream
-
-                #where_element_token_stream
+                #postgresql_type_nullable_or_not_null_where_token_stream
 
                 // #impl_postgresql_type_for_ident_token_stream
             };
