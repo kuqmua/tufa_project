@@ -1825,6 +1825,7 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
         }
     }
 }
+//todo reuse - PostgresqlTypeNullableOrNotNull - same thing
 enum IsNullable {
     True,
     False,
@@ -9751,6 +9752,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
+                let is_nullable = match &postgresql_type_nullable_or_not_null {
+                    PostgresqlTypeNullableOrNotNull::NotNull => IsNullable::False,
+                    PostgresqlTypeNullableOrNotNull::Nullable => IsNullable::True,
+                };
+
                 let greater_than = crate::filters::GreaterThan;
                 let postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
@@ -9761,6 +9767,50 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &where_operator_type_ident
                 );
                 //todo reuse filter declarations
+
+                // let where_element_number_token_stream = {
+                //     let equal = crate::filters::Equal;
+                //     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                //         &postgresql_type,
+                //         &is_nullable,
+                //         &where_operator_type_field_type_default,
+                //     );
+                //     let between = crate::filters::Between;
+                //     let in_handle = crate::filters::In;
+                //     let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                //         PostgresqlTypeNullableOrNotNull::NotNull => {
+                //             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                //                 &postgresql_type,
+                //                 &where_operator_type_field_type_default,
+                //                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                //                 &crate::filters::ShouldAddDotZero::False,
+                //             );
+                //             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                //                 &postgresql_type,
+                //                 &where_operator_type_field_type_default,
+                //             );
+                //             quote::quote! {
+                //                 #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                //                 #postgresql_type_tokens_where_element_between_token_stream
+                //                 #postgresql_type_tokens_where_element_in_token_stream
+                //             }
+                //         },
+                //         PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
+                //     };
+                //     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
+                //         &vec![
+                //             &equal,
+                //             &greater_than,
+                //             &between,
+                //             &in_handle,
+                //         ]
+                //     );
+                //     quote::quote! {
+                //         #postgresql_type_tokens_where_element_equal_token_stream
+                //         #maybe_filters_token_stream
+                //         #postgresql_type_tokens_where_element_token_stream
+                //     }
+                // };
 
                 let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
                     let equal = crate::filters::Equal;
