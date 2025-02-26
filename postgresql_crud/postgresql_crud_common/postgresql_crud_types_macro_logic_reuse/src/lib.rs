@@ -9742,7 +9742,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
                 };
                 let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type);
-
                 let generate_postgresql_type_nullable_or_not_null_where_element_token_stream = |variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>| {
                     generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
                         &variants,
@@ -9752,6 +9751,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
+                let greater_than = crate::filters::GreaterThan;
+                let postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &where_operator_type_field_type_default,
+                );
+                let postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                    &postgresql_type,
+                    &where_operator_type_ident
+                );
+
                 let where_element_number_token_stream = generate_nullable_and_not_nullable_token_stream(|is_nullable: IsNullable| -> proc_macro2::TokenStream {
                     let equal = crate::filters::Equal;
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -9759,11 +9768,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_field_type_default,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_field_type_default,
-                    );
+
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -9786,7 +9791,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_in_token_stream
                         #postgresql_type_tokens_where_element_token_stream
@@ -9798,11 +9803,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type,
                         &is_nullable,
                         &where_operator_type_ident,
-                    );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_ident
                     );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
@@ -9826,7 +9826,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_in_token_stream
                         #postgresql_type_tokens_where_element_token_stream
@@ -9839,11 +9839,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_field_type_default,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_field_type_default,
-                    );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -9860,7 +9855,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_token_stream
                     }
@@ -9872,11 +9867,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_ident,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_ident
-                    );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -9893,7 +9883,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_token_stream
                     }
@@ -9978,11 +9968,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_ident,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_ident
-                    );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -10009,7 +9994,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_current_date_token_stream
                         #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
@@ -10021,11 +10006,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
                         &is_nullable,
-                        &where_operator_type_field_type_default,
-                    );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
                         &where_operator_type_field_type_default,
                     );
                     let between = crate::filters::Between;
@@ -10054,7 +10034,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_current_date_token_stream
                         #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
@@ -10066,11 +10046,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
                         &is_nullable,
-                        &where_operator_type_field_type_default,
-                    );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
                         &where_operator_type_field_type_default,
                     );
                     let between = crate::filters::Between;
@@ -10099,7 +10074,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_current_time_token_stream
                         #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
@@ -10162,11 +10137,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_ident,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_ident
-                    );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -10183,7 +10153,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_token_stream
                     }
@@ -10309,11 +10279,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_field_type_default,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_field_type_default,
-                    );
                     let between = crate::filters::Between;
                     let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -10340,7 +10305,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                         #postgresql_type_tokens_where_element_between_token_stream
                         #postgresql_type_tokens_where_element_current_timestamp_token_stream
                         #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
@@ -10570,11 +10535,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &is_nullable,
                         &where_operator_type_ident,
                     );
-                    let greater_than = crate::filters::GreaterThan;
-                    let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type,
-                        &where_operator_type_ident
-                    );
                     let case_sensitive_regular_expression = crate::filters::CaseSensitiveRegularExpression;
                     let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
@@ -10593,7 +10553,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     );
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
-                        #postgresql_type_tokens_where_element_greater_than_token_stream
+                        #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                         #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
                         #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                         #postgresql_type_tokens_where_element_token_stream
