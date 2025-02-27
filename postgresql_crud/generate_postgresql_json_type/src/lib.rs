@@ -2279,11 +2279,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 }
             };
-            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream = {
-                quote::quote!{
-                    impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_json_type_ident_option_to_update_upper_camel_case {}
-                }
-            };
             quote::quote!{
                 #postgresql_json_type_ident_option_to_update_token_stream
                 #impl_try_new_for_postgresql_json_type_ident_option_to_update_token_stream
@@ -2293,7 +2288,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #impl_postgresql_json_type_ident_option_to_update_methods_token_stream
 
                 #impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream
-                #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_update_traits_for_postgresql_json_type_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
@@ -5268,15 +5262,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream = {
-                            quote::quote!{
-                                impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfToUpdateTraits<'_> for #postgresql_type_tokens_to_update_upper_camel_case {}
-                            }
-                        };
                         quote::quote!{
                             #postgresql_type_tokens_to_update_token_stream
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
-                            #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_to_create_traits_for_postgresql_type_tokens_to_update_token_stream
                         }
                     };
                     let postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
