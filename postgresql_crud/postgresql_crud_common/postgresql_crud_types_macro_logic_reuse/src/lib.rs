@@ -1781,9 +1781,9 @@ fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
     }
 }
 
-enum IsNullable {
-    False,
-    True,
+enum PostgresqlTypeNullableOrNotNull {
+    NotNull,
+    Nullable,
 }
 
 enum PostgresqlTypeOrJsonType {
@@ -2416,15 +2416,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             }
         }
-        let generate_postgresql_type_nullable_or_not_null = |is_nullable: &IsNullable| -> proc_macro2::TokenStream {
+        let generate_postgresql_type_nullable_or_not_null = |postgresql_type_nullable_or_not_null: &PostgresqlTypeNullableOrNotNull| -> proc_macro2::TokenStream {
             let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
-            let postgresql_type_nullable_or_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_nullable {
-                IsNullable::False => &postgresql_type_not_null_upper_camel_case,
-                IsNullable::True => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+            let postgresql_type_nullable_or_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::NotNull => &postgresql_type_not_null_upper_camel_case,
+                PostgresqlTypeNullableOrNotNull::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
             };
-            let field_type_handle: &dyn quote::ToTokens = match &is_nullable {
-                IsNullable::False => &field_type,
-                IsNullable::True => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
+            let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::NotNull => &field_type,
+                PostgresqlTypeNullableOrNotNull::Nullable => &quote::quote!{std::option::Option<#postgresql_type_not_null_upper_camel_case>},
             };
             let pub_struct_postgresql_type_nullable_or_not_null_token_stream = {
                 let maybe_derive_serde_serialize_token_stream = {
@@ -2536,8 +2536,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     pub struct #postgresql_type_nullable_or_not_null_upper_camel_case(pub #field_type_handle);
                 }
             };
-            let maybe_impl_try_new_for_postgresql_type_not_null_token_stream = match &is_nullable {
-                IsNullable::False => {
+            let maybe_impl_try_new_for_postgresql_type_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::NotNull => {
                     let sqlx_types_time_date_token_stream = {
                         let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
                         let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
@@ -2640,11 +2640,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
                     }
                 },
-                IsNullable::True => proc_macro2::TokenStream::new(),
+                PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new(),
             };
             let postgresql_type_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type);
-            let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream = match &is_nullable {
-                IsNullable::False => {
+            let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::NotNull => {
                     let generate_impl_serde_serialize_for_postgresql_type_not_null_tokens = |content_token_stream: &dyn quote::ToTokens|{
                         quote::quote!{
                             const _: () = {
@@ -2866,11 +2866,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
                     }
                 },
-                IsNullable::True => proc_macro2::TokenStream::new(),
+                PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new(),
             };
-            let maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream = match &is_nullable {
-                IsNullable::True => proc_macro2::TokenStream::new(),
-                IsNullable::False => {
+            let maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new(),
+                PostgresqlTypeNullableOrNotNull::NotNull => {
                     let struct_ident_double_quotes_token_stream = generate_struct_postgresql_type_where_element_tokens_double_quotes_token_stream(&postgresql_type);
                     //// let struct_ident_with_one_element_double_quotes_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
                     ////     &postgresql_type,
@@ -4556,8 +4556,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
                 &quote::quote!{self.to_string()},
             );
-            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_token_stream = match &is_nullable {
-                IsNullable::False => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_token_stream = match &postgresql_type_nullable_or_not_null {
+                PostgresqlTypeNullableOrNotNull::NotNull => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_nullable_or_not_null_upper_camel_case,
                     &{
                         let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_steram(//todo fix naming
@@ -4648,7 +4648,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         quote::quote!{Self(#initialization_token_stream)}
                     },
                 ),
-                IsNullable::True => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                PostgresqlTypeNullableOrNotNull::Nullable => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_nullable_or_not_null_upper_camel_case,
                     &{
                         //todo reuse
@@ -4691,8 +4691,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         Ok(#acc_snake_case)
                     }
                 };
-                match &is_nullable {
-                    IsNullable::False => generate_impl_crate_bind_query_for_tokens_token_stream(
+                match &postgresql_type_nullable_or_not_null {
+                    PostgresqlTypeNullableOrNotNull::NotNull => generate_impl_crate_bind_query_for_tokens_token_stream(
                         &postgresql_type_nullable_or_not_null_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
@@ -4700,7 +4700,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #query_snake_case
                         }
                     ),
-                    IsNullable::True => generate_impl_crate_bind_query_for_tokens_token_stream(
+                    PostgresqlTypeNullableOrNotNull::Nullable => generate_impl_crate_bind_query_for_tokens_token_stream(
                         &postgresql_type_nullable_or_not_null_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
@@ -4820,26 +4820,26 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}");
                 let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
                 let space_additional_parameter = format!(" {{}}");
-                let content_token_stream = match (&is_nullable, &is_primary_key) {
-                    (IsNullable::False, IsPrimaryKey::False) => {
+                let content_token_stream = match (&postgresql_type_nullable_or_not_null, &is_primary_key) {
+                    (PostgresqlTypeNullableOrNotNull::NotNull, IsPrimaryKey::False) => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type_not_null}"));
                         quote::quote!{
                             format!(#format_handle_token_stream)
                         }
                     },
-                    (IsNullable::False, IsPrimaryKey::True) => {
+                    (PostgresqlTypeNullableOrNotNull::NotNull, IsPrimaryKey::True) => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type_not_null}{space_additional_parameter}"));
                         quote::quote!{
                             format!(#format_handle_token_stream, #crate_maybe_primary_key_is_primary_key_token_stream)
                         }
                     },
-                    (IsNullable::True, IsPrimaryKey::False) => {
+                    (PostgresqlTypeNullableOrNotNull::Nullable, IsPrimaryKey::False) => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type);
                         quote::quote!{
                             format!(#format_handle_token_stream)
                         }
                     },
-                    (IsNullable::True, IsPrimaryKey::True) => {
+                    (PostgresqlTypeNullableOrNotNull::Nullable, IsPrimaryKey::True) => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type}{space_additional_parameter}"));
                         quote::quote!{
                             format!(#format_handle_token_stream, #crate_maybe_primary_key_is_primary_key_token_stream)
@@ -4854,7 +4854,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let maybe_primary_key_tokens_token_stream = if let (IsNullable::False, IsPrimaryKey::True) = (&is_nullable, &is_primary_key) {
+            let maybe_primary_key_tokens_token_stream = if let (PostgresqlTypeNullableOrNotNull::NotNull, IsPrimaryKey::True) = (&postgresql_type_nullable_or_not_null, &is_primary_key) {
                 let impl_sqlx_encode_sqlx_postgres_for_ident_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_upper_camel_case);
                 let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
                     quote::quote!{
@@ -5160,12 +5160,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
                 let postgresql_type_tokens_where_element_equal_where_operator_type_field_type_default_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
-                    &is_nullable,
+                    &postgresql_type_nullable_or_not_null,
                     &where_operator_type_field_type_default,
                 );
                 let postgresql_type_tokens_where_element_equal_where_operator_type_ident_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                     &postgresql_type,
-                    &is_nullable,
+                    &postgresql_type_nullable_or_not_null,
                     &where_operator_type_ident,
                 );
 
@@ -5179,8 +5179,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
 
                 let where_element_number_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type_default,
@@ -5197,7 +5197,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5214,8 +5214,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_postgres_types_pg_money_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_ident,
@@ -5232,7 +5232,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5249,8 +5249,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_decimal_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type_default,
@@ -5262,7 +5262,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5278,8 +5278,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_big_decimal_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_ident,
@@ -5291,7 +5291,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5318,8 +5318,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_std_string_string_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5331,7 +5331,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5347,8 +5347,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_std_vec_vec_std_primitive_u8_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5360,7 +5360,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5376,8 +5376,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_time_date_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_ident,
@@ -5397,7 +5397,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5415,8 +5415,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_chrono_naive_date_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type_default,
@@ -5436,7 +5436,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5454,8 +5454,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_chrono_naive_time_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type_default,
@@ -5475,7 +5475,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5499,11 +5499,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
-                        &is_nullable,
+                        &postgresql_type_nullable_or_not_null,
                         &where_operator_type_field_type,
                     );
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type,
@@ -5527,7 +5527,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5545,8 +5545,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_postgres_types_pg_interval_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_ident,
@@ -5558,7 +5558,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5579,8 +5579,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let range_type_should_impl_range_length = range_type.should_impl_range_length();
                     let range_type_default_initialization_token_stream = range_type.default_initialization_token_stream();
                     let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = range_type.postgresql_type_self_where_bind_value_to_query_parameter_token_stream();
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &range_type_token_stream,
@@ -5637,7 +5637,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #maybe_postgresql_type_tokens_where_element_range_length_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &{
@@ -5678,8 +5678,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal);
                 let where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
                 let where_element_sqlx_types_chrono_naive_date_time_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type_default,
@@ -5699,7 +5699,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5723,11 +5723,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
-                        &is_nullable,
+                        &postgresql_type_nullable_or_not_null,
                         &where_operator_type_field_type,
                     );
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                                 &where_operator_type_field_type,
@@ -5751,7 +5751,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5769,8 +5769,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_time_offset_date_time_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5807,7 +5807,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5823,8 +5823,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5839,7 +5839,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5855,8 +5855,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5871,7 +5871,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5887,8 +5887,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_uuid_uuid_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5900,7 +5900,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5918,7 +5918,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_ipnetwork_ip_network_token_stream = {
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type,
-                        &is_nullable,
+                        &postgresql_type_nullable_or_not_null,
                         &WhereOperatorType::FieldType {
                             field_type: &field_type,
                             default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
@@ -5935,8 +5935,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_mac_address_mac_address_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5949,7 +5949,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -5966,8 +5966,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_bit_vec_token_stream = {
-                    let maybe_filters_token_stream = match &is_nullable {
-                        IsNullable::False => {
+                    let maybe_filters_token_stream = match &postgresql_type_nullable_or_not_null {
+                        PostgresqlTypeNullableOrNotNull::NotNull => {
                             let postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream = bit_vec_position_equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type,
                             );
@@ -5975,7 +5975,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #postgresql_type_tokens_where_element_bit_vec_position_equal_token_stream
                             }
                         },
-                        IsNullable::True => proc_macro2::TokenStream::new()
+                        PostgresqlTypeNullableOrNotNull::Nullable => proc_macro2::TokenStream::new()
                     };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_nullable_or_not_null_where_element_token_stream(
                         &vec![
@@ -6157,9 +6157,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_postgresql_type_for_ident_token_stream
             }
         };
-        let postgresql_type_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&IsNullable::False);
+        let postgresql_type_not_null_token_stream = generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::NotNull);
         let maybe_postgresql_type_nullable_token_stream = match &postgresql_type.can_be_nullable() {
-            CanBeNullable::True => generate_postgresql_type_nullable_or_not_null(&IsNullable::True),
+            CanBeNullable::True => generate_postgresql_type_nullable_or_not_null(&PostgresqlTypeNullableOrNotNull::Nullable),
             CanBeNullable::False => proc_macro2::TokenStream::new()
         };
         let generated = quote::quote!{

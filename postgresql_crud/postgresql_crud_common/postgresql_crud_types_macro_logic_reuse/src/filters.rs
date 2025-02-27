@@ -463,7 +463,7 @@ fn generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3
 fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     ident: &dyn quote::ToTokens,
-    is_nullable: &crate::IsNullable,
+    postgresql_type_nullable_or_not_null: &crate::PostgresqlTypeNullableOrNotNull,
     where_operator_type: &crate::WhereOperatorType,
     dimension: &Dimension,
 ) -> proc_macro2::TokenStream {
@@ -475,8 +475,8 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
     let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
     let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
-    match &is_nullable {
-        crate::IsNullable::False => {
+    match &postgresql_type_nullable_or_not_null {
+        crate::PostgresqlTypeNullableOrNotNull::NotNull => {
             let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
                 where_operator_type: &where_operator_type,
             };
@@ -493,7 +493,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817
                 &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
             )
         },
-        crate::IsNullable::True => {
+        crate::PostgresqlTypeNullableOrNotNull::Nullable => {
             let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
                 where_operator_type: &where_operator_type,
             };
@@ -554,13 +554,13 @@ impl Equal {
     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
         &self,
         ident: &dyn quote::ToTokens,
-        is_nullable: &crate::IsNullable,
+        postgresql_type_nullable_or_not_null: &crate::PostgresqlTypeNullableOrNotNull,
         where_operator_type: &crate::WhereOperatorType,
     ) -> proc_macro2::TokenStream {
         generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
             WhereOperatorName::upper_camel_case(self),
             ident,
-            is_nullable,
+            postgresql_type_nullable_or_not_null,
             where_operator_type,
             &Self::dimension(),
         )
