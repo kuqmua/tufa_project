@@ -476,23 +476,6 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817
     let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
     let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
     match &is_nullable {
-        crate::IsNullable::True => {
-            let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
-                where_operator_type: &where_operator_type,
-            };
-            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                &postgresql_type_or_json_type,
-                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
-                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
-                ),
-                should_where_element_fields_be_public,
-                &should_implement_schemars_json_schema,
-                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
-                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
-                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
-                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
-            )
-        },
         crate::IsNullable::False => {
             let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType {
                 where_operator_type: &where_operator_type,
@@ -506,6 +489,23 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817
                 &should_implement_schemars_json_schema,
                 &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
                 &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
+                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
+                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+            )
+        },
+        crate::IsNullable::True => {
+            let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType {
+                where_operator_type: &where_operator_type,
+            };
+            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+                &postgresql_type_or_json_type,
+                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(
+                    &naming::parameter::PostgresqlTypeStdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)
+                ),
+                should_where_element_fields_be_public,
+                &should_implement_schemars_json_schema,
+                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
+                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
                 &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
                 &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
             )
