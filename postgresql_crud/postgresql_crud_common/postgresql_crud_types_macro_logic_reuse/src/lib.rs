@@ -3217,7 +3217,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = {
-                            let std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream = quote::quote!{std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp>};
+                            //todo reusage
+                            let std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream = quote::quote!{std::collections::Bound<SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull>};
                             generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                                 &std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream,
                                 &std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream,
@@ -3563,14 +3564,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         };
                         (
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDateTime}),
-                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp}),
+                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull}),//todo reuse
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>}),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>}),
-                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz}),
+                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull}),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDate}),
-                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeDateAsPostgresqlDate}),
+                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull}),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::Decimal}),
-                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumeric})
+                            generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull})
                         )
                     };
 
@@ -6228,7 +6229,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "pPostgresqlTypeTokens",
-    //     &h21,
+    //     &h25,
     // );
 
     let generated = quote::quote!{
@@ -6255,9 +6256,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h19
         #h20
         #h21
-        // #h22
-        // #h23
-        // #h24
+        #h22
+        #h23
+        #h24
         // #h25
         // #h26
         // #h27
