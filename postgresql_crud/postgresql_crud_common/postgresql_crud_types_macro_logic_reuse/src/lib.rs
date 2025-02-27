@@ -2140,10 +2140,10 @@ impl RangeType {
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDateAsPostgresqlDate},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumeric},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo reuse
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},
         }
     }
     fn should_impl_range_length(&self) -> ShouldImplRangeLength {
@@ -2808,7 +2808,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
                     let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
                         &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumeric},//todo how to reuse naming?
+                            &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},//todo how to reuse naming?
                             true,
                         )
                     );
@@ -3316,7 +3316,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = {
-                            let token_stream = quote::quote!{std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumeric>};
+                            let token_stream = quote::quote!{std::collections::Bound<SqlxTypesBigDecimalAsPostgresqlNumericNotNull>};//todo
                             generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                                 &token_stream,
                                 &token_stream,
@@ -6228,7 +6228,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "pPostgresqlTypeTokens",
+    //     "PostgresqlTypeTokens",
     //     &h32,
     // );
 
@@ -6266,7 +6266,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h29
         // #h30
         // #h31
-        // #h32
+        #h32
         #h33
         #h34
         #h35
