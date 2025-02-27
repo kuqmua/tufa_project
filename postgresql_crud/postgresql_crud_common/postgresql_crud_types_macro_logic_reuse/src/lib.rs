@@ -2786,7 +2786,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
                     let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
                         &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp},//todo how to reuse naming?
+                            &quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},//todo how to reuse naming?
                             false,
                         )
                     );
@@ -6259,7 +6259,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h22
         #h23
         #h24
-        // #h25
+        #h25
         #h26
         #h27
         #h28
