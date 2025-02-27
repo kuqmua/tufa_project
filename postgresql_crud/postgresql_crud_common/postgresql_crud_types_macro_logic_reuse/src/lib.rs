@@ -2261,19 +2261,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 Self::SqlxTypesBitVecAsPostgresqlVarbit => CanBeNullable::True,
             }
         }
-    }
-    impl quote::ToTokens for PostgresqlType {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string()
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream"))
-            .to_tokens(tokens)
-        }
-    }
-
-    let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
-        let field_type = {
-            let value = match &postgresql_type {
+        fn field_type_stringified(&self) -> &'static std::primitive::str {
+            match &self {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "std::primitive::i16",
                 PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "std::primitive::i32",
                 PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => "std::primitive::i64",
@@ -2318,10 +2307,25 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "sqlx::types::mac_address::MacAddress",
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "sqlx::types::BitVec",
                 PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "sqlx::types::BitVec",
-            };
-            value.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
-        };
+            }
+        }
+        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
+            self.field_type_stringified()
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap()
+        }
+    }
+    impl quote::ToTokens for PostgresqlType {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            self.to_string()
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream"))
+            .to_tokens(tokens)
+        }
+    }
+
+    let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
+        let field_type = postgresql_type.field_type_token_stream();
         enum ParameterNumber {
             One,
             Two,
@@ -2337,6 +2341,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         }
         let generate_postgresql_type_not_null_or_nullable = |postgresql_type_not_null_or_nullable: &PostgresqlTypeNotNullOrNullable| -> proc_macro2::TokenStream {
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz;
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz.field_type_token_stream();
+
             let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => &postgresql_type_not_null_upper_camel_case,
@@ -3152,7 +3159,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = {
-                            let std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = quote::quote!{std::collections::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>};
+                            let std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = quote::quote!{std::collections::Bound<#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream>};
                             generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                                 &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                                 &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -3485,7 +3492,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         (
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDateTime}),
                             generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull}),//todo reuse
-                            generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>}),
+                            generate_std_collections_bound_token_stream(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>}),
                             generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull}),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDate}),
@@ -5471,18 +5478,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
                 }
                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
-                    let range_type_token_stream = match &range_type {
-                        RangeType::I32 => quote::quote!{std::primitive::i32},
-                        RangeType::I64 => quote::quote!{std::primitive::i64},
-                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>},
-                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => quote::quote!{sqlx::types::chrono::NaiveDateTime},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => quote::quote!{sqlx::types::chrono::NaiveDate},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => quote::quote!{sqlx::types::Decimal},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo reuse
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},
+                    let range_type_token_stream: &dyn quote::ToTokens = match &range_type {
+                        RangeType::I32 => &quote::quote!{std::primitive::i32},
+                        RangeType::I64 => &quote::quote!{std::primitive::i64},
+                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream,
+                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => &quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => &quote::quote!{sqlx::types::chrono::NaiveDateTime},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => &quote::quote!{sqlx::types::chrono::NaiveDate},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => &quote::quote!{sqlx::types::Decimal},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => &quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo reuse
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => &quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => &quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},
                     };
                     let range_type_should_impl_range_length = match &range_type {
                         RangeType::I32 => ShouldImplRangeLength::True,
