@@ -5,13 +5,6 @@ pub trait PostgresqlTypeSelfToCreateTraits<'a>: std::fmt::Debug
     + serde::Deserialize<'a>
     + crate::BindQuery<'a>
     + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-pub trait PostgresqlTypeSelfToReadTraits<'a>: std::fmt::Debug
-    + Clone
-    + PartialEq
-    + serde::Serialize
-    + serde::Deserialize<'a>
-    + sqlx::Decode<'a, sqlx::Postgres>
-    + sqlx::Type<sqlx::Postgres> {}
 pub trait PostgresqlTypeSelfToUpdateTraits<'a>: 
     std::fmt::Debug
     + Clone
@@ -51,7 +44,13 @@ pub trait PostgresqlType<'a> {
     //maybe move it into own trait?
     fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String;
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>;
-    type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>;
+    type PostgresqlTypeSelfToRead: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>;
     type PostgresqlTypeSelfToUpdateQueryPartErrorNamed: std::fmt::Debug;// + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
     fn postgresql_type_self_to_update_query_part(
@@ -82,7 +81,14 @@ pub trait PostgresqlType<'a> {
 pub trait PostgresqlTypePrimaryKey<'a> {
     type PostgresqlTypeSelfToCreate: PostgresqlTypeSelfToCreateTraits<'a>
         + sqlx::Type<sqlx::Postgres>;
-    type PostgresqlTypeSelfToRead: PostgresqlTypeSelfToReadTraits<'a>
+    type PostgresqlTypeSelfToRead: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>
+
         + crate::BindQuery<'a>
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlTypeSelfToUpdate: PostgresqlTypeSelfToUpdateTraits<'a>
