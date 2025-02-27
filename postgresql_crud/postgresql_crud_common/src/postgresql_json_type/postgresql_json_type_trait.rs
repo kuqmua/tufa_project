@@ -54,14 +54,7 @@ pub trait PostgresqlJsonType {
         + serde::Deserialize<'a>
         // + schemars::JsonSchema //todo
         + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
-        + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-
-        + std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
+        + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlJsonTypeSelfWhere: std::fmt::Debug
         + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
