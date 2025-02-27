@@ -3136,7 +3136,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            match #postgresql_type::try_new(__field0, __field1, __field2) {
+                            match #postgresql_type_not_null_upper_camel_case::try_new(__field0, __field1, __field2) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -3807,7 +3807,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
                         let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::types::BigDecimal::new(__field0.0, __field1)});
                         let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote!{
-                            match #postgresql_type::try_new(__field0, __field1, __field2) {
+                            match #postgresql_type_not_null_upper_camel_case::try_new(__field0, __field1, __field2) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -6227,8 +6227,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "PostgresqlTypeTokens",
-    //     &h11,
+    //     "pPostgresqlTypeTokens",
+    //     &h17,
     // );
 
     let generated = quote::quote!{
@@ -6245,12 +6245,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h9
         #h10
         #h11
-        // #h12
-        // #h13
-        // #h14
-        // #h15
-        // #h16
-        // #h17
+        #h12
+        #h13
+        #h14
+        #h15
+        #h16
+        #h17
         // #h18
         // #h19
         // #h20
