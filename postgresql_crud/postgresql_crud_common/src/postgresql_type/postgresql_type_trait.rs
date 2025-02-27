@@ -87,16 +87,7 @@ pub trait PostgresqlTypePrimaryKey<'a> {
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType
 
-        + std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Type<sqlx::Postgres>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuery<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        ;
+        + sqlx::Decode<'a, sqlx::Postgres>;
     type PostgresqlTypeSelfToRead: std::fmt::Debug
         + Clone
         + PartialEq
@@ -109,18 +100,7 @@ pub trait PostgresqlTypePrimaryKey<'a> {
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
         
         + sqlx::Encode<'a, sqlx::Postgres>
-        + sqlx::postgres::PgHasArrayType
-        
-        + std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Type<sqlx::Postgres>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuery<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        ;
+        + sqlx::postgres::PgHasArrayType;
     type PostgresqlTypeSelfToUpdate: std::fmt::Debug
         + Clone
         + PartialEq
@@ -135,16 +115,7 @@ pub trait PostgresqlTypePrimaryKey<'a> {
         + sqlx::Encode<'a, sqlx::Postgres>
         + sqlx::postgres::PgHasArrayType
         
-        + std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Type<sqlx::Postgres>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuery<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        ;
+        + crate::BindQuery<'a>;
     type PostgresqlTypeSelfToDelete: std::fmt::Debug
         + Clone
         + PartialEq
@@ -157,18 +128,7 @@ pub trait PostgresqlTypePrimaryKey<'a> {
         + sqlx::Type<sqlx::Postgres>
         + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
         + sqlx::Encode<'a, sqlx::Postgres>
-        + sqlx::postgres::PgHasArrayType
-        
-        + std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + serde::Deserialize<'a>
-        + sqlx::Type<sqlx::Postgres>
-        + sqlx::Decode<'a, sqlx::Postgres>
-        + crate::BindQuery<'a>
-        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
-        ;
+        + sqlx::postgres::PgHasArrayType;
 }
 
 /////////////////////
