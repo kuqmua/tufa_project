@@ -5056,17 +5056,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     },
                 );
-                let impl_postgresql_type_self_to_create_traits_for_postgresql_type_nullable_or_not_null_to_create_token_stream = {
-                    let postgresql_type_self_to_create_traits_upper_camel_case = naming::PostgresqlTypeSelfToCreateTraitsUpperCamelCase;
-                    quote::quote!{
-                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_self_to_create_traits_upper_camel_case<'_> for #postgresql_type_nullable_or_not_null_to_create_upper_camel_case {}
-                    }
-                };
                 quote::quote! {
                     #postgresql_type_nullable_or_not_null_to_create_token_stream
                     #impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_to_create_token_stream
                     #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_nullable_or_not_null_to_create_token_stream
-                    #impl_postgresql_type_self_to_create_traits_for_postgresql_type_nullable_or_not_null_to_create_token_stream
                 }
             };
             let postgresql_type_nullable_or_not_null_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type_nullable_or_not_null_upper_camel_case);
