@@ -3151,7 +3151,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = {
-                            let std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream = quote::quote!{std::collections::Bound<sqlx::types::chrono::NaiveDateTime>};
+                            let std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream = quote::quote!{std::collections::Bound<#sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream>};
                             generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                                 &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream,
                                 &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream,
@@ -3511,7 +3511,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             quote::quote!{std::collections::Bound<#type_token_stream>}
                         };
                         (
-                            generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::NaiveDateTime}),
+                            generate_std_collections_bound_token_stream(&sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream),
                             generate_std_collections_bound_token_stream(&quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull}),//todo reuse
                             generate_std_collections_bound_token_stream(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream),
                             generate_std_collections_bound_token_stream(&quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>}),
@@ -5500,11 +5500,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
                     let range_type_token_stream: &dyn quote::ToTokens = match &range_type {
-                        RangeType::I32 => &quote::quote!{std::primitive::i32},
-                        RangeType::I64 => &quote::quote!{std::primitive::i64},
+                        RangeType::I32 => &std_primitive_i16_as_postgresql_int2_field_type_token_stream,
+                        RangeType::I64 => &std_primitive_i32_as_postgresql_int4_field_type_token_stream,
                         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream,
                         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => &quote::quote!{sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>},
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => &quote::quote!{sqlx::types::chrono::NaiveDateTime},
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => &sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream,
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => &quote::quote!{sqlx::types::chrono::NaiveDate},
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => &quote::quote!{sqlx::types::Decimal},
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => &quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo reuse
