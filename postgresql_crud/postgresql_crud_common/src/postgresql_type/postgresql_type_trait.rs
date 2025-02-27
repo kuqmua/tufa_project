@@ -133,17 +133,23 @@ pub trait PostgresqlTypePrimaryKey<'a> {
 
 /////////////////////
 
-pub trait PostgresqlTypeSelfTraits<'a>: std::fmt::Debug
-    + Clone
-    + PartialEq
-    + serde::Serialize
-    + serde::Deserialize<'a>
-    + sqlx::Type<sqlx::Postgres>
-    + sqlx::Decode<'a, sqlx::Postgres>
-    + crate::BindQuery<'a>
-    + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {}
-
 pub trait PostgresqlBaseType<'a> {
-    type PostgresqlBaseTypeSelf: PostgresqlTypeSelfTraits<'a>;
-    type PostgresqlBaseTypeStdOptionOptionSelf: PostgresqlTypeSelfTraits<'a>;
+    type PostgresqlBaseTypeSelf: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Type<sqlx::Postgres>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + crate::BindQuery<'a>
+        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type PostgresqlBaseTypeStdOptionOptionSelf: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        + sqlx::Type<sqlx::Postgres>
+        + sqlx::Decode<'a, sqlx::Postgres>
+        + crate::BindQuery<'a>
+        + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 }

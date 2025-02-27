@@ -4748,9 +4748,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_nullable_or_not_null_upper_camel_case,
                 &field_type_handle
             );
-            let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream = quote::quote! {
-                impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfTraits<'_> for #postgresql_type_nullable_or_not_null_upper_camel_case {}
-            };
             //todo rename CanBePrimaryKey 
             let is_primary_key = match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => IsPrimaryKey::False,
@@ -6183,7 +6180,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_bind_query_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_nullable_or_not_null_token_stream
-                #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_traits_for_postgresql_type_nullable_or_not_null_token_stream
                 #impl_crate_create_table_column_query_part_for_postgresql_type_nullable_or_not_null_token_stream
                 #maybe_primary_key_tokens_token_stream
                 #postgresql_type_nullable_or_not_null_column_token_stream
