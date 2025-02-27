@@ -4895,19 +4895,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream = {
-                    let postgresql_base_type_primary_key_upper_camel_case = naming::PostgresqlBaseTypePrimaryKeyUpperCamelCase;
-                    let postgresql_base_type_self_upper_camel_case = naming::PostgresqlBaseTypeSelfUpperCamelCase;
-                    quote::quote!{
-                        impl crate::postgresql_type::postgresql_type_trait:: #postgresql_base_type_primary_key_upper_camel_case<'_> for #postgresql_type_not_null_upper_camel_case {
-                            type #postgresql_base_type_self_upper_camel_case = Self;
-                        }
-                    }
-                };
                 quote::quote!{
                     #impl_sqlx_encode_sqlx_postgres_for_ident_token_stream
                     #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-                    #impl_crate_postgresql_type_postgresql_base_type_trait_postgresql_base_type_primary_key_for_ident_token_stream
                 }
             }
             else {
