@@ -6229,7 +6229,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &h32,
+    //     &h30,
     // );
 
     let generated = quote::quote!{
@@ -6265,7 +6265,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h28
         // #h29
         // #h30
-        // #h31
+        #h31
         #h32
         #h33
         #h34
