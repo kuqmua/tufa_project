@@ -6263,7 +6263,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #h26
         // #h27
         // #h28
-        // #h29
+        #h29
         #h30
         #h31
         #h32
