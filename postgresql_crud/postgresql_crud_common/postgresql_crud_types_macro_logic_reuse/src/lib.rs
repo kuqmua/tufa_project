@@ -3912,7 +3912,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let serde_private_ok_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&serde_private_ok_token_stream);
                             quote::quote!{
                                 #[inline]
-                                fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type, V::Error>
+                                fn visit_map<V>(self, mut map: V) -> Result<#postgresql_type_not_null_upper_camel_case, V::Error>
                                 where
                                     V: serde::de::MapAccess<'de>,
                                 {
@@ -4260,7 +4260,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
                                 &postgresql_type_visitor_upper_camel_case,
                                 &quote::quote!{
-                                    type Value = #postgresql_type;
+                                    type Value = #postgresql_type_not_null_upper_camel_case;
                                     #fn_expecting_struct_ident_double_quotes_token_stream
                                     #first_token_stream
                                     #second_token_stream
@@ -6228,7 +6228,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "pPostgresqlTypeTokens",
-    //     &h17,
+    //     &h21,
     // );
 
     let generated = quote::quote!{
@@ -6251,10 +6251,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h15
         #h16
         #h17
-        // #h18
-        // #h19
-        // #h20
-        // #h21
+        #h18
+        #h19
+        #h20
+        #h21
         // #h22
         // #h23
         // #h24
