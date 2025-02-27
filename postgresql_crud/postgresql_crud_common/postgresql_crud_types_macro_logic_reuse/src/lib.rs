@@ -2923,7 +2923,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         (
                             generate_serde_deserializer_deserialize_struct_visitor_token_stream(&quote::quote!{
                                 __Visitor {
-                                    marker: _serde::__private::PhantomData::<#postgresql_type>,
+                                    marker: _serde::__private::PhantomData::<#postgresql_type_not_null_upper_camel_case>,
                                     lifetime: _serde::__private::PhantomData,
                                 }
                             }),
@@ -6227,8 +6227,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "pPostgresqlTypeTokens",
-    //     &h9,
+    //     "PostgresqlTypeTokens",
+    //     &h11,
     // );
 
     let generated = quote::quote!{
@@ -6244,7 +6244,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h8
         #h9
         #h10
-        // #h11
+        #h11
         // #h12
         // #h13
         // #h14
