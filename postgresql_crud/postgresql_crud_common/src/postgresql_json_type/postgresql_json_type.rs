@@ -395,7 +395,6 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {}
 impl error_occurence_lib::ToStdStringString for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")

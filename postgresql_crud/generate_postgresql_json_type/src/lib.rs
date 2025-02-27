@@ -3584,17 +3584,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_json_type_tokens_where_element_token_stream = {
-                            quote::quote!{
-                                impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_json_type_tokens_where_element_upper_camel_case {}
-                            }
-                        };
                         quote::quote!{
                             #postgresql_json_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_element_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_postgresql_json_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_element_token_stream
-                            #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_json_type_tokens_where_element_token_stream
                         }
                     };
                     let postgresql_json_type_tokens_where_token_stream = {
@@ -5505,17 +5499,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_element_token_stream = {
-                            quote::quote!{
-                                impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #postgresql_type_tokens_where_element_upper_camel_case {}
-                            }
-                        };
                         quote::quote!{
                             #postgresql_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_postgresql_json_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_element_token_stream
-                            #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_self_where_traits_for_postgresql_type_tokens_where_element_token_stream
                         }
                     };
                     let postgresql_type_tokens_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type.add_postfix(tokens_upper_camel_case));

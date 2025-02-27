@@ -1735,9 +1735,6 @@ fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std
         }
     }
 }
-fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    quote::quote! {impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereElementTraits<'_> for #ident {}}
-}
 
 enum PostgresqlTypeNullableOrNotNull {
     Nullable,
@@ -2023,9 +2020,6 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
             }
         }
     );
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_tokens_token_stream(
-        &postgresql_type_tokens_where_element_upper_camel_case
-    );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
         &postgresql_type_tokens_where_element_upper_camel_case,
         &quote::quote!{format!("{self:#?}")},
@@ -2047,7 +2041,6 @@ fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_
     quote::quote! {
         #postgresql_type_tokens_where_element_token_stream
         #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
-        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_element_traits_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
         #impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
