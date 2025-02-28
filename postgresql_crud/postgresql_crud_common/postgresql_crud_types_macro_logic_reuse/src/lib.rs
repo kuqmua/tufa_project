@@ -138,32 +138,6 @@ impl PostgresqlJsonTypeVariant {
     }
 }
 
-#[derive(Debug, Clone)]
-enum PostgresqlJsonTypeSpecific {
-    Number,
-    Bool,
-    String,
-}
-impl std::convert::From<&PostgresqlJsonTypeHandle> for PostgresqlJsonTypeSpecific {
-    fn from(value: &PostgresqlJsonTypeHandle) -> Self {
-        match value {
-            PostgresqlJsonTypeHandle::StdPrimitiveI8 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI16 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveI64 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU8 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU16 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveU64 |
-            PostgresqlJsonTypeHandle::StdPrimitiveF32 |
-            PostgresqlJsonTypeHandle::StdPrimitiveF64 => Self::Number,
-            PostgresqlJsonTypeHandle::StdPrimitiveBool => Self::Bool,
-            PostgresqlJsonTypeHandle::StdStringString |
-            PostgresqlJsonTypeHandle::UuidUuid => Self::String,
-        }
-    }
-}
-
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypeHandle {
     StdPrimitiveI8,
@@ -503,6 +477,32 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             }
         }
+        #[derive(Debug, Clone)]
+        enum PostgresqlJsonTypeSpecific {
+            Number,
+            Bool,
+            String,
+        }
+        impl std::convert::From<&PostgresqlJsonTypeHandle> for PostgresqlJsonTypeSpecific {
+            fn from(value: &PostgresqlJsonTypeHandle) -> Self {
+                match value {
+                    PostgresqlJsonTypeHandle::StdPrimitiveI8 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveI16 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveI32 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveI64 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveU8 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveU16 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveU32 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveU64 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveF32 |
+                    PostgresqlJsonTypeHandle::StdPrimitiveF64 => Self::Number,
+                    PostgresqlJsonTypeHandle::StdPrimitiveBool => Self::Bool,
+                    PostgresqlJsonTypeHandle::StdStringString |
+                    PostgresqlJsonTypeHandle::UuidUuid => Self::String,
+                }
+            }
+        }
+        let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
         let postgresql_json_type_ident_where_element_token_stream = {
             let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
             
@@ -898,7 +898,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
             match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
                 PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => generate_postgresql_json_type_where_element_number_token_stream(),
@@ -958,7 +957,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 // }
                 generated
             };
-            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
             match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
                 PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => proc_macro2::TokenStream::new(),
