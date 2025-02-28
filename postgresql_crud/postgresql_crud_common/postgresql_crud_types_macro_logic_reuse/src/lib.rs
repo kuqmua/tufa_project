@@ -2080,19 +2080,6 @@ impl WhereOperatorType<'_> {
     }
 }
 
-enum ShouldImplRangeLength {
-    True,
-    False
-}
-
-// fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
-//     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
-// }
-fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
-    let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-    quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-}
-
 #[proc_macro]
 pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -4528,6 +4515,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )}
             };
 
+            // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
+            //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
+            // }
+            fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
+                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+                quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
+            }
+            
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
@@ -5534,6 +5529,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => &quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},
                     };
+                    enum ShouldImplRangeLength {
+                        True,
+                        False
+                    }
                     let range_type_should_impl_range_length = match &range_type {
                         RangeType::I32 => ShouldImplRangeLength::True,
                         RangeType::I64 => ShouldImplRangeLength::True,
