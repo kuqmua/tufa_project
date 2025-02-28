@@ -302,6 +302,14 @@ impl quote::ToTokens for StdPrimitiveI64 {
         quote::quote! {std::primitive::i64}.to_tokens(tokens)
     }
 }
+pub struct StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+impl quote::ToTokens for StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        }.to_tokens(tokens)
+    }
+}
 pub struct StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
 impl quote::ToTokens for StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
