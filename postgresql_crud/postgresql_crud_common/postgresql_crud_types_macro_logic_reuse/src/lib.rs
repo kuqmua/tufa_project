@@ -1719,12 +1719,6 @@ fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std
     }
 }
 
-enum PostgresqlTypeInitializedByTokens {
-    InitializedUsingDefaultKeywordByPostgresql,
-    InitializedUsingUuidGenerateV4FunctionByPostgresql,
-    InitializedByClient,
-}
-
 enum IsPrimaryKey {
     True,
     False,
@@ -4758,6 +4752,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_column_token_stream
                 }
             };
+            enum PostgresqlTypeInitializedByTokens {
+                InitializedUsingDefaultKeywordByPostgresql,
+                InitializedUsingUuidGenerateV4FunctionByPostgresql,
+                InitializedByClient,
+            }
             let postgresql_type_initialized_by_tokens = match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => PostgresqlTypeInitializedByTokens::InitializedByClient,
                 PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => PostgresqlTypeInitializedByTokens::InitializedByClient,
