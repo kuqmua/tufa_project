@@ -2319,55 +2319,71 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
                         let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
                         let less_than_minimum_postgresql_value_upper_camel_case = naming::LessThanMinimumPostgresqlValueUpperCamelCase;
-                        quote::quote!{
-                            #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #postgresql_type_not_null_try_new_error_named_upper_camel_case {
-                                #from_calendar_date_upper_camel_case {
+                        let postgresql_type_not_null_try_new_error_named_token_stream = {
+                            let error_content_token_stream = {
+                                let std_string_string_token_stream = token_patterns::StdStringString;
+                                quote::quote!{
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: std::string::String,
+                                    value: #std_string_string_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #less_than_minimum_postgresql_value_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: std::string::String,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
+                                }
+                            };
+                            quote::quote!{
+                                #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                                pub enum #postgresql_type_not_null_try_new_error_named_upper_camel_case {
+                                    #from_calendar_date_upper_camel_case {
+                                        #error_content_token_stream
+                                    },
+                                    #less_than_minimum_postgresql_value_upper_camel_case {
+                                        #error_content_token_stream
+                                    },
+                                }
                             }
-                            impl #postgresql_type_not_null_upper_camel_case {
-                                fn try_new(
-                                    year: std::primitive::i32,
-                                    month: time::Month,
-                                    day: std::primitive::u8,
-                                ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
-                                    match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
-                                        year,
-                                        month,
-                                        day,
-                                    ) {
-                                        Ok(value) => {
-                                            //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
-                                            let minimum = #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
-                                                -4713,
-                                                time::Month::December,
-                                                31,
-                                            ).unwrap();
-                                            if minimum > value {
-                                                Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#less_than_minimum_postgresql_value_upper_camel_case {
-                                                    value: format!("{value:?}"),
-                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                })
-                                            }
-                                            else {
-                                                Ok(Self(value))
-                                            }
-                                        },
-                                        Err(error) => Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#from_calendar_date_upper_camel_case {
-                                            value: format!("{error:?}"),
-                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                        })
+                        };
+                        let impl_postgresql_type_not_null_try_new_token_stream = {
+                            let error_content_token_stream = quote::quote!{
+                                value: format!("{value:?}"),
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            };
+                            quote::quote!{
+                                impl #postgresql_type_not_null_upper_camel_case {
+                                    fn try_new(
+                                        year: std::primitive::i32,
+                                        month: time::Month,
+                                        day: std::primitive::u8,
+                                    ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
+                                        match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
+                                            year,
+                                            month,
+                                            day,
+                                        ) {
+                                            Ok(value) => {
+                                                //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
+                                                let minimum = #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
+                                                    -4713,
+                                                    time::Month::December,
+                                                    31,
+                                                ).unwrap();
+                                                if minimum > value {
+                                                    Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#less_than_minimum_postgresql_value_upper_camel_case {
+                                                        #error_content_token_stream
+                                                    })
+                                                }
+                                                else {
+                                                    Ok(Self(value))
+                                                }
+                                            },
+                                            Err(value) => Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#from_calendar_date_upper_camel_case {
+                                                #error_content_token_stream
+                                            })
+                                        }
                                     }
                                 }
                             }
+                        };
+                        quote::quote!{
+                            #postgresql_type_not_null_try_new_error_named_token_stream
+                            #impl_postgresql_type_not_null_try_new_token_stream
                         }
                     };
                     match &postgresql_type {
