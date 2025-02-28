@@ -2122,14 +2122,6 @@ enum ShouldImplRangeLength {
     False
 }
 
-fn sqlx_types_time_primitive_date_time_new_token_stream() -> proc_macro2::TokenStream {
-    let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
-    let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
-    quote::quote!{sqlx::types::time::PrimitiveDateTime::new(
-        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-        #sqlx_types_time_time_midnight,
-    )}
-}
 // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
 //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
 // }
@@ -4511,6 +4503,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 &postgresql_type_not_null_or_nullable_upper_camel_case,
                 &quote::quote!{self.to_string()},
             );
+
+            let generate_sqlx_types_time_primitive_date_time_new_token_stream = || {
+                let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
+                let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream();
+                //todo reuse?
+                quote::quote!{#sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream::new(
+                    #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                    #sqlx_types_time_time_midnight,
+                )}
+            };
+
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
@@ -4554,7 +4557,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &{
-                                let sqlx_types_time_primitive_date_time_new_token_stream = sqlx_types_time_primitive_date_time_new_token_stream();
+                                let sqlx_types_time_primitive_date_time_new_token_stream = generate_sqlx_types_time_primitive_date_time_new_token_stream();
                                 generate_sqlx_postgres_types_pg_range_token_steram(
                                     &sqlx_types_time_primitive_date_time_new_token_stream,
                                     &sqlx_types_time_primitive_date_time_new_token_stream,
@@ -4581,7 +4584,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &sqlx_postgres_types_pg_range_core_default_default_default_token_stream,
 
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream(),
+                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &generate_sqlx_types_time_primitive_date_time_new_token_stream(),
                             PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &{
                                 let value = token_patterns::SqlxTypesTimeOffsetDateTimeUnixEpoch;
                                 quote::quote!{#value}
@@ -5696,7 +5699,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_time_primitive_date_time_token_stream = {
                     let where_operator_type_field_type = WhereOperatorType::FieldType {
                         field_type: &field_type,
-                        default_initialization_token_stream: &sqlx_types_time_primitive_date_time_new_token_stream(),
+                        default_initialization_token_stream: &generate_sqlx_types_time_primitive_date_time_new_token_stream(),
                     };
                     let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                         &postgresql_type_not_null_upper_camel_case,
