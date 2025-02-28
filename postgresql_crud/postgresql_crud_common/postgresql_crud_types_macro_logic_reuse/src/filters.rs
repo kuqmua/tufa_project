@@ -53,10 +53,22 @@ fn array_position_type_token_stream() -> token_patterns::StdPrimitiveI32 {
     token_patterns::StdPrimitiveI32
 }
 
+enum ShouldWhereElementFieldsBePublic<'a> {
+    True,
+    False {
+        ident: &'a dyn quote::ToTokens,
+        postfix: &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
+        try_new_error_named_variants_token_stream: &'a dyn quote::ToTokens,
+        try_new_additional_input_parameters_token_stream: &'a dyn quote::ToTokens,
+        try_new_content_token_stream: &'a dyn quote::ToTokens,
+        impl_deserialize_token_stream: &'a dyn quote::ToTokens,
+    }
+}
+
 fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
     ident: &dyn quote::ToTokens,
     postfix: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
+    should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -81,7 +93,7 @@ fn generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_st
 fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
     postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType,
     postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case: &dyn quote::ToTokens,
-    should_where_element_fields_be_public: crate::ShouldWhereElementFieldsBePublic,
+    should_where_element_fields_be_public: ShouldWhereElementFieldsBePublic,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     additional_type_declaration_token_stream: &dyn quote::ToTokens,
     additional_default_initialization_token_stream: &dyn quote::ToTokens,
@@ -89,9 +101,9 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_ident_where_element_tokens_token_stream = {
-        let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
-            crate::ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
-            crate::ShouldWhereElementFieldsBePublic::False {
+        let maybe_pub_token_stream: &dyn quote::ToTokens = match &should_where_element_fields_be_public {
+            ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
+            ShouldWhereElementFieldsBePublic::False {
                 ident: _,
                 postfix: _,
                 try_new_error_named_variants_token_stream: _,
@@ -100,9 +112,9 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
                 impl_deserialize_token_stream: _,
             } => &proc_macro2::TokenStream::new()
         };
-        let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
-            crate::ShouldWhereElementFieldsBePublic::True => quote::quote! {, serde::Deserialize},
-            crate::ShouldWhereElementFieldsBePublic::False {
+        let maybe_impl_serde_deserialize_token_stream = match &should_where_element_fields_be_public {
+            ShouldWhereElementFieldsBePublic::True => quote::quote! {, serde::Deserialize},
+            ShouldWhereElementFieldsBePublic::False {
                 ident: _,
                 postfix: _,
                 try_new_error_named_variants_token_stream: _,
@@ -121,7 +133,60 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
             }
         }
     };
-    let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(postgresql_type_or_json_type);
+    let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = match &should_where_element_fields_be_public {
+        ShouldWhereElementFieldsBePublic::True => proc_macro2::TokenStream::new(),
+        ShouldWhereElementFieldsBePublic::False {
+            ident,
+            postfix,
+            try_new_error_named_variants_token_stream,
+            try_new_additional_input_parameters_token_stream,
+            try_new_content_token_stream,
+            impl_deserialize_token_stream,
+        } => {
+            let postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case = {
+                let value = format!(
+                    "{postgresql_type_or_json_type}{}{postfix}{}",
+                    naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+                    naming::TryNewErrorNamedUpperCamelCase
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream = {
+                quote::quote! {
+                    #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case {
+                        #try_new_error_named_variants_token_stream
+                    }
+                }
+            };
+            let postgresql_type_ident_where_element_tokens_upper_camel_case = {
+                let value = format!(
+                    "{postgresql_type_or_json_type}{}{postfix}",
+                    naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident),
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let impl_postgresql_type_ident_where_element_tokens_try_new_token_stream = {
+                quote::quote! {
+                    impl #postgresql_type_ident_where_element_tokens_upper_camel_case {
+                        fn try_new(
+                            logical_operator: crate::LogicalOperator,
+                            #try_new_additional_input_parameters_token_stream
+                        ) -> Result<Self, #postgresql_type_ident_where_element_tokens_try_new_error_named_upper_camel_case> {
+                            #try_new_content_token_stream
+                        }
+                    }
+                }
+            };
+            quote::quote!{
+                #postgresql_type_ident_where_element_tokens_try_new_error_named_token_stream
+                #impl_postgresql_type_ident_where_element_tokens_try_new_token_stream
+                #impl_deserialize_token_stream
+            }
+        }
+    };
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = crate::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
         &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
         &{
@@ -500,7 +565,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817
         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let postgresql_type_or_json_type = crate::PostgresqlTypeOrJsonType::PostgresqlType;
-    let should_where_element_fields_be_public = crate::ShouldWhereElementFieldsBePublic::True;
+    let should_where_element_fields_be_public = ShouldWhereElementFieldsBePublic::True;
     let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
     match &postgresql_type_not_null_or_nullable {
         crate::PostgresqlTypeNotNullOrNullable::NotNull => {
@@ -549,7 +614,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::True,
+        ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_ident_wrapper),
         &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&{
@@ -630,7 +695,7 @@ impl GreaterThan {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
             &Self::generate_try_generate_bind_increments_token_stream(),
@@ -651,7 +716,7 @@ impl GreaterThan {
                 &postgresql_json_type_variant.postgresql_json_type_ident_wrapper(), 
                 WhereOperatorName::upper_camel_case(self),
             ),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_variant.wrapper_field_type()),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_variant.wrapper_initialization_token_stream()),
@@ -854,7 +919,7 @@ impl Between {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
@@ -900,7 +965,7 @@ impl Between {
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(
@@ -1092,7 +1157,7 @@ impl In {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&where_operator_type_type_token_stream),
@@ -1131,7 +1196,7 @@ impl In {
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&non_optional_field_type),
@@ -1304,7 +1369,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
@@ -1336,7 +1401,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&ident, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
@@ -1435,7 +1500,7 @@ impl Before {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -1464,7 +1529,7 @@ impl CurrentDate {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1494,7 +1559,7 @@ impl GreaterThanCurrentDate {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1524,7 +1589,7 @@ impl CurrentTimestamp {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1554,7 +1619,7 @@ impl GreaterThanCurrentTimestamp {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1584,7 +1649,7 @@ impl CurrentTime {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1614,7 +1679,7 @@ impl GreaterThanCurrentTime {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{},
             &quote::quote!{},
             &quote::quote!{
@@ -1757,7 +1822,7 @@ fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_81c
     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
         &ident,
         &self_upper_camel_case,
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &ident,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
@@ -1790,7 +1855,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519(),
@@ -1901,7 +1966,7 @@ impl EqualToEncodedStringRepresentation {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{
                 pub encode_format: crate::postgresql_type::postgresql_base_type::EncodeFormat,
                 pub encoded_string_representation: std::string::String,
@@ -1955,7 +2020,7 @@ impl ValueIsContainedWithinRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
@@ -1986,7 +2051,7 @@ impl ContainsAnotherRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2019,7 +2084,7 @@ impl StrictlyToLeftOfRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2052,7 +2117,7 @@ impl StrictlyToRightOfRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2085,7 +2150,7 @@ impl IncludedLowerBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(lower({}) = ${})"}),
@@ -2116,7 +2181,7 @@ impl ExcludedUpperBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #range_type_token_stream},
             &quote::quote!{#value_snake_case: #range_type_default_initialization_token_stream},
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}(upper({}) = ${})"}),
@@ -2147,7 +2212,7 @@ impl GreaterThanLowerBound {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2180,7 +2245,7 @@ impl OverlapWithRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2213,7 +2278,7 @@ impl AdjacentWithRange {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &quote::quote!{pub #value_snake_case: #ident},
             &quote::quote!{
                 #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
@@ -2250,7 +2315,7 @@ impl RangeLength {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &quote::quote!{
@@ -2480,7 +2545,7 @@ impl BitVecPositionEqual {
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &ident,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
@@ -2605,7 +2670,7 @@ impl PositionEqual {
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
@@ -2664,7 +2729,7 @@ impl PositionGreaterThan {
         generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
             &postgresql_type_or_json_type,
             &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            crate::ShouldWhereElementFieldsBePublic::False {
+            ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
@@ -2784,7 +2849,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
@@ -2890,7 +2955,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &postgresql_type_or_json_type,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
             ident: &postgresql_json_type_ident_wrapper,
             postfix: &self_upper_camel_case,
             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_c7fb6522_d391_4af8_b39f_9c6611d199c5(&postgresql_json_type_array_element_ident_wrapper),
@@ -3009,7 +3074,7 @@ impl AllElementsEqual {
                 &postgresql_json_type_ident_wrapper,
                 WhereOperatorName::upper_camel_case(self),
             ),
-            crate::ShouldWhereElementFieldsBePublic::True,
+            ShouldWhereElementFieldsBePublic::True,
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_variant_array_element.wrapper_field_type()),
             &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_variant_array_element.wrapper_initialization_token_stream()),
@@ -3035,7 +3100,7 @@ pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_s
             &postgresql_json_type_ident_wrapper,
             self_upper_camel_case,
         ),
-        crate::ShouldWhereElementFieldsBePublic::True,
+        ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_variant_array_element.wrapper_non_optional_field_type()),
         &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&postgresql_json_type_variant_array_element.wrapper_non_optional_initialization_token_stream()),
@@ -3105,7 +3170,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
         &crate::PostgresqlTypeOrJsonType::PostgresqlJsonType,
         &generate_postgresql_json_type_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-        crate::ShouldWhereElementFieldsBePublic::False {
+        ShouldWhereElementFieldsBePublic::False {
                 ident: &postgresql_json_type_ident_wrapper,
                 postfix: &self_upper_camel_case,
                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_f2c321ab_f37c_41cb_b949_a7bef3f819b9(),
