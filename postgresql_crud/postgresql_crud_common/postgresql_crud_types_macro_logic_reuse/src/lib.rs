@@ -2142,6 +2142,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+    let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
 
     #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
@@ -2968,10 +2971,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         };
                         (
                             generate_fn_visit_newtype_struct_token_stream(
-                                &token_patterns::StdPrimitiveI64,
-                                &quote::quote!{sqlx::postgres::types::PgMoney(__field0)}
+                                &std_primitive_i64_token_stream,
+                                &quote::quote!{sqlx::postgres::types::PgMoney(__field0)} //todo reuse
                             ),
-                            generate_fn_visit_newtype_struct_token_stream(
+                            generate_fn_visit_newtype_struct_token_stream(//todo reuse
                                 &token_patterns::StdStringString,
                                 &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&__field0) {
                                     Ok(value) => value,
@@ -3041,9 +3044,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
                     let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &token_patterns::StdPrimitiveI64,
+                            &std_primitive_i64_token_stream,
                         ]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});
+                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});//todo reuse
                         quote::quote!{
                             #fields_initialization_token_stream
                             #serde_private_ok_postgresql_type_token_stream
@@ -3051,8 +3054,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt},
-                            &token_patterns::StdPrimitiveI64,
+                            &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt},//todo reuse
+                            &std_primitive_i64_token_stream,
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
@@ -3061,9 +3064,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     });
                     let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &token_patterns::StdPrimitiveI32,
-                            &quote::quote!{time::Month},
-                            &token_patterns::StdPrimitiveU8,
+                            &std_primitive_i32_token_stream,
+                            &quote::quote!{time::Month},//todo reuse
+                            &std_primitive_u8_token_stream,
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
@@ -3568,12 +3571,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             (
                                 generate_field_option_none_initialization_token_stream(&[
                                     &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt},
-                                    &token_patterns::StdPrimitiveI64,
+                                    &std_primitive_i64_token_stream,
                                 ]),
                                 generate_field_option_none_initialization_token_stream(&[
-                                    &token_patterns::StdPrimitiveI32,
+                                    &std_primitive_i32_token_stream,
                                     &quote::quote!{time::Month},
-                                    &token_patterns::StdPrimitiveU8,
+                                    &std_primitive_u8_token_stream,
                                 ]),
                                 generate_field_option_none_initialization_token_stream(&[
                                     &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream,
@@ -3661,12 +3664,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             (
                                 generate_while_some_next_key_field_token_stream(&[
                                     (&digits_snake_case, &quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt}),
-                                    (&scale_snake_case, &token_patterns::StdPrimitiveI64)
+                                    (&scale_snake_case, &std_primitive_i64_token_stream)
                                 ]),
                                 generate_while_some_next_key_field_token_stream(&[
-                                    (&year_snake_case, &token_patterns::StdPrimitiveI32),
-                                    (&month_snake_case, &quote::quote!{time::Month}),
-                                    (&day_snake_case, &token_patterns::StdPrimitiveU8)
+                                    (&year_snake_case, &std_primitive_i32_token_stream),
+                                    (&month_snake_case, &quote::quote!{time::Month}),//todo reuse
+                                    (&day_snake_case, &std_primitive_u8_token_stream)
                                 ]),
                                 generate_while_some_next_key_field_token_stream(&[
                                     (&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream),
@@ -3707,7 +3710,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 //// generate_while_some_next_key_field_token_stream(&[
                                 ////     (&date_snake_case, &sqlx_types_time_date_as_postgresql_date_field_type_token_stream),
                                 ////     (&time_snake_case, &quote::quote!{sqlx::types::time::Time}),
-                                ////     (&offset_snake_case, &quote::quote!{sqlx::types::time::UtcOffset}),
+                                ////     (&offset_snake_case, &quote::quote!{sqlx::types::time::UtcOffset}),//todo reuse
                                 //// ])
                             )
                         };
