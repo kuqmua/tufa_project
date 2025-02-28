@@ -2080,16 +2080,6 @@ impl WhereOperatorType<'_> {
     }
 }
 
-fn generate_sqlx_postgres_types_pg_range_token_stream(
-    start_token_stream: &dyn quote::ToTokens,
-    end_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    quote::quote!{sqlx::postgres::types::PgRange {
-        start: std::ops::Bound::Included(#start_token_stream),
-        end: std::ops::Bound::Excluded(#end_token_stream),
-    }}
-}
-
 enum ShouldImplRangeLength {
     True,
     False
@@ -4542,6 +4532,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlTypeNotNullOrNullable::NotNull => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
                     &{
+                        fn generate_sqlx_postgres_types_pg_range_token_stream(
+                            start_token_stream: &dyn quote::ToTokens,
+                            end_token_stream: &dyn quote::ToTokens,
+                        ) -> proc_macro2::TokenStream {
+                            quote::quote!{sqlx::postgres::types::PgRange {
+                                start: std::ops::Bound::Included(#start_token_stream),
+                                end: std::ops::Bound::Excluded(#end_token_stream),
+                            }}
+                        }
                         let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                             &core_default_default_default_token_stream,
                             &core_default_default_default_token_stream,
@@ -4571,7 +4570,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 quote::quote!{#value}
                             },
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
-                                quote::quote!{sqlx::postgres::types::PgInterval {
+                                quote::quote!{sqlx::postgres::types::PgInterval {//todo reuse
                                     months: #core_default_default_default_token_stream,
                                     days: #core_default_default_default_token_stream,
                                     microseconds: #core_default_default_default_token_stream,
@@ -4592,7 +4591,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
-                                let mut value = sqlx::types::BitVec::new();
+                                let mut value = sqlx::types::BitVec::new();//todo reuse
                                 value.push(false);
                                 value
                             }},
