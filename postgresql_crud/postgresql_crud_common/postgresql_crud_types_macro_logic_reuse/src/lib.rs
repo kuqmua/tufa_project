@@ -1893,44 +1893,6 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
 }
 
 ///////////////////////
-fn generate_postgresql_type_tokens_where_element_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    should_where_element_fields_be_public: &ShouldWhereElementFieldsBePublic,
-    should_implement_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
-    additional_type_declaration_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
-        ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
-        ShouldWhereElementFieldsBePublic::False {
-            ident: _,
-            postfix: _,
-            try_new_error_named_variants_token_stream: _,
-            try_new_additional_input_parameters_token_stream: _,
-            try_new_content_token_stream: _,
-            impl_deserialize_token_stream: _,
-        } => &proc_macro2::TokenStream::new()
-    };
-    let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
-        ShouldWhereElementFieldsBePublic::True => quote::quote! {, serde::Deserialize},
-        ShouldWhereElementFieldsBePublic::False {
-            ident: _,
-            postfix: _,
-            try_new_error_named_variants_token_stream: _,
-            try_new_additional_input_parameters_token_stream: _,
-            try_new_content_token_stream: _,
-            impl_deserialize_token_stream: _,
-        } => proc_macro2::TokenStream::new()
-    };
-    let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
-    let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
-    quote::quote! {
-        #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_impl_serde_deserialize_token_stream #should_implement_schemars_json_schema)]
-        pub struct #ident {
-            #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
-            #additional_type_declaration_token_stream
-        }
-    }
-}
 fn generate_postgresql_type_tokens_where_element_and_postgresql_type_std_option_option_tokens_where_element_handle_token_stream(
     variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>,
     postgresql_type_tokens_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -5045,6 +5007,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
+
+
+
+
+                
                 let where_operator_type_field_type_default = WhereOperatorType::FieldType {
                     field_type: &field_type,
                     default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
@@ -6266,7 +6233,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &h25,
+    //     &h1,
     // );
 
     let generated = quote::quote!{

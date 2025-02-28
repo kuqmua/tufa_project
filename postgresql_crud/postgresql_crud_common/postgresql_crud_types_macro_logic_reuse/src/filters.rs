@@ -88,12 +88,39 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     postgresql_type_self_where_try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_bind_value_to_query_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_ident_where_element_tokens_token_stream = crate::generate_postgresql_type_tokens_where_element_tokens_token_stream(
-        &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
-        &should_where_element_fields_be_public,
-        &should_implement_schemars_json_schema,
-        &additional_type_declaration_token_stream,
-    );
+    let postgresql_type_ident_where_element_tokens_token_stream = {
+        let maybe_pub_token_stream: &dyn quote::ToTokens = match should_where_element_fields_be_public {
+            crate::ShouldWhereElementFieldsBePublic::True => &naming::PubSnakeCase,
+            crate::ShouldWhereElementFieldsBePublic::False {
+                ident: _,
+                postfix: _,
+                try_new_error_named_variants_token_stream: _,
+                try_new_additional_input_parameters_token_stream: _,
+                try_new_content_token_stream: _,
+                impl_deserialize_token_stream: _,
+            } => &proc_macro2::TokenStream::new()
+        };
+        let maybe_impl_serde_deserialize_token_stream = match should_where_element_fields_be_public {
+            crate::ShouldWhereElementFieldsBePublic::True => quote::quote! {, serde::Deserialize},
+            crate::ShouldWhereElementFieldsBePublic::False {
+                ident: _,
+                postfix: _,
+                try_new_error_named_variants_token_stream: _,
+                try_new_additional_input_parameters_token_stream: _,
+                try_new_content_token_stream: _,
+                impl_deserialize_token_stream: _,
+            } => proc_macro2::TokenStream::new()
+        };
+        let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
+        let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
+        quote::quote! {
+            #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_impl_serde_deserialize_token_stream #should_implement_schemars_json_schema)]
+            pub struct #postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case {
+                #maybe_pub_token_stream #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
+                #additional_type_declaration_token_stream
+            }
+        }
+    };
     let maybe_try_new_error_named_and_try_new_and_deserialize_token_stream = should_where_element_fields_be_public.maybe_generate_try_new_error_named_and_try_new_and_deserialize_token_stream(postgresql_type_or_json_type);
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream = crate::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
         &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
