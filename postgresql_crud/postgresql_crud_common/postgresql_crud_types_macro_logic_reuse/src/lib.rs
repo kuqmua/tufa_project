@@ -2150,30 +2150,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
         let field_type = postgresql_type.field_type_token_stream();
         let generate_postgresql_type_not_null_or_nullable = |postgresql_type_not_null_or_nullable: &PostgresqlTypeNotNullOrNullable| -> proc_macro2::TokenStream {
-            let std_primitive_i16_as_postgresql_int2 = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
-            let std_primitive_i32_as_postgresql_int4 = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4;
-            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp;
-            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp;
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz;
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz;
-            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz;
-            let sqlx_types_chrono_naive_date_as_postgresql_date = PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate;
-            let sqlx_types_time_date_as_postgresql_date = PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate;
-            let sqlx_types_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric;
-            let sqlx_types_big_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric;
-
-            let std_primitive_i16_as_postgresql_int2_field_type_token_stream = std_primitive_i16_as_postgresql_int2.field_type_token_stream();
-            let std_primitive_i32_as_postgresql_int4_field_type_token_stream = std_primitive_i32_as_postgresql_int4.field_type_token_stream();
-            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_chrono_naive_date_time_as_postgresql_timestamp.field_type_token_stream();
-            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_postgresql_timestamp.field_type_token_stream();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_chrono_naive_date_as_postgresql_date_field_type_token_stream = sqlx_types_chrono_naive_date_as_postgresql_date.field_type_token_stream();
-            let sqlx_types_time_date_as_postgresql_date_field_type_token_stream = sqlx_types_time_date_as_postgresql_date.field_type_token_stream();
-            let sqlx_types_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_decimal_as_postgresql_numeric.field_type_token_stream();
-            let sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_big_decimal_as_postgresql_numeric.field_type_token_stream();
-
             let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => &postgresql_type_not_null_upper_camel_case,
@@ -2299,127 +2275,150 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     pub struct #postgresql_type_not_null_or_nullable_upper_camel_case(pub #field_type_handle);
                 }
             };
-            let maybe_impl_try_new_for_postgresql_type_not_null_token_stream = match &postgresql_type_not_null_or_nullable {
-                PostgresqlTypeNotNullOrNullable::NotNull => {
-                    let sqlx_types_time_date_token_stream = {
-                        let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
-                        let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
-                        let less_than_minimum_postgresql_value_upper_camel_case = naming::LessThanMinimumPostgresqlValueUpperCamelCase;
-                        let postgresql_type_not_null_try_new_error_named_token_stream = {
-                            let error_content_token_stream = {
-                                let std_string_string_token_stream = token_patterns::StdStringString;
-                                quote::quote!{
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #std_string_string_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                }
-                            };
-                            quote::quote!{
-                                #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                                pub enum #postgresql_type_not_null_try_new_error_named_upper_camel_case {
-                                    #from_calendar_date_upper_camel_case {
-                                        #error_content_token_stream
-                                    },
-                                    #less_than_minimum_postgresql_value_upper_camel_case {
-                                        #error_content_token_stream
-                                    },
-                                }
-                            }
-                        };
-                        let impl_postgresql_type_not_null_try_new_token_stream = {
-                            let error_content_token_stream = quote::quote!{
-                                value: format!("{value:?}"),
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            };
-                            quote::quote!{
-                                impl #postgresql_type_not_null_upper_camel_case {
-                                    fn try_new(
-                                        year: std::primitive::i32,
-                                        month: time::Month,
-                                        day: std::primitive::u8,
-                                    ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
-                                        match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
-                                            year,
-                                            month,
-                                            day,
-                                        ) {
-                                            Ok(value) => {
-                                                //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
-                                                let minimum = #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
-                                                    -4713,
-                                                    time::Month::December,
-                                                    31,
-                                                ).unwrap();
-                                                if minimum > value {
-                                                    Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#less_than_minimum_postgresql_value_upper_camel_case {
-                                                        #error_content_token_stream
-                                                    })
-                                                }
-                                                else {
-                                                    Ok(Self(value))
-                                                }
-                                            },
-                                            Err(value) => Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#from_calendar_date_upper_camel_case {
+
+            let std_primitive_i16_as_postgresql_int2 = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
+            let std_primitive_i32_as_postgresql_int4 = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4;
+            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp;
+            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp;
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz;
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz;
+            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz;
+            let sqlx_types_chrono_naive_date_as_postgresql_date = PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate;
+            let sqlx_types_time_date_as_postgresql_date = PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate;
+            let sqlx_types_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric;
+            let sqlx_types_big_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric;
+
+            let std_primitive_i16_as_postgresql_int2_field_type_token_stream = std_primitive_i16_as_postgresql_int2.field_type_token_stream();
+            let std_primitive_i32_as_postgresql_int4_field_type_token_stream = std_primitive_i32_as_postgresql_int4.field_type_token_stream();
+            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_chrono_naive_date_time_as_postgresql_timestamp.field_type_token_stream();
+            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_postgresql_timestamp.field_type_token_stream();
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz.field_type_token_stream();
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz.field_type_token_stream();
+            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz.field_type_token_stream();
+            let sqlx_types_chrono_naive_date_as_postgresql_date_field_type_token_stream = sqlx_types_chrono_naive_date_as_postgresql_date.field_type_token_stream();
+            let sqlx_types_time_date_as_postgresql_date_field_type_token_stream = sqlx_types_time_date_as_postgresql_date.field_type_token_stream();
+            let sqlx_types_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_decimal_as_postgresql_numeric.field_type_token_stream();
+            let sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_big_decimal_as_postgresql_numeric.field_type_token_stream();
+
+            let impl_try_new_for_sqlx_types_time_date_token_stream = {
+                let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
+                let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
+                let less_than_minimum_postgresql_value_upper_camel_case = naming::LessThanMinimumPostgresqlValueUpperCamelCase;
+                let postgresql_type_not_null_try_new_error_named_token_stream = {
+                    let error_content_token_stream = {
+                        let std_string_string_token_stream = token_patterns::StdStringString;
+                        quote::quote!{
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            value: #std_string_string_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        }
+                    };
+                    quote::quote!{
+                        #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                        pub enum #postgresql_type_not_null_try_new_error_named_upper_camel_case {
+                            #from_calendar_date_upper_camel_case {
+                                #error_content_token_stream
+                            },
+                            #less_than_minimum_postgresql_value_upper_camel_case {
+                                #error_content_token_stream
+                            },
+                        }
+                    }
+                };
+                let impl_postgresql_type_not_null_try_new_token_stream = {
+                    let error_content_token_stream = quote::quote!{
+                        value: format!("{value:?}"),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    };
+                    quote::quote!{
+                        impl #postgresql_type_not_null_upper_camel_case {
+                            fn try_new(
+                                year: std::primitive::i32,
+                                month: time::Month,
+                                day: std::primitive::u8,
+                            ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
+                                match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
+                                    year,
+                                    month,
+                                    day,
+                                ) {
+                                    Ok(value) => {
+                                        //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
+                                        let minimum = #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
+                                            -4713,
+                                            time::Month::December,
+                                            31,
+                                        ).unwrap();
+                                        if minimum > value {
+                                            Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#less_than_minimum_postgresql_value_upper_camel_case {
                                                 #error_content_token_stream
                                             })
                                         }
-                                    }
+                                        else {
+                                            Ok(Self(value))
+                                        }
+                                    },
+                                    Err(value) => Err(#postgresql_type_not_null_try_new_error_named_upper_camel_case::#from_calendar_date_upper_camel_case {
+                                        #error_content_token_stream
+                                    })
                                 }
                             }
-                        };
-                        quote::quote!{
-                            #postgresql_type_not_null_try_new_error_named_token_stream
-                            #impl_postgresql_type_not_null_try_new_token_stream
                         }
-                    };
-                    match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => sqlx_types_time_date_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => proc_macro2_token_stream_new.clone(),
                     }
+                };
+                quote::quote!{
+                    #postgresql_type_not_null_try_new_error_named_token_stream
+                    #impl_postgresql_type_not_null_try_new_token_stream
+                }
+            };
+            let maybe_impl_try_new_for_postgresql_type_not_null_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
+                PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdStringStringAsPostgresqlCharN => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &impl_try_new_for_sqlx_types_time_date_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,//impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &proc_macro2_token_stream_new,
                 },
-                PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
             };
             enum ParameterNumber {
                 One,
