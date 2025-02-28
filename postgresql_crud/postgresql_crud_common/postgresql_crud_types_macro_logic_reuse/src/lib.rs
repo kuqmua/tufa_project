@@ -2461,7 +2461,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
                         let parameter_number_token_stream = match parameter_number {
-                            ParameterNumber::One => quote::quote!{+ 1 + 1},
+                            ParameterNumber::One => quote::quote!{+ 1},
                             ParameterNumber::Two => quote::quote!{+ 1 + 1},
                             ParameterNumber::Three => quote::quote!{+ 1 + 1 + 1},
                         };
