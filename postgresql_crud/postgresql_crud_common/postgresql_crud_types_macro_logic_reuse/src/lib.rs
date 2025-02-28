@@ -535,18 +535,6 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(
         }
     }
 }
-fn generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
-    should_implement_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    quote::quote! {
-        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_implement_schemars_json_schema)]
-        pub enum #ident {
-            #content_token_stream
-        }
-    }
-}
 fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>,
     ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -558,25 +546,27 @@ fn generate_postgresql_type_where_element_token_stream(
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+    //todo reuse
     let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
         crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     };
-    let postgresql_type_tokens_where_element_token_stream = generate_pub_enum_postgresql_type_tokens_where_element_token_stream(
-        should_implement_schemars_json_schema,
-        &ident,
-        &{
-            let variants_token_stream = variants.iter().map(|element|{
-                let element_upper_camel_case = element.upper_camel_case();
-                let postgresql_type_tokens_where_element_filter_upper_camel_case = {
-                    let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote!{#element_upper_camel_case});
-                    value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote!{#element_upper_camel_case(#postgresql_type_tokens_where_element_filter_upper_camel_case)}
-            });
-            quote::quote!{#(#variants_token_stream),*}
+    let postgresql_type_tokens_where_element_token_stream = {
+        let variants_token_stream = variants.iter().map(|element|{
+            let element_upper_camel_case = element.upper_camel_case();
+            let postgresql_type_tokens_where_element_filter_upper_camel_case = {
+                let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote!{#element_upper_camel_case});
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{#element_upper_camel_case(#postgresql_type_tokens_where_element_filter_upper_camel_case)}
+        });
+        quote::quote! {
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_implement_schemars_json_schema)]
+            pub enum #ident {
+                #(#variants_token_stream),*
+            }
         }
-    );
+    };
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
         &ident,
         &{
