@@ -1647,25 +1647,8 @@ fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(
         }
     }
 }
-enum Visibility {
-    Pub,
-    PubCrate,
-    // Private
-}
-impl quote::ToTokens for Visibility {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let pub_snake_case = naming::PubSnakeCase;
-        let crate_snake_case = naming::CrateSnakeCase;
-        match &self {
-            Visibility::Pub => naming::PubSnakeCase.to_tokens(tokens),
-            Visibility::PubCrate => quote::quote!{#pub_snake_case(#crate_snake_case)}.to_tokens(tokens),
-            // Visibility::Private => (),
-        }
-        
-    }
-}
+
 fn generate_pub_struct_tokens_token_stream(
-    visibility: Visibility,
     ident_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
     impl_default: std::primitive::bool,
@@ -1692,7 +1675,7 @@ fn generate_pub_struct_tokens_token_stream(
             serde::Serialize,
             #maybe_impl_serde_deserialize_token_stream
         )]
-        #visibility struct #ident_token_stream #content_token_stream
+        pub struct #ident_token_stream #content_token_stream
     }
 }
 fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
@@ -4874,7 +4857,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_column_upper_camel_case = naming::parameter::SelfColumnUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_column_token_stream = {
                 let pub_struct_postgresql_type_not_null_or_nullable_column_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
                     &postgresql_type_not_null_or_nullable_column_upper_camel_case,
                     &quote::quote!{;},
                     true,
@@ -4972,7 +4954,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             // };
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(
-                    Visibility::Pub,
                     &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
                     match &postgresql_type_initialized_by_tokens {
                         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
@@ -5027,7 +5008,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //todo put delete into trait
             // let postgresql_type_not_null_or_nullable_to_delete_token_stream = {
             //     let postgresql_type_not_null_or_nullable_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
-            //         Visibility::Pub,
             //         &postgresql_type_not_null_or_nullable_to_delete_upper_camel_case,
             //         &postgresql_type_not_null_or_nullable_struct_content_token_stream,
             //         false,
