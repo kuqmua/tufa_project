@@ -2460,10 +2460,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, &self.0 #value_token_stream)}
                     };
                     let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
-                        let parameter_number_token_stream = match parameter_number {
-                            ParameterNumber::One => quote::quote!{+ 1},
-                            ParameterNumber::Two => quote::quote!{+ 1 + 1},
-                            ParameterNumber::Three => quote::quote!{+ 1 + 1 + 1},
+                        let parameter_number_token_stream = {
+                            let value = (0..parameter_number.get_std_primitive_u8()).collect::<std::vec::Vec<_>>().into_iter().map(|_|quote::quote!{+ 1});
+                            quote::quote!{#(#value)*}
                         };
                         quote::quote!{
                             let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
