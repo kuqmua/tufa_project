@@ -2149,20 +2149,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
         let field_type = postgresql_type.field_type_token_stream();
-        enum ParameterNumber {
-            One,
-            Two,
-            Three,
-        }
-        impl ParameterNumber {
-            fn get_std_primitive_u8(&self) -> std::primitive::u8 {
-                match &self {
-                    Self::One => 1,
-                    Self::Two => 2,
-                    Self::Three => 3,
-                }
-            }
-        }
         let generate_postgresql_type_not_null_or_nullable = |postgresql_type_not_null_or_nullable: &PostgresqlTypeNotNullOrNullable| -> proc_macro2::TokenStream {
             let std_primitive_i16_as_postgresql_int2 = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
             let std_primitive_i32_as_postgresql_int4 = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4;
@@ -2435,6 +2421,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 },
                 PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
             };
+            enum ParameterNumber {
+                One,
+                Two,
+                Three,
+            }
+            impl ParameterNumber {
+                fn get_std_primitive_u8(&self) -> std::primitive::u8 {
+                    match &self {
+                        Self::One => 1,
+                        Self::Two => 2,
+                        Self::Three => 3,
+                    }
+                }
+            }
             let postgresql_type_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type_not_null_upper_camel_case);
             let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => {
