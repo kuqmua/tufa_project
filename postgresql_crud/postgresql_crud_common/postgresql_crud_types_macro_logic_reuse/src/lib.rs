@@ -2292,10 +2292,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_decimal_as_postgresql_numeric.field_type_token_stream();
             let sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_big_decimal_as_postgresql_numeric.field_type_token_stream();
 
-            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_not_null_upper_camel_case_token_stream = quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull};
-            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_not_null_upper_camel_case_token_stream = quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull};
-            let sqlx_types_time_date_as_postgresql_date_not_null_upper_camel_case_token_stream = quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull};
-            let sqlx_types_big_decimal_as_postgresql_numeric_not_null_upper_camel_case_token_stream = quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull};
+            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz);
+            let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_time_primitive_date_time_as_postgresql_timestamp);
+            let sqlx_types_time_date_as_postgresql_date_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_time_date_as_postgresql_date);
+            let sqlx_types_big_decimal_as_postgresql_numeric_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_big_decimal_as_postgresql_numeric);
 
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
