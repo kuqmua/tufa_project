@@ -174,7 +174,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                                 acc.push(element);
                             } else {
                                 return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                                    value: element.clone(),
+                                    value: element.clone(),//todo maybe remove .clone() ?
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -761,12 +761,11 @@ struct PostgresqlJsonTypeVariant {
 impl PostgresqlJsonTypeVariant {
     // fn all_variants() -> std::vec::Vec<Self> {
     //     let mut acc = vec![];
-    //     let postgresql_json_type_pattern_array = PostgresqlJsonTypePattern::all_variants();
     //     for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
-    //         for postgresql_json_type_pattern in &postgresql_json_type_pattern_array {
+    //         for postgresql_json_type_pattern in PostgresqlJsonTypePattern::all_variants() {
     //             acc.push(Self {
     //                 postgresql_json_type_handle: postgresql_json_type_handle.clone(),
-    //                 postgresql_json_type_pattern: postgresql_json_type_pattern.clone(),
+    //                 postgresql_json_type_pattern: postgresql_json_type_pattern,
     //             });
     //         }
     //     }
@@ -995,11 +994,10 @@ impl PostgresqlJsonTypePattern {
     }
     // fn all_variants() -> std::vec::Vec<Self> {
     //     let mut acc = vec![];
-    //     let postgresql_json_type_pattern_is_optional_array = PostgresqlJsonTypePatternIsOptional::into_array();
     //     for postgresql_json_type_pattern_type in PostgresqlJsonTypePatternType::into_array() {
-    //         for postgresql_json_type_pattern_is_optional in &postgresql_json_type_pattern_is_optional_array {
+    //         for postgresql_json_type_pattern_is_optional in PostgresqlJsonTypePatternIsOptional::into_array() {
     //             acc.push(Self {
-    //                 postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional.clone(),
+    //                 postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional,
     //                 postgresql_json_type_pattern_type: postgresql_json_type_pattern_type.clone(),
     //             });
     //         }
