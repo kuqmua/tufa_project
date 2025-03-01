@@ -2820,6 +2820,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
+            let field_0_token_stream = quote::quote!{__field0};
+            let field_1_token_stream = quote::quote!{__field1};
+            let field2_token_stream = quote::quote!{__field2};
+
             let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#content_token_stream)}};
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{generate_serde_private_ok_token_stream(&quote::quote!{#postgresql_type_not_null_upper_camel_case(#content_token_stream)})};
 
@@ -2837,7 +2841,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         where
                             __E: serde::Deserializer<'de>,
                         {
-                            let __field0 = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
+                            let #field_0_token_stream = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
                             #serde_private_ok_postgresql_type_token_stream
                         }
                     }
@@ -2845,11 +2849,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 (
                     generate_fn_visit_newtype_struct_token_stream(
                         &std_primitive_i64_token_stream,
-                        &quote::quote!{sqlx::postgres::types::PgMoney(__field0)} //todo reuse
+                        &quote::quote!{sqlx::postgres::types::PgMoney(#field_0_token_stream)} //todo reuse
                     ),
                     generate_fn_visit_newtype_struct_token_stream(//todo reuse
                         &token_patterns::StdStringString,
-                        &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                        &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
                             Ok(value) => value,
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -2858,13 +2862,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
                         &quote::quote!{[std::primitive::u8; 6]},
-                        &quote::quote!{sqlx::types::mac_address::MacAddress::new(__field0)}
+                        &quote::quote!{sqlx::types::mac_address::MacAddress::new(#field_0_token_stream)}
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
                         &quote::quote!{std::vec::Vec<std::primitive::bool>},
                         &quote::quote!{{
-                            let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                            __field0.into_iter().enumerate().for_each(|(index, element)|{
+                            let mut bit_vec = sqlx::types::BitVec::from_elem(#field_0_token_stream.len(), false);
+                            #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
                                 bit_vec.set(index, element);
                             });
                             bit_vec
@@ -2913,13 +2917,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{#(#fields_initialization_token_stream)*}
             };
 
-            let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{#sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream::new(__field0.0, __field1)});
+            let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = generate_serde_private_ok_postgresql_type_token_stream(
+                &quote::quote!{#sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream::new(
+                    #field_0_token_stream.0,
+                    #field_1_token_stream
+                )}
+            );
 
             let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &std_primitive_i64_token_stream,
                 ]);
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(__field0)});//todo reuse
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(#field_0_token_stream)});//todo reuse
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -2943,7 +2952,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ]);
                 quote::quote!{
                     #fields_initialization_token_stream
-                    match #postgresql_type_not_null_upper_camel_case::try_new(__field0, __field1, __field2) {
+                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field2_token_stream) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                     }
@@ -2979,14 +2988,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
-            let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case: __field0, #end_snake_case: __field1 }};
+            let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case: #field_0_token_stream, #end_snake_case: #field_1_token_stream }};
+            //todo reuse bounds
             let sqlx_postgres_types_pg_range_bound_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange {
-                #start_snake_case: match __field0 {
+                #start_snake_case: match #field_0_token_stream {
                     std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
                     std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
                     std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                 },
-                #end_snake_case: match __field1 {
+                #end_snake_case: match #field_1_token_stream {
                     std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
                     std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
                     std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
@@ -2995,8 +3005,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
-                    let __field0 = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                    let __field1 = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
+                    let #field_0_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
+                    let #field_1_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
@@ -3142,9 +3152,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             ////     quote::quote!{
             ////         #fields_initialization_token_stream
             ////         _serde::__private::Ok(#postgresql_type {
-            ////             date: __field0,
-            ////             time: __field1,
-            ////             offset: __field2,
+            ////             date: #field_0_token_stream,
+            ////             time: #field_1_token_stream,
+            ////             offset: #field2_token_stream,
             ////         })
             ////     }
             //// });
@@ -3153,7 +3163,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &token_patterns::StdStringString,
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    match sqlx::types::uuid::Uuid::try_parse(&__field0) {
+                    match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(error));
@@ -3170,7 +3180,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &quote::quote!{[std::primitive::u8; 6]},
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    sqlx::types::mac_address::MacAddress::new(__field0)
+                    sqlx::types::mac_address::MacAddress::new(#field_0_token_stream)
                 });
                 quote::quote!{
                     #fields_initialization_token_stream
@@ -3183,8 +3193,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
                     {
-                        let mut bit_vec = sqlx::types::BitVec::from_elem(__field0.len(), false);
-                        __field0.into_iter().enumerate().for_each(|(index, element)|{
+                        let mut bit_vec = sqlx::types::BitVec::from_elem(#field_0_token_stream.len(), false);
+                        #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
                             bit_vec.set(index, element);
                         });
                         bit_vec
@@ -3609,7 +3619,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
 
                 let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote!{
-                    match #postgresql_type_not_null_upper_camel_case::try_new(__field0, __field1, __field2) {
+                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field2_token_stream) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                     }
@@ -3618,9 +3628,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                 //// let serde_private_ok_postgresql_type_date_time_offset_token_stream = generate_serde_private_ok_token_stream(&quote::quote!{
                 ////     #postgresql_type {
-                ////         date: __field0,
-                ////         time: __field1,
-                ////         offset: __field2,
+                ////         date: #field_0_token_stream,
+                ////         time: #field_1_token_stream,
+                ////         offset: #field2_token_stream,
                 ////     }
                 //// });
 
@@ -3824,9 +3834,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &while_some_next_key_field_months_days_microseconds_token_stream,
                         &match_field_initialization_months_days_microseconds_token_stream,
                         &quote::quote!{sqlx::postgres::types::PgInterval {
-                            #months_snake_case: __field0,
-                            #days_snake_case: __field1,
-                            #microseconds_snake_case: __field2,
+                            #months_snake_case: #field_0_token_stream,
+                            #days_snake_case: #field_1_token_stream,
+                            #microseconds_snake_case: #field2_token_stream,
                         }},
                     ),
                     generate_fn_visit_map_token_stream(
