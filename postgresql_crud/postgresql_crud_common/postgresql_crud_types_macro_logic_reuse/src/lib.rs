@@ -2435,229 +2435,211 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             }
             let postgresql_type_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type_not_null_upper_camel_case);
-            let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream = match &postgresql_type_not_null_or_nullable {
+
+            let generate_impl_serde_serialize_for_postgresql_type_not_null_tokens = |content_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{
+                    const _: () = {
+                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        extern crate serde as _serde;
+                        #[automatically_derived]
+                        impl _serde::Serialize for #postgresql_type_not_null_upper_camel_case {
+                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
+                            where
+                                __S: _serde::Serializer,
+                            {
+                                #content_token_stream
+                            }
+                        }
+                    };
+                }
+            };
+            let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, &self.0 #value_token_stream)}
+            };
+            let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
+                let parameter_number_token_stream = {
+                    let value = (0..parameter_number.get_std_primitive_u8()).collect::<std::vec::Vec<_>>().into_iter().map(|_|quote::quote!{+ 1});
+                    quote::quote!{#(#value)*}
+                };
+                quote::quote!{
+                    let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
+                }
+            };
+            let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
+            let serde_state_initialization_three_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Three);
+            let generate_serialize_field_token_stream = |field_name: &dyn std::fmt::Display, third_parameter_token_stream: &dyn quote::ToTokens|{
+                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_name);
+                quote::quote!{_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_token_stream, #third_parameter_token_stream)?;}
+            };
+            let serde_ser_serialize_struct_end_token_stream = quote::quote!{_serde::ser::SerializeStruct::end(__serde_state)};
+            let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = {
+                let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{&self.0.#value_token_stream}
+                };
+                let start_serialize_field_token_stream = generate_serialize_field_token_stream(&start_snake_case, &generate_self_zero_tokens_token_stream(&start_snake_case));
+                let end_serialize_field_token_stream = generate_serialize_field_token_stream(&end_snake_case, &generate_self_zero_tokens_token_stream(&end_snake_case));
+                quote::quote!{
+                    #serde_state_initialization_two_fields_token_stream
+                    #start_serialize_field_token_stream
+                    #end_serialize_field_token_stream
+                    #serde_ser_serialize_struct_end_token_stream
+                }
+            };
+            let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |
+                type_token_stream: &dyn quote::ToTokens,
+                is_need_to_be_cloned: std::primitive::bool,
+            |{
+                let maybe_clone_token_stream: &dyn quote::ToTokens = if is_need_to_be_cloned {
+                    &quote::quote!{.clone()}
+                }
+                else {
+                    &proc_macro2_token_stream_new
+                };
+                let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{&match self.0.#value_token_stream #maybe_clone_token_stream {
+                        std::collections::Bound::Included(value) => std::collections::Bound::Included(#type_token_stream(value)),
+                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(#type_token_stream(value)),
+                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                    }}
+                };
+                let start_serialize_field_token_stream = generate_serialize_field_token_stream(
+                    &start_snake_case,
+                    &generate_self_zero_match_tokens_token_stream(&start_snake_case)
+                );
+                let end_serialize_field_token_stream = generate_serialize_field_token_stream(
+                    &end_snake_case,
+                    &generate_self_zero_match_tokens_token_stream(&end_snake_case)
+                );
+                quote::quote!{
+                    #serde_state_initialization_two_fields_token_stream
+                    #start_serialize_field_token_stream
+                    #end_serialize_field_token_stream
+                    #serde_ser_serialize_struct_end_token_stream
+                }
+            };
+            let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
+            let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.to_string()})
+            );
+            let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&quote::quote!{
+                _serde::Serializer::serialize_newtype_struct(
+                    __serializer,
+                    #postgresql_type_not_null_double_quotes_token_stream,
+                    &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
+                )
+            });
+            let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => {
-                    let generate_impl_serde_serialize_for_postgresql_type_not_null_tokens = |content_token_stream: &dyn quote::ToTokens|{
-                        quote::quote!{
-                            const _: () = {
-                                #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                extern crate serde as _serde;
-                                #[automatically_derived]
-                                impl _serde::Serialize for #postgresql_type_not_null_upper_camel_case {
-                                    fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                    where
-                                        __S: _serde::Serializer,
-                                    {
-                                        #content_token_stream
-                                    }
-                                }
-                            };
-                        }
-                    };
-
-                    let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens|{
-                        quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, &self.0 #value_token_stream)}
-                    };
-                    let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
-                        let parameter_number_token_stream = {
-                            let value = (0..parameter_number.get_std_primitive_u8()).collect::<std::vec::Vec<_>>().into_iter().map(|_|quote::quote!{+ 1});
-                            quote::quote!{#(#value)*}
-                        };
-                        quote::quote!{
-                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
-                        }
-                    };
-                    let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
-                    let serde_state_initialization_three_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Three);
-
-                    let generate_serialize_field_token_stream = |field_name: &dyn std::fmt::Display, third_parameter_token_stream: &dyn quote::ToTokens|{
-                        let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_name);
-                        quote::quote!{_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_token_stream, #third_parameter_token_stream)?;}
-                    };
-
-                    let serde_ser_serialize_struct_end_token_stream = quote::quote!{_serde::ser::SerializeStruct::end(__serde_state)};
-                    let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = {
-                        let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                            quote::quote!{&self.0.#value_token_stream}
-                        };
-                        let start_serialize_field_token_stream = generate_serialize_field_token_stream(&start_snake_case, &generate_self_zero_tokens_token_stream(&start_snake_case));
-                        let end_serialize_field_token_stream = generate_serialize_field_token_stream(&end_snake_case, &generate_self_zero_tokens_token_stream(&end_snake_case));
-                        quote::quote!{
-                            #serde_state_initialization_two_fields_token_stream
-                            #start_serialize_field_token_stream
-                            #end_serialize_field_token_stream
-                            #serde_ser_serialize_struct_end_token_stream
-                        }
-                    };
-                    let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |
-                        type_token_stream: &dyn quote::ToTokens,
-                        is_need_to_be_cloned: std::primitive::bool,
-                    |{
-                        let maybe_clone_token_stream = if is_need_to_be_cloned {
-                            quote::quote!{.clone()}
-                        }
-                        else {
-                            proc_macro2::TokenStream::new()
-                        };
-                        let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                            quote::quote!{&match self.0.#value_token_stream #maybe_clone_token_stream {
-                                std::collections::Bound::Included(value) => std::collections::Bound::Included(#type_token_stream(value)),
-                                std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(#type_token_stream(value)),
-                                std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                            }}
-                        };
-                        let start_serialize_field_token_stream = generate_serialize_field_token_stream(
-                            &start_snake_case,
-                            &generate_self_zero_match_tokens_token_stream(&start_snake_case)
-                        );
-                        let end_serialize_field_token_stream = generate_serialize_field_token_stream(
-                            &end_snake_case,
-                            &generate_self_zero_match_tokens_token_stream(&end_snake_case)
-                        );
-                        quote::quote!{
-                            #serde_state_initialization_two_fields_token_stream
-                            #start_serialize_field_token_stream
-                            #end_serialize_field_token_stream
-                            #serde_ser_serialize_struct_end_token_stream
-                        }
-                    };
-
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.0})
-                    );
-                    let impl_serde_serialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                        let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote!{&crate::postgresql_type::postgresql_base_type::NumBigintBigInt(bigint)});
-                        let scale_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::ScaleSnakeCase, &quote::quote!{&exponent});
-                        quote::quote!{
-                            let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
-                            #serde_state_initialization_two_fields_token_stream
-                            #digits_serialize_field_token_stream
-                            #scale_serialize_field_token_stream
-                            #serde_ser_serialize_struct_end_token_stream
-                        }
-                    });
-                    let impl_serde_serialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                        let year_snake_case = naming::YearSnakeCase;
-                        let month_snake_case = naming::MonthSnakeCase;
-                        let day_snake_case = naming::DaySnakeCase;
-                        let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                            quote::quote!{&self.0.#value_token_stream()}
-                        };
-                        let year_serialize_field_token_stream = generate_serialize_field_token_stream(&year_snake_case, &generate_self_zero_tokens_token_stream(&year_snake_case));
-                        let month_serialize_field_token_stream = generate_serialize_field_token_stream(&month_snake_case, &generate_self_zero_tokens_token_stream(&month_snake_case));
-                        let day_serialize_field_token_stream = generate_serialize_field_token_stream(&day_snake_case, &generate_self_zero_tokens_token_stream(&day_snake_case));
-                        quote::quote!{
-                            #serde_state_initialization_three_fields_token_stream
-                            #year_serialize_field_token_stream
-                            #month_serialize_field_token_stream
-                            #day_serialize_field_token_stream
-                            #serde_ser_serialize_struct_end_token_stream
-                        }
-                    });
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                        let months_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MonthsSnakeCase, &quote::quote!{&self.0.months});
-                        let days_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DaysSnakeCase, &quote::quote!{&self.0.days});
-                        let microseconds_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MicrosecondsSnakeCase, &quote::quote!{&self.0.microseconds});
-                        quote::quote!{
-                            #serde_state_initialization_three_fields_token_stream
-                            #months_serialize_field_token_stream
-                            #days_serialize_field_token_stream
-                            #microseconds_serialize_field_token_stream
-                            #serde_ser_serialize_struct_end_token_stream
-                        }
-                    });
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},//todo how to reuse naming?
-                            false,
-                        )
-                    );
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo how to reuse naming?
-                            false,
-                        )
-                    );
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},//todo how to reuse naming?
-                            false,
-                        )
-                    );
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
-                            &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},//todo how to reuse naming?
-                            true,
-                        )
-                    );
-                    let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.to_string()})
-                    );
-                    let impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
-                        &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.bytes()})
-                    );
-                    let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&quote::quote!{
-                        _serde::Serializer::serialize_newtype_struct(
-                            __serializer,
-                            #postgresql_type_not_null_double_quotes_token_stream,
-                            &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
-                        )
-                    });
                     match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => impl_serde_serialize_for_sqlx_postgres_types_pg_money_token_stream,
-                        PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => impl_serde_serialize_for_sqlx_types_big_decimal_token_stream,
-                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlCharN => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlVarchar => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdStringStringAsPostgresqlText => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => impl_serde_serialize_for_sqlx_types_time_date_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => impl_serde_serialize_for_sqlx_postgres_types_pg_interval_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
-                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => proc_macro2_token_stream_new.clone(),
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => impl_serde_serialize_for_sqlx_types_mac_address_mac_address_token_stream,
-                        PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
-                        PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => impl_serde_serialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => impl_serde_serialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                        PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.0})
+                        ),
+                        PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
+                            let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote!{&crate::postgresql_type::postgresql_base_type::NumBigintBigInt(bigint)});
+                            let scale_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::ScaleSnakeCase, &quote::quote!{&exponent});
+                            quote::quote!{
+                                let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
+                                #serde_state_initialization_two_fields_token_stream
+                                #digits_serialize_field_token_stream
+                                #scale_serialize_field_token_stream
+                                #serde_ser_serialize_struct_end_token_stream
+                            }
+                        }),
+                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdStringStringAsPostgresqlCharN => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
+                            let year_snake_case = naming::YearSnakeCase;
+                            let month_snake_case = naming::MonthSnakeCase;
+                            let day_snake_case = naming::DaySnakeCase;
+                            let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
+                                quote::quote!{&self.0.#value_token_stream()}
+                            };
+                            let year_serialize_field_token_stream = generate_serialize_field_token_stream(&year_snake_case, &generate_self_zero_tokens_token_stream(&year_snake_case));
+                            let month_serialize_field_token_stream = generate_serialize_field_token_stream(&month_snake_case, &generate_self_zero_tokens_token_stream(&month_snake_case));
+                            let day_serialize_field_token_stream = generate_serialize_field_token_stream(&day_snake_case, &generate_self_zero_tokens_token_stream(&day_snake_case));
+                            quote::quote!{
+                                #serde_state_initialization_three_fields_token_stream
+                                #year_serialize_field_token_stream
+                                #month_serialize_field_token_stream
+                                #day_serialize_field_token_stream
+                                #serde_ser_serialize_struct_end_token_stream
+                            }
+                        }),
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
+                            let months_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MonthsSnakeCase, &quote::quote!{&self.0.months});
+                            let days_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DaysSnakeCase, &quote::quote!{&self.0.days});
+                            let microseconds_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MicrosecondsSnakeCase, &quote::quote!{&self.0.microseconds});
+                            quote::quote!{
+                                #serde_state_initialization_three_fields_token_stream
+                                #months_serialize_field_token_stream
+                                #days_serialize_field_token_stream
+                                #microseconds_serialize_field_token_stream
+                                #serde_ser_serialize_struct_end_token_stream
+                            }
+                        }),
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => &impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
+                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote!{.bytes()})
+                        ),
+                        PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => &impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
+                        PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &quote::quote!{SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull},//todo how to reuse naming?
+                                false,
+                            )
+                        ),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &quote::quote!{SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull},//todo how to reuse naming?
+                                false,
+                            )
+                        ),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &quote::quote!{SqlxTypesTimeDateAsPostgresqlDateNotNull},//todo how to reuse naming?
+                                false,
+                            )
+                        ),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => &impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(
+                            &generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &quote::quote!{SqlxTypesBigDecimalAsPostgresqlNumericNotNull},//todo how to reuse naming?
+                                true,
+                            )
+                        ),
                     }
                 },
-                PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
             };
             let maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
