@@ -2931,15 +2931,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
                 },
             }};
-            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                quote::quote!{
-                    let __field0 = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                    let __field1 = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                    #serde_private_ok_postgresql_type_token_stream
-                }
-            });
-            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
+            let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
                     let __field0 = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
@@ -3648,8 +3640,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let (
                 fn_visit_map_sqlx_postgres_types_pg_interval_token_stream,
-                fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream,
             ) = {
                 let generate_fn_visit_map_token_stream = |
                     field_option_none_initialization_token_stream: &dyn quote::ToTokens,
@@ -3781,13 +3772,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &while_some_next_key_field_start_end_token_stream,
                         &match_field_initialization_start_end_token_stream,
                         &sqlx_postgres_types_pg_range_start_end_token_stream,
-                    ),
-                    generate_fn_visit_map_token_stream(
-                        &field_option_none_initialization_start_end_token_stream,
-                        &while_some_next_key_field_start_end_token_stream,
-                        &match_field_initialization_start_end_token_stream,
-                        &sqlx_postgres_types_pg_range_start_end_token_stream,
-                    ),
+                    )
                 )
             };
 
@@ -3998,8 +3983,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let (
                 impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream,
-                impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream,
             ) = {
                 let generate_impl_serde_de_visitor_for_ident_visitor_token_stream = |
                     first_token_stream: &dyn quote::ToTokens,
@@ -4025,20 +4009,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &fn_visit_map_sqlx_postgres_types_pg_interval_token_stream
                     ),
                     generate_impl_serde_de_visitor_for_ident_visitor_token_stream(
-                        &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
-                    ),
-                    generate_impl_serde_de_visitor_for_ident_visitor_token_stream(
-                        &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                        &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
+                        &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream,
+                        &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream
                     )
                 )
             };
 
             let (
                 impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream,
-                impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_stream,
-                impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i64_stream
+                impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream,
             ) = {
                 let generate_impl_serde_deserialize_for_field_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{
@@ -4059,167 +4038,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ),
                     generate_impl_serde_deserialize_for_field_token_stream(
                         &impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
-                    ),
-                    generate_impl_serde_deserialize_for_field_token_stream(
-                        &impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
                     )
                 )
             };
-
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_pg_money_token_stream
-                    #serde_deserializer_deserialize_newtype_struct_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_8ae918a4_5464_4f56_8078_ab475f269079
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_types_big_decimal_token_stream
-                    #const_fields_sqlx_types_big_decimal_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
-            let impl_serde_deserialize_for_sqlx_types_time_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_three_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
-                    #const_fields_sqlx_types_time_date_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #field_months_days_microseconds_token_stream
-                    #impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream
-                    #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
-                    #const_fields_sqlx_postgres_types_pg_interval_token_stream
-                    #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
+            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                 quote::quote!{
                     #field_start_end_token_stream
-                    #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i64_stream
-                    #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
+                    #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream
+                    #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream
                     #const_fields_start_end_token_stream
                     #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #field_start_end_token_stream
-                    #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_stream
-                    #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #enum_field_two_token_stream
-                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                    #impl_serde_deserialize_for_field_token_stream
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
-                    #const_fields_start_end_token_stream
-                    #serde_deserializer_deserialize_struct_visitor_token_stream
                 }
             });
             //// let impl_serde_deserialize_for_sqlx_types_time_offset_date_time_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
@@ -4237,13 +4065,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote!{
                     #struct_visitor_token_stream
                     #impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream
-                    #serde_deserializer_deserialize_newtype_struct_token_stream
-                }
-            });
-            let impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                quote::quote!{
-                    #struct_visitor_token_stream
-                    #impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream
                     #serde_deserializer_deserialize_newtype_struct_token_stream
                 }
             });
@@ -4266,15 +4087,42 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &impl_serde_deserialize_for_sqlx_postgres_types_pg_money_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_pg_money_token_stream
+                            #serde_deserializer_deserialize_newtype_struct_token_stream
+                        }
+                    }),
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &impl_serde_deserialize_for_sqlx_types_big_decimal_token_stream,
+                    PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_8ae918a4_5464_4f56_8078_ab475f269079
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_types_big_decimal_token_stream
+                            #const_fields_sqlx_types_big_decimal_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
                     PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlCharN => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
                     PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &impl_serde_deserialize_for_sqlx_types_time_date_token_stream,
+                    //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
+                    PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_three_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
+                            #const_fields_sqlx_types_time_date_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
                     PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
@@ -4287,21 +4135,125 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &impl_serde_deserialize_for_sqlx_types_mac_address_mac_address_token_stream,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream
+                            #serde_deserializer_deserialize_newtype_struct_token_stream
+                        }
+                    }),
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => &impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
                     PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &impl_serde_deserialize_for_sqlx_types_bit_vec_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &impl_serde_deserialize_for_sqlx_postgres_types_pg_interval_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #field_months_days_microseconds_token_stream
+                            #impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream
+                            #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
+                            #const_fields_sqlx_postgres_types_pg_interval_token_stream
+                            #serde_deserializer_deserialize_struct_ident_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => &impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_decimal_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        }
+                    }),
                 },
             };
             let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
