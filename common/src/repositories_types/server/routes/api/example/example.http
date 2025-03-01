@@ -120,6 +120,85 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       "days": 0,
       "microseconds": 0
     },
+    "chrono_naive_date_time_as_timestamp_nullable": "1970-01-01T00:00:00",
+    "chrono_naive_date_time_as_timestamp_not_null": "1970-01-01T00:00:00",
+    "sqlx_types_time_primitive_date_time_as_timestamp_nullable": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "time_offset_date_time_as_timestamp_tz_nullable": [
+      1970,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "time_offset_date_time_as_timestamp_tz_not_null": [
+      1970,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": "1970-01-01T00:00:00Z",
+    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": "1970-01-01T00:00:00Z",
+    "chrono_date_time_chrono_local_as_timestamp_tz_nullable": "1970-01-01T03:00:00+03:00",
+    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1970-01-01T03:00:00+03:00",
+    "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": null,
+    "uuid_uuid_as_uuid_init_by_client_nullable": "00000000-0000-0000-0000-000000000000",
+    "uuid_uuid_as_uuid_init_by_client_not_null": "00000000-0000-0000-0000-000000000000",
+    "sqlx_types_ipnetwork_ip_network_as_inet_nullable": "0.0.0.0/0",
+    "sqlx_types_ipnetwork_ip_network_as_inet_not_null": "0.0.0.0/0",
+    "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": "0.0.0.0/0",
+    "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": "0.0.0.0/0",
+    "mac_address_mac_address_as_mac_addr_nullable": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mac_address_mac_address_as_mac_addr_not_null": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "sqlx_types_bit_vec_as_bit_nullable": [
+      false
+    ],
+    "sqlx_types_bit_vec_as_bit_not_null": [
+      false
+    ],
+    "sqlx_types_bit_vec_as_varbit_nullable": [
+      false
+    ],
+    "sqlx_types_bit_vec_as_varbit_not_null": [
+      false
+    ],
     "pg_range_std_primitive_i32_as_int4_range_nullable": {
       "start": {
         "Included": 0
@@ -404,89 +483,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         }
       }
     },
-    "chrono_naive_date_time_as_timestamp_nullable": "1970-01-01T00:00:00",
-    "chrono_naive_date_time_as_timestamp_not_null": "1970-01-01T00:00:00",
-    "sqlx_types_time_primitive_date_time_as_timestamp_nullable": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "time_offset_date_time_as_timestamp_tz_nullable": [
-      1970,
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "time_offset_date_time_as_timestamp_tz_not_null": [
-      1970,
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_local_as_timestamp_tz_nullable": "1970-01-01T03:00:00+03:00",
-    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1970-01-01T03:00:00+03:00",
-    "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": null,
-    "uuid_uuid_as_uuid_init_by_client_nullable": "00000000-0000-0000-0000-000000000000",
-    "uuid_uuid_as_uuid_init_by_client_not_null": "00000000-0000-0000-0000-000000000000",
-    "sqlx_types_ipnetwork_ip_network_as_inet_nullable": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_inet_not_null": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": "0.0.0.0/0",
-    "mac_address_mac_address_as_mac_addr_nullable": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "mac_address_mac_address_as_mac_addr_not_null": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_bit_vec_as_bit_nullable": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_bit_not_null": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_varbit_nullable": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_varbit_not_null": [
-      false
-    ],
     "object_animal_as_jsonb_not_null": {
       "std_vec_vec_std_vec_vec_uuid_uuid": [
         [
-          "99c4f8cb-aac2-4881-a666-9d0249534cb1"
+          "29d331a3-cd45-4f3c-9e60-d04822ce3b00"
         ]
       ]
     }
@@ -1808,6 +1808,701 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #           "days": 0,
   #           "microseconds": 0
   #         }
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_naive_date_time_as_timestamp_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T00:00:00",
+  #         "end": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "CurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThanCurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_naive_date_time_as_timestamp_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T00:00:00",
+  #         "end": "1970-01-01T00:00:00"
+  #       }
+  #     },
+  #     {
+  #       "CurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThanCurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_time_primitive_date_time_as_timestamp_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "CurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThanCurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           0,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "CurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     },
+  #     {
+  #       "GreaterThanCurrentTimestamp": {
+  #         "logical_operator": "Or"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "time_offset_date_time_as_timestamp_tz_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "time_offset_date_time_as_timestamp_tz_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ],
+  #         "end": [
+  #           1970,
+  #           1,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00Z"
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00Z"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T00:00:00Z",
+  #         "end": "1970-01-01T00:00:00Z"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00Z"
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T00:00:00Z"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T00:00:00Z",
+  #         "end": "1970-01-01T00:00:00Z"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_date_time_chrono_local_as_timestamp_tz_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T03:00:00+03:00",
+  #         "end": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
+  #       "Before": {
+  #         "logical_operator": "Or",
+  #         "value": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": "1970-01-01T03:00:00+03:00",
+  #         "end": "1970-01-01T03:00:00+03:00"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "00000000-0000-0000-0000-000000000000"
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "uuid_uuid_as_uuid_init_by_client_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "00000000-0000-0000-0000-000000000000"
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "uuid_uuid_as_uuid_init_by_client_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "00000000-0000-0000-0000-000000000000"
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_ipnetwork_ip_network_as_inet_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_ipnetwork_ip_network_as_inet_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "mac_address_mac_address_as_mac_addr_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "mac_address_mac_address_as_mac_addr_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0,
+  #           0
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_bit_vec_as_bit_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "BitVecPositionEqual": {
+  #         "logical_operator": "Or",
+  #         "value": false,
+  #         "position": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_bit_vec_as_bit_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "BitVecPositionEqual": {
+  #         "logical_operator": "Or",
+  #         "value": false,
+  #         "position": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_bit_vec_as_varbit_nullable": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "BitVecPositionEqual": {
+  #         "logical_operator": "Or",
+  #         "value": false,
+  #         "position": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "sqlx_types_bit_vec_as_varbit_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "BitVecPositionEqual": {
+  #         "logical_operator": "Or",
+  #         "value": false,
+  #         "position": 0
   #       }
   #     }
   #   ]
@@ -5262,701 +5957,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "chrono_naive_date_time_as_timestamp_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00",
-  #         "end": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "CurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThanCurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "chrono_naive_date_time_as_timestamp_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00",
-  #         "end": "1970-01-01T00:00:00"
-  #       }
-  #     },
-  #     {
-  #       "CurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThanCurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_time_primitive_date_time_as_timestamp_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThanCurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           0,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     },
-  #     {
-  #       "GreaterThanCurrentTimestamp": {
-  #         "logical_operator": "Or"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "time_offset_date_time_as_timestamp_tz_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
-  # "time_offset_date_time_as_timestamp_tz_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ],
-  #         "end": [
-  #           1970,
-  #           1,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
-  # "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00Z",
-  #         "end": "1970-01-01T00:00:00Z"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T00:00:00Z"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T00:00:00Z",
-  #         "end": "1970-01-01T00:00:00Z"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "chrono_date_time_chrono_local_as_timestamp_tz_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T03:00:00+03:00",
-  #         "end": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Before": {
-  #         "logical_operator": "Or",
-  #         "value": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": "1970-01-01T03:00:00+03:00",
-  #         "end": "1970-01-01T03:00:00+03:00"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "00000000-0000-0000-0000-000000000000"
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     }
-  #   ]
-  # },
-  # "uuid_uuid_as_uuid_init_by_client_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "00000000-0000-0000-0000-000000000000"
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     }
-  #   ]
-  # },
-  # "uuid_uuid_as_uuid_init_by_client_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "00000000-0000-0000-0000-000000000000"
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_ipnetwork_ip_network_as_inet_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "0.0.0.0/0"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_ipnetwork_ip_network_as_inet_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "0.0.0.0/0"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "0.0.0.0/0"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": "0.0.0.0/0"
-  #       }
-  #     }
-  #   ]
-  # },
-  # "mac_address_mac_address_as_mac_addr_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     }
-  #   ]
-  # },
-  # "mac_address_mac_address_as_mac_addr_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0,
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "CaseSensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     },
-  #     {
-  #       "CaseInsensitiveRegularExpression": {
-  #         "logical_operator": "Or",
-  #         "value": ""
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_bit_vec_as_bit_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           false
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "BitVecPositionEqual": {
-  #         "logical_operator": "Or",
-  #         "value": false,
-  #         "position": 0
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_bit_vec_as_bit_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           false
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "BitVecPositionEqual": {
-  #         "logical_operator": "Or",
-  #         "value": false,
-  #         "position": 0
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_bit_vec_as_varbit_nullable": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           false
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "BitVecPositionEqual": {
-  #         "logical_operator": "Or",
-  #         "value": false,
-  #         "position": 0
-  #       }
-  #     }
-  #   ]
-  # },
-  # "sqlx_types_bit_vec_as_varbit_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           false
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "BitVecPositionEqual": {
-  #         "logical_operator": "Or",
-  #         "value": false,
-  #         "position": 0
-  #       }
-  #     }
-  #   ]
-  # },
   # "object_animal_as_jsonb_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -5969,7 +5969,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #               "logical_operator": "Or",
   #               "value": [
   #                 [
-  #                   "bf593835-1625-41f8-add0-54b944e115d9"
+  #                   "7a64893b-ac75-429e-a6b2-e6d4a898d981"
   #                 ]
   #               ]
   #             }
@@ -5980,7 +5980,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #             "EqualSecondDimension": {
   #               "logical_operator": "Or",
   #               "value": [
-  #                 "af9e7942-e06d-4a8c-acf1-e11cda70620b"
+  #                 "8cd13647-48f3-4d87-a845-654e10ffc707"
   #               ]
   #             }
   #           }
@@ -6111,72 +6111,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "sqlx_postgres_types_pg_interval_as_interval_not_null": null
     },
     {
-      "pg_range_std_primitive_i32_as_int4_range_nullable": null
-    },
-    {
-      "pg_range_std_primitive_i32_as_int4_range_not_null": null
-    },
-    {
-      "pg_range_std_primitive_i64_as_int8_range_nullable": null
-    },
-    {
-      "pg_range_std_primitive_i64_as_int8_range_not_null": null
-    },
-    {
-      "pg_range_naive_date_time_as_ts_range_nullable": null
-    },
-    {
-      "pg_range_naive_date_time_as_ts_range_not_null": null
-    },
-    {
-      "pg_range_time_primitive_date_time_as_ts_range_nullable": null
-    },
-    {
-      "pg_range_time_primitive_date_time_as_ts_range_not_null": null
-    },
-    {
-      "pg_range_date_time_utc_as_ts_tz_range_nullable": null
-    },
-    {
-      "pg_range_date_time_utc_as_ts_tz_range_not_null": null
-    },
-    {
-      "pg_range_date_time_local_as_ts_tz_range_nullable": null
-    },
-    {
-      "pg_range_date_time_local_as_ts_tz_range_not_null": null
-    },
-    {
-      "pg_range_time_offset_date_time_as_ts_tz_range_nullable": null
-    },
-    {
-      "pg_range_time_offset_date_time_as_ts_tz_range_not_null": null
-    },
-    {
-      "pg_range_chrono_naive_date_as_date_range_nullable": null
-    },
-    {
-      "pg_range_chrono_naive_date_as_date_range_not_null": null
-    },
-    {
-      "pg_range_sqlx_types_time_date_as_date_range_nullable": null
-    },
-    {
-      "pg_range_sqlx_types_time_date_as_date_range_not_null": null
-    },
-    {
-      "pg_range_decimal_as_num_range_nullable": null
-    },
-    {
-      "pg_range_decimal_as_num_range_not_null": null
-    },
-    {
-      "pg_range_sqlx_types_big_decimal_as_num_range_nullable": null
-    },
-    {
-      "pg_range_sqlx_types_big_decimal_as_num_range_not_null": null
-    },
-    {
       "chrono_naive_date_time_as_timestamp_nullable": null
     },
     {
@@ -6246,6 +6180,72 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "sqlx_types_bit_vec_as_varbit_not_null": null
     },
     {
+      "pg_range_std_primitive_i32_as_int4_range_nullable": null
+    },
+    {
+      "pg_range_std_primitive_i32_as_int4_range_not_null": null
+    },
+    {
+      "pg_range_std_primitive_i64_as_int8_range_nullable": null
+    },
+    {
+      "pg_range_std_primitive_i64_as_int8_range_not_null": null
+    },
+    {
+      "pg_range_naive_date_time_as_ts_range_nullable": null
+    },
+    {
+      "pg_range_naive_date_time_as_ts_range_not_null": null
+    },
+    {
+      "pg_range_time_primitive_date_time_as_ts_range_nullable": null
+    },
+    {
+      "pg_range_time_primitive_date_time_as_ts_range_not_null": null
+    },
+    {
+      "pg_range_date_time_utc_as_ts_tz_range_nullable": null
+    },
+    {
+      "pg_range_date_time_utc_as_ts_tz_range_not_null": null
+    },
+    {
+      "pg_range_date_time_local_as_ts_tz_range_nullable": null
+    },
+    {
+      "pg_range_date_time_local_as_ts_tz_range_not_null": null
+    },
+    {
+      "pg_range_time_offset_date_time_as_ts_tz_range_nullable": null
+    },
+    {
+      "pg_range_time_offset_date_time_as_ts_tz_range_not_null": null
+    },
+    {
+      "pg_range_chrono_naive_date_as_date_range_nullable": null
+    },
+    {
+      "pg_range_chrono_naive_date_as_date_range_not_null": null
+    },
+    {
+      "pg_range_sqlx_types_time_date_as_date_range_nullable": null
+    },
+    {
+      "pg_range_sqlx_types_time_date_as_date_range_not_null": null
+    },
+    {
+      "pg_range_decimal_as_num_range_nullable": null
+    },
+    {
+      "pg_range_decimal_as_num_range_not_null": null
+    },
+    {
+      "pg_range_sqlx_types_big_decimal_as_num_range_nullable": null
+    },
+    {
+      "pg_range_sqlx_types_big_decimal_as_num_range_not_null": null
+    },
+    {
       "object_animal_as_jsonb_not_null": [
         {
           "std_vec_vec_std_vec_vec_uuid_uuid": {
@@ -6269,6 +6269,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
   }
 }
+
 
 ###
 
@@ -6470,6 +6471,131 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         "days": 0,
         "microseconds": 0
       }
+    },
+    "chrono_naive_date_time_as_timestamp_nullable": {
+      "value": "1970-01-01T00:00:00"
+    },
+    "chrono_naive_date_time_as_timestamp_not_null": {
+      "value": "1970-01-01T00:00:00"
+    },
+    "sqlx_types_time_primitive_date_time_as_timestamp_nullable": {
+      "value": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
+      "value": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "time_offset_date_time_as_timestamp_tz_nullable": {
+      "value": [
+        1970,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "time_offset_date_time_as_timestamp_tz_not_null": {
+      "value": [
+        1970,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": {
+      "value": "1970-01-01T00:00:00Z"
+    },
+    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": {
+      "value": "1970-01-01T00:00:00Z"
+    },
+    "chrono_date_time_chrono_local_as_timestamp_tz_nullable": {
+      "value": "1970-01-01T03:00:00+03:00"
+    },
+    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
+      "value": "1970-01-01T03:00:00+03:00"
+    },
+    "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "uuid_uuid_as_uuid_init_by_client_nullable": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "uuid_uuid_as_uuid_init_by_client_not_null": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "sqlx_types_ipnetwork_ip_network_as_inet_nullable": {
+      "value": "0.0.0.0/0"
+    },
+    "sqlx_types_ipnetwork_ip_network_as_inet_not_null": {
+      "value": "0.0.0.0/0"
+    },
+    "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": {
+      "value": "0.0.0.0/0"
+    },
+    "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": {
+      "value": "0.0.0.0/0"
+    },
+    "mac_address_mac_address_as_mac_addr_nullable": {
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "mac_address_mac_address_as_mac_addr_not_null": {
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "sqlx_types_bit_vec_as_bit_nullable": {
+      "value": [
+        false
+      ]
+    },
+    "sqlx_types_bit_vec_as_bit_not_null": {
+      "value": [
+        false
+      ]
+    },
+    "sqlx_types_bit_vec_as_varbit_nullable": {
+      "value": [
+        false
+      ]
+    },
+    "sqlx_types_bit_vec_as_varbit_not_null": {
+      "value": [
+        false
+      ]
     },
     "pg_range_std_primitive_i32_as_int4_range_nullable": {
       "value": {
@@ -6799,138 +6925,13 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         }
       }
     },
-    "chrono_naive_date_time_as_timestamp_nullable": {
-      "value": "1970-01-01T00:00:00"
-    },
-    "chrono_naive_date_time_as_timestamp_not_null": {
-      "value": "1970-01-01T00:00:00"
-    },
-    "sqlx_types_time_primitive_date_time_as_timestamp_nullable": {
-      "value": [
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": {
-      "value": [
-        0,
-        1,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "time_offset_date_time_as_timestamp_tz_nullable": {
-      "value": [
-        1970,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "time_offset_date_time_as_timestamp_tz_not_null": {
-      "value": [
-        1970,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": {
-      "value": "1970-01-01T00:00:00Z"
-    },
-    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": {
-      "value": "1970-01-01T00:00:00Z"
-    },
-    "chrono_date_time_chrono_local_as_timestamp_tz_nullable": {
-      "value": "1970-01-01T03:00:00+03:00"
-    },
-    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": {
-      "value": "1970-01-01T03:00:00+03:00"
-    },
-    "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": {
-      "value": "00000000-0000-0000-0000-000000000000"
-    },
-    "uuid_uuid_as_uuid_init_by_client_nullable": {
-      "value": "00000000-0000-0000-0000-000000000000"
-    },
-    "uuid_uuid_as_uuid_init_by_client_not_null": {
-      "value": "00000000-0000-0000-0000-000000000000"
-    },
-    "sqlx_types_ipnetwork_ip_network_as_inet_nullable": {
-      "value": "0.0.0.0/0"
-    },
-    "sqlx_types_ipnetwork_ip_network_as_inet_not_null": {
-      "value": "0.0.0.0/0"
-    },
-    "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": {
-      "value": "0.0.0.0/0"
-    },
-    "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": {
-      "value": "0.0.0.0/0"
-    },
-    "mac_address_mac_address_as_mac_addr_nullable": {
-      "value": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "mac_address_mac_address_as_mac_addr_not_null": {
-      "value": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    "sqlx_types_bit_vec_as_bit_nullable": {
-      "value": [
-        false
-      ]
-    },
-    "sqlx_types_bit_vec_as_bit_not_null": {
-      "value": [
-        false
-      ]
-    },
-    "sqlx_types_bit_vec_as_varbit_nullable": {
-      "value": [
-        false
-      ]
-    },
-    "sqlx_types_bit_vec_as_varbit_not_null": {
-      "value": [
-        false
-      ]
-    },
     "object_animal_as_jsonb_not_null": {
       "value": [
         {
           "std_vec_vec_std_vec_vec_uuid_uuid": {
             "value": [
               [
-                "5fbb9827-2eef-4a4c-931f-38607145e01c"
+                "5947ba91-fe29-4972-b69d-03e0e169879c"
               ]
             ]
           }
@@ -6939,7 +6940,6 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     }
   }
 ]
-
 
 ###
 
