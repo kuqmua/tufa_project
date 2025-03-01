@@ -2133,6 +2133,54 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             .parse::<proc_macro2::TokenStream>()
             .unwrap()
         }
+        fn try_to_pg_range_type(&self) -> Result<Self, ()> {
+            match &self {
+                Self::StdPrimitiveI16AsPostgresqlInt2 => Err(()),
+                Self::StdPrimitiveI32AsPostgresqlInt4 => Err(()),
+                Self::StdPrimitiveI64AsPostgresqlInt8 => Err(()),
+                Self::StdPrimitiveF32AsPostgresqlFloat4 => Err(()),
+                Self::StdPrimitiveF64AsPostgresqlFloat8 => Err(()),
+                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => Err(()),
+                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => Err(()),
+                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => Err(()),
+                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => Err(()),
+                Self::SqlxTypesDecimalAsPostgresqlNumeric => Err(()),
+                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => Err(()),
+                Self::StdPrimitiveBoolAsPostgresqlBool => Err(()),
+                Self::StdStringStringAsPostgresqlCharN => Err(()),
+                Self::StdStringStringAsPostgresqlVarchar => Err(()),
+                Self::StdStringStringAsPostgresqlText => Err(()),
+                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Err(()),
+                Self::SqlxTypesTimeDateAsPostgresqlDate => Err(()),
+                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => Err(()),
+                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => Err(()),
+                Self::SqlxTypesTimeTimeAsPostgresqlTime => Err(()),
+                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => Err(()),
+                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Err(()),
+                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Err(()),
+                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Err(()),
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Err(()),
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Err(()),
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => Err(()),
+                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => Err(()),
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(()),
+                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
+                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
+                Self::SqlxTypesBitVecAsPostgresqlBit => Err(()),
+                Self::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),//todo rename tstz to timestamptz
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDate),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Ok(Self::SqlxTypesTimeDateAsPostgresqlDate),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
+                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumeric),
+            }
+        }
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
