@@ -2321,17 +2321,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         value: format!("{value:?}"),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     };
+                    let year_snake_case = naming::YearSnakeCase;
+                    let month_snake_case = naming::MonthSnakeCase;
+                    let day_snake_case = naming::DaySnakeCase;
                     quote::quote!{
                         impl #postgresql_type_not_null_upper_camel_case {
                             fn try_new(
-                                year: std::primitive::i32,
-                                month: time::Month,
-                                day: std::primitive::u8,
+                                #year_snake_case: std::primitive::i32,
+                                #month_snake_case: time::Month,
+                                #day_snake_case: std::primitive::u8,
                             ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
                                 match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
-                                    year,
-                                    month,
-                                    day,
+                                    #year_snake_case,
+                                    #month_snake_case,
+                                    #day_snake_case,
                                 ) {
                                     Ok(value) => {
                                         //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
