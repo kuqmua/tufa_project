@@ -1469,6 +1469,26 @@ impl CaseInsensitiveRegularExpression {
     }
 }
 
+fn generate_pub_value_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{pub #value_snake_case: #ident}
+}
+fn generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream() -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
+    quote::quote!{
+        #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+    }
+}
+fn generate_query_equals_query_bind_self_value_zero_token_stream() -> proc_macro2::TokenStream {
+    let query_snake_case = naming::QuerySnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{
+        #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
+        #query_snake_case
+    }
+}
+
 pub struct Before;
 impl WhereOperatorName for Before {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -1480,26 +1500,14 @@ impl Before {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} < ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2035,26 +2043,14 @@ impl ContainsAnotherRange {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} @> ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2070,26 +2066,14 @@ impl StrictlyToLeftOfRange {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} &< ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2105,26 +2089,14 @@ impl StrictlyToRightOfRange {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} &> ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2202,26 +2174,14 @@ impl GreaterThanLowerBound {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} > ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2237,26 +2197,14 @@ impl OverlapWithRange {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} && ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
@@ -2272,26 +2220,14 @@ impl AdjacentWithRange {
         &self,
         ident: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
-            &quote::quote!{pub #value_snake_case: #ident},
-            &{
-                let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    #value_snake_case: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                }
-            },
+            &generate_pub_value_ident_token_stream(&ident),
+            &generate_value_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote!{"{}({} -|- ${})"}),
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote!{
-                    #query_snake_case = #query_snake_case.bind(self.#value_snake_case.0);
-                    #query_snake_case
-                }
-            }
+            &generate_query_equals_query_bind_self_value_zero_token_stream()
         )
     }
 }
