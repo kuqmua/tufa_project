@@ -2506,18 +2506,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 Three,
             }
             impl ParameterNumber {
-                fn get_std_primitive_u8(&self) -> std::primitive::u8 {
-                    match &self {
-                        Self::One => 1,
-                        Self::Two => 2,
-                        Self::Three => 3,
-                    }
-                }
                 fn get_index(&self) -> std::primitive::usize {
                     match &self {
                         Self::One => 0,
                         Self::Two => 1,
                         Self::Three => 2,
+                    }
+                }
+                fn get_index_starting_with_one(&self) -> std::primitive::usize {
+                    match &self {
+                        Self::One => 1,
+                        Self::Two => 2,
+                        Self::Three => 3,
                     }
                 }
             }
@@ -2545,7 +2545,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
                 let parameter_number_token_stream = {
-                    let value = (0..parameter_number.get_std_primitive_u8()).collect::<std::vec::Vec<_>>().into_iter().map(|_|quote::quote!{+ 1});
+                    let value = (0..parameter_number.get_index_starting_with_one()).collect::<std::vec::Vec<_>>().into_iter().map(|_|quote::quote!{+ 1});
                     quote::quote!{#(#value)*}
                 };
                 quote::quote!{
@@ -2822,9 +2822,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             ) = {
                 let generate_enum_field_token_stream = |parameter_number: &ParameterNumber|{
                     let fields_token_stream = {
-                        let number = parameter_number.get_std_primitive_u8();
-                        let value = (0..number).collect::<std::vec::Vec<std::primitive::u8>>();
-                        let fields_token_stream = value.iter().map(|element|generate_field_index_token_stream(*element as usize));//todo choose one usize or u8
+                        let value = (0..parameter_number.get_index_starting_with_one()).collect::<std::vec::Vec<std::primitive::usize>>();
+                        let fields_token_stream = value.iter().map(|element|generate_field_index_token_stream(*element));
                         quote::quote!{#(#fields_token_stream),*}
                     };
                     quote::quote!{
@@ -3254,13 +3253,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             ) = {
                 let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber|{
                     let fields_token_stream = {
-                        (0..parameter_number.get_std_primitive_u8())
-                        .collect::<std::vec::Vec<std::primitive::u8>>()
+                        (0..parameter_number.get_index_starting_with_one())
+                        .collect::<std::vec::Vec<std::primitive::usize>>()
                         .into_iter().map(|element|{
                             let index_variant_token_stream = format!("{element}u64")
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap();
-                            let field_index_token_stream = generate_field_index_token_stream(element as usize);//todo choose one u8 or usize
+                            let field_index_token_stream = generate_field_index_token_stream(element);
                             quote::quote!{#index_variant_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
                         })
                     };
