@@ -2772,6 +2772,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let parameter_number_two = ParameterNumber::Two;
             let parameter_number_three = ParameterNumber::Three;
 
+            let generate_field_index_token_stream = |value: &dyn std::fmt::Display|{
+                format!("__{}{value}", naming::FieldSnakeCase)
+                .parse::<proc_macro2::TokenStream>()
+                .unwrap()
+            };
+
             let (
                 enum_field_two_token_stream,
                 enum_field_three_token_stream,
@@ -2780,11 +2786,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let fields_token_stream = {
                         let number = parameter_number.get_std_primitive_u8();
                         let value = (0..number).collect::<std::vec::Vec<std::primitive::u8>>();
-                        let fields_token_stream = value.iter().map(|element|{
-                            format!("__{}{element}", naming::FieldSnakeCase)
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap()
-                        });
+                        let fields_token_stream = value.iter().map(|element|generate_field_index_token_stream(&element));
                         quote::quote!{#(#fields_token_stream),*}
                     };
                     quote::quote!{
@@ -3219,9 +3221,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let index_variant_token_stream = format!("{element}u64")
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap();
-                            let field_index_token_stream = format!("__{}{element}", naming::FieldSnakeCase)
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap();
+                            let field_index_token_stream = generate_field_index_token_stream(&element);
                             quote::quote!{#index_variant_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
                         })
                     };
