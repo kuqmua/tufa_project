@@ -1944,6 +1944,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
     let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
     let std_string_string_token_stream = token_patterns::StdStringString;
+    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
 
     #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
@@ -4446,12 +4447,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ),
                 PostgresqlTypeNotNullOrNullable::Nullable => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
-                    &{
-                        let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                        quote::quote!{Self(
-                            Some(#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-                        )}
-                    }
+                    &quote::quote!{Self(
+                        Some(#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
+                    )}
                 ),
             };
             let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
@@ -4743,11 +4741,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
             let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
             let self_core_default_default_default_token_stream = quote::quote!{Self(#core_default_default_default_token_stream)};
-            let self_braces_td_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = {
-                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-                quote::quote!{
-                    Self(#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-                }
+            let self_braces_td_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
+                Self(#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
             };
             // let postgresql_type_not_null_or_nullable_to_create_token_stream = {
             //     let alias: &dyn quote::ToTokens = match &postgresql_type_initialized_by_tokens {
@@ -5368,10 +5363,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
-                        //todo reuse
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => &quote::quote!{
-                            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                        },
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => &std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     };
                     let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream = match &range_type {
                         RangeType::I32 |
