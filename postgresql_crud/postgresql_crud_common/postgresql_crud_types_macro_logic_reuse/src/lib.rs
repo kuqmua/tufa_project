@@ -2379,9 +2379,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         value: format!("{value:?}"),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     };
-                    let year_snake_case = naming::YearSnakeCase;
-                    let month_snake_case = naming::MonthSnakeCase;
-                    let day_snake_case = naming::DaySnakeCase;
                     quote::quote!{
                         impl #postgresql_type_not_null_upper_camel_case {
                             fn try_new(
@@ -2612,9 +2609,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
                         PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                            let year_snake_case = naming::YearSnakeCase;
-                            let month_snake_case = naming::MonthSnakeCase;
-                            let day_snake_case = naming::DaySnakeCase;
                             let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{&self.0.#value_token_stream()}
                             };
