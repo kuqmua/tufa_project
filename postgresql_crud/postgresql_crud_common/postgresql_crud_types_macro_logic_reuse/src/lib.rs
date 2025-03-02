@@ -2064,8 +2064,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
             let sqlx_types_time_primitive_date_time_stringified = "sqlx::types::time::PrimitiveDateTime".to_string();
             let sqlx_types_time_offset_date_time_stringified = "sqlx::types::time::OffsetDateTime".to_string();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>".to_string();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified = "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>".to_string();
+            let (
+                sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
+                sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified,
+            ) = {
+                let wrap_into_sqlx_types_chrono_date_time_stringified = |value: &dyn std::fmt::Display|{
+                    format!("sqlx::types::chrono::DateTime<{value}>")
+                };
+                (
+                    wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Utc"),
+                    wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Local"),
+                )
+            };
             let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
             let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
             let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
