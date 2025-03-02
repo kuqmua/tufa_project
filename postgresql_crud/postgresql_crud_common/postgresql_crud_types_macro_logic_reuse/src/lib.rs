@@ -2609,12 +2609,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
                         PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                            let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                                quote::quote!{&self.0.#value_token_stream()}
+                            let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens|{
+                                generate_serialize_field_token_stream(&value, &quote::quote!{&self.0.#value()})//todo reuse &self.0.#value ?
                             };
-                            let year_serialize_field_token_stream = generate_serialize_field_token_stream(&year_snake_case, &generate_self_zero_tokens_token_stream(&year_snake_case));
-                            let month_serialize_field_token_stream = generate_serialize_field_token_stream(&month_snake_case, &generate_self_zero_tokens_token_stream(&month_snake_case));
-                            let day_serialize_field_token_stream = generate_serialize_field_token_stream(&day_snake_case, &generate_self_zero_tokens_token_stream(&day_snake_case));
+                            let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
+                            let month_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&month_snake_case);
+                            let day_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&day_snake_case);
                             quote::quote!{
                                 #serde_state_initialization_three_fields_token_stream
                                 #year_serialize_field_token_stream
@@ -2627,9 +2627,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                            let months_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MonthsSnakeCase, &quote::quote!{&self.0.months});
-                            let days_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DaysSnakeCase, &quote::quote!{&self.0.days});
-                            let microseconds_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::MicrosecondsSnakeCase, &quote::quote!{&self.0.microseconds});
+                            let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens|{
+                                generate_serialize_field_token_stream(&value, &quote::quote!{&self.0.#value})
+                            };
+                            let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
+                            let days_serialize_field_token_stream = generate_serialize_field_token_stream(&days_snake_case);
+                            let microseconds_serialize_field_token_stream = generate_serialize_field_token_stream(&microseconds_snake_case);
                             quote::quote!{
                                 #serde_state_initialization_three_fields_token_stream
                                 #months_serialize_field_token_stream
