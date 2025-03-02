@@ -2866,6 +2866,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             }};
             let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote!{#sqlx_types_mac_address_mac_address_field_type_token_stream::new(#field_0_token_stream)};
+            let array_std_primitive_u8_6_token_stream = quote::quote!{[std::primitive::u8; 6]};
 
             let (
                 fn_visit_newtype_struct_pg_money_token_stream,
@@ -2896,7 +2897,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
-                        &quote::quote!{[std::primitive::u8; 6]},
+                        &array_std_primitive_u8_6_token_stream,
                         &sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
@@ -3213,7 +3214,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                    &quote::quote!{[std::primitive::u8; 6]},
+                    &array_std_primitive_u8_6_token_stream,
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream);
                 quote::quote!{
