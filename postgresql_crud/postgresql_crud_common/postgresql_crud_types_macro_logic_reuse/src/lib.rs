@@ -4345,10 +4345,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
             //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
             // }
-            fn sqlx_types_ipnetwork_ip_network_v4_token_stream() -> proc_macro2::TokenStream {
-                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote!{sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default).unwrap())}
-            }
+            let sqlx_types_ipnetwork_ip_network_v4_token_stream = quote::quote!{
+                sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
+            };
             
             let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
@@ -4410,7 +4409,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql |
                             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &core_default_default_default_token_stream,
                             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &sqlx_types_ipnetwork_ip_network_v4_token_stream(),
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => &sqlx_types_ipnetwork_ip_network_v4_token_stream,
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
@@ -4675,7 +4674,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
                 let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_column_token_stream = generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_column_upper_camel_case,
-                    &token_patterns::CoreDefaultDefaultDefault,
+                    &core_default_default_default_token_stream,
                 );
                 quote::quote! {
                     #pub_struct_postgresql_type_not_null_or_nullable_column_token_stream
@@ -4857,14 +4856,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
-
-
-
-
-                
                 let where_operator_type_field_type_default = WhereOperatorType::FieldType {
                     field_type: &field_type,
-                    default_initialization_token_stream: &token_patterns::CoreDefaultDefaultDefault,
+                    default_initialization_token_stream: &core_default_default_default_token_stream,
                 };
                 let where_operator_type_ident = WhereOperatorType::Ident(&postgresql_type_not_null_upper_camel_case);
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn crate::filters::WhereOperatorName>| {
@@ -5363,21 +5357,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => ShouldImplRangeLength::False,
                     };
-                    let range_type_default_initialization_token_stream = match &range_type {
+                    let range_type_default_initialization_token_stream: &dyn quote::ToTokens = match &range_type {
                         RangeType::I32 |
                         RangeType::I64 |
                         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
                         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => {
-                            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                            quote::quote!{#core_default_default_default}
-                        },
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => &core_default_default_default_token_stream,
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
                         RangeType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
-                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => quote::quote!{
+                        //todo reuse
+                        RangeType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => &quote::quote!{
                             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
                         },
                     };
@@ -5736,7 +5728,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type_not_null_or_nullable,
                         &WhereOperatorType::FieldType {
                             field_type: &field_type,
-                            default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream()
+                            default_initialization_token_stream: &sqlx_types_ipnetwork_ip_network_v4_token_stream
                         },
                     );
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(
