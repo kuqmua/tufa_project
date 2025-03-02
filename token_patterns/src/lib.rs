@@ -302,6 +302,9 @@ impl quote::ToTokens for StdPrimitiveI64 {
         quote::quote! {std::primitive::i64}.to_tokens(tokens)
     }
 }
+
+
+
 pub struct CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -319,6 +322,24 @@ impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdO
         }.to_tokens(tokens)
     }
 }
+pub struct PostgresqlCrudStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+impl quote::ToTokens for PostgresqlCrudStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {
+            postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+        }.to_tokens(tokens)
+    }
+}
+pub struct PostgresqlCrudStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
+impl quote::ToTokens for PostgresqlCrudStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element = PostgresqlCrudStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+        quote::quote! {
+            #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+        }.to_tokens(tokens)
+    }
+}
+
 // pub struct AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
 // impl quote::ToTokens for AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement {
 //     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
