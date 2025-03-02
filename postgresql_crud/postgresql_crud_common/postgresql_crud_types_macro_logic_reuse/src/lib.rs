@@ -3777,10 +3777,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                
-                let months_snake_case = naming::MonthsSnakeCase;
-                let days_snake_case = naming::DaysSnakeCase;
-                let microseconds_snake_case = naming::MicrosecondsSnakeCase;
 
                 let (
                     field_option_none_initialization_months_days_microseconds_token_stream,
