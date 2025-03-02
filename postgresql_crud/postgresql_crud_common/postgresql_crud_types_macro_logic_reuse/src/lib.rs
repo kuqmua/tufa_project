@@ -2347,6 +2347,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney.field_type_token_stream();
 
+            let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
+
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
                 let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
@@ -2512,7 +2514,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     quote::quote!{#(#value)*}
                 };
                 quote::quote!{
-                    let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
+                    let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
                 }
             };
             let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
@@ -2575,7 +2577,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::Serializer::serialize_newtype_struct(
                     __serializer,
                     #postgresql_type_not_null_double_quotes_token_stream,
-                    &self.0.iter().collect::<std::vec::Vec<std::primitive::bool>>(),
+                    &self.0.iter().collect::<#std_vec_vec_std_primitive_bool_token_stream>(),
                 )
             });
             let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
@@ -2867,7 +2869,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &quote::quote!{sqlx::types::mac_address::MacAddress::new(#field_0_token_stream)}
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
-                        &quote::quote!{std::vec::Vec<std::primitive::bool>},
+                        &std_vec_vec_std_primitive_bool_token_stream,
                         &quote::quote!{{
                             let mut bit_vec = sqlx::types::BitVec::from_elem(#field_0_token_stream.len(), false);
                             #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
@@ -3191,7 +3193,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let fn_visit_seq_sqlx_types_bit_vec_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                    &quote::quote!{std::vec::Vec<std::primitive::bool>},
+                    &std_vec_vec_std_primitive_bool_token_stream,
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
                     {
