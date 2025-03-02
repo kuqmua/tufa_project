@@ -2376,6 +2376,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_big_decimal_as_postgresql_numeric_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_big_decimal_as_postgresql_numeric);
 
             let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney.field_type_token_stream();
+            let sqlx_types_uuid_uuid_field_type_token_stream = PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient.field_type_token_stream();
 
             let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
 
@@ -2881,9 +2882,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &std_primitive_i64_token_stream,
                         &quote::quote!{#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)}
                     ),
-                    generate_fn_visit_newtype_struct_token_stream(//todo reuse
+                    generate_fn_visit_newtype_struct_token_stream(
                         &std_string_string_token_stream,
-                        &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
+                        &quote::quote!{match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
                             Ok(value) => value,
                             Err(error) => {
                                 return Err(serde::de::Error::custom(error));
@@ -3201,7 +3202,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &std_string_string_token_stream,
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
+                    match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(error));
