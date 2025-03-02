@@ -2513,6 +2513,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         Self::Three => 3,
                     }
                 }
+                fn get_index(&self) -> std::primitive::usize {
+                    match &self {
+                        Self::One => 0,
+                        Self::Two => 1,
+                        Self::Three => 2,
+                    }
+                }
             }
             let postgresql_type_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type_not_null_upper_camel_case);
 
@@ -2803,8 +2810,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let parameter_number_two = ParameterNumber::Two;
             let parameter_number_three = ParameterNumber::Three;
 
-            let generate_field_index_token_stream = |value: &dyn std::fmt::Display|{
-                format!("__{}{value}", naming::FieldSnakeCase)
+            let generate_field_index_token_stream = |index: std::primitive::usize|{
+                format!("__{}{index}", naming::FieldSnakeCase)
                 .parse::<proc_macro2::TokenStream>()
                 .unwrap()
             };
@@ -2817,7 +2824,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let fields_token_stream = {
                         let number = parameter_number.get_std_primitive_u8();
                         let value = (0..number).collect::<std::vec::Vec<std::primitive::u8>>();
-                        let fields_token_stream = value.iter().map(|element|generate_field_index_token_stream(&element));
+                        let fields_token_stream = value.iter().map(|element|generate_field_index_token_stream(*element as usize));//todo choose one usize or u8
                         quote::quote!{#(#fields_token_stream),*}
                     };
                     quote::quote!{
@@ -2854,9 +2861,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
 
-            let field_0_token_stream = quote::quote!{__field0};
-            let field_1_token_stream = quote::quote!{__field1};
-            let field_2_token_stream = quote::quote!{__field2};
+            let field_0_token_stream = generate_field_index_token_stream(ParameterNumber::One.get_index());
+            let field_1_token_stream = generate_field_index_token_stream(ParameterNumber::Two.get_index());
+            let field_2_token_stream = generate_field_index_token_stream(ParameterNumber::Three.get_index());
 
             let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#content_token_stream)}};
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{generate_serde_private_ok_token_stream(&quote::quote!{#postgresql_type_not_null_upper_camel_case(#content_token_stream)})};
@@ -2939,24 +2946,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            let generate_field_index_name_token_stream = |index: std::primitive::usize|{
-                format!("__{}{index}", naming::FieldSnakeCase)
-                .parse::<proc_macro2::TokenStream>()
-                .unwrap()
-            };
-
             let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]|{
                 let error_message_token_stream = generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(
                     &postgresql_type,
                     vec_token_stream.len(),
                 );
                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
-                    let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                    let field_index_token_stream = generate_field_index_token_stream(index);
                     let index_usize_token_stream = format!("{index}usize")
                         .parse::<proc_macro2::TokenStream>()
                         .unwrap();
                     quote::quote!{
-                        let #field_index_name_token_stream = match serde::de::SeqAccess::next_element::<#element>(&mut __seq)? {
+                        let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#element>(&mut __seq)? {
                             serde::__private::Some(__value) => __value,
                             serde::__private::None => {
                                 return serde::__private::Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
@@ -3259,7 +3260,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let index_variant_token_stream = format!("{element}u64")
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap();
-                            let field_index_token_stream = generate_field_index_token_stream(&element);
+                            let field_index_token_stream = generate_field_index_token_stream(element as usize);//todo choose one u8 or usize
                             quote::quote!{#index_variant_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
                         })
                     };
@@ -3289,7 +3290,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                     let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                         let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-                        let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                        let field_index_name_token_stream = generate_field_index_token_stream(index);
                         quote::quote!{
                             #element_double_quotes_token_stream => _serde::__private::Ok(__Field::#field_index_name_token_stream)
                         }
@@ -3356,7 +3357,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element))
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap();
-                        let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                        let field_index_name_token_stream = generate_field_index_token_stream(index);
                         quote::quote!{
                             #b_element_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_name_token_stream)
                         }
@@ -3476,7 +3477,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ) = {
                     let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]|{
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
-                            let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index);
                             quote::quote!{
                                 let mut #field_index_name_token_stream: serde::__private::Option<#element> = serde::__private::None;
                             }
@@ -3555,7 +3556,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                             let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element.0);
                             let field_type_token_stream = &element.1;
-                            let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index);
                             quote::quote!{
                                 __Field::#field_index_name_token_stream => {
                                     if serde::__private::Option::is_some(&#field_index_name_token_stream) {
@@ -3639,7 +3640,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
                             let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
-                            let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index);
                             quote::quote!{
                                 let #field_index_name_token_stream = match #field_index_name_token_stream {
                                     serde::__private::Some(#field_index_name_token_stream) => #field_index_name_token_stream,
@@ -3847,7 +3848,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ) = {
                     let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)|{
-                            let field_index_name_token_stream = generate_field_index_name_token_stream(index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index);
                             let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
                             quote::quote!{
                                 let #field_index_name_token_stream = #element.ok_or_else(|| serde::de::Error::missing_field(#field_name_double_quotes_token_stream))?;
