@@ -2379,6 +2379,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_uuid_uuid_field_type_token_stream = PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient.field_type_token_stream();
             let sqlx_types_mac_address_mac_address_field_type_token_stream = PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr.field_type_token_stream();
             let sqlx_types_bit_vec_field_type_token_stream = PostgresqlType::SqlxTypesBitVecAsPostgresqlBit.field_type_token_stream();
+            let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval.field_type_token_stream();
 
             let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
 
@@ -3017,7 +3018,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
             let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgInterval { 
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream { 
                     #months_snake_case,
                     #days_snake_case,
                     #microseconds_snake_case
@@ -3860,7 +3861,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &field_option_none_initialization_months_days_microseconds_token_stream,
                         &while_some_next_key_field_months_days_microseconds_token_stream,
                         &match_field_initialization_months_days_microseconds_token_stream,
-                        &quote::quote!{sqlx::postgres::types::PgInterval {
+                        &quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream {
                             #months_snake_case: #field_0_token_stream,
                             #days_snake_case: #field_1_token_stream,
                             #microseconds_snake_case: #field2_token_stream,
@@ -4381,10 +4382,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 quote::quote!{#value}
                             },
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
-                                quote::quote!{sqlx::postgres::types::PgInterval {//todo reuse
-                                    months: #core_default_default_default_token_stream,
-                                    days: #core_default_default_default_token_stream,
-                                    microseconds: #core_default_default_default_token_stream,
+                                quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream {
+                                    #months_snake_case: #core_default_default_default_token_stream,
+                                    #days_snake_case: #core_default_default_default_token_stream,
+                                    #microseconds_snake_case: #core_default_default_default_token_stream,
                                 }}
                             },
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
