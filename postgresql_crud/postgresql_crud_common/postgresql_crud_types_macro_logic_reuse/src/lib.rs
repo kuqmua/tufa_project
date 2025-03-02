@@ -2982,29 +2982,37 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
             let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgInterval { months, days, microseconds }});
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgInterval { 
+                    #months_snake_case,
+                    #days_snake_case,
+                    #microseconds_snake_case
+                }});
                 //todo
                 quote::quote!{
-                    let months = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                    let days = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                    let microseconds = #seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
+                    let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
+                    let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
+                    let #microseconds_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
             let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case: #field_0_token_stream, #end_snake_case: #field_1_token_stream }};
-            //todo reuse bounds
-            let sqlx_postgres_types_pg_range_bound_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange {
-                #start_snake_case: match #field_0_token_stream {
-                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                },
-                #end_snake_case: match #field_1_token_stream {
-                    std::collections::Bound::Included(value) => std::collections::Bound::Included(value.0),
-                    std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(value.0),
-                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                },
-            }};
+            let sqlx_postgres_types_pg_range_bound_start_end_token_stream = {
+                let generate_match_std_collections_bound_token_stream = |value: &dyn quote::ToTokens|{
+                    quote::quote!{
+                        match #value {
+                            std::collections::Bound::Included(#value_snake_case) => std::collections::Bound::Included(#value_snake_case.0),
+                            std::collections::Bound::Excluded(#value_snake_case) => std::collections::Bound::Excluded(#value_snake_case.0),
+                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        }
+                    }
+                };
+                let field_0_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_0_token_stream);
+                let field_1_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_1_token_stream);
+                quote::quote!{sqlx::postgres::types::PgRange {
+                    #start_snake_case: #field_0_match_std_collections_bound_token_stream,
+                    #end_snake_case: #field_1_match_std_collections_bound_token_stream,
+                }}
+            };
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                 quote::quote!{
