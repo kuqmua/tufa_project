@@ -2378,6 +2378,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney.field_type_token_stream();
             let sqlx_types_uuid_uuid_field_type_token_stream = PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient.field_type_token_stream();
             let sqlx_types_mac_address_mac_address_field_type_token_stream = PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr.field_type_token_stream();
+            let sqlx_types_bit_vec_field_type_token_stream = PostgresqlType::SqlxTypesBitVecAsPostgresqlBit.field_type_token_stream();
 
             let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
 
@@ -2867,6 +2868,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }};
             let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote!{#sqlx_types_mac_address_mac_address_field_type_token_stream::new(#field_0_token_stream)};
             let array_std_primitive_u8_6_token_stream = quote::quote!{[std::primitive::u8; 6]};
+            let sqlx_types_bit_vec_field_type_set_token_stream = quote::quote!{{
+                let mut bit_vec = #sqlx_types_bit_vec_field_type_token_stream::from_elem(#field_0_token_stream.len(), false);
+                #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
+                    bit_vec.set(index, element);
+                });
+                bit_vec
+            }};
 
             let (
                 fn_visit_newtype_struct_pg_money_token_stream,
@@ -2902,13 +2910,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
                         &std_vec_vec_std_primitive_bool_token_stream,
-                        &quote::quote!{{
-                            let mut bit_vec = sqlx::types::BitVec::from_elem(#field_0_token_stream.len(), false);
-                            #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
-                                bit_vec.set(index, element);
-                            });
-                            bit_vec
-                        }}
+                        &sqlx_types_bit_vec_field_type_set_token_stream
                     )
                 )
             };
@@ -3226,15 +3228,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &std_vec_vec_std_primitive_bool_token_stream,
                 ]);
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    {
-                        let mut bit_vec = sqlx::types::BitVec::from_elem(#field_0_token_stream.len(), false);
-                        #field_0_token_stream.into_iter().enumerate().for_each(|(index, element)|{
-                            bit_vec.set(index, element);
-                        });
-                        bit_vec
-                    }
-                });
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_bit_vec_field_type_set_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -4408,7 +4402,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => &core_default_default_default_token_stream,
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlBit |
                             PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &quote::quote!{{
-                                let mut value = sqlx::types::BitVec::new();//todo reuse
+                                let mut value = #sqlx_types_bit_vec_field_type_token_stream::new();
                                 value.push(false);
                                 value
                             }},
