@@ -2858,6 +2858,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#content_token_stream)}};
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{generate_serde_private_ok_token_stream(&quote::quote!{#postgresql_type_not_null_upper_camel_case(#content_token_stream)})};
 
+            let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote!{match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(serde::de::Error::custom(error));
+                }
+            }};
+
             let (
                 fn_visit_newtype_struct_pg_money_token_stream,
                 fn_visit_newtype_struct_uuid_token_stream,
@@ -2884,12 +2891,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
                         &std_string_string_token_stream,
-                        &quote::quote!{match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(serde::de::Error::custom(error));
-                            }
-                        }}
+                        &match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream
                     ),
                     generate_fn_visit_newtype_struct_token_stream(
                         &quote::quote!{[std::primitive::u8; 6]},
@@ -3201,14 +3203,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &std_string_string_token_stream,
                 ]);
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
-                    match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
-                        Ok(value) => value,
-                        Err(error) => {
-                            return Err(serde::de::Error::custom(error));
-                        }
-                    }
-                });
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream);
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
