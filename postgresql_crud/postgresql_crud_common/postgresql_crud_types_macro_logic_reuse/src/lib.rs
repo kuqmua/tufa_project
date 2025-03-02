@@ -2856,7 +2856,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let field_0_token_stream = quote::quote!{__field0};
             let field_1_token_stream = quote::quote!{__field1};
-            let field2_token_stream = quote::quote!{__field2};
+            let field_2_token_stream = quote::quote!{__field2};
 
             let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens|{quote::quote!{serde::__private::Ok(#content_token_stream)}};
             let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens|{generate_serde_private_ok_token_stream(&quote::quote!{#postgresql_type_not_null_upper_camel_case(#content_token_stream)})};
@@ -2876,6 +2876,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 });
                 bit_vec
             }};
+            let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |
+                months_token_stream: &dyn quote::ToTokens,
+                days_token_stream: &dyn quote::ToTokens,
+                microseconds_token_stream: &dyn quote::ToTokens,
+            |{
+                quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream { 
+                    #months_snake_case #months_token_stream,
+                    #days_snake_case #days_token_stream,
+                    #microseconds_snake_case #microseconds_token_stream
+                }}
+            };
 
             let (
                 fn_visit_newtype_struct_pg_money_token_stream,
@@ -2991,7 +3002,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 ]);
                 quote::quote!{
                     #fields_initialization_token_stream
-                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field2_token_stream) {
+                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                     }
@@ -3018,11 +3029,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 )
             };
             let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream { 
-                    #months_snake_case,
-                    #days_snake_case,
-                    #microseconds_snake_case
-                }});
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                    &proc_macro2_token_stream_new,
+                    &proc_macro2_token_stream_new,
+                    &proc_macro2_token_stream_new,
+                ));
                 //todo
                 quote::quote!{
                     let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
@@ -3647,7 +3658,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
 
                 let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote!{
-                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field2_token_stream) {
+                    match #postgresql_type_not_null_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                     }
@@ -3736,6 +3747,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     ////     &serde_private_ok_postgresql_type_date_time_offset_token_stream,
                     //// )
                 )
+            };
+
+            let generate_double_dot_space_tokens_token_stream = |value: &dyn quote::ToTokens|{
+                quote::quote!{: #value}
             };
 
             let (
@@ -3861,11 +3876,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &field_option_none_initialization_months_days_microseconds_token_stream,
                         &while_some_next_key_field_months_days_microseconds_token_stream,
                         &match_field_initialization_months_days_microseconds_token_stream,
-                        &quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream {
-                            #months_snake_case: #field_0_token_stream,
-                            #days_snake_case: #field_1_token_stream,
-                            #microseconds_snake_case: #field2_token_stream,
-                        }},
+                        &generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                            &generate_double_dot_space_tokens_token_stream(&field_0_token_stream),
+                            &generate_double_dot_space_tokens_token_stream(&field_1_token_stream),
+                            &generate_double_dot_space_tokens_token_stream(&field_2_token_stream),
+                        ),
                     ),
                     generate_fn_visit_map_token_stream(
                         &field_option_none_initialization_start_end_token_stream,
@@ -4382,11 +4397,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 quote::quote!{#value}
                             },
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &{
-                                quote::quote!{#sqlx_postgres_types_pg_interval_field_type_token_stream {
-                                    #months_snake_case: #core_default_default_default_token_stream,
-                                    #days_snake_case: #core_default_default_default_token_stream,
-                                    #microseconds_snake_case: #core_default_default_default_token_stream,
-                                }}
+                                let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
+                                generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                                    &double_dots_space_core_default_default_default_token_stream,
+                                    &double_dots_space_core_default_default_default_token_stream,
+                                    &double_dots_space_core_default_default_default_token_stream,
+                                )
                             },
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &core_default_default_default_token_stream,
                             PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &generate_sqlx_types_time_primitive_date_time_new_token_stream(),
