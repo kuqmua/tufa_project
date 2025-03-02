@@ -1943,6 +1943,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
     let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
     let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
+    let std_string_string_token_stream = token_patterns::StdStringString;
 
     #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
@@ -2383,13 +2384,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
                 let less_than_minimum_postgresql_value_upper_camel_case = naming::LessThanMinimumPostgresqlValueUpperCamelCase;
                 let postgresql_type_not_null_try_new_error_named_token_stream = {
-                    let error_content_token_stream = {
-                        let std_string_string_token_stream = token_patterns::StdStringString;
-                        quote::quote!{
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            value: #std_string_string_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        }
+                    let error_content_token_stream = quote::quote!{
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        value: #std_string_string_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     };
                     quote::quote!{
                         #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -2884,7 +2882,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &quote::quote!{#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)}
                     ),
                     generate_fn_visit_newtype_struct_token_stream(//todo reuse
-                        &token_patterns::StdStringString,
+                        &std_string_string_token_stream,
                         &quote::quote!{match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
                             Ok(value) => value,
                             Err(error) => {
@@ -3200,7 +3198,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //// });
             let fn_visit_seq_sqlx_types_uuid_uuid_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                    &token_patterns::StdStringString,
+                    &std_string_string_token_stream,
                 ]);
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{
                     match sqlx::types::uuid::Uuid::try_parse(&#field_0_token_stream) {
