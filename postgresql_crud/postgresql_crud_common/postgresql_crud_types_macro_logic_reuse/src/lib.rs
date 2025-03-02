@@ -2382,6 +2382,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval.field_type_token_stream();
 
             let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
+            let time_month_token_stream = quote::quote!{time::Month};
 
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
@@ -2414,7 +2415,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         impl #postgresql_type_not_null_upper_camel_case {
                             fn try_new(
                                 #year_snake_case: std::primitive::i32,
-                                #month_snake_case: time::Month,
+                                #month_snake_case: #time_month_token_stream,
                                 #day_snake_case: std::primitive::u8,
                             ) -> Result<Self, #postgresql_type_not_null_try_new_error_named_upper_camel_case> {
                                 match #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
@@ -2426,7 +2427,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                         //postgresql having minimum value "year": -4712, "month": 1, "day": 1. maximum "year": 5874897, "month": 12, "day": 31. but library type does not impl that correctly(in type max is 9999)
                                         let minimum = #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_calendar_date(
                                             -4713,
-                                            time::Month::December,
+                                            #time_month_token_stream::December,
                                             31,
                                         ).unwrap();
                                         if minimum > value {
@@ -2999,7 +3000,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &std_primitive_i32_token_stream,
-                    &quote::quote!{time::Month},//todo reuse
+                    &time_month_token_stream,
                     &std_primitive_u8_token_stream,
                 ]);
                 quote::quote!{
@@ -3491,7 +3492,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         ]),
                         generate_field_option_none_initialization_token_stream(&[
                             &std_primitive_i32_token_stream,
-                            &quote::quote!{time::Month},
+                            &time_month_token_stream,
                             &std_primitive_u8_token_stream,
                         ]),
                         generate_field_option_none_initialization_token_stream(&[
@@ -3584,7 +3585,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
                             (&year_snake_case, &std_primitive_i32_token_stream),
-                            (&month_snake_case, &quote::quote!{time::Month}),//todo reuse
+                            (&month_snake_case, &time_month_token_stream),
                             (&day_snake_case, &std_primitive_u8_token_stream)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
