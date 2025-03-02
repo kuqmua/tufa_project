@@ -2070,17 +2070,36 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
             let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
             let sqlx_types_bit_vec_stringified = "sqlx::types::BitVec".to_string();
-            let sqlx_postgres_types_pg_range_std_primitive_i32_stringified = format!("sqlx::postgres::types::PgRange<{std_primitive_i32_stringified}>");
-            let sqlx_postgres_types_pg_range_std_primitive_i64_stringified = format!("sqlx::postgres::types::PgRange<{std_primitive_i64_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_chrono_naive_date_time_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_time_primitive_date_time_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_time_offset_date_time_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_chrono_naive_date_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_time_date_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_time_date_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_decimal_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_decimal_stringified}>");
-            let sqlx_postgres_types_pg_range_sqlx_types_big_decimal_stringified = format!("sqlx::postgres::types::PgRange<{sqlx_types_big_decimal_stringified}>");
+            let (
+                sqlx_postgres_types_pg_range_std_primitive_i32_stringified,
+                sqlx_postgres_types_pg_range_std_primitive_i64_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_time_date_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_decimal_stringified,
+                sqlx_postgres_types_pg_range_sqlx_types_big_decimal_stringified,
+            ) = {
+                let wrap_into_sqlx_postgres_types_pg_range_stringified = |value: &dyn std::fmt::Display|{
+                    format!("sqlx::postgres::types::PgRange<{value}>")
+                };
+                (
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i64_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_time_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_time_primitive_date_time_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_time_offset_date_time_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_time_date_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_decimal_stringified),
+                    wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_big_decimal_stringified),
+                )
+            };
             match &self {
                 PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => std_primitive_i16_stringified,
                 PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => std_primitive_i32_stringified,
