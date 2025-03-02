@@ -121,6 +121,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
     postgresql_type_or_json_type_ident_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_type_or_json_type_ident_where_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
 ) -> proc_macro2::TokenStream {
+    let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
     let postgresql_type_or_json_type_ident_where_token_stream = {
         let should_derive_schemars_json_schema = ShouldDeriveSchemarsJsonSchema::from(postgresql_type_or_json_type);
         quote::quote!{
@@ -451,7 +452,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
         &postgresql_type_or_json_type_ident_where_upper_camel_case,
         &quote::quote!{
             Self {
-                logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+                logical_operator: #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                 value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             }
         },
@@ -729,8 +730,9 @@ impl WhereOperatorType<'_> {
     }
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
-            WhereOperatorType::Ident(_) => quote::quote!{
-                crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            WhereOperatorType::Ident(_) => {
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
+                quote::quote!{#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream}
             },
             WhereOperatorType::FieldType {
                 field_type: _,
@@ -740,8 +742,9 @@ impl WhereOperatorType<'_> {
     }
     fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
-            WhereOperatorType::Ident(_) => quote::quote!{
-                Some(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+            WhereOperatorType::Ident(_) => {
+                let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
+                quote::quote!{Some(#std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)}
             },
             WhereOperatorType::FieldType {
                 field_type: _,
