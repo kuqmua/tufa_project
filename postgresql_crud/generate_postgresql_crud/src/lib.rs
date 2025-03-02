@@ -829,9 +829,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let elements_token_stream = fields.iter().map(|element| {
                 let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
                 quote::quote! {
-                    #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(
-                        postgresql_crud::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-                    )
+                    #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                 }
             });
             quote::quote! {

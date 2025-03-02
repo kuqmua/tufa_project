@@ -17,6 +17,7 @@ generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 naming = {path = "../../naming"}
 macros_helpers = {path = "../../macros_helpers"}
+token_patterns = {path = "../../token_patterns"}
 
 [lints]
 workspace = true
