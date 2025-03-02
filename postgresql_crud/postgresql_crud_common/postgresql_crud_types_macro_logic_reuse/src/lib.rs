@@ -2345,6 +2345,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_time_date_as_postgresql_date_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_time_date_as_postgresql_date);
             let sqlx_types_big_decimal_as_postgresql_numeric_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_big_decimal_as_postgresql_numeric);
 
+            let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney.field_type_token_stream();
+
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
                 let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
@@ -2849,7 +2851,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 (
                     generate_fn_visit_newtype_struct_token_stream(
                         &std_primitive_i64_token_stream,
-                        &quote::quote!{sqlx::postgres::types::PgMoney(#field_0_token_stream)} //todo reuse
+                        &quote::quote!{#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)}
                     ),
                     generate_fn_visit_newtype_struct_token_stream(//todo reuse
                         &token_patterns::StdStringString,
@@ -2928,7 +2930,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                     &std_primitive_i64_token_stream,
                 ]);
-                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{sqlx::postgres::types::PgMoney(#field_0_token_stream)});//todo reuse
+                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote!{#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)});
                 quote::quote!{
                     #fields_initialization_token_stream
                     #serde_private_ok_postgresql_type_token_stream
@@ -4338,7 +4340,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql |
                             PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql |
                             PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote!{sqlx::postgres::types::PgMoney(#core_default_default_default_token_stream)},
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote!{#sqlx_postgres_types_pg_money_field_type_token_stream(#core_default_default_default_token_stream)},
                             PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric |
                             PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric |
                             PostgresqlType::StdPrimitiveBoolAsPostgresqlBool |
