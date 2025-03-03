@@ -71,18 +71,6 @@ fn generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std
         }
     }
 }
-fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    quote::quote!{
-        impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for #ident {
-            fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-                #content_token_stream
-            }
-        }
-    }
-}
 enum PostgresqlTypeOrJsonType {
     PostgresqlType,
     PostgresqlJsonType,
@@ -601,7 +589,8 @@ fn generate_postgresql_type_where_element_token_stream(
         &ident,
         &quote::quote!{format!("{self:#?}")},
     );
-    let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+    let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = postgresql_crud_macros_common::generate_impl_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+        &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType,
         &ident,
         &{
             let variants_token_stream = variants.iter().map(|element|{
