@@ -2810,15 +2810,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &postgresql_json_type_tokens_field_reader_upper_camel_case,
                         &{
                             let value = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
-                                //todo optioon(null) must also be a read value
+                                //todo option(null) must also be a read value
+                                PostgresqlJsonType::Object |
                                 PostgresqlJsonType::StdOptionOptionObject => quote::quote!{(#postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)},
-                                PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                                    {
-                                        field_vec: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                                        pagination: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                                    }
-                                },
+                                PostgresqlJsonType::StdVecVecObjectWithId |
                                 PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
                                     {
                                         field_vec: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
