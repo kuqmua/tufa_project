@@ -3561,28 +3561,26 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_element_token_stream = {
-                            let variants_token_stream = vec_syn_field.iter().map(|element| {
-                                let field_ident_stringified = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
-                                quote::quote!{
-                                    Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-                                }
-                            });
-                            quote::quote!{
-                                impl #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_json_type_tokens_where_element_upper_camel_case {
-                                    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-                                        vec![#(#variants_token_stream),*]
+                        let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_element_token_stream = postgresql_crud_macros_common::generate_impl_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud,
+                            &postgresql_json_type_tokens_where_element_upper_camel_case,
+                            &{
+                                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                    let field_ident_stringified = element
+                                        .ident
+                                        .as_ref()
+                                        .unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        })
+                                        .to_string();
+                                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::new_or_panic(&field_ident_stringified);
+                                    quote::quote!{
+                                        Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                                     }
-                                }
-                            }
-                        };
+                                });
+                                quote::quote!{vec![#(#variants_token_stream),*]}
+                            },
+                        );
                         quote::quote!{
                             #postgresql_json_type_tokens_where_element_token_stream
                             #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_element_token_stream
