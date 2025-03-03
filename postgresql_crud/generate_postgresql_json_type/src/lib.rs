@@ -57,15 +57,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         struct_ident_token_stream: &dyn quote::ToTokens,
         self_initialization_content_token_stream: &dyn quote::ToTokens,
     |{
-        
-        quote::quote!{
-            impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #struct_ident_token_stream {
-                #[inline]
-                fn #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Self {
-                    Self #self_initialization_content_token_stream
-                }
-            }
-        }
+        postgresql_crud_macros_common::generate_impl_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+            &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud,
+            &struct_ident_token_stream,
+            &quote::quote!{Self #self_initialization_content_token_stream},
+        )
     };
 
     let (
