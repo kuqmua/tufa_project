@@ -52,7 +52,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
     let postgresql_crud_uuid_option_to_update_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::PostgresqlJsonTypeUuidUuidOptionToUpdate};//todo reuse
 
-    //todo cross macro reuse
     let generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream = |
         struct_ident_token_stream: &dyn quote::ToTokens,
         self_initialization_content_token_stream: &dyn quote::ToTokens,
