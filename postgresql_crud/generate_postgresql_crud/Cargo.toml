@@ -20,6 +20,7 @@ panic_location = {path = "../../panic_location"}
 macros_helpers = {path = "../../macros_helpers"}
 naming = {path = "../../naming"}
 token_patterns = {path = "../../token_patterns"}
+postgresql_crud_macros_common = {path = "../postgresql_crud_common/postgresql_crud_macros_common"}
 
 [lints]
 workspace = true
