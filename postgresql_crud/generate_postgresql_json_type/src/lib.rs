@@ -2310,30 +2310,26 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     //             }}
     //         }
     //     );
-    //     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream = {
-    //         let fields_token_stream = vec_syn_field.iter().map(|element| {
-    //             let field_ident = element
-    //                 .ident
-    //                 .as_ref()
-    //                 .unwrap_or_else(|| {
-    //                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
-    //                 });
-    //             quote::quote!{
-    //                 #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-    //             }
-    //         });
-    //         quote::quote!{
-    //             impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #object_with_id_ident_upper_camel_case {
-    //                 #[inline]
-    //                 fn #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Self {
-    //                     Self {
-    //                         #id_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-    //                         #(#fields_token_stream),*
-    //                     }
+    //     let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+    //         &object_with_id_ident_upper_camel_case,
+    //         &{
+    //             let fields_token_stream = vec_syn_field.iter().map(|element| {
+    //                 let field_ident = element
+    //                     .ident
+    //                     .as_ref()
+    //                     .unwrap_or_else(|| {
+    //                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
+    //                     });
+    //                 quote::quote!{
+    //                     #field_ident: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
     //                 }
-    //             }
-    //         }
-    //     };
+    //             });
+    //             quote::quote!{{
+    //                 #id_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+    //                 #(#fields_token_stream),*
+    //             }}
+    //         },
+    //     );
     //     quote::quote!{
     //         #object_with_id_ident_token_stream
     //         #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_object_with_id_ident_token_stream
@@ -3618,19 +3614,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_token_stream = {
-                            quote::quote!{
-                                impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_json_type_tokens_where_upper_camel_case {
-                                    #[inline]
-                                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        Self {
-                                            logical_operator: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                                            value: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                        }
-                                    }
+                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_json_type_tokens_where_upper_camel_case,
+                            &quote::quote!{
+                                {
+                                    logical_operator: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                    value: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 }
-                            }
-                        };
+                            },
+                        );
                         quote::quote!{
                             #postgresql_json_type_tokens_where_token_stream
                             #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream
@@ -4966,27 +4958,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                       let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_column_token_stream = {
-                            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream = match &postgresql_type {
+                       let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_column_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_type_tokens_column_upper_camel_case,
+                            &match &postgresql_type {
                                 PostgresqlType::JsonbNullable
-                                => quote::quote!{Self(Some(
+                                => quote::quote!{(Some(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 ))},
 
                                 PostgresqlType::JsonbNotNull
-                                => quote::quote!{Self(
+                                => quote::quote!{(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 )},
-                            };
-                            quote::quote!{
-                                impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_type_tokens_column_upper_camel_case {
-                                    #[inline]
-                                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_column_token_stream
-                                    }
-                                }
-                            }
-                        };
+                            },
+                        );
                         quote::quote!{
                             #postgresql_type_tokens_column_token_stream
                             #impl_sqlx_type_sqlx_postgres_for_postgresql_type_tokens_column_token_stream
@@ -5097,27 +5082,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = {
-                            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream = match &postgresql_type {
+                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_type_tokens_to_create_upper_camel_case,
+                            &match &postgresql_type {
                                 PostgresqlType::JsonbNullable
-                                => quote::quote!{Self(Some(
+                                => quote::quote!{(Some(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 ))},
 
                                 PostgresqlType::JsonbNotNull
-                                => quote::quote!{Self(
+                                => quote::quote!{(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 )},
-                            };
-                            quote::quote!{
-                                impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_type_tokens_to_create_upper_camel_case {
-                                    #[inline]
-                                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_create_token_stream
-                                    }
-                                }
-                            }
-                        };
+                            },
+                        );
                         quote::quote!{
                             #postgresql_type_tokens_to_create_token_stream
                             #impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream
@@ -5225,24 +5203,17 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #postgresql_type_tokens_to_update_upper_camel_case #pub_struct_postgresql_type_tokens_to_update_declaration_token_stream
                             }
                         };
-                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = {
-                            let std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream = match &postgresql_type {
-                                PostgresqlType::JsonbNullable => quote::quote!{Self(Some(
+                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_type_tokens_to_update_upper_camel_case,
+                            &match &postgresql_type {
+                                PostgresqlType::JsonbNullable => quote::quote!{(Some(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 ))},
-                                PostgresqlType::JsonbNotNull => quote::quote!{Self(
+                                PostgresqlType::JsonbNotNull => quote::quote!{(
                                     #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
                                 )},
-                            };
-                            quote::quote!{
-                                impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_type_tokens_to_update_upper_camel_case {
-                                    #[inline]
-                                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        #std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_content_for_postgresql_type_tokens_to_update_token_stream
-                                    }
-                                }
-                            }
-                        };
+                            },
+                        );
                         quote::quote!{
                             #postgresql_type_tokens_to_update_token_stream
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
@@ -5532,19 +5503,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = {
-                            quote::quote!{
-                                impl #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream for #postgresql_type_tokens_where_upper_camel_case {
-                                    #[inline]
-                                    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-                                        Self {
-                                            #logical_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                                            #value_snake_case: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
-                                        }
-                                    }
-                                }
-                            }
-                        };
+                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                            &postgresql_type_tokens_where_upper_camel_case,
+                            &quote::quote!{{
+                                #logical_operator_snake_case: #postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                #value_snake_case: #postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+                            }}
+                        );
                         quote::quote!{
                             #postgresql_type_tokens_where_token_stream
                             #impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream
