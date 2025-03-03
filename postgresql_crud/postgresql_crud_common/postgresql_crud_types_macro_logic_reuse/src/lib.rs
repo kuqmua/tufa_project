@@ -6048,7 +6048,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let generated = quote::quote!{
         // #(#postgresql_type_array)*
 
-        #h1
+        // #h1
         // #h2
         // #h3
         // #h4
