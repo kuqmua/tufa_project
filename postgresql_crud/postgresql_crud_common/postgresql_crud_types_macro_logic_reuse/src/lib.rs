@@ -1896,6 +1896,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
+    let error_snake_case = naming::ErrorSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let self_snake_case = naming::SelfSnakeCase;
@@ -5849,7 +5850,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             serde::Deserialize,
                         )]
                         pub enum #postgresql_type_not_null_or_nullable_to_update_query_part_error_named_upper_camel_case {
-                            Todo//todo
+                            #try_generate_bind_increments_error_named_upper_camel_case(crate::#try_generate_bind_increments_error_named_upper_camel_case),
                         }
                     }
                 };
@@ -5871,9 +5872,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #jsonb_set_target_snake_case: &std::primitive::str,
                             #jsonb_set_path_snake_case: &std::primitive::str,
                             #increment_snake_case: &mut std::primitive::u64
-                        ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
-                            //todo remove .unwrap()
-                            Ok(#crate_bind_query_try_generate_bind_increments_token_stream(#postgresql_type_self_to_update_snake_case, #increment_snake_case).unwrap())
+                        ) -> Result<#std_string_string_token_stream, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
+                            match #crate_bind_query_try_generate_bind_increments_token_stream(#postgresql_type_self_to_update_snake_case, #increment_snake_case) {
+                                Ok(#value_snake_case) => Ok(#value_snake_case),
+                                Err(#error_snake_case) => Err(
+                                    Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case::#try_generate_bind_increments_error_named_upper_camel_case(#error_snake_case)
+                                )
+                            }
                         }
                     }
                 };
@@ -6048,7 +6053,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let generated = quote::quote!{
         // #(#postgresql_type_array)*
 
-        // #h1
+        #h1
         // #h2
         // #h3
         // #h4
