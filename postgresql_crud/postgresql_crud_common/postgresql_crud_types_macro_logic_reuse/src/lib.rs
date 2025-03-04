@@ -2560,6 +2560,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_ser_serialize_struct_end_token_stream
                 }
             };
+            let generate_match_std_collections_bound_token_stream = |
+                match_token_stream: &dyn quote::ToTokens,
+                init_token_stream: &dyn quote::ToTokens,
+            |{
+                quote::quote!{match #match_token_stream {
+                    std::collections::Bound::Included(#value_snake_case) => std::collections::Bound::Included(#init_token_stream),
+                    std::collections::Bound::Excluded(#value_snake_case) => std::collections::Bound::Excluded(#init_token_stream),
+                    std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                }}
+            };
             let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |
                 type_token_stream: &dyn quote::ToTokens,
                 is_need_to_be_cloned: std::primitive::bool,
@@ -2571,11 +2581,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &proc_macro2_token_stream_new
                 };
                 let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                    quote::quote!{&match self.0.#value_token_stream #maybe_clone_token_stream {
-                        std::collections::Bound::Included(value) => std::collections::Bound::Included(#type_token_stream(value)),
-                        std::collections::Bound::Excluded(value) => std::collections::Bound::Excluded(#type_token_stream(value)),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                    }}
+                    let token_stream = generate_match_std_collections_bound_token_stream(
+                        &quote::quote!{self.0.#value_token_stream #maybe_clone_token_stream},
+                        &quote::quote!{#type_token_stream(#value_snake_case)}
+                    );
+                    quote::quote!{&#token_stream}
                 };
                 let start_serialize_field_token_stream = generate_serialize_field_token_stream(
                     &start_snake_case,
@@ -3031,18 +3041,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case: #field_0_token_stream, #end_snake_case: #field_1_token_stream }};
             let sqlx_postgres_types_pg_range_bound_start_end_token_stream = {
-                let generate_match_std_collections_bound_token_stream = |value: &dyn quote::ToTokens|{
-                    quote::quote!{
-                        match #value {
-                            std::collections::Bound::Included(#value_snake_case) => std::collections::Bound::Included(#value_snake_case.0),
-                            std::collections::Bound::Excluded(#value_snake_case) => std::collections::Bound::Excluded(#value_snake_case.0),
-                            std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
-                        }
-                    }
-                };
-                let field_0_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_0_token_stream);
-                let field_1_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_1_token_stream);
-                quote::quote!{sqlx::postgres::types::PgRange {
+                let value_zero_token_stream = quote::quote!{#value_snake_case.0};
+                let field_0_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_0_token_stream, &value_zero_token_stream);
+                let field_1_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_1_token_stream, &value_zero_token_stream);
+                quote::quote!{sqlx::postgres::types::PgRange {//todoreuse
                     #start_snake_case: #field_0_match_std_collections_bound_token_stream,
                     #end_snake_case: #field_1_match_std_collections_bound_token_stream,
                 }}
