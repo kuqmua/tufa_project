@@ -2329,28 +2329,21 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            let std_primitive_i16_as_postgresql_int2 = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2;
-            let std_primitive_i32_as_postgresql_int4 = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4;
-            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp;
             let sqlx_types_time_primitive_date_time_as_postgresql_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp;
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz;
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz;
             let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz = PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz;
-            let sqlx_types_chrono_naive_date_as_postgresql_date = PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate;
             let sqlx_types_time_date_as_postgresql_date = PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate;
-            let sqlx_types_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric;
             let sqlx_types_big_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric;
 
-            let std_primitive_i16_as_postgresql_int2_field_type_token_stream = std_primitive_i16_as_postgresql_int2.field_type_token_stream();
-            let std_primitive_i32_as_postgresql_int4_field_type_token_stream = std_primitive_i32_as_postgresql_int4.field_type_token_stream();
-            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_chrono_naive_date_time_as_postgresql_timestamp.field_type_token_stream();
+            let std_primitive_i16_as_postgresql_int2_field_type_token_stream = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2.field_type_token_stream();
+            let std_primitive_i32_as_postgresql_int4_field_type_token_stream = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4.field_type_token_stream();
+            let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp.field_type_token_stream();
             let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_postgresql_timestamp.field_type_token_stream();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz.field_type_token_stream();
-            let sqlx_types_chrono_naive_date_as_postgresql_date_field_type_token_stream = sqlx_types_chrono_naive_date_as_postgresql_date.field_type_token_stream();
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz.field_type_token_stream();
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_field_type_token_stream = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz.field_type_token_stream();
+            // let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_field_type_token_stream = sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz.field_type_token_stream();
+            let sqlx_types_chrono_naive_date_as_postgresql_date_field_type_token_stream = PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate.field_type_token_stream();
             let sqlx_types_time_date_as_postgresql_date_field_type_token_stream = sqlx_types_time_date_as_postgresql_date.field_type_token_stream();
-            let sqlx_types_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_decimal_as_postgresql_numeric.field_type_token_stream();
+            let sqlx_types_decimal_as_postgresql_numeric_field_type_token_stream = PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric.field_type_token_stream();
             let sqlx_types_big_decimal_as_postgresql_numeric_field_type_token_stream = sqlx_types_big_decimal_as_postgresql_numeric.field_type_token_stream();
 
             let sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_not_null_upper_camel_case_token_stream = naming::parameter::SelfNotNullUpperCamelCase::from_display(&sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz);
