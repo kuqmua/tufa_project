@@ -2204,18 +2204,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         }
     }
     enum RangeType {
-        // I32,
-        // I64,
-        // SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-        // SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-        // SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-        // SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-
         StdPrimitiveI32AsPostgresqlInt4,
         StdPrimitiveI64AsPostgresqlInt8,
         SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
