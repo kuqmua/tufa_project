@@ -485,12 +485,15 @@ fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(
         }
     }
 }
+fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_macro2::TokenStream {
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    quote::quote!{crate::#try_generate_bind_increments_error_named_upper_camel_case}
+}
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
     bind_value_to_query_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
     let self_snake_case = naming::SelfSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -498,9 +501,10 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(
     let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
     let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
+    let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
     quote::quote!{
         impl #crate_bind_query_token_stream<'_> for #ident_token_stream {
-            fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, crate::#try_generate_bind_increments_error_named_upper_camel_case> {
+            fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, #crate_try_generate_bind_increments_error_named_token_stream> {
                 #try_generate_bind_increments_token_stream
             }
             fn #bind_value_to_query_snake_case(#self_snake_case, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1896,6 +1900,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
+    let acc_snake_case = naming::AccSnakeCase;
+    let element_snake_case = naming::ElementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let error_snake_case = naming::ErrorSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -1914,7 +1920,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let microseconds_snake_case = naming::MicrosecondsSnakeCase;
 
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
     let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
@@ -4429,6 +4434,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )}
                 ),
             };
+            let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
             let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
                 let self_zero_token_stream = {
                     let self_snake_case = naming::SelfSnakeCase;
@@ -4446,7 +4452,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #acc_snake_case.push_str(&format!(#format_handle_token_stream));
                             }
                             None => {
-                                return Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -5846,7 +5852,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
                     quote::quote!{
                         fn #postgresql_type_self_to_update_query_part_snake_case(
-                            //few parameters usefull only with json types. maybe refactor it later
+                            //todo few parameters usefull only with json types. maybe refactor it later
                             #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
@@ -5876,24 +5882,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     quote::quote!{
                         fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
                             #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
-                            increment: &mut std::primitive::u64,
-                            column: &dyn std::fmt::Display,
+                            #increment_snake_case: &mut std::primitive::u64,
+                            #column_snake_case: &dyn std::fmt::Display,
                             is_need_to_add_logical_operator: std::primitive::bool,
                         ) -> Result<#std_string_string_token_stream, crate::TryGenerateBindIncrementsErrorNamed> {
-                            let mut acc = #std_string_string_token_stream::default();
+                            let mut #acc_snake_case = #std_string_string_token_stream::default();
                             let mut is_need_to_add_logical_operator_inner_handle = false;
-                            for element in &#postgresql_type_self_where_snake_case.value {
-                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                                    Ok(value) => {
-                                        acc.push_str(&format!("{value} "));
+                            for #element_snake_case in &#postgresql_type_self_where_snake_case.#value_snake_case {
+                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(
+                                    #element_snake_case,
+                                    #increment_snake_case,
+                                    #column_snake_case,
+                                    is_need_to_add_logical_operator_inner_handle
+                                ) {
+                                    Ok(#value_snake_case) => {
+                                        #acc_snake_case.push_str(&format!("{value} "));
                                         is_need_to_add_logical_operator_inner_handle = true;
                                     }
-                                    Err(error) => {
-                                        return Err(error);
+                                    Err(#error_snake_case) => {
+                                        return Err(#error_snake_case);
                                     }
                                 }
                             }
-                            let _ = acc.pop();
+                            let _ = #acc_snake_case.pop();
                             Ok(format!("{}({acc})", &#postgresql_type_self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                         }
                     }
@@ -5905,10 +5916,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
                             mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            for element in postgresql_type_self_where.value {
-                                query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                            for #element_snake_case in postgresql_type_self_where.#value_snake_case {
+                                #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(#element_snake_case, #query_snake_case);
                             }
-                            query
+                            #query_snake_case
                         }
                     }
                 };
@@ -5920,7 +5931,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type #postgresql_type_self_to_create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
                         type #postgresql_type_self_to_read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
                         type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
-                        type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = crate::#try_generate_bind_increments_error_named_upper_camel_case;
+                        type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
                         #postgresql_type_self_to_update_query_part_token_stream
                         #postgresql_type_self_to_update_bind_query_part_token_stream
                         type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
