@@ -2368,6 +2368,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let time_month_token_stream = quote::quote!{time::Month};
             let crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream = quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote!{sqlx::postgres::types::PgRange};
+            
+            let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{#sqlx_postgres_types_pg_range_token_stream { 
+                    #start_snake_case: #start_token_stream,
+                    #end_snake_case: #end_token_stream
+                }}
+            };
 
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
@@ -3040,15 +3047,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #serde_private_ok_postgresql_type_token_stream
                 }
             });
-            let sqlx_postgres_types_pg_range_start_end_token_stream = quote::quote!{#sqlx_postgres_types_pg_range_token_stream { #start_snake_case: #field_0_token_stream, #end_snake_case: #field_1_token_stream }};
+            let sqlx_postgres_types_pg_range_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(&field_0_token_stream, &field_1_token_stream);
             let sqlx_postgres_types_pg_range_bound_start_end_token_stream = {
                 let value_zero_token_stream = quote::quote!{#value_snake_case.0};
-                let field_0_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_0_token_stream, &value_zero_token_stream);
-                let field_1_match_std_collections_bound_token_stream = generate_match_std_collections_bound_token_stream(&field_1_token_stream, &value_zero_token_stream);
-                quote::quote!{#sqlx_postgres_types_pg_range_token_stream {
-                    #start_snake_case: #field_0_match_std_collections_bound_token_stream,
-                    #end_snake_case: #field_1_match_std_collections_bound_token_stream,
-                }}
+                generate_qlx_postgres_types_pg_range_start_end_token_stream(
+                    &generate_match_std_collections_bound_token_stream(&field_0_token_stream, &value_zero_token_stream),
+                    &generate_match_std_collections_bound_token_stream(&field_1_token_stream, &value_zero_token_stream)
+                )
             };
             let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream = generate_fn_visit_seq_token_stream(&{
                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
@@ -4321,7 +4326,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let sqlx_types_time_primitive_date_time_new_token_stream = {
                 let sqlx_types_time_time_midnight = token_patterns::SqlxTypesTimeTimeMidnight;
-                //todo reuse?
                 quote::quote!{#sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream::new(
                     #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
                     #sqlx_types_time_time_midnight,
@@ -4343,10 +4347,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             start_token_stream: &dyn quote::ToTokens,
                             end_token_stream: &dyn quote::ToTokens,
                         | {
-                            quote::quote!{#sqlx_postgres_types_pg_range_token_stream {
-                                #start_snake_case: std::ops::Bound::Included(#start_token_stream),
-                                #end_snake_case: std::ops::Bound::Excluded(#end_token_stream),
-                            }}
+                            generate_qlx_postgres_types_pg_range_start_end_token_stream(
+                                &quote::quote!{std::ops::Bound::Included(#start_token_stream)},
+                                &quote::quote!{std::ops::Bound::Excluded(#end_token_stream)}
+                            )
                         };
                         let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                             &core_default_default_default_token_stream,
