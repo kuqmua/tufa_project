@@ -882,7 +882,8 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum StdPrimitiveI16AsPostgresqlInt2NotNullToUpdateQueryPartErrorNamed {
-    Todo,
+    // Todo,
+    TryGenerateBindIncrementsErrorNamed(crate::TryGenerateBindIncrementsErrorNamed),
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPrimitiveI16AsPostgresqlInt2NotNull {
     type PostgresqlTypeSelf = Self;
@@ -901,7 +902,14 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for StdPr
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
-        Ok(crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment).unwrap())
+        match crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment) {
+            Ok(value) => Ok(value),
+            Err(error) => {
+                // let f: bool = error;
+                Err(Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed::TryGenerateBindIncrementsErrorNamed(error))
+            }
+        }
+        // Ok(crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment).unwrap())
     }
     fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(postgresql_type_self_to_update, query)

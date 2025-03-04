@@ -1,11 +1,11 @@
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
 pub struct MacroOccurence {
     pub file: std::string::String,
     pub line: u32,
     pub column: u32,
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
 pub struct CodeOccurence {
     file: std::string::String,
     line: u32,
