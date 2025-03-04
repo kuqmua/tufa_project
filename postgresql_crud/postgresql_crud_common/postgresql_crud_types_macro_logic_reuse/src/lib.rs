@@ -4751,10 +4751,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 );
                 let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
-                    &match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => quote::quote!{Ok(std::string::String::from("DEFAULT"))},
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => quote::quote!{Ok(std::string::String::from("uuid_generate_v4()"))},
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)},
+                    &{
+                        let generate_ok_std_string_string_from_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                            quote::quote!{Ok(#std_string_string_token_stream::from(#content_token_stream))}
+                        };
+                        match &postgresql_type_initialized_by_tokens {
+                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => generate_ok_std_string_string_from_token_stream(&quote::quote!{"DEFAULT"}),
+                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => generate_ok_std_string_string_from_token_stream(&quote::quote!{"uuid_generate_v4()"}),
+                            PostgresqlTypeInitializedByTokens::InitializedByClient => quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)},
+                        }
                     },
                     match &postgresql_type_initialized_by_tokens {
                         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
