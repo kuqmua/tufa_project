@@ -2203,6 +2203,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             .to_tokens(tokens)
         }
     }
+    enum RangeType {
+        I32,
+        I64,
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+        SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+    }
 
     let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
         let field_type = postgresql_type.field_type_token_stream();
@@ -5291,20 +5304,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #postgresql_type_tokens_where_element_token_stream
                     }
                 };
-
-                enum RangeType {
-                    I32,
-                    I64,
-                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-                    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-                    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-                    SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-                    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-                    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-                    SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-                    SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-                }
                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType|{
                     let range_type_token_stream: &dyn quote::ToTokens = match &range_type {
                         RangeType::I32 => &std_primitive_i16_as_postgresql_int2_field_type_token_stream,
@@ -5563,28 +5562,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 &crate::filters::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
                                 &crate::filters::ShouldAddDotZero::False,
                             );
-                            // todo
-                            // -- Values after the current timestamp
-                            // SELECT *
-                            // FROM your_table
-                            // WHERE your_timestamptz_column > CURRENT_TIMESTAMP;
-
-                            // -- Values equal to the current date (ignoring time)
-                            // SELECT *
-                            // FROM your_table
-                            // WHERE your_timestamptz_column::date = CURRENT_DATE;
-                            // 6. Time Zone Conversion
-                            // You can also use AT TIME ZONE to convert the TIMESTAMPTZ to a different time zone for comparison. This is useful when you want to perform comparisons based on different time zones.
-
-                            // -- Compare with a specific timestamp in another time zone
-                            // SELECT *
-                            // FROM your_table
-                            // WHERE your_timestamptz_column AT TIME ZONE 'UTC' = '2024-12-30 14:30:00+00';
-
-                            // -- Values after a timestamp in a different time zone
-                            // SELECT *
-                            // FROM your_table
-                            // WHERE your_timestamptz_column AT TIME ZONE 'America/New_York' > '2024-12-30 14:30:00';
                             quote::quote! {
                                 #postgresql_type_tokens_where_element_before_token_stream
                                 #postgresql_type_tokens_where_element_between_token_stream
