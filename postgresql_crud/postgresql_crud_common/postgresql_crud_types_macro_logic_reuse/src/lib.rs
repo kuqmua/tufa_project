@@ -4777,68 +4777,40 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
             };
-            let postgresql_type_not_null_or_nullable_struct_content_token_stream = quote::quote!{(#postgresql_type_not_null_or_nullable_upper_camel_case);};
-            let empty_struct_content_token_stream = quote::quote!{(());};
             let postgresql_type_not_null_or_nullable_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
             let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
-            let crate_bind_query_try_generate_bind_increments_token_stream = quote::quote!{#crate_bind_query_token_stream #try_generate_bind_increments_snake_case};
             let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-            let crate_bind_query_bind_value_to_query_token_stream = quote::quote!{#crate_bind_query_token_stream #bind_value_to_query_snake_case};
-            let crate_bind_query_bind_value_to_query_self_zero_query_token_stream = quote::quote!{#crate_bind_query_bind_value_to_query_token_stream(#self_dot_zero_token_stream, #query_snake_case)};
-            let self_core_default_default_default_token_stream = quote::quote!{Self(#core_default_default_default_token_stream)};
-            let self_braces_td_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                Self(#crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
-            };
-            // let postgresql_type_not_null_or_nullable_to_create_token_stream = {
-            //     let alias: &dyn quote::ToTokens = match &postgresql_type_initialized_by_tokens {
-            //         PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql |
-            //         PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &quote::quote!{crate::postgresql_type::postgresql_type_trait::PostgresqlTypeToCreateInitializedByPostgresql},
-            //         PostgresqlTypeInitializedByTokens::InitializedByClient => &field_type_handle,
-            //     };
-            //     macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_to_create_upper_camel_case, &alias)
-            // };
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
-                let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(
-                    &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &empty_struct_content_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &empty_struct_content_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &postgresql_type_not_null_or_nullable_struct_content_token_stream,
-                    },
-                    false,
-                    true,
-                );
-                let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
-                    &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
-                    &{
-                        let generate_ok_std_string_string_from_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                            quote::quote!{Ok(#std_string_string_token_stream::from(#content_token_stream))}
-                        };
-                        match &postgresql_type_initialized_by_tokens {
-                            PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => generate_ok_std_string_string_from_token_stream(&quote::quote!{"DEFAULT"}),
-                            PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => generate_ok_std_string_string_from_token_stream(&quote::quote!{"uuid_generate_v4()"}),
-                            PostgresqlTypeInitializedByTokens::InitializedByClient => quote::quote!{#crate_bind_query_try_generate_bind_increments_token_stream(&#self_dot_zero_token_stream, #increment_snake_case)},
-                        }
-                    },
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &query_snake_case,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &query_snake_case,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
-                    },
-                );
-                let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream = postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                    &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
-                    match &postgresql_type_initialized_by_tokens {
-                        PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => &self_core_default_default_default_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => &self_core_default_default_default_token_stream,
-                        PostgresqlTypeInitializedByTokens::InitializedByClient => &self_braces_td_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    },
-                );
-                quote::quote! {
-                    #postgresql_type_not_null_or_nullable_to_create_token_stream
-                    #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream
-                    #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
+                let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens|{
+                    let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(
+                        &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
+                        &quote::quote!{(());},
+                        false,
+                        true,
+                    );
+                    let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
+                        &quote::quote!{Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
+                        &query_snake_case,
+                    );
+                    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream = postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
+                        &quote::quote!{Self(#core_default_default_default_token_stream)},
+                    );
+                    quote::quote! {
+                        #postgresql_type_not_null_or_nullable_to_create_token_stream
+                        #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream
+                        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
+                    }
+                };
+                match &postgresql_type_initialized_by_tokens {
+                    PostgresqlTypeInitializedByTokens::InitializedUsingDefaultKeywordByPostgresql => generate_initialized_by_postgresql_token_stream(&quote::quote!{"DEFAULT"}),
+                    PostgresqlTypeInitializedByTokens::InitializedUsingUuidGenerateV4FunctionByPostgresql => generate_initialized_by_postgresql_token_stream(&quote::quote!{"uuid_generate_v4()"}),
+                    PostgresqlTypeInitializedByTokens::InitializedByClient => macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                        &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
+                        &postgresql_type_not_null_or_nullable_upper_camel_case
+                    ),
                 }
             };
             let postgresql_type_not_null_or_nullable_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
@@ -5896,7 +5868,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             _: &std::primitive::str,
                             #increment_snake_case: &mut std::primitive::u64
                         ) -> Result<#std_string_string_token_stream, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
-                            #crate_bind_query_try_generate_bind_increments_token_stream(#postgresql_type_self_to_update_snake_case, #increment_snake_case)
+                            #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#postgresql_type_self_to_update_snake_case, #increment_snake_case)
                         }
                     }
                 };
@@ -5908,7 +5880,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
                             #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            #crate_bind_query_bind_value_to_query_token_stream(#postgresql_type_self_to_update_snake_case, #query_snake_case)
+                            #crate_bind_query_token_stream #bind_value_to_query_snake_case(#postgresql_type_self_to_update_snake_case, #query_snake_case)
                         }
                     }
                 };
@@ -6021,51 +5993,49 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let postgresql_type_array = PostgresqlType::into_array().map(|element|generate_postgresql_type_token_stream(element));
     
     let h1 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
-    // let h2 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
-    // let h3 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
-    // let h4 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
-    // let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
+    let h2 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
+    let h3 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
+    let h4 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
+    let h5 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
     let h6 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
-    // let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
+    let h7 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
     let h8 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
-    // let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
-    // let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
-    // let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
-    // let h12 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
-    // let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
-    // let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar);
-    // let h15 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlText);
-    // let h16 = generate_postgresql_type_token_stream(PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea);
-    // let h17 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate);
-    // let h18 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
-    // let h19 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime);
-    // let h20 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime);
-    // let h21 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval);
-    // let h22 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp);
-    // let h23 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp);
-    // let h24 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz);
-    // let h25 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz);
-    // let h26 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz);
-    // let h27 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
-    // let h28 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
-    // let h29 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
-    // let h30 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
-    // let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
-    // let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
-    // let h33 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
-    // let h34 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
-    // let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
-    // let h36 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
-    // let h37 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange);
-    // let h38 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange);
-    // let h39 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange);
-    // let h40 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange);
-    // let h41 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange);
-    // let h42 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange);
-    // let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange);
-    // let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
-
-
+    let h9 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
+    let h10 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
+    let h11 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
+    let h12 = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
+    let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
+    let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar);
+    let h15 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlText);
+    let h16 = generate_postgresql_type_token_stream(PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea);
+    let h17 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate);
+    let h18 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
+    let h19 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime);
+    let h20 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime);
+    let h21 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval);
+    let h22 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp);
+    let h23 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp);
+    let h24 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz);
+    let h25 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz);
+    let h26 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz);
+    let h27 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
+    let h28 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
+    let h29 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
+    let h30 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
+    let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
+    let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
+    let h33 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
+    let h34 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
+    let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
+    let h36 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
+    let h37 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange);
+    let h38 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange);
+    let h39 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange);
+    let h40 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange);
+    let h41 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange);
+    let h42 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange);
+    let h43 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange);
+    let h44 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
@@ -6076,49 +6046,49 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #(#postgresql_type_array)*
 
         #h1
-        // #h2
-        // #h3
-        // #h4
-        // #h5
-        // #h6
-        // #h7
+        #h2
+        #h3
+        #h4
+        #h5
+        #h6
+        #h7
         #h8
-        // #h9
-        // #h10
-        // #h11
-        // #h12
-        // #h13
-        // #h14
-        // #h15
-        // #h16
-        // #h17
-        // #h18
-        // #h19
-        // #h20
-        // #h21
-        // #h22
-        // #h23
-        // #h24
-        // #h25
-        // #h26
-        // #h27
-        // #h28
-        // #h29
-        // #h30
-        // #h31
-        // #h32
-        // #h33
-        // #h34
-        // #h35
-        // #h36
-        // #h37
-        // #h38
-        // #h39
-        // #h40
-        // #h41
-        // #h42
-        // #h43
-        // #h44
+        #h9
+        #h10
+        #h11
+        #h12
+        #h13
+        #h14
+        #h15
+        #h16
+        #h17
+        #h18
+        #h19
+        #h20
+        #h21
+        #h22
+        #h23
+        #h24
+        #h25
+        #h26
+        #h27
+        #h28
+        #h29
+        #h30
+        #h31
+        #h32
+        #h33
+        #h34
+        #h35
+        #h36
+        #h37
+        #h38
+        #h39
+        #h40
+        #h41
+        #h42
+        #h43
+        #h44
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
