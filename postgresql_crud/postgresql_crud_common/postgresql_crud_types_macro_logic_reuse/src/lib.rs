@@ -5916,7 +5916,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
                             mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            for #element_snake_case in postgresql_type_self_where.#value_snake_case {
+                            for #element_snake_case in #postgresql_type_self_where_snake_case.#value_snake_case {
                                 #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(#element_snake_case, #query_snake_case);
                             }
                             #query_snake_case
