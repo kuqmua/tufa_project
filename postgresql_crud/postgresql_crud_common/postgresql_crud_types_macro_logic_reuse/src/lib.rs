@@ -2366,7 +2366,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let std_vec_vec_std_primitive_bool_token_stream = quote::quote!{std::vec::Vec<std::primitive::bool>};
             let time_month_token_stream = quote::quote!{time::Month};
-            let crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream = quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt};
+            let crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream = quote::quote!{crate::postgresql_type::postgresql_base_type::NumBigintBigInt};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote!{sqlx::postgres::types::PgRange};
             
             let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens|{
@@ -2637,7 +2637,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         ),
                         PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
-                            let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote!{&#crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream(bigint)});
+                            let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote!{&#crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream(bigint)});
                             let scale_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::ScaleSnakeCase, &quote::quote!{&exponent});
                             quote::quote!{
                                 let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
@@ -2991,7 +2991,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let fn_visit_seq_sqlx_types_big_decimal_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                    &crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream,
+                    &crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream,
                     &std_primitive_i64_token_stream,
                 ]);
                 quote::quote!{
@@ -3479,7 +3479,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     (
                         generate_field_option_none_initialization_token_stream(&[
-                            &crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream,
+                            &crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream,
                             &std_primitive_i64_token_stream,
                         ]),
                         generate_field_option_none_initialization_token_stream(&[
@@ -3572,7 +3572,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     };
                     (
                         generate_while_some_next_key_field_token_stream(&[
-                            (&digits_snake_case, &crate_postgresql_type_postgresql_base_type_num_bigint_bigInt_token_stream),
+                            (&digits_snake_case, &crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream),
                             (&scale_snake_case, &std_primitive_i64_token_stream)
                         ]),
                         generate_while_some_next_key_field_token_stream(&[
