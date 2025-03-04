@@ -2180,7 +2180,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
                 Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
                 Self::SqlxTypesBitVecAsPostgresqlBit => Err(()),
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),//todo rename tstz to timestamptz
+                Self::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
