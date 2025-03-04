@@ -4441,12 +4441,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )}
                 ),
             };
+            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
             let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
             let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
-                let self_zero_token_stream = {
-                    let self_snake_case = naming::SelfSnakeCase;
-                    quote::quote!{#self_snake_case.0}
-                };
                 let try_generate_bind_increments_token_stream = {
                     let increment_snake_case = naming::IncrementSnakeCase;
                     let acc_snake_case = naming::AccSnakeCase;
@@ -4472,7 +4469,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(#self_zero_token_stream);
+                            #query_snake_case = #query_snake_case.bind(#self_dot_zero_token_stream);
                             #query_snake_case
                         }
                     ),
@@ -4480,7 +4477,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(match #self_zero_token_stream {
+                            #query_snake_case = #query_snake_case.bind(match #self_dot_zero_token_stream {
                                 Some(#value_snake_case) => Some(#value_snake_case.0),
                                 None => None
                             });
@@ -4720,7 +4717,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => PostgresqlTypeInitializedByTokens::InitializedByClient,
             };
-            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
             let postgresql_type_not_null_or_nullable_struct_content_token_stream = quote::quote!{(#postgresql_type_not_null_or_nullable_upper_camel_case);};
             let empty_struct_content_token_stream = quote::quote!{(());};
             let postgresql_type_not_null_or_nullable_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
