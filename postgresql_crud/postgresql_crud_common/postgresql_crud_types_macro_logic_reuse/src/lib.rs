@@ -489,6 +489,9 @@ fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_macro2:
     let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
     quote::quote!{crate::#try_generate_bind_increments_error_named_upper_camel_case}
 }
+fn crate_bind_query_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{crate::BindQuery::}
+}
 fn generate_impl_crate_bind_query_for_tokens_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
@@ -498,7 +501,7 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(
     let self_snake_case = naming::SelfSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
-    let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
+    let crate_bind_query_token_stream = crate_bind_query_token_stream();
     let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
     let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
@@ -3042,7 +3045,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                 ));
-                //todo
                 quote::quote!{
                     let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
                     let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
@@ -3082,7 +3084,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             });
             let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
                 let fields_initialization_token_stream = {
-                    //todo reusage
                     let std_collections_bound_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream = generate_std_collections_bound_token_stream(
                         &sqlx_types_time_primitive_date_time_as_postgresql_timestamp_not_null_upper_camel_case_token_stream
                     );
@@ -4122,7 +4123,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
                     PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
-                    //todo default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
+                    // default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
                     PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_deserialize_for_tokens_token_stream(&{
                         quote::quote!{
                             #enum_field_three_token_stream
@@ -4201,7 +4202,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
                 &postgresql_type_not_null_or_nullable_upper_camel_case,
-                &quote::quote!{"{self:?}"}//todo maybe make it better with match on types
+                &quote::quote!{"{self:?}"}
             );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(
                 &postgresql_type_not_null_or_nullable_upper_camel_case,
@@ -4543,7 +4544,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let postgresql_type_not_null_or_nullable_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-            let crate_bind_query_token_stream = quote::quote!{crate::BindQuery::};
+            let crate_bind_query_token_stream = crate_bind_query_token_stream();
             let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens|{
