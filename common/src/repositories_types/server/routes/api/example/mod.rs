@@ -150,7 +150,7 @@ pub struct Example {
     pub mac_address_mac_address_as_mac_addr_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNullable,
 
     pub sqlx_types_bit_vec_as_bit_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNotNull,
-    // pub sqlx_types_bit_vec_as_bit_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNullable,
+    pub sqlx_types_bit_vec_as_bit_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNullable,
 
     pub sqlx_types_bit_vec_as_varbit_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull,
     pub sqlx_types_bit_vec_as_varbit_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable,
@@ -327,7 +327,7 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
     println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
     let _ = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(pool).await.unwrap();
     let create_table_if_not_exists_query_stringified = format!(
-        "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
+        "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull::create_table_column_query_part(&"std_primitive_i64_as_postgresql_big_serial_not_null_primary_key", true),
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_column_query_part(&"std_primitive_i16_as_small_int2_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_column_query_part(&"std_primitive_i16_as_small_int2_nullable", false),
@@ -350,10 +350,10 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
         postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBigDecimalAsPostgresqlNumericNullable::create_table_column_query_part(&"sqlx_types_big_decimal_as_numeric_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNotNull::create_table_column_query_part(&"std_primitive_bool_as_bool_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveBoolAsPostgresqlBoolNullable::create_table_column_query_part(&"std_primitive_bool_as_bool_nullable", false),
-        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNotNull::create_table_column_query_part(&"std_string_string_as_char_n_not_null", false),
-        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNullable::create_table_column_query_part(&"std_string_string_as_char_n_nullable", false),
-        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull::create_table_column_query_part(&"std_string_string_as_varchar_not_null", false),
-        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNullable::create_table_column_query_part(&"std_string_string_as_varchar_nullable", false),
+        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNotNull::create_table_column_query_part(&"std_string_string_as_char_n_not_null", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlCharNNullable::create_table_column_query_part(&"std_string_string_as_char_n_nullable", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull::create_table_column_query_part(&"std_string_string_as_varchar_not_null", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlVarcharNullable::create_table_column_query_part(&"std_string_string_as_varchar_nullable", false, 1),
         postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlTextNotNull::create_table_column_query_part(&"std_string_string_as_text_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::StdStringStringAsPostgresqlTextNullable::create_table_column_query_part(&"std_string_string_as_text_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull::create_table_column_query_part(&"std_vec_vec_std_primitive_u8_as_bytea_not_null", false),
@@ -385,39 +385,22 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
         postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNullable::create_table_column_query_part(&"sqlx_types_ipnetwork_ip_network_as_cidr_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull::create_table_column_query_part(&"mac_address_mac_address_as_mac_addr_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNullable::create_table_column_query_part(&"mac_address_mac_address_as_mac_addr_nullable", false),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNotNull::create_table_column_query_part(&"sqlx_types_bit_vec_as_bit_not_null", false),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull::create_table_column_query_part(&"sqlx_types_bit_vec_as_varbit_not_null", false),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable::create_table_column_query_part(&"sqlx_types_bit_vec_as_varbit_nullable", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNotNull::create_table_column_query_part(&"sqlx_types_bit_vec_as_bit_not_null", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNullable::create_table_column_query_part(&"sqlx_types_bit_vec_as_bit_nullable", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull::create_table_column_query_part(&"sqlx_types_bit_vec_as_varbit_not_null", false, 1),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable::create_table_column_query_part(&"sqlx_types_bit_vec_as_varbit_nullable", false, 1),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull::create_table_column_query_part(&"pg_range_std_primitive_i32_as_int4_range_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNullable::create_table_column_query_part(&"pg_range_std_primitive_i32_as_int4_range_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull::create_table_column_query_part(&"pg_range_std_primitive_i64_as_int8_range_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNullable::create_table_column_query_part(&"pg_range_std_primitive_i64_as_int8_range_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNotNull::create_table_column_query_part(&"pg_range_naive_date_time_as_timestamp_range_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNullable::create_table_column_query_part(&"pg_range_naive_date_time_as_timestamp_range_nullable", false),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNotNull::create_table_column_query_part(
-            &"pg_range_time_primitive_date_time_as_timestamp_range_not_null",
-            false
-        ),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNullable::create_table_column_query_part(
-            &"pg_range_time_primitive_date_time_as_timestamp_range_nullable",
-            false
-        ),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNotNull::create_table_column_query_part(
-            &"pg_range_date_time_utc_as_timestamp_tz_range_not_null",
-            false
-        ),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNullable::create_table_column_query_part(
-            &"pg_range_date_time_utc_as_timestamp_tz_range_nullable",
-            false
-        ),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull::create_table_column_query_part(
-            &"pg_range_date_time_local_as_timestamp_tz_range_not_null",
-            false
-        ),
-        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable::create_table_column_query_part(
-            &"pg_range_date_time_local_as_timestamp_tz_range_nullable",
-            false
-        ),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNotNull::create_table_column_query_part(&"pg_range_time_primitive_date_time_as_timestamp_range_not_null", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNullable::create_table_column_query_part(&"pg_range_time_primitive_date_time_as_timestamp_range_nullable", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNotNull::create_table_column_query_part(&"pg_range_date_time_utc_as_timestamp_tz_range_not_null", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNullable::create_table_column_query_part(&"pg_range_date_time_utc_as_timestamp_tz_range_nullable", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull::create_table_column_query_part(&"pg_range_date_time_local_as_timestamp_tz_range_not_null", false),
+        postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable::create_table_column_query_part(&"pg_range_date_time_local_as_timestamp_tz_range_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull::create_table_column_query_part(&"pg_range_chrono_naive_date_as_date_range_not_null", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNullable::create_table_column_query_part(&"pg_range_chrono_naive_date_as_date_range_nullable", false),
         postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull::create_table_column_query_part(&"pg_range_sqlx_types_time_date_as_date_range_not_null", false),
