@@ -435,3 +435,8 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         )
     }
 }
+
+
+//////////////////
+
+//  8,388,608, for char(n) and varchar(n) is 10,485,760
