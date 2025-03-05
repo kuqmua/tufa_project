@@ -2149,54 +2149,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             .parse::<proc_macro2::TokenStream>()
             .unwrap()
         }
-        fn try_to_pg_range_type(&self) -> Result<Self, ()> {
-            match &self {
-                Self::StdPrimitiveI16AsPostgresqlInt2 => Err(()),
-                Self::StdPrimitiveI32AsPostgresqlInt4 => Err(()),
-                Self::StdPrimitiveI64AsPostgresqlInt8 => Err(()),
-                Self::StdPrimitiveF32AsPostgresqlFloat4 => Err(()),
-                Self::StdPrimitiveF64AsPostgresqlFloat8 => Err(()),
-                Self::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => Err(()),
-                Self::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => Err(()),
-                Self::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => Err(()),
-                Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => Err(()),
-                Self::SqlxTypesDecimalAsPostgresqlNumeric => Err(()),
-                Self::SqlxTypesBigDecimalAsPostgresqlNumeric => Err(()),
-                Self::StdPrimitiveBoolAsPostgresqlBool => Err(()),
-                Self::StdStringStringAsPostgresqlCharN => Err(()),
-                Self::StdStringStringAsPostgresqlVarchar => Err(()),
-                Self::StdStringStringAsPostgresqlText => Err(()),
-                Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Err(()),
-                Self::SqlxTypesTimeDateAsPostgresqlDate => Err(()),
-                Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => Err(()),
-                Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => Err(()),
-                Self::SqlxTypesTimeTimeAsPostgresqlTime => Err(()),
-                Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => Err(()),
-                Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Err(()),
-                Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Err(()),
-                Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Err(()),
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Err(()),
-                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Err(()),
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => Err(()),
-                Self::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => Err(()),
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(()),
-                Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
-                Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
-                Self::SqlxTypesBitVecAsPostgresqlBit => Err(()),
-                Self::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
-                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDate),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Ok(Self::SqlxTypesTimeDateAsPostgresqlDate),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
-                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumeric),
-            }
-        }
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -2204,6 +2156,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream"))
             .to_tokens(tokens)
+        }
+    }
+    impl std::convert::From<&RangeType> for PostgresqlType {
+        fn from(value: &RangeType) -> PostgresqlType {
+            match value {
+                RangeType::StdPrimitiveI32AsPostgresqlInt4 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
+                RangeType::StdPrimitiveI64AsPostgresqlInt8 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
+                RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange,
+                RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange,
+                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange,
+                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange,
+                RangeType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange,
+                RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
+                RangeType::SqlxTypesTimeDateAsPostgresqlDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
+                RangeType::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
+                RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
+            }
         }
     }
     enum RangeType {
@@ -2219,57 +2188,57 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesDecimalAsPostgresqlNumeric,
         SqlxTypesBigDecimalAsPostgresqlNumeric,
     }
-    // impl std::convert::TryFrom<PostgresqlType> for RangeType {
-    //     type Error = ();
-    //     fn try_from(value: PostgresqlType) -> Result<Self, Self::Error> {
-    //         match &self {
-    //             PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => Err(()),
-    //             PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => Err(()),
-    //             PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => Err(()),
-    //             PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => Err(()),
-    //             PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => Err(()),
-    //             PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => Err(()),
-    //             PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => Err(()),
-    //             PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => Err(()),
-    //             PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => Err(()),
-    //             PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => Err(()),
-    //             PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => Err(()),
-    //             PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => Err(()),
-    //             PostgresqlType::StdStringStringAsPostgresqlCharN => Err(()),
-    //             PostgresqlType::StdStringStringAsPostgresqlVarchar => Err(()),
-    //             PostgresqlType::StdStringStringAsPostgresqlText => Err(()),
-    //             PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Err(()),
-    //             PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => Err(()),
-    //             PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Err(()),
-    //             PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => Err(()),
-    //             PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => Err(()),
-    //             PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => Err(()),
-    //             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Err(()),
-    //             PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Err(()),
-    //             PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Err(()),
-    //             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Err(()),
-    //             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Err(()),
-    //             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => Err(()),
-    //             PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => Err(()),
-    //             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(()),
-    //             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
-    //             PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
-    //             PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => Err(()),
-    //             PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Ok(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Ok(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => Ok(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => Ok(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => Ok(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => Ok(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange => Ok(PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Ok(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Ok(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => Ok(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric),
-    //             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => Ok(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric),
-    //         }
-    //     }
-    // }
+    impl std::convert::TryFrom<PostgresqlType> for RangeType {
+        type Error = ();
+        fn try_from(value: PostgresqlType) -> Result<Self, Self::Error> {
+            match &value {
+                PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => Err(()),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => Err(()),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => Err(()),
+                PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => Err(()),
+                PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => Err(()),
+                PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => Err(()),
+                PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => Err(()),
+                PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => Err(()),
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => Err(()),
+                PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => Err(()),
+                PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => Err(()),
+                PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => Err(()),
+                PostgresqlType::StdStringStringAsPostgresqlCharN => Err(()),
+                PostgresqlType::StdStringStringAsPostgresqlVarchar => Err(()),
+                PostgresqlType::StdStringStringAsPostgresqlText => Err(()),
+                PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Err(()),
+                PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => Err(()),
+                PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Err(()),
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => Err(()),
+                PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => Err(()),
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => Err(()),
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Err(()),
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Err(()),
+                PostgresqlType::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Err(()),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Err(()),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Err(()),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => Err(()),
+                PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => Err(()),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(()),
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => Err(()),
+                PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => Err(()),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzRange => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDate),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Ok(Self::SqlxTypesTimeDateAsPostgresqlDate),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumeric),
+            }
+        }
+    }
 
     let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType|{
         let field_type = postgresql_type.field_type_token_stream();
