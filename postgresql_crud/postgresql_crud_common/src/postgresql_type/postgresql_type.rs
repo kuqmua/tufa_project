@@ -435,8 +435,51 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         )
     }
 }
-
-
 //////////////////
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
+    NotValid {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error_message: std::string::String,
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
+impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlCharNLength {
+    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
+    fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
+        let error_message = std::string::String::from("StdStringStringAsPostgresqlCharNLength must be between 1(included) and 10,485,760(included)");
+        if value == 0 {
+            Err(Self::Error::NotValid {
+                error_message,
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+        else if value < 10_485_760 {
+            Err(Self::Error::NotValid {
+                error_message,
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+        else {
+            Ok(Self(value))
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+pub struct StdStringStringAsPostgresqlVarchar(std::primitive::u32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+pub struct SqlxTypesBitVecAsPostgresqlBit(std::primitive::u32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+pub struct SqlxTypesBitVecAsPostgresqlVarbit(std::primitive::u32);
 
-//  8,388,608, for char(n) and varchar(n) is 10,485,760
+
+    // let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);// 1    10,485,760
+    // let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar); 0      10,485,760
+    // let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit); 1   8,589,934,592
+    // let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit); 0    8,589,934,592
