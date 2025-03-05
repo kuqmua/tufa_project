@@ -143,14 +143,13 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                         });
                     }
                     {
-                        //todo maybe not correct?
                         let mut acc = vec![];
                         for element in &value {
                             if !acc.contains(&element) {
                                 acc.push(element);
                             } else {
                                 return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                                    value: element.clone(),//todo maybe remove .clone() ?
+                                    value: element.clone(),
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
