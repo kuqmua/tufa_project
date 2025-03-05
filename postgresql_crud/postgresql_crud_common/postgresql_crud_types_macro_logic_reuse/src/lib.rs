@@ -2387,6 +2387,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }}
             };
 
+            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+
             let impl_try_new_for_sqlx_types_time_date_token_stream = {
                 let postgresql_type_not_null_try_new_error_named_upper_camel_case = naming::parameter::SelfNotNullTryNewErrorNamedUpperCamelCase::from_tokens(&postgresql_type);
                 let from_calendar_date_upper_camel_case = naming::FromCalendarDateUpperCamelCase;
@@ -2546,7 +2548,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, &self.0 #value_token_stream)}
+                quote::quote!{_serde::Serializer::serialize_newtype_struct(__serializer, #postgresql_type_not_null_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
             };
             let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber|{
                 let parameter_number_token_stream = {
@@ -2566,7 +2568,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let serde_ser_serialize_struct_end_token_stream = quote::quote!{_serde::ser::SerializeStruct::end(__serde_state)};
             let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = {
                 let generate_self_zero_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
-                    quote::quote!{&self.0.#value_token_stream}
+                    quote::quote!{&#self_dot_zero_token_stream.#value_token_stream}
                 };
                 let start_serialize_field_token_stream = generate_serialize_field_token_stream(&start_snake_case, &generate_self_zero_tokens_token_stream(&start_snake_case));
                 let end_serialize_field_token_stream = generate_serialize_field_token_stream(&end_snake_case, &generate_self_zero_tokens_token_stream(&end_snake_case));
@@ -2599,7 +2601,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens|{
                     let token_stream = generate_match_std_collections_bound_token_stream(
-                        &quote::quote!{self.0.#value_token_stream #maybe_clone_token_stream},
+                        &quote::quote!{#self_dot_zero_token_stream.#value_token_stream #maybe_clone_token_stream},
                         &quote::quote!{#type_token_stream(#value_snake_case)}
                     );
                     quote::quote!{&#token_stream}
@@ -2627,7 +2629,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 _serde::Serializer::serialize_newtype_struct(
                     __serializer,
                     #postgresql_type_not_null_double_quotes_token_stream,
-                    &self.0.iter().collect::<#std_vec_vec_std_primitive_bool_token_stream>(),
+                    &#self_dot_zero_token_stream.iter().collect::<#std_vec_vec_std_primitive_bool_token_stream>(),
                 )
             });
             let maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
@@ -2649,7 +2651,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote!{&#crate_postgresql_type_postgresql_base_type_num_bigint_big_int_token_stream(bigint)});
                             let scale_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::ScaleSnakeCase, &quote::quote!{&exponent});
                             quote::quote!{
-                                let (bigint, exponent) = self.0.clone().into_bigint_and_exponent();
+                                let (bigint, exponent) = #self_dot_zero_token_stream.clone().into_bigint_and_exponent();
                                 #serde_state_initialization_two_fields_token_stream
                                 #digits_serialize_field_token_stream
                                 #scale_serialize_field_token_stream
@@ -2663,7 +2665,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
                             let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens|{
-                                generate_serialize_field_token_stream(&value, &quote::quote!{&self.0.#value()})//todo reuse &self.0.#value ?
+                                generate_serialize_field_token_stream(&value, &quote::quote!{&#self_dot_zero_token_stream.#value()})
                             };
                             let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
                             let month_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&month_snake_case);
@@ -2681,7 +2683,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &generate_impl_serde_serialize_for_postgresql_type_not_null_tokens(&{
                             let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens|{
-                                generate_serialize_field_token_stream(&value, &quote::quote!{&self.0.#value})
+                                generate_serialize_field_token_stream(&value, &quote::quote!{&#self_dot_zero_token_stream.#value})
                             };
                             let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
                             let days_serialize_field_token_stream = generate_serialize_field_token_stream(&days_snake_case);
@@ -4319,7 +4321,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )}
                 ),
             };
-            let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
             let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
             let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
                 let try_generate_bind_increments_token_stream = {
