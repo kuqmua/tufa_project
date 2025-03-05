@@ -13,8 +13,7 @@ pub trait PostgresqlTypeSelfWhereFilter {
 
 //maybe put analog\copy of BindQuery inside this trait?
 pub trait PostgresqlType<'a> {
-    type PostgresqlTypeSelf: std::fmt::Debug
-        + crate::CreateTableColumnQueryPart;
+    type PostgresqlTypeSelf: std::fmt::Debug;
     type PostgresqlTypeSelfColumn: std::fmt::Debug
         + Clone
         + PartialEq

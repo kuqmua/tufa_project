@@ -110,9 +110,6 @@ pub trait GeneratePostgresqlJsonTypeToRead {
         Self: Sized;
 }
 
-pub trait CreateTableColumnQueryPart {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display;
-}
 pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
     if is_primary_key {
         "primary key"

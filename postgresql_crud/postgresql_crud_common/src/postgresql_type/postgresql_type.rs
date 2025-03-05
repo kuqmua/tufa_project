@@ -133,8 +133,8 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBitVecAsPostgresqlBitNotNull 
         }
     }
 }
-impl crate::CreateTableColumnQueryPart for SqlxTypesBitVecAsPostgresqlBitNotNull {
-    fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+impl SqlxTypesBitVecAsPostgresqlBitNotNull {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
         format!("{column} bit(1) not null")
     }
 }

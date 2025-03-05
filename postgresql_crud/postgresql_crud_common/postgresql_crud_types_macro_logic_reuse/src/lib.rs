@@ -4499,8 +4499,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     },
                 };
                 quote::quote!{
-                    impl crate::CreateTableColumnQueryPart for #postgresql_type_not_null_or_nullable_upper_camel_case {
-                        fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+                    impl #postgresql_type_not_null_or_nullable_upper_camel_case {
+                        pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
                             #content_token_stream
                         }
                     }

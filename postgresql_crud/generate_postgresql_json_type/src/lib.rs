@@ -4863,8 +4863,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
                             );
                             quote::quote!{
-                                impl postgresql_crud::CreateTableColumnQueryPart for #tokens_as_postgresql_postfix_type_upper_camel_case {
-                                    fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+                                impl #tokens_as_postgresql_postfix_type_upper_camel_case {
+                                    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
                                         format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#tokens_as_postgresql_postfix_type_upper_camel_case)).unwrap())
                                     }
                                 }
