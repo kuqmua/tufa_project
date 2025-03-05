@@ -471,6 +471,92 @@ impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlC
         }
     }
 }
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for StdStringStringAsPostgresqlCharNLength {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<
+                    StdStringStringAsPostgresqlCharNLength,
+                >,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = StdStringStringAsPostgresqlCharNLength;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct StdStringStringAsPostgresqlCharNLength",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::u32,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct StdStringStringAsPostgresqlCharNLength with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "StdStringStringAsPostgresqlCharNLength",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<
+                        StdStringStringAsPostgresqlCharNLength,
+                    >,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct StdStringStringAsPostgresqlVarchar(std::primitive::u32);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
