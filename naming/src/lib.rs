@@ -546,7 +546,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["time"],
     ["std", "vec", "vec"],
     ["std", "vec", "vec", "std", "vec", "vec"],
-    ["uuid", "uuid"]
+    ["uuid", "uuid"],
+    ["fixed", "length"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

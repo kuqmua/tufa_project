@@ -4423,6 +4423,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => CanBePrimaryKey::False,
             };
             let impl_crate_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream = {
+                let fixed_length_snake_case = naming::FixedLengthSnakeCase;
                 let postgresql_query_type = match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => "int2",
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => "int4",
@@ -4436,10 +4437,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => "numeric",
                     PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => "numeric",
                     PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => "bool",
-                    PostgresqlType::StdStringStringAsPostgresqlCharN => "char(10)",
-                    PostgresqlType::StdStringStringAsPostgresqlVarchar => "varchar(8)",
+                    PostgresqlType::StdStringStringAsPostgresqlCharN => &format!("char({{{fixed_length_snake_case}}})"),
+                    PostgresqlType::StdStringStringAsPostgresqlVarchar => &format!("varchar({{{fixed_length_snake_case}}})"),
                     PostgresqlType::StdStringStringAsPostgresqlText => "text",
-                    // PostgresqlType::StdStringStringAsPostgresqlCiText => "citext",
                     PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => "bytea",
                     PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => "date",
                     PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => "date",
@@ -4455,8 +4455,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => "inet",
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => "cidr",
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => "macaddr",
-                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => "bit(1)",//todo
-                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => "bit varying(1)",
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => &format!("bit({{{fixed_length_snake_case}}})"),
+                    PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => &format!("bit varying({{{fixed_length_snake_case}}})"),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => "int4range",
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => "int8range",
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => "tsrange",
@@ -4498,7 +4498,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     },
                 };
-                let fixed_length_parameter_token_stream = quote::quote!{, fixed_length: std::primitive::u16};//todo temporary - for bit its 8,388,608, for char(n) and varchar(n) is 10,485,760
+                let fixed_length_parameter_token_stream = quote::quote!{, #fixed_length_snake_case: std::primitive::u16};//todo temporary - for bit its 8,388,608, for char(n) and varchar(n) is 10,485,760
                 let maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens = match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => &proc_macro2_token_stream_new,
