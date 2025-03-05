@@ -946,6 +946,7 @@ impl PostgresqlJsonTypePatternIsOptional {
     }
 }
 
+//todo reuse this type for 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypePatternType {
     FullTypePath,
@@ -955,10 +956,9 @@ enum PostgresqlJsonTypePatternType {
 impl PostgresqlJsonTypePatternType {
     fn prefix_stringified(&self) -> std::string::String {
         match &self {
-            //todo maybe reuse from naming:: ?
             PostgresqlJsonTypePatternType::FullTypePath => std::string::String::default(),
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => std::string::String::from("StdVecVec"),
-            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => std::string::String::from("StdVecVecStdVecVec"),
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => naming::StdVecVecUpperCamelCase.to_string(),
+            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => naming::StdVecVecStdVecVecUpperCamelCase.to_string(),
         }
     }
 }
@@ -1059,13 +1059,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypeHandle::StdPrimitiveBool |
                 PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
                 PostgresqlJsonTypeHandle::UuidUuid => &{
+                    let uuid_uuid_upper_camel_case = naming::UuidUuidUpperCamelCase;
+                    let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&uuid_uuid_upper_camel_case.to_string());
+                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgresql_crud_common::f::{uuid_uuid_upper_camel_case}"));
                     quote::quote!{
-                        impl schemars::JsonSchema for UuidUuid {
+                        impl schemars::JsonSchema for #uuid_uuid_upper_camel_case {
                             fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed("UuidUuid")//todo reuse
+                                schemars::_private::alloc::borrow::Cow::Borrowed(#schema_name_format_handle_token_stream)
                             }
                             fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed("postgresql_crud_common::f::UuidUuid")
+                                schemars::_private::alloc::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
                             }
                             fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
                                 {

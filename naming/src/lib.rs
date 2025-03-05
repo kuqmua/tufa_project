@@ -543,7 +543,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["days"],
     ["microseconds"],
     ["date"],
-    ["time"]
+    ["time"],
+    ["std", "vec", "vec"],
+    ["std", "vec", "vec", "std", "vec", "vec"],
+    ["uuid", "uuid"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
