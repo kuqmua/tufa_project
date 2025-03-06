@@ -4861,7 +4861,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
                     quote::quote! {
                         fn #postgresql_type_self_to_update_query_part_snake_case(
-                            //todo few parameters usefull only with json types. maybe refactor it later
                             #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
