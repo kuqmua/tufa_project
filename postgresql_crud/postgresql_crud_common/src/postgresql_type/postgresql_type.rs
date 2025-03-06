@@ -441,7 +441,7 @@ fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display)
     format!("value must be between 1(included) and {length}(included)")
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
+pub enum StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -453,7 +453,7 @@ pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlCharNLength {
-    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
+    type Error = StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
@@ -558,10 +558,20 @@ impl std::fmt::Display for StdStringStringAsPostgresqlCharNLength {
         write!(formatter, "{}", self.0)
     }
 }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorNamed {
+    NotValid {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error_message: std::string::String,
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct StdStringStringAsPostgresqlVarcharLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarcharLength {
-    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
+    type Error = StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
@@ -667,7 +677,7 @@ impl std::fmt::Display for StdStringStringAsPostgresqlVarcharLength {
     }
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed {
+pub enum SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -679,7 +689,7 @@ pub enum PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct SqlxTypesBitVecAsPostgresqlBitLength(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlBitLength {
-    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
+    type Error = SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
         let max_length = 8_589_934_592;
         if (value == 0) || (value > max_length) {
@@ -785,10 +795,20 @@ impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlBitLength {
         write!(formatter, "{}", self.0)
     }
 }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed {
+    NotValid {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error_message: std::string::String,
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for SqlxTypesBitVecAsPostgresqlVarbitLength {
-    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
+    type Error = SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         let max_length = 83_886_080;
         if (value == 0) || (value > max_length) {
