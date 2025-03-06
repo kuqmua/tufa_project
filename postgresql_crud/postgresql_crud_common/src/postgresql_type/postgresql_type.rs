@@ -436,6 +436,9 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
     }
 }
 //////////////////
+const CHAR_AND_VARCHAR_MAX_LENGTH: std::primitive::u32 = 10_485_760;
+const BIT_AND_VARBIT_MAX_LENGTH: std::primitive::u64 = 8_589_934_592;
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
@@ -451,8 +454,7 @@ pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlCharNLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        let max = 10_485_760;
-        let error_message = format!("StdStringStringAsPostgresqlCharNLength must be between 1(included) and {max}(included)");
+        let error_message = format!("StdStringStringAsPostgresqlCharNLength must be between 1(included) and {CHAR_AND_VARCHAR_MAX_LENGTH}(included)");
         if value == 0 {
             Err(Self::Error::NotValid {
                 error_message,
@@ -460,7 +462,7 @@ impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlC
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
-        else if value < max {
+        else if value < CHAR_AND_VARCHAR_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message,
                 value,
@@ -563,9 +565,8 @@ pub struct StdStringStringAsPostgresqlVarchar(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarchar {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        let max = 10_485_760;
-        let error_message = std::string::String::from("StdStringStringAsPostgresqlVarchar must be less than {max}(included)");
-        if value < max {
+        let error_message = std::string::String::from("StdStringStringAsPostgresqlVarchar must be less than {CHAR_AND_VARCHAR_MAX_LENGTH}(included)");
+        if value < CHAR_AND_VARCHAR_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message,
                 value,
@@ -679,8 +680,7 @@ pub struct SqlxTypesBitVecAsPostgresqlBit(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlBit {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        let max = 8_589_934_592;
-        let error_message = format!("SqlxTypesBitVecAsPostgresqlBit must be less than {max}(included)");
+        let error_message = format!("SqlxTypesBitVecAsPostgresqlBit must be between 1(included) and {BIT_AND_VARBIT_MAX_LENGTH}(included)");
         if value == 0 {
             Err(Self::Error::NotValid {
                 error_message,
@@ -688,7 +688,7 @@ impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlB
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
-        else if value < max {
+        else if value < BIT_AND_VARBIT_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message,
                 value,
@@ -791,9 +791,8 @@ pub struct SqlxTypesBitVecAsPostgresqlVarbit(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbit {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        let max = 8_589_934_592;
-        let error_message = std::string::String::from("SqlxTypesBitVecAsPostgresqlVarbit must be less than {max}(included)");
-        if value < max {
+        let error_message = std::string::String::from("SqlxTypesBitVecAsPostgresqlVarbit must be less than {BIT_AND_VARBIT_MAX_LENGTH}(included)");
+        if value < BIT_AND_VARBIT_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message,
                 value,
@@ -891,8 +890,3 @@ const _: () = {
         }
     }
 };
-
-    // let h13 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);// 1    10,485,760
-    // let h14 = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar); 0      10,485,760
-    // let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit); 1   8,589,934,592
-    // let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit); 0    8,589,934,592
