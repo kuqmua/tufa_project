@@ -441,9 +441,6 @@ const BIT_AND_VARBIT_MAX_LENGTH: std::primitive::u64 = 8_589_934_592;
 fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display) -> std::string::String {
     format!("value must be between 1(included) and {length}(included)")
 }
-fn generate_must_be_less_than_length_message(length: &dyn std::fmt::Display) -> std::string::String {
-    format!("value must be less than {length}(included)")
-}
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
@@ -567,9 +564,9 @@ pub struct StdStringStringAsPostgresqlVarcharLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarcharLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        if value > CHAR_AND_VARCHAR_MAX_LENGTH {
+        if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
-                error_message: generate_must_be_less_than_length_message(&CHAR_AND_VARCHAR_MAX_LENGTH),
+                error_message: generate_must_be_between_1_and_length_message(&CHAR_AND_VARCHAR_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -793,9 +790,9 @@ pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbitLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        if value > BIT_AND_VARBIT_MAX_LENGTH {
+        if (value == 0) || (value > BIT_AND_VARBIT_MAX_LENGTH) {
             Err(Self::Error::NotValid {
-                error_message: generate_must_be_less_than_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
+                error_message: generate_must_be_between_1_and_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
