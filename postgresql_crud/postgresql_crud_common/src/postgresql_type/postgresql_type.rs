@@ -786,10 +786,10 @@ impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlBitLength {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);//todo u32
-impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbitLength {
-    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
-    fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
+pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u32);
+impl std::convert::TryFrom<std::primitive::u32> for SqlxTypesBitVecAsPostgresqlVarbitLength {
+    type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
+    fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         let max_length = 83_886_080;
         if (value == 0) || (value > max_length) {
             Err(Self::Error::NotValid {
@@ -841,7 +841,7 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::primitive::u64 = <std::primitive::u64 as _serde::Deserialize>::deserialize(
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
                     match SqlxTypesBitVecAsPostgresqlVarbitLength::try_from(__field0) {
@@ -858,7 +858,7 @@ const _: () = {
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u64,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
