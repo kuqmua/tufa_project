@@ -728,7 +728,6 @@ impl PostgresqlJsonTypeVariant {
         let postgresql_json_type_handle = &self.postgresql_json_type_handle;
         let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream =
             token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-        //todo better code reuse
         match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
             (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::FullTypePath) => {
                 if is_wrapper {
@@ -863,7 +862,6 @@ impl PostgresqlJsonTypePatternIsOptional {
     }
 }
 
-//todo reuse this type for
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 enum PostgresqlJsonTypePatternType {
     FullTypePath,
