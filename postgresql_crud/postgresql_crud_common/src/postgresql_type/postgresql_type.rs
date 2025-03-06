@@ -786,7 +786,7 @@ impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlBitLength {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);
+pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);//todo u32
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbitLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
