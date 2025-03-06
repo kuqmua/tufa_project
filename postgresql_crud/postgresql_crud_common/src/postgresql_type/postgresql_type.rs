@@ -435,7 +435,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         )
     }
 }
-//////////////////
+
 const CHAR_AND_VARCHAR_MAX_LENGTH: std::primitive::u32 = 10_485_760;
 const BIT_AND_VARBIT_MAX_LENGTH: std::primitive::u64 = 8_589_934_592;
 fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display) -> std::string::String {
@@ -444,7 +444,6 @@ fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display)
 fn generate_must_be_less_than_length_message(length: &dyn std::fmt::Display) -> std::string::String {
     format!("value must be less than {length}(included)")
 }
-
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
@@ -661,7 +660,6 @@ const _: () = {
         }
     }
 };
-
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed {
     NotValid {
