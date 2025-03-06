@@ -4498,7 +4498,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     },
                 };
-                let fixed_length_parameter_token_stream = quote::quote!{, #fixed_length_snake_case: std::primitive::u16};//todo temporary - for bit its 8,388,608, for char(n) and varchar(n) is 10,485,760
+                let fixed_length_parameter_token_stream = {
+                    let postgresql_type_length_upper_camel_case = naming::parameter::SelfLengthUpperCamelCase::from_tokens(&postgresql_type);
+                    quote::quote!{, #fixed_length_snake_case: #postgresql_type_length_upper_camel_case}
+                };
                 let maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens = match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => &proc_macro2_token_stream_new,
