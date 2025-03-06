@@ -438,6 +438,12 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
 //////////////////
 const CHAR_AND_VARCHAR_MAX_LENGTH: std::primitive::u32 = 10_485_760;
 const BIT_AND_VARBIT_MAX_LENGTH: std::primitive::u64 = 8_589_934_592;
+fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display) -> std::string::String {
+    format!("value must be between 1(included) and {length}(included)")
+}
+fn generate_must_be_less_than_length_message(length: &dyn std::fmt::Display) -> std::string::String {
+    format!("value must be less than {length}(included)")
+}
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed {
@@ -454,17 +460,9 @@ pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlCharNLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        let error_message = format!("StdStringStringAsPostgresqlCharNLength must be between 1(included) and {CHAR_AND_VARCHAR_MAX_LENGTH}(included)");
-        if value == 0 {
+        if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
-                error_message,
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-        else if value < CHAR_AND_VARCHAR_MAX_LENGTH {
-            Err(Self::Error::NotValid {
-                error_message,
+                error_message: generate_must_be_between_1_and_length_message(&CHAR_AND_VARCHAR_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -565,10 +563,9 @@ pub struct StdStringStringAsPostgresqlVarchar(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarchar {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        let error_message = std::string::String::from("StdStringStringAsPostgresqlVarchar must be less than {CHAR_AND_VARCHAR_MAX_LENGTH}(included)");
         if value < CHAR_AND_VARCHAR_MAX_LENGTH {
             Err(Self::Error::NotValid {
-                error_message,
+                error_message: generate_must_be_less_than_length_message(&CHAR_AND_VARCHAR_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -680,17 +677,9 @@ pub struct SqlxTypesBitVecAsPostgresqlBit(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlBit {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        let error_message = format!("SqlxTypesBitVecAsPostgresqlBit must be between 1(included) and {BIT_AND_VARBIT_MAX_LENGTH}(included)");
-        if value == 0 {
+        if (value == 0) || (value > BIT_AND_VARBIT_MAX_LENGTH) {
             Err(Self::Error::NotValid {
-                error_message,
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-        else if value < BIT_AND_VARBIT_MAX_LENGTH {
-            Err(Self::Error::NotValid {
-                error_message,
+                error_message: generate_must_be_between_1_and_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -791,10 +780,9 @@ pub struct SqlxTypesBitVecAsPostgresqlVarbit(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbit {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        let error_message = std::string::String::from("SqlxTypesBitVecAsPostgresqlVarbit must be less than {BIT_AND_VARBIT_MAX_LENGTH}(included)");
         if value < BIT_AND_VARBIT_MAX_LENGTH {
             Err(Self::Error::NotValid {
-                error_message,
+                error_message: generate_must_be_less_than_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
