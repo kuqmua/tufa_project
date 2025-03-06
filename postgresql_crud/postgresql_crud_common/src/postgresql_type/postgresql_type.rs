@@ -437,7 +437,6 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
 }
 
 const CHAR_AND_VARCHAR_MAX_LENGTH: std::primitive::u32 = 10_485_760;
-const BIT_AND_VARBIT_MAX_LENGTH: std::primitive::u64 = 8_589_934_592;
 fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display) -> std::string::String {
     format!("value must be between 1(included) and {length}(included)")
 }
@@ -682,9 +681,10 @@ pub struct SqlxTypesBitVecAsPostgresqlBitLength(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlBitLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        if (value == 0) || (value > BIT_AND_VARBIT_MAX_LENGTH) {
+        let max_length = 8_589_934_592;
+        if (value == 0) || (value > max_length) {
             Err(Self::Error::NotValid {
-                error_message: generate_must_be_between_1_and_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
+                error_message: generate_must_be_between_1_and_length_message(&max_length),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -790,9 +790,10 @@ pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbitLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        if (value == 0) || (value > BIT_AND_VARBIT_MAX_LENGTH) {
+        let max_length = 83_886_080;
+        if (value == 0) || (value > max_length) {
             Err(Self::Error::NotValid {
-                error_message: generate_must_be_between_1_and_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
+                error_message: generate_must_be_between_1_and_length_message(&max_length),
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
