@@ -567,7 +567,7 @@ pub struct StdStringStringAsPostgresqlVarcharLength(std::primitive::u32);
 impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarcharLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
-        if value < CHAR_AND_VARCHAR_MAX_LENGTH {
+        if value > CHAR_AND_VARCHAR_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message: generate_must_be_less_than_length_message(&CHAR_AND_VARCHAR_MAX_LENGTH),
                 value,
@@ -793,7 +793,7 @@ pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u64);
 impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlVarbitLength {
     type Error = PostgresqlTypeLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
-        if value < BIT_AND_VARBIT_MAX_LENGTH {
+        if value > BIT_AND_VARBIT_MAX_LENGTH {
             Err(Self::Error::NotValid {
                 error_message: generate_must_be_less_than_length_message(&BIT_AND_VARBIT_MAX_LENGTH),
                 value,
