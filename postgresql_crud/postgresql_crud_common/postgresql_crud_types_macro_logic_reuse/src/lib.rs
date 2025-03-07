@@ -2155,8 +2155,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let sqlx_types_time_date_as_postgresql_date = PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate;
             let sqlx_types_big_decimal_as_postgresql_numeric = PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric;
 
-            let std_primitive_i16_as_postgresql_int2_field_type_token_stream = PostgresqlType::StdPrimitiveI16AsPostgresqlInt2.field_type_token_stream();
             let std_primitive_i32_as_postgresql_int4_field_type_token_stream = PostgresqlType::StdPrimitiveI32AsPostgresqlInt4.field_type_token_stream();
+            let std_primitive_i64_as_postgresql_int8_field_type_token_stream = PostgresqlType::StdPrimitiveI64AsPostgresqlInt8.field_type_token_stream();
             let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp.field_type_token_stream();
             let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_postgresql_timestamp.field_type_token_stream();
             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz.field_type_token_stream();
@@ -4472,8 +4472,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType| {
                     let range_type_token_stream: &dyn quote::ToTokens = match &range_type {
-                        RangeType::StdPrimitiveI32AsPostgresqlInt4 => &std_primitive_i16_as_postgresql_int2_field_type_token_stream,
-                        RangeType::StdPrimitiveI64AsPostgresqlInt8 => &std_primitive_i32_as_postgresql_int4_field_type_token_stream,
+                        RangeType::StdPrimitiveI32AsPostgresqlInt4 => &std_primitive_i32_as_postgresql_int4_field_type_token_stream,
+                        RangeType::StdPrimitiveI64AsPostgresqlInt8 => &std_primitive_i64_as_postgresql_int8_field_type_token_stream,
                         RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_field_type_token_stream,
                         RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &sqlx_types_time_primitive_date_time_as_postgresql_timestamp_not_null_upper_camel_case_token_stream,
                         RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_field_type_token_stream,
@@ -5021,6 +5021,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h30 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
     let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
     let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
+
     let h33 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
     let h34 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
     let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
@@ -5034,7 +5035,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &h31,
+    //     &h33,
     // );
 
     let generated = quote::quote! {
@@ -5072,6 +5073,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h30
         #h31
         #h32
+
         #h33
         #h34
         #h35
