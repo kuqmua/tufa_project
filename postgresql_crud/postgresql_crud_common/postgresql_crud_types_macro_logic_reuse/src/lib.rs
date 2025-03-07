@@ -2037,6 +2037,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         }
     }
+    impl std::fmt::Display for RangeType {
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(formatter, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
+        }
+    }
+    impl quote::ToTokens for RangeType {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse RangeType to proc_macro2::TokenStream")).to_tokens(tokens)
+        }
+    }
 
     let generate_postgresql_type_token_stream = |postgresql_type: PostgresqlType| {
         let field_type = postgresql_type.field_type_token_stream();
@@ -4521,41 +4531,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         RangeType::SqlxTypesDecimalAsPostgresqlNumeric => &core_default_default_default_token_stream,
                         RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => &crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
                     };
-                    let dot_zero_token_stream = quote::quote! {.0};
-                    let range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream: &dyn quote::ToTokens = match &range_type {
-                        RangeType::StdPrimitiveI32AsPostgresqlInt4 => &proc_macro2_token_stream_new,
-                        RangeType::StdPrimitiveI64AsPostgresqlInt8 => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &dot_zero_token_stream,
-                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesTimeDateAsPostgresqlDate => &dot_zero_token_stream,
-                        RangeType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
-                        RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => &dot_zero_token_stream,
-                    };
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
+                            let dot_zero_token_stream = quote::quote! {.0};
                             let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
-                                &range_type_token_stream,
-                                &range_type_default_initialization_token_stream,
-                                &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                                &range_type,
+                                &crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
-                                &range_type_token_stream,
-                                &range_type_default_initialization_token_stream,
-                                &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                                &range_type,
+                                &crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
-                                &range_type_token_stream,
-                                &range_type_default_initialization_token_stream,
-                                &range_type_postgresql_type_self_where_bind_value_to_query_parameter_token_stream,
+                                &range_type,
+                                &crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
+                                &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
@@ -5028,6 +5026,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let h31 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
     let h32 = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
 
+    //todo reorder type so ranges and elements of ranges would be in the same order
     let h33 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
     let h34 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
     let h35 = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
@@ -5041,7 +5040,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &h33,
+    //     &h1,
     // );
 
     let generated = quote::quote! {
@@ -5079,7 +5078,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #h30
         #h31
         #h32
-
         #h33
         #h34
         #h35
