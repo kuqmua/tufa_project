@@ -1955,16 +1955,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     impl std::convert::From<&RangeType> for PostgresqlType {
         fn from(value: &RangeType) -> PostgresqlType {
             match value {
-                RangeType::StdPrimitiveI32AsPostgresqlInt4 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
-                RangeType::StdPrimitiveI64AsPostgresqlInt8 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
-                RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange,
-                RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange,
-                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange,
-                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange,
-                RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
-                RangeType::SqlxTypesTimeDateAsPostgresqlDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
-                RangeType::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
-                RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
+                RangeType::StdPrimitiveI32AsPostgresqlInt4 => Self::StdPrimitiveI32AsPostgresqlInt4,
+                RangeType::StdPrimitiveI64AsPostgresqlInt8 => Self::StdPrimitiveI64AsPostgresqlInt8,
+                RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
+                RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
+                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
+                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
+                RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxTypesChronoNaiveDateAsPostgresqlDate,
+                RangeType::SqlxTypesTimeDateAsPostgresqlDate => Self::SqlxTypesTimeDateAsPostgresqlDate,
+                RangeType::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxTypesDecimalAsPostgresqlNumeric,
+                RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => Self::SqlxTypesBigDecimalAsPostgresqlNumeric,
             }
         }
     }
@@ -1979,6 +1979,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesTimeDateAsPostgresqlDate,
         SqlxTypesDecimalAsPostgresqlNumeric,
         SqlxTypesBigDecimalAsPostgresqlNumeric,
+    }
+    impl RangeType {
+        fn field_type_stringified(&self) -> std::string::String {
+            PostgresqlType::from(self).field_type_stringified()
+        }
+        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
+            PostgresqlType::from(self).field_type_token_stream()
+        }
     }
     impl std::convert::TryFrom<PostgresqlType> for RangeType {
         type Error = ();
