@@ -73,15 +73,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let element_ident = &element.ident;
                             quote::quote! {#element_ident,}
                         });
-                        let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(
-                            &fields.iter()
-                                .filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
-                                .fold(std::string::String::new(), |mut acc, element| {
-                                    let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                                    acc.push_str(&format!("{element_ident}: {{}}\n"));
-                                    acc
-                                })
-                        );
+                        let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(&fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).fold(
+                            std::string::String::new(),
+                            |mut acc, element| {
+                                let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+                                acc.push_str(&format!("{element_ident}: {{}}\n"));
+                                acc
+                            },
+                        ));
                         let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
                             let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
                             match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
@@ -307,10 +306,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 generate_impl_ident_into_serialize_deserialize_version_token_stream(&quote::quote! {#(#variants_token_stream),*})
             };
             let enum_ident_with_serialize_deserialize_token_stream = {
-                let variants_token_stream = data_enum
-                    .variants
-                    .iter()
-                    .map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(&element));
+                let variants_token_stream = data_enum.variants.iter().map(macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant);
                 generate_enum_ident_with_serialize_deserialize_token_stream(&quote::quote! {#(#variants_token_stream),*})
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_handle_token_stream(&ident_with_serialize_deserialize_upper_camel_case);
@@ -384,9 +380,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             },
                             naming::WithSerializeDeserializeUpperCamelCase
                         );
-                        value
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     };
                     quote::quote! {
                         #element_ident(#inner_type_with_serialize_deserialize_token_stream)
