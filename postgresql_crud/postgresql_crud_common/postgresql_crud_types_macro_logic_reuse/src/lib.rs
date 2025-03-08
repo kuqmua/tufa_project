@@ -3825,7 +3825,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(#self_dot_zero_token_stream);
+                            #query_snake_case = #query_snake_case.bind(self);
                             #query_snake_case
                         },
                     ),
@@ -3843,6 +3843,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
+            let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
             enum CanBePrimaryKey {
                 True,
@@ -4024,7 +4025,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let maybe_primary_key_tokens_token_stream: &dyn quote::ToTokens = if let (PostgresqlTypeNotNullOrNullable::NotNull, CanBePrimaryKey::True) = (&postgresql_type_not_null_or_nullable, &can_be_primary_key) {
                 let impl_sqlx_postgres_pg_has_array_type_for_token_stream = {
                     quote::quote! {
@@ -4947,9 +4947,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
+                #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_crate_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
-                #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #maybe_primary_key_tokens_token_stream
                 #postgresql_type_not_null_or_nullable_column_token_stream
                 #postgresql_type_not_null_or_nullable_to_create_token_stream
