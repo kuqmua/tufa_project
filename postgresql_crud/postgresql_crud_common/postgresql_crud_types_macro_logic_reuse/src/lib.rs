@@ -3825,7 +3825,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(self);
+                            #query_snake_case = #query_snake_case.bind(#self_snake_case);
                             #query_snake_case
                         },
                     ),
@@ -3834,7 +3834,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
                             #query_snake_case = #query_snake_case.bind(match #self_dot_zero_token_stream {
-                                Some(#value_snake_case) => Some(#value_snake_case.0),
+                                Some(#value_snake_case) => Some(#value_snake_case),
                                 None => None
                             });
                             #query_snake_case
