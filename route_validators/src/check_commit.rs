@@ -35,7 +35,7 @@ pub fn check_commit(
     if
     // app_state.get_enable_api_git_commit_check()
     enable_api_git_commit_check {
-        headers.get(&naming::CommitSnakeCase.to_string()).map_or_else(
+        headers.get(naming::CommitSnakeCase.to_string()).map_or_else(
             || {
                 Err(CheckCommitErrorNamed::NoCommitHeader {
                     no_commit_header: std::string::String::from("no_commit_header"),

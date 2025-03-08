@@ -2274,7 +2274,7 @@ fn generate_try_new_content_token_stream_e8513d93_a3ac_4c83_abb1_6f8c8749bcad(id
 }
 fn generate_impl_deserialize_token_stream_aa92bdde_fcc8_4d46_aae2_d66234bef357(ident: &dyn quote::ToTokens, postgresql_type_or_json_type: &crate::PostgresqlTypeOrJsonType, regular_expression: &RegularExpression) -> proc_macro2::TokenStream {
     let postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case =
-        generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(&postgresql_type_or_json_type, &ident, &format!("{}{}", naming::PositionUpperCamelCase, regular_expression.name_upper_camel_case()));
+        generate_postgresql_type_or_json_type_self_where_element_filter_upper_camel_case_token_stream(postgresql_type_or_json_type, &ident, &format!("{}{}", naming::PositionUpperCamelCase, regular_expression.name_upper_camel_case()));
     generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(&postgresql_type_or_json_type_ident_where_element_filter_upper_camel_case, &token_patterns::StdStringString)
 }
 fn generate_try_generate_bind_increments_token_stream_4334f73e_cfcd_494b_aa9c_54a4aa8a0e39(regular_expression: &RegularExpression) -> proc_macro2::TokenStream {

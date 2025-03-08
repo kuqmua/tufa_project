@@ -1168,7 +1168,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
             }
         }
-        fn to_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
+        fn generate_postgresql_crud_attribute_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
@@ -1180,7 +1180,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
             }
         }
-        fn to_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
+        fn generate_postgresql_crud_attribute_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
@@ -2493,7 +2493,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         for element in syn_variants {
             type_variants_from_request_response_syn_variants.push((*element).clone());
         }
-        let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.to_additional_error_variants());
+        let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.generate_postgresql_crud_attribute_additional_error_variants());
         for element in operation_additional_error_variants {
             type_variants_from_request_response_syn_variants.push(element.clone());
         }
@@ -2555,7 +2555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let additional_validators_token_stream = {
-            let operation_additional_route_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &operation.to_additional_route_logic().generate_path_to_attribute());
+            let operation_additional_route_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &operation.generate_postgresql_crud_attribute_additional_route_logic().generate_path_to_attribute());
             quote::quote! {
                 #common_additional_route_logic_token_stream
                 #operation_additional_route_logic_token_stream
