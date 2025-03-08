@@ -1,8 +1,8 @@
 pub mod generate_postgresql_json_type;
-pub mod value;
-pub mod postgresql_type;
-pub mod postgresql_json_type;
 pub mod pagination;
+pub mod postgresql_json_type;
+pub mod postgresql_type;
+pub mod value;
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateBindIncrementsErrorNamed {
@@ -12,7 +12,7 @@ pub enum TryGenerateBindIncrementsErrorNamed {
 impl std::convert::From<crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed> for TryGenerateBindIncrementsErrorNamed {
     fn from(value: crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed) -> Self {
         match value {
-            crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence }
+            crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence },
         }
     }
 }
@@ -36,13 +36,10 @@ impl LogicalOperator {
                 Self::AndNot => format!("{and_space}{not_space}"),
                 Self::OrNot => format!("{or_space}{not_space}"),
             }
-        }
-        else {
+        } else {
             match &self {
-                Self::And |
-                Self::Or => std::string::String::default(),
-                Self::AndNot |
-                Self::OrNot => not_space,
+                Self::And | Self::Or => std::string::String::default(),
+                Self::AndNot | Self::OrNot => not_space,
             }
         }
     }
@@ -62,7 +59,6 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         ::core::default::Default::default()
     }
 }
-
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum Order {
@@ -91,10 +87,10 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 impl Order {
     pub fn to_upper_camel_case_stringified(&self) -> std::string::String {
-        naming::DisplayToUpperCamelCaseStringified::new(&self)
+        naming::DisplayToUpperCamelCaseStringified::case(&self)
     }
     pub fn to_snake_case_stringified(&self) -> std::string::String {
-        naming::DisplayToSnakeCaseStringified::new(&self)
+        naming::DisplayToSnakeCaseStringified::case(&self)
     }
 }
 
@@ -111,11 +107,7 @@ pub trait GeneratePostgresqlJsonTypeToRead {
 }
 
 pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-    if is_primary_key {
-        "primary key"
-    } else {
-        ""
-    }
+    if is_primary_key { "primary key" } else { "" }
 }
 
 pub trait BindQuery<'a> {

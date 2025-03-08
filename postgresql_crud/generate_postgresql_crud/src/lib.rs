@@ -133,7 +133,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::new(&ident);
+    let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
     // #[derive(Debug, Clone)]
     // struct Generic<'a> {
     //     syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
@@ -600,7 +600,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // };
     // let primary_key_field = &primary_key_syn_field_with_additional_info.field;
     let primary_key_field_ident = &primary_key_field.field_ident;
-    let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&primary_key_field_ident);
+    let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
     // let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
     // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
@@ -762,7 +762,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_column_token_stream = {
             let variants = fields.iter().map(|element| {
                 let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                 let type_path_column_upper_camel_case = naming::parameter::SelfColumnUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
@@ -825,7 +825,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &ident_column_upper_camel_case,
             &{
                 let elements_token_stream = fields.iter().map(|element| {
-                    let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+                    let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                     quote::quote! {
                         #ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream)
                     }
@@ -836,7 +836,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //todo this is temporary impl. maybe should write trait and implement different logic
         let pick_column_token_stream = {
             let fields_token_stream = fields.iter().map(|element| {
-                let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+                let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                 let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 quote::quote!{
                     Self::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
@@ -897,7 +897,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             segments: {
                                 let mut handle = syn::punctuated::Punctuated::new();
                                 handle.push(syn::PathSegment {
-                                    ident: proc_macro2::Ident::new(&naming::AsRefStrToSnakeCaseStringified::new(*&value), proc_macro2::Span::call_site()),
+                                    ident: proc_macro2::Ident::new(&naming::AsRefStrToSnakeCaseStringified::case(*&value), proc_macro2::Span::call_site()),
                                     arguments: syn::PathArguments::None,
                                 });
                                 handle
@@ -1006,7 +1006,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // operation: &Operation
     | {
         let variants_token_stream = fields.iter().map(|element| {
-            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
             //todo refactor it. can be rewriten witout double match. just put in one struct with syn_angle_bracketed_generic_arguments and others
             let initialization_token_stream = 
             // match &element.option_generic {
@@ -1259,7 +1259,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let assignment_variants_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
-            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
             let maybe_generic_filter_token_stream = proc_macro2::TokenStream::new();
             // if element.option_generic.is_some() {
             //     &curly_brace_space_filter_snake_case_space_curly_braces_token_stream
@@ -1974,7 +1974,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     let not_unique_column_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &not_unique_column_syn_variant_wrapper, file!(), line!(), column!());
     //     let generics_generate_postgresql_json_type_from_vec_error_named_syn_variants_wrappers_token_stream = {
     //         // let generics_fiter_checks_token_stream = fields.iter().map(|element| {
-    //         //     let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element.field_ident);
+    //         //     let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
     //         //     // if element.option_generic.is_some() {
     //         //     //     let empty_column_json_reader_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
     //         //     //         &operation,
@@ -2701,7 +2701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let future_snake_case = naming::FutureSnakeCase;
         let future_token_stream = {
-            let operation_http_method_snake_case_token_stream = naming::AsRefStrToSnakeCaseTokenStream::new_or_panic(&operation.http_method());
+            let operation_http_method_snake_case_token_stream = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
                     &#postgresql_crud_snake_case::CommitSnakeCase.to_string(),//todo remove it

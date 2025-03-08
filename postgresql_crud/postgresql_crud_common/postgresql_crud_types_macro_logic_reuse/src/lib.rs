@@ -2956,7 +2956,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                     let fields_token_stream = vec_token_stream.iter().map(|element| {
                         let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-                        let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element);
+                        let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element);
                         quote::quote! {#element_double_quotes_token_stream => Ok(Field::#element_upper_camel_case_token_stream)}
                     });
                     quote::quote! {
@@ -3314,7 +3314,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_initialization_token_stream = vec_token_stream.iter().map(|element| {
                             let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-                            let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element);
+                            let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element);
                             quote::quote! {
                                 Field::#element_upper_camel_case_token_stream => {
                                     if #element.is_some() {
@@ -3376,7 +3376,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let (field_months_days_microseconds_token_stream, field_start_end_token_stream) = {
                 let generate_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                    let variants_token_stream = vec_token_stream.iter().map(|element| naming::ToTokensToUpperCamelCaseTokenStream::new_or_panic(&element));
+                    let variants_token_stream = vec_token_stream.iter().map(|element| naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element));
                     quote::quote! {
                         enum Field {
                             #(#variants_token_stream),*

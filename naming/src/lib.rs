@@ -1,29 +1,29 @@
 pub mod parameter;
 
-pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
-pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified;
+pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
+pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
 
-pub use naming_common::AsRefStrToUpperCamelCaseStringified;
-pub use naming_common::AsRefStrToUpperCamelCaseTokenStream;
-pub use naming_common::AsRefStrToSnakeCaseStringified;
-pub use naming_common::AsRefStrToSnakeCaseTokenStream;
 pub use naming_common::AsRefStrToScreamingSnakeCaseStringified;
 pub use naming_common::AsRefStrToScreamingSnakeCaseTokenStream;
+pub use naming_common::AsRefStrToSnakeCaseStringified;
+pub use naming_common::AsRefStrToSnakeCaseTokenStream;
+pub use naming_common::AsRefStrToUpperCamelCaseStringified;
+pub use naming_common::AsRefStrToUpperCamelCaseTokenStream;
 
-pub use naming_common::DisplayToUpperCamelCaseStringified;
-pub use naming_common::DisplayToUpperCamelCaseTokenStream;
-pub use naming_common::DisplayToSnakeCaseStringified;
-pub use naming_common::DisplayToSnakeCaseTokenStream;
 pub use naming_common::DisplayToScreamingSnakeCaseStringified;
 pub use naming_common::DisplayToScreamingSnakeCaseTokenStream;
+pub use naming_common::DisplayToSnakeCaseStringified;
+pub use naming_common::DisplayToSnakeCaseTokenStream;
+pub use naming_common::DisplayToUpperCamelCaseStringified;
+pub use naming_common::DisplayToUpperCamelCaseTokenStream;
 
-pub use naming_common::ToTokensToUpperCamelCaseStringified;
-pub use naming_common::ToTokensToUpperCamelCaseTokenStream;
-pub use naming_common::ToTokensToSnakeCaseStringified;
-pub use naming_common::ToTokensToSnakeCaseTokenStream;
 pub use naming_common::ToTokensToScreamingSnakeCaseStringified;
 pub use naming_common::ToTokensToScreamingSnakeCaseTokenStream;
+pub use naming_common::ToTokensToSnakeCaseStringified;
+pub use naming_common::ToTokensToSnakeCaseTokenStream;
+pub use naming_common::ToTokensToUpperCamelCaseStringified;
+pub use naming_common::ToTokensToUpperCamelCaseTokenStream;
 
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
@@ -427,7 +427,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["table", "name"],
     ["generate", "postgresql", "crud", "primary", "key"],
     ["std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
-    ["all", "enum", "variants", "array", "std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
+    [
+        "all", "enum", "variants", "array", "std", "default", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"
+    ],
     ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
     ["generate", "postgresql", "json", "type"],
     ["to", "std", "string", "string"],
@@ -589,7 +591,7 @@ where
     T: naming_common::AsRefStrToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
-        generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.new(),))
+        generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.case(),))
     }
 }
 
@@ -616,7 +618,7 @@ where
     T: naming_common::AsRefStrToSnakeCaseStringified,
 {
     fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
-        format!("\"{{}}/{}/{}\"", table_name_stringified, self.new())
+        format!("\"{{}}/{}/{}\"", table_name_stringified, self.case())
     }
 }
 

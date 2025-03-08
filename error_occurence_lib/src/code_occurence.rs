@@ -34,7 +34,7 @@ impl std::fmt::Display for CodeOccurence {
         write!(
             formatter,
             "{} {}",
-            &match SOURCE_PLACE_TYPE.get_or_init(|| app_state::SourcePlaceType::from_env_or_default()) {
+            &match SOURCE_PLACE_TYPE.get_or_init(app_state::SourcePlaceType::from_env_or_default) {
                 app_state::SourcePlaceType::Source => self
                     .macro_occurence
                     .as_ref()

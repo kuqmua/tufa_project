@@ -28,10 +28,5 @@ pub fn get_macro_attribute_meta_list_token_stream<'a>(attrs: &'a [syn::Attribute
         },
         |attribute| attribute,
     );
-    let value = if let syn::Meta::List(value) = &attribute.meta {
-        &value.tokens
-    } else {
-        panic!("&attribute.meta is not syn::Meta::List(value)")
-    };
-    value
+    if let syn::Meta::List(value) = &attribute.meta { &value.tokens } else { panic!("&attribute.meta is not syn::Meta::List(value)") }
 }

@@ -12,6 +12,7 @@ proc-macro2 = {version = "=1.0.81"}
 quote = {version = "=1.0.36"}
 generate_quotes = {path = "../../../generate_quotes"}
 server_port_common = {path = "../server_port_common"}
+panic_location = {path = "../../../panic_location"}
 
 [lints]
 workspace = true

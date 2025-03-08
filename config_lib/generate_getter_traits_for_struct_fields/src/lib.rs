@@ -10,7 +10,7 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, upper_camel_case_field_ident) = {
             let field_ident = field.ident.as_ref().unwrap_or_else(|| panic!("{ident} {}", naming::FIELD_IDENT_IS_NONE));
-            (field_ident, naming::ToTokensToUpperCamelCaseStringified::new(&field_ident))
+            (field_ident, naming::ToTokensToUpperCamelCaseStringified::case(&field_ident))
         };
         let field_type = field.ty;
         let path_trait_ident = format!("app_state::Get{upper_camel_case_field_ident}").parse::<proc_macro2::TokenStream>().expect("path_trait_ident parse failed");
