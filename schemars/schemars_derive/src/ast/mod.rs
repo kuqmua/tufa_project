@@ -64,7 +64,7 @@ impl<'a> Container<'a> {
     }
 }
 
-impl<'a> Variant<'a> {
+impl Variant<'_> {
     pub fn name(&self) -> &str {
         self.serde_attrs.name().deserialize_name()
     }
@@ -78,7 +78,7 @@ impl<'a> Variant<'a> {
     }
 }
 
-impl<'a> Field<'a> {
+impl Field<'_> {
     pub fn name(&self) -> &str {
         self.serde_attrs.name().deserialize_name()
     }
