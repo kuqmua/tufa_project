@@ -917,7 +917,14 @@ impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlVarbitLength {
 
 
 /////////////////////////////
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull(pub std::vec::Vec<StdPrimitiveI16AsPostgresqlInt2NotNull>);
 impl std::fmt::Display for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -955,6 +962,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for VecStdPrimitiveI16AsPostgresqlInt2Arra
         }
     }
 }
+// impl sqlx::postgres::PgHasArrayType for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
+//     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+//         <std::vec::Vec<StdPrimitiveI16AsPostgresqlInt2NotNull> as sqlx::postgres::PgHasArrayType>::array_type_info()
+//     }
+// }
 impl crate::BindQuery<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
@@ -998,299 +1010,339 @@ pub type VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate = VecStdPrimitiv
 pub type VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull;
 pub type VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull;
 pub type VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToDelete = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull;
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-// pub struct PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
-//     pub logical_operator: crate::LogicalOperator,
-//     pub value: std::primitive::i16,
-// }
-// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
-//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             value: ::core::default::Default::default(),
-//         }
-//     }
-// }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-//             }
-//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.value);
-//         query
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-// pub enum PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
-//     Equal(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual),
-//     GreaterThan(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementGreaterThan),
-//     Between(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementBetween),
-//     In(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementIn),
-// }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         match &self {
-//             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
-//             Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
-//             Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
-//             Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
-//         }
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         match self {
-//             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
-//             Self::GreaterThan(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
-//             Self::Between(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
-//             Self::In(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
-//         }
-//     }
-// }
-// impl error_occurence_lib::ToStdStringString for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self:#?}")
-//     }
-// }
-// impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
-//     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-//         vec![
-//             Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-//             Self::GreaterThan(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-//             Self::Between(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-//             Self::In(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-//         ]
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
-// pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//     logical_operator: crate::LogicalOperator,
-//     value: std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>,
-// }
-// #[derive(
-//     Debug,
-//     Clone,
-//     serde :: Serialize,
-//     serde :: Deserialize,
-//     thiserror ::
-// Error,
-//     error_occurence_lib :: ErrorOccurence,
-// )]
-// pub enum PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed {
-//     IsEmpty {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUnique {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         value: PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-// impl VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//     fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>) -> Result<Self, PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed> {
-//         if value.is_empty() {
-//             return Err(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-//         }
-//         {
-//             let mut acc = vec![];
-//             for element in &value {
-//                 if !acc.contains(&element) {
-//                     acc.push(element);
-//                 } else {
-//                     return Err(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed::NotUnique {
-//                         value: element.clone(),
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//             }
-//         }
-//         Ok(Self { logical_operator, value })
-//     }
-// }
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl<'de> _serde::Deserialize<'de> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-//         where
-//             __D: _serde::Deserializer<'de>,
-//         {
-//             #[allow(non_camel_case_types)]
-//             #[doc(hidden)]
-//             enum __Field {
-//                 __field0,
-//                 __field1,
-//                 __ignore,
-//             }
-//             #[doc(hidden)]
-//             struct __FieldVisitor;
-//             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-//                 type Value = __Field;
-//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(__formatter, "field identifier")
-//                 }
-//                 fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         0u64 => _serde::__private::Ok(__Field::__field0),
-//                         1u64 => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         "logical_operator" => _serde::__private::Ok(__Field::__field0),
-//                         "value" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-//                         b"value" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//             }
-//             impl<'de> _serde::Deserialize<'de> for __Field {
-//                 #[inline]
-//                 fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-//                 where
-//                     __D: _serde::Deserializer<'de>,
-//                 {
-//                     _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-//                 }
-//             }
-//             #[doc(hidden)]
-//             struct __Visitor<'de> {
-//                 marker: _serde::__private::PhantomData<VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere>,
-//                 lifetime: _serde::__private::PhantomData<&'de ()>,
-//             }
-//             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-//                 type Value = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
-//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(__formatter, "struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere")
-//                 }
-//                 #[inline]
-//                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::SeqAccess<'de>,
-//                 {
-//                     let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere with 2 elements"));
-//                         }
-//                     };
-//                     let __field1 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>>(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere with 2 elements"));
-//                         }
-//                     };
-//                     match VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere::try_new(__field0, __field1) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-//                     }
-//                 }
-//                 #[inline]
-//                 fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::MapAccess<'de>,
-//                 {
-//                     let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
-//                     let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>> = _serde::__private::None;
-//                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-//                         match __key {
-//                             __Field::__field0 => {
-//                                 if _serde::__private::Option::is_some(&__field0) {
-//                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
-//                                 }
-//                                 __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<crate::LogicalOperator>(&mut __map)?);
-//                             }
-//                             __Field::__field1 => {
-//                                 if _serde::__private::Option::is_some(&__field1) {
-//                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("value"));
-//                                 }
-//                                 __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>>(&mut __map)?);
-//                             }
-//                             _ => {
-//                                 let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
-//                             }
-//                         }
-//                     }
-//                     let __field0 = match __field0 {
-//                         _serde::__private::Some(__field0) => __field0,
-//                         _serde::__private::None => _serde::__private::de::missing_field("logical_operator")?,
-//                     };
-//                     let __field1 = match __field1 {
-//                         _serde::__private::Some(__field1) => __field1,
-//                         _serde::__private::None => _serde::__private::de::missing_field("value")?,
-//                     };
-//                     match VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere::try_new(__field0, __field1) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-//                     }
-//                 }
-//             }
-//             #[doc(hidden)]
-//             const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-//             _serde::Deserializer::deserialize_struct(
-//                 __deserializer,
-//                 "VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere",
-//                 FIELDS,
-//                 __Visitor {
-//                     marker: _serde::__private::PhantomData::<VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere>,
-//                     lifetime: _serde::__private::PhantomData,
-//                 },
-//             )
-//         }
-//     }
-// };
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//     fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
-//         let mut acc = std::string::String::default();
-//         let mut is_need_to_add_logical_operator_inner_handle = false;
-//         for element in &self.value {
-//             match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-//                 Ok(value) => {
-//                     acc.push_str(&format!("{value} "));
-//                     is_need_to_add_logical_operator_inner_handle = true;
-//                 }
-//                 Err(error) => {
-//                     return Err(error);
-//                 }
-//             }
-//         }
-//         let _ = acc.pop();
-//         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-//     }
-//     fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.value {
-//             query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
-//         }
-//         query
-//     }
-// }
-// impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-//         Self {
-//             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//             value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
-//         }
-//     }
-// }
-
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
+    pub logical_operator: crate::LogicalOperator,
+    pub value: VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull,
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+            }
+            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.value);
+        query
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+    Equal(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual),
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query),
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
+        ]
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize)]
+pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>,
+}
+#[derive(
+    Debug,
+    Clone,
+    serde :: Serialize,
+    serde :: Deserialize,
+    thiserror ::
+Error,
+    error_occurence_lib :: ErrorOccurence,
+)]
+pub enum PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed {
+    IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUnique {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+    fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>) -> Result<Self, PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed> {
+        if value.is_empty() {
+            return Err(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        {
+            let mut acc = vec![];
+            for element in &value {
+                if !acc.contains(&element) {
+                    acc.push(element);
+                } else {
+                    return Err(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereTryNewErrorNamed::NotUnique {
+                        value: element.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self { logical_operator, value })
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => _serde::__private::Ok(__Field::__field0),
+                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        "value" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        b"value" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere with 2 elements"));
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere with 2 elements"));
+                        }
+                    };
+                    match VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>> = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
+                                }
+                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<crate::LogicalOperator>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("value"));
+                                }
+                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::vec::Vec<PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement>>(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => _serde::__private::de::missing_field("logical_operator")?,
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => _serde::__private::de::missing_field("value")?,
+                    };
+                    match VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+    fn postgresql_type_self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &self.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
+    }
+}
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
+}
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
+    type PostgresqlTypeSelf = Self;
+    type PostgresqlTypeSelfColumn = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
+    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
+        column.to_string()
+    }
+    type PostgresqlTypeSelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
+    type PostgresqlTypeSelfToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
+    type PostgresqlTypeSelfToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
+    type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;
+    fn postgresql_type_self_to_update_query_part(
+        postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+        _: &std::primitive::str,
+        _: &std::primitive::str,
+        _: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, Self::PostgresqlTypeSelfToUpdateQueryPartErrorNamed> {
+        crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment)
+    }
+    fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::PostgresqlTypeSelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        crate::BindQuery::bind_value_to_query(postgresql_type_self_to_update, query)
+    }
+    type PostgresqlTypeSelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
+    type PostgresqlTypeSelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
+    fn postgresql_type_self_where_try_generate_bind_increments(
+        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+        increment: &mut std::primitive::u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: std::primitive::bool,
+    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &postgresql_type_self_where.value {
+            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+    }
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in postgresql_type_self_where.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+        }
+        query
+    }
+}
