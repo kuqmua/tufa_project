@@ -270,11 +270,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(input: p
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let data_enum = if let syn::Data::Enum(data_enum) = &syn_derive_input.data {
-        data_enum
-    } else {
-        panic!("does work only on structs!");
-    };
+    let data_enum = if let syn::Data::Enum(data_enum) = &syn_derive_input.data { data_enum } else { panic!("does work only on structs!") };
     let std_string_string_token_stream = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
