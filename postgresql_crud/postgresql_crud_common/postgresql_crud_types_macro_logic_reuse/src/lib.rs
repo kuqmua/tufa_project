@@ -4927,7 +4927,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
 
-            // let pub_struct_std_vec_vec_
+            ////////////////////////////////////////
+            // let vec_postgresql_type_array_not_null_upper_camel_case = naming::parameter::VecSelfArrayNotNullUpperCamelCase::from_tokens(&postgresql_type);
+            // let vec_postgresql_type_array_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
+            //     PostgresqlTypeNotNullOrNullable::NotNull => &vec_postgresql_type_array_not_null_upper_camel_case,
+            //     PostgresqlTypeNotNullOrNullable::Nullable => &naming::parameter::VecSelfArrayNullableUpperCamelCase::from_tokens(&postgresql_type),
+            // };
+            // let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
+            //     PostgresqlTypeNotNullOrNullable::NotNull => &field_type,
+            //     PostgresqlTypeNotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#postgresql_type_not_null_upper_camel_case>},
+            // };
+            // let vec_field_type_handle = quote::quote! {std::vec::Vec<#postgresql_type_not_null_upper_camel_case>}
             quote::quote! {
                 #pub_struct_postgresql_type_not_null_or_nullable_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
