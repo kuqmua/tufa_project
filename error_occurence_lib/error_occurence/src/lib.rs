@@ -413,9 +413,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     // println!("{generated} ");
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name_upper_camel_case,
+    //         &"ErrorOccurence",
     //         &generated,
-    //         &proc_macro_name_upper_camel_case_ident_stringified
     //     );
     // }
     generated.into()
