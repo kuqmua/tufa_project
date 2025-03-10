@@ -5233,11 +5233,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         }
                     };
-                    let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+                    let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                     let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
                     let postgresql_type_self_to_update_query_part_token_stream = {
                         let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
-                        let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
+                        let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                         //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                         let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
@@ -5246,7 +5246,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let postgresql_type_self_to_update_query_part_content_token_stream = {
                             let generate_ok_try_generate_postgresql_json_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
                                 let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
-                                    &quote::quote!{&#postgresql_type_self_to_update_snake_case.0}
+                                    &quote::quote!{&#self_to_update_snake_case.0}
                                 }
                                 else {
                                     &value_snake_case
@@ -5266,7 +5266,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 PostgresqlType::JsonbNullable => {
                                     let ok_try_generate_postgresql_json_type_to_update_token_stream = generate_ok_try_generate_postgresql_json_type_to_update_token_stream(false);
                                     quote::quote!{
-                                        match &#postgresql_type_self_to_update_snake_case.0 {
+                                        match &#self_to_update_snake_case.0 {
                                             Some(#value_snake_case) => #ok_try_generate_postgresql_json_type_to_update_token_stream,
                                             None => match increment.checked_add(1) {
                                                 Some(#value_snake_case) => {
@@ -5287,7 +5287,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         quote::quote!{
                             fn #postgresql_type_self_to_update_query_part_snake_case(
                                 //few parameters usefull only with json types. maybe refactor it later
-                                #postgresql_type_self_to_update_snake_case: &Self::#postgresql_type_self_to_update_upper_camel_case,
+                                #self_to_update_snake_case: &Self::#self_to_update_upper_camel_case,
                                 #jsonb_set_accumulator_snake_case: &std::primitive::str,
                                 #jsonb_set_target_snake_case: &std::primitive::str,
                                 #jsonb_set_path_snake_case: &std::primitive::str,
@@ -5299,11 +5299,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let postgresql_type_self_to_update_bind_query_part_token_stream = {
                         let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
-                        let postgresql_type_self_to_update_snake_case = naming::PostgresqlTypeSelfToUpdateSnakeCase;
+                        let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                         let postgresql_type_self_to_update_bind_query_part_content_token_stream = {
                             let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
                                 let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
-                                    &quote::quote!{#postgresql_type_self_to_update_snake_case.0}
+                                    &quote::quote!{#self_to_update_snake_case.0}
                                 }
                                 else {
                                     &value_snake_case
@@ -5319,7 +5319,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 PostgresqlType::JsonbNullable => {
                                     let bind_value_to_postgresql_query_part_to_update_token_stream = generate_bind_value_to_postgresql_query_part_to_update_token_stream(false);
                                     quote::quote!{
-                                        query = match #postgresql_type_self_to_update_snake_case.0 {
+                                        query = match #self_to_update_snake_case.0 {
                                             Some(#value_snake_case) => #bind_value_to_postgresql_query_part_to_update_token_stream,
                                             None => {
                                                 #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>>))
@@ -5333,7 +5333,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #postgresql_type_self_to_update_bind_query_part<'a>(
-                                #postgresql_type_self_to_update_snake_case: Self::#postgresql_type_self_to_update_upper_camel_case,
+                                #self_to_update_snake_case: Self::#self_to_update_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #postgresql_type_self_to_update_bind_query_part_content_token_stream
@@ -5577,7 +5577,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let self_column_upper_camel_case = naming::SelfColumnUpperCamelCase;
                         let self_to_create_upper_camel_case = naming::SelfToCreateUpperCamelCase;
                         let self_to_read_upper_camel_case = naming::SelfToReadUpperCamelCase;
-                        let postgresql_type_self_to_update_upper_camel_case = naming::PostgresqlTypeSelfToUpdateUpperCamelCase;
+                        let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                         let self_column_query_part_token_stream = {
                             let self_column_snake_case = naming::SelfColumnSnakeCase;
                             let format_value_token_stream = match &postgresql_type {
@@ -5613,7 +5613,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #self_column_query_part_token_stream
                                 type #self_to_create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                                 type #self_to_read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
-                                type #postgresql_type_self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
+                                type #self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
                                 type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #postgresql_type_self_to_update_bind_query_part_token_stream
