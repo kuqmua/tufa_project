@@ -1044,7 +1044,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let field_type = &element.syn_field.ty;
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 quote::quote! {
-                    => <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_column_query_part(
+                    => <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::self_column_query_part(
                         value,
                         #field_ident_string_double_quotes_token_stream
                     )

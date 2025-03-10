@@ -8,7 +8,7 @@ pub trait PostgresqlType<'a> {
     type PostgresqlTypeSelf: std::fmt::Debug;
     type SelfColumn: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     //maybe move it into own trait?
-    fn postgresql_type_self_column_query_part(self_column: &Self::SelfColumn, column: &std::primitive::str) -> std::string::String;
+    fn self_column_query_part(self_column: &Self::SelfColumn, column: &std::primitive::str) -> std::string::String;
     type PostgresqlTypeSelfToCreate: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::BindQuery<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type PostgresqlTypeSelfToRead: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + sqlx::Decode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     type PostgresqlTypeSelfToUpdate: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
