@@ -1462,7 +1462,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
         column.to_string()
     }
     type SelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
-    type PostgresqlTypeSelfToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
+    type SelfToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
     type PostgresqlTypeSelfToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
     type PostgresqlTypeSelfToUpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;
     fn postgresql_type_self_to_update_query_part(
