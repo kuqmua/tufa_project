@@ -1479,7 +1479,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     }
     type SelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
     type SelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
-    fn postgresql_type_self_where_try_generate_bind_increments(
+    fn self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::SelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,

@@ -3586,7 +3586,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::postgresql_type_self_where_try_generate_bind_increments(
+                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::self_where_try_generate_bind_increments(
                                     value,
                                     &mut increment,
                                     &#field_ident_double_quotes_token_stream,
@@ -5431,10 +5431,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{generated}");
     // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "GeneratePostgresqlCrud",
-    //         &generated,
-    //     );
+        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "GeneratePostgresqlCrud",
+        //     &generated,
+        // );
     // }
     generated.into()
 }
