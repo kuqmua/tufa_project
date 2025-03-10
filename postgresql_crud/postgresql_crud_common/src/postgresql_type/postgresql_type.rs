@@ -1458,7 +1458,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     type PostgresqlTypeSelf = Self;
     type SelfColumn = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
-    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::SelfColumn, column: &std::primitive::str) -> std::string::String {
+    fn postgresql_type_self_column_query_part(self_column: &Self::SelfColumn, column: &std::primitive::str) -> std::string::String {
         column.to_string()
     }
     type PostgresqlTypeSelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
