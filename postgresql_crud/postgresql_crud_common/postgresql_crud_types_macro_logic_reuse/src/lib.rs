@@ -4838,12 +4838,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let self_to_create_upper_camel_case = naming::SelfToCreateUpperCamelCase;
                 let self_to_read_upper_camel_case = naming::SelfToReadUpperCamelCase;
                 let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
-                let self_column_upper_camel_case = naming::SelfColumnUpperCamelCase;
+                let column_upper_camel_case = naming::ColumnUpperCamelCase;
                 let self_column_query_part_token_stream = {
                     let self_column_snake_case = naming::SelfColumnSnakeCase;
                     quote::quote! {
                         fn self_column_query_part(
-                            #self_column_snake_case: &Self::#self_column_upper_camel_case,
+                            #self_column_snake_case: &Self::#column_upper_camel_case,
                             #column_snake_case: &std::primitive::str,
                         ) -> #std_string_string_token_stream {
                             #column_snake_case.to_string()
@@ -4930,7 +4930,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 quote::quote! {
                     impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
-                        type #self_column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
+                        type #column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
                         #self_column_query_part_token_stream
                         type #self_to_create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
                         type #self_to_read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
