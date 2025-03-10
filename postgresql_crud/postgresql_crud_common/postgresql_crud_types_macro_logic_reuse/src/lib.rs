@@ -4867,11 +4867,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let postgresql_type_self_to_update_bind_query_part_token_stream = {
-                    let postgresql_type_self_to_update_bind_query_part = naming::PostgresqlTypeSelfToUpdateBindQueryPartSnakeCase;
+                let self_to_update_bind_query_part_token_stream = {
+                    let self_to_update_bind_query_part = naming::SelfToUpdateBindQueryPartSnakeCase;
                     let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                     quote::quote! {
-                        fn #postgresql_type_self_to_update_bind_query_part<'a>(
+                        fn #self_to_update_bind_query_part<'a>(
                             #self_to_update_snake_case: Self::#self_to_update_upper_camel_case,
                             #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -4937,7 +4937,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type #self_to_update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
                         type #self_to_update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
                         #postgresql_type_self_to_update_query_part_token_stream
-                        #postgresql_type_self_to_update_bind_query_part_token_stream
+                        #self_to_update_bind_query_part_token_stream
                         type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
                         type #postgresql_type_self_where_upper_camel_case = #postgresql_type_not_null_or_nullable_where_upper_camel_case;
                         #postgresql_type_self_where_try_generate_bind_increments_token_stream
