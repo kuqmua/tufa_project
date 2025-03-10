@@ -1466,13 +1466,13 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     type SelfToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
     type SelfToUpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;
     fn self_to_update_query_part(
-        postgresql_type_self_to_update: &Self::SelfToUpdate,
+        self_to_update: &Self::SelfToUpdate,
         _: &std::primitive::str,
         _: &std::primitive::str,
         _: &std::primitive::str,
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed> {
-        crate::BindQuery::try_generate_bind_increments(postgresql_type_self_to_update, increment)
+        crate::BindQuery::try_generate_bind_increments(self_to_update, increment)
     }
     fn postgresql_type_self_to_update_bind_query_part<'a>(postgresql_type_self_to_update: Self::SelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(postgresql_type_self_to_update, query)

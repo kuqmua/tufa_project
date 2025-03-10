@@ -14,7 +14,7 @@ pub trait PostgresqlType<'a> {
     type SelfToUpdate: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type SelfToUpdateQueryPartErrorNamed: std::fmt::Debug; // + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
     fn self_to_update_query_part(
-        postgresql_type_self_to_update: &Self::SelfToUpdate,
+        self_to_update: &Self::SelfToUpdate,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,

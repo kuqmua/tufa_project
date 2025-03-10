@@ -4303,7 +4303,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     &"",
                                                     &mut #increment_snake_case,
 
-                                                    // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                                    // self_to_update: &Self::PostgresqlTypeSelfToUpdate,
                                                     // jsonb_set_accumulator: &std::primitive::str,
                                                     // jsonb_set_target: &std::primitive::str,
                                                     // jsonb_set_path: &std::primitive::str,
@@ -4332,7 +4332,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     &"",
                                                     &mut #increment_snake_case,
 
-                                                    // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                                    // self_to_update: &Self::PostgresqlTypeSelfToUpdate,
                                                     // jsonb_set_accumulator: &std::primitive::str,
                                                     // jsonb_set_target: &std::primitive::str,
                                                     // jsonb_set_path: &std::primitive::str,
@@ -4390,7 +4390,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             &"",
                                             &mut #increment_snake_case,
 
-                                            // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                            // self_to_update: &Self::PostgresqlTypeSelfToUpdate,
                                             // jsonb_set_accumulator: &std::primitive::str,
                                             // jsonb_set_target: &std::primitive::str,
                                             // jsonb_set_path: &std::primitive::str,
@@ -4696,7 +4696,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &"",
                                     &mut #increment_snake_case,
 
-                                    // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                    // self_to_update: &Self::PostgresqlTypeSelfToUpdate,
                                     // jsonb_set_accumulator: &std::primitive::str,
                                     // jsonb_set_target: &std::primitive::str,
                                     // jsonb_set_path: &std::primitive::str,
@@ -4733,7 +4733,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &"",
                                 &mut #increment_snake_case,
 
-                                // postgresql_type_self_to_update: &Self::PostgresqlTypeSelfToUpdate,
+                                // self_to_update: &Self::PostgresqlTypeSelfToUpdate,
                                 // jsonb_set_accumulator: &std::primitive::str,
                                 // jsonb_set_target: &std::primitive::str,
                                 // jsonb_set_path: &std::primitive::str,
