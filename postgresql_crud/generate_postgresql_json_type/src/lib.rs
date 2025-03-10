@@ -5512,15 +5512,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
-                    let postgresql_type_self_where_upper_camel_case = naming::PostgresqlTypeSelfWhereUpperCamelCase;
-                    let postgresql_type_self_where_snake_case = naming::PostgresqlTypeSelfWhereSnakeCase;
+                    let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
+                    let self_where_snake_case = naming::SelfWhereSnakeCase;
                     let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
                         let postgresql_type_self_where_try_generate_bind_increments_snake_case = naming::PostgresqlTypeSelfWhereTryGenerateBindIncrementsSnakeCase;
                         let postgresql_type_self_where_try_generate_bind_increments_content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{
                                 let mut acc = std::string::String::default();
                                 let mut is_need_to_add_logical_operator_inner_handle = false;
-                                for element in &postgresql_type_self_where.value {
+                                for element in &#self_where_snake_case.value {
                                     match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                                         Ok(value) => {
                                             acc.push_str(&format!("{value} "));
@@ -5532,7 +5532,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     }
                                 }
                                 let _ = acc.pop();
-                                Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                Ok(format!("{}({acc})", &#self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                             },
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
@@ -5540,7 +5540,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #postgresql_type_self_where_try_generate_bind_increments_snake_case(
-                                #postgresql_type_self_where_snake_case: &Self::#postgresql_type_self_where_upper_camel_case,
+                                #self_where_snake_case: &Self::#self_where_upper_camel_case,
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
                                 is_need_to_add_logical_operator: std::primitive::bool,
@@ -5553,7 +5553,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
                         let postgresql_type_self_where_bind_value_to_query_content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{
-                                for element in postgresql_type_self_where.value {
+                                for element in #self_where_snake_case.value {
                                     query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
                                 }
                                 query
@@ -5564,7 +5564,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
-                                #postgresql_type_self_where_snake_case: Self::#postgresql_type_self_where_upper_camel_case,
+                                #self_where_snake_case: Self::#self_where_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #postgresql_type_self_where_bind_value_to_query_content_token_stream
@@ -5618,7 +5618,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #self_to_update_bind_query_part_token_stream
                                 type #self_where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
-                                type #postgresql_type_self_where_upper_camel_case = #postgresql_type_tokens_where_upper_camel_case;
+                                type #self_where_upper_camel_case = #postgresql_type_tokens_where_upper_camel_case;
                                 #postgresql_type_self_where_try_generate_bind_increments_token_stream
                                 #postgresql_type_self_where_bind_value_to_query_token_stream
                             }

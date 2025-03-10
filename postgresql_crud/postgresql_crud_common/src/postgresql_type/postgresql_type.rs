@@ -1478,9 +1478,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
         crate::BindQuery::bind_value_to_query(self_to_update, query)
     }
     type SelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
-    type PostgresqlTypeSelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
+    type SelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
     fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+        postgresql_type_self_where: &Self::SelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
         is_need_to_add_logical_operator: std::primitive::bool,
@@ -1501,7 +1501,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
         let _ = acc.pop();
         Ok(format!("{}({acc})", &postgresql_type_self_where.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn postgresql_type_self_where_bind_value_to_query<'a>(postgresql_type_self_where: Self::SelfWhere, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in postgresql_type_self_where.value {
             query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
         }

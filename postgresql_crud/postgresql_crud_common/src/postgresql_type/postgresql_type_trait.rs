@@ -22,14 +22,14 @@ pub trait PostgresqlType<'a> {
     ) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed>;
     fn self_to_update_bind_query_part(self_to_update: Self::SelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type SelfWhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
-    type PostgresqlTypeSelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
+    type SelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn postgresql_type_self_where_try_generate_bind_increments(
-        postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
+        postgresql_type_self_where: &Self::SelfWhere,
         increment: &mut std::primitive::u64,
         column: &dyn std::fmt::Display,
         is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
-    fn postgresql_type_self_where_bind_value_to_query(postgresql_type_self_where: Self::PostgresqlTypeSelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn postgresql_type_self_where_bind_value_to_query(postgresql_type_self_where: Self::SelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 pub trait PostgresqlTypePrimaryKey<'a> {
     type SelfToCreate: std::fmt::Debug
