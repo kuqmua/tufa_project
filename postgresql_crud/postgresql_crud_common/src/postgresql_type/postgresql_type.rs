@@ -4,7 +4,7 @@ postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
 pub enum EncodeFormat {
     Base64,
     Hex,
-    Escape
+    Escape,
 }
 impl std::fmt::Display for EncodeFormat {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -448,7 +448,7 @@ pub enum StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed 
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
@@ -461,8 +461,7 @@ impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlC
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
-        }
-        else {
+        } else {
             Ok(Self(value))
         }
     }
@@ -472,71 +471,46 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for StdStringStringAsPostgresqlCharNLength {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<
-                    StdStringStringAsPostgresqlCharNLength,
-                >,
+                marker: _serde::__private::PhantomData<StdStringStringAsPostgresqlCharNLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = StdStringStringAsPostgresqlCharNLength;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct StdStringStringAsPostgresqlCharNLength",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlCharNLength")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
                     match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u32,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct StdStringStringAsPostgresqlCharNLength with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsPostgresqlCharNLength with 1 element"));
                         }
                     };
                     match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -544,9 +518,7 @@ const _: () = {
                 __deserializer,
                 "StdStringStringAsPostgresqlCharNLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<
-                        StdStringStringAsPostgresqlCharNLength,
-                    >,
+                    marker: _serde::__private::PhantomData::<StdStringStringAsPostgresqlCharNLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -566,7 +538,7 @@ pub enum StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorName
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct StdStringStringAsPostgresqlVarcharLength(std::primitive::u32);
@@ -579,8 +551,7 @@ impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlV
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
-        }
-        else {
+        } else {
             Ok(Self(value))
         }
     }
@@ -590,71 +561,46 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for StdStringStringAsPostgresqlVarcharLength {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<
-                    StdStringStringAsPostgresqlVarcharLength,
-                >,
+                marker: _serde::__private::PhantomData<StdStringStringAsPostgresqlVarcharLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = StdStringStringAsPostgresqlVarcharLength;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct StdStringStringAsPostgresqlVarcharLength",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlVarcharLength")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
                     match StdStringStringAsPostgresqlVarcharLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u32,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct StdStringStringAsPostgresqlVarcharLength with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsPostgresqlVarcharLength with 1 element"));
                         }
                     };
                     match StdStringStringAsPostgresqlVarcharLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -662,9 +608,7 @@ const _: () = {
                 __deserializer,
                 "StdStringStringAsPostgresqlVarcharLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<
-                        StdStringStringAsPostgresqlVarcharLength,
-                    >,
+                    marker: _serde::__private::PhantomData::<StdStringStringAsPostgresqlVarcharLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -684,7 +628,7 @@ pub enum SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct SqlxTypesBitVecAsPostgresqlBitLength(std::primitive::u64);
@@ -698,8 +642,7 @@ impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlB
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
-        }
-        else {
+        } else {
             Ok(Self(value))
         }
     }
@@ -709,71 +652,46 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsPostgresqlBitLength {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<
-                    SqlxTypesBitVecAsPostgresqlBitLength,
-                >,
+                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsPostgresqlBitLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = SqlxTypesBitVecAsPostgresqlBitLength;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct SqlxTypesBitVecAsPostgresqlBitLength",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlBitLength")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::primitive::u64 = <std::primitive::u64 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
+                    let __field0: std::primitive::u64 = <std::primitive::u64 as _serde::Deserialize>::deserialize(__e)?;
                     match SqlxTypesBitVecAsPostgresqlBitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u64,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u64>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct SqlxTypesBitVecAsPostgresqlBitLength with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsPostgresqlBitLength with 1 element"));
                         }
                     };
                     match SqlxTypesBitVecAsPostgresqlBitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -781,9 +699,7 @@ const _: () = {
                 __deserializer,
                 "SqlxTypesBitVecAsPostgresqlBitLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<
-                        SqlxTypesBitVecAsPostgresqlBitLength,
-                    >,
+                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsPostgresqlBitLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -803,7 +719,7 @@ pub enum SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u32);
@@ -817,8 +733,7 @@ impl std::convert::TryFrom<std::primitive::u32> for SqlxTypesBitVecAsPostgresqlV
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
-        }
-        else {
+        } else {
             Ok(Self(value))
         }
     }
@@ -828,71 +743,46 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsPostgresqlVarbitLength {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<
-                    SqlxTypesBitVecAsPostgresqlVarbitLength,
-                >,
+                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsPostgresqlVarbitLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = SqlxTypesBitVecAsPostgresqlVarbitLength;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
                     match SqlxTypesBitVecAsPostgresqlVarbitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u32,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength with 1 element"));
                         }
                     };
                     match SqlxTypesBitVecAsPostgresqlVarbitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -900,9 +790,7 @@ const _: () = {
                 __deserializer,
                 "SqlxTypesBitVecAsPostgresqlVarbitLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<
-                        SqlxTypesBitVecAsPostgresqlVarbitLength,
-                    >,
+                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsPostgresqlVarbitLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -935,7 +823,7 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     },
     NotUnique {
         // #[eo_to_std_string_string_serialize_deserialize]
-        value: PostgresqlTypeWhereElement,//PostgresqlTypeWhereElement
+        value: PostgresqlTypeWhereElement, //PostgresqlTypeWhereElement
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -947,14 +835,10 @@ impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fm
             "{}{}",
             match self {
                 Self::IsEmpty { .. } => format!(""),
-                Self::NotUnique { value, .. } => format!(
-                    "value: {}",
-                    error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                )
+                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
             },
             match self {
-                Self::IsEmpty { code_occurence, .. } |
-                Self::NotUnique { code_occurence, .. } => code_occurence,
+                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
             }
         )
     }
@@ -980,14 +864,10 @@ impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fm
             "{}{}",
             match self {
                 Self::IsEmpty { .. } => "".to_string(),
-                Self::NotUnique { value, .. } => format!(
-                    "value: {}",
-                     error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                )
+                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
             },
             match self {
-                Self::IsEmpty { code_occurence, .. } |
-                Self::NotUnique { code_occurence, .. } => code_occurence,
+                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
             }
         )
     }
@@ -1193,7 +1073,9 @@ impl<PostgresqlTypeWhereElement: crate::postgresql_type::postgresql_type_trait::
         query
     }
 }
-impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement> crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement
+    for PostgresqlTypeWhere<PostgresqlTypeWhereElement>
+{
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -1202,14 +1084,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
     }
 }
 /////////////////////////////
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    PartialOrd,
-    serde::Serialize,
-    serde::Deserialize,
-)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
 pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull(pub std::vec::Vec<StdPrimitiveI16AsPostgresqlInt2NotNull>);
 impl std::fmt::Display for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -1223,7 +1098,9 @@ impl error_occurence_lib::ToStdStringString for VecStdPrimitiveI16AsPostgresqlIn
 }
 impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
-        Self(vec![crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()])
+        Self(vec![
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        ])
     }
 }
 impl sqlx::Type<sqlx::Postgres> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
@@ -1346,9 +1223,9 @@ impl error_occurence_lib::ToStdStringString for PostgresqlTypeVecStdPrimitiveI16
 }
 impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-        ]
+        vec![Self::Equal(
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        )]
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
@@ -1580,8 +1457,8 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     type PostgresqlTypeSelf = Self;
-    type PostgresqlTypeSelfColumn = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
-    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::PostgresqlTypeSelfColumn, column: &std::primitive::str) -> std::string::String {
+    type SelfColumn = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
+    fn postgresql_type_self_column_query_part(postgresql_type_self_column: &Self::SelfColumn, column: &std::primitive::str) -> std::string::String {
         column.to_string()
     }
     type PostgresqlTypeSelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
