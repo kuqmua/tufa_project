@@ -1,7 +1,4 @@
-#[derive(
-    Debug,
-    postgresql_crud::GeneratePostgresqlCrud
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -60,7 +57,7 @@ pub struct Example {
 
     // pub std_primitive_f32_as_float4_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveF32AsPostgresqlFloat4NotNull,
     // pub std_primitive_f32_as_float4_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveF32AsPostgresqlFloat4Nullable,
-    
+
     // pub std_primitive_f64_as_float8_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveF64AsPostgresqlFloat8NotNull,
     // pub std_primitive_f64_as_float8_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveF64AsPostgresqlFloat8Nullable,
 
@@ -70,7 +67,6 @@ pub struct Example {
     // pub std_primitive_i32_as_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresqlNotNull,
     // // // #[generate_postgresql_crud_primary_key]
     // pub std_primitive_i64_as_big_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull,
-
     #[generate_postgresql_crud_primary_key]
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull,
 
@@ -142,7 +138,7 @@ pub struct Example {
 
     // pub sqlx_types_ipnetwork_ip_network_as_inet_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
     // pub sqlx_types_ipnetwork_ip_network_as_inet_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNullable,
-    
+
     // pub sqlx_types_ipnetwork_ip_network_as_cidr_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
     // pub sqlx_types_ipnetwork_ip_network_as_cidr_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNullable,
 
@@ -184,7 +180,6 @@ pub struct Example {
 
     // pub pg_range_date_time_local_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull,
     // pub pg_range_date_time_local_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable,
-
     pub object_animal_as_jsonb_not_null: ObjectAnimalAsPostgresqlJsonbNotNull,
     // pub object_animal_as_jsonb_nullable: ObjectAnimalAsPostgresqlJsonbNullable,
 
@@ -203,17 +198,7 @@ pub struct Example {
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-    postgresql_crud::GeneratePostgresqlJsonType,
-)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud::GeneratePostgresqlJsonType)] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
@@ -413,13 +398,12 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
         // postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull::create_table_column_query_part(&"pg_range_decimal_as_num_range_not_null", false),
         // postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNullable::create_table_column_query_part(&"pg_range_decimal_as_num_range_nullable", false),
         // postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull::create_table_column_query_part(&"pg_range_sqlx_types_big_decimal_as_num_range_not_null", false),
-        // postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNullable::create_table_column_query_part(&"pg_range_sqlx_types_big_decimal_as_num_range_nullable", false),        
+        // postgresql_crud::postgresql_type::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNullable::create_table_column_query_part(&"pg_range_sqlx_types_big_decimal_as_num_range_nullable", false),
         ObjectAnimalAsPostgresqlJsonbNotNull::create_table_column_query_part(&"object_animal_as_jsonb_not_null", false),
-
-
-
         postgresql_crud::postgresql_type::postgresql_type::VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull::create_table_column_query_part(&"vec_std_primitive_i16_as_postgresql_int2_array_not_null", false),
     );
     println!("{create_table_if_not_exists_query_stringified}");
     let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(pool).await.unwrap();
 }
+
+//////////////////////////////////

@@ -46,7 +46,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["object", "self", "options", "to", "read"],
     ["std", "option", "option", "object", "self", "options", "to", "read"],
     ["std", "vec", "vec", "object", "with", "id", "self", "options", "to", "read"],
-    ["std","option", "option","std", "vec", "vec", "object", "with", "id", "self", "options", "to", "read"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "options", "to", "read"],
     ["object", "self", "to", "create"],
     ["std", "option", "option", "object", "self", "to", "create"],
     ["std", "vec", "vec", "object", "with", "id", "self", "to", "create"],
@@ -87,7 +87,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "options", "to", "update"],
     ["self", "to", "create", "with", "generated", "id"],
     ["self", "to", "create", "without", "generated", "id"],
-    ["self", "json", "array", "change", "try", "generate", "postgresql", "json", "type", "error", "named"],
+    ["self", "json", "array", "change", "try", "generate", "error", "named"],
     ["self", "field", "to", "update"],
     ["self", "generate", "postgresql", "json", "type", "to", "read", "error", "named"],
     ["self", "try", "generate", "json", "array", "element", "update", "bind", "increments", "error", "named"],
@@ -109,9 +109,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["std", "option", "option", "object", "self", "field", "reader", "try", "new", "error", "named"],
     ["std", "vec", "vec", "object", "with", "id", "self", "field", "reader", "try", "new", "error", "named"],
     ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "field", "reader", "try", "new", "error", "named"],
-    ["object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
+    ["object", "self", "option", "to", "update", "try", "generate", "error", "named"],
     ["object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named", "with", "serialize", "deserialize"],
-    ["std", "option", "option", "object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
+    ["std", "option", "option", "object", "self", "option", "to", "update", "try", "generate", "error", "named"],
     ["std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
     ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
     ["self", "with", "serialize", "deserialize"],
@@ -168,11 +168,32 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "json", "type", "object", "self", "option", "to", "update"],
     ["postgresql", "json", "type", "std", "option", "option", "object", "self", "option", "to", "update"],
     ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update"],
-    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to","update"],
-    ["postgresql", "json", "type", "object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
-    ["postgresql", "json", "type", "std", "option", "option", "object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
-    ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
-    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
+    ["std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "error", "named"],
+    [
+        "postgresql",
+        "json",
+        "type",
+        "std",
+        "option",
+        "option",
+        "std",
+        "vec",
+        "vec",
+        "object",
+        "with",
+        "id",
+        "self",
+        "option",
+        "to",
+        "update",
+        "try",
+        "generate",
+        "postgresql",
+        "json",
+        "type",
+        "error",
+        "named"
+    ],
     ["postgresql", "json", "type", "object", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named", "with", "serialize", "deserialize"],
     ["postgresql", "json", "type", "self", "option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named", "with", "serialize", "deserialize"],
     ["postgresql", "json", "type", "self", "options", "to", "read", "with", "or", "without", "id", "try", "from", "error", "named"],
@@ -240,9 +261,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "self", "where", "element", "case", "sensitive", "regular", "expression"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "case", "sensitive", "regular", "expression"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "case", "insensitive", "regular", "expression"],
-    ["postgresql", "type", "self","where", "element", "case", "insensitive", "regular", "expression"],
-    ["postgresql", "type", "std", "option", "option", "self", "where","element", "hexadecimal", "notation", "equal"],
-    ["postgresql", "type", "self", "where","element", "hexadecimal", "notation", "equal"],
+    ["postgresql", "type", "self", "where", "element", "case", "insensitive", "regular", "expression"],
+    ["postgresql", "type", "std", "option", "option", "self", "where", "element", "hexadecimal", "notation", "equal"],
+    ["postgresql", "type", "self", "where", "element", "hexadecimal", "notation", "equal"],
     ["postgresql", "type", "self", "where", "element", "length", "more", "than"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "length", "more", "than"],
     ["postgresql", "type", "self", "where", "element", "length", "more", "than", "try", "new", "error", "named"],
@@ -253,7 +274,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["postgresql", "type", "self", "where", "element", "contains", "another", "range"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "contains", "another", "range"],
     ["postgresql", "type", "std", "option", "option", "self", "where", "element", "is", "null"],
-    ["postgresql", "type","self", "where", "element", "named"],
+    ["postgresql", "type", "self", "where", "element", "named"],
     ["postgresql", "type", "self", "where", "element", "range", "length", "try", "new", "error", "named"],
     ["postgresql", "type", "self", "where", "element", "range", "length"],
     ["self", "nullable"],
@@ -327,7 +348,10 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "to", "update", "query", "part", "error", "named"],
     ["self", "length"],
     ["vec", "self", "array", "not", "null"],
-    ["vec", "self", "array", "nullable"]
+    ["vec", "self", "array", "nullable"],
+    ["self", "option", "to", "update", "try", "generate", "error", "named"],
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update"],
+    ["std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try", "generate", "error", "named"]
 ]);
 
 ////////////////////////////////////////////////////
@@ -362,7 +386,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     }
 // }
 
-
 // #[derive(Debug)]
 // pub struct GenericSelfFieldReaderSnakeCase(std::string::String);
 // impl GenericSelfFieldReaderSnakeCase {
@@ -394,10 +417,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     }
 // }
 
-
-
-
-
 /////////
 // pub struct StdOptionOptionGenericAccUpperCamelCase;
 // impl std::fmt::Display for StdOptionOptionGenericAccUpperCamelCase {
@@ -422,7 +441,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 //     }
 // }
 ////////
-
 
 // pub trait GenericSelfFieldReaderUpperCamelCaseStringified {
 //     fn generic_self_field_reader_upper_camel_case_stringified(&self) -> std::string::String;
@@ -610,4 +628,3 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
 // }
 
 ////////////////////////////////////
-

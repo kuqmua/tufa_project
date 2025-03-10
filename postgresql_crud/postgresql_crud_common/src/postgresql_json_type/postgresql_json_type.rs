@@ -121,7 +121,7 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
                 }
             }
         }
-        Ok(Self { logical_operator, dimension_1, dimension_2})
+        Ok(Self { logical_operator, dimension_1, dimension_2 })
     }
 }
 const _: () = {
@@ -402,73 +402,61 @@ impl error_occurence_lib::ToStdStringString for PostgresqlJsonTypeStdVecVecStdVe
 }
 impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-            Self::Equal(crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()),
-        ]
+        vec![Self::Equal(
+            crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        )]
     }
 }
 pub type PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate = StdVecVecStdVecVecUuidUuid;
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed {
+pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
-    type PostgresqlJsonTypeSelfToCreate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
-    fn try_generate_postgresql_json_type_to_create(
-        _: &Self::PostgresqlJsonTypeSelfToCreate<'_>,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed> {
+    type SelfToCreate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
+    fn try_generate_postgresql_json_type_to_create(_: &Self::SelfToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("${increment}"))
             }
-            None => Err(crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::PostgresqlJsonTypeSelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::SelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(sqlx::types::Json(postgresql_json_type_self_to_create.0));
         query
     }
-    type PostgresqlJsonTypeSelfFieldReader<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader;
-    type PostgresqlJsonTypeSelfOptionsToRead<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionsToRead;
-    fn generate_postgresql_json_type_to_read(
-        postgresql_json_type_self_field_reader: &Self::PostgresqlJsonTypeSelfFieldReader<'_>,
-        field_ident: &std::primitive::str,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        _: &std::primitive::str,
-        _: std::primitive::bool,
-    ) -> std::string::String {
+    type SelfFieldReader<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader;
+    type SelfOptionsToRead<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionsToRead;
+    fn generate_postgresql_json_type_to_read(postgresql_json_type_self_field_reader: &Self::SelfFieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
         println!("fn generate_postgresql_json_type_to_read");
         //todo change
         let start = postgresql_json_type_self_field_reader.pagination.start();
         let end = postgresql_json_type_self_field_reader.pagination.end();
         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))")
     }
-    type PostgresqlJsonTypeSelfWhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
-    type PostgresqlJsonTypeSelfWhere = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
-    type PostgresqlJsonTypeSelfOptionToUpdate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
-    type PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed;
+    type SelfWhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
+    type SelfWhere = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
+    type SelfOptionToUpdate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
+    type SelfOptionToUpdateTryGenerateErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
     fn try_generate_postgresql_json_type_to_update(
-        _: &Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
+        _: &Self::SelfOptionToUpdate<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         _: &std::primitive::str,
         jsonb_set_path: &std::primitive::str,
         increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed> {
+    ) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateErrorNamed> {
         println!("fn try_generate_postgresql_json_type_to_update");
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
             }
-            None => Err(Self::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(Self::SelfOptionToUpdateTryGenerateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_update<'a>(
-        postgresql_json_type_self_option_to_update: Self::PostgresqlJsonTypeSelfOptionToUpdate<'_>,
-        mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_self_option_to_update: Self::SelfOptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(sqlx::types::Json(postgresql_json_type_self_option_to_update.0));
         query
     }

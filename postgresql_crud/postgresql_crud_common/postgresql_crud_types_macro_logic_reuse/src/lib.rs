@@ -1538,8 +1538,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &ident,
             &postgresql_json_type_ident_to_create_upper_camel_case,
             &{
+                //todo reuse
                 let crate_json_types_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream = quote::quote! {
-                    crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                    crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed
                 };
                 quote::quote! {
                     match increment.checked_add(1) {
@@ -1554,18 +1555,18 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &{
-                let postgresql_json_type_self_to_create_snake_case = naming::PostgresqlJsonTypeSelfToCreateSnakeCase;
+                let self_to_create_snake_case = naming::SelfToCreateSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#postgresql_json_type_self_to_create_snake_case.0));
+                    query = query.bind(sqlx::types::Json(#self_to_create_snake_case.0));
                     query
                 }
             },
             &postgresql_json_type_ident_field_reader_upper_camel_case,
             &postgresql_json_type_ident_options_to_read_upper_camel_case,
             &{
-                let postgresql_json_type_self_field_reader_snake_case = naming::PostgresqlJsonTypeSelfFieldReaderSnakeCase;
+                let self_field_reader_snake_case = naming::SelfFieldReaderSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
-                    let pagination_start_end_initialization_token_stream = macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&postgresql_json_type_self_field_reader_snake_case);
+                    let pagination_start_end_initialization_token_stream = macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&self_field_reader_snake_case);
                     quote::quote! {
                         #pagination_start_end_initialization_token_stream
                         format!(#format_handle_token_stream)
@@ -1600,21 +1601,21 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
-                let postgresql_json_type_self_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case = naming::PostgresqlJsonTypeSelfOptionToUpdateTryGeneratePostgresqlJsonTypeErrorNamedUpperCamelCase;
+                let self_option_to_update_try_generate_error_named_upper_camel_case = naming::SelfOptionToUpdateTryGenerateErrorNamedUpperCamelCase;
                 quote::quote! {
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
                             Ok(format!(#format_handle_token_stream))
                         }
-                        None => Err(Self::#postgresql_json_type_self_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                        None => Err(Self::#self_option_to_update_try_generate_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
             },
             &{
-                let postgresql_json_type_self_option_to_update_snake_case = naming::PostgresqlJsonTypeSelfOptionToUpdateSnakeCase;
+                let self_option_to_update_snake_case = naming::SelfOptionToUpdateSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#postgresql_json_type_self_option_to_update_snake_case.0));
+                    query = query.bind(sqlx::types::Json(#self_option_to_update_snake_case.0));
                     query
                 }
             },
@@ -4732,11 +4733,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let where_element_sqlx_types_ipnetwork_ip_network_token_stream = {
-                    let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                        &postgresql_type_not_null_upper_camel_case,
-                        postgresql_type_not_null_or_nullable,
-                        &where_operator_type_field_type_default
-                    );
+                    let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable, &where_operator_type_field_type_default);
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal]);
                     quote::quote! {
                         #postgresql_type_tokens_where_element_equal_token_stream
