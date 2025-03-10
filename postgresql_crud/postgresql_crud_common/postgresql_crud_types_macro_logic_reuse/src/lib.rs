@@ -392,9 +392,9 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
                     let _ = acc.pop();
                     Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                 }
-                fn postgresql_type_self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     for element in self.value {
-                        query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(element, query);
+                        query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(element, query);
                     }
                     query
                 }
@@ -535,7 +535,7 @@ fn generate_postgresql_type_where_element_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(
                         #value_snake_case,
                         #query_snake_case
                     )
@@ -603,7 +603,7 @@ fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_sel
             ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                 #postgresql_type_self_where_try_generate_bind_increments_token_stream
             }
-            fn postgresql_type_self_where_bind_value_to_query<'a>(
+            fn self_where_bind_value_to_query<'a>(
                 self,
                 mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -4921,7 +4921,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             for #element_snake_case in #self_where_snake_case.#value_snake_case {
-                                #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(#element_snake_case, #query_snake_case);
+                                #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(#element_snake_case, #query_snake_case);
                             }
                             #query_snake_case
                         }
