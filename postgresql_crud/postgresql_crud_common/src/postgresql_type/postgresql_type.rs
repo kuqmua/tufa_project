@@ -1477,7 +1477,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     fn self_to_update_bind_query_part<'a>(self_to_update: Self::SelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         crate::BindQuery::bind_value_to_query(self_to_update, query)
     }
-    type PostgresqlTypeSelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
+    type SelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
     type PostgresqlTypeSelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
     fn postgresql_type_self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,

@@ -21,7 +21,7 @@ pub trait PostgresqlType<'a> {
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed>;
     fn self_to_update_bind_query_part(self_to_update: Self::SelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    type PostgresqlTypeSelfWhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
+    type SelfWhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
     type PostgresqlTypeSelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn postgresql_type_self_where_try_generate_bind_increments(
         postgresql_type_self_where: &Self::PostgresqlTypeSelfWhere,
