@@ -5236,7 +5236,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                     let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
                     let postgresql_type_self_to_update_query_part_token_stream = {
-                        let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
+                        let self_to_update_query_part_snake_case = naming::SelfToUpdateQueryPartSnakeCase;
                         let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                         //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
@@ -5285,7 +5285,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            fn #postgresql_type_self_to_update_query_part_snake_case(
+                            fn #self_to_update_query_part_snake_case(
                                 //few parameters usefull only with json types. maybe refactor it later
                                 #self_to_update_snake_case: &Self::#self_to_update_upper_camel_case,
                                 #jsonb_set_accumulator_snake_case: &std::primitive::str,

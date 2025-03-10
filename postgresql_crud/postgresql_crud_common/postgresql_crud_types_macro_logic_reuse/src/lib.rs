@@ -4853,10 +4853,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                 let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
                 let postgresql_type_self_to_update_query_part_token_stream = {
-                    let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
+                    let self_to_update_query_part_snake_case = naming::SelfToUpdateQueryPartSnakeCase;
                     let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                     quote::quote! {
-                        fn #postgresql_type_self_to_update_query_part_snake_case(
+                        fn #self_to_update_query_part_snake_case(
                             #self_to_update_snake_case: &Self::#self_to_update_upper_camel_case,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
