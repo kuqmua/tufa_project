@@ -5234,7 +5234,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
-                    let postgresql_type_self_to_update_query_part_error_named_upper_camel_case = naming::PostgresqlTypeSelfToUpdateQueryPartErrorNamedUpperCamelCase;
+                    let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
                     let postgresql_type_self_to_update_query_part_token_stream = {
                         let postgresql_type_self_to_update_query_part_snake_case = naming::PostgresqlTypeSelfToUpdateQueryPartSnakeCase;
                         let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
@@ -5292,7 +5292,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #jsonb_set_target_snake_case: &std::primitive::str,
                                 #jsonb_set_path_snake_case: &std::primitive::str,
                                 #increment_snake_case: &mut std::primitive::u64
-                            ) -> Result<std::string::String, Self::#postgresql_type_self_to_update_query_part_error_named_upper_camel_case> {
+                            ) -> Result<std::string::String, Self::#self_to_update_query_part_error_named_upper_camel_case> {
                                 #postgresql_type_self_to_update_query_part_content_token_stream
                             }
                         }
@@ -5614,7 +5614,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #self_to_create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                                 type #self_to_read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
                                 type #self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
-                                type #postgresql_type_self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
+                                type #self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #postgresql_type_self_to_update_bind_query_part_token_stream
                                 type #postgresql_type_self_where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
