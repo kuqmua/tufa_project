@@ -4914,9 +4914,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let postgresql_type_self_where_bind_value_to_query_token_stream = {
-                    let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
+                    let self_where_bind_value_to_query_snake_case = naming::SelfWhereBindValueToQuerySnakeCase;
                     quote::quote! {
-                        fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
+                        fn #self_where_bind_value_to_query_snake_case<'a>(
                             #self_where_snake_case: Self::#self_where_upper_camel_case,
                             mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

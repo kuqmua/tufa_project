@@ -29,7 +29,7 @@ pub trait PostgresqlType<'a> {
         column: &dyn std::fmt::Display,
         is_need_to_add_logical_operator: std::primitive::bool,
     ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed>;
-    fn postgresql_type_self_where_bind_value_to_query(self_where: Self::SelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn self_where_bind_value_to_query(self_where: Self::SelfWhere, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 pub trait PostgresqlTypePrimaryKey<'a> {
     type SelfToCreate: std::fmt::Debug

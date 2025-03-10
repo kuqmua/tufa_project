@@ -5397,6 +5397,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::postgresql_type_self_where_bind_value_to_query(value, query)
                                 }
                             });
+                            //todo reuse filter token stream
                             quote::quote!{
                                 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_tokens_where_element_upper_camel_case {
                                     fn postgresql_type_self_where_try_generate_bind_increments(
@@ -5550,7 +5551,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let postgresql_type_self_where_bind_value_to_query_token_stream = {
-                        let postgresql_type_self_where_bind_value_to_query_snake_case = naming::PostgresqlTypeSelfWhereBindValueToQuerySnakeCase;
+                        let self_where_bind_value_to_query_snake_case = naming::SelfWhereBindValueToQuerySnakeCase;
                         let postgresql_type_self_where_bind_value_to_query_content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{
                                 for element in #self_where_snake_case.value {
@@ -5563,7 +5564,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
                         };
                         quote::quote!{
-                            fn #postgresql_type_self_where_bind_value_to_query_snake_case<'a>(
+                            fn #self_where_bind_value_to_query_snake_case<'a>(
                                 #self_where_snake_case: Self::#self_where_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
