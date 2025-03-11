@@ -5580,20 +5580,20 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let format_value_token_stream = match &postgresql_type {
                                 PostgresqlType::JsonbNullable
                                 => quote::quote!{
-                                    match &#self_column_snake_case.0 {
-                                        Some(value) => <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(value, &column, &column, &column, true),
+                                    match &#value_snake_case.0 {
+                                        Some(#value_snake_case) => <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(value, &column, &column, &column, true),
                                         None => "null".to_string()
                                     }
                                 },
 
                                 PostgresqlType::JsonbNotNull
                                 => quote::quote!{
-                                    <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(&#self_column_snake_case.0, &column, &column, &column, true)
+                                    <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(&#value_snake_case.0, &column, &column, &column, true)
                                 },
                             };
                             quote::quote!{
                                 fn column_query_part(
-                                    #self_column_snake_case: &Self::#column_upper_camel_case,
+                                    #value_snake_case: &Self::#column_upper_camel_case,
                                     column: &std::primitive::str,
                                 ) -> std::string::String {
                                     format!(
