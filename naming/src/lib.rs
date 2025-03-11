@@ -469,7 +469,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["column", "name", "and", "maybe", "field", "getter", "handle"],
     ["null"],
     ["self", "to", "update", "query", "part"],
-    ["self", "to", "update", "query", "part", "error", "named"],
+    ["update", "query", "part", "error", "named"],
     ["self", "to", "update", "bind", "query", "part"],
     ["self", "where", "try", "generate", "bind", "increments"],
     ["self", "where", "bind", "value", "to", "query"],

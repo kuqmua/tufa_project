@@ -12,8 +12,8 @@ pub trait PostgresqlType<'a> {
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::BindQuery<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + sqlx::Decode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelfToUpdateQueryPartErrorNamed: std::fmt::Debug; // + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
-    fn self_to_update_query_part(self_to_update: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed>;
+    type UpdateQueryPartErrorNamed: std::fmt::Debug; // + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
+    fn self_to_update_query_part(self_to_update: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed>;
     fn self_to_update_bind_query_part(self_to_update: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type SelfWhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + serde::Deserialize<'a> + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
     type SelfWhere: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;

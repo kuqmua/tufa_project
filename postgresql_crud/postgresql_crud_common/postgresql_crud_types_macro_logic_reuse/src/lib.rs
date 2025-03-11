@@ -4851,7 +4851,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let update_upper_camel_case = naming::UpdateUpperCamelCase;
-                let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
+                let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
                 let postgresql_type_self_to_update_query_part_token_stream = {
                     let self_to_update_query_part_snake_case = naming::SelfToUpdateQueryPartSnakeCase;
                     let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
@@ -4862,7 +4862,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             _: &std::primitive::str,
                             _: &std::primitive::str,
                             #increment_snake_case: &mut std::primitive::u64
-                        ) -> Result<#std_string_string_token_stream, Self::#self_to_update_query_part_error_named_upper_camel_case> {
+                        ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
                             #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#self_to_update_snake_case, #increment_snake_case)
                         }
                     }
@@ -4935,7 +4935,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
                         type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
-                        type #self_to_update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
+                        type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
                         #postgresql_type_self_to_update_query_part_token_stream
                         #self_to_update_bind_query_part_token_stream
                         type #self_where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
