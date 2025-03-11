@@ -64,7 +64,7 @@ pub fn generate_postgresql_json_type_token_stream(
             type #field_reader_upper_camel_case<'a> = #postgresql_json_type_ident_field_reader;
             type #options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
             fn #field_reader_query_part_snake_case(
-                #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
+                #value_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
