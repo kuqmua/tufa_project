@@ -5576,7 +5576,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
                         let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
                         let column_upper_camel_case = naming::ColumnUpperCamelCase;
-                        let self_to_create_upper_camel_case = naming::SelfToCreateUpperCamelCase;
+                        let create_upper_camel_case = naming::CreateUpperCamelCase;
                         let self_to_read_upper_camel_case = naming::SelfToReadUpperCamelCase;
                         let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                         let self_column_query_part_token_stream = {
@@ -5612,7 +5612,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #postgresql_type_self_upper_camel_case = #tokens_as_postgresql_postfix_type_upper_camel_case;
                                 type #column_upper_camel_case = #postgresql_type_tokens_column_upper_camel_case;
                                 #self_column_query_part_token_stream
-                                type #self_to_create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
+                                type #create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                                 type #self_to_read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
                                 type #self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
                                 type #self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;

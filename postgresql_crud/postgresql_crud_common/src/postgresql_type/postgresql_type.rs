@@ -1461,7 +1461,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     fn column_query_part(_: &Self::Column, column: &std::primitive::str) -> std::string::String {
         column.to_string()
     }
-    type SelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
+    type Create = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
     type SelfToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
     type SelfToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
     type SelfToUpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;

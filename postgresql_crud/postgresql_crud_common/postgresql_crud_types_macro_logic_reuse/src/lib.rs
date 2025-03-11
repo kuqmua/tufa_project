@@ -4835,7 +4835,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
                 let self_upper_camel_case = naming::SelfUpperCamelCase;
                 let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
-                let self_to_create_upper_camel_case = naming::SelfToCreateUpperCamelCase;
+                let create_upper_camel_case = naming::CreateUpperCamelCase;
                 let self_to_read_upper_camel_case = naming::SelfToReadUpperCamelCase;
                 let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
                 let column_upper_camel_case = naming::ColumnUpperCamelCase;
@@ -4932,7 +4932,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
                         #self_column_query_part_token_stream
-                        type #self_to_create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
+                        type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
                         type #self_to_read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
                         type #self_to_update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
                         type #self_to_update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
