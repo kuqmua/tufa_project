@@ -14,8 +14,8 @@ pub fn generate_postgresql_json_type_token_stream(
     try_generate_postgresql_json_type_to_update_token_stream: &dyn quote::ToTokens,
     bind_value_to_postgresql_query_part_to_update_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let self_to_create_upper_camel_case = naming::SelfToCreateUpperCamelCase;
-    let self_to_create_snake_case = naming::SelfToCreateSnakeCase;
+    let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let create_snake_case = naming::CreateSnakeCase;
     let self_field_reader_upper_camel_case = naming::SelfFieldReaderUpperCamelCase;
     let self_field_reader_snake_case = naming::SelfFieldReaderSnakeCase;
     let self_options_to_read_upper_camel_case = naming::SelfOptionsToReadUpperCamelCase;
@@ -47,15 +47,15 @@ pub fn generate_postgresql_json_type_token_stream(
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
-            type #self_to_create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
+            type #create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
             fn #try_generate_postgresql_json_type_to_create_snake_case(
-                #self_to_create_snake_case: &Self::#self_to_create_upper_camel_case<'_>,
+                #create_snake_case: &Self::#create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #path_token_stream #try_generate_to_create_error_named_upper_camel_case> {
                 #try_generate_postgresql_json_type_to_create_token_stream
             }
             fn #bind_value_to_postgresql_query_part_to_create_snake_case<'a>(
-                #self_to_create_snake_case: Self::#self_to_create_upper_camel_case<'a>,
+                #create_snake_case: Self::#create_upper_camel_case<'a>,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #bind_value_to_postgresql_query_part_to_create_token_stream

@@ -413,8 +413,8 @@ pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
-    type SelfToCreate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
-    fn try_generate_postgresql_json_type_to_create(_: &Self::SelfToCreate<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> {
+    type Create<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
+    fn try_generate_postgresql_json_type_to_create(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
@@ -423,7 +423,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
             None => Err(crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::SelfToCreate<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn bind_value_to_postgresql_query_part_to_create<'a>(postgresql_json_type_self_to_create: Self::Create<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(sqlx::types::Json(postgresql_json_type_self_to_create.0));
         query
     }
