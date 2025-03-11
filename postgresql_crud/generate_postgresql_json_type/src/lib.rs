@@ -5303,7 +5303,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let self_to_update_bind_query_part_content_token_stream = {
                             let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
                                 let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
-                                    &quote::quote!{#update_snake_case.0}
+                                    &quote::quote!{#value_snake_case.0}
                                 }
                                 else {
                                     &value_snake_case
@@ -5319,7 +5319,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 PostgresqlType::JsonbNullable => {
                                     let bind_value_to_postgresql_query_part_to_update_token_stream = generate_bind_value_to_postgresql_query_part_to_update_token_stream(false);
                                     quote::quote!{
-                                        query = match #update_snake_case.0 {
+                                        query = match #value_snake_case.0 {
                                             Some(#value_snake_case) => #bind_value_to_postgresql_query_part_to_update_token_stream,
                                             None => {
                                                 #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>>))
@@ -5333,7 +5333,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #update_bind_query_part_snake_case<'a>(
-                                #update_snake_case: Self::#update_upper_camel_case,
+                                #value_snake_case: Self::#update_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #self_to_update_bind_query_part_content_token_stream
