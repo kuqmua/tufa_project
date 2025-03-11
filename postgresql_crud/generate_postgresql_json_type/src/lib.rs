@@ -5298,7 +5298,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let self_to_update_bind_query_part_token_stream = {
-                        let self_to_update_bind_query_part = naming::SelfToUpdateBindQueryPartSnakeCase;
+                        let update_bind_query_part_snake_case = naming::UpdateBindQueryPartSnakeCase;
                         let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                         let self_to_update_bind_query_part_content_token_stream = {
                             let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
@@ -5332,7 +5332,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            fn #self_to_update_bind_query_part<'a>(
+                            fn #update_bind_query_part_snake_case<'a>(
                                 #self_to_update_snake_case: Self::#update_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
