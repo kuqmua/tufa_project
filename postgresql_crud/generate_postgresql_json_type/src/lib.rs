@@ -5512,7 +5512,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
                         }
                     };
-                    let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
+                    let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
                     let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
                     let self_where_snake_case = naming::SelfWhereSnakeCase;
                     let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
@@ -5617,7 +5617,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #self_to_update_bind_query_part_token_stream
-                                type #self_where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
+                                type #where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
                                 type #self_where_upper_camel_case = #postgresql_type_tokens_where_upper_camel_case;
                                 #postgresql_type_self_where_try_generate_bind_increments_token_stream
                                 #postgresql_type_self_where_bind_value_to_query_token_stream

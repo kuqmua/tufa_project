@@ -512,6 +512,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["position", "equal"],
     ["position", "is", "less", "or", "equal", "zero"],
     ["self", "where", "element"],
+    ["where", "element"],
     ["self", "where"],
     ["position"],
     ["bit", "vec", "position", "equal"],
