@@ -4882,9 +4882,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
                 let self_where_snake_case = naming::SelfWhereSnakeCase;
                 let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
-                    let self_where_try_generate_bind_increments_snake_case = naming::SelfWhereTryGenerateBindIncrementsSnakeCase;
+                    let where_try_generate_bind_increments_snake_case = naming::WhereTryGenerateBindIncrementsSnakeCase;
                     quote::quote! {
-                        fn #self_where_try_generate_bind_increments_snake_case(
+                        fn #where_try_generate_bind_increments_snake_case(
                             #self_where_snake_case: &Self::#self_where_upper_camel_case,
                             #increment_snake_case: &mut std::primitive::u64,
                             #column_snake_case: &dyn std::fmt::Display,

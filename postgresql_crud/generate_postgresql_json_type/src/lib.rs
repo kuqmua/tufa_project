@@ -5516,7 +5516,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
                     let self_where_snake_case = naming::SelfWhereSnakeCase;
                     let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
-                        let self_where_try_generate_bind_increments_snake_case = naming::SelfWhereTryGenerateBindIncrementsSnakeCase;
+                        let where_try_generate_bind_increments_snake_case = naming::WhereTryGenerateBindIncrementsSnakeCase;
                         let postgresql_type_self_where_try_generate_bind_increments_content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{
                                 let mut acc = std::string::String::default();
@@ -5540,7 +5540,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
                         };
                         quote::quote!{
-                            fn #self_where_try_generate_bind_increments_snake_case(
+                            fn #where_try_generate_bind_increments_snake_case(
                                 #self_where_snake_case: &Self::#self_where_upper_camel_case,
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
