@@ -3586,7 +3586,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_try_generate_bind_increments(
+                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_query_part(
                                     value,
                                     &mut increment,
                                     &#field_ident_double_quotes_token_stream,
@@ -3691,7 +3691,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_type = &element.syn_field.ty;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_bind_value_to_query(
+                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_query_bind(
                                     value,
                                     query
                                 );
