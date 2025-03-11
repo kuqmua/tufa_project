@@ -3513,7 +3513,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     .to_string();
                                 let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                                 quote::quote!{
-                                    Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(value, query)
+                                    Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(value, query)
                                 }
                             });
                             quote::quote!{
@@ -3523,7 +3523,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                             #(#postgresql_type_self_where_try_generate_bind_increments_variants_token_stream),*
                                         }
                                     }
-                                    fn self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                         match self {
                                             #(#postgresql_type_self_where_bind_value_to_query_variants_token_stream),*
                                         }
@@ -3597,9 +3597,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         let _ = acc.pop();
                                         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                                     }
-                                    fn self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                         for element in self.value {
-                                            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(element, query);
+                                            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
                                         }
                                         query
                                     }
@@ -5392,7 +5392,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     .to_string();
                                 let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                                 quote::quote!{
-                                    Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(value, query)
+                                    Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(value, query)
                                 }
                             });
                             //todo reuse filter token stream
@@ -5409,7 +5409,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
                                         }
                                     }
-                                    fn self_where_bind_value_to_query<'a>(
+                                    fn where_bind_value_to_query<'a>(
                                         self,
                                         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                                     ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -5488,9 +5488,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         let _ = acc.pop();
                                         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                                     }
-                                    fn self_where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                         for element in self.value {
-                                            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(element, query);
+                                            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
                                         }
                                         query
                                     }
@@ -5552,7 +5552,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let postgresql_type_self_where_bind_value_to_query_content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote!{
                                 for element in #value_snake_case.value {
-                                    query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(element, query);
+                                    query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
                                 }
                                 query
                             },
