@@ -423,8 +423,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
             None => Err(crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn create_query_bind<'a>(postgresql_json_type_self_to_create: Self::Create<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(postgresql_json_type_self_to_create.0));
+    fn create_query_bind<'a>(value: Self::Create<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(value.0));
         query
     }
     type SelfFieldReader<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader;

@@ -4258,6 +4258,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 };
                 let create_snake_case = naming::CreateSnakeCase;
+                let value_snake_case = naming::ValueSnakeCase;
                 let self_option_to_update_snake_case = naming::SelfOptionToUpdateSnakeCase;
                 let field_ident_snake_case = naming::FieldIdentSnakeCase;
                 let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
@@ -4265,11 +4266,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &tokens_upper_camel_case,
                     &postgresql_json_type_tokens_to_create_upper_camel_case,
                     &match &postgresql_json_type {
-                        PostgresqlJsonType::Object => quote::quote!{#create_snake_case.0.#create_query_part_snake_case(#increment_snake_case)},
+                        PostgresqlJsonType::Object => quote::quote!{#value_snake_case.0.#create_query_part_snake_case(#increment_snake_case)},
                         PostgresqlJsonType::StdOptionOptionObject => quote::quote!{
-                            match &#create_snake_case.0 {
-                                Some(value) => match value.#create_query_part_snake_case(#increment_snake_case) {
-                                    Ok(value) => Ok(value),
+                            match &#value_snake_case.0 {
+                                Some(#value_snake_case) => match #value_snake_case.#create_query_part_snake_case(#increment_snake_case) {
+                                    Ok(#value_snake_case) => Ok(#value_snake_case),
                                     Err(error) => Err(error)
                                 },
                                 //maybe not use null here and use increment logic
@@ -4278,9 +4279,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         },
                         PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
                             let mut acc = std::string::String::default();
-                            for element in &#create_snake_case.0 {
+                            for element in &#value_snake_case.0 {
                                 match element.#create_query_part_snake_case(#increment_snake_case) {
-                                    Ok(value) => {
+                                    Ok(#value_snake_case) => {
                                         acc.push_str(&format!("{value},"));
                                     },
                                     Err(error) => {
@@ -4292,12 +4293,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             Ok(format!("jsonb_build_array({acc})"))
                         },
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
-                            match &#create_snake_case.0 {
-                                Some(value) => {
+                            match &#value_snake_case.0 {
+                                Some(#value_snake_case) => {
                                     let mut acc = std::string::String::default();
-                                    for element in value {
+                                    for element in #value_snake_case {
                                         match element.#create_query_part_snake_case(#increment_snake_case) {
-                                            Ok(value) => {
+                                            Ok(#value_snake_case) => {
                                                 acc.push_str(&format!("{value},"));
                                             },
                                             Err(error) => {
@@ -4313,22 +4314,22 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         },
                     },
                     &match &postgresql_json_type {
-                        PostgresqlJsonType::Object => quote::quote!{#create_snake_case.0.#create_query_bind_snake_case(#query_snake_case)},
+                        PostgresqlJsonType::Object => quote::quote!{#value_snake_case.0.#create_query_bind_snake_case(#query_snake_case)},
                         PostgresqlJsonType::StdOptionOptionObject => quote::quote!{
-                            if let Some(value) = #create_snake_case.0 {
-                                #query_snake_case = value.#create_query_bind_snake_case(#query_snake_case);
+                            if let Some(#value_snake_case) = #value_snake_case.0 {
+                                #query_snake_case = #value_snake_case.#create_query_bind_snake_case(#query_snake_case);
                             }
                             #query_snake_case
                         },
                         PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                            for element in #create_snake_case.0 {
+                            for element in #value_snake_case.0 {
                                 #query_snake_case = element.#create_query_bind_snake_case(#query_snake_case);
                             }
                             #query_snake_case
                         },
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
-                            if let Some(value) = #create_snake_case.0 {
-                                for element in value {
+                            if let Some(#value_snake_case) = #value_snake_case.0 {
+                                for element in #value_snake_case {
                                     #query_snake_case = element.#create_query_bind_snake_case(#query_snake_case);
                                 }
                             }

@@ -2,7 +2,7 @@ pub fn generate_postgresql_json_type_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
     postgresql_json_type_ident_to_create_token_stream: &dyn quote::ToTokens,
-    try_generate_postgresql_json_type_to_create_token_stream: &dyn quote::ToTokens,
+    create_query_part_token_stream: &dyn quote::ToTokens,
     create_query_bind_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_field_reader: &dyn quote::ToTokens,
     postgresql_json_type_ident_options_to_read: &dyn quote::ToTokens,
@@ -16,6 +16,7 @@ pub fn generate_postgresql_json_type_token_stream(
 ) -> proc_macro2::TokenStream {
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let self_field_reader_upper_camel_case = naming::SelfFieldReaderUpperCamelCase;
     let self_field_reader_snake_case = naming::SelfFieldReaderSnakeCase;
     let self_options_to_read_upper_camel_case = naming::SelfOptionsToReadUpperCamelCase;
@@ -49,13 +50,13 @@ pub fn generate_postgresql_json_type_token_stream(
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
             type #create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
             fn #create_query_part_snake_case(
-                #create_snake_case: &Self::#create_upper_camel_case<'_>,
+                #value_snake_case: &Self::#create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #path_token_stream #try_generate_to_create_error_named_upper_camel_case> {
-                #try_generate_postgresql_json_type_to_create_token_stream
+                #create_query_part_token_stream
             }
             fn #create_query_bind_snake_case<'a>(
-                #create_snake_case: Self::#create_upper_camel_case<'a>,
+                #value_snake_case: Self::#create_upper_camel_case<'a>,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #create_query_bind_token_stream
