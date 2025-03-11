@@ -4850,14 +4850,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
+                let update_upper_camel_case = naming::UpdateUpperCamelCase;
                 let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
                 let postgresql_type_self_to_update_query_part_token_stream = {
                     let self_to_update_query_part_snake_case = naming::SelfToUpdateQueryPartSnakeCase;
                     let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                     quote::quote! {
                         fn #self_to_update_query_part_snake_case(
-                            #self_to_update_snake_case: &Self::#self_to_update_upper_camel_case,
+                            #self_to_update_snake_case: &Self::#update_upper_camel_case,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
@@ -4872,7 +4872,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
                     quote::quote! {
                         fn #self_to_update_bind_query_part<'a>(
-                            #self_to_update_snake_case: Self::#self_to_update_upper_camel_case,
+                            #self_to_update_snake_case: Self::#update_upper_camel_case,
                             #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             #crate_bind_query_token_stream #bind_value_to_query_snake_case(#self_to_update_snake_case, #query_snake_case)
@@ -4934,7 +4934,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #self_column_query_part_token_stream
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
-                        type #self_to_update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
+                        type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
                         type #self_to_update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
                         #postgresql_type_self_to_update_query_part_token_stream
                         #self_to_update_bind_query_part_token_stream

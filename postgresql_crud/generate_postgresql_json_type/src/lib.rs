@@ -5233,7 +5233,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         }
                     };
-                    let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
+                    let update_upper_camel_case = naming::UpdateUpperCamelCase;
                     let self_to_update_query_part_error_named_upper_camel_case = naming::SelfToUpdateQueryPartErrorNamedUpperCamelCase;
                     let postgresql_type_self_to_update_query_part_token_stream = {
                         let self_to_update_query_part_snake_case = naming::SelfToUpdateQueryPartSnakeCase;
@@ -5287,7 +5287,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         quote::quote!{
                             fn #self_to_update_query_part_snake_case(
                                 //few parameters usefull only with json types. maybe refactor it later
-                                #self_to_update_snake_case: &Self::#self_to_update_upper_camel_case,
+                                #self_to_update_snake_case: &Self::#update_upper_camel_case,
                                 #jsonb_set_accumulator_snake_case: &std::primitive::str,
                                 #jsonb_set_target_snake_case: &std::primitive::str,
                                 #jsonb_set_path_snake_case: &std::primitive::str,
@@ -5333,7 +5333,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #self_to_update_bind_query_part<'a>(
-                                #self_to_update_snake_case: Self::#self_to_update_upper_camel_case,
+                                #self_to_update_snake_case: Self::#update_upper_camel_case,
                                 mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #self_to_update_bind_query_part_content_token_stream
@@ -5578,7 +5578,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let column_upper_camel_case = naming::ColumnUpperCamelCase;
                         let create_upper_camel_case = naming::CreateUpperCamelCase;
                         let read_upper_camel_case = naming::ReadUpperCamelCase;
-                        let self_to_update_upper_camel_case = naming::SelfToUpdateUpperCamelCase;
                         let self_column_query_part_token_stream = {
                             let self_column_snake_case = naming::SelfColumnSnakeCase;
                             let format_value_token_stream = match &postgresql_type {
@@ -5614,7 +5613,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #self_column_query_part_token_stream
                                 type #create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
                                 type #read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
-                                type #self_to_update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
+                                type #update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
                                 type #self_to_update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #self_to_update_bind_query_part_token_stream
