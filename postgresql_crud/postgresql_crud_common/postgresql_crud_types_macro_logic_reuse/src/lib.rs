@@ -4879,12 +4879,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
+                let where_upper_camel_case = naming::WhereUpperCamelCase;
                 let postgresql_type_self_where_try_generate_bind_increments_token_stream = {
                     let where_try_generate_bind_increments_snake_case = naming::WhereTryGenerateBindIncrementsSnakeCase;
                     quote::quote! {
                         fn #where_try_generate_bind_increments_snake_case(
-                            #value_snake_case: &Self::#self_where_upper_camel_case,
+                            #value_snake_case: &Self::#where_upper_camel_case,
                             #increment_snake_case: &mut std::primitive::u64,
                             #column_snake_case: &dyn std::fmt::Display,
                             is_need_to_add_logical_operator: std::primitive::bool,
@@ -4916,7 +4916,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let self_where_bind_value_to_query_snake_case = naming::SelfWhereBindValueToQuerySnakeCase;
                     quote::quote! {
                         fn #self_where_bind_value_to_query_snake_case<'a>(
-                            #value_snake_case: Self::#self_where_upper_camel_case,
+                            #value_snake_case: Self::#where_upper_camel_case,
                             mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             for #element_snake_case in #value_snake_case.#value_snake_case {
@@ -4938,7 +4938,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #postgresql_type_self_to_update_query_part_token_stream
                         #self_to_update_bind_query_part_token_stream
                         type #where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
-                        type #self_where_upper_camel_case = #postgresql_type_not_null_or_nullable_where_upper_camel_case;
+                        type #where_upper_camel_case = #postgresql_type_not_null_or_nullable_where_upper_camel_case;
                         #postgresql_type_self_where_try_generate_bind_increments_token_stream
                         #postgresql_type_self_where_bind_value_to_query_token_stream
                     }
