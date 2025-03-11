@@ -4842,7 +4842,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let self_column_query_part_token_stream = {
                     let self_column_snake_case = naming::SelfColumnSnakeCase;
                     quote::quote! {
-                        fn self_column_query_part(
+                        fn column_query_part(
                             #self_column_snake_case: &Self::#column_upper_camel_case,
                             #column_snake_case: &std::primitive::str,
                         ) -> #std_string_string_token_stream {

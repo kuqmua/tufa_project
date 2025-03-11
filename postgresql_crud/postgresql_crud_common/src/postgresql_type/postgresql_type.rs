@@ -1458,20 +1458,14 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
     type PostgresqlTypeSelf = Self;
     type Column = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
-    fn self_column_query_part(_: &Self::Column, column: &std::primitive::str) -> std::string::String {
+    fn column_query_part(_: &Self::Column, column: &std::primitive::str) -> std::string::String {
         column.to_string()
     }
     type SelfToCreate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
     type SelfToRead = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
     type SelfToUpdate = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
     type SelfToUpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;
-    fn self_to_update_query_part(
-        self_to_update: &Self::SelfToUpdate,
-        _: &std::primitive::str,
-        _: &std::primitive::str,
-        _: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed> {
+    fn self_to_update_query_part(self_to_update: &Self::SelfToUpdate, _: &std::primitive::str, _: &std::primitive::str, _: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfToUpdateQueryPartErrorNamed> {
         crate::BindQuery::try_generate_bind_increments(self_to_update, increment)
     }
     fn self_to_update_bind_query_part<'a>(self_to_update: Self::SelfToUpdate, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1479,12 +1473,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     }
     type SelfWhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
     type SelfWhere = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
-    fn self_where_try_generate_bind_increments(
-        self_where: &Self::SelfWhere,
-        increment: &mut std::primitive::u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: std::primitive::bool,
-    ) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn self_where_try_generate_bind_increments(self_where: &Self::SelfWhere, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self_where.value {
