@@ -4885,14 +4885,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let where_try_generate_bind_increments_snake_case = naming::WhereTryGenerateBindIncrementsSnakeCase;
                     quote::quote! {
                         fn #where_try_generate_bind_increments_snake_case(
-                            #self_where_snake_case: &Self::#self_where_upper_camel_case,
+                            #value_snake_case: &Self::#self_where_upper_camel_case,
                             #increment_snake_case: &mut std::primitive::u64,
                             #column_snake_case: &dyn std::fmt::Display,
                             is_need_to_add_logical_operator: std::primitive::bool,
                         ) -> Result<#std_string_string_token_stream, crate::TryGenerateBindIncrementsErrorNamed> {
                             let mut #acc_snake_case = #std_string_string_token_stream::default();
                             let mut is_need_to_add_logical_operator_inner_handle = false;
-                            for #element_snake_case in &#self_where_snake_case.#value_snake_case {
+                            for #element_snake_case in &#value_snake_case.#value_snake_case {
                                 match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(
                                     #element_snake_case,
                                     #increment_snake_case,
@@ -4909,7 +4909,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 }
                             }
                             let _ = #acc_snake_case.pop();
-                            Ok(format!("{}({acc})", &#self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                            Ok(format!("{}({acc})", &#value_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                         }
                     }
                 };

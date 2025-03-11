@@ -5521,7 +5521,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::Object => quote::quote!{
                                 let mut acc = std::string::String::default();
                                 let mut is_need_to_add_logical_operator_inner_handle = false;
-                                for element in &#self_where_snake_case.value {
+                                for element in &#value_snake_case.value {
                                     match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                                         Ok(value) => {
                                             acc.push_str(&format!("{value} "));
@@ -5533,7 +5533,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     }
                                 }
                                 let _ = acc.pop();
-                                Ok(format!("{}({acc})", &#self_where_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                Ok(format!("{}({acc})", &#value_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                             },
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
@@ -5541,7 +5541,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         quote::quote!{
                             fn #where_try_generate_bind_increments_snake_case(
-                                #self_where_snake_case: &Self::#self_where_upper_camel_case,
+                                #value_snake_case: &Self::#self_where_upper_camel_case,
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
                                 is_need_to_add_logical_operator: std::primitive::bool,
