@@ -4854,28 +4854,28 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
                 let postgresql_type_self_to_update_query_part_token_stream = {
                     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-                    let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
+                    let update_snake_case = naming::UpdateSnakeCase;
                     quote::quote! {
                         fn #update_query_part_snake_case(
-                            #self_to_update_snake_case: &Self::#update_upper_camel_case,
+                            #update_snake_case: &Self::#update_upper_camel_case,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
                             _: &std::primitive::str,
                             #increment_snake_case: &mut std::primitive::u64
                         ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
-                            #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#self_to_update_snake_case, #increment_snake_case)
+                            #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#update_snake_case, #increment_snake_case)
                         }
                     }
                 };
                 let self_to_update_bind_query_part_token_stream = {
                     let update_bind_query_part_snake_case = naming::UpdateBindQueryPartSnakeCase;
-                    let self_to_update_snake_case = naming::SelfToUpdateSnakeCase;
+                    let update_snake_case = naming::UpdateSnakeCase;
                     quote::quote! {
                         fn #update_bind_query_part_snake_case<'a>(
-                            #self_to_update_snake_case: Self::#update_upper_camel_case,
+                            #update_snake_case: Self::#update_upper_camel_case,
                             #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            #crate_bind_query_token_stream #bind_value_to_query_snake_case(#self_to_update_snake_case, #query_snake_case)
+                            #crate_bind_query_token_stream #bind_value_to_query_snake_case(#update_snake_case, #query_snake_case)
                         }
                     }
                 };
