@@ -1490,7 +1490,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
         let _ = acc.pop();
         Ok(format!("{}({acc})", &value.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn self_where_bind_value_to_query<'a>(value: Self::Where, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_bind_value_to_query<'a>(value: Self::Where, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in value.value {
             query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_bind_value_to_query(element, query);
         }

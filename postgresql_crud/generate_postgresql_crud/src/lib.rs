@@ -3691,7 +3691,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_type = &element.syn_field.ty;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::self_where_bind_value_to_query(
+                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_bind_value_to_query(
                                     value,
                                     query
                                 );
