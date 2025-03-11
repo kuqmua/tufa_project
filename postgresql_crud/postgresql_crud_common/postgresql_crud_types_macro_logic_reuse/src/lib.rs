@@ -4864,9 +4864,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let self_to_update_bind_query_part_token_stream = {
-                    let update_bind_query_part_snake_case = naming::UpdateBindQueryPartSnakeCase;
+                    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
                     quote::quote! {
-                        fn #update_bind_query_part_snake_case<'a>(
+                        fn #update_query_bind_snake_case<'a>(
                             #value_snake_case: Self::#update_upper_camel_case,
                             #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

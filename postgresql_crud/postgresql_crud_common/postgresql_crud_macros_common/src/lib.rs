@@ -3,7 +3,7 @@ pub fn generate_postgresql_json_type_token_stream(
     ident: &dyn quote::ToTokens,
     postgresql_json_type_ident_to_create_token_stream: &dyn quote::ToTokens,
     try_generate_postgresql_json_type_to_create_token_stream: &dyn quote::ToTokens,
-    create_bind_to_query_token_stream: &dyn quote::ToTokens,
+    create_query_bind_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_field_reader: &dyn quote::ToTokens,
     postgresql_json_type_ident_options_to_read: &dyn quote::ToTokens,
     generate_postgresql_json_type_to_read_token_stream: &dyn quote::ToTokens,
@@ -35,7 +35,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
     let try_generate_to_create_error_named_upper_camel_case = naming::TryGenerateToCreateErrorNamedUpperCamelCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
-    let create_bind_to_query_snake_case = naming::CreateBindToQuerySnakeCase;
+    let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let generate_postgresql_json_type_to_read_snake_case = naming::GeneratePostgresqlJsonTypeToReadSnakeCase;
     let try_generate_postgresql_json_type_to_update_snake_case = naming::TryGeneratePostgresqlJsonTypeToUpdateSnakeCase;
     let bind_value_to_postgresql_query_part_to_update_snake_case = naming::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
@@ -54,11 +54,11 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #path_token_stream #try_generate_to_create_error_named_upper_camel_case> {
                 #try_generate_postgresql_json_type_to_create_token_stream
             }
-            fn #create_bind_to_query_snake_case<'a>(
+            fn #create_query_bind_snake_case<'a>(
                 #create_snake_case: Self::#create_upper_camel_case<'a>,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
-                #create_bind_to_query_token_stream
+                #create_query_bind_token_stream
             }
             type #self_field_reader_upper_camel_case<'a> = #postgresql_json_type_ident_field_reader;
             type #self_options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
