@@ -4423,7 +4423,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::Object |
                             PostgresqlJsonType::StdOptionOptionObject => proc_macro2::TokenStream::new(),
                             PostgresqlJsonType::StdVecVecObjectWithId |
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming::SelfFieldReaderSnakeCase)
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&naming::FieldReaderSnakeCase)
                         };
                         let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                             &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}'")
@@ -4481,7 +4481,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 },
                             }
                         };
-                        let self_field_reader_snake_case = naming::SelfFieldReaderSnakeCase;
+                        let field_reader_snake_case = naming::FieldReaderSnakeCase;
                         quote::quote!{
                             let mut acc = std::string::String::default();
                             let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
@@ -4490,7 +4490,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
                             };
                             let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
-                            for element in &#self_field_reader_snake_case.#self_field_vec_token_stream {
+                            for element in &#field_reader_snake_case.#self_field_vec_token_stream {
                                 acc.push_str(&format!(
                                     "{}||",
                                     match element {

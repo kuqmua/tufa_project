@@ -427,9 +427,9 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         query = query.bind(sqlx::types::Json(value.0));
         query
     }
-    type SelfFieldReader<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader;
+    type FieldReader<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidFieldReader;
     type SelfOptionsToRead<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionsToRead;
-    fn generate_postgresql_json_type_to_read(postgresql_json_type_self_field_reader: &Self::SelfFieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
+    fn generate_postgresql_json_type_to_read(postgresql_json_type_self_field_reader: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
         println!("fn generate_postgresql_json_type_to_read");
         //todo change
         let start = postgresql_json_type_self_field_reader.pagination.start();

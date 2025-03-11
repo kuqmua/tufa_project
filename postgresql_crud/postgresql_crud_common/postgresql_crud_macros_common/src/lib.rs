@@ -17,8 +17,8 @@ pub fn generate_postgresql_json_type_token_stream(
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
-    let self_field_reader_upper_camel_case = naming::SelfFieldReaderUpperCamelCase;
-    let self_field_reader_snake_case = naming::SelfFieldReaderSnakeCase;
+    let field_reader_upper_camel_case = naming::FieldReaderUpperCamelCase;
+    let field_reader_snake_case = naming::FieldReaderSnakeCase;
     let self_options_to_read_upper_camel_case = naming::SelfOptionsToReadUpperCamelCase;
     let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
     let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
@@ -61,10 +61,10 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> #query_postgres_arguments_token_stream {
                 #create_query_bind_token_stream
             }
-            type #self_field_reader_upper_camel_case<'a> = #postgresql_json_type_ident_field_reader;
+            type #field_reader_upper_camel_case<'a> = #postgresql_json_type_ident_field_reader;
             type #self_options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
             fn #generate_postgresql_json_type_to_read_snake_case(
-                #self_field_reader_snake_case: &Self::#self_field_reader_upper_camel_case<'_>,
+                #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
