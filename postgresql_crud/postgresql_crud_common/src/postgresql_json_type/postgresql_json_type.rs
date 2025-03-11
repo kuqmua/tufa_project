@@ -295,12 +295,12 @@ const _: () = {
     }
 };
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
-    fn self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         if let Some(value) = &self.dimension_1 {
             for element in value {
-                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                     Ok(value) => {
                         acc.push_str(&format!("{value} "));
                         is_need_to_add_logical_operator_inner_handle = true;
@@ -313,7 +313,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
         if let Some(value) = &self.dimension_2 {
             for element in value {
-                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                     Ok(value) => {
                         acc.push_str(&format!("{value} "));
                         is_need_to_add_logical_operator_inner_handle = true;
@@ -364,7 +364,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual {
-    fn self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
@@ -384,9 +384,9 @@ pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
     Equal(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual),
 }
 impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
-    fn self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
         match &self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(value, increment, column, is_need_to_add_logical_operator),
         }
     }
     fn self_where_bind_value_to_query<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

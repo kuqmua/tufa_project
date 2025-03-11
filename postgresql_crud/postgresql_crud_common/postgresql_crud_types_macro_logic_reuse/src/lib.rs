@@ -375,11 +375,11 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream = {
         quote::quote! {
             impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_or_json_type_ident_where_upper_camel_case {
-                fn self_where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+                fn where_try_generate_bind_increments(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
                     let mut acc = std::string::String::default();
                     let mut is_need_to_add_logical_operator_inner_handle = false;
                     for element in &self.value {
-                        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                             Ok(value) => {
                                 acc.push_str(&format!("{value} "));
                                 is_need_to_add_logical_operator_inner_handle = true;
@@ -517,7 +517,7 @@ fn generate_postgresql_type_where_element_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(
                         #value_snake_case,
                         #increment_snake_case,
                         #column_snake_case,
@@ -595,7 +595,7 @@ fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_sel
     let query_snake_case = naming::QuerySnakeCase;
     quote::quote! {
         impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #ident {
-            fn self_where_try_generate_bind_increments(
+            fn where_try_generate_bind_increments(
                 &self,
                 #increment_snake_case: &mut std::primitive::u64,
                 #column_snake_case : &dyn std::fmt::Display,
@@ -4887,7 +4887,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let mut #acc_snake_case = #std_string_string_token_stream::default();
                             let mut is_need_to_add_logical_operator_inner_handle = false;
                             for #element_snake_case in &#value_snake_case.#value_snake_case {
-                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::self_where_try_generate_bind_increments(
+                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_try_generate_bind_increments(
                                     #element_snake_case,
                                     #increment_snake_case,
                                     #column_snake_case,
