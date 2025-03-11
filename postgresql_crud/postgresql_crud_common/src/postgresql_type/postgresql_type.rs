@@ -1066,9 +1066,9 @@ impl<PostgresqlTypeWhereElement: crate::postgresql_type::postgresql_type_trait::
         let _ = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
         }
         query
     }
@@ -1195,7 +1195,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(self.value);
         query
     }
@@ -1210,9 +1210,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
         }
     }
-    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(value, query),
+            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query),
         }
     }
 }
@@ -1440,9 +1440,9 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         let _ = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn where_bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
         }
         query
     }
@@ -1492,7 +1492,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecSt
     }
     fn where_query_bind<'a>(value: Self::Where, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in value.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_bind_value_to_query(element, query);
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
         }
         query
     }
