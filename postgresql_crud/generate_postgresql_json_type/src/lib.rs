@@ -1746,7 +1746,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             generate_jsonb_set_target_token_stream
         )
     };
-    let generate_postgresql_json_type_to_read_snake_case = naming::GeneratePostgresqlJsonTypeToReadSnakeCase;
+    let field_reader_query_part_snake_case = naming::FieldReaderQueryPartSnakeCase;
     let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
     // let column_name_and_maybe_field_getter_handle_snake_case = naming::ColumnNameAndMaybeFieldGetterHandleSnakeCase;
     let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
@@ -1875,7 +1875,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
                         quote::quote!{
-                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_json_type_to_read_snake_case(
+                            #ident_field_to_read_without_id_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #field_reader_query_part_snake_case(
                                 value,
                                 #field_ident_double_quotes_token_stream,
                                 #column_name_and_maybe_field_getter_snake_case,
@@ -4354,7 +4354,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             };
                             let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
                             quote::quote!{
-                                #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #generate_postgresql_json_type_to_read_snake_case(
+                                #tokens_field_to_read_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #field_reader_query_part_snake_case(
                                     value,
                                     #field_ident_double_quotes_token_stream,
                                     #column_name_and_maybe_field_getter_token_stream,
@@ -5582,14 +5582,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 PostgresqlType::JsonbNullable
                                 => quote::quote!{
                                     match &#value_snake_case.0 {
-                                        Some(#value_snake_case) => <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(value, &column, &column, &column, true),
+                                        Some(#value_snake_case) => <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::field_reader_query_part(value, &column, &column, &column, true),
                                         None => "null".to_string()
                                     }
                                 },
 
                                 PostgresqlType::JsonbNotNull
                                 => quote::quote!{
-                                    <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::generate_postgresql_json_type_to_read(&#value_snake_case.0, &column, &column, &column, true)
+                                    <#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::field_reader_query_part(&#value_snake_case.0, &column, &column, &column, true)
                                 },
                             };
                             quote::quote!{

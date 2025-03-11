@@ -6,7 +6,7 @@ pub fn generate_postgresql_json_type_token_stream(
     create_query_bind_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_field_reader: &dyn quote::ToTokens,
     postgresql_json_type_ident_options_to_read: &dyn quote::ToTokens,
-    generate_postgresql_json_type_to_read_token_stream: &dyn quote::ToTokens,
+    field_reader_query_part_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_where_element_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_where_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_option_to_update: &dyn quote::ToTokens,
@@ -19,7 +19,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let value_snake_case = naming::ValueSnakeCase;
     let field_reader_upper_camel_case = naming::FieldReaderUpperCamelCase;
     let field_reader_snake_case = naming::FieldReaderSnakeCase;
-    let self_options_to_read_upper_camel_case = naming::SelfOptionsToReadUpperCamelCase;
+    let options_to_read_upper_camel_case = naming::OptionsToReadUpperCamelCase;
     let self_where_element_upper_camel_case = naming::SelfWhereElementUpperCamelCase;
     let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
     let self_option_to_update_upper_camel_case = naming::SelfOptionToUpdateUpperCamelCase;
@@ -37,7 +37,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let try_generate_to_create_error_named_upper_camel_case = naming::TryGenerateToCreateErrorNamedUpperCamelCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
-    let generate_postgresql_json_type_to_read_snake_case = naming::GeneratePostgresqlJsonTypeToReadSnakeCase;
+    let field_reader_query_part_snake_case = naming::FieldReaderQueryPartSnakeCase;
     let try_generate_postgresql_json_type_to_update_snake_case = naming::TryGeneratePostgresqlJsonTypeToUpdateSnakeCase;
     let bind_value_to_postgresql_query_part_to_update_snake_case = naming::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
     let reference_std_primitive_str_token_stream = quote::quote! {&std::primitive::str};
@@ -62,15 +62,15 @@ pub fn generate_postgresql_json_type_token_stream(
                 #create_query_bind_token_stream
             }
             type #field_reader_upper_camel_case<'a> = #postgresql_json_type_ident_field_reader;
-            type #self_options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
-            fn #generate_postgresql_json_type_to_read_snake_case(
+            type #options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
+            fn #field_reader_query_part_snake_case(
                 #field_reader_snake_case: &Self::#field_reader_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
                 is_postgresql_type: std::primitive::bool,
             ) -> #std_string_string_token_stream {
-                #generate_postgresql_json_type_to_read_token_stream
+                #field_reader_query_part_token_stream
             }
             type #self_where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
             type #self_where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
