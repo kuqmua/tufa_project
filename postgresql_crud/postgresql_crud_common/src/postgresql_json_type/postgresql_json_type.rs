@@ -414,7 +414,7 @@ pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
 }
 impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
     type Create<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
-    fn try_generate_create(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> {
+    fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;

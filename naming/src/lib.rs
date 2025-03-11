@@ -406,7 +406,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["all", "fields", "are", "none"],
     ["self"],
     ["option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
-    ["try", "generate", "create"],
+    ["create", "query", "part"],
     ["bind", "value", "to", "postgresql", "query", "part", "to", "create"],
     ["generate", "postgresql", "json", "type", "to", "read"],
     ["try", "generate", "postgresql", "json", "type", "to", "update"],

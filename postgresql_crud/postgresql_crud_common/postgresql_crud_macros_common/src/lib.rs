@@ -34,7 +34,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
     let try_generate_to_create_error_named_upper_camel_case = naming::TryGenerateToCreateErrorNamedUpperCamelCase;
-    let try_generate_create_snake_case = naming::TryGenerateCreateSnakeCase;
+    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let bind_value_to_postgresql_query_part_to_create_snake_case = naming::BindValueToPostgresqlQueryPartToCreateSnakeCase;
     let generate_postgresql_json_type_to_read_snake_case = naming::GeneratePostgresqlJsonTypeToReadSnakeCase;
     let try_generate_postgresql_json_type_to_update_snake_case = naming::TryGeneratePostgresqlJsonTypeToUpdateSnakeCase;
@@ -48,7 +48,7 @@ pub fn generate_postgresql_json_type_token_stream(
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
             type #create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
-            fn #try_generate_create_snake_case(
+            fn #create_query_part_snake_case(
                 #create_snake_case: &Self::#create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #path_token_stream #try_generate_to_create_error_named_upper_camel_case> {
