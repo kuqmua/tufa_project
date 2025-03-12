@@ -584,11 +584,7 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
         postgresql_type_ident_where_element_tokens_double_quotes_token_stream,
     )
 }
-fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    where_query_part_token_stream: &dyn quote::ToTokens,
-    where_query_bind_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(ident: &dyn quote::ToTokens, where_query_part_token_stream: &dyn quote::ToTokens, where_query_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
@@ -1613,9 +1609,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &{
-                let self_option_to_update_snake_case = naming::SelfOptionToUpdateSnakeCase;
+                let update_snake_case = naming::UpdateSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#self_option_to_update_snake_case.0));
+                    query = query.bind(sqlx::types::Json(#update_snake_case.0));
                     query
                 }
             },

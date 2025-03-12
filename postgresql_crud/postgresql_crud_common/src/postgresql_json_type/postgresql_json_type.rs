@@ -438,15 +438,9 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     }
     type WhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
     type Where = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
-    type SelfOptionToUpdate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
+    type Update<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
     type SelfOptionToUpdateTryGenerateErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
-    fn try_generate_postgresql_json_type_to_update(
-        _: &Self::SelfOptionToUpdate<'_>,
-        jsonb_set_accumulator: &std::primitive::str,
-        _: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateErrorNamed> {
+    fn try_generate_postgresql_json_type_to_update(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateErrorNamed> {
         println!("fn try_generate_postgresql_json_type_to_update");
         match increment.checked_add(1) {
             Some(value) => {
@@ -456,7 +450,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
             None => Err(Self::SelfOptionToUpdateTryGenerateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_self_option_to_update: Self::SelfOptionToUpdate<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_self_option_to_update: Self::Update<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(sqlx::types::Json(postgresql_json_type_self_option_to_update.0));
         query
     }
