@@ -16,8 +16,7 @@ pub trait PostgresqlJsonType {
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
         is_postgresql_type: std::primitive::bool,
     ) -> std::string::String;
-    //new
-    type SelfWhereElement<'a>: std::fmt::Debug
+    type WhereElement<'a>: std::fmt::Debug
         + Clone
         + PartialEq
         + serde::Serialize
