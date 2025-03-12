@@ -25,7 +25,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["try", "self", "generated", "route", "logic", "error", "named", "with", "serialize", "deserialize"],
     ["self", "payload", "example", "route", "logic"],
     ["self", "create"],
-    ["self", "to", "read"],
+    ["self", "read"],
     ["self", "to", "update"],
     ["self", "to", "delete"],
     ["self", "options", "to", "read"],
