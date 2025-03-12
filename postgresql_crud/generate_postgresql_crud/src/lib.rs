@@ -553,7 +553,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let fields_without_primary_key_len = fields_without_primary_key.len();
     // let primary_key_field_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
-    let primary_key_field_type_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
@@ -606,7 +606,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     // let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
     // let primary_key_inner_type_token_stream = &primary_key_field.syn_field.ty;
-    let primary_key_field_type_to_update_token_stream = &naming::parameter::SelfToUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     // fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
     //     naming::ToTokensToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value)
     // }
@@ -1483,7 +1483,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         }
                                         handle.push_value(syn::PathSegment {
                                             ident: proc_macro2::Ident::new(
-                                                &naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
+                                                &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
                                                 proc_macro2::Span::call_site()
                                             ),
                                             arguments: syn::PathArguments::None,
@@ -1628,7 +1628,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     
     // let std_vec_vec_primary_key_field_type_to_create_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_to_create_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_read_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_read_upper_camel_case>};
-    let std_vec_vec_primary_key_field_type_to_update_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_to_update_upper_camel_case>};
+    let std_vec_vec_primary_key_field_type_to_update_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_update_upper_camel_case>};
     let std_vec_vec_primary_key_field_type_to_delete_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_to_delete_upper_camel_case>};
 
     let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_options_upper_camel_case>};
@@ -1770,7 +1770,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //         }
             //         handle.push_value(syn::PathSegment {
             //             ident: proc_macro2::Ident::new(
-            //                 &naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
+            //                 &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
             //                 proc_macro2::Span::call_site()
             //             ),
             //             arguments: syn::PathArguments::None,
@@ -1808,7 +1808,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                     handle.push_value(syn::PathSegment {
                         ident: proc_macro2::Ident::new(
-                            &naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
+                            &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
                             proc_macro2::Span::call_site()
                         ),
                         arguments: syn::PathArguments::None,
@@ -1870,7 +1870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                     handle.push_value(syn::PathSegment {
                         ident: proc_macro2::Ident::new(
-                            &naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
+                            &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(),
                             proc_macro2::Span::call_site()
                         ),
                         arguments: syn::PathArguments::None,
@@ -2066,13 +2066,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             // let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
-            let field_ident_to_update_upper_camel_case = &naming::parameter::SelfToUpdateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+            let field_ident_update_upper_camel_case = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
             quote::quote! {
-                pub #field_ident: std::option::Option<#path_value_token_stream<#field_ident_to_update_upper_camel_case>>
+                pub #field_ident: std::option::Option<#path_value_token_stream<#field_ident_update_upper_camel_case>>
             }
         });
         quote::quote! {
-            pub #primary_key_field_ident: #primary_key_field_type_to_update_token_stream,
+            pub #primary_key_field_ident: #primary_key_field_type_update_token_stream,
             #fields_named_excluding_primary_key_token_stream
         }
     };
@@ -2217,7 +2217,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     // value.push_value(syn::PathSegment {
                     //     ident: proc_macro2::Ident::new(
                     //         // &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)).to_string(),
-                    //         // &naming::parameter::SelfToReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty).to_string()
+                    //         // &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty).to_string()
                     //         "todo"
                     //         ,
                     //         proc_macro2::Span::call_site(),
@@ -2956,7 +2956,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
                     Operation::CreateMany => quote::quote!{#primary_key_field_type_read_upper_camel_case},//todo maybe other parameters must be read too?
-                    Operation::UpdateMany => quote::quote!{#primary_key_field_type_to_update_upper_camel_case},
+                    Operation::UpdateMany => quote::quote!{#primary_key_field_type_update_upper_camel_case},
                     Operation::DeleteMany => quote::quote!{#primary_key_field_type_to_delete_upper_camel_case},
                     _ => panic!("supported only CreateMany, UpdateMany, DeleteMany")
                 },
@@ -2972,7 +2972,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
                     Operation::CreateOne => quote::quote!{#primary_key_field_type_read_upper_camel_case},//todo maybe other must also be read
-                    Operation::UpdateOne => quote::quote!{#primary_key_field_type_to_update_upper_camel_case},
+                    Operation::UpdateOne => quote::quote!{#primary_key_field_type_update_upper_camel_case},
                     Operation::DeleteOne => quote::quote!{#primary_key_field_type_to_delete_upper_camel_case},
                     _ => panic!("supported only CreateOne, UpdateOne, DeleteOne")
                 },
@@ -4656,7 +4656,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                 &operation,
-                &primary_key_field_type_to_update_upper_camel_case,
+                &primary_key_field_type_update_upper_camel_case,
                 &type_variants_from_request_response_syn_variants,
             );
             let try_operation_route_logic_token_stream = {
@@ -4831,7 +4831,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &primary_key_field_type_to_update_upper_camel_case,
+                &primary_key_field_type_update_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &value_snake_case,
             );

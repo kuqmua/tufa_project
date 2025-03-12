@@ -4154,8 +4154,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let postgresql_type_not_null_or_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_read_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
-            let postgresql_type_not_null_or_nullable_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            let postgresql_type_not_null_or_nullable_to_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_to_update_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_to_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_update_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_token_stream =
                 macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
@@ -4924,7 +4924,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #self_column_query_part_token_stream
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_read_upper_camel_case;
-                        type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
+                        type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_update_upper_camel_case;
                         type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
                         #postgresql_type_self_to_update_query_part_token_stream
                         #self_to_update_bind_query_part_token_stream
