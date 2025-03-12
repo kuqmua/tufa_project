@@ -437,7 +437,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))")
     }
     type WhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
-    type SelfWhere = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
+    type Where = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
     type SelfOptionToUpdate<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
     type SelfOptionToUpdateTryGenerateErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
     fn try_generate_postgresql_json_type_to_update(

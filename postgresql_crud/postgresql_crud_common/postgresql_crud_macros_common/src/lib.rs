@@ -21,7 +21,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let field_reader_snake_case = naming::FieldReaderSnakeCase;
     let options_to_read_upper_camel_case = naming::OptionsToReadUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
-    let self_where_upper_camel_case = naming::SelfWhereUpperCamelCase;
+    let where_upper_camel_case = naming::WhereUpperCamelCase;
     let self_option_to_update_upper_camel_case = naming::SelfOptionToUpdateUpperCamelCase;
     let self_option_to_update_snake_case = naming::SelfOptionToUpdateSnakeCase;
     let self_option_to_update_try_generate_error_named_upper_camel_case = naming::SelfOptionToUpdateTryGenerateErrorNamedUpperCamelCase;
@@ -73,7 +73,7 @@ pub fn generate_postgresql_json_type_token_stream(
                 #field_reader_query_part_token_stream
             }
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
-            type #self_where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
+            type #where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
             type #self_option_to_update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
             type #self_option_to_update_try_generate_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
             fn #try_generate_postgresql_json_type_to_update_snake_case(

@@ -24,8 +24,7 @@ pub trait PostgresqlJsonType {
         // + schemars::JsonSchema //todo
         + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
         + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    type SelfWhere: std::fmt::Debug + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
-    //endnew
+    type Where: std::fmt::Debug + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type SelfOptionToUpdate<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type SelfOptionToUpdateTryGenerateErrorNamed: std::fmt::Debug + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
     fn try_generate_postgresql_json_type_to_update(
