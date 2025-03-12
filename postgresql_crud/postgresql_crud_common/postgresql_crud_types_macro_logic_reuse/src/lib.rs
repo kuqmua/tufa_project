@@ -1597,14 +1597,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
-                let self_option_to_update_try_generate_error_named_upper_camel_case = naming::SelfOptionToUpdateTryGenerateErrorNamedUpperCamelCase;
+                let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
                 quote::quote! {
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
                             Ok(format!(#format_handle_token_stream))
                         }
-                        None => Err(Self::#self_option_to_update_try_generate_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                        None => Err(Self::#update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
             },

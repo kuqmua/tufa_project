@@ -22,7 +22,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let where_upper_camel_case = naming::WhereUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let update_snake_case = naming::UpdateSnakeCase;
-    let self_option_to_update_try_generate_error_named_upper_camel_case = naming::SelfOptionToUpdateTryGenerateErrorNamedUpperCamelCase;
+    let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -73,14 +73,14 @@ pub fn generate_postgresql_json_type_token_stream(
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
             type #where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
-            type #self_option_to_update_try_generate_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
+            type #update_query_part_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
             fn #try_generate_postgresql_json_type_to_update_snake_case(
                 #update_snake_case: &Self::#update_upper_camel_case<'_>,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-            ) -> Result<#std_string_string_token_stream, Self::#self_option_to_update_try_generate_error_named_upper_camel_case> {
+            ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
                 #try_generate_postgresql_json_type_to_update_token_stream
             }
             fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(

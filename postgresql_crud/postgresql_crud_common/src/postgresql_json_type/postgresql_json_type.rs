@@ -439,15 +439,15 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     type WhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
     type Where = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
     type Update<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
-    type SelfOptionToUpdateTryGenerateErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
-    fn try_generate_postgresql_json_type_to_update(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::SelfOptionToUpdateTryGenerateErrorNamed> {
+    type UpdateQueryPartErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
+    fn try_generate_postgresql_json_type_to_update(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
         println!("fn try_generate_postgresql_json_type_to_update");
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
             }
-            None => Err(Self::SelfOptionToUpdateTryGenerateErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(Self::UpdateQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn bind_value_to_postgresql_query_part_to_update<'a>(postgresql_json_type_self_option_to_update: Self::Update<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

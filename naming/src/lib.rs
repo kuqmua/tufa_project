@@ -442,8 +442,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["self", "to", "read"],
     ["self", "field", "reader"],
     ["self", "options", "to", "read"],
-    ["self", "option", "to", "update"],
-    ["self", "option", "to", "update", "try", "generate", "error", "named"],
     ["postgresql", "crud", "base", "self", "traits"],
     ["postgresql", "base", "type"],
     ["postgresql", "base", "type", "self"],
