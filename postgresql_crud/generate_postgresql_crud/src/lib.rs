@@ -551,7 +551,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         panic!("does work only on structs!");
     };
     // let fields_without_primary_key_len = fields_without_primary_key.len();
-    // let primary_key_field_type_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    // let primary_key_field_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_to_read_upper_camel_case = naming::parameter::SelfToReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_to_update_upper_camel_case = naming::parameter::SelfToUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let primary_key_field_type_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
@@ -2641,11 +2641,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     (&|element: &SynFieldWrapper| {
         let field_ident = &element.field_ident;
         // let field_type = &element.syn_field.ty;
-        let field_type_to_create = naming::parameter::SelfToCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+        let field_type_create = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
         // let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
         // let field_type_token_stream = match &element.option_generic {
         //     Some(value) => {
-        //         let value_token_stream = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&{
+        //         let value_token_stream = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&{
         //             let value = &value.upper_camel_case_stringified;
         //             value
         //                 .parse::<proc_macro2::TokenStream>()
@@ -2656,7 +2656,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     None => inner_type_token_stream.clone(),
         // };
         quote::quote! {
-            pub #field_ident: #field_type_to_create
+            pub #field_ident: #field_type_create
         }
     });
     let generate_try_operation_token_stream = |

@@ -4819,7 +4819,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
                     };
-                    let postgresql_type_tokens_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(tokens_upper_camel_case));
+                    let postgresql_type_tokens_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type.add_postfix(tokens_upper_camel_case));
                     let tokens_tokens_stream = {
                         let postgresql_type_tokens_token_stream = {
                             quote::quote!{
@@ -4831,7 +4831,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     //- serde::Deserialize,
                                     schemars::JsonSchema,
                                 )]
-                                pub struct #tokens_as_postgresql_postfix_type_upper_camel_case(#postgresql_type_tokens_to_create_upper_camel_case);
+                                pub struct #tokens_as_postgresql_postfix_type_upper_camel_case(#postgresql_type_tokens_create_upper_camel_case);
                             }
                         };
                         let impl_std_fmt_display_for_tokens_token_stream = {
@@ -4990,7 +4990,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     serde::Deserialize,
                                     schemars::JsonSchema,
                                 )]
-                                pub struct #postgresql_type_tokens_to_create_upper_camel_case (#postgresql_type_tokens_to_create_declaration_token_stream);
+                                pub struct #postgresql_type_tokens_create_upper_camel_case (#postgresql_type_tokens_to_create_declaration_token_stream);
                             }
                         };
                         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = {
@@ -5064,7 +5064,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             };
                             quote::quote!{
-                                impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_type_tokens_to_create_upper_camel_case {
+                                impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_type_tokens_create_upper_camel_case {
                                     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
                                         #try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream
                                     }
@@ -5075,7 +5075,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                            &postgresql_type_tokens_to_create_upper_camel_case,
+                            &postgresql_type_tokens_create_upper_camel_case,
                             &{
                                 let value = match &postgresql_type {
                                     PostgresqlType::JsonbNullable => quote::quote!{(Some(
@@ -5606,7 +5606,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #postgresql_type_self_upper_camel_case = #tokens_as_postgresql_postfix_type_upper_camel_case;
                                 type #column_upper_camel_case = #postgresql_type_tokens_column_upper_camel_case;
                                 #self_column_query_part_token_stream
-                                type #create_upper_camel_case = #postgresql_type_tokens_to_create_upper_camel_case;
+                                type #create_upper_camel_case = #postgresql_type_tokens_create_upper_camel_case;
                                 type #read_upper_camel_case = #postgresql_type_tokens_to_read_upper_camel_case;
                                 type #update_upper_camel_case = #postgresql_type_tokens_to_update_upper_camel_case;
                                 type #update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;

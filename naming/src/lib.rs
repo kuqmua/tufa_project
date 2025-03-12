@@ -436,7 +436,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["bind", "value", "to", "query"],
     ["logical", "operator"],
     ["pub"],
-    ["self", "to", "create"],
+    ["self", "create"],
     ["self", "to", "read"],
     ["self", "field", "reader"],
     ["self", "options", "to", "read"],

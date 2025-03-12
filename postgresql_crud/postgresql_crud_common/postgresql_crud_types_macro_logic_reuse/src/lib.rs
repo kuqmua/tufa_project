@@ -4084,18 +4084,18 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_column_token_stream
                 }
             };
-            let postgresql_type_not_null_or_nullable_to_create_upper_camel_case = naming::parameter::SelfToCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
             let crate_bind_query_token_stream = crate_bind_query_token_stream();
             let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
-                    let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_to_create_upper_camel_case, &quote::quote! {(());}, false, true);
+                    let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
                     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
-                        generate_impl_crate_bind_query_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_to_create_upper_camel_case, &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))}, &query_snake_case);
+                        generate_impl_crate_bind_query_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))}, &query_snake_case);
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
                         postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                            &postgresql_type_not_null_or_nullable_to_create_upper_camel_case,
+                            &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                             &quote::quote! {Self(#core_default_default_default_token_stream)},
                         );
                     quote::quote! {
@@ -4106,7 +4106,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let default_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"DEFAULT"});
                 let uuid_generate_v4_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"uuid_generate_v4()"});
-                let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_to_create_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
+                let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
                 match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => alias_token_stream,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => alias_token_stream,
@@ -4922,7 +4922,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
                         #self_column_query_part_token_stream
-                        type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_to_create_upper_camel_case;
+                        type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_to_read_upper_camel_case;
                         type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_to_update_upper_camel_case;
                         type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
