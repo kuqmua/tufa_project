@@ -3578,35 +3578,32 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream = {
-                            quote::quote!{
-                                impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_tokens_where_upper_camel_case {
-                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                                        let mut acc = std::string::String::default();
-                                        let mut is_need_to_add_logical_operator_inner_handle = false;
-                                        for element in &self.value {
-                                            match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                                                Ok(value) => {
-                                                    acc.push_str(&format!("{value} "));
-                                                    is_need_to_add_logical_operator_inner_handle = true;
-                                                }
-                                                Err(error) => {
-                                                    return Err(error);
-                                                }
-                                            }
+                        let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+                            &postgresql_json_type_tokens_where_upper_camel_case,
+                            &quote::quote!{
+                                let mut acc = std::string::String::default();
+                                let mut is_need_to_add_logical_operator_inner_handle = false;
+                                for element in &self.value {
+                                    match postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                                        Ok(value) => {
+                                            acc.push_str(&format!("{value} "));
+                                            is_need_to_add_logical_operator_inner_handle = true;
                                         }
-                                        let _ = acc.pop();
-                                        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                                    }
-                                    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                        for element in self.value {
-                                            query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+                                        Err(error) => {
+                                            return Err(error);
                                         }
-                                        query
                                     }
                                 }
-                            }
-                        };
+                                let _ = acc.pop();
+                                Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                            },
+                            &quote::quote!{
+                                for element in self.value {
+                                    query = postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+                                }
+                                query
+                            },
+                        );
                         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                             &postgresql_json_type_tokens_where_upper_camel_case,
                             &quote::quote!{Self {
