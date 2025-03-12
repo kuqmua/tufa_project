@@ -12,7 +12,7 @@ pub fn generate_postgresql_json_type_token_stream(
     postgresql_json_type_ident_option_to_update: &dyn quote::ToTokens,
     postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
-    bind_value_to_postgresql_query_part_to_update_token_stream: &dyn quote::ToTokens,
+    update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -37,7 +37,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let field_reader_query_part_snake_case = naming::FieldReaderQueryPartSnakeCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-    let bind_value_to_postgresql_query_part_to_update_snake_case = naming::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
+    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let reference_std_primitive_str_token_stream = quote::quote! {&std::primitive::str};
     let reference_mut_std_primitive_u64_token_stream = quote::quote! {&mut std::primitive::u64};
     let mut_query_sqlx_query_postgres_arguments_token_stream = quote::quote! {mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
@@ -83,11 +83,11 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
                 #update_query_part_token_stream
             }
-            fn #bind_value_to_postgresql_query_part_to_update_snake_case<'a>(
+            fn #update_query_bind_snake_case<'a>(
                 #update_snake_case: Self::#update_upper_camel_case<'_>,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
-                #bind_value_to_postgresql_query_part_to_update_token_stream
+                #update_query_bind_token_stream
             }
         }
     }
