@@ -4560,7 +4560,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             quote::quote!{
                                 let mut #object_acc_snake_case = format!(#some_format_handle_token_stream);
                                 #generate_jsonb_set_target_token_stream
-                                for element in &#update_snake_case.0.0 {
+                                for element in &#value_snake_case.0.0 {
                                     match element {
                                         #(#try_generate_bind_increments_variants_token_stream),*
                                     }
@@ -4618,7 +4618,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})")
                             );
                             quote::quote!{
-                                match &#update_snake_case.0 {
+                                match &#value_snake_case.0 {
                                     Some(value) => {
                                         let mut #std_option_option_object_acc_snake_case = format!(#some_format_handle_token_stream);
                                         #generate_jsonb_set_target_token_stream
@@ -4645,7 +4645,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         },
                         PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                            match #update_snake_case.0.#update_query_part_snake_case(
+                            match #value_snake_case.0.#update_query_part_snake_case(
                                 #jsonb_set_accumulator_snake_case,
                                 #jsonb_set_target_snake_case,
                                 #jsonb_set_path_snake_case,
@@ -4661,7 +4661,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
                             quote::quote!{
-                                match &#update_snake_case.0 {
+                                match &#value_snake_case.0 {
                                     Some(value) => {
                                         match value.#update_query_part_snake_case(
                                             #jsonb_set_accumulator_snake_case,

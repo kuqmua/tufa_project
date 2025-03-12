@@ -75,7 +75,7 @@ pub fn generate_postgresql_json_type_token_stream(
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
             type #update_query_part_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
             fn #update_query_part_snake_case(
-                #update_snake_case: &Self::#update_upper_camel_case<'_>,
+                #value_snake_case: &Self::#update_upper_camel_case<'_>,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
