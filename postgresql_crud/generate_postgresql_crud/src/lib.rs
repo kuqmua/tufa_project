@@ -1752,7 +1752,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![(
             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
             &naming::BindQuerySnakeCase,
-            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[postgresql_crud_snake_case_stringified, &naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase.to_string()]),
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[postgresql_crud_snake_case_stringified, &naming::QueryPartErrorNamedUpperCamelCase.to_string()]),
         )],
     );
     let not_unique_primary_key_syn_variant_wrapper = new_syn_variant_wrapper(

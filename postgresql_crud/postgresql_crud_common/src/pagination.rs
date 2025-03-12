@@ -273,7 +273,7 @@ impl Pagination {
 }
 //for ReadMany in GeneratePostgresqlCrud
 impl crate::BindQuery<'_> for Pagination {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(limit_increment) => {
                 *increment = limit_increment;
@@ -282,12 +282,12 @@ impl crate::BindQuery<'_> for Pagination {
                         *increment = offset_increment;
                         Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
                     }
-                    None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    None => Err(crate::QueryPartErrorNamed::CheckedAdd {
                         code_occurence: error_occurence_lib::code_occurence!()
                     })
                 }
             }
-            None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+            None => Err(crate::QueryPartErrorNamed::CheckedAdd {
                 code_occurence: error_occurence_lib::code_occurence!()
             }),
         }

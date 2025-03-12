@@ -27,8 +27,8 @@ pub use generate_postgresql_crud::update_one_additional_route_logic;
 pub use postgresql_crud_common::BindQuery;
 pub use postgresql_crud_common::Order;
 pub use postgresql_crud_common::OrderBy;
-pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;
-pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
+pub use postgresql_crud_common::QueryPartErrorNamed;
+pub use postgresql_crud_common::QueryPartErrorNamedWithSerializeDeserialize;
 pub use postgresql_crud_common::value::Value;
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 //

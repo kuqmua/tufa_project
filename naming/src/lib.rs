@@ -84,7 +84,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["app", "state"],
     ["column", "select"],
     ["options", "try", "from", "sqlx", "row"],
-    ["try", "generate", "bind", "increments", "error", "named"],
+    ["query", "part", "error", "named"],
     ["primary", "key", "try", "from", "sqlx", "row"],
     ["extraction", "result"],
     ["serde", "json", "to", "string"],

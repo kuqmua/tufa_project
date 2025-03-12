@@ -541,7 +541,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 |{
                     quote::quote!{
                         impl<'a> postgresql_crud::BindQuery<'a> for #ident_token_stream {
-                            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                 #try_generate_bind_increments_token_stream
                             }
                             fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -2245,7 +2245,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             let impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream = {
                 quote::quote!{
                     impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_json_type_ident_option_to_update_upper_camel_case {
-                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                             todo!()
                         }
                         fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -3518,7 +3518,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             });
                             quote::quote!{
                                 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_tokens_where_element_upper_camel_case {
-                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         match &self {
                                             #(#where_query_part_variants_token_stream),*
                                         }
@@ -3580,7 +3580,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream = {
                             quote::quote!{
                                 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_json_type_tokens_where_upper_camel_case {
-                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         let mut acc = std::string::String::default();
                                         let mut is_need_to_add_logical_operator_inner_handle = false;
                                         for element in &self.value {
@@ -5065,7 +5065,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             };
                             quote::quote!{
                                 impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_type_tokens_create_upper_camel_case {
-                                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         #try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream
                                     }
                                     fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -5403,7 +5403,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         increment: &mut std::primitive::u64,
                                         column: &dyn std::fmt::Display,
                                         is_need_to_add_logical_operator: std::primitive::bool,
-                                    ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         match &self {
                                             #(#where_query_part_variants_token_stream),*
                                         }
@@ -5470,7 +5470,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_json_type_tokens_where_token_stream = {
                             quote::quote!{
                                 impl postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_tokens_where_upper_camel_case {
-                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         let mut acc = std::string::String::default();
                                         let mut is_need_to_add_logical_operator_inner_handle = false;
                                         for element in &self.value {
@@ -5541,7 +5541,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 increment: &mut std::primitive::u64,
                                 column: &dyn std::fmt::Display,
                                 is_need_to_add_logical_operator: std::primitive::bool,
-                            ) -> Result<std::string::String, postgresql_crud::TryGenerateBindIncrementsErrorNamed> {
+                            ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                 #where_query_part_content_token_stream
                             }
                         }

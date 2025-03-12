@@ -5,11 +5,11 @@ pub mod postgresql_type;
 pub mod value;
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryGenerateBindIncrementsErrorNamed {
+pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 //todo add another error variant instead for TryGenerateToCreateErrorNamed
-impl std::convert::From<crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> for TryGenerateBindIncrementsErrorNamed {
+impl std::convert::From<crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> for QueryPartErrorNamed {
     fn from(value: crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed) -> Self {
         match value {
             crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence },
@@ -111,6 +111,6 @@ pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt:
 }
 
 pub trait BindQuery<'a> {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
+    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }

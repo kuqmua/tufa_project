@@ -452,7 +452,7 @@ fn generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2
     let column_snake_case = naming::ColumnSnakeCase;
     let match_increment_checked_add_token_stream = {
         let increment_snake_case = naming::IncrementSnakeCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let format_handle_token_stream = match &dimension {
             Dimension::First => generate_quotes::double_quotes_token_stream(&"{}({} = ${})"),
@@ -774,7 +774,7 @@ impl Between {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
         quote::quote! {
             match #increment_snake_case.checked_add(1) {
                 Some(first_value) => {
@@ -951,7 +951,7 @@ impl In {
         let increment_snake_case = naming::IncrementSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
         quote::quote! {
             let mut #acc_snake_case = std::string::String::default();
             for #element_snake_case in &self.#value_snake_case {
@@ -1119,7 +1119,7 @@ fn generate_postgresql_type_self_where_try_generate_bind_increments_token_stream
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let case_stringified = regular_expression.stringified();
     //using postgresql operator -> than converting it into text returns original string wrapped in double quotes ("original string" instead of original string). it causes problems with regular expression api.
     //this code remove double quotes from start and end of string(text) to make regular expression correct
@@ -1506,7 +1506,7 @@ fn generate_try_generate_bind_increments_token_stream_145071b7_6a73_4d42_938b_cd
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let format_handle_token_stream = {
         let function = match &postgresql_type_or_json_type {
             crate::PostgresqlTypeOrJsonType::PostgresqlType => "length",
@@ -1652,7 +1652,7 @@ impl EqualToEncodedStringRepresentation {
                 let value_snake_case = naming::ValueSnakeCase;
                 let increment_snake_case = naming::IncrementSnakeCase;
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-                let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+                let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
                 quote::quote! {
                     match #increment_snake_case.checked_add(1) {
                         Some(#value_snake_case) => {
@@ -1906,7 +1906,7 @@ impl RangeLength {
         let value_snake_case = naming::ValueSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
         let array_position_type_token_stream = array_position_type_token_stream();
@@ -2075,7 +2075,7 @@ impl BitVecPositionEqual {
         let increment_snake_case = naming::IncrementSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
         quote::quote! {
             match #increment_snake_case.checked_add(1) {
                 Some(first_increment) => {
@@ -2155,7 +2155,7 @@ fn generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {
         match #increment_snake_case.checked_add(1) {
             Some(first_increment) => {
@@ -2281,7 +2281,7 @@ fn generate_try_generate_bind_increments_token_stream_4334f73e_cfcd_494b_aa9c_54
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let regular_expression_stringified = regular_expression.stringified();
     let format_handle_token_stream = format!("{{}}({{}}->>${{}} ~{regular_expression_stringified} ${{}})");
     quote::quote! {
@@ -2376,7 +2376,7 @@ fn generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_20
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::TryGenerateBindIncrementsErrorNamedUpperCamelCase;
+    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {
         match #increment_snake_case.checked_add(1) {
             Some(#value_snake_case) => {

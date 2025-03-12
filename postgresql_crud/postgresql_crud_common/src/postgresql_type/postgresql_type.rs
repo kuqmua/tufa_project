@@ -1049,7 +1049,7 @@ const _: () = {
     }
 };
 impl<PostgresqlTypeWhereElement: crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter> crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
@@ -1130,7 +1130,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 // //     }
 // // }
 // impl crate::BindQuery<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
-//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         let mut acc = std::string::String::default();
 //         match increment.checked_add(1) {
 //             Some(value) => {
@@ -1138,7 +1138,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //                 acc.push_str(&format!("${increment}"));
 //             }
 //             None => {
-//                 return Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+//                 return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
 //             }
 //         }
 //         Ok(acc)
@@ -1186,13 +1186,13 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     }
 // }
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(value) => {
 //                 *increment = value;
 //                 Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
 //             }
-//             None => Err(crate::TryGenerateBindIncrementsErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
 //         }
 //     }
 //     fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1205,7 +1205,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     Equal(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual),
 // }
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match &self {
 //             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
 //         }
@@ -1423,7 +1423,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     }
 // };
 // impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         let mut acc = std::string::String::default();
 //         let mut is_need_to_add_logical_operator_inner_handle = false;
 //         for element in &self.value {
@@ -1464,7 +1464,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     type Create = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToCreate;
 //     type Read = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToRead;
 //     type Update = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullToUpdate;
-//     type UpdateQueryPartErrorNamed = crate::TryGenerateBindIncrementsErrorNamed;
+//     type UpdateQueryPartErrorNamed = crate::QueryPartErrorNamed;
 //     fn update_query_part(value: &Self::Update, _: &std::primitive::str, _: &std::primitive::str, _: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
 //         crate::BindQuery::try_generate_bind_increments(value, increment)
 //     }
@@ -1473,7 +1473,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     }
 //     type WhereElement = PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement;
 //     type Where = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
-//     fn where_query_part(value: &Self::Where, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::TryGenerateBindIncrementsErrorNamed> {
+//     fn where_query_part(value: &Self::Where, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         let mut acc = std::string::String::default();
 //         let mut is_need_to_add_logical_operator_inner_handle = false;
 //         for element in &value.value {
