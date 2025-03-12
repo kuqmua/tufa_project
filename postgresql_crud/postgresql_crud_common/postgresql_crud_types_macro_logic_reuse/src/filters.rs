@@ -176,10 +176,11 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
                 }}
             },
         );
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream = crate::generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
         &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
         &postgresql_type_self_where_try_generate_bind_increments_token_stream,
         &postgresql_type_self_where_bind_value_to_query_token_stream,
+        &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
     quote::quote! {
         #postgresql_type_ident_where_element_tokens_token_stream

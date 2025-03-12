@@ -372,35 +372,33 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
             };
         }
     };
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream = {
-        quote::quote! {
-            impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #postgresql_type_or_json_type_ident_where_upper_camel_case {
-                fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-                    let mut acc = std::string::String::default();
-                    let mut is_need_to_add_logical_operator_inner_handle = false;
-                    for element in &self.value {
-                        match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                            Ok(value) => {
-                                acc.push_str(&format!("{value} "));
-                                is_need_to_add_logical_operator_inner_handle = true;
-                            }
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        }
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+        &postgresql_type_or_json_type_ident_where_upper_camel_case,
+        &quote::quote!{
+            let mut acc = std::string::String::default();
+            let mut is_need_to_add_logical_operator_inner_handle = false;
+            for element in &self.value {
+                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                    Ok(value) => {
+                        acc.push_str(&format!("{value} "));
+                        is_need_to_add_logical_operator_inner_handle = true;
                     }
-                    let _ = acc.pop();
-                    Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-                }
-                fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    for element in self.value {
-                        query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+                    Err(error) => {
+                        return Err(error);
                     }
-                    query
                 }
             }
-        }
-    };
+            let _ = acc.pop();
+            Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+        },
+        &quote::quote!{
+            for element in self.value {
+                query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+            }
+            query
+        },
+        &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
+    );
     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_or_json_type_ident_where_token_stream =
         postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_or_json_type_ident_where_upper_camel_case, &{
             let crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream =
@@ -511,7 +509,7 @@ fn generate_postgresql_type_where_element_token_stream(
             }
         }
     };
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
         &ident,
         &{
             let variants_token_stream = variants.iter().map(|element| {
@@ -547,6 +545,7 @@ fn generate_postgresql_type_where_element_token_stream(
                 }
             }
         },
+        &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
     let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
@@ -583,30 +582,6 @@ fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_w
         struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream,
         postgresql_type_ident_where_element_tokens_double_quotes_token_stream,
     )
-}
-fn generate_impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_token_stream(ident: &dyn quote::ToTokens, where_query_part_token_stream: &dyn quote::ToTokens, where_query_bind_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    quote::quote! {
-        impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for #ident {
-            fn where_query_part(
-                &self,
-                #increment_snake_case: &mut std::primitive::u64,
-                #column_snake_case : &dyn std::fmt::Display,
-                #is_need_to_add_logical_operator_snake_case: std::primitive::bool,
-            ) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-                #where_query_part_token_stream
-            }
-            fn where_query_bind<'a>(
-                self,
-                mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                #where_query_bind_token_stream
-            }
-        }
-    }
 }
 
 enum PostgresqlTypeNotNullOrNullable {
