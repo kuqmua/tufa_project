@@ -4715,7 +4715,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             });
                             quote::quote!{
-                                for element in #update_snake_case.0.0 {
+                                for element in #value_snake_case.0.0 {
                                     match element {
                                         #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
                                     }
@@ -4741,7 +4741,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             });
                             quote::quote!{
-                                match #update_snake_case.0 {
+                                match #value_snake_case.0 {
                                     Some(value) => {
                                         for element in value.0 {
                                             match element {
@@ -4757,11 +4757,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         },
                         PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                            #query_snake_case = #update_snake_case.0.#update_query_bind_snake_case(#query_snake_case);
+                            #query_snake_case = #value_snake_case.0.#update_query_bind_snake_case(#query_snake_case);
                             #query_snake_case
                         },
                         PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{
-                            match #update_snake_case.0 {
+                            match #value_snake_case.0 {
                                 Some(value) => {
                                     #query_snake_case = value.#update_query_bind_snake_case(#query_snake_case);
                                 }

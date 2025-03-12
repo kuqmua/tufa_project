@@ -449,8 +449,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
             None => Err(Self::UpdateQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn update_query_bind<'a>(postgresql_json_type_self_option_to_update: Self::Update<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(postgresql_json_type_self_option_to_update.0));
+    fn update_query_bind<'a>(value: Self::Update<'_>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(value.0)); //todo remove .0 and impl Encode instead
         query
     }
 }
