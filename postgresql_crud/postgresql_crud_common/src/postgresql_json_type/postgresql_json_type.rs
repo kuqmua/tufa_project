@@ -440,8 +440,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     type Where = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
     type Update<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
     type UpdateQueryPartErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
-    fn try_generate_postgresql_json_type_to_update(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
-        println!("fn try_generate_postgresql_json_type_to_update");
+    fn update_query_part(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;

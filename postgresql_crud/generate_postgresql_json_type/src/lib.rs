@@ -1654,7 +1654,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             #update_token_stream
         }
     };
-    let try_generate_postgresql_json_type_to_update_snake_case = naming::TryGeneratePostgresqlJsonTypeToUpdateSnakeCase;
+    let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let bind_value_to_postgresql_query_part_to_update_snake_case = naming::BindValueToPostgresqlQueryPartToUpdateSnakeCase;
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
@@ -1668,7 +1668,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     |{
         quote::quote!{
             impl #struct_token_stream {
-                fn #try_generate_postgresql_json_type_to_update_snake_case(
+                fn #update_query_part_snake_case(
                     &self,
                     #jsonb_set_accumulator_snake_case: &std::primitive::str,
                     #jsonb_set_target_snake_case: &std::primitive::str,
@@ -2173,7 +2173,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
                         quote::quote!{
-                            #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_update_snake_case(
+                            #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
                                 &value.value,
                                 &local_acc,
                                 &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -3990,7 +3990,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
                                 quote::quote!{
                                     #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_update_snake_case(
+                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
                                             &value.value,
                                             &element_acc,
                                             &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -4531,7 +4531,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
                                 quote::quote!{
                                     #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_update_snake_case(
+                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
                                             &value.value,
                                             &#object_acc_snake_case,
                                             &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -4591,7 +4591,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
                                 quote::quote!{
                                     #postgresql_json_type_ident_option_to_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #try_generate_postgresql_json_type_to_update_snake_case(
+                                        match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
                                             &value.value,
                                             &#std_option_option_object_acc_snake_case,
                                             &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
@@ -4645,7 +4645,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         },
                         PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{
-                            match #update_snake_case.0.#try_generate_postgresql_json_type_to_update_snake_case(
+                            match #update_snake_case.0.#update_query_part_snake_case(
                                 #jsonb_set_accumulator_snake_case,
                                 #jsonb_set_target_snake_case,
                                 #jsonb_set_path_snake_case,
@@ -4663,7 +4663,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             quote::quote!{
                                 match &#update_snake_case.0 {
                                     Some(value) => {
-                                        match value.#try_generate_postgresql_json_type_to_update_snake_case(
+                                        match value.#update_query_part_snake_case(
                                             #jsonb_set_accumulator_snake_case,
                                             #jsonb_set_target_snake_case,
                                             #jsonb_set_path_snake_case,
@@ -5252,7 +5252,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 };
                                 //todo proper error handling - remove .unwrap()
                                 quote::quote!{
-                                    Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::try_generate_postgresql_json_type_to_update(
+                                    Ok(<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
                                         #first_argument_token_stream,
                                         #jsonb_set_accumulator_snake_case,
                                         #jsonb_set_target_snake_case,

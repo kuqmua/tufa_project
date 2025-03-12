@@ -27,7 +27,7 @@ pub trait PostgresqlJsonType {
     type Where: std::fmt::Debug + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type Update<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type UpdateQueryPartErrorNamed: std::fmt::Debug + std::error::Error; //thiserror::Error + error_occurence_lib::ErrorOccurence
-    fn try_generate_postgresql_json_type_to_update(
+    fn update_query_part(
         postgresql_json_type_self_option_to_update: &Self::Update<'_>,
         jsonb_set_accumulator: &std::primitive::str,
         jsonb_set_target: &std::primitive::str,
