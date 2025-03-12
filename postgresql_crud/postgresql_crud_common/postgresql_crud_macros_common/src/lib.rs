@@ -156,3 +156,36 @@ pub fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud, ident, content_token_stream)
 }
+
+pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
+    ident_token_stream: &dyn quote::ToTokens,
+    where_query_part_content_token_stream: &dyn quote::ToTokens,
+    where_query_bind_content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+    let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+    let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
+    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
+    let std_string_string_token_stream = token_patterns::StdStringString;
+    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+    let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
+    let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
+    let postgresql_type_self_where_filter_upper_camel_case = naming::PostgresqlTypeSelfWhereFilterUpperCamelCase;
+    quote::quote!{
+        impl postgresql_crud::postgresql_type::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case for #ident_token_stream {
+            fn #where_query_part_snake_case(
+                &self,
+                #increment_snake_case: &mut #std_primitive_u64_token_stream,
+                #column_snake_case: &dyn #std_fmt_display_token_stream,
+                #is_need_to_add_logical_operator_snake_case: #std_primitive_bool_token_stream
+            ) -> Result<#std_string_string_token_stream, postgresql_crud::#query_part_error_named_upper_camel_case> {
+                #where_query_part_content_token_stream
+            }
+            fn #where_query_bind_snake_case<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                #where_query_bind_content_token_stream
+            }
+        }
+    }
+}

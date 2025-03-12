@@ -302,6 +302,13 @@ impl quote::ToTokens for StdPrimitiveI64 {
         quote::quote! {std::primitive::i64}.to_tokens(tokens)
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct StdFmtDisplay;
+impl quote::ToTokens for StdFmtDisplay {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::fmt::Display}.to_tokens(tokens)
+    }
+}
 
 fn crate_generate_postgresql_json_type() -> proc_macro2::TokenStream {
     quote::quote!{crate::generate_postgresql_json_type::}
