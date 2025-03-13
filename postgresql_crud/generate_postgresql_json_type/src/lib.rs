@@ -107,12 +107,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             },
         };
-        let postgresql_json_type_tokens_field_reader_try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
-            PostgresqlJsonTypeFieldReader::Ident => &naming::parameter::PostgresqlJsonTypeSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::PostgresqlJsonTypeStdOptionOptionObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::PostgresqlJsonTypeStdOptionOptionStdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+        let tokens_field_reader_try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
+            PostgresqlJsonTypeFieldReader::Ident => &naming::parameter::SelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::ObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
         };
         let fields_filter_is_empty_upper_camel_case = naming::FieldsFilterIsEmptyUpperCamelCase;
         let not_unique_field_filter_upper_camel_case = naming::NotUniqueFieldFilterUpperCamelCase;
@@ -145,7 +145,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             quote::quote!{
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #postgresql_json_type_tokens_field_reader_try_new_error_named_upper_camel_case_token_stream {
+                pub enum #tokens_field_reader_try_new_error_named_upper_camel_case_token_stream {
                     #fields_filter_is_empty_upper_camel_case {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
@@ -156,16 +156,16 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 }
                 impl #tokens_field_reader_upper_camel_case_token_stream {
-                    pub fn try_new(#input_parameters_token_stream) -> Result<Self, #postgresql_json_type_tokens_field_reader_try_new_error_named_upper_camel_case_token_stream> {
+                    pub fn try_new(#input_parameters_token_stream) -> Result<Self, #tokens_field_reader_try_new_error_named_upper_camel_case_token_stream> {
                         if #check_handle_token_stream.is_empty() {
-                            return Err(#postgresql_json_type_tokens_field_reader_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
+                            return Err(#tokens_field_reader_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!()
                             });
                         }
                         let mut #unique_snake_case = vec![];
                         for element in #check_handle_token_stream {
                             if #unique_snake_case.contains(&element) {
-                                return Err(#postgresql_json_type_tokens_field_reader_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
+                                return Err(#tokens_field_reader_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
                                     field: element,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
@@ -5664,10 +5664,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         #postgresql_type_traits_token_stream
     };
     // if ident == "" {
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "GeneratePostgresqlJsonType",
-            &generated,
-        );
+        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "GeneratePostgresqlJsonType",
+        //     &generated,
+        // );
     //     // quote::quote!{}.into()
     // }
     // // else {
