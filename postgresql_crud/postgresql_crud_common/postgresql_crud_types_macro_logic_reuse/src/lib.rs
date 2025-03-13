@@ -997,8 +997,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             });
         let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
 
-        let postgresql_json_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_json_type_ident_to_create_upper_camel_case, &ident);
+        let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+        let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident);
         let postgresql_json_type_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfFieldReaderUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_field_reader_token_stream = {
             let content_token_stream = match &postgresql_json_type_pattern.postgresql_json_type_pattern_type {
@@ -1507,7 +1507,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
             &quote::quote! {crate::postgresql_json_type::postgresql_json_type_trait::},
             &ident,
-            &postgresql_json_type_ident_to_create_upper_camel_case,
+            &ident_create_upper_camel_case,
             &{
                 //todo reuse
                 let crate_json_types_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream = quote::quote! {
@@ -1598,7 +1598,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_token_stream
 
-            #postgresql_json_type_ident_to_create_alias_token_stream
+            #ident_create_alias_token_stream
             #postgresql_json_type_ident_field_reader_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_field_reader_token_stream
             #postgresql_json_type_ident_options_to_read_alias_token_stream
