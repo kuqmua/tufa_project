@@ -5214,9 +5214,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
                         }
                     };
-                    let postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
-                        PostgresqlType::JsonbNullable => &naming::parameter::PostgresqlTypeSelfAsPostgresqlJsonbToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
-                        PostgresqlType::JsonbNotNull => &naming::parameter::PostgresqlTypeSelfAsPostgresqlJsonbNotNullToUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
+                    let tokens_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
+                        PostgresqlType::JsonbNullable => &naming::parameter::SelfAsPostgresqlJsonbUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
+                        PostgresqlType::JsonbNotNull => &naming::parameter::SelfAsPostgresqlJsonbNotNullUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
                     };
                     let postgresql_type_tokens_to_update_query_part_error_named_token_stream = {
                         quote::quote!{
@@ -5227,7 +5227,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 serde::Serialize,
                                 serde::Deserialize,
                             )]
-                            pub enum #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case {
+                            pub enum #tokens_update_query_part_error_named_upper_camel_case {
                                 #checked_add_variant_declaration_token_stream,
                                 Todo//todo
                             }
@@ -5273,7 +5273,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                     Ok(format!("${increment}"))
                                                 },
                                                 //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
-                                                None => Err(#postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                                None => Err(#tokens_update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case {
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 })
                                             }
@@ -5600,7 +5600,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #create_upper_camel_case = #postgresql_type_tokens_create_upper_camel_case;
                                 type #read_upper_camel_case = #postgresql_type_tokens_read_upper_camel_case;
                                 type #update_upper_camel_case = #postgresql_type_tokens_update_upper_camel_case;
-                                type #update_query_part_error_named_upper_camel_case = #postgresql_type_tokens_to_update_query_part_error_named_upper_camel_case;
+                                type #update_query_part_error_named_upper_camel_case = #tokens_update_query_part_error_named_upper_camel_case;
                                 #postgresql_type_self_to_update_query_part_token_stream
                                 #self_to_update_bind_query_part_token_stream
                                 type #where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
