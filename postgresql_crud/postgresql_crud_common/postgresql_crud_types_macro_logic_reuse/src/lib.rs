@@ -89,10 +89,7 @@ fn generate_postgresql_type_or_json_type_where_token_stream(
             }
         }
     };
-    let postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_or_json_type {
-        PostgresqlTypeOrJsonType::PostgresqlType => &naming::parameter::SelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        PostgresqlTypeOrJsonType::PostgresqlJsonType => &naming::parameter::PostgresqlJsonTypeSelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident),//todo remove PostgresqlJsonType prefix
-    };
+    let postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case = &naming::parameter::SelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
     let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
     let postgresql_type_or_json_type_ident_where_try_new_error_named_token_stream = {
