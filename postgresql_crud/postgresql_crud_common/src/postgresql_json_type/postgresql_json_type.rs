@@ -37,7 +37,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-pub type PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionsToRead = StdVecVecStdVecVecUuidUuid;
+pub type StdVecVecStdVecVecUuidUuidOptionsToRead = StdVecVecStdVecVecUuidUuid;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, schemars :: JsonSchema)]
 pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
     logical_operator: crate::LogicalOperator,
@@ -428,7 +428,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         query
     }
     type FieldReader<'a> = StdVecVecStdVecVecUuidUuidFieldReader;
-    type OptionsToRead<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionsToRead;
+    type OptionsToRead<'a> = StdVecVecStdVecVecUuidUuidOptionsToRead;
     fn field_reader_query_part(value: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
         // println!("fn field_reader_query_part");
         //todo change
