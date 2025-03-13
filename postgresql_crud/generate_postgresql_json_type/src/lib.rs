@@ -1750,7 +1750,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
     // let column_name_and_maybe_field_getter_handle_snake_case = naming::ColumnNameAndMaybeFieldGetterHandleSnakeCase;
     let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
-    let postgresql_json_type_ident_to_create_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfToCreateUpperCamelCase::from_tokens(&ident);
+    let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = quote::quote!{
@@ -1761,9 +1761,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
         let create_token_stream = {
-            let postgresql_json_type_ident_to_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_json_type_ident_to_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
+            let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
             quote::quote!{
-                #postgresql_json_type_ident_to_create_alias_token_stream
+                #ident_create_alias_token_stream
             }
         };
         let read_token_stream = {
@@ -5664,10 +5664,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         #postgresql_type_traits_token_stream
     };
     // if ident == "" {
-        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //     "GeneratePostgresqlJsonType",
-        //     &generated,
-        // );
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "GeneratePostgresqlJsonType",
+            &generated,
+        );
     //     // quote::quote!{}.into()
     // }
     // // else {
