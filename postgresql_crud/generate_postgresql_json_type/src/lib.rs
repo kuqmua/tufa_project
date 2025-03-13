@@ -806,11 +806,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     impl_try_new_for_postgresql_json_type_ident_options_to_read_with_id_token_stream
                 ) = {
                     let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
-                    let postgresql_json_type_ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionsToReadWithOrWithoutIdTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
+                    let ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case = naming::parameter::SelfOptionsToReadWithOrWithoutIdTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
                     let postgresql_json_type_ident_options_to_read_with_or_without_id_try_from_error_named_token_stream = {
                         quote::quote!{
                             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #postgresql_json_type_ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case {
+                            pub enum #ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case {
                                 #all_fields_are_none_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
@@ -884,7 +884,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 };
                                 quote::quote!{
                                     if let (#(#nones_token_stream),*) = (#postgresql_json_type_ident_options_to_read_with_or_without_id_fields_reference_token_stream) {
-                                        return Err(#postgresql_json_type_ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
+                                        return Err(#ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                             code_occurence: error_occurence_lib::code_occurence!()
                                         });
                                     }
@@ -892,7 +892,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             };
                             quote::quote!{
                                 impl #postgresql_json_type_ident_options_to_read_with_or_without_id_token_stream {
-                                    pub fn try_new(#postgresql_json_type_ident_options_to_read_with_or_without_id_fields_declaration_token_stream) -> Result<Self, #postgresql_json_type_ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case> {
+                                    pub fn try_new(#postgresql_json_type_ident_options_to_read_with_or_without_id_fields_declaration_token_stream) -> Result<Self, #ident_options_to_read_with_or_without_id_try_from_error_named_upper_camel_case> {
                                         #postgresql_json_type_ident_options_to_read_with_or_without_id_check_if_all_fields_are_none_token_stream
                                         Ok(Self{#postgresql_json_type_ident_options_to_read_with_or_without_id_fields_token_stream})
                                     }
