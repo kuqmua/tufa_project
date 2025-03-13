@@ -1050,9 +1050,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let ident_options_to_read_upper_camel_case = naming::parameter::SelfOptionsToReadUpperCamelCase::from_tokens(&ident);
         let ident_options_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_options_to_read_upper_camel_case, &ident);
 
-        let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
+        let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
         let postgresql_json_type_ident_where_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(&PostgresqlTypeOrJsonType::PostgresqlJsonType, &ident, &postgresql_json_type_ident_where_element_upper_camel_case, &postgresql_json_type_ident_where_upper_camel_case);
+        let postgresql_json_type_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(&PostgresqlTypeOrJsonType::PostgresqlJsonType, &ident, &ident_where_element_upper_camel_case, &postgresql_json_type_ident_where_upper_camel_case);
         enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
             Some { where_operator_name: &'a dyn crate::filters::WhereOperatorName, token_stream: proc_macro2::TokenStream },
             None,
@@ -1091,7 +1091,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         }
         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
         let postgresql_json_type_ident_where_element_token_stream = {
-            let postgresql_json_type_ident_where_element_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementUpperCamelCase::from_tokens(&ident);
+            let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
 
             let equal = crate::filters::Equal;
             let postgresql_json_type_ident_where_element_equal_token_stream = equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
@@ -1267,8 +1267,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         vec.push(&in_handle);
                         vec
                     },
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote! {
@@ -1289,8 +1289,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_bool_token_stream = || {
                 let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_where_element_token_stream(
                     &common_postgresql_json_type_filters_variants,
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote! {
@@ -1317,8 +1317,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         vec.push(&case_insensitive_regular_expression);
                         vec
                     },
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote! {
@@ -1351,8 +1351,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     filters_variants.push(where_operator_name);
                     filters_token_stream.push(token_stream);
                 }
-                let postgresql_json_type_ident_where_element_token_stream =
-                    generate_postgresql_type_where_element_token_stream(&filters_variants, &postgresql_json_type_ident_where_element_upper_camel_case, &postgresql_json_type_ident_where_element_upper_camel_case, &ShouldDeriveSchemarsJsonSchema::True);
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ShouldDeriveSchemarsJsonSchema::True
+                );
                 let generated = quote::quote! {
                     #(#filters_token_stream)*
                     #postgresql_json_type_ident_where_element_token_stream
@@ -1366,8 +1370,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let generate_postgresql_json_type_where_element_vec_bool_token_stream = || {
                 let filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                 let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
-                let postgresql_json_type_ident_where_element_token_stream =
-                    generate_postgresql_type_where_element_token_stream(&filters_variants, &postgresql_json_type_ident_where_element_upper_camel_case, &postgresql_json_type_ident_where_element_upper_camel_case, &ShouldDeriveSchemarsJsonSchema::True);
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ShouldDeriveSchemarsJsonSchema::True
+                );
                 let generated = quote::quote! {
                     #(#filters_token_stream)*
                     #postgresql_json_type_ident_where_element_token_stream
@@ -1405,8 +1413,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     filters_variants.push(where_operator_name);
                     filters_token_stream.push(token_stream);
                 }
-                let postgresql_json_type_ident_where_element_token_stream =
-                    generate_postgresql_type_where_element_token_stream(&filters_variants, &postgresql_json_type_ident_where_element_upper_camel_case, &postgresql_json_type_ident_where_element_upper_camel_case, &ShouldDeriveSchemarsJsonSchema::True);
+                let postgresql_json_type_ident_where_element_token_stream = generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
+                    &ShouldDeriveSchemarsJsonSchema::True
+                );
                 let generated = quote::quote! {
                     #(#filters_token_stream)*
                     #postgresql_json_type_ident_where_element_token_stream
@@ -1459,7 +1471,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let postgresql_json_type_ident_where_element_second_dimension_token_stream = generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
                     &postgresql_json_type_ident_where_element_second_dimension_upper_camel_case,
-                    &postgresql_json_type_ident_where_element_upper_camel_case,
+                    &ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote! {
@@ -1565,7 +1577,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     ))),
                 }
             },
-            &postgresql_json_type_ident_where_element_upper_camel_case,
+            &ident_where_element_upper_camel_case,
             &postgresql_json_type_ident_where_upper_camel_case,
             &postgresql_json_type_ident_option_to_update_upper_camel_case,
             &postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named_upper_camel_case,
@@ -4189,7 +4201,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     generate_postgresql_type_where_element_token_stream(
                         variants,
                         &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
-                        &naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_display(&postgresql_type_not_null_upper_camel_case),
+                        &naming::parameter::SelfWhereElementUpperCamelCase::from_display(&postgresql_type_not_null_upper_camel_case),
                         &ShouldDeriveSchemarsJsonSchema::False,
                     )
                 };
