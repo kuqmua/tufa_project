@@ -407,7 +407,7 @@ impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefault
         )]
     }
 }
-pub type PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate = StdVecVecStdVecVecUuidUuid;
+pub type StdVecVecStdVecVecUuidUuidUpdate = StdVecVecStdVecVecUuidUuid;
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
@@ -438,7 +438,7 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
     }
     type WhereElement<'a> = StdVecVecStdVecVecUuidUuidWhereElement;
     type Where = StdVecVecStdVecVecUuidUuidWhere;
-    type Update<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
+    type Update<'a> = StdVecVecStdVecVecUuidUuidUpdate;
     type UpdateQueryPartErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
     fn update_query_part(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
         match increment.checked_add(1) {
