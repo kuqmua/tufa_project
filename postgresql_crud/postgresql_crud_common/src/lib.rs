@@ -8,11 +8,11 @@ pub mod value;
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-//todo add another error variant instead for TryGenerateToCreateErrorNamed
-impl std::convert::From<crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed> for QueryPartErrorNamed {
-    fn from(value: crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed) -> Self {
+//todo add another error variant instead for CreateQueryPartErrorNamed
+impl std::convert::From<crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed> for QueryPartErrorNamed {
+    fn from(value: crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed) -> Self {
         match value {
-            crate::postgresql_json_type::postgresql_json_type_trait::TryGenerateToCreateErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence },
+            crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence },
         }
     }
 }
