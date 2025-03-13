@@ -1727,7 +1727,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     };
     let field0_token_stream = quote::quote!{__field0};
     let ident_option_to_update_try_generate_error_named_upper_camel_case = naming::parameter::SelfOptionToUpdateTryGenerateErrorNamedUpperCamelCase::from_tokens(&ident);
-    let postgresql_json_type_ident_option_to_update_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfOptionToUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+    let ident_update_try_new_error_named_upper_camel_case = naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let (
         generate_jsonb_set_target_snake_case,
         generate_jsonb_set_target_token_stream
@@ -1959,7 +1959,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     });
                     quote::quote!{
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                        pub enum #postgresql_json_type_ident_option_to_update_try_new_error_named_upper_camel_case {
+                        pub enum #ident_update_try_new_error_named_upper_camel_case {
                             #fields_are_empty_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             },
@@ -1972,7 +1972,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let check_fields_are_empty_token_stream = {
                             quote::quote!{
                                 if value.is_empty() {
-                                    return Err(#postgresql_json_type_ident_option_to_update_try_new_error_named_upper_camel_case::#fields_are_empty_upper_camel_case {
+                                    return Err(#ident_update_try_new_error_named_upper_camel_case::#fields_are_empty_upper_camel_case {
                                         code_occurence: error_occurence_lib::code_occurence!(),
                                     });
                                 }
@@ -1995,7 +1995,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #ident_update_origin_upper_camel_case::#variant_ident_upper_camel_case_token_stream(_) => {
                                         let value = #ident_field_to_update_upper_camel_case::#variant_ident_upper_camel_case_token_stream;
                                         if acc.contains(&value) {
-                                            return Err(#postgresql_json_type_ident_option_to_update_try_new_error_named_upper_camel_case::#not_unique_field_self_upper_camel_case_token_stream {
+                                            return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_field_self_upper_camel_case_token_stream {
                                                 error: #generate_not_unique_field_snake_case(#field_ident_double_quotes_token_stream),
                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                             });
@@ -2027,7 +2027,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     quote::quote!{
                         impl #ident_update_upper_camel_case {
-                            pub fn try_new(value: std::vec::Vec<#ident_update_origin_upper_camel_case>) -> Result<Self, #postgresql_json_type_ident_option_to_update_try_new_error_named_upper_camel_case> {
+                            pub fn try_new(value: std::vec::Vec<#ident_update_origin_upper_camel_case>) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
                                 #custom_checks_token_stream
                                 Ok(Self(value))
                             }
