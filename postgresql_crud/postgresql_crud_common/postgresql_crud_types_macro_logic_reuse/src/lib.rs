@@ -4190,7 +4190,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //     }
             // };
 
-            let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
                 let where_operator_type_field_type_default = WhereOperatorType::FieldType {
                     field_type: &postgresql_type_not_null_or_nullable_upper_camel_case,

@@ -1929,7 +1929,7 @@ impl RangeLength {
                     #value_snake_case: #array_position_type_token_stream
                 },
                 try_new_content_token_stream: &{
-                    let postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+                    let ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                     quote::quote! {
                         if #value_snake_case > 0 {
                             Ok(Self {
@@ -1938,7 +1938,7 @@ impl RangeLength {
                             })
                         }
                         else {
-                            Err(#postgresql_type_ident_where_element_range_length_try_new_error_named_upper_camel_case::#length_is_negative_or_zero_upper_camel_case {
+                            Err(#ident_where_element_range_length_try_new_error_named_upper_camel_case::#length_is_negative_or_zero_upper_camel_case {
                                 #value_snake_case,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             })
@@ -1946,7 +1946,7 @@ impl RangeLength {
                     }
                 },
                 impl_deserialize_token_stream: &generate_impl_deserialize_with_try_new_token_stream(
-                    &naming::parameter::PostgresqlTypeSelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident),
+                    &naming::parameter::SelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident),
                     &[
                         Field {
                             field_name: &naming::LogicalOperatorSnakeCase,
