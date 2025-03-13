@@ -350,9 +350,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         .unwrap_or_else(|| {
                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                         });
-                    let postgresql_json_type_type_path_to_create_token_stream = naming::parameter::PostgresqlJsonTypeSelfToCreateUpperCamelCase::from_type_last_segment(&element.ty);
+                    let type_path_create_token_stream = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.ty);
                     quote::quote!{
-                        #field_ident: #postgresql_json_type_type_path_to_create_token_stream
+                        #field_ident: #type_path_create_token_stream
                     }
                 });
                 quote::quote!{#(#value),*}

@@ -14,7 +14,7 @@ impl error_occurence_lib::ToStdStringString for StdVecVecStdVecVecUuidUuid {
         format!("{self:#?}")
     }
 }
-pub type PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate = StdVecVecStdVecVecUuidUuid;
+pub type StdVecVecStdVecVecUuidUuidCreate = StdVecVecStdVecVecUuidUuid;
 #[derive(
     Debug,
     Clone,
@@ -413,7 +413,7 @@ pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
-    type Create<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidToCreate;
+    type Create<'a> = StdVecVecStdVecVecUuidUuidCreate;
     fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
