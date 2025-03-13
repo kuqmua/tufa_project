@@ -39,10 +39,10 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
 }
 pub type StdVecVecStdVecVecUuidUuidOptionsToRead = StdVecVecStdVecVecUuidUuid;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, schemars :: JsonSchema)]
-pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
+pub struct StdVecVecStdVecVecUuidUuidWhere {
     logical_operator: crate::LogicalOperator,
     //here
-    dimension_1: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>,
+    dimension_1: std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>,
     dimension_2: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>,
 }
 #[derive(
@@ -54,7 +54,7 @@ pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
 Error,
     error_occurence_lib :: ErrorOccurence,
 )]
-pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
+pub enum StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
     NoDimensionFilters {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -63,7 +63,7 @@ pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
     },
     Dimension1NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
-        element: PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement,
+        element: StdVecVecStdVecVecUuidUuidWhereElement,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Dimension2IsEmpty {
@@ -75,19 +75,19 @@ pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
+impl StdVecVecStdVecVecUuidUuidWhere {
     fn try_new(
         logical_operator: crate::LogicalOperator,
-        dimension_1: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>,
+        dimension_1: std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>,
         dimension_2: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>,
-    ) -> Result<Self, PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed> {
+    ) -> Result<Self, StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed> {
         if let (None, None) = (&dimension_1, &dimension_2) {
-            return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::NoDimensionFilters { code_occurence: error_occurence_lib::code_occurence!() });
+            return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::NoDimensionFilters { code_occurence: error_occurence_lib::code_occurence!() });
         }
         //todo change logic
         if let Some(value) = &dimension_1 {
             if value.is_empty() {
-                return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
             }
             {
                 let mut acc = vec![];
@@ -95,7 +95,7 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
                     if !acc.contains(&element) {
                         acc.push(element);
                     } else {
-                        return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1NotUnique {
+                        return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension1NotUnique {
                             element: element.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -105,7 +105,7 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
         }
         if let Some(value) = &dimension_2 {
             if value.is_empty() {
-                return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
             }
             {
                 let mut acc = vec![];
@@ -113,7 +113,7 @@ impl PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
                     if !acc.contains(&element) {
                         acc.push(element);
                     } else {
-                        return Err(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2NotUnique {
+                        return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::Dimension2NotUnique {
                             element: element.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
@@ -128,7 +128,7 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
+    impl<'de> _serde::Deserialize<'de> for StdVecVecStdVecVecUuidUuidWhere {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -193,13 +193,13 @@ const _: () = {
             }
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere>,
+                marker: _serde::__private::PhantomData<StdVecVecStdVecVecUuidUuidWhere>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
+                type Value = StdVecVecStdVecVecUuidUuidWhere;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere")
+                    _serde::__private::Formatter::write_str(__formatter, "struct StdVecVecStdVecVecUuidUuidWhere")
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -209,22 +209,22 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere with 3 elements"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct StdVecVecStdVecVecUuidUuidWhere with 3 elements"));
                         }
                     };
-                    let __field1 = match _serde::de::SeqAccess::next_element::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>>(&mut __seq)? {
+                    let __field1 = match _serde::de::SeqAccess::next_element::<std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere with 3 elements"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct StdVecVecStdVecVecUuidUuidWhere with 3 elements"));
                         }
                     };
                     let __field2 = match _serde::de::SeqAccess::next_element::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere with 3 elements"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct StdVecVecStdVecVecUuidUuidWhere with 3 elements"));
                         }
                     };
-                    match PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere::try_new(__field0, __field1, __field2) {
+                    match StdVecVecStdVecVecUuidUuidWhere::try_new(__field0, __field1, __field2) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -235,7 +235,7 @@ const _: () = {
                     __A: _serde::de::MapAccess<'de>,
                 {
                     let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
-                    let mut __field1: _serde::__private::Option<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>> = _serde::__private::None;
                     let mut __field2: _serde::__private::Option<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
@@ -249,7 +249,7 @@ const _: () = {
                                 if _serde::__private::Option::is_some(&__field2) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("dimension_1"));
                                 }
-                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement>>>(&mut __map)?);
+                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>>(&mut __map)?);
                             }
                             __Field::__field2 => {
                                 if _serde::__private::Option::is_some(&__field2) {
@@ -274,7 +274,7 @@ const _: () = {
                         _serde::__private::Some(__field2) => __field2,
                         _serde::__private::None => _serde::__private::de::missing_field("dimension_2")?,
                     };
-                    match PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere::try_new(__field0, __field1, __field2) {
+                    match StdVecVecStdVecVecUuidUuidWhere::try_new(__field0, __field1, __field2) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -284,17 +284,17 @@ const _: () = {
             const FIELDS: &'static [&'static str] = &["logical_operator", "dimension_1", "dimension_2"];
             _serde::Deserializer::deserialize_struct(
                 __deserializer,
-                "PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere",
+                "StdVecVecStdVecVecUuidUuidWhere",
                 FIELDS,
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere>,
+                    marker: _serde::__private::PhantomData::<StdVecVecStdVecVecUuidUuidWhere>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for StdVecVecStdVecVecUuidUuidWhere {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
@@ -341,7 +341,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         query
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhere {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -351,11 +351,11 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
-pub struct PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual {
+pub struct StdVecVecStdVecVecUuidUuidWhereElementEqual {
     pub logical_operator: crate::LogicalOperator,
     pub value: StdVecVecStdVecVecUuidUuid,
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElementEqual {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -363,7 +363,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for StdVecVecStdVecVecUuidUuidWhereElementEqual {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
@@ -380,10 +380,10 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 }
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
-pub enum PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
-    Equal(PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElementEqual),
+pub enum StdVecVecStdVecVecUuidUuidWhereElement {
+    Equal(StdVecVecStdVecVecUuidUuidWhereElementEqual),
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for StdVecVecStdVecVecUuidUuidWhereElement {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match &self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
@@ -395,12 +395,12 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
         }
     }
 }
-impl error_occurence_lib::ToStdStringString for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
+impl error_occurence_lib::ToStdStringString for StdVecVecStdVecVecUuidUuidWhereElement {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement {
+impl crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![Self::Equal(
             crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -436,8 +436,8 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         let end = value.pagination.end();
         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {start} and {end})))")
     }
-    type WhereElement<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhereElement;
-    type Where = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidWhere;
+    type WhereElement<'a> = StdVecVecStdVecVecUuidUuidWhereElement;
+    type Where = StdVecVecStdVecVecUuidUuidWhere;
     type Update<'a> = PostgresqlJsonTypeStdVecVecStdVecVecUuidUuidOptionToUpdate;
     type UpdateQueryPartErrorNamed = StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed;
     fn update_query_part(_: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, Self::UpdateQueryPartErrorNamed> {
