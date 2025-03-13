@@ -1446,7 +1446,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
         //
         let postgresql_json_type_ident_where_element_second_dimension_token_stream = {
-            let postgresql_json_type_ident_where_element_second_dimension_upper_camel_case = naming::parameter::PostgresqlJsonTypeSelfWhereElementSecondDimensionUpperCamelCase::from_tokens(&ident);
+            let ident_where_element_second_dimension_upper_camel_case = naming::parameter::SelfWhereElementSecondDimensionUpperCamelCase::from_tokens(&ident);
 
             let equal_second_dimension = crate::filters::EqualSecondDimension;
             let postgresql_json_type_ident_where_element_equal_second_dimension_token_stream = equal_second_dimension.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
@@ -1462,18 +1462,18 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
             let common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
 
-            let generate_postgresql_json_type_where_element_vec_string_second_dimension_token_stream = || {
+            let generate_where_element_vec_string_second_dimension_token_stream = || {
                 let filters_variants: std::vec::Vec<&dyn crate::filters::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                 let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
-                let postgresql_json_type_ident_where_element_second_dimension_token_stream = generate_postgresql_type_where_element_token_stream(
+                let ident_where_element_second_dimension_token_stream = generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
-                    &postgresql_json_type_ident_where_element_second_dimension_upper_camel_case,
+                    &ident_where_element_second_dimension_upper_camel_case,
                     &ident_where_element_upper_camel_case,
                     &ShouldDeriveSchemarsJsonSchema::True,
                 );
                 let generated = quote::quote! {
                     #(#filters_token_stream)*
-                    #postgresql_json_type_ident_where_element_second_dimension_token_stream
+                    #ident_where_element_second_dimension_token_stream
                 };
                 // if ident == "" {
                 //     println!("{generated}");
@@ -1490,7 +1490,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 PostgresqlJsonTypePatternType::StdVecVecFullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => &proc_macro2_token_stream_new,
                     PostgresqlJsonTypeSpecific::Bool => &proc_macro2_token_stream_new,
-                    PostgresqlJsonTypeSpecific::String => &generate_postgresql_json_type_where_element_vec_string_second_dimension_token_stream(),
+                    PostgresqlJsonTypeSpecific::String => &generate_where_element_vec_string_second_dimension_token_stream(),
                 },
                 PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => &proc_macro2_token_stream_new,
@@ -1622,10 +1622,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         // if quote::quote!{#ident}.to_string() == "StdVecVecStdVecVecUuidUuid" {
         //    //  println!("{generated}");
         //    //  println!("-------");
-        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //         "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-        //         &generated,
-        //     );
+            // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //     "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
+            //     &generated,
+            // );
         //     generated = quote::quote!{}
         // }
         generated

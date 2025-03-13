@@ -43,7 +43,7 @@ pub struct StdVecVecStdVecVecUuidUuidWhere {
     logical_operator: crate::LogicalOperator,
     //here
     dimension_1: std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>,
-    dimension_2: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>,
+    dimension_2: std::option::Option<std::vec::Vec<StdVecVecUuidUuidWhereElementSecondDimension>>,
 }
 #[derive(
     Debug,
@@ -71,7 +71,7 @@ pub enum StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed {
     },
     Dimension2NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
-        element: PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension,
+        element: StdVecVecUuidUuidWhereElementSecondDimension,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -79,7 +79,7 @@ impl StdVecVecStdVecVecUuidUuidWhere {
     fn try_new(
         logical_operator: crate::LogicalOperator,
         dimension_1: std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>,
-        dimension_2: std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>,
+        dimension_2: std::option::Option<std::vec::Vec<StdVecVecUuidUuidWhereElementSecondDimension>>,
     ) -> Result<Self, StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed> {
         if let (None, None) = (&dimension_1, &dimension_2) {
             return Err(StdVecVecStdVecVecUuidUuidWhereTryNewErrorNamed::NoDimensionFilters { code_occurence: error_occurence_lib::code_occurence!() });
@@ -218,7 +218,7 @@ const _: () = {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct StdVecVecStdVecVecUuidUuidWhere with 3 elements"));
                         }
                     };
-                    let __field2 = match _serde::de::SeqAccess::next_element::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>>(&mut __seq)? {
+                    let __field2 = match _serde::de::SeqAccess::next_element::<std::option::Option<std::vec::Vec<StdVecVecUuidUuidWhereElementSecondDimension>>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct StdVecVecStdVecVecUuidUuidWhere with 3 elements"));
@@ -236,7 +236,7 @@ const _: () = {
                 {
                     let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
                     let mut __field1: _serde::__private::Option<std::option::Option<std::vec::Vec<StdVecVecStdVecVecUuidUuidWhereElement>>> = _serde::__private::None;
-                    let mut __field2: _serde::__private::Option<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>> = _serde::__private::None;
+                    let mut __field2: _serde::__private::Option<std::option::Option<std::vec::Vec<StdVecVecUuidUuidWhereElementSecondDimension>>> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
                             __Field::__field0 => {
@@ -255,7 +255,7 @@ const _: () = {
                                 if _serde::__private::Option::is_some(&__field2) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("dimension_2"));
                                 }
-                                __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<PostgresqlJsonTypeStdVecVecUuidUuidWhereElementSecondDimension>>>(&mut __map)?);
+                                __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::option::Option<std::vec::Vec<StdVecVecUuidUuidWhereElementSecondDimension>>>(&mut __map)?);
                             }
                             _ => {
                                 let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
