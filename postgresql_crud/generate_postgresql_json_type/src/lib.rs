@@ -2822,10 +2822,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let field0_field1_token_stream = quote::quote!{__field0, __field1};
                         match &postgresql_json_type {
                             PostgresqlJsonType::Object => {
-                                let postgresql_json_type_object_ident_field_reader_upper_camel_case = naming::parameter::PostgresqlJsonTypeObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
-                                let tuple_struct_postgresql_json_type_object_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&postgresql_json_type_object_ident_field_reader_upper_camel_case);
-                                let tuple_struct_postgresql_json_type_object_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&postgresql_json_type_object_ident_field_reader_upper_camel_case);
-                                let postgresql_json_type_object_ident_field_reader_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_json_type_object_ident_field_reader_upper_camel_case);
+                                let object_ident_field_reader_upper_camel_case = naming::parameter::ObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident);
+                                let tuple_struct_object_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&object_ident_field_reader_upper_camel_case);
+                                let tuple_struct_object_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&object_ident_field_reader_upper_camel_case);
+                                let object_ident_field_reader_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&object_ident_field_reader_upper_camel_case);
                                 let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
                                     &postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream,
                                     &field0_token_stream,
@@ -2851,7 +2851,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                 ) -> serde::__private::fmt::Result {
                                                     serde::__private::Formatter::write_str(
                                                         __formatter,
-                                                        #tuple_struct_postgresql_json_type_object_ident_field_reader_double_quotes_token_stream,
+                                                        #tuple_struct_object_ident_field_reader_double_quotes_token_stream,
                                                     )
                                                 }
                                                 #[inline]
@@ -2883,7 +2883,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                             return serde::__private::Err(
                                                                 serde::de::Error::invalid_length(
                                                                     0usize,
-                                                                    &#tuple_struct_postgresql_json_type_object_ident_field_reader_with_1_element_double_quotes_token_stream,
+                                                                    &#tuple_struct_object_ident_field_reader_with_1_element_double_quotes_token_stream,
                                                                 ),
                                                             );
                                                         }
@@ -2893,7 +2893,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                             }
                                             serde::Deserializer::deserialize_newtype_struct(
                                                 __deserializer,
-                                                #postgresql_json_type_object_ident_field_reader_upper_camel_case_double_quotes_token_stream,
+                                                #object_ident_field_reader_upper_camel_case_double_quotes_token_stream,
                                                 __Visitor {
                                                     marker: serde::__private::PhantomData::<#postgresql_json_type_tokens_field_reader_upper_camel_case_token_stream>,
                                                     lifetime: serde::__private::PhantomData,
