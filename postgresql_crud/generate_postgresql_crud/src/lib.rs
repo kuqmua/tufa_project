@@ -5501,7 +5501,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_one_token_stream
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
-            // #update_one_token_stream
+            #update_one_token_stream
             //// #delete_many_token_stream
             // #delete_one_token_stream
         // // }
