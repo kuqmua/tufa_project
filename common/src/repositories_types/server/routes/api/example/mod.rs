@@ -1,4 +1,7 @@
-#[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
+#[derive(
+    Debug, 
+    postgresql_crud::GeneratePostgresqlCrud
+)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -407,3 +410,12 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
 }
 
 //////////////////////////////////
+/// 
+struct Something<'a> {
+    k: <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'a>>::Where
+}
+// fn tyu() {
+//     let f = ; 
+// }
+
+///////////////////////
