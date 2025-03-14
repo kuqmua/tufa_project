@@ -1158,10 +1158,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
             }
         }
-        fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
-            let operation_payload_element_upper_camel_case = naming::parameter::SelfPayloadElementUpperCamelCase::from_display(self);
-            quote::quote! {std::vec::Vec<#operation_payload_element_upper_camel_case>}
-        }
         const fn desirable_status_code(&self) -> macros_helpers::status_code::StatusCode {
             match self {
                 Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
@@ -1948,10 +1944,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let field_ident = &element.field_ident;
         let field_type = &element.syn_field.ty;
         // let where_inner_type_with_generic_token_stream = &element.where_inner_type_with_generic_token_stream;
-        // let field_type_where_upper_camel_case = &naming::parameter::SelfWhereUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
         quote::quote! {
             pub #field_ident: std::option::Option<<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'a>>::Where>
-            // #field_type_where_upper_camel_case
         }
     });
     let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
@@ -2472,22 +2466,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_payload_and_payload_element_token_stream = |operation: &Operation, fields_token_stream: &dyn quote::ToTokens| -> proc_macro2::TokenStream {
+    let generate_payload_and_payload_element_token_stream = |
+        operation: &Operation,
+        payload_element_lifetime_token_stream: &dyn quote::ToTokens,
+        payload_lifetime_token_stream: &dyn quote::ToTokens,
+        fields_token_stream: &dyn quote::ToTokens
+    | -> proc_macro2::TokenStream {
         let operation_payload_element_token_stream = {
             let operation_payload_element_upper_camel_case = naming::parameter::SelfPayloadElementUpperCamelCase::from_display(operation);
             quote::quote! {
                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-                pub struct #operation_payload_element_upper_camel_case {
+                pub struct #operation_payload_element_upper_camel_case #payload_element_lifetime_token_stream {
                     #fields_token_stream
                 }
             }
         };
         let operation_payload_token_stream = {
             let operation_payload_upper_camel_case = naming::parameter::SelfPayloadUpperCamelCase::from_display(operation);
-            let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
+            let operation_payload_element_upper_camel_case = naming::parameter::SelfPayloadElementUpperCamelCase::from_display(&operation);
             quote::quote! {
                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-                pub struct #operation_payload_upper_camel_case(pub #std_vec_vec_operation_payload_element_token_stream);
+                pub struct #operation_payload_upper_camel_case #payload_lifetime_token_stream(pub std::vec::Vec<#operation_payload_element_upper_camel_case #payload_element_lifetime_token_stream>);
             }
         };
         quote::quote! {
@@ -2641,14 +2640,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = 
-    
-    generate_fields_named_token_stream
+    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_token_stream
     // generate_fields_named_excluding_primary_key_token_stream
     (&|element: &SynFieldWrapper| {
         let field_ident = &element.field_ident;
-        // let field_type = &element.syn_field.ty;
-        let field_type_create = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+        let field_type = &element.syn_field.ty;
+        // let field_type_create = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
         // let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
         // let field_type_token_stream = match &element.option_generic {
         //     Some(value) => {
@@ -2663,7 +2660,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //     None => inner_type_token_stream.clone(),
         // };
         quote::quote! {
-            pub #field_ident: #field_type_create
+            // pub #field_ident: #field_type_create
+            pub #field_ident: <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'a>>::Create
         }
     });
     let generate_try_operation_token_stream = |
@@ -3077,10 +3075,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
+            &quote::quote!{<'a>},
+            &quote::quote!{<'a>},
             generate_payload_and_payload_element_token_stream(
                 &operation,
+                &quote::quote!{<'a>},
+                &quote::quote!{<'a>},
                 &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream
             )
         );
@@ -3246,7 +3246,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &proc_macro2::TokenStream::new(),
+                &quote::quote!{<'_>},
                 &type_variants_from_request_response_syn_variants,
                 // &std_vec_vec_primary_key_inner_type_token_stream,
                 &std_vec_vec_primary_key_field_type_read_token_stream,
@@ -3302,12 +3302,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_element_token_stream = 
             postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &naming::parameter::SelfPayloadElementUpperCamelCase::from_display(&operation),
-                &proc_macro2::TokenStream::new(),
+                &quote::quote!{<'_>},
                 &fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream,
             );
             let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                 &naming::parameter::SelfPayloadUpperCamelCase::from_display(&operation),
-                &proc_macro2::TokenStream::new(),
+                &quote::quote!{<'_>},
                 &quote::quote! {Self(vec![#postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream])},
             );
             quote::quote! {
@@ -4264,6 +4264,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro2::TokenStream::new(),
             generate_payload_and_payload_element_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
+                &proc_macro2::TokenStream::new(),
                 &update_fields_token_stream
             )
         );
