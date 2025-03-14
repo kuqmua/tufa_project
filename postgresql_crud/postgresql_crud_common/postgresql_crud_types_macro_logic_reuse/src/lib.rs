@@ -4803,12 +4803,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let postgresql_type_not_null_or_nullable_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            //todo maybe put Where into library? seems like it can be struct with generic parameter what can be imported from library
-            let postgresql_type_not_null_or_nullable_where_token_stream = generate_postgresql_type_or_json_type_where_token_stream(
-                &PostgresqlTypeOrJsonType::PostgresqlType,
-                &postgresql_type_not_null_or_nullable_upper_camel_case,
-                &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
+            //todo even alias can be remove if in GeneratePostgresqlCrud use Trait type, not naming convension like add postfix Where to type name
+            let postgresql_type_not_null_or_nullable_where_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                 &postgresql_type_not_null_or_nullable_where_upper_camel_case,
+                &quote::quote!{PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case>}
             );
 
             let impl_postgresql_type_for_ident_token_stream = {
