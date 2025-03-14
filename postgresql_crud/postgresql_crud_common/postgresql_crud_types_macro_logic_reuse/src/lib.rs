@@ -72,350 +72,6 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
         }
     }
 }
-fn generate_postgresql_type_or_json_type_where_token_stream(
-    postgresql_type_or_json_type: &PostgresqlTypeOrJsonType,
-    ident: &dyn quote::ToTokens,
-    postgresql_type_or_json_type_ident_where_element_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    postgresql_type_or_json_type_ident_where_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-) -> proc_macro2::TokenStream {
-    let crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-    let postgresql_type_or_json_type_ident_where_token_stream = {
-        let should_derive_schemars_json_schema = ShouldDeriveSchemarsJsonSchema::from(postgresql_type_or_json_type);
-        quote::quote! {
-            #[derive(Debug, Clone, PartialEq, serde::Serialize #should_derive_schemars_json_schema)]
-            pub struct #postgresql_type_or_json_type_ident_where_upper_camel_case {
-                logical_operator: crate::LogicalOperator,
-                value: std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
-            }
-        }
-    };
-    let postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case = &naming::parameter::SelfWhereTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-    let is_empty_upper_camel_case = naming::IsEmptyUpperCamelCase;
-    let not_unique_upper_camel_case = naming::NotUniqueUpperCamelCase;
-    let postgresql_type_or_json_type_ident_where_try_new_error_named_token_stream = {
-        quote::quote! {
-            #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case {
-                #is_empty_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                },
-                #not_unique_upper_camel_case {
-                    #[eo_to_std_string_string_serialize_deserialize]
-                    value: #postgresql_type_or_json_type_ident_where_element_upper_camel_case,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                },
-            }
-        }
-    };
-    let impl_postgresql_type_or_json_type_ident_where_try_new_token_stream = {
-        let logical_operator_upper_camel_case = naming::LogicalOperatorUpperCamelCase;
-        let logical_operator_snake_case = naming::LogicalOperatorSnakeCase;
-        quote::quote! {
-            impl #postgresql_type_or_json_type_ident_where_upper_camel_case {
-                fn try_new(
-                    #logical_operator_snake_case: crate::#logical_operator_upper_camel_case,
-                    value: std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
-                ) -> Result<Self, #postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case> {
-                    if value.is_empty() {
-                        return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#is_empty_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    {
-                        let mut acc = vec![];
-                        for element in &value {
-                            if !acc.contains(&element) {
-                                acc.push(element);
-                            } else {
-                                return Err(#postgresql_type_or_json_type_ident_where_try_new_error_named_upper_camel_case::#not_unique_upper_camel_case {
-                                    value: element.clone(),
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                    }
-                    Ok(Self {
-                        #logical_operator_snake_case,
-                        value,
-                    })
-                }
-            }
-        }
-    };
-    let impl_serde_deserialize_for_postgresql_type_or_json_type_ident_where_token_stream = {
-        let (struct_postgresql_json_type_ident_where_double_quotes_token_stream, struct_postgresql_json_type_ident_where_with_2_elements_double_quotes_token_stream, postgresql_json_type_ident_where_double_quotes_token_stream) =
-            crate::generate_serde_deserialize_double_quotes_token_stream(&postgresql_type_or_json_type_ident_where_upper_camel_case, 2);
-        quote::quote! {
-            const _: () = {
-                #[allow(unused_extern_crates, clippy::useless_attribute)]
-                extern crate serde as _serde;
-                #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for #postgresql_type_or_json_type_ident_where_upper_camel_case {
-                    fn deserialize<__D>(
-                        __deserializer: __D,
-                    ) -> _serde::__private::Result<Self, __D::Error>
-                    where
-                        __D: _serde::Deserializer<'de>,
-                    {
-                        #[allow(non_camel_case_types)]
-                        #[doc(hidden)]
-                        enum __Field {
-                            __field0,
-                            __field1,
-                            __ignore,
-                        }
-                        #[doc(hidden)]
-                        struct __FieldVisitor;
-                        impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                            type Value = __Field;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    "field identifier",
-                                )
-                            }
-                            fn visit_u64<__E>(
-                                self,
-                                __value: u64,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    0u64 => _serde::__private::Ok(__Field::__field0),
-                                    1u64 => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_str<__E>(
-                                self,
-                                __value: &str,
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    "value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                            fn visit_bytes<__E>(
-                                self,
-                                __value: &[u8],
-                            ) -> _serde::__private::Result<Self::Value, __E>
-                            where
-                                __E: _serde::de::Error,
-                            {
-                                match __value {
-                                    b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                                    b"value" => _serde::__private::Ok(__Field::__field1),
-                                    _ => _serde::__private::Ok(__Field::__ignore),
-                                }
-                            }
-                        }
-                        impl<'de> _serde::Deserialize<'de> for __Field {
-                            #[inline]
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
-                            where
-                                __D: _serde::Deserializer<'de>,
-                            {
-                                _serde::Deserializer::deserialize_identifier(
-                                    __deserializer,
-                                    __FieldVisitor,
-                                )
-                            }
-                        }
-                        #[doc(hidden)]
-                        struct __Visitor<'de> {
-                            marker: _serde::__private::PhantomData<#postgresql_type_or_json_type_ident_where_upper_camel_case>,
-                            lifetime: _serde::__private::PhantomData<&'de ()>,
-                        }
-                        impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                            type Value = #postgresql_type_or_json_type_ident_where_upper_camel_case;
-                            fn expecting(
-                                &self,
-                                __formatter: &mut _serde::__private::Formatter,
-                            ) -> _serde::__private::fmt::Result {
-                                _serde::__private::Formatter::write_str(
-                                    __formatter,
-                                    #struct_postgresql_json_type_ident_where_double_quotes_token_stream,
-                                )
-                            }
-                            #[inline]
-                            fn visit_seq<__A>(
-                                self,
-                                mut __seq: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::SeqAccess<'de>,
-                            {
-                                let __field0 = match _serde::de::SeqAccess::next_element::<
-                                    crate::LogicalOperator,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                0usize,
-                                                &#struct_postgresql_json_type_ident_where_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                let __field1 = match _serde::de::SeqAccess::next_element::<
-                                    std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
-                                >(&mut __seq)? {
-                                    _serde::__private::Some(__value) => __value,
-                                    _serde::__private::None => {
-                                        return _serde::__private::Err(
-                                            _serde::de::Error::invalid_length(
-                                                1usize,
-                                                &#struct_postgresql_json_type_ident_where_with_2_elements_double_quotes_token_stream,
-                                            ),
-                                        );
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                            #[inline]
-                            fn visit_map<__A>(
-                                self,
-                                mut __map: __A,
-                            ) -> _serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: _serde::de::MapAccess<'de>,
-                            {
-                                let mut __field0: _serde::__private::Option<
-                                    crate::LogicalOperator,
-                                > = _serde::__private::None;
-                                let mut __field1: _serde::__private::Option<std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>> = _serde::__private::None;
-                                while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                    __Field,
-                                >(&mut __map)? {
-                                    match __key {
-                                        __Field::__field0 => {
-                                            if _serde::__private::Option::is_some(&__field0) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field(
-                                                        "logical_operator",
-                                                    ),
-                                                );
-                                            }
-                                            __field0 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    crate::LogicalOperator,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        __Field::__field1 => {
-                                            if _serde::__private::Option::is_some(&__field1) {
-                                                return _serde::__private::Err(
-                                                    <__A::Error as _serde::de::Error>::duplicate_field("value"),
-                                                );
-                                            }
-                                            __field1 = _serde::__private::Some(
-                                                _serde::de::MapAccess::next_value::<
-                                                    std::vec::Vec<#postgresql_type_or_json_type_ident_where_element_upper_camel_case>,
-                                                >(&mut __map)?,
-                                            );
-                                        }
-                                        _ => {
-                                            let _ = _serde::de::MapAccess::next_value::<
-                                                _serde::de::IgnoredAny,
-                                            >(&mut __map)?;
-                                        }
-                                    }
-                                }
-                                let __field0 = match __field0 {
-                                    _serde::__private::Some(__field0) => __field0,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("logical_operator")?
-                                    }
-                                };
-                                let __field1 = match __field1 {
-                                    _serde::__private::Some(__field1) => __field1,
-                                    _serde::__private::None => {
-                                        _serde::__private::de::missing_field("value")?
-                                    }
-                                };
-                                match #postgresql_type_or_json_type_ident_where_upper_camel_case::try_new(__field0, __field1) {
-                                    Ok(value) => serde::__private::Ok(value),
-                                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
-                                }
-                            }
-                        }
-                        #[doc(hidden)]
-                        const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
-                        _serde::Deserializer::deserialize_struct(
-                            __deserializer,
-                            #postgresql_json_type_ident_where_double_quotes_token_stream,
-                            FIELDS,
-                            __Visitor {
-                                marker: _serde::__private::PhantomData::<#postgresql_type_or_json_type_ident_where_upper_camel_case>,
-                                lifetime: _serde::__private::PhantomData,
-                            },
-                        )
-                    }
-                }
-            };
-        }
-    };
-    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
-        &postgresql_type_or_json_type_ident_where_upper_camel_case,
-        &quote::quote!{
-            let mut acc = std::string::String::default();
-            let mut is_need_to_add_logical_operator_inner_handle = false;
-            for element in &self.value {
-                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
-                    Ok(value) => {
-                        acc.push_str(&format!("{value} "));
-                        is_need_to_add_logical_operator_inner_handle = true;
-                    }
-                    Err(error) => {
-                        return Err(error);
-                    }
-                }
-            }
-            let _ = acc.pop();
-            Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-        },
-        &quote::quote!{
-            for element in self.value {
-                query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
-            }
-            query
-        },
-        &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
-    );
-    let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_or_json_type_ident_where_token_stream =
-        postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_or_json_type_ident_where_upper_camel_case, &{
-            let crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream =
-                token_patterns::CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementCall;
-            quote::quote! {
-                Self {
-                    logical_operator: #crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                    value: #crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream,
-                }
-            }
-        });
-    quote::quote! {
-        #postgresql_type_or_json_type_ident_where_token_stream
-        #postgresql_type_or_json_type_ident_where_try_new_error_named_token_stream
-        #impl_postgresql_type_or_json_type_ident_where_try_new_token_stream
-        #impl_serde_deserialize_for_postgresql_type_or_json_type_ident_where_token_stream
-        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_or_json_type_ident_where_token_stream
-        #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_or_json_type_ident_where_token_stream
-    }
-}
 fn generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let self_snake_case = naming::SelfSnakeCase;
     quote::quote! {
@@ -1048,11 +704,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let ident_options_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_options_to_read_upper_camel_case, &ident);
 
         let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-        let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
-        let postgresql_json_type_where_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-            &ident_where_upper_camel_case,
-            &quote::quote!{crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#ident_where_element_upper_camel_case>}
-        );
         
         enum MaybePostgresqlJsonTypeIdentWhereElementFilter<'a> {
             Some { where_operator_name: &'a dyn crate::filters::WhereOperatorName, token_stream: proc_macro2::TokenStream },
@@ -1579,7 +1230,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &ident_where_element_upper_camel_case,
-            &ident_where_upper_camel_case,
+            &quote::quote!{crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#ident_where_element_upper_camel_case>},
             &ident_update_upper_camel_case,
             &ident_update_error_named_upper_camel_case,
             &{
@@ -1615,7 +1266,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #ident_field_reader_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_field_reader_token_stream
             #ident_options_to_read_alias_token_stream
-            #postgresql_json_type_where_token_stream
             #postgresql_json_type_ident_where_element_token_stream
             #postgresql_json_type_ident_where_element_second_dimension_token_stream
             #ident_update_alias_token_stream
@@ -4806,13 +4456,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 }
             };
-            let postgresql_type_not_null_or_nullable_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            //todo even alias can be remove if in GeneratePostgresqlCrud use Trait type, not naming convension like add postfix Where to type name
-            let postgresql_type_not_null_or_nullable_where_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
-                &postgresql_type_not_null_or_nullable_where_upper_camel_case,
-                &quote::quote!{crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case>}
-            );
-
             let impl_postgresql_type_for_ident_token_stream = {
                 let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
                 let self_upper_camel_case = naming::SelfUpperCamelCase;
@@ -4915,7 +4558,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #postgresql_type_self_to_update_query_part_token_stream
                         #self_to_update_bind_query_part_token_stream
                         type #where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
-                        type #where_upper_camel_case = #postgresql_type_not_null_or_nullable_where_upper_camel_case;
+                        type #where_upper_camel_case = crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case>;
                         #where_query_part_token_stream
                         #where_query_bind_token_stream
                     }
@@ -4953,7 +4596,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #postgresql_type_not_null_or_nullable_to_update_token_stream
                 #postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_token_stream
                 #postgresql_type_not_null_or_nullable_where_element_token_stream
-                #postgresql_type_not_null_or_nullable_where_token_stream
                 #impl_postgresql_type_for_ident_token_stream
             }
         };
