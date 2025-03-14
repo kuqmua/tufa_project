@@ -3344,11 +3344,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            &proc_macro2::TokenStream::new(),
-            &proc_macro2::TokenStream::new(),
+            &quote::quote!{<'a>},
+            &quote::quote!{<'a>},
             generate_operation_payload_token_stream(
                 &operation,
-                &proc_macro2::TokenStream::new(),
+                &quote::quote!{<'a>},
                 &pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream,
             )
         );
@@ -3487,7 +3487,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &proc_macro2::TokenStream::new(),
+                &quote::quote!{<'_>},
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_field_type_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
@@ -3534,7 +3534,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{try_operation_token_stream}");
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &naming::parameter::SelfPayloadUpperCamelCase::from_display(&operation),
-            &proc_macro2::TokenStream::new(),
+            &quote::quote!{<'_>},
             &fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_curly_braces_token_stream,
         );
         // println!("{impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream}");
@@ -5496,7 +5496,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            // #create_one_token_stream
+            #create_one_token_stream
             #read_many_token_stream
             // #read_one_token_stream
             //todo fix trait calls in update many comparing with update_one
