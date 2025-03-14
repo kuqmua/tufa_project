@@ -2668,6 +2668,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let generate_try_operation_token_stream = |
         operation: &Operation,
+        operation_parameters_lifetime_token_stream: &dyn quote::ToTokens,
         type_variants_from_request_response_syn_variants: &[syn::Variant],
         result_ok_type_token_stream: &dyn quote::ToTokens,
         payload_check_token_stream: &dyn quote::ToTokens,
@@ -2808,7 +2809,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             pub async fn #try_operation_snake_case(
                 #server_location_snake_case: #ref_std_primitive_str,//todo rename as endpoint location
-                #parameters_snake_case: #operation_parameters_upper_camel_case,
+                #parameters_snake_case: #operation_parameters_upper_camel_case #operation_parameters_lifetime_token_stream,
             ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case> {
                 #payload_token_stream
                 #url_token_stream
@@ -3245,6 +3246,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 // &std_vec_vec_primary_key_inner_type_token_stream,
                 &std_vec_vec_primary_key_field_type_read_token_stream,
@@ -3485,6 +3487,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_field_type_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
@@ -3790,6 +3793,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &quote::quote!{<'_>},
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_struct_options_ident_token_stream,
                 &{
@@ -4110,6 +4114,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &ident_options_upper_camel_case,
                 &{
@@ -4563,6 +4568,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_field_type_to_update_token_stream,
                 &{
@@ -4884,6 +4890,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_field_type_update_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
@@ -5176,6 +5183,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_field_type_to_delete_token_stream,
                 &proc_macro2::TokenStream::new(), //todo maybe add filter on not unique primary key like in read_many ?
@@ -5347,6 +5355,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &primary_key_field_type_to_delete_upper_camel_case,
                 &proc_macro2::TokenStream::new(),

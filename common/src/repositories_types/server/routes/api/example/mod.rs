@@ -410,12 +410,3 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
 }
 
 //////////////////////////////////
-/// 
-struct Something<'a> {
-    k: <postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'a>>::Where
-}
-// fn tyu() {
-//     let f = ; 
-// }
-
-///////////////////////
