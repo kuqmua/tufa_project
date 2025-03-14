@@ -46,7 +46,7 @@
     // }
 }]
 pub struct Example {
-    // pub std_primitive_i16_as_small_int2_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull,
+    pub std_primitive_i16_as_small_int2_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull,
     // pub std_primitive_i16_as_small_int2_nullable: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2Nullable,
 
     // pub std_primitive_i32_as_int4_not_null: postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4NotNull,
@@ -317,9 +317,9 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
     let create_table_if_not_exists_query_stringified = format!(
         // "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
         // "create table if not exists example ({},{},{},{})",
-        "create table if not exists example ({},{})",
+        "create table if not exists example ({},{},{})",
         postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull::create_table_column_query_part(&"std_primitive_i64_as_postgresql_big_serial_not_null_primary_key", true),
-        // postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_column_query_part(&"std_primitive_i16_as_small_int2_not_null", false),
+        postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2NotNull::create_table_column_query_part(&"std_primitive_i16_as_small_int2_not_null", false),
         // postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI16AsPostgresqlInt2Nullable::create_table_column_query_part(&"std_primitive_i16_as_small_int2_nullable", false),
         // postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4NotNull::create_table_column_query_part(&"std_primitive_i32_as_int4_not_null", false),
         // postgresql_crud::postgresql_type::postgresql_type::StdPrimitiveI32AsPostgresqlInt4Nullable::create_table_column_query_part(&"std_primitive_i32_as_int4_nullable", false),

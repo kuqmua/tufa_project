@@ -1083,6 +1083,18 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
         }
     }
 }
+///////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 /////////////////////////////
 // #[derive(Debug, Clone, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
 // pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull(pub std::vec::Vec<StdPrimitiveI16AsPostgresqlInt2NotNull>);
