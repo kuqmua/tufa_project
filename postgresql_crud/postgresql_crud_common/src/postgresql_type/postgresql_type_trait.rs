@@ -4,7 +4,7 @@ pub trait PostgresqlTypeSelfWhereFilter {
 }
 
 //maybe put analog\copy of BindQuery inside this trait?
-pub trait PostgresqlType<'a> {
+pub trait PostgresqlType {
     type PostgresqlTypeSelf: std::fmt::Debug;
     type Column: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     //maybe move it into own trait?

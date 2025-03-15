@@ -4535,10 +4535,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_query_bind_token_stream = {
                     let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
                     quote::quote! {
-                        fn #where_query_bind_snake_case<'a>(
+                        fn #where_query_bind_snake_case(
                             #value_snake_case: Self::#where_upper_camel_case,
-                            mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                        ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                        ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             for #element_snake_case in #value_snake_case.#value_snake_case {
                                 #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(#element_snake_case, #query_snake_case);
                             }
@@ -4547,7 +4547,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 quote::quote! {
-                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case<'_> for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
                         #self_column_query_part_token_stream
