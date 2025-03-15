@@ -763,11 +763,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let variants = fields.iter().map(|element| {
                 let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let field_type = &element.syn_field.ty;
+                let type_path_column_upper_camel_case = naming::parameter::SelfColumnUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
                     #field_ident_upper_camel_case_token_stream(
-                        <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType<'a>>::Column
+                        #type_path_column_upper_camel_case
                     )
                 }
             });
@@ -779,7 +779,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     PartialEq,
                     Clone,
                 )]
-                pub enum #ident_column_upper_camel_case<'a> {
+                pub enum #ident_column_upper_camel_case {
                     #(#variants),*
                 }
             }
@@ -801,7 +801,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     }
             // });
             quote::quote! {
-                impl std::fmt::Display for #ident_column_upper_camel_case<'_> {
+                impl std::fmt::Display for #ident_column_upper_camel_case {
                     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         // match self {
                         //     #(#display_variants),*
@@ -814,7 +814,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let impl_error_occurence_lib_to_std_string_string_for_ident_column_token_stream = {
             quote::quote! {
                 //todo maybe reuse naming
-                impl error_occurence_lib::ToStdStringString for #ident_column_upper_camel_case<'_> {
+                impl error_occurence_lib::ToStdStringString for #ident_column_upper_camel_case {
                     fn to_std_string_string(&self) -> #std_string_string {
                         format!("{self}")
                     }
@@ -823,7 +823,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_column_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident_column_upper_camel_case,
-            &quote::quote!{<'_>},
             &{
                 let elements_token_stream = fields.iter().map(|element| {
                     let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
@@ -844,7 +843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote!{
-                impl #ident_column_upper_camel_case<'_> {
+                impl #ident_column_upper_camel_case {
                     fn pick_column(&self) -> std::string::String {
                         match &self {
                             #(#fields_token_stream),*
@@ -1959,7 +1958,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     false => &primary_key_inner_type_token_stream,
     // };
     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
-        quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case<'a>>}
+        quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_column_upper_camel_case>}
     };
     let generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = |primary_key_type_token_stream: &dyn quote::ToTokens|{
         let is_pub = true;
@@ -3591,7 +3590,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &quote::quote! {
                     #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
                     #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
-                    pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case<'a>>,
+                    pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_column_upper_camel_case>,
                     pub pagination: postgresql_crud::Pagination,
                 },
             ),
@@ -4980,11 +4979,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            &quote::quote!{<'a>},
-            &quote::quote!{<'a>},
+            &proc_macro2::TokenStream::new(),
+            &proc_macro2::TokenStream::new(),
             generate_operation_payload_token_stream(
                 &operation,
-                &quote::quote!{<'a>},
+                &proc_macro2::TokenStream::new(),
                 &pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
             ),
         );
@@ -5188,7 +5187,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_error_named_token_stream}");
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
-                &quote::quote!{<'_>},
+                &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_primary_key_field_type_to_delete_token_stream,
                 &proc_macro2::TokenStream::new(), //todo maybe add filter on not unique primary key like in read_many ?
@@ -5246,7 +5245,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{try_operation_token_stream}");
         let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_operation_payload_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &naming::parameter::SelfPayloadUpperCamelCase::from_display(&operation),
-            &quote::quote!{<'_>},
+            &proc_macro2::TokenStream::new(),
             &{
                 let primary_key_token_stream = {
                     quote::quote! {
@@ -5505,16 +5504,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
             #update_one_token_stream
-            // #delete_many_token_stream
+            //// #delete_many_token_stream
             // #delete_one_token_stream
         // // }
     };
     // println!("{generated}");
     // if ident == "" {
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "GeneratePostgresqlCrud",
-            &generated,
-        );
+        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "GeneratePostgresqlCrud",
+        //     &generated,
+        // );
     // }
     generated.into()
 }
