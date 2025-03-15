@@ -125,7 +125,7 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(ident_token_stream: &d
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
     let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
     quote::quote! {
-        impl #crate_bind_query_token_stream<'_> for #ident_token_stream {
+        impl crate::BindQuery for #ident_token_stream {
             fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, #crate_try_generate_bind_increments_error_named_token_stream> {
                 #try_generate_bind_increments_token_stream
             }

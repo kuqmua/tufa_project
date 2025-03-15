@@ -1141,7 +1141,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 // //         <std::vec::Vec<StdPrimitiveI16AsPostgresqlInt2NotNull> as sqlx::postgres::PgHasArrayType>::array_type_info()
 // //     }
 // // }
-// impl crate::BindQuery<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
+// impl crate::BindQuery for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
 //     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         let mut acc = std::string::String::default();
 //         match increment.checked_add(1) {

@@ -243,7 +243,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 fn #create_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_create_query_part_error_named_token_stream> {
                     #create_query_part_content_token_stream
                 }
-                fn #create_query_bind_snake_case<'a>(self, mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn #create_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #create_query_bind_content_token_stream
                 }
             }
@@ -543,11 +543,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     bind_value_to_query_token_stream: &dyn quote::ToTokens,
                 |{
                     quote::quote!{
-                        impl<'a> postgresql_crud::BindQuery<'a> for #ident_token_stream {
+                        impl postgresql_crud::BindQuery for #ident_token_stream {
                             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                 #try_generate_bind_increments_token_stream
                             }
-                            fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #bind_value_to_query_token_stream
                             }
                         }
@@ -1683,7 +1683,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
                     #update_query_part_token_stream
                 }
-                fn #update_query_bind_snake_case<'a>(self, mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                fn #update_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                     #update_query_bind_token_stream
                 }
             }
@@ -2252,11 +2252,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             //integration with GeneratePostgresqlCrud
             let impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream = {
                 quote::quote!{
-                    impl<'a> postgresql_crud::BindQuery<'a> for #ident_update_upper_camel_case {
+                    impl postgresql_crud::BindQuery for #ident_update_upper_camel_case {
                         fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                             todo!()
                         }
-                        fn bind_value_to_query(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                             todo!()
                         }
                     }
@@ -5080,11 +5080,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             };
                             quote::quote!{
-                                impl<'a> postgresql_crud::BindQuery<'a> for #postgresql_type_tokens_create_upper_camel_case {
+                                impl postgresql_crud::BindQuery for #postgresql_type_tokens_create_upper_camel_case {
                                     fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                                         #try_generate_bind_increments_content_for_postgresql_type_tokens_to_create_token_stream
                                     }
-                                    fn bind_value_to_query(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                         #bind_value_to_query_content_for_postgresql_type_tokens_to_create_token_stream
                                     }
                                 }
@@ -5348,10 +5348,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            fn #update_query_bind_snake_case<'a>(
+                            fn #update_query_bind_snake_case(
                                 #value_snake_case: Self::#update_upper_camel_case,
-                                mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #self_to_update_bind_query_part_content_token_stream
                             }
                         }
@@ -5570,10 +5570,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
                         };
                         quote::quote!{
-                            fn #where_query_bind_snake_case<'a>(
+                            fn #where_query_bind_snake_case(
                                 #value_snake_case: Self::#where_upper_camel_case,
-                                mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 #where_query_bind_content_token_stream
                             }
                         }
