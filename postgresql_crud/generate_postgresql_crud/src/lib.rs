@@ -763,11 +763,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let variants = fields.iter().map(|element| {
                 let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let type_path_column_upper_camel_case = naming::parameter::SelfColumnUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+                let field_type = &element.syn_field.ty;
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
                     #field_ident_upper_camel_case_token_stream(
-                        #type_path_column_upper_camel_case
+                        <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Column
                     )
                 }
             });
