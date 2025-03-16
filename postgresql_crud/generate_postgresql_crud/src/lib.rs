@@ -555,9 +555,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = |
         field_type: &dyn quote::ToTokens,
-        postgresql_type_name: &dyn quote::ToTokens,
+        tokens: &dyn quote::ToTokens,
     |{
-        quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#postgresql_type_name}
+        quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#tokens}
     };
 
     // let primary_key_field_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
@@ -1065,14 +1065,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     }
             // };
             {
-                let field_type = &element.syn_field.ty;
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                quote::quote! {
-                    => <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::column_query_part(
-                        value,
-                        #field_ident_string_double_quotes_token_stream
-                    )
-                }
+                let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                    &element.syn_field.ty,
+                    &quote::quote!{
+                        column_query_part(
+                            value,
+                            #field_ident_string_double_quotes_token_stream
+                        )
+                    }
+                );
+                quote::quote! {=> #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream}
             };
             quote::quote! {#ident_column_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
