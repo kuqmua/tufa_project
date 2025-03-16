@@ -4541,7 +4541,19 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             increment: &mut std::primitive::u64
                         ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
                             // #content_token_stream
+                            //todo
                             crate::BindQuery::#try_generate_bind_increments_snake_case(value, increment)
+                        }
+                    }
+                };
+                let create_query_bind_token_stream = {
+                    quote::quote! {
+                        fn create_query_bind(
+                            value: Self::Create,
+                            query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                        ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            //todo
+                            crate::BindQuery::bind_value_to_query(value, query)
                         }
                     }
                 };
@@ -4626,6 +4638,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #column_query_part_token_stream
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
                         #create_query_part_token_stream
+                        #create_query_bind_token_stream
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_read_upper_camel_case;
                         type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_update_upper_camel_case;
                         type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;

@@ -5458,6 +5458,17 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
+                        let create_query_bind_token_stream = {
+                            quote::quote! {
+                                fn create_query_bind(
+                                    value: Self::Create,
+                                    query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                                ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    //todo
+                                    postgresql_crud::BindQuery::bind_value_to_query(value, query)
+                                }
+                            }
+                        };
                         let update_upper_camel_case = naming::UpdateUpperCamelCase;
                         let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
                         let update_query_part_token_stream = {
@@ -5629,6 +5640,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #column_query_part_token_stream
                                 type #create_upper_camel_case = #postgresql_type_tokens_create_upper_camel_case;
                                 #create_query_part_token_stream
+                                #create_query_bind_token_stream
                                 type #read_upper_camel_case = #postgresql_type_tokens_read_upper_camel_case;
                                 type #update_upper_camel_case = #postgresql_type_tokens_update_upper_camel_case;
                                 type #update_query_part_error_named_upper_camel_case = #tokens_update_query_part_error_named_upper_camel_case;
