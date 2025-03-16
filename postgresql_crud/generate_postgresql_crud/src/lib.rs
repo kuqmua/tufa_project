@@ -666,12 +666,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     };
+    //todo maybe rename to ident_read
     let ident_options_token_stream = {
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
-                // &primary_key_inner_type_token_stream
-                &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty)
+                &{
+                    let primary_key_field_type = &primary_key_field.syn_field.ty;
+                    quote::quote!{<#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Read}
+                }
             );
             quote::quote! {
                 #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
@@ -682,8 +685,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_vis = &element.syn_field.vis;
             let field_ident = &element.field_ident;
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
-                // &element.syn_field.ty
-                &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty)
+                &{
+                    let field_type = &element.syn_field.ty;
+                    quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Read}
+                }
             );
             quote::quote! {
                 #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
