@@ -1071,10 +1071,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //     }
             // };
             {
-                let field_type = &element.syn_field.ty;
+                // let field_type = &element.syn_field.ty;
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                    &element.syn_field.ty
+                );
                 quote::quote! {
-                    => <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::column_query_part(
+                    => #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream column_query_part(
                         #value_snake_case,
                         #field_ident_string_double_quotes_token_stream
                     )
@@ -3639,11 +3642,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let query_string_token_stream = {
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let field_type = &element.syn_field.ty;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &element.syn_field.ty
+                        );
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_query_part(
+                                match #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream where_query_part(
                                     value,
                                     &mut increment,
                                     &#field_ident_double_quotes_token_stream,
