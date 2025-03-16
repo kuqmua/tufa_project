@@ -4360,6 +4360,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         let field_type = &element.syn_field.ty;
                         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
+                        let primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &primary_key_field_type
+                        );
+                        let field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &field_type
+                        );
                         quote::quote! {
                             {
                                 let mut #is_field_ident_update_exists_snake_case = false;
@@ -4375,7 +4381,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #acc_snake_case.push_str(&format!(
                                                 #when_primary_key_field_ident_equals_then_token_stream,
-                                                match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
+                                                match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #update_query_part_snake_case(
                                                     &#element_snake_case.#primary_key_field_ident,
                                                     // &#primary_key_field_ident_double_quotes_token_stream,
                                                     &"",
@@ -4404,7 +4410,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 
                                                 ,
 
-                                               match <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
+                                               match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #update_query_part_snake_case(
                                                     &#value_snake_case.#value_snake_case,
                                                     // &#field_ident_double_quotes_token_stream,
                                                     &"",
