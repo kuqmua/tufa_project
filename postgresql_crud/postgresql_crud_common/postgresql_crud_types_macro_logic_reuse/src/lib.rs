@@ -3729,8 +3729,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
                     let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
-                    let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
-                        generate_impl_crate_bind_query_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))}, &query_snake_case);
+                    let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                        &postgresql_type_not_null_or_nullable_create_upper_camel_case,
+                        &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
+                        &query_snake_case
+                    );
                     let impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
                         postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                             &postgresql_type_not_null_or_nullable_create_upper_camel_case,
@@ -3795,8 +3798,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_to_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_update_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_upper_camel_case = naming::parameter::SelfToDeleteUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            let postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_token_stream =
-                macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_not_null_or_nullable_upper_camel_case_to_delete_upper_camel_case,
+                &postgresql_type_not_null_or_nullable_upper_camel_case
+            );
             //todo put delete into trait
             // let postgresql_type_not_null_or_nullable_to_delete_token_stream = {
             //     let postgresql_type_not_null_or_nullable_to_delete_token_stream = generate_pub_struct_tokens_token_stream(
@@ -4464,7 +4469,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let read_upper_camel_case = naming::ReadUpperCamelCase;
                 let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
                 let column_upper_camel_case = naming::ColumnUpperCamelCase;
-                let self_column_query_part_token_stream = quote::quote! {
+                let column_query_part_token_stream = quote::quote! {
                     fn column_query_part(
                         _: &Self::#column_upper_camel_case,
                         #column_snake_case: &std::primitive::str,
@@ -4472,9 +4477,77 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #column_snake_case.to_string()
                     }
                 };
+                let create_query_part_token_stream = {
+                    // let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
+                    //     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    //         &postgresql_type_not_null_or_nullable_create_upper_camel_case,
+                    //         &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
+                    //         &query_snake_case
+                    //     );
+                    // };
+                    // let default_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"DEFAULT"});
+                    // let uuid_generate_v4_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"uuid_generate_v4()"});
+                    // let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    //     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
+                    //     &postgresql_type_not_null_or_nullable_upper_camel_case
+                    // );
+                    // let content_token_stream = match &postgresql_type {
+                    //     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
+                    //     PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
+                    //     PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => alias_token_stream,
+                    //     PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => alias_token_stream,
+                    //     PostgresqlType::StdStringStringAsPostgresqlCharN => alias_token_stream,
+                    //     PostgresqlType::StdStringStringAsPostgresqlVarchar => alias_token_stream,
+                    //     PostgresqlType::StdStringStringAsPostgresqlText => alias_token_stream,
+                    //     PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => uuid_generate_v4_initialized_by_postgresql_token_stream,
+                    //     PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => alias_token_stream,
+                    //     PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => alias_token_stream,
+                    //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => alias_token_stream,
+                    // };
+                    quote::quote! {
+                        fn create_query_part(
+                            value: &Self::#create_upper_camel_case,
+                            increment: &mut std::primitive::u64
+                        ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
+                            // #content_token_stream
+                            crate::BindQuery::#try_generate_bind_increments_snake_case(value, increment)
+                        }
+                    }
+                };
                 let update_upper_camel_case = naming::UpdateUpperCamelCase;
                 let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
-                let postgresql_type_self_to_update_query_part_token_stream = {
+                let update_query_part_token_stream = {
                     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
                     quote::quote! {
                         fn #update_query_part_snake_case(
@@ -4488,7 +4561,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let self_to_update_bind_query_part_token_stream = {
+                let update_bind_query_part_token_stream = {
                     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
                     quote::quote! {
                         fn #update_query_bind_snake_case<'a>(
@@ -4550,13 +4623,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #column_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
-                        #self_column_query_part_token_stream
+                        #column_query_part_token_stream
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
+                        #create_query_part_token_stream
                         type #read_upper_camel_case = #postgresql_type_not_null_or_nullable_read_upper_camel_case;
                         type #update_upper_camel_case = #postgresql_type_not_null_or_nullable_update_upper_camel_case;
                         type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
-                        #postgresql_type_self_to_update_query_part_token_stream
-                        #self_to_update_bind_query_part_token_stream
+                        #update_query_part_token_stream
+                        #update_bind_query_part_token_stream
                         type #where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
                         type #where_upper_camel_case = crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case>;
                         #where_query_part_token_stream
