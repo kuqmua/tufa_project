@@ -553,11 +553,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let fields_without_primary_key_len = fields_without_primary_key.len();
     let primary_key_field_type = &primary_key_field.syn_field.ty;
 
+    let generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens|{
+        quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::}
+    };
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_tokens_token_stream = |
         field_type: &dyn quote::ToTokens,
         tokens: &dyn quote::ToTokens,
     |{
-        quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#tokens}
+        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+            &field_type
+        );
+        quote::quote!{#as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #tokens}
     };
 
     // let primary_key_field_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
