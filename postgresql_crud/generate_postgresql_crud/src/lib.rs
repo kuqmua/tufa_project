@@ -3202,8 +3202,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_string_snake_case = naming::QueryStringSnakeCase;
                     let query_bind_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &element.syn_field.ty
+                        );
                         quote::quote! {
-                            #query_snake_case = #postgresql_crud_snake_case::BindQuery::bind_value_to_query(#element_snake_case.#field_ident, #query_snake_case);
+                            #query_snake_case = #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream create_query_bind(
+                                #element_snake_case.#field_ident,
+                                #query_snake_case
+                            );
                         }
                     });
                     quote::quote! {
@@ -3482,8 +3488,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &element.syn_field.ty
+                        );
                         quote::quote! {
-                            query = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#field_ident, query);
+                            query = #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream create_query_bind(
+                                #parameters_snake_case.#payload_snake_case.#field_ident,
+                                query
+                            );
                         }
                     });
                     quote::quote! {
