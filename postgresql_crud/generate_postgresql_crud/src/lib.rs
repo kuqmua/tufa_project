@@ -3455,9 +3455,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         //         }
                         //     }
                         // }
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &element.syn_field.ty
+                        );
                         let bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &bind_query_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            match postgresql_crud::BindQuery::try_generate_bind_increments(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                            match #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream create_query_part(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
                                     #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
