@@ -4452,6 +4452,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &format!(" {where_snake_case} {primary_key_field_ident} {} ({{}}) {returning_snake_case} {primary_key_field_ident};", naming::InSnakeCase)
                         );
                         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &primary_key_field_type
+                        );
                         quote::quote! {
                             #query_snake_case.push_str(&format!(
                                 #where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream,
@@ -4467,7 +4470,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         //     }
                                         // }
                                         //
-                                        match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
+                                        match #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #update_query_part_snake_case(
                                             &#element_snake_case.#primary_key_field_ident,
                                             // &#primary_key_field_ident_double_quotes_token_stream,
                                             &"",
