@@ -3750,10 +3750,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let field_type = &element.syn_field.ty;
+                        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                            &element.syn_field.ty
+                        );
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                query = <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::where_query_bind(
+                                query = #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream where_query_bind(
                                     value,
                                     query
                                 );
