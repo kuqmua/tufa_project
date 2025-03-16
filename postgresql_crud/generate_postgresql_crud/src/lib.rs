@@ -1966,10 +1966,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
         let field_ident = &element.field_ident;
-        let field_type = &element.syn_field.ty;
-        // let where_inner_type_with_generic_token_stream = &element.where_inner_type_with_generic_token_stream;
+        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+            &element.syn_field.ty,
+            &naming::WhereUpperCamelCase
+        );
         quote::quote! {
-            pub #field_ident: std::option::Option<<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Where>
+            pub #field_ident: std::option::Option<#as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream>
         }
     });
     let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
@@ -2080,17 +2082,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let update_fields_token_stream = {
         let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
-            let field_type = &element.syn_field.ty;
             let path_value_token_stream = {
                 let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            // let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
-            // let field_ident_update_upper_camel_case = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+            let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+                &element.syn_field.ty,
+                &naming::UpdateUpperCamelCase
+            );
             quote::quote! {
-                // pub #field_ident: std::option::Option<#path_value_token_stream<#field_ident_update_upper_camel_case>>
-                pub #field_ident: std::option::Option<#path_value_token_stream<<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Update>>
+                pub #field_ident: std::option::Option<#path_value_token_stream<
+                    #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream
+                >>
             }
         });
         quote::quote! {
@@ -2670,24 +2674,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // generate_fields_named_excluding_primary_key_token_stream
     (&|element: &SynFieldWrapper| {
         let field_ident = &element.field_ident;
-        let field_type = &element.syn_field.ty;
-        // let field_type_create = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
-        // let inner_type_token_stream = &element.inner_type_with_generic_token_stream;
-        // let field_type_token_stream = match &element.option_generic {
-        //     Some(value) => {
-        //         let value_token_stream = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&{
-        //             let value = &value.upper_camel_case_stringified;
-        //             value
-        //                 .parse::<proc_macro2::TokenStream>()
-        //                 .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        //         });
-        //         quote::quote!{#value_token_stream}
-        //     },
-        //     None => inner_type_token_stream.clone(),
-        // };
+        let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
+            &element.syn_field.ty,
+            &naming::CreateUpperCamelCase
+        );
         quote::quote! {
-            // pub #field_ident: #field_type_create
-            pub #field_ident: <#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::Create
+            pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream
         }
     });
     let generate_try_operation_token_stream = |
