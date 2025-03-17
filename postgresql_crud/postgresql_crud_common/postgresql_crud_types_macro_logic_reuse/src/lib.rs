@@ -4469,8 +4469,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let read_upper_camel_case = naming::ReadUpperCamelCase;
                 let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
                 let select_upper_camel_case = naming::SelectUpperCamelCase;
-                let column_query_part_token_stream = quote::quote! {
-                    fn column_query_part(
+                let select_query_part_token_stream = quote::quote! {
+                    fn select_query_part(
                         _: &Self::#select_upper_camel_case,
                         #column_snake_case: &std::primitive::str,
                     ) -> #std_string_string_token_stream {
@@ -4635,7 +4635,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #select_upper_camel_case = #postgresql_type_not_null_or_nullable_column_upper_camel_case;
-                        #column_query_part_token_stream
+                        #select_query_part_token_stream
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
                         #create_query_part_token_stream
                         #create_query_bind_token_stream

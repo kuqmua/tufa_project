@@ -8,7 +8,7 @@ pub trait PostgresqlType {
     type PostgresqlTypeSelf: std::fmt::Debug;
     type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     //maybe move it into own trait?
-    fn column_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
+    fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize  + for<'__> serde::Deserialize<'__> + crate::BindQuery + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;

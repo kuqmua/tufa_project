@@ -1079,7 +1079,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &element.syn_field.ty
                 );
                 quote::quote! {
-                    => #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream column_query_part(
+                    => #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream select_query_part(
                         #value_snake_case,
                         #field_ident_string_double_quotes_token_stream
                     )

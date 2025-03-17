@@ -5436,7 +5436,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 },
                             };
                             quote::quote!{
-                                fn column_query_part(
+                                fn select_query_part(
                                     #value_snake_case: &Self::#select_upper_camel_case,
                                     column: &std::primitive::str,
                                 ) -> std::string::String {
