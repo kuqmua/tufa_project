@@ -4594,26 +4594,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #column_snake_case: &dyn std::fmt::Display,
                             is_need_to_add_logical_operator: std::primitive::bool,
                         ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
-                            let mut #acc_snake_case = #std_string_string_token_stream::default();
-                            let mut is_need_to_add_logical_operator_inner_handle = false;
-                            for #element_snake_case in &#value_snake_case.#value_snake_case {
-                                match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
-                                    #element_snake_case,
-                                    #increment_snake_case,
-                                    #column_snake_case,
-                                    is_need_to_add_logical_operator_inner_handle
-                                ) {
-                                    Ok(#value_snake_case) => {
-                                        #acc_snake_case.push_str(&format!("{value} "));
-                                        is_need_to_add_logical_operator_inner_handle = true;
-                                    }
-                                    Err(#error_snake_case) => {
-                                        return Err(#error_snake_case);
-                                    }
-                                }
-                            }
-                            let _ = #acc_snake_case.pop();
-                            Ok(format!("{}({acc})", &#value_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_part_snake_case(
+                                #value_snake_case,
+                                increment,
+                                column,
+                                is_need_to_add_logical_operator
+                            )
                         }
                     }
                 };
@@ -4624,10 +4610,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #value_snake_case: Self::#where_upper_camel_case,
                             mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            for #element_snake_case in #value_snake_case.#value_snake_case {
-                                #query_snake_case = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(#element_snake_case, #query_snake_case);
-                            }
-                            #query_snake_case
+                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_bind_snake_case(
+                                #value_snake_case,
+                                query
+                            )
                         }
                     }
                 };

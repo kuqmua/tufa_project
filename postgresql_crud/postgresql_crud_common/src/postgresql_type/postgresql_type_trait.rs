@@ -13,6 +13,7 @@ pub trait PostgresqlType {
     //maybe move it into own trait?
     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
     type WhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize  + for<'__> serde::Deserialize<'__> + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
+    //todo todo maybe not even need where and its methods? just use PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case> in GeneratePostgresqlCrud
     type Where: std::fmt::Debug + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     fn where_query_part(value: &Self::Where, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn where_query_bind(value: Self::Where, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
