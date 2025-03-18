@@ -81,3 +81,5 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub use postgresql_crud_common::postgresql_type;
 
 pub use postgresql_crud_common::maybe_primary_key;
+
+pub use crate::postgresql_type::postgresql_type::PostgresqlTypeWhere;
