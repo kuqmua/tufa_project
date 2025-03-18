@@ -4830,7 +4830,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let tokens_as_type_upper_camel_case = postgresql_type.add_postfix(tokens_upper_camel_case);
                     let postgresql_type_tokens_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let tokens_tokens_stream = {
-                        let postgresql_type_tokens_token_stream = {
+                        let tokens_token_stream = {
                             quote::quote!{
                                 #[derive(
                                     Debug,
@@ -4879,7 +4879,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            #postgresql_type_tokens_token_stream
+                            #tokens_token_stream
                             #impl_std_fmt_display_for_tokens_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
                             #impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream
