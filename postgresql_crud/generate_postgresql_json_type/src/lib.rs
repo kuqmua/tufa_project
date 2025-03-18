@@ -5418,19 +5418,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let where_upper_camel_case = naming::WhereUpperCamelCase;
                         let where_query_part_token_stream = {
                             let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
-                            let where_query_part_content_token_stream = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => quote::quote!{
-                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_part_snake_case(
-                                        #value_snake_case,
-                                        increment,
-                                        column,
-                                        is_need_to_add_logical_operator
-                                    )
-                                },
-                                PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
-                                PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
-                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
-                            };
                             quote::quote!{
                                 fn #where_query_part_snake_case(
                                     #value_snake_case: &Self::#where_upper_camel_case,
@@ -5438,29 +5425,26 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     column: &dyn std::fmt::Display,
                                     is_need_to_add_logical_operator: std::primitive::bool,
                                 ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                                    #where_query_part_content_token_stream
+                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_part_snake_case(
+                                        #value_snake_case,
+                                        increment,
+                                        column,
+                                        is_need_to_add_logical_operator
+                                    )
                                 }
                             }
                         };
                         let where_query_bind_token_stream = {
                             let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
-                            let where_query_bind_content_token_stream = match &postgresql_json_type {
-                                PostgresqlJsonType::Object => quote::quote!{
-                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_bind_snake_case(
-                                        #value_snake_case,
-                                        query
-                                    )
-                                },
-                                PostgresqlJsonType::StdOptionOptionObject => quote::quote!{todo!()},
-                                PostgresqlJsonType::StdVecVecObjectWithId => quote::quote!{todo!()},
-                                PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote!{todo!()},
-                            };
                             quote::quote!{
                                 fn #where_query_bind_snake_case(
                                     #value_snake_case: Self::#where_upper_camel_case,
                                     mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                                 ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                    #where_query_bind_content_token_stream
+                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_bind_snake_case(
+                                        #value_snake_case,
+                                        query
+                                    )
                                 }
                             }
                         };
