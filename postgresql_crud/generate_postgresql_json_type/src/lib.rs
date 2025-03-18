@@ -5415,39 +5415,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
-                        let where_upper_camel_case = naming::WhereUpperCamelCase;
-                        let where_query_part_token_stream = {
-                            let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
-                            quote::quote!{
-                                fn #where_query_part_snake_case(
-                                    #value_snake_case: &Self::#where_upper_camel_case,
-                                    increment: &mut std::primitive::u64,
-                                    column: &dyn std::fmt::Display,
-                                    is_need_to_add_logical_operator: std::primitive::bool,
-                                ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_part_snake_case(
-                                        #value_snake_case,
-                                        increment,
-                                        column,
-                                        is_need_to_add_logical_operator
-                                    )
-                                }
-                            }
-                        };
-                        let where_query_bind_token_stream = {
-                            let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
-                            quote::quote!{
-                                fn #where_query_bind_snake_case(
-                                    #value_snake_case: Self::#where_upper_camel_case,
-                                    mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-                                ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                    postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_bind_snake_case(
-                                        #value_snake_case,
-                                        query
-                                    )
-                                }
-                            }
-                        };
                         let read_upper_camel_case = naming::ReadUpperCamelCase;
                         let update_upper_camel_case = naming::UpdateUpperCamelCase;
                         let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
@@ -5563,9 +5530,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #select_upper_camel_case = #tokens_select_upper_camel_case;
                                 #select_query_part_token_stream
                                 type #where_element_upper_camel_case = #tokens_where_element_upper_camel_case;
-                                type #where_upper_camel_case = postgresql_crud::postgresql_type::postgresql_type::PostgresqlTypeWhere<#tokens_where_element_upper_camel_case>;
-                                #where_query_part_token_stream
-                                #where_query_bind_token_stream
                                 type #read_upper_camel_case = #postgresql_type_tokens_read_upper_camel_case;
                                 type #update_upper_camel_case = #postgresql_type_tokens_update_upper_camel_case;
                                 type #update_query_part_error_named_upper_camel_case = #tokens_update_query_part_error_named_upper_camel_case;
@@ -5582,7 +5546,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #postgresql_type_tokens_to_update_token_stream
                         #postgresql_type_tokens_to_update_query_part_error_named_token_stream
                         #tokens_where_element_token_stream
-                        // #postgresql_type_tokens_where_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }
                 };

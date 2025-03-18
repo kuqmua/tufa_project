@@ -38,17 +38,15 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
+    "std_primitive_i16_as_small_int2_not_null": 0,
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
       "std_vec_vec_std_vec_vec_uuid_uuid": [
         [
-          "5e543d8d-3edf-495e-8171-bd4bf5d53ffa"
+          "01b0b6b2-61ff-4351-b334-1ff06e054c71"
         ]
       ]
-    },
-    "vec_std_primitive_i16_as_postgresql_int2_array_not_null": [
-      0
-    ]
+    }
   }
 ]
 
@@ -82,6 +80,39 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
+  "std_primitive_i16_as_small_int2_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
   # "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -126,7 +157,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #               "logical_operator": "Or",
   #               "value": [
   #                 [
-  #                   "0361eb4a-933d-4be1-b8e2-710378090fcd"
+  #                   "b40da887-061c-499e-860e-e23d8ca41728"
   #                 ]
   #               ]
   #             }
@@ -137,7 +168,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #             "EqualSecondDimension": {
   #               "logical_operator": "Or",
   #               "value": [
-  #                 "57081a87-ff4e-47b2-8afe-d6fdde96c443"
+  #                 "477e069d-4d05-447e-bd04-025e82874819"
   #               ]
   #             }
   #           }
@@ -146,20 +177,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": [
-            0
-          ]
-        }
-      }
-    ]
-  },
   "select": [
+    {
+      "std_primitive_i16_as_small_int2_not_null": null
+    },
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
     },
@@ -174,9 +195,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           }
         }
       ]
-    },
-    {
-      "vec_std_primitive_i16_as_postgresql_int2_array_not_null": null
     }
   ],
   "order_by": {

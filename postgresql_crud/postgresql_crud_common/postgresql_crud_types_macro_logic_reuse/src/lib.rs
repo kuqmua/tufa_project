@@ -4584,39 +4584,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     }
                 };
-                let where_upper_camel_case = naming::WhereUpperCamelCase;
-                let where_query_part_token_stream = {
-                    let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
-                    quote::quote! {
-                        fn #where_query_part_snake_case(
-                            #value_snake_case: &Self::#where_upper_camel_case,
-                            #increment_snake_case: &mut std::primitive::u64,
-                            #column_snake_case: &dyn std::fmt::Display,
-                            is_need_to_add_logical_operator: std::primitive::bool,
-                        ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
-                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_part_snake_case(
-                                #value_snake_case,
-                                increment,
-                                column,
-                                is_need_to_add_logical_operator
-                            )
-                        }
-                    }
-                };
-                let where_query_bind_token_stream = {
-                    let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
-                    quote::quote! {
-                        fn #where_query_bind_snake_case(
-                            #value_snake_case: Self::#where_upper_camel_case,
-                            mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-                        ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::#where_query_bind_snake_case(
-                                #value_snake_case,
-                                query
-                            )
-                        }
-                    }
-                };
                 quote::quote! {
                     impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
@@ -4631,9 +4598,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #update_query_part_token_stream
                         #update_bind_query_part_token_stream
                         type #where_element_upper_camel_case = #postgresql_type_not_null_or_nullable_where_element_upper_camel_case;
-                        type #where_upper_camel_case = crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#postgresql_type_not_null_or_nullable_where_element_upper_camel_case>;
-                        #where_query_part_token_stream
-                        #where_query_bind_token_stream
                     }
                 }
             };
