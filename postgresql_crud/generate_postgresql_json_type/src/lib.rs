@@ -5279,13 +5279,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     let tokens_as_type_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
-                    let postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream = generate_tokens_update_upper_camel_case_token_stream(postgresql_json_type);
-                    let postgresql_type_tokens_to_update_token_stream = {
-                        let postgresql_type_tokens_to_update_token_stream = {
-                            let pub_struct_postgresql_type_tokens_to_update_declaration_token_stream = {
+                    let tokens_update_upper_camel_case_token_stream = generate_tokens_update_upper_camel_case_token_stream(postgresql_json_type);
+                    let tokens_update_token_stream = {
+                        let tokens_update_token_stream = {
+                            let pub_struct_tokens_update_declaration_token_stream = {
                                 match &postgresql_type {
-                                    PostgresqlType::JsonbNullable => quote::quote!{(std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>);},
-                                    PostgresqlType::JsonbNotNull => quote::quote!{(#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream);},
+                                    PostgresqlType::JsonbNullable => quote::quote!{(std::option::Option<#tokens_update_upper_camel_case_token_stream>);},
+                                    PostgresqlType::JsonbNotNull => quote::quote!{(#tokens_update_upper_camel_case_token_stream);},
                                 }
                             };
                             quote::quote!{
@@ -5297,10 +5297,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     serde::Deserialize,
                                     schemars::JsonSchema,
                                 )]
-                                pub struct #tokens_as_type_update_upper_camel_case #pub_struct_postgresql_type_tokens_to_update_declaration_token_stream
+                                pub struct #tokens_as_type_update_upper_camel_case #pub_struct_tokens_update_declaration_token_stream
                             }
                         };
-                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
+                        let impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                             &tokens_as_type_update_upper_camel_case,
                             &proc_macro2::TokenStream::new(),
                             &{
@@ -5316,15 +5316,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             },
                         );
                         quote::quote!{
-                            #postgresql_type_tokens_to_update_token_stream
-                            #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_to_update_token_stream
+                            #tokens_update_token_stream
+                            #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_update_token_stream
                         }
                     };
-                    let tokens_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
+                    let tokens_as_type_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
                         PostgresqlType::JsonbNullable => &naming::parameter::SelfAsPostgresqlJsonbUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
                         PostgresqlType::JsonbNotNull => &naming::parameter::SelfAsPostgresqlJsonbNotNullUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
                     };
-                    let postgresql_type_tokens_to_update_query_part_error_named_token_stream = {
+                    let tokens_update_query_part_error_named_token_stream = {
                         quote::quote!{
                             #[derive(
                                 Debug,
@@ -5333,7 +5333,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 serde::Serialize,
                                 serde::Deserialize,
                             )]
-                            pub enum #tokens_update_query_part_error_named_upper_camel_case {
+                            pub enum #tokens_as_type_update_query_part_error_named_upper_camel_case {
                                 #checked_add_variant_declaration_token_stream,
                                 Todo//todo
                             }
@@ -5435,7 +5435,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                         Ok(format!("${increment}"))
                                                     },
                                                     //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
-                                                    None => Err(#tokens_update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                                    None => Err(#tokens_as_type_update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case {
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     })
                                                 }
@@ -5460,35 +5460,26 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         let update_query_bind_token_stream = {
                             let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-                            let self_to_update_bind_query_part_content_token_stream = {
-                                let generate_bind_value_to_postgresql_query_part_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool|{
-                                    let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero {
-                                        &quote::quote!{#value_snake_case.0}
-                                    }
-                                    else {
-                                        &value_snake_case
-                                    };
-                                    quote::quote!{
+                            let content_token_stream = {
+                                match &postgresql_type {
+                                    PostgresqlType::JsonbNullable => quote::quote!{
+                                        query = match #value_snake_case.0 {
+                                            Some(#value_snake_case) => #tokens_as_postgresql_json_type_token_stream update_query_bind(
+                                                #value_snake_case,
+                                                query
+                                            ),
+                                            None => {
+                                                #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#tokens_update_upper_camel_case_token_stream>>))
+                                            }
+                                        };
+                                        query
+                                    },
+                                    PostgresqlType::JsonbNotNull => quote::quote!{
                                         #tokens_as_postgresql_json_type_token_stream update_query_bind(
-                                            #first_argument_token_stream,
+                                            #value_snake_case.0,
                                             query
                                         )
                                     }
-                                };
-                                match &postgresql_type {
-                                    PostgresqlType::JsonbNullable => {
-                                        let bind_value_to_postgresql_query_part_to_update_token_stream = generate_bind_value_to_postgresql_query_part_to_update_token_stream(false);
-                                        quote::quote!{
-                                            query = match #value_snake_case.0 {
-                                                Some(#value_snake_case) => #bind_value_to_postgresql_query_part_to_update_token_stream,
-                                                None => {
-                                                    #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#postgresql_json_type_tokens_option_to_update_upper_camel_case_token_stream>>))
-                                                }
-                                            };
-                                            query
-                                        }
-                                    },
-                                    PostgresqlType::JsonbNotNull => generate_bind_value_to_postgresql_query_part_to_update_token_stream(true),
                                 }
                             };
                             quote::quote!{
@@ -5496,7 +5487,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #value_snake_case: Self::#update_upper_camel_case,
                                     mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                                 ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                    #self_to_update_bind_query_part_content_token_stream
+                                    #content_token_stream
                                 }
                             }
                         };
@@ -5511,7 +5502,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 type #where_element_upper_camel_case = #tokens_as_type_where_element_upper_camel_case;
                                 type #read_upper_camel_case = #tokens_as_type_read_upper_camel_case;
                                 type #update_upper_camel_case = #tokens_as_type_update_upper_camel_case;
-                                type #update_query_part_error_named_upper_camel_case = #tokens_update_query_part_error_named_upper_camel_case;
+                                type #update_query_part_error_named_upper_camel_case = #tokens_as_type_update_query_part_error_named_upper_camel_case;
                                 #update_query_part_token_stream
                                 #update_query_bind_token_stream
                             }
@@ -5522,8 +5513,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #tokens_select_token_stream
                         #tokens_create_token_stream
                         #tokens_read_token_stream
-                        #postgresql_type_tokens_to_update_token_stream
-                        #postgresql_type_tokens_to_update_query_part_error_named_token_stream
+                        #tokens_update_token_stream
+                        #tokens_update_query_part_error_named_token_stream
                         #tokens_where_element_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }
