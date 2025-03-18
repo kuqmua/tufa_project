@@ -4826,8 +4826,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let tokens_as_postgresql_json_type_token_stream = quote::quote!{<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::};
                     let tokens_as_type_upper_camel_case = postgresql_type.add_postfix(tokens_upper_camel_case);
                     let tokens_as_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
-                    let tokens_tokens_stream = {
-                        let tokens_token_stream = {
+                    let tokens_as_type_tokens_stream = {
+                        let tokens_as_type_token_stream = {
                             quote::quote!{
                                 #[derive(
                                     Debug,
@@ -4840,7 +4840,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_upper_camel_case(#tokens_as_type_create_upper_camel_case);
                             }
                         };
-                        let impl_std_fmt_display_for_tokens_token_stream = {
+                        let impl_std_fmt_display_for_tokens_as_type_token_stream = {
                             quote::quote!{
                                 impl std::fmt::Display for #tokens_as_type_upper_camel_case {
                                     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4849,7 +4849,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream = {
+                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream = {
                             quote::quote!{
                                 impl error_occurence_lib::ToStdStringString for #tokens_as_type_upper_camel_case {
                                     fn to_std_string_string(&self) -> std::string::String {
@@ -4858,14 +4858,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream = {
+                        let impl_postgresql_crud_create_table_column_query_part_for_tokens_as_type_token_stream = {
                             let jsonb = "jsonb";
-                            let create_table_query_part_for_tokens_stringified: &dyn std::fmt::Display = match &postgresql_type {
+                            let type_stringified: &dyn std::fmt::Display = match &postgresql_type {
                                 PostgresqlType::JsonbNotNull => &format!("{jsonb} not null"),
                                 PostgresqlType::JsonbNullable => &jsonb,
                             };
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                &format!("{{column}} {create_table_query_part_for_tokens_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
+                                &format!("{{column}} {type_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
                             );
                             quote::quote!{
                                 impl #tokens_as_type_upper_camel_case {
@@ -4876,10 +4876,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            #tokens_token_stream
-                            #impl_std_fmt_display_for_tokens_token_stream
-                            #impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream
-                            #impl_postgresql_crud_create_table_column_query_part_for_tokens_token_stream
+                            #tokens_as_type_token_stream
+                            #impl_std_fmt_display_for_tokens_as_type_token_stream
+                            #impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream
+                            #impl_postgresql_crud_create_table_column_query_part_for_tokens_as_type_token_stream
                         }
                     };
                     let tokens_create_token_stream = {
@@ -5494,7 +5494,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     quote::quote!{
-                        #tokens_tokens_stream
+                        #tokens_as_type_tokens_stream
                         #tokens_select_token_stream
                         #tokens_create_token_stream
                         #tokens_read_token_stream
