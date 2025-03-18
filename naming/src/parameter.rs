@@ -122,7 +122,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["error", "self"],
     ["not", "unique", "self"],
     ["is", "self", "update", "exist"],
-    ["self", "column"],
+    ["self", "select"],
     ["self", "column", "read", "permission"],
     ["self", "where"],
     ["std", "option", "option", "self"],
