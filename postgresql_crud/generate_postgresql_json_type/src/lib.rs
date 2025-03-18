@@ -5495,12 +5495,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     quote::quote!{
                         #tokens_as_type_tokens_stream
-                        #tokens_as_type_select_token_stream
                         #tokens_create_token_stream
+                        #tokens_as_type_select_token_stream
+                        #tokens_where_element_token_stream
                         #tokens_read_token_stream
                         #tokens_update_token_stream
                         #tokens_update_query_part_error_named_token_stream
-                        #tokens_where_element_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
                     }
                 };
