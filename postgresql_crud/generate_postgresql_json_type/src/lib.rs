@@ -5111,7 +5111,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_postgresql_crud_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_select_token_stream
                         }
                     };
-                    let postgresql_type_tokens_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type.add_postfix(tokens_upper_camel_case));
+                    let tokens_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type.add_postfix(tokens_upper_camel_case));
                     let postgresql_type_tokens_where_element_token_stream = {
                         let postgresql_type_tokens_where_element_token_stream = {
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -5130,13 +5130,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             });
                             quote::quote!{
                                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                                pub enum #postgresql_type_tokens_where_element_upper_camel_case {
+                                pub enum #tokens_where_element_upper_camel_case {
                                     #(#variants_token_stream),*
                                 }
                             }
                         };
                         let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
-                            &postgresql_type_tokens_where_element_upper_camel_case,
+                            &tokens_where_element_upper_camel_case,
                             &{
                                 let where_query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                     let field_ident_stringified = element
@@ -5187,7 +5187,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         );
                         let impl_error_occurence_lib_to_std_string_string_for_postgresql_json_type_tokens_where_element_token_stream = {
                             quote::quote!{
-                                impl error_occurence_lib::ToStdStringString for #postgresql_type_tokens_where_element_upper_camel_case {
+                                impl error_occurence_lib::ToStdStringString for #tokens_where_element_upper_camel_case {
                                     fn to_std_string_string(&self) -> std::string::String {
                                         format!("{self:#?}")
                                     }
@@ -5195,7 +5195,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_tokens_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
-                            &postgresql_type_tokens_where_element_upper_camel_case,
+                            &tokens_where_element_upper_camel_case,
                             &{
                                 let variants_token_stream = vec_syn_field.iter().map(|element| {
                                     let field_ident_stringified = element
@@ -5229,7 +5229,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]//, schemars :: JsonSchema
                                 pub struct #postgresql_type_tokens_where_upper_camel_case {
                                     #logical_operator_snake_case: postgresql_crud::#logical_operator_upper_camel_case,
-                                    #value_snake_case: std::vec::Vec<#postgresql_type_tokens_where_element_upper_camel_case>,
+                                    #value_snake_case: std::vec::Vec<#tokens_where_element_upper_camel_case>,
                                 }
                             }
                         };
@@ -5641,7 +5641,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #create_query_bind_token_stream
                                 type #select_upper_camel_case = #tokens_select_upper_camel_case;
                                 #select_query_part_token_stream
-                                type #where_element_upper_camel_case = #postgresql_type_tokens_where_element_upper_camel_case;
+                                type #where_element_upper_camel_case = #tokens_where_element_upper_camel_case;
                                 type #where_upper_camel_case = #postgresql_type_tokens_where_upper_camel_case;
                                 #where_query_part_token_stream
                                 #where_query_bind_token_stream
