@@ -5009,12 +5009,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let tokens_as_type_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let tokens_select_token_stream = {
-                        let tokens_field_reader_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
-                            PostgresqlJsonType::Object => &naming::parameter::ObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::StdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-                        };
+                        let tokens_field_reader_upper_camel_case = naming::parameter::SelfFieldReaderUpperCamelCase::from_tokens(&tokens_upper_camel_case);
                         let tokens_select_token_stream = {
                             let pub_struct_tokens_select_declaration_token_stream = match &postgresql_type {
                                 PostgresqlType::JsonbNullable
@@ -5053,8 +5048,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         };
                         let impl_sqlx_decode_sqlx_postgres_for_tokens_select_token_stream = {
                             let decode_content_for_tokens_select_token_stream = match &postgresql_type {
-                                PostgresqlType::JsonbNullable
-                                => quote::quote!{
+                                PostgresqlType::JsonbNullable => quote::quote!{
                                     match <std::option::Option<sqlx::types::Json<#tokens_field_reader_upper_camel_case>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
                                         Ok(value) => match value {
                                             Some(value) => Ok(Self(Some(value.0))),
@@ -5063,9 +5057,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         Err(error) => Err(error),
                                     }
                                 },
-
-                                PostgresqlType::JsonbNotNull
-                                => quote::quote!{
+                                PostgresqlType::JsonbNotNull => quote::quote!{
                                     match <sqlx::types::Json<#tokens_field_reader_upper_camel_case> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
                                         Ok(value) => Ok(Self(value.0)),
                                         Err(error) => Err(error),
