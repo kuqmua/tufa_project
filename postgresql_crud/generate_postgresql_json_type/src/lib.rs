@@ -5205,12 +5205,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let postgresql_type_tokens_as_type_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let postgresql_type_tokens_to_read_token_stream = {
-                        let tokens_options_to_read_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type {
-                            PostgresqlJsonType::Object => &naming::parameter::ObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::StdOptionOptionObjectSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfOptionsToReadUpperCamelCase::from_tokens(&ident),
-                        };
+                        let tokens_options_to_read_upper_camel_case = naming::parameter::SelfOptionsToReadUpperCamelCase::from_tokens(&tokens_upper_camel_case);
                         let postgresql_type_tokens_to_read_token_stream = {
                             let pub_struct_postgresql_type_tokens_to_read_declaration_token_stream = match &postgresql_type {
                                 PostgresqlType::JsonbNullable
