@@ -806,7 +806,7 @@ impl Between {
         let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
         let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+        let f = generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
             &ident,
             &self_upper_camel_case,
             ShouldWhereElementFieldsBePublic::False {
@@ -825,7 +825,10 @@ impl Between {
                 let end_snake_case = naming::EndSnakeCase;
                 Self::generate_bind_value_to_query_token_stream(&quote::quote! {self.#start_snake_case #where_operator_type_additional_bind_token_stream}, &quote::quote! {self.#end_snake_case #where_operator_type_additional_bind_token_stream})
             },
-        )
+        );
+
+        // println!("{f}");
+        f
     }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, between_try_new_error_type: &BetweenTryNewErrorType, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);

@@ -3,6 +3,7 @@ pub mod pagination;
 pub mod postgresql_json_type;
 pub mod postgresql_type;
 pub mod value;
+pub mod where_element_filters;
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
