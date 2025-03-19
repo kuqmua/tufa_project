@@ -59,7 +59,6 @@ pub fn generate_postgresql_json_type_token_stream(
                 #create_query_bind_token_stream
             }
             type #select_upper_camel_case<'a> = #postgresql_json_type_ident_select;
-            type #options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
             fn #select_query_part_snake_case(
                 #value_snake_case: &Self::#select_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
@@ -71,6 +70,7 @@ pub fn generate_postgresql_json_type_token_stream(
             }
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
             type #where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
+            type #options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
             type #update_query_part_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
             fn #update_query_part_snake_case(
