@@ -139,7 +139,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
     //     upper_camel_case_stringified: std::string::String,
     //     reader_upper_camel_case_stringified: std::string::String,
-    //     options_to_read_upper_camel_case_stringified: std::string::String,
+    //     read_upper_camel_case_stringified: std::string::String,
     //     field_to_read_upper_camel_case_stringified: std::string::String,
     //     generate_postgresql_json_type_from_vec_error_named_upper_camel_case_stringified: std::string::String,
     //     generate_postgresql_json_type_from_vec_error_named_snake_case_stringified: std::string::String,
@@ -255,7 +255,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 //                 return Err(error);
     //                 //             }
     //                 //         };
-    //                 //         let options_to_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::OptionsToReadUpperCamelCase.to_string(), Case::UpperCamel) {
+    //                 //         let read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::ReadUpperCamelCase.to_string(), Case::UpperCamel) {
     //                 //             Ok(value) => value,
     //                 //             Err(error) => {
     //                 //                 return Err(error);
@@ -283,7 +283,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                 //             syn_angle_bracketed_generic_arguments: value,
     //                 //             upper_camel_case_stringified,
     //                 //             reader_upper_camel_case_stringified,
-    //                 //             options_to_read_upper_camel_case_stringified,
+    //                 //             read_upper_camel_case_stringified,
     //                 //             field_to_read_upper_camel_case_stringified,
     //                 //             generate_postgresql_json_type_from_vec_error_named_upper_camel_case_stringified,
     //                 //             generate_postgresql_json_type_from_vec_error_named_snake_case_stringified,
@@ -729,7 +729,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
 
 
-    // let from_ident_for_ident_postgresql_json_type_options_to_read_token_stream = {
+    // let from_ident_for_ident_postgresql_json_type_read_token_stream = {
     //     let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
     //         #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident.0)
     //     });
@@ -748,10 +748,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //                         constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
     //                     )
     //                 });
-    //                 let generic_option_string_options_token_stream = value.options_to_read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
+    //                 let generic_option_string_options_token_stream = value.read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
     //                     panic!(
     //                         "{} {}",
-    //                         &value.options_to_read_upper_camel_case_stringified,
+    //                         &value.read_upper_camel_case_stringified,
     //                         constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
     //                     )
     //                 });
@@ -5516,7 +5516,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_ident_table_name_token_stream
             #ident_options_token_stream
 
-            // // #from_ident_for_ident_postgresql_json_type_options_to_read_token_stream
+            // // #from_ident_for_ident_postgresql_json_type_read_token_stream
             #select_token_stream
             #allow_methods_token_stream
             #ident_column_read_permission_token_stream

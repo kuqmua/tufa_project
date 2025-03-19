@@ -5,7 +5,7 @@ pub fn generate_postgresql_json_type_token_stream(
     create_query_part_token_stream: &dyn quote::ToTokens,
     create_query_bind_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_select: &dyn quote::ToTokens,
-    postgresql_json_type_ident_options_to_read: &dyn quote::ToTokens,
+    postgresql_json_type_ident_read: &dyn quote::ToTokens,
     select_query_part_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_where_element_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_where_token_stream: &dyn quote::ToTokens,
@@ -17,7 +17,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let select_upper_camel_case = naming::SelectUpperCamelCase;
-    let options_to_read_upper_camel_case = naming::OptionsToReadUpperCamelCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let where_upper_camel_case = naming::WhereUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
@@ -70,7 +70,7 @@ pub fn generate_postgresql_json_type_token_stream(
             }
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
             type #where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
-            type #options_to_read_upper_camel_case<'a> = #postgresql_json_type_ident_options_to_read;
+            type #read_upper_camel_case<'a> = #postgresql_json_type_ident_read;
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
             type #update_query_part_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
             fn #update_query_part_snake_case(

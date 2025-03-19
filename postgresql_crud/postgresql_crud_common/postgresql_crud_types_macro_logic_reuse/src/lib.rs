@@ -700,8 +700,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             });
-        let ident_options_to_read_upper_camel_case = naming::parameter::SelfOptionsToReadUpperCamelCase::from_tokens(&ident);
-        let ident_options_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_options_to_read_upper_camel_case, &ident);
+        let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+        let ident_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_upper_camel_case, &ident);
 
         let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
         
@@ -1197,7 +1197,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &ident_select_upper_camel_case,
-            &ident_options_to_read_upper_camel_case,
+            &ident_read_upper_camel_case,
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
@@ -1265,7 +1265,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #ident_create_alias_token_stream
             #ident_select_token_stream
             #impl_crate_generate_postgresql_json_type_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream
-            #ident_options_to_read_alias_token_stream
+            #ident_read_alias_token_stream
             #postgresql_json_type_ident_where_element_token_stream
             #postgresql_json_type_ident_where_element_second_dimension_token_stream
             #ident_update_alias_token_stream
