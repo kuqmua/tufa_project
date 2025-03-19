@@ -394,50 +394,30 @@ impl<T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptio
         }
     }
 }
-// impl
-// <'__, T: std::marker::Send + sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + '__> 
-// crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeWhereElementBetween<T> {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-//         match increment.checked_add(1) {
-//             Some(first_value) => {
-//                 *increment = first_value;
-//                 match increment.checked_add(1) {
-//                     Some(second_value) => {
-//                         *increment = second_value;
-//                         let between_snake_case = naming::BetweenSnakeCase;
-//                         let and_snake_case = naming::AndSnakeCase;
-//                         Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
-//                     }
-//                     None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//                 }
-//             }
-//             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//         }
-//     }
-//     fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
-//     // where T: 'a
-//     {
-//         query = query.bind(self.start);
-//         query = query.bind(self.end);
-//         query
-//     }
-// } 
-
-
-
-// use sqlx::{query::Query, Postgres, postgres::PgArguments, Encode, Type};
-// pub struct Something<T> {
-//     something: T,
-// }
-// pub trait Bind {
-//     fn bind(self, query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>;
-// }
-// impl <'a, T: std::marker::Send + Encode<'a, Postgres> + Type<Postgres> + 'a> Bind for Something<T> {
-//     fn bind(self, mut query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>  {
-//         query = query.bind(self.something);
-//         query
-//     }
-// }
+impl<T: crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter> crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeWhereElementBetween<T> {
+    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        match increment.checked_add(1) {
+            Some(first_value) => {
+                *increment = first_value;
+                match increment.checked_add(1) {
+                    Some(second_value) => {
+                        *increment = second_value;
+                        let between_snake_case = naming::BetweenSnakeCase;
+                        let and_snake_case = naming::AndSnakeCase;
+                        Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                    }
+                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                }
+            }
+            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
+    }
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(self.start, query);//here change
+        query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(self.end, query);//here change
+        query
+    }
+} 
 
 //THIS WORKS
 // use sqlx::{postgres::PgArguments, query::Query, Encode, Postgres, Type};
@@ -453,20 +433,3 @@ impl<T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptio
 //         query
 //     }
 // }
-
-#[derive(Debug)]
-pub struct PostgresqlTypeWhere<T> {
-    logical_operator: crate::LogicalOperator,
-    value: std::vec::Vec<T>,
-}
-impl<T: crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter> crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeWhere<T> {
-    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-        todo!()
-    }
-    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in self.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
-        }
-        query
-    }
-}
