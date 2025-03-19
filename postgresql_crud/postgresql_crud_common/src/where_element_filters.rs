@@ -425,16 +425,48 @@ impl<T: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptio
 
 
 
-use sqlx::{query::Query, Postgres, postgres::PgArguments, Encode, Type};
-pub struct Something<T> {
-    something: T,
+// use sqlx::{query::Query, Postgres, postgres::PgArguments, Encode, Type};
+// pub struct Something<T> {
+//     something: T,
+// }
+// pub trait Bind {
+//     fn bind(self, query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>;
+// }
+// impl <'a, T: std::marker::Send + Encode<'a, Postgres> + Type<Postgres> + 'a> Bind for Something<T> {
+//     fn bind(self, mut query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>  {
+//         query = query.bind(self.something);
+//         query
+//     }
+// }
+
+//THIS WORKS
+// use sqlx::{postgres::PgArguments, query::Query, Encode, Postgres, Type};
+// pub struct Something<T> {
+//     something: T,
+// }
+// pub trait Bind<'a> {
+//     fn bind(self, query: Query<'a, Postgres, PgArguments>) -> Query<'a, Postgres, PgArguments>;
+// }
+// impl <'a, T: Encode<'a, Postgres> + Type<Postgres> + 'a + std::marker::Send> Bind<'a> for Something<T> {
+//     fn bind(self, mut query: Query<'a, Postgres, PgArguments>) -> Query<'a, Postgres, PgArguments> {
+//         query = query.bind(self.something);
+//         query
+//     }
+// }
+
+#[derive(Debug)]
+pub struct PostgresqlTypeWhere<T> {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<T>,
 }
-pub trait Bind {
-    fn bind(self, query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>;
-}
-impl <'a, T: std::marker::Send + Encode<'a, Postgres> + Type<Postgres> + 'a> Bind for Something<T> {
-    fn bind(self, mut query: Query<'_, Postgres, PgArguments>) -> Query<'_, Postgres, PgArguments>  {
-        query = query.bind(self.something);
+impl<T: crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter> crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for PostgresqlTypeWhere<T> {
+    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        todo!()
+    }
+    fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.value {
+            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+        }
         query
     }
 }
