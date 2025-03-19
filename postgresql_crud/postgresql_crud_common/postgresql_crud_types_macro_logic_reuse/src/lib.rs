@@ -4685,7 +4685,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let generated = quote::quote! {
         // #(#postgresql_type_array)*
 
-        #std_primitive_i16_as_postgresql_int2_token_stream
+        // #std_primitive_i16_as_postgresql_int2_token_stream
         // #std_primitive_i32_as_postgresql_int4_token_stream
         // #std_primitive_i64_as_postgresql_int8_token_stream
         // #std_primitive_f32_as_postgresql_float4_token_stream
