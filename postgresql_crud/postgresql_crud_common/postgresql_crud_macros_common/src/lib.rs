@@ -181,9 +181,9 @@ pub enum PostgresqlTypeSelfWhereFilterPath {
 impl quote::ToTokens for PostgresqlTypeSelfWhereFilterPath  {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::Crate => quote::quote!{crate}.to_tokens(tokens),
-            Self::PostgresqlCrud => quote::quote!{postgresql_crud}.to_tokens(tokens),
-        }
+            Self::Crate => quote::quote!{crate},
+            Self::PostgresqlCrud => quote::quote!{postgresql_crud},
+        }.to_tokens(tokens)
     }
 }
 pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
