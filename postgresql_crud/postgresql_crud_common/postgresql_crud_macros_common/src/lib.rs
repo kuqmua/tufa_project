@@ -69,7 +69,6 @@ pub fn generate_postgresql_json_type_token_stream(
                 #select_query_part_token_stream
             }
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
-            type #where_upper_camel_case = #postgresql_json_type_ident_where_token_stream;
             type #read_upper_camel_case<'a> = #postgresql_json_type_ident_read;
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
             type #update_query_part_error_named_upper_camel_case = #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named;
