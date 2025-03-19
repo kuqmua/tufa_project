@@ -26,11 +26,11 @@ Deserialize,
     utoipa :: ToSchema,
     schemars :: JsonSchema,
 )]
-pub struct StdVecVecStdVecVecUuidUuidFieldReader {
+pub struct StdVecVecStdVecVecUuidUuidSelect {
     //todo could not implement multi dimension pagination
     pagination: crate::pagination::Pagination,
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidFieldReader {
+impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidSelect {
     fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
         Self {
             pagination: crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement::std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
@@ -427,10 +427,10 @@ impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType
         query = query.bind(sqlx::types::Json(value.0));
         query
     }
-    type FieldReader<'a> = StdVecVecStdVecVecUuidUuidFieldReader;
+    type Select<'a> = StdVecVecStdVecVecUuidUuidSelect;
     type OptionsToRead<'a> = StdVecVecStdVecVecUuidUuidOptionsToRead;
-    fn field_reader_query_part(value: &Self::FieldReader<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
-        // println!("fn field_reader_query_part");
+    fn select_query_part(value: &Self::Select<'_>, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, _: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
+        // println!("fn select_query_part");
         //todo change
         let start = value.pagination.start();
         let end = value.pagination.end();
