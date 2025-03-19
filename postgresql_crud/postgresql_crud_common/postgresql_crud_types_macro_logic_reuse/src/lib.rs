@@ -16,16 +16,6 @@ fn generate_pub_struct_tokens_token_stream(ident_token_stream: &dyn quote::ToTok
         pub struct #ident_token_stream #content_token_stream
     }
 }
-fn generate_impl_std_fmt_display_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let self_snake_case = naming::SelfSnakeCase;
-    quote::quote! {
-        impl std::fmt::Display for #ident_token_stream {
-            fn fmt(&#self_snake_case, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(formatter, #content_token_stream)
-            }
-        }
-    }
-}
 enum PostgresqlTypeOrJsonType {
     PostgresqlType,
     PostgresqlJsonType,
@@ -3370,7 +3360,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 },
             };
-            let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &quote::quote! {"{self:?}"});
+            let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+                &postgresql_type_not_null_or_nullable_upper_camel_case,
+                &quote::quote! {write!(formatter, "{self:?}")}
+            );
             let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &quote::quote! {self.to_string()});
 
             let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = quote::quote! {

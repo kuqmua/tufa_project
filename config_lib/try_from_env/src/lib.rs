@@ -52,22 +52,21 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(formatter, "{}", #element_ident)
             }
         });
-        quote::quote! {
-            impl std::fmt::Display for #ident_try_from_env_error_named_upper_camel_case {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    match self {
-                        Self::#dotenv_upper_camel_case {
-                            #dotenv_snake_case
-                        } => write!(formatter, "{}", #dotenv_snake_case),
-                        Self::#std_env_var_error_upper_camel_case {
-                            #std_env_var_error_snake_case,
-                            env_var_name
-                        } => write!(formatter, "{} {}", #std_env_var_error_snake_case, env_var_name),
-                        #(#variants_token_stream),*
-                    }
+        macros_helpers::generate_impl_std_fmt_display_token_stream(
+            &ident_try_from_env_error_named_upper_camel_case,
+            &quote::quote!{
+                match self {
+                    Self::#dotenv_upper_camel_case {
+                        #dotenv_snake_case
+                    } => write!(formatter, "{}", #dotenv_snake_case),
+                    Self::#std_env_var_error_upper_camel_case {
+                        #std_env_var_error_snake_case,
+                        env_var_name
+                    } => write!(formatter, "{} {}", #std_env_var_error_snake_case, env_var_name),
+                    #(#variants_token_stream),*
                 }
             }
-        }
+        )
     };
     let try_from_env_token_stream = {
         let fields_initialization_token_stream = fields_named.iter().map(|element| {

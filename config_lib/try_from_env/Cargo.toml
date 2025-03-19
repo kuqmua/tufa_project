@@ -13,6 +13,7 @@ syn = {version = "=2.0.60"}
 constants = {path = "../../constants"}
 panic_location = {path = "../../panic_location"}
 naming = {path = "../../naming"}
+macros_helpers = {path = "../../macros_helpers"}
 
 [lints]
 workspace = true
