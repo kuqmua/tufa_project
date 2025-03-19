@@ -51,7 +51,7 @@ impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIs
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for StdVecVecStdVecVecUuidUuidWhereElementEqual {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElementEqual {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
@@ -71,7 +71,7 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 pub enum StdVecVecStdVecVecUuidUuidWhereElement {
     Equal(StdVecVecStdVecVecUuidUuidWhereElementEqual),
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter for StdVecVecStdVecVecUuidUuidWhereElement {
+impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElement {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match &self {
             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),

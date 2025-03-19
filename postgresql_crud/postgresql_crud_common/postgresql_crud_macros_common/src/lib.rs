@@ -204,7 +204,7 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
     let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
     let postgresql_type_self_where_filter_upper_camel_case = naming::PostgresqlTypeSelfWhereFilterUpperCamelCase;
     quote::quote!{
-        impl #postgresql_type_self_where_filter_path ::postgresql_type::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case for #ident_token_stream {
+        impl #postgresql_type_self_where_filter_path ::postgresql_type::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'_> for #ident_token_stream {
             fn #where_query_part_snake_case(
                 &self,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,

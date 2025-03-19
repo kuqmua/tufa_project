@@ -21,7 +21,7 @@ pub trait PostgresqlJsonType {
         + serde::Serialize
         + serde::Deserialize<'a>
         // + schemars::JsonSchema //todo
-        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
+        + crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a>
         + crate::generate_postgresql_json_type::AllEnumVariantsArrayStdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type Read<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
     type Update<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement;
