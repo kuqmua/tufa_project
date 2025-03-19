@@ -26,20 +26,6 @@ fn generate_impl_std_fmt_display_for_tokens_token_stream(ident_token_stream: &dy
         }
     }
 }
-fn generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let error_occurence_lib_snake_case = naming::ErrorOccurenceLibSnakeCase;
-    let to_std_string_string_upper_camel_case = naming::ToStdStringStringUpperCamelCase;
-    let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;
-    let std_string_string_token_stream = token_patterns::StdStringString;
-    let self_snake_case = naming::SelfSnakeCase;
-    quote::quote! {
-        impl #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident {
-            fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_token_stream {
-                #content_token_stream
-            }
-        }
-    }
-}
 enum PostgresqlTypeOrJsonType {
     PostgresqlType,
     PostgresqlJsonType,
@@ -200,7 +186,7 @@ fn generate_postgresql_type_where_element_token_stream(
         },
         &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
-    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
+    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
     let impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
         postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {
@@ -648,7 +634,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     Self(#content_token_stream)
                 }
             });
-        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
+        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
 
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident);
@@ -3385,7 +3371,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 },
             };
             let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &quote::quote! {"{self:?}"});
-            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &quote::quote! {self.to_string()});
+            let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &quote::quote! {self.to_string()});
 
             let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = quote::quote! {
                 #sqlx_types_time_date_as_postgresql_date_field_type_token_stream::from_ordinal_date(
