@@ -682,20 +682,16 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_token_stream,
                     impl_error_occurence_lib_to_std_string_string_for_ident_with_id_field_to_read_token_stream
                 ) = {
-                    let generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream = |value: &dyn quote::ToTokens|{
-                        quote::quote!{
-                            impl error_occurence_lib::ToStdStringString for #value {
-                                fn to_std_string_string(&self) -> std::string::String {
-                                    format!("{self:?}")
-                                }
-                            }
-                        }
-                    };
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_without_id_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_without_id_upper_camel_case);
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_with_id_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_value_token_stream(&ident_field_to_read_with_id_upper_camel_case);
+                    let content_token_stream = quote::quote!{format!("{self:?}")};
                     (
-                        impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_without_id_token_stream,
-                        impl_error_occurence_lib_to_std_string_string_for_ident_field_to_read_with_id_token_stream
+                        macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                            &ident_field_to_read_without_id_upper_camel_case,
+                            &content_token_stream
+                        ),
+                        macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                            &ident_field_to_read_with_id_upper_camel_case,
+                            &content_token_stream
+                        ),
                     )
                 };
                 let (
@@ -1534,15 +1530,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             Self::#element_ident_upper_camel_case_token_stream => #element_ident_double_quotes_token_stream.to_owned()
                         }
                     });
-                    quote::quote!{
-                        impl error_occurence_lib::ToStdStringString for #ident_field_to_update_upper_camel_case {
-                            fn to_std_string_string(&self) -> std::string::String {
-                                match &self {
-                                    #(#variants_token_stream),*
-                                }
+                    macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                        &ident_field_to_update_upper_camel_case,
+                        &quote::quote! {
+                            match &self {
+                                #(#variants_token_stream),*
                             }
                         }
-                    }
+                    )
                 };
                 let postgresql_json_type_ident_option_to_update_origin_token_stream = {
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -3487,15 +3482,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             },
                             &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::PostgresqlCrud,
                         );
-                        let impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream = {
-                            quote::quote!{
-                                impl error_occurence_lib::ToStdStringString for #tokens_where_element_upper_camel_case {
-                                    fn to_std_string_string(&self) -> std::string::String {
-                                        format!("{self:#?}")
-                                    }
-                                }
-                            }
-                        };
+                        let impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                            &tokens_where_element_upper_camel_case,
+                            &quote::quote!{format!("{self:#?}")}
+                        );
                         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                             &tokens_where_element_upper_camel_case,
                             &{
@@ -4734,15 +4724,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         };
-                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream = {
-                            quote::quote!{
-                                impl error_occurence_lib::ToStdStringString for #tokens_as_type_upper_camel_case {
-                                    fn to_std_string_string(&self) -> std::string::String {
-                                        format!("{self}")
-                                    }
-                                }
-                            }
-                        };
+                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                            &tokens_as_type_upper_camel_case,
+                            &quote::quote! {format!("{self}")}
+                        );
                         let impl_postgresql_crud_create_table_column_query_part_for_tokens_as_type_token_stream = {
                             let jsonb = "jsonb";
                             let type_stringified: &dyn std::fmt::Display = match &postgresql_type {
@@ -5036,15 +5021,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             },
                             &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::PostgresqlCrud,
                         );
-                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_where_element_token_stream = {
-                            quote::quote!{
-                                impl error_occurence_lib::ToStdStringString for #tokens_as_type_where_element_upper_camel_case {
-                                    fn to_std_string_string(&self) -> std::string::String {
-                                        format!("{self:#?}")
-                                    }
-                                }
-                            }
-                        };
+                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                            &tokens_as_type_where_element_upper_camel_case,
+                            &quote::quote!{format!("{self:#?}")}
+                        );
                         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_as_type_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
                             &tokens_as_type_where_element_upper_camel_case,
                             &{

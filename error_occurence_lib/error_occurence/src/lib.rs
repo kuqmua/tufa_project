@@ -310,15 +310,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 generate_enum_ident_with_serialize_deserialize_token_stream(&quote::quote! {#(#variants_token_stream),*})
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_handle_token_stream(&ident_with_serialize_deserialize_upper_camel_case);
-            let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = {
-                quote::quote! {
-                    impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_upper_camel_case {
-                        fn to_std_string_string(&self) -> #std_string_string {
-                            format!("{self}")
-                        }
-                    }
-                }
-            };
+            let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                &ident_with_serialize_deserialize_upper_camel_case,
+                &quote::quote! {format!("{self}")}
+            );
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream

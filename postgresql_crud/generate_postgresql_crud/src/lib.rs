@@ -843,16 +843,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = {
-            quote::quote! {
-                //todo maybe reuse naming
-                impl error_occurence_lib::ToStdStringString for #ident_select_upper_camel_case {
-                    fn to_std_string_string(&self) -> #std_string_string {
-                        format!("{self}")
-                    }
-                }
-            }
-        };
+        let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+            &ident_select_upper_camel_case,
+            &quote::quote! {format!("{self}")}
+        );
         let impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_for_tokens_token_stream(
             &ident_select_upper_camel_case,
             &{
