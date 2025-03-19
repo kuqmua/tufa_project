@@ -86,13 +86,17 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         StdOptionOptionStdVecVecObjectWithIdIdent,
     }
     let generate_tokens_field_reader_token_stream = |postgresql_json_type_field_reader: &PostgresqlJsonTypeFieldReader|{
-        let tokens_field_reader_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
-            PostgresqlJsonTypeFieldReader::Ident => &naming::parameter::SelfFieldReaderUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::ObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfFieldReaderUpperCamelCase::from_tokens(&ident),
+        let tokens_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
+            PostgresqlJsonTypeFieldReader::Ident => &{
+                let value = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&ident);
+                value
+            },
+            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
         };
+        let tokens_field_reader_upper_camel_case_token_stream = naming::parameter::SelfFieldReaderUpperCamelCase::from_tokens(&tokens_upper_camel_case_token_stream);
         let std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>};
         let field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
         let content_token_stream = match &postgresql_json_type_field_reader {
@@ -107,13 +111,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             },
         };
-        let tokens_field_reader_try_new_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
-            PostgresqlJsonTypeFieldReader::Ident => &naming::parameter::SelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::ObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-        };
+        let tokens_field_reader_try_new_error_named_upper_camel_case_token_stream = naming::parameter::SelfFieldReaderTryNewErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case_token_stream);
         let fields_filter_is_empty_upper_camel_case = naming::FieldsFilterIsEmptyUpperCamelCase;
         let not_unique_field_filter_upper_camel_case = naming::NotUniqueFieldFilterUpperCamelCase;
         let generate_impl_pub_fn_try_new_token_stream = |
