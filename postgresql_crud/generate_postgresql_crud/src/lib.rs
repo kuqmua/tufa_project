@@ -816,33 +816,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        let impl_std_fmt_display_for_ident_select_token_stream = {
-            // let display_variants = syn_field_with_additional_info_fields_named.iter().map(|element| {
-            //     let field_ident_stringified = element.field_ident.to_string();
-            //     let field_ident_double_quotes_token_stream= generate_quotes::double_quotes_token_stream(
-            //         &field_ident_stringified,
-            //         &proc_macro_name_upper_camel_case_ident_stringified,
-            //     );
-            //     let field_ident_upper_camel_case_token_stream = {
-            //         let value = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
-            //         value.parse::<proc_macro2::TokenStream>()
-            //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            //     };
-            //     quote::quote! {
-            //         Self::#field_ident_upper_camel_case_token_stream => write!(formatter, #field_ident_double_quotes_token_stream)
-            //     }
-            // });
-            quote::quote! {
-                impl std::fmt::Display for #ident_select_upper_camel_case {
-                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        // match self {
-                        //     #(#display_variants),*
-                        // }
-                        write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
-                    }
-                }
+        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+            &ident_select_upper_camel_case,
+            &quote::quote! {
+                // match self {
+                //     #(#display_variants),*
+                // }
+                write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
             }
-        };
+        );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
             &ident_select_upper_camel_case,
             &quote::quote! {format!("{self}")}

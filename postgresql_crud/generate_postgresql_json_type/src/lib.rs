@@ -1752,13 +1752,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
-        let impl_std_fmt_display_for_ident_token_stream = quote::quote!{
-            impl std::fmt::Display for #ident {
-                fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    write!(formatter, "{:?}", &self)
-                }
-            }
-        };
+        let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+            &ident,
+            &quote::quote!{write!(formatter, "{:?}", &self)}
+        );
         let create_token_stream = {
             let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
             quote::quote!{
@@ -4715,15 +4712,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_upper_camel_case(#type_token_stream);
                             }
                         };
-                        let impl_std_fmt_display_for_tokens_as_type_token_stream = {
-                            quote::quote!{
-                                impl std::fmt::Display for #tokens_as_type_upper_camel_case {
-                                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                        write!(formatter, "{:?}", self)
-                                    }
-                                }
-                            }
-                        };
+                        let impl_std_fmt_display_for_tokens_as_type_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+                            &tokens_as_type_upper_camel_case,
+                            &quote::quote!{write!(formatter, "{:?}", self)}
+                        );
                         let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                             &tokens_as_type_upper_camel_case,
                             &quote::quote! {format!("{self}")}
