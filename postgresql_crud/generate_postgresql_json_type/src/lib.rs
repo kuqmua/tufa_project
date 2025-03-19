@@ -77,7 +77,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         }
     }
 
-    enum PostgresqlJsonTypeFieldReader {
+    enum PostgresqlJsonTypeSelect {
         //todo why Ident variant here? maybe remove it?
         Ident,
         ObjectIdent,
@@ -85,27 +85,27 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         StdVecVecObjectWithIdIdent,
         StdOptionOptionStdVecVecObjectWithIdIdent,
     }
-    let generate_tokens_field_reader_token_stream = |postgresql_json_type_field_reader: &PostgresqlJsonTypeFieldReader|{
+    let generate_tokens_field_reader_token_stream = |postgresql_json_type_field_reader: &PostgresqlJsonTypeSelect|{
         let tokens_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_field_reader {
-            PostgresqlJsonTypeFieldReader::Ident => &{
+            PostgresqlJsonTypeSelect::Ident => &{
                 let value = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&ident);
                 value
             },
-            PostgresqlJsonTypeFieldReader::ObjectIdent => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
-            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeSelect::ObjectIdent => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeSelect::StdOptionOptionObjectIdent => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeSelect::StdVecVecObjectWithIdIdent => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
+            PostgresqlJsonTypeSelect::StdOptionOptionStdVecVecObjectWithIdIdent => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
         };
         let tokens_field_reader_upper_camel_case_token_stream = naming::parameter::SelfFieldReaderUpperCamelCase::from_tokens(&tokens_upper_camel_case_token_stream);
         let std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream = quote::quote!{std::vec::Vec<#ident_field_to_read_without_id_upper_camel_case>};
         let field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream = quote::quote!{field_vec: std::vec::Vec<#ident_field_to_read_with_id_upper_camel_case>, pagination: #postgersql_crud_pagination_token_stream};
         let content_token_stream = match &postgresql_json_type_field_reader {
             //todo option (null) must be an read option too
-            PostgresqlJsonTypeFieldReader::Ident |
-            PostgresqlJsonTypeFieldReader::ObjectIdent |
-            PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream);},
-            PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent |
-            PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => quote::quote!{
+            PostgresqlJsonTypeSelect::Ident |
+            PostgresqlJsonTypeSelect::ObjectIdent |
+            PostgresqlJsonTypeSelect::StdOptionOptionObjectIdent => quote::quote!{(#std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream);},
+            PostgresqlJsonTypeSelect::StdVecVecObjectWithIdIdent |
+            PostgresqlJsonTypeSelect::StdOptionOptionStdVecVecObjectWithIdIdent => quote::quote!{
                 {
                     #field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream
                 }
@@ -181,15 +181,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 quote::quote!{#value_snake_case: #value_token_stream}
             };
             match &postgresql_json_type_field_reader {
-                PostgresqlJsonTypeFieldReader::Ident |
-                PostgresqlJsonTypeFieldReader::ObjectIdent |
-                PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent => generate_impl_pub_fn_try_new_token_stream(
+                PostgresqlJsonTypeSelect::Ident |
+                PostgresqlJsonTypeSelect::ObjectIdent |
+                PostgresqlJsonTypeSelect::StdOptionOptionObjectIdent => generate_impl_pub_fn_try_new_token_stream(
                     false,
                     &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream),
                     false,
                 ),
-                PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent |
-                PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent => generate_impl_pub_fn_try_new_token_stream(
+                PostgresqlJsonTypeSelect::StdVecVecObjectWithIdIdent |
+                PostgresqlJsonTypeSelect::StdOptionOptionStdVecVecObjectWithIdIdent => generate_impl_pub_fn_try_new_token_stream(
                     true,
                     &field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream,
                     true,
@@ -1777,7 +1777,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             let ident_options_to_read_alias_token_stream = generate_postgresql_json_type_tokens_options_to_read_alias_token_stream(&ident_options_to_read_upper_camel_case, false);
 
             let ident_field_reader_upper_camel_case = naming::parameter::SelfFieldReaderUpperCamelCase::from_tokens(&ident);
-            let postgresql_json_type_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(&PostgresqlJsonTypeFieldReader::Ident);
+            let postgresql_json_type_ident_field_reader_token_stream = generate_tokens_field_reader_token_stream(&PostgresqlJsonTypeSelect::Ident);
             let impl_serde_deserialize_for_postgresql_json_type_ident_field_reader_token_stream = {
                 let tuple_struct_ident_field_reader_double_quotes_token_stream = generate_tuple_struct_tokens_double_quotes_token_stream(&ident_field_reader_upper_camel_case);
                 let tuple_struct_ident_field_reader_with_1_element_double_quotes_token_stream = generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream(&ident_field_reader_upper_camel_case);
@@ -2560,10 +2560,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     );
                     let tokens_field_reader_token_stream = generate_tokens_field_reader_token_stream(&match &postgresql_json_type {
                         //todo why its two different types?
-                        PostgresqlJsonType::Object => PostgresqlJsonTypeFieldReader::ObjectIdent,
-                        PostgresqlJsonType::StdOptionOptionObject => PostgresqlJsonTypeFieldReader::StdOptionOptionObjectIdent,
-                        PostgresqlJsonType::StdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdVecVecObjectWithIdIdent,
-                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => PostgresqlJsonTypeFieldReader::StdOptionOptionStdVecVecObjectWithIdIdent,
+                        PostgresqlJsonType::Object => PostgresqlJsonTypeSelect::ObjectIdent,
+                        PostgresqlJsonType::StdOptionOptionObject => PostgresqlJsonTypeSelect::StdOptionOptionObjectIdent,
+                        PostgresqlJsonType::StdVecVecObjectWithId => PostgresqlJsonTypeSelect::StdVecVecObjectWithIdIdent,
+                        PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => PostgresqlJsonTypeSelect::StdOptionOptionStdVecVecObjectWithIdIdent,
                     });
                     let impl_serde_deserialize_for_postgresql_json_type_tokens_options_to_read_token_stream = match &postgresql_json_type {
                         //todo impl_serde_deserialize
