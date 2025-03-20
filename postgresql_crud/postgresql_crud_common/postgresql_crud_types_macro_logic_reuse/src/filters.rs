@@ -802,34 +802,31 @@ impl Between {
             #query_snake_case
         }
     }
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens, where_operator_type: &crate::WhereOperatorType, between_try_new_error_type: &BetweenTryNewErrorType, should_add_dot_zero: &ShouldAddDotZero) -> proc_macro2::TokenStream {
-        let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
-        let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let f = generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &self_upper_camel_case,
-            ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(between_try_new_error_type, &where_operator_type_type_token_stream),
-                try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-                try_new_content_token_stream: &self.generate_try_new_content_token_stream(&ident, between_try_new_error_type, &quote::quote! {#where_operator_type_additional_bind_token_stream #should_add_dot_zero}),
-                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(&ident, &where_operator_type_type_token_stream),
-            },
-            &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
-            &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
-            &Self::generate_try_generate_bind_increments_token_stream(),
-            &{
-                let start_snake_case = naming::StartSnakeCase;
-                let end_snake_case = naming::EndSnakeCase;
-                Self::generate_bind_value_to_query_token_stream(&quote::quote! {self.#start_snake_case #where_operator_type_additional_bind_token_stream}, &quote::quote! {self.#end_snake_case #where_operator_type_additional_bind_token_stream})
-            },
-        );
-
-        // println!("{f}");
-        f
-    }
+    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens, where_operator_type: &crate::WhereOperatorType, between_try_new_error_type: &BetweenTryNewErrorType, should_add_dot_zero: &ShouldAddDotZero) -> proc_macro2::TokenStream {
+    //     let where_operator_type_type_token_stream = where_operator_type.type_token_stream();
+    //     let where_operator_type_additional_bind_token_stream = where_operator_type.additional_bind_token_stream();
+    //     let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+    //     generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+    //         &ident,
+    //         &self_upper_camel_case,
+    //         ShouldWhereElementFieldsBePublic::False {
+    //             ident: &ident,
+    //             postfix: &self_upper_camel_case,
+    //             try_new_error_named_variants_token_stream: &Self::generate_try_new_error_named_variants_token_stream(between_try_new_error_type, &where_operator_type_type_token_stream),
+    //             try_new_additional_input_parameters_token_stream: &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
+    //             try_new_content_token_stream: &self.generate_try_new_content_token_stream(&ident, between_try_new_error_type, &quote::quote! {#where_operator_type_additional_bind_token_stream #should_add_dot_zero}),
+    //             impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(&ident, &where_operator_type_type_token_stream),
+    //         },
+    //         &Self::generate_additional_type_declaration_token_stream(&where_operator_type_type_token_stream),
+    //         &Self::generate_additional_default_initialization_token_stream(&where_operator_type.default_initialization_token_stream()),
+    //         &Self::generate_try_generate_bind_increments_token_stream(),
+    //         &{
+    //             let start_snake_case = naming::StartSnakeCase;
+    //             let end_snake_case = naming::EndSnakeCase;
+    //             Self::generate_bind_value_to_query_token_stream(&quote::quote! {self.#start_snake_case #where_operator_type_additional_bind_token_stream}, &quote::quote! {self.#end_snake_case #where_operator_type_additional_bind_token_stream})
+    //         },
+    //     )
+    // }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, between_try_new_error_type: &BetweenTryNewErrorType, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
         let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
