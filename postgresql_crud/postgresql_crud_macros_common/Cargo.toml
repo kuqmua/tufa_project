@@ -6,5 +6,5 @@ edition = "2024"
 [dependencies]
 proc-macro2 = {version = "=1.0.81"}
 quote = {version = "=1.0.36"}
-naming = {path = "../../../naming"}
-token_patterns = {path = "../../../token_patterns"}
+naming = {path = "../../naming"}
+token_patterns = {path = "../../token_patterns"}
