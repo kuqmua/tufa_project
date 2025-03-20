@@ -56,18 +56,18 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
-        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = {
-            quote::quote! {
-                impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhereElementEqual<T> {
-                    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-                        Self {
-                            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                            value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                        }
-                    }
+        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            &quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
+            &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+            &quote::quote!{PostgresqlTypeWhereElementEqual},
+            &quote::quote!{<T>},
+            &quote::quote!{
+                Self {
+                    logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                 }
-            }
-        };
+            },
+        );
         let impl_postgresql_type_self_where_filter_token_stream = {
             quote::quote! {
                 impl<'a, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send> crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a> for PostgresqlTypeWhereElementEqual<T> {

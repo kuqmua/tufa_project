@@ -655,7 +655,7 @@ impl PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
         }
     }
 }
-fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
     path_default_but_option_is_always_some_and_vec_always_contains_one_element: &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
     ident: &dyn quote::ToTokens,
@@ -665,14 +665,14 @@ fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_e
     let path_trait_token_stream = path_default_but_option_is_always_some_and_vec_always_contains_one_element.default_but_option_is_always_some_and_vec_always_contains_one_element();
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
-        impl #path_trait_token_stream for #ident #ident_generic_token_stream {
+        impl #impl_generic_token_stream #path_trait_token_stream for #ident #ident_generic_token_stream {
             fn #default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case() -> Self {
                 #content_token_stream
             }
         }
     }
 }
-fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     path_default_but_option_is_always_some_and_vec_always_contains_one_element: &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
