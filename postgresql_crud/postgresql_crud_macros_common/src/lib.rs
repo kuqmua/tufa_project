@@ -68,14 +68,14 @@ pub fn generate_postgresql_type_where_element_token_stream(
         &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
-    let impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
-        crate::generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
+    let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
+        crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
                 quote::quote! {
-                    Self::#element_upper_camel_case(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                    Self::#element_upper_camel_case(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 }
             });
             quote::quote! {vec![#(#variants_token_stream),*]}
@@ -84,7 +84,7 @@ pub fn generate_postgresql_type_where_element_token_stream(
         #postgresql_type_tokens_where_element_token_stream
         #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
-        #impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+        #impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
 }
 //todo its just a copy of generate_postgresql_type_where_element_token_stream for the time for refactoring
@@ -164,14 +164,14 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
-    let impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
-        crate::generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
+    let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
+        crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
                 quote::quote! {
-                    Self::#element_upper_camel_case(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                    Self::#element_upper_camel_case(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 }
             });
             quote::quote! {vec![#(#variants_token_stream),*]}
@@ -180,7 +180,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         #postgresql_type_tokens_where_element_token_stream
         #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
-        #impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+        #impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
 }
 
@@ -400,27 +400,27 @@ impl PostgresqlJsonTypeVariant {
     }
     pub fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
         let postgresql_json_type_handle = &self.postgresql_json_type_handle;
-        let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-            token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+            token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
             (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::FullTypePath) => {
                 if is_wrapper {
-                    quote::quote! {#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
+                    quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
                 } else {
                     postgresql_json_type_handle.full_type_path_initialization_token_stream()
                 }
             }
-            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::FullTypePath) => quote::quote! {Some(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => quote::quote! {vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::FullTypePath) => quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => quote::quote! {vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
             (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::StdVecVecFullTypePath) => {
-                quote::quote! {Some(vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}
+                quote::quote! {Some(vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}
                 // quote::quote!{Some(#default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
             }
             (&PostgresqlJsonTypePatternIsOptional::False, &PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => {
-                quote::quote! {vec![vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]]}
+                quote::quote! {vec![vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]]}
             }
             (&PostgresqlJsonTypePatternIsOptional::True, &PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => {
-                quote::quote! {Some(vec![vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]])}
+                quote::quote! {Some(vec![vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]])}
             }
         }
     }
@@ -446,12 +446,12 @@ impl PostgresqlJsonTypeVariant {
         self.handle_initialization_token_stream(true)
     }
     pub fn wrapper_non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-            token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+            token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-            PostgresqlJsonTypePatternType::FullTypePath => quote::quote! {#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream},
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote! {vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
-            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => quote::quote! {vec![vec![#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]]},
+            PostgresqlJsonTypePatternType::FullTypePath => quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream},
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote! {vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
+            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => quote::quote! {vec![vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]]},
         }
     }
 }
@@ -493,9 +493,9 @@ impl WhereOperatorType<'_> {
     fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
             WhereOperatorType::Ident(_) => {
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                quote::quote! {#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
             }
             WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {#default_initialization_token_stream},
         }
@@ -503,9 +503,9 @@ impl WhereOperatorType<'_> {
     // fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
     //     match &self {
     //         WhereOperatorType::Ident(_) => {
-    //             let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-    //                 token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-    //             quote::quote! {Some(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
+    //             let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+    //                 token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    //             quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
     //         }
     //         WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
     //     }
@@ -638,33 +638,34 @@ pub fn generate_postgresql_json_type_token_stream(
 }
 
 pub enum PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
-    CrateGeneratePostgresqlJsonType,
+    Crate,
     PostgresqlCrud,
 }
 impl PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
         match &self {
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType => &token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
     fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
         match &self {
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
 }
 fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+    impl_generic_token_stream: &dyn quote::ToTokens,
     path_default_but_option_is_always_some_and_vec_always_contains_one_element: &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
     ident: &dyn quote::ToTokens,
-    lifetime_token_stream: &dyn quote::ToTokens,
+    ident_generic_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_trait_token_stream = path_default_but_option_is_always_some_and_vec_always_contains_one_element.default_but_option_is_always_some_and_vec_always_contains_one_element();
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
-        impl #path_trait_token_stream for #ident #lifetime_token_stream {
+        impl #path_trait_token_stream for #ident #ident_generic_token_stream {
             fn #default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case() -> Self {
                 #content_token_stream
             }
@@ -687,12 +688,13 @@ fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_v
     }
 }
 
-pub fn generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+pub fn generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-        &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType,
+        &proc_macro2::TokenStream::new(),
+        &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
         ident,
         &proc_macro2::TokenStream::new(),
         content_token_stream
@@ -704,17 +706,18 @@ pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_a
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+        &proc_macro2::TokenStream::new(),
         &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud,
         ident,
         lifetime_token_stream,
         content_token_stream
     )
 }
-pub fn generate_impl_crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+pub fn generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType, ident, content_token_stream)
+    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate, ident, content_token_stream)
 }
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud, ident, content_token_stream)

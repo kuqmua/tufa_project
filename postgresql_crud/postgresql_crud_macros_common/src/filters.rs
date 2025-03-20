@@ -161,14 +161,14 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
             }
         }
     };
-    let impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream =
-        crate::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+    let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream =
+        crate::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
             &{
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
                 quote::quote! {Self {
-                    logical_operator: #crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    logical_operator: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #additional_default_initialization_token_stream
                 }}
             },
@@ -182,7 +182,7 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
     quote::quote! {
         #postgresql_type_ident_where_element_tokens_token_stream
         #maybe_try_new_error_named_and_try_new_and_deserialize_token_stream
-        #impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream
+        #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_ident_where_element_tokens_token_stream
         #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream
     }
 }
@@ -573,7 +573,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         ShouldWhereElementFieldsBePublic::True,
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&postgresql_json_type_ident_wrapper),
-        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
+        &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
         &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
         &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
     )
@@ -1221,11 +1221,11 @@ fn generate_pub_value_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_ma
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote! {pub #value_snake_case: #ident}
 }
-fn generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream() -> proc_macro2::TokenStream {
+fn generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
-    let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     quote::quote! {
-        #value_snake_case: #crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+        #value_snake_case: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     }
 }
 fn generate_query_equals_query_bind_self_value_zero_token_stream() -> proc_macro2::TokenStream {
@@ -1250,7 +1250,7 @@ impl Before {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} < ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1626,11 +1626,11 @@ impl EqualToEncodedStringRepresentation {
                 pub encoded_string_representation: std::string::String,
             },
             &{
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
                 quote::quote! {
-                    encode_format: #crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    encode_format: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     encoded_string_representation: #core_default_default_default,
                 }
             },
@@ -1711,7 +1711,7 @@ impl ContainsAnotherRange {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} @> ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1731,7 +1731,7 @@ impl StrictlyToLeftOfRange {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} &< ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1751,7 +1751,7 @@ impl StrictlyToRightOfRange {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} &> ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1833,7 +1833,7 @@ impl GreaterThanLowerBound {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} > ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1853,7 +1853,7 @@ impl OverlapWithRange {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} && ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -1873,7 +1873,7 @@ impl AdjacentWithRange {
             WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} -|- ${})"}),
             &generate_query_equals_query_bind_self_value_zero_token_stream(),
         )
@@ -2208,7 +2208,7 @@ impl PositionEqual {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
+            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2(),
         )
@@ -2242,7 +2242,7 @@ impl PositionGreaterThan {
             },
             &crate::ShouldDeriveSchemarsJsonSchema::True,
             &additional_type_declaration_token_stream,
-            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
+            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
             &Self::generate_try_generate_bind_increments_token_stream(),
             &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2(),
         )
@@ -2408,7 +2408,7 @@ fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_strea
         },
         &crate::ShouldDeriveSchemarsJsonSchema::True,
         &additional_type_declaration_token_stream,
-        &generate_additional_default_initialization_token_stream_e46171d1_2c28_450b_85a8_80293ebe69f8(&token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
+        &generate_additional_default_initialization_token_stream_e46171d1_2c28_450b_85a8_80293ebe69f8(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
         &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&format_handle_token_stream),
         &generate_bind_value_to_query_token_stream_575c4454_6fbb_42c6_bc9c_5bb55c954f1b(),
     )

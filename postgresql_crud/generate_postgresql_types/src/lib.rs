@@ -25,7 +25,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
     let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
     let std_string_string_token_stream = token_patterns::StdStringString;
-    let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
     #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
@@ -2052,9 +2052,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
             // }
 
-            let impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream = match &postgresql_type_not_null_or_nullable {
+            let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream = match &postgresql_type_not_null_or_nullable {
                 PostgresqlTypeNotNullOrNullable::NotNull => {
-                    postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &{
+                    postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &{
                         let generate_sqlx_postgres_types_pg_range_token_stream =
                             |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| generate_qlx_postgres_types_pg_range_start_end_token_stream(&quote::quote! {std::ops::Bound::Included(#start_token_stream)}, &quote::quote! {std::ops::Bound::Excluded(#end_token_stream)});
                         let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&core_default_default_default_token_stream, &core_default_default_default_token_stream);
@@ -2118,10 +2118,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         quote::quote! {Self(#initialization_token_stream)}
                     })
                 }
-                PostgresqlTypeNotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                PostgresqlTypeNotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
                     &quote::quote! {Self(
-                        Some(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                        Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                     )},
                 ),
             };
@@ -2413,14 +2413,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_select_token_stream = {
                 let pub_struct_postgresql_type_not_null_or_nullable_select_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &quote::quote! {;}, true, true);
-                let impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream =
-                    postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream =
+                    postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &postgresql_type_not_null_or_nullable_select_upper_camel_case,
                         &core_default_default_default_token_stream,
                     );
                 quote::quote! {
                     #pub_struct_postgresql_type_not_null_or_nullable_select_token_stream
-                    #impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream
+                    #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream
                 }
             };
             let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
@@ -2435,15 +2435,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
                         &query_snake_case
                     );
-                    let impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
-                        postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
+                        postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                             &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                             &quote::quote! {Self(#core_default_default_default_token_stream)},
                         );
                     quote::quote! {
                         #postgresql_type_not_null_or_nullable_to_create_token_stream
                         #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream
-                        #impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
+                        #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
                     }
                 };
                 let default_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"DEFAULT"});
@@ -2516,9 +2516,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             //         &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
             //     );
-            //     let impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_delete_token_stream = postgresql_crud_macros_common::generate_impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            //     let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_delete_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             //         &postgresql_type_not_null_or_nullable_to_delete_upper_camel_case,
-            //         &self_braces_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
+            //         &self_braces_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call_token_stream
             //     );
             //     let impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_to_delete_token_stream = generate_impl_std_fmt_display_for_tokens_token_stream(
             //         &postgresql_type_not_null_or_nullable_to_delete_upper_camel_case,
@@ -2543,7 +2543,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //         #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
-            //         #impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
+            //         #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //     }
             // };
 
@@ -2551,7 +2551,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
                 let where_operator_type_field_type_default = postgresql_crud_macros_common::WhereOperatorType::FieldType {
                     field_type: &postgresql_type_not_null_or_nullable_upper_camel_case,
-                    default_initialization_token_stream: &crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    default_initialization_token_stream: &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                 };
                 let where_operator_type_ident = postgresql_crud_macros_common::WhereOperatorType::Ident(&postgresql_type_not_null_upper_camel_case);
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName>| {
@@ -2898,7 +2898,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
                                 &range_type,
-                                &crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                 &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
@@ -2907,13 +2907,13 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
                                 &range_type,
-                                &crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                 &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
                                 &range_type,
-                                &crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                 &dot_zero_token_stream,
                             );
                             let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
@@ -3340,7 +3340,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #maybe_impl_serde_deserialize_for_postgresql_type_not_null_token_stream
                 #impl_std_fmt_display_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_token_stream
-                #impl_crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream
+                #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
