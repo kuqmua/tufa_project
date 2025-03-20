@@ -310,8 +310,8 @@ impl quote::ToTokens for StdFmtDisplay {
     }
 }
 
-fn crate_generate_postgresql_json_type() -> proc_macro2::TokenStream {
-    quote::quote!{crate::generate_postgresql_json_type::}
+fn crate_path_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{crate::}
 }
 fn postgresql_crud() -> proc_macro2::TokenStream {
     quote::quote!{postgresql_crud::}
@@ -331,10 +331,10 @@ fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and
 pub struct CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
 impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_generate_postgresql_json_type = crate_generate_postgresql_json_type();
+        let crate_path_token_stream = crate_path_token_stream();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
-            #crate_generate_postgresql_json_type
+            #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
         }.to_tokens(tokens)
     }
@@ -342,11 +342,11 @@ impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlways
 pub struct CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_generate_postgresql_json_type = crate_generate_postgresql_json_type();
+        let crate_path_token_stream = crate_path_token_stream();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call = path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
         quote::quote! {
-            #crate_generate_postgresql_json_type
+            #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
         }.to_tokens(tokens)
@@ -374,24 +374,24 @@ impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysC
         }.to_tokens(tokens)
     }
 }
-pub struct CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_generate_postgresql_json_type = crate_generate_postgresql_json_type();
+        let crate_path_token_stream = crate_path_token_stream();
         let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
-            #crate_generate_postgresql_json_type
+            #crate_path_token_stream
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
         }.to_tokens(tokens)
     }
 }
-pub struct CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-impl quote::ToTokens for CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element = CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element = CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
         let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
         quote::quote! {
-            #crate_generate_postgresql_json_type_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
+            #crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
         }.to_tokens(tokens)
     }

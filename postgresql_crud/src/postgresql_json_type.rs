@@ -2,10 +2,10 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct StdVecVecStdVecVecUuidUuid(pub std::vec::Vec<std::vec::Vec<UuidUuid>>);
-impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuid {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuid {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![vec![
-            crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
         ]])
     }
 }
@@ -30,10 +30,10 @@ pub struct StdVecVecStdVecVecUuidUuidSelect {
     //todo could not implement multi dimension pagination
     pagination: crate::pagination::Pagination,
 }
-impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidSelect {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidSelect {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            pagination: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            pagination: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
         }
     }
 }
@@ -43,15 +43,15 @@ pub struct StdVecVecStdVecVecUuidUuidWhereElementEqual {
     pub logical_operator: crate::LogicalOperator,
     pub value: StdVecVecStdVecVecUuidUuid,
 }
-impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElementEqual {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElementEqual {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            logical_operator: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
         }
     }
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElementEqual {
+impl crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElementEqual {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
@@ -71,15 +71,15 @@ impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilte
 pub enum StdVecVecStdVecVecUuidUuidWhereElement {
     Equal(StdVecVecStdVecVecUuidUuidWhereElementEqual),
 }
-impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElement {
+impl crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElement {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match &self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
         }
     }
     fn where_query_bind<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
-            Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query),
+            Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query),
         }
     }
 }
@@ -88,10 +88,10 @@ impl error_occurence_lib::ToStdStringString for StdVecVecStdVecVecUuidUuidWhereE
         format!("{self:#?}")
     }
 }
-impl crate::generate_postgresql_json_type::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElement {
+impl crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdVecVecStdVecVecUuidUuidWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![Self::Equal(
-            crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
         )]
     }
 }
@@ -100,15 +100,15 @@ pub type StdVecVecStdVecVecUuidUuidUpdate = StdVecVecStdVecVecUuidUuid;
 pub enum StdVecVecStdVecVecUuidUuidOptionToUpdateTryGenerateErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl crate::postgresql_json_type::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
+impl crate::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
     type Create<'a> = StdVecVecStdVecVecUuidUuidCreate;
-    fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed> {
+    fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type_trait::CreateQueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
                 Ok(format!("${increment}"))
             }
-            None => Err(crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            None => Err(crate::postgresql_json_type_trait::CreateQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
     fn create_query_bind<'a>(value: Self::Create<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {

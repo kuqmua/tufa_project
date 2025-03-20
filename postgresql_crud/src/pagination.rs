@@ -298,7 +298,7 @@ impl crate::BindQuery for Pagination {
         query
     }
 }
-impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagination {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagination {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {

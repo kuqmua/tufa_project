@@ -3305,7 +3305,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 quote::quote! {
-                    impl crate::postgresql_type::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                    impl crate::postgresql_type_trait:: #postgresql_type_upper_camel_case for #postgresql_type_not_null_or_nullable_upper_camel_case {
                         type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
                         type #create_upper_camel_case = #postgresql_type_not_null_or_nullable_create_upper_camel_case;
                         #create_query_part_token_stream

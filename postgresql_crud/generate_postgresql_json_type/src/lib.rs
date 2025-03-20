@@ -3442,7 +3442,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         &format!("{{column}}->'{field_ident_stringified}'")
                                     );
                                     quote::quote!{
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
+                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
                                             value,
                                             increment,
                                             &format!(#format_handle_token_stream),
@@ -3467,7 +3467,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         .to_string();
                                     let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                                     quote::quote!{
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query)
+                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query)
                                     }
                                 });
                                 quote::quote!{
@@ -4975,7 +4975,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
                                     quote::quote!{
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
+                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
                                             value,
                                             increment,
                                             &format!(#format_handle_token_stream),
@@ -5000,7 +5000,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         .to_string();
                                     let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                                     quote::quote!{
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query)
+                                        Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query)
                                     }
                                 });
                                 quote::quote!{
@@ -5326,7 +5326,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         quote::quote!{
-                            impl postgresql_crud::postgresql_type::postgresql_type_trait::#postgresql_type_upper_camel_case for #tokens_as_type_upper_camel_case {
+                            impl postgresql_crud::postgresql_type_trait::#postgresql_type_upper_camel_case for #tokens_as_type_upper_camel_case {
                                 type #postgresql_type_self_upper_camel_case = #tokens_as_type_upper_camel_case;
                                 type #create_upper_camel_case = #tokens_as_type_create_upper_camel_case;
                                 #create_query_part_token_stream

@@ -554,7 +554,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_field_type = &primary_key_field.syn_field.ty;
 
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens|{
-        quote::quote!{<#field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::}
+        quote::quote!{<#field_type as postgresql_crud::postgresql_type_trait::PostgresqlType>::}
     };
     let primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
         &primary_key_field_type
@@ -3649,7 +3649,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         <
                             postgresql_crud::PostgresqlTypeWhere<#as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream>
                             as 
-                            postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
+                            postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
                         >::
                     }
                 };
@@ -4814,7 +4814,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             //         #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             //     },
                             // }
-                            match <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
+                            match <#primary_key_field_type as postgresql_crud::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                                 // &#primary_key_field_ident_double_quotes_token_stream,
                                 &"",
@@ -4876,7 +4876,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         //     #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                         //     #query_snake_case,
                         // );
-                        #query_snake_case = <#primary_key_field_type as postgresql_crud::postgresql_type::postgresql_type_trait::PostgresqlType>::#update_query_bind_snake_case(
+                        #query_snake_case = <#primary_key_field_type as postgresql_crud::postgresql_type_trait::PostgresqlType>::#update_query_bind_snake_case(
                             #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                             #query_snake_case,
                         );

@@ -35,7 +35,7 @@ pub fn generate_postgresql_type_where_element_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
                         #value_snake_case,
                         #increment_snake_case,
                         #column_snake_case,
@@ -53,7 +53,7 @@ pub fn generate_postgresql_type_where_element_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(
                         #value_snake_case,
                         #query_snake_case
                     )
@@ -131,7 +131,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
                         #value_snake_case,
                         #increment_snake_case,
                         #column_snake_case,
@@ -149,7 +149,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(
                         #value_snake_case,
                         #query_snake_case
                     )
@@ -650,7 +650,7 @@ impl PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     }
     fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
         match &self {
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType => &token_patterns::CrateGeneratePostgresqlJsonTypeAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::CrateGeneratePostgresqlJsonType => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
@@ -750,7 +750,7 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
     let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
     let postgresql_type_self_where_filter_upper_camel_case = naming::PostgresqlTypeSelfWhereFilterUpperCamelCase;
     quote::quote!{
-        impl #postgresql_type_self_where_filter_path ::postgresql_type::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'_> for #ident_token_stream {
+        impl #postgresql_type_self_where_filter_path ::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'_> for #ident_token_stream {
             fn #where_query_part_snake_case(
                 &self,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,

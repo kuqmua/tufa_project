@@ -9,11 +9,18 @@ edition = "2024"
 strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
+utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+serde = {version = "=1.0", features = ["derive"]}
+num-bigint = {version = "=0.4.4"}
+thiserror = {version = "=1.0.48"}
+schemars = {path = "../schemars/schemars"}#todo migrate for newer version of schemars. "0.8.21" is not correctly validate int types (like its float)
+error_occurence_lib = {path = "../error_occurence_lib"}
+from_str = {path = "../from_str"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 generate_postgresql_json_type = {path = "./generate_postgresql_json_type"}
 generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 generate_postgresql_types = {path = "./generate_postgresql_types"}
-postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}
 http_logic = {path = "../http_logic"}
 naming = {path = "../naming"}

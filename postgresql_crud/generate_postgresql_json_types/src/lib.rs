@@ -642,13 +642,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
         };
         let impl_crate_generate_postgresql_json_type_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-            &quote::quote! {crate::postgresql_json_type::postgresql_json_type_trait::},
+            &quote::quote! {crate::postgresql_json_type_trait::},
             &ident,
             &ident_create_upper_camel_case,
             &{
                 //todo reuse
                 let crate_postgresql_json_type_postgresql_json_type_trait_create_query_part_error_named_token_stream = quote::quote! {
-                    crate::postgresql_json_type::postgresql_json_type_trait::CreateQueryPartErrorNamed
+                    crate::postgresql_json_type_trait::CreateQueryPartErrorNamed
                 };
                 quote::quote! {
                     match increment.checked_add(1) {

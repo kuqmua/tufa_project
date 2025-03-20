@@ -20,7 +20,7 @@ impl std::default::Default for EncodeFormat {
         Self::Base64
     }
 }
-impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
@@ -1048,12 +1048,12 @@ const _: () = {
         }
     }
 };
-impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a>> crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a>> crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
-            match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+            match crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
                     acc.push_str(&format!("{value} "));
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -1068,18 +1068,18 @@ impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type::postgresql_type_tra
     }
     fn where_query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.value {
-            query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+            query = crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
         }
         query
     }
 }
-impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     for PostgresqlTypeWhere<PostgresqlTypeWhereElement>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            logical_operator: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: crate::generate_postgresql_json_type::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
 }
@@ -1108,10 +1108,10 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //         self.to_string()
 //     }
 // }
-// impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
+// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
 //     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
 //         Self(vec![
-//             crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
 //         ])
 //     }
 // }
@@ -1175,7 +1175,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 // Deserialize,
 // )]
 // pub struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
-// impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn {
+// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn {
 //     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
 //         ::core::default::Default::default()
 //     }
@@ -1189,15 +1189,15 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     pub logical_operator: crate::LogicalOperator,
 //     pub value: VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull,
 // }
-// impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
+// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
 //     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
 //         Self {
-//             logical_operator: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             value: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
 //         }
 //     }
 // }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
+// impl crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual {
 //     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(value) => {
@@ -1216,15 +1216,15 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 // pub enum PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
 //     Equal(PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElementEqual),
 // }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+// impl crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
 //     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match &self {
-//             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
+//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
 //         }
 //     }
 //     fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         match self {
-//             Self::Equal(value) => crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query),
+//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(value, query),
 //         }
 //     }
 // }
@@ -1233,10 +1233,10 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //         format!("{self:#?}")
 //     }
 // }
-// impl crate::generate_postgresql_json_type::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
+// impl crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeVecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhereElement {
 //     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
 //         vec![Self::Equal(
-//             crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
 //         )]
 //     }
 // }
@@ -1434,12 +1434,12 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //         }
 //     }
 // };
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+// impl crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
 //     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         let mut acc = std::string::String::default();
 //         let mut is_need_to_add_logical_operator_inner_handle = false;
 //         for element in &self.value {
-//             match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+//             match crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
 //                 Ok(value) => {
 //                     acc.push_str(&format!("{value} "));
 //                     is_need_to_add_logical_operator_inner_handle = true;
@@ -1454,20 +1454,20 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     }
 //     fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in self.value {
-//             query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+//             query = crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
 //         }
 //         query
 //     }
 // }
-// impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
+// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere {
 //     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
 //         Self {
-//             logical_operator: crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             value: crate::generate_postgresql_json_type::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+//             logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             value: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
 //         }
 //     }
 // }
-// impl crate::postgresql_type::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
+// impl crate::postgresql_type_trait::PostgresqlType<'_> for VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNull {
 //     type PostgresqlTypeSelf = Self;
 //     type Column = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullColumn;
 //     fn column_query_part(_: &Self::Column, column: &std::primitive::str) -> std::string::String {
@@ -1489,7 +1489,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //         let mut acc = std::string::String::default();
 //         let mut is_need_to_add_logical_operator_inner_handle = false;
 //         for element in &value.value {
-//             match crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+//             match crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
 //                 Ok(value) => {
 //                     acc.push_str(&format!("{value} "));
 //                     is_need_to_add_logical_operator_inner_handle = true;
@@ -1504,7 +1504,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //     }
 //     fn where_query_bind<'a>(value: Self::Where, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         for element in value.value {
-//             query = crate::postgresql_type::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
+//             query = crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(element, query);
 //         }
 //         query
 //     }
