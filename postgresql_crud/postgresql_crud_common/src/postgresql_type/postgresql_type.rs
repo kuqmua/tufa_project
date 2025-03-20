@@ -1,4 +1,4 @@
-postgresql_crud_types_macro_logic_reuse::generate_postgresql_types!();
+generate_postgresql_types::generate_postgresql_types!();
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum EncodeFormat {

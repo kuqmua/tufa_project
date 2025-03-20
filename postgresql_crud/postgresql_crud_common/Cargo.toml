@@ -14,6 +14,7 @@ thiserror = {version = "=1.0.48"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 schemars = {path = "../../schemars/schemars"}#todo migrate for newer version of schemars. "0.8.21" is not correctly validate int types (like its float)
 postgresql_crud_types_macro_logic_reuse = {path = "./postgresql_crud_types_macro_logic_reuse"}
+generate_postgresql_types = {path = "../generate_postgresql_types"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 naming = {path = "../../naming"}
 from_str = {path = "../../from_str"}
