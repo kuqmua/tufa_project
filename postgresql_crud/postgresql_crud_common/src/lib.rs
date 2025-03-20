@@ -55,8 +55,8 @@ impl Default for LogicalOperator {
         Self::Or
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for LogicalOperator {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOperator {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
 }
@@ -81,8 +81,8 @@ impl Default for Order {
         Self::Asc
     }
 }
-impl crate::generate_postgresql_json_type::StdDefaultDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElement for Order {
-    fn std_default_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Self {
+impl crate::generate_postgresql_json_type::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         ::core::default::Default::default()
     }
 }
