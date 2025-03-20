@@ -1,4 +1,4 @@
-postgresql_crud_types_macro_logic_reuse::generate_postgresql_json_types!();
+generate_postgresql_json_types::generate_postgresql_json_types!();
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct StdVecVecStdVecVecUuidUuid(pub std::vec::Vec<std::vec::Vec<UuidUuid>>);
