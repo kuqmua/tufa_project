@@ -4393,7 +4393,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     },
                     &tokens_where_element_upper_camel_case,
-                    &tokens_where_upper_camel_case,
                     &tokens_update_upper_camel_case,
                     &tokens_option_to_update_try_generate_error_named_upper_camel_case_token_stream,
                     &match &postgresql_json_type {

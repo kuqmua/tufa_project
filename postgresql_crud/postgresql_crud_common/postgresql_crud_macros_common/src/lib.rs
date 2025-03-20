@@ -8,7 +8,6 @@ pub fn generate_postgresql_json_type_token_stream(
     postgresql_json_type_ident_read: &dyn quote::ToTokens,
     select_query_part_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_where_element_token_stream: &dyn quote::ToTokens,
-    postgresql_json_type_ident_where_token_stream: &dyn quote::ToTokens,
     postgresql_json_type_ident_option_to_update: &dyn quote::ToTokens,
     postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
@@ -19,7 +18,6 @@ pub fn generate_postgresql_json_type_token_stream(
     let select_upper_camel_case = naming::SelectUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
     let increment_snake_case = naming::IncrementSnakeCase;

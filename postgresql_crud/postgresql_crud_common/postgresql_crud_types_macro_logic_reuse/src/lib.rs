@@ -1302,7 +1302,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &ident_where_element_upper_camel_case,
-            &quote::quote!{crate::postgresql_type::postgresql_type::PostgresqlTypeWhere<#ident_where_element_upper_camel_case>},
             &ident_update_upper_camel_case,
             &ident_update_error_named_upper_camel_case,
             &{
