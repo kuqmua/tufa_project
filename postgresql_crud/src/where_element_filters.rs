@@ -1,3 +1,5 @@
+generate_postgresql_type_where_element_filters::generate_postgresql_type_where_element_filters!();
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlTypeWhereElementEqual<T> {
     pub logical_operator: crate::LogicalOperator,

@@ -6,7 +6,6 @@ pub mod postgresql_json_type_trait;
 pub mod postgresql_type;
 pub mod postgresql_type_trait;
 
-
 pub use futures::TryStreamExt;
 pub use http_logic;
 pub use route_validators::check_body_size;
