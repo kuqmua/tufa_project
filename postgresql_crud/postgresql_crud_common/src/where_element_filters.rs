@@ -195,7 +195,7 @@ const _: () = {
                 type Value = __Field;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private::Formatter,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
                 ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(
                         __formatter,
@@ -280,7 +280,7 @@ const _: () = {
                 type Value = PostgresqlTypeWhereElementBetween<T>;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private::Formatter,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
                 ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(
                         __formatter,

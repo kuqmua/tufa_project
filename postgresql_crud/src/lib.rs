@@ -77,6 +77,7 @@ pub use postgresql_crud_common::postgresql_json_type::postgresql_json_type;
 
 ////////////
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
+pub use generate_postgresql_types::generate_postgresql_types;
 
 pub use postgresql_crud_common::postgresql_type;
 

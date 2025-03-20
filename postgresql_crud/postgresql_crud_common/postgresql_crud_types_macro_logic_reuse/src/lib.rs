@@ -21,7 +21,7 @@ enum PostgresqlTypeOrJsonType {
     PostgresqlJsonType,
 }
 impl std::fmt::Display for PostgresqlTypeOrJsonType {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
             Self::PostgresqlType => write!(formatter, "{}", naming::PostgresqlTypeUpperCamelCase),
             Self::PostgresqlJsonType => write!(formatter, "{}", naming::PostgresqlJsonTypeUpperCamelCase),

@@ -15,7 +15,7 @@ pub struct ServerPortErrorNamed {
     message: std::string::String,
 }
 impl std::fmt::Display for ServerPortErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
     }
 }

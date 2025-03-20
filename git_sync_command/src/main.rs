@@ -61,7 +61,7 @@ enum CommandError {
 }
 
 impl std::fmt::Display for CommandError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             CommandError::CheckoutDot { path, error } => {
                 write!(f, "git checkout . error: {}, path: {}", error, path)

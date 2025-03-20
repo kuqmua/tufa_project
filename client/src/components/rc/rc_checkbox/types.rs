@@ -35,7 +35,7 @@ pub enum InputType {
 }
 
 impl fmt::Display for InputType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             InputType::Button => write!(f, "button"),
             InputType::Checkbox => write!(f, "checkbox"),

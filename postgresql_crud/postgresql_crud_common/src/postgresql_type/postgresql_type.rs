@@ -483,7 +483,7 @@ const _: () = {
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = StdStringStringAsPostgresqlCharNLength;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlCharNLength")
                 }
                 #[inline]
@@ -573,7 +573,7 @@ const _: () = {
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = StdStringStringAsPostgresqlVarcharLength;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlVarcharLength")
                 }
                 #[inline]
@@ -664,7 +664,7 @@ const _: () = {
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = SqlxTypesBitVecAsPostgresqlBitLength;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlBitLength")
                 }
                 #[inline]
@@ -755,7 +755,7 @@ const _: () = {
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = SqlxTypesBitVecAsPostgresqlVarbitLength;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength")
                 }
                 #[inline]
@@ -919,7 +919,7 @@ const _: () = {
             struct __FieldVisitor;
             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                 type Value = __Field;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "field identifier")
                 }
                 fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
@@ -969,7 +969,7 @@ const _: () = {
             }
             impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, PostgresqlTypeWhereElement> {
                 type Value = PostgresqlTypeWhere<PostgresqlTypeWhereElement>;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "struct PostgresqlTypeWhere")
                 }
                 #[inline]
@@ -1305,7 +1305,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //             struct __FieldVisitor;
 //             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
 //                 type Value = __Field;
-//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
 //                     _serde::__private::Formatter::write_str(__formatter, "field identifier")
 //                 }
 //                 fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
@@ -1355,7 +1355,7 @@ impl<PostgresqlTypeWhereElement: crate::generate_postgresql_json_type::AllEnumVa
 //             }
 //             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
 //                 type Value = VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere;
-//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+//                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
 //                     _serde::__private::Formatter::write_str(__formatter, "struct VecStdPrimitiveI16AsPostgresqlInt2ArrayNotNullWhere")
 //                 }
 //                 #[inline]

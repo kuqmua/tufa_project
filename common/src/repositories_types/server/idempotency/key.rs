@@ -8,7 +8,7 @@ pub enum IdempotencyKeyTryFromStringError {
 }
 
 impl std::fmt::Display for IdempotencyKeyTryFromStringError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             IdempotencyKeyTryFromStringError::CannotBeEmpty(message) => write!(f, "{}", message),
             IdempotencyKeyTryFromStringError::MustBeShorter(message) => write!(f, "{}", message),

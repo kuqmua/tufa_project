@@ -116,7 +116,7 @@ pub struct StrokeColor {
 }
 
 impl Display for StrokeColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut gradient = std::string::String::from("");
         self.colors.iter().for_each(|c| {
             gradient.push_str(c);

@@ -9,8 +9,6 @@ edition = "2024"
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 serde = {version = "=1.0", features = ["derive"]}
-serde_json = {version = "=1.0"}
-time = {version = "=0.3.36", features = ["serde"]}
 num-bigint = {version = "=0.4.4"}
 thiserror = {version = "=1.0.48"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
