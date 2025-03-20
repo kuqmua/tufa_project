@@ -11,6 +11,7 @@ futures = {version = "=0.3.28"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 generate_postgresql_json_type = {path = "./generate_postgresql_json_type"}
+generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 generate_postgresql_types = {path = "./generate_postgresql_types"}
 postgresql_crud_common = {path = "./postgresql_crud_common"}
 app_state = {path = "../app_state"}
