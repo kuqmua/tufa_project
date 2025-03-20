@@ -214,8 +214,10 @@ fn generate_postgresql_type_where_element_refactoring_token_stream(
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
             let type_token_stream = if 
-            "Between" == &element_upper_camel_case.to_string() ||
-            "Equal" == &element_upper_camel_case.to_string()
+            "Equal" == &element_upper_camel_case.to_string() ||
+            "GreaterThan" == &element_upper_camel_case.to_string() ||
+            "Between" == &element_upper_camel_case.to_string()
+            
             {
                 quote::quote! {crate::where_element_filters::PostgresqlTypeWhereElementBetween<#postgresql_type_not_null_upper_camel_case>}
             }
@@ -3972,8 +3974,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 //     &where_operator_type_ident
                 // );
 
-                let postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
-                let postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident);
+                // let postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                //     &postgresql_type_not_null_upper_camel_case,
+                //     &where_operator_type_field_type_default
+                // );
+                // let postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident);
 
                 let where_element_number_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
@@ -3986,7 +3991,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             // );
                             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
@@ -4010,7 +4015,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             // );
                             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
@@ -4034,7 +4039,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             //     &crate::filters::ShouldAddDotZero::False,
                             // );
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
@@ -4057,7 +4062,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             //     &crate::filters::ShouldAddDotZero::False
                             // );
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
@@ -4123,7 +4128,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_date_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
@@ -4150,7 +4155,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_date_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
@@ -4177,7 +4182,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_time_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
@@ -4196,7 +4201,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     // let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable, &where_operator_type_field_type_default);
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
+                            // let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
                             // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                             //     &postgresql_type_not_null_upper_camel_case,
                             //     &where_operator_type_field_type_default,
@@ -4206,7 +4211,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_time_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
@@ -4227,7 +4232,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             // let postgresql_type_tokens_where_element_between_token_stream =
                             //     between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident, &crate::filters::BetweenTryNewErrorType::StartIsEqualToEnd, &crate::filters::ShouldAddDotZero::False);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
@@ -4354,7 +4359,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_timestamp_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
@@ -4373,7 +4378,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     // let postgresql_type_tokens_where_element_equal_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable, &where_operator_type_field_type_default);
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
+                            // let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
                             // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                             //     &postgresql_type_not_null_upper_camel_case,
                             //     &where_operator_type_field_type_default,
@@ -4383,7 +4388,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_token_stream
                                 // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_timestamp_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
@@ -4471,7 +4476,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
+                                // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
                                 #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
