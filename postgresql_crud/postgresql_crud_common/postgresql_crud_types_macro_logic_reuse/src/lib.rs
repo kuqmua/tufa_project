@@ -1,81 +1,3 @@
-fn generate_pub_struct_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: std::primitive::bool, impl_deserialize: std::primitive::bool) -> proc_macro2::TokenStream {
-    let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-    let maybe_impl_default_token_stream: &dyn quote::ToTokens = if impl_default { &quote::quote! {Default,} } else { &proc_macro2_token_stream_new };
-    let maybe_impl_serde_deserialize_token_stream: &dyn quote::ToTokens = if impl_deserialize { &quote::quote! {serde::Deserialize,} } else { &proc_macro2_token_stream_new };
-    quote::quote! {
-        #[derive(
-            Debug,
-            #maybe_impl_default_token_stream
-            Clone,
-            PartialEq,
-            serde::Serialize,
-            #maybe_impl_serde_deserialize_token_stream
-        )]
-        pub struct #ident_token_stream #content_token_stream
-    }
-}
-fn generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let self_snake_case = naming::SelfSnakeCase;
-    quote::quote! {
-        impl sqlx::Encode<'_, sqlx::Postgres> for #ident_token_stream {
-            fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
-            }
-        }
-    }
-}
-fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
-    let error_snake_case = naming::ErrorSnakeCase;
-    quote::quote! {
-        impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-            fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                    Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                    Err(#error_snake_case) => Err(#error_snake_case)
-                }
-            }
-        }
-    }
-}
-fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    quote::quote! {
-        impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
-            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-               <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
-            }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-                <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-            }
-        }
-    }
-}
-fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_macro2::TokenStream {
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
-}
-fn crate_bind_query_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {crate::BindQuery::}
-}
-fn generate_impl_crate_bind_query_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, try_generate_bind_increments_token_stream: &dyn quote::ToTokens, bind_value_to_query_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let std_string_string_token_stream = token_patterns::StdStringString;
-    let self_snake_case = naming::SelfSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-    let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-    let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
-    quote::quote! {
-        impl crate::BindQuery for #ident_token_stream {
-            fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, #crate_try_generate_bind_increments_error_named_token_stream> {
-                #try_generate_bind_increments_token_stream
-            }
-            fn #bind_value_to_query_snake_case(#self_snake_case, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                #bind_value_to_query_token_stream
-            }
-        }
-    }
-}
 fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName>,
     ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -3211,8 +3133,43 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )},
                 ),
             };
+            fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                quote::quote! {
+                    impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
+                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                           <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
+                        }
+                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+                            <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                        }
+                    }
+                }
+            }
             let impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
-            let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_encode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = {
+                let self_snake_case = naming::SelfSnakeCase;
+                quote::quote! {
+                    impl sqlx::Encode<'_, sqlx::Postgres> for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                        fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
+                        }
+                    }
+                }
+            };
+            fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                let value_snake_case = naming::ValueSnakeCase;
+                let error_snake_case = naming::ErrorSnakeCase;
+                quote::quote! {
+                    impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
+                        fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                            match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
+                                Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                Err(#error_snake_case) => Err(#error_snake_case)
+                            }
+                        }
+                    }
+                }
+            }
             let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
             let impl_sqlx_postgres_pg_has_array_type_for_token_stream = quote::quote! {
                 impl sqlx::postgres::PgHasArrayType for #postgresql_type_not_null_or_nullable_upper_camel_case {
@@ -3221,7 +3178,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
+            let crate_try_generate_bind_increments_error_named_token_stream = postgresql_crud_macros_common::crate_try_generate_bind_increments_error_named_token_stream();
             let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
                 let try_generate_bind_increments_token_stream = {
                     let increment_snake_case = naming::IncrementSnakeCase;
@@ -3244,7 +3201,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 match &postgresql_type_not_null_or_nullable {
-                    PostgresqlTypeNotNullOrNullable::NotNull => generate_impl_crate_bind_query_for_tokens_token_stream(
+                    PostgresqlTypeNotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
@@ -3252,7 +3209,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             #query_snake_case
                         },
                     ),
-                    PostgresqlTypeNotNullOrNullable::Nullable => generate_impl_crate_bind_query_for_tokens_token_stream(
+                    PostgresqlTypeNotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &try_generate_bind_increments_token_stream,
                         &quote::quote! {
@@ -3445,6 +3402,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
+            fn generate_pub_struct_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: std::primitive::bool, impl_deserialize: std::primitive::bool) -> proc_macro2::TokenStream {
+                let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+                let maybe_impl_default_token_stream: &dyn quote::ToTokens = if impl_default { &quote::quote! {Default,} } else { &proc_macro2_token_stream_new };
+                let maybe_impl_serde_deserialize_token_stream: &dyn quote::ToTokens = if impl_deserialize { &quote::quote! {serde::Deserialize,} } else { &proc_macro2_token_stream_new };
+                quote::quote! {
+                    #[derive(
+                        Debug,
+                        #maybe_impl_default_token_stream
+                        Clone,
+                        PartialEq,
+                        serde::Serialize,
+                        #maybe_impl_serde_deserialize_token_stream
+                    )]
+                    pub struct #ident_token_stream #content_token_stream
+                }
+            }
             let postgresql_type_not_null_or_nullable_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_select_token_stream = {
                 let pub_struct_postgresql_type_not_null_or_nullable_select_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &quote::quote! {;}, true, true);
@@ -3460,12 +3433,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-            let crate_bind_query_token_stream = crate_bind_query_token_stream();
+            let crate_bind_query_token_stream = postgresql_crud_macros_common::crate_bind_query_token_stream();
             let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
                     let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
-                    let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
                         &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                         &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
                         &query_snake_case
@@ -3546,7 +3519,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         false,
             //         true,
             //     );
-            //     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_delete_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+            //     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_delete_token_stream = postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
             //         &postgresql_type_not_null_or_nullable_to_delete_upper_camel_case,
             //         &crate_bind_query_try_generate_bind_increments_self_zero_increment_token_stream,
             //         &crate_bind_query_bind_value_to_query_self_zero_query_token_stream,
@@ -4234,7 +4207,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let create_query_part_token_stream = {
                     // let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
-                    //     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = generate_impl_crate_bind_query_for_tokens_token_stream(
+                    //     let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_create_token_stream = postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
                     //         &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                     //         &quote::quote! {Ok(#std_string_string_token_stream::from(#query_part_token_stream))},
                     //         &query_snake_case
