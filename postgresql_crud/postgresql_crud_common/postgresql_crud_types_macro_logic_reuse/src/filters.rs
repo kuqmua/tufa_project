@@ -521,46 +521,46 @@ fn generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3
         #query_snake_case
     }
 }
-fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
-    self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    ident: &dyn quote::ToTokens,
-    postgresql_type_not_null_or_nullable: &crate::PostgresqlTypeNotNullOrNullable,
-    where_operator_type: &crate::WhereOperatorType,
-    dimension: &Dimension,
-) -> proc_macro2::TokenStream {
-    let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display| {
-        let value = format!("{prefix}{self_upper_camel_case}");
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let should_where_element_fields_be_public = ShouldWhereElementFieldsBePublic::True;
-    let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
-    match &postgresql_type_not_null_or_nullable {
-        crate::PostgresqlTypeNotNullOrNullable::NotNull => {
-            let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type };
-            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(&naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident)),
-                should_where_element_fields_be_public,
-                &should_implement_schemars_json_schema,
-                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
-                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
-                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
-                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
-            )
-        }
-        crate::PostgresqlTypeNotNullOrNullable::Nullable => {
-            let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType { where_operator_type };
-            generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-                &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(&naming::parameter::StdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)),
-                should_where_element_fields_be_public,
-                &should_implement_schemars_json_schema,
-                &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
-                &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
-                &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
-                &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
-            )
-        }
-    }
-}
+// fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+//     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+//     ident: &dyn quote::ToTokens,
+//     postgresql_type_not_null_or_nullable: &crate::PostgresqlTypeNotNullOrNullable,
+//     where_operator_type: &crate::WhereOperatorType,
+//     dimension: &Dimension,
+// ) -> proc_macro2::TokenStream {
+//     let generate_postgresql_type_ident_where_element_tokens_upper_camel_case = |prefix: &dyn std::fmt::Display| {
+//         let value = format!("{prefix}{self_upper_camel_case}");
+//         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     };
+//     let should_where_element_fields_be_public = ShouldWhereElementFieldsBePublic::True;
+//     let should_implement_schemars_json_schema = crate::ShouldDeriveSchemarsJsonSchema::False;
+//     match &postgresql_type_not_null_or_nullable {
+//         crate::PostgresqlTypeNotNullOrNullable::NotNull => {
+//             let is_nullable_postgresql_type = IsNullablePostgresqlType::NotNullPostgresqlType { where_operator_type };
+//             generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+//                 &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(&naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident)),
+//                 should_where_element_fields_be_public,
+//                 &should_implement_schemars_json_schema,
+//                 &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.type_token_stream()),
+//                 &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.default_initialization_token_stream()),
+//                 &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
+//                 &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+//             )
+//         }
+//         crate::PostgresqlTypeNotNullOrNullable::Nullable => {
+//             let is_nullable_postgresql_type = IsNullablePostgresqlType::NullablePostgresqlType { where_operator_type };
+//             generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+//                 &generate_postgresql_type_ident_where_element_tokens_upper_camel_case(&naming::parameter::StdOptionOptionSelfWhereElementUpperCamelCase::from_tokens(&ident)),
+//                 should_where_element_fields_be_public,
+//                 &should_implement_schemars_json_schema,
+//                 &generate_additional_type_declaration_token_stream_6d00fd33_7c12_43a7_bbcf_2c0ace83c81b(&where_operator_type.std_option_option_type_token_stream()),
+//                 &generate_additional_default_initialization_token_stream_49cf6c53_08ea_4758_91cd_a175677b5ad6(&where_operator_type.std_option_option_default_initialization_token_stream()),
+//                 &generate_try_generate_bind_increments_token_stream_1ccce498_2851_4b84_8d29_a2d205a8e111(&is_nullable_postgresql_type, dimension),
+//                 &generate_bind_value_to_query_token_stream_ab123b8a_9bca_4b86_ac58_214a877e8d3e(&is_nullable_postgresql_type),
+//             )
+//         }
+//     }
+// }
 fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(
     self_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant,
@@ -670,18 +670,18 @@ impl BetweenTryNewErrorType {
         }
     }
 }
-pub enum ShouldAddDotZero {
-    True,
-    False,
-}
-impl quote::ToTokens for ShouldAddDotZero {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {.0}.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
+// pub enum ShouldAddDotZero {
+//     True,
+//     False,
+// }
+// impl quote::ToTokens for ShouldAddDotZero {
+//     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+//         match &self {
+//             Self::True => quote::quote! {.0}.to_tokens(tokens),
+//             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+//         }
+//     }
+// }
 
 pub struct Between;
 impl WhereOperatorName for Between {
@@ -2044,89 +2044,89 @@ fn generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_99
     }
 }
 
-pub struct BitVecPositionEqual;
-impl WhereOperatorName for BitVecPositionEqual {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::BitVecPositionEqualUpperCamelCase
-    }
-}
-impl BitVecPositionEqual {
-    fn std_primitive_bool() -> token_patterns::StdPrimitiveBool {
-        token_patterns::StdPrimitiveBool
-    }
-    fn generate_impl_deserialize_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
-            &generate_self_where_element_filter_upper_camel_case_token_stream(&ident, &WhereOperatorName::upper_camel_case(self)),
-            &Self::std_primitive_bool()
-        )
-    }
-    fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let column_snake_case = naming::ColumnSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-        quote::quote! {
-            match #increment_snake_case.checked_add(1) {
-                Some(first_increment) => {
-                    *#increment_snake_case = first_increment;
-                    match #increment_snake_case.checked_add(1) {
-                        Some(second_increment) => {
-                            *#increment_snake_case = second_increment;
-                            Ok(format!(
-                                "{}(get_bit({}, ${}) = ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                first_increment,
-                                second_increment,
-                            ))
-                        },
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        })
-                    }
-                },
-                None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        }
-    }
-    fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
-        let value_snake_case = naming::ValueSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let position_snake_case = naming::PositionSnakeCase;
-        quote::quote! {
-            #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
-            #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
-                1
-            }
-            else {
-                0
-            });
-            #query_snake_case
-        }
-    }
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&Self::std_primitive_bool());
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &self_upper_camel_case,
-            ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(&ident, &self_upper_camel_case),
-                impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(&ident),
-            },
-            &additional_type_declaration_token_stream,
-            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CoreDefaultDefaultDefault),
-            &Self::generate_try_generate_bind_increments_token_stream(),
-            &Self::generate_bind_value_to_query_token_stream(),
-        )
-    }
-}
+// pub struct BitVecPositionEqual;
+// impl WhereOperatorName for BitVecPositionEqual {
+//     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+//         &naming::BitVecPositionEqualUpperCamelCase
+//     }
+// }
+// impl BitVecPositionEqual {
+//     fn std_primitive_bool() -> token_patterns::StdPrimitiveBool {
+//         token_patterns::StdPrimitiveBool
+//     }
+//     fn generate_impl_deserialize_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         generate_impl_deserialize_token_stream_f8893cac_9ce5_4333_81c7_6bfa8d56c65d(
+//             &generate_self_where_element_filter_upper_camel_case_token_stream(&ident, &WhereOperatorName::upper_camel_case(self)),
+//             &Self::std_primitive_bool()
+//         )
+//     }
+//     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
+//         let increment_snake_case = naming::IncrementSnakeCase;
+//         let column_snake_case = naming::ColumnSnakeCase;
+//         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+//         let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+//         quote::quote! {
+//             match #increment_snake_case.checked_add(1) {
+//                 Some(first_increment) => {
+//                     *#increment_snake_case = first_increment;
+//                     match #increment_snake_case.checked_add(1) {
+//                         Some(second_increment) => {
+//                             *#increment_snake_case = second_increment;
+//                             Ok(format!(
+//                                 "{}(get_bit({}, ${}) = ${})",
+//                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                                 #column_snake_case,
+//                                 first_increment,
+//                                 second_increment,
+//                             ))
+//                         },
+//                         None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//                             code_occurence: error_occurence_lib::code_occurence!(),
+//                         })
+//                     }
+//                 },
+//                 None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 })
+//             }
+//         }
+//     }
+//     fn generate_bind_value_to_query_token_stream() -> proc_macro2::TokenStream {
+//         let value_snake_case = naming::ValueSnakeCase;
+//         let query_snake_case = naming::QuerySnakeCase;
+//         let position_snake_case = naming::PositionSnakeCase;
+//         quote::quote! {
+//             #query_snake_case = #query_snake_case.bind(self.#position_snake_case);
+//             #query_snake_case = #query_snake_case.bind(if self.#value_snake_case {
+//                 1
+//             }
+//             else {
+//                 0
+//             });
+//             #query_snake_case
+//         }
+//     }
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+//         let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&Self::std_primitive_bool());
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             &self_upper_camel_case,
+//             ShouldWhereElementFieldsBePublic::False {
+//                 ident: &ident,
+//                 postfix: &self_upper_camel_case,
+//                 try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
+//                 try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+//                 try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(&ident, &self_upper_camel_case),
+//                 impl_deserialize_token_stream: &self.generate_impl_deserialize_token_stream(&ident),
+//             },
+//             &additional_type_declaration_token_stream,
+//             &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CoreDefaultDefaultDefault),
+//             &Self::generate_try_generate_bind_increments_token_stream(),
+//             &Self::generate_bind_value_to_query_token_stream(),
+//         )
+//     }
+// }
 
 fn generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(ident: &dyn quote::ToTokens, filter: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
     generate_try_new_content_token_stream_32f214a7_79ed_4fae_8fdd_0123bd84c652(&generate_self_where_element_filter_try_new_error_named_upper_camel_case_stringified(&ident, filter))

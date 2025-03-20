@@ -96,7 +96,6 @@ fn generate_impl_crate_bind_query_for_tokens_token_stream(ident_token_stream: &d
     let self_snake_case = naming::SelfSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
-    let crate_bind_query_token_stream = crate_bind_query_token_stream();
     let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
     let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
     let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
@@ -325,12 +324,12 @@ impl WhereOperatorType<'_> {
             WhereOperatorType::FieldType { field_type, .. } => quote::quote! {#field_type},
         }
     }
-    fn std_option_option_type_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(value) => quote::quote! {std::option::Option<#value>},
-            WhereOperatorType::FieldType { field_type, .. } => quote::quote! {std::option::Option<#field_type>},
-        }
-    }
+    // fn std_option_option_type_token_stream(&self) -> proc_macro2::TokenStream {
+    //     match &self {
+    //         WhereOperatorType::Ident(value) => quote::quote! {std::option::Option<#value>},
+    //         WhereOperatorType::FieldType { field_type, .. } => quote::quote! {std::option::Option<#field_type>},
+    //     }
+    // }
     fn additional_bind_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
             WhereOperatorType::Ident(_) => quote::quote! {.0},
@@ -347,16 +346,16 @@ impl WhereOperatorType<'_> {
             WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {#default_initialization_token_stream},
         }
     }
-    fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(_) => {
-                let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                quote::quote! {Some(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
-            }
-            WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
-        }
-    }
+    // fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+    //     match &self {
+    //         WhereOperatorType::Ident(_) => {
+    //             let crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+    //                 token_patterns::CrateGeneratePostgresqlJsonTypeDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    //             quote::quote! {Some(#crate_generate_postgresql_json_type_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
+    //         }
+    //         WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
+    //     }
+    // }
 }
 
 struct PostgresqlJsonTypeVariant {
@@ -1427,10 +1426,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
-    let acc_snake_case = naming::AccSnakeCase;
-    let element_snake_case = naming::ElementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
-    let error_snake_case = naming::ErrorSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let self_snake_case = naming::SelfSnakeCase;
@@ -3962,7 +3958,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let current_timestamp = crate::filters::CurrentTimestamp;
                 let greater_than_current_timestamp = crate::filters::GreaterThanCurrentTimestamp;
                 let before = crate::filters::Before;
-                let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
+                // let bit_vec_position_equal = crate::filters::BitVecPositionEqual;
 
                 // let postgresql_type_tokens_where_element_equal_where_operator_type_field_type_default_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                 //     &postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable,
@@ -4499,7 +4495,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         },
                         PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
                     };
-                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &bit_vec_position_equal]);
+                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![
+                        &equal,
+                        // &bit_vec_position_equal
+                    ]);
                     quote::quote! {
                         // #postgresql_type_tokens_where_element_equal_where_operator_type_ident_token_stream
                         #maybe_filters_token_stream
