@@ -1,6 +1,7 @@
 #[proc_macro]
 pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
+    #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum Filter {
         Equal,
         GreaterThan,
@@ -77,8 +78,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             }
         }
     };
+    // let filter_array_token_stream = Filter::into_array().map(|element|generate_filters_token_stream(&element));
     let equal_token_stream = generate_filters_token_stream(&Filter::Equal);
     let generated = quote::quote! {
+        // #(#filter_array_token_stream)*
         #equal_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
