@@ -60,7 +60,7 @@ impl<T> PostgresqlTypeWhereElementBetweenTryNewErrorNamed<T> {
 pub enum PostgresqlTypeWhereElementBetweenTryNewErrorNamedWithSerializeDeserialize<T> {//here
     StartMoreOrEqualToEnd { start: T, end: T, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl<T> std::fmt::Display for PostgresqlTypeWhereElementBetweenTryNewErrorNamedWithSerializeDeserialize<T> {//here
+impl<T: error_occurence_lib::ToStdStringString> std::fmt::Display for PostgresqlTypeWhereElementBetweenTryNewErrorNamedWithSerializeDeserialize<T> {//here
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter,
@@ -82,7 +82,7 @@ end: {}
         )
     }
 }
-impl<T> error_occurence_lib::ToStdStringString for PostgresqlTypeWhereElementBetweenTryNewErrorNamedWithSerializeDeserialize<T> {
+impl<T: error_occurence_lib::ToStdStringString> error_occurence_lib::ToStdStringString for PostgresqlTypeWhereElementBetweenTryNewErrorNamedWithSerializeDeserialize<T> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self}")
     }
