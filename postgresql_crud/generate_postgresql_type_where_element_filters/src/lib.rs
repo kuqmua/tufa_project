@@ -1,14 +1,6 @@
 #[proc_macro]
 pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    // struct Properties<'a> {
-    //     maybe_pub_token_stream: &'a dyn quote::ToTokens,
-    //     maybe_serde_deserialize_token_stream: &'a dyn quote::ToTokens,
-    //     struct_additional_fields_token_stream: &'a dyn quote::ToTokens,
-    //     impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream: &'a dyn quote::ToTokens,
-    //     where_query_part_content_token_stream: &'a dyn quote::ToTokens,
-    //     where_query_bind_content_token_stream: &'a dyn quote::ToTokens,
-    // }
     #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum Filter {
         Equal,
@@ -55,6 +47,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         EqualSecondDimension,
     }
     let generate_filters_token_stream = |filter: &Filter|{
+        let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
+        let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let pub_snake_case_token_stream = {
             let pub_snake_case = naming::PubSnakeCase;
@@ -62,6 +56,20 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         let comma_serde_deserialize_token_stream = quote::quote!{, serde::Deserialize};
         let pub_value_t_token_stream = quote::quote!{pub value: T};
+        let generate_enum_ident_try_new_error_named_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            quote::quote!{
+                #[derive(
+                    Debug,
+                    Clone,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    thiserror::Error,
+                )]
+                pub enum #ident_try_new_error_named<T> {
+                    #content_token_stream
+                }
+            }
+        };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
         };
@@ -84,6 +92,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             maybe_pub_token_stream,
             maybe_serde_deserialize_token_stream,
             struct_additional_fields_token_stream,
+            enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
@@ -92,6 +101,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &pub_snake_case_token_stream,
                 &comma_serde_deserialize_token_stream,
                 &pub_value_t_token_stream,
+                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} = ${})"}),
                 &where_query_bind_one_value_token_stream,
@@ -100,6 +110,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &pub_snake_case_token_stream,
                 &comma_serde_deserialize_token_stream,
                 &pub_value_t_token_stream,
+                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
                 &where_query_bind_one_value_token_stream,
@@ -111,6 +122,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     start: T,
                     end: T,
                 },
+                &generate_enum_ident_try_new_error_named_token_stream(&quote::quote!{
+                    StartMoreOrEqualToEnd {
+                        start: T,
+                        end: T,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }),
                 &quote::quote!{
                     start: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                     end: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -178,34 +196,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
             Filter::EqualSecondDimension => todo!(),
         };
-        let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let struct_token_stream = {
             quote::quote! {
                 #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_serde_deserialize_token_stream )]
                 pub struct #ident<T> {
                     #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
                     #struct_additional_fields_token_stream
-                }
-            }
-        };
-        let maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream = {
-            quote::quote! {
-                #[derive(
-                    Debug,
-                    Clone,
-                    serde :: Serialize,
-                    serde :: Deserialize,
-                    thiserror ::Error,
-                    // error_occurence_lib :: ErrorOccurence,
-                )]
-                pub enum PostgresqlTypeWhereElementBetweenTryNewErrorNamed<T> {
-                    StartMoreOrEqualToEnd {
-                        // #[eo_to_std_string_string_serialize_deserialize]
-                        start: T,
-                        // #[eo_to_std_string_string_serialize_deserialize]
-                        end: T,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
                 }
             }
         };
@@ -237,6 +233,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         quote::quote! {
             #struct_token_stream
+            #enum_postgresql_type_where_element_filter_try_new_error_named_token_stream
             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             #impl_postgresql_type_self_where_filter_token_stream
         }
