@@ -597,7 +597,116 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::In => todo!(),
+            Filter::In => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &pub_value_t_token_stream,
+                &generate_enum_ident_try_new_error_named_token_stream(&quote::quote!{
+                    IsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    NotUnique {
+                        value: T,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }),
+                &generate_impl_std_fmt_display_for_ident_try_new_error_named_token_stream(&quote::quote!{
+                    
+                }),
+                &generate_ident_try_new_error_named_into_serialize_deserialize_version_token_stream(&quote::quote!{
+                    
+                }),
+                &generate_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
+                    // StartMoreOrEqualToEnd {
+                    //     start: T,
+                    //     end: T,
+                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+                    // },
+                }),
+                &generate_impl_std_fmt_display_for_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
+                    // write!(
+                    //     formatter,
+                    //     "{}{}",
+                    //     match self {
+                    //         Self::StartMoreOrEqualToEnd { start, end, .. } => {
+                    //             format!(
+                    //                 "start: {} end: {}",
+                    //                 error_occurence_lib::ToStdStringString::to_std_string_string(start),
+                    //                 error_occurence_lib::ToStdStringString::to_std_string_string(end)
+                    //             )
+                    //         }
+                    //     },
+                    //     match self {
+                    //         Self::StartMoreOrEqualToEnd { code_occurence, .. } => code_occurence,
+                    //     }
+                    // )
+                }),
+                &generate_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
+                    // format!("{self}")
+                }),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &quote::quote!{: std::cmp::PartialOrd},
+                    &quote::quote!{
+                        start: T,
+                        end: T,
+                    },
+                    &quote::quote!{
+                        if start < end {//removed .0
+                            Ok(Self {
+                                logical_operator,
+                                start,
+                                end
+                            })
+                        } else {
+                            Err(#ident_try_new_error_named::StartMoreOrEqualToEnd {
+                                start,
+                                end,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(&[
+                    Field {
+                        field_name: &naming::LogicalOperatorSnakeCase,
+                        field_type: &quote::quote! {crate::LogicalOperator},
+                    },
+                    Field {
+                        field_name: &naming::StartSnakeCase,
+                        field_type: &t_token_stream,
+                    },
+                    Field {
+                        field_name: &naming::EndSnakeCase,
+                        field_type: &t_token_stream,
+                    },
+                ]),
+                &quote::quote!{
+                    start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                },
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(first_value) => {
+                            *increment = first_value;
+                            match increment.checked_add(1) {
+                                Some(second_value) => {
+                                    *increment = second_value;
+                                    let between_snake_case = naming::BetweenSnakeCase;
+                                    let and_snake_case = naming::AndSnakeCase;
+                                    Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+                                }
+                                None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            }
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.start);//here change
+                    query = query.bind(self.end);//here change
+                    query
+                }
+            ),
             Filter::CaseSensitiveRegularExpression => todo!(),
             Filter::CaseInsensitiveRegularExpression => todo!(),
             Filter::Before => todo!(),
@@ -749,7 +858,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         // #(#filter_array_token_stream)*
         #equal_token_stream
         #greater_than_token_stream
-        #between_token_stream
+        // #between_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
