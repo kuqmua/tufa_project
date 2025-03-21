@@ -689,10 +689,117 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     // let filter_array_token_stream = Filter::into_array().map(|element|generate_filters_token_stream(&element));
     let equal_token_stream = generate_filters_token_stream(&Filter::Equal);
     let greater_than_token_stream = generate_filters_token_stream(&Filter::GreaterThan);
+    let between_token_stream = generate_filters_token_stream(&Filter::Between);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
+    // let _token_stream = generate_filters_token_stream(&Filter::);
     let generated = quote::quote! {
         // #(#filter_array_token_stream)*
         #equal_token_stream
         #greater_than_token_stream
+        #between_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
+        // #_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlTypeWhereElementFilters",
