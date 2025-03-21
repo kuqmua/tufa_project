@@ -50,13 +50,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named_with_serialize_deserialize = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedWithSerializeDeserializeUpperCamelCase::from_display(&filter);
-
         let t_token_stream = quote::quote!{T};
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
         };
-
         let pub_snake_case_token_stream = {
             let pub_snake_case = naming::PubSnakeCase;
             quote::quote!{#pub_snake_case}
@@ -399,16 +397,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 };
             }
         };
-        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
-        //     quote::quote!{
-
-        //     }
-        // };
-        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
-        //     quote::quote!{
-
-        //     }
-        // };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
         };
@@ -439,7 +427,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             maybe_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream,
             maybe_impl_try_new_for_ident_token_stream,
             maybe_impl_serde_deserialize_for_ident_token_stream,
-            // maybe_,
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
