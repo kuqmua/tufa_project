@@ -96,6 +96,44 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
+        let generate_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
+                pub enum #ident_try_new_error_named_with_serialize_deserialize<T> {
+                    #content_token_stream
+                }
+            }
+        };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
+        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        //     quote::quote!{
+
+        //     }
+        // };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
         };
@@ -121,6 +159,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
             maybe_impl_std_fmt_display_for_ident_try_new_error_named_token_stream,
             maybe_ident_try_new_error_named_into_serialize_deserialize_version_token_stream,
+            maybe_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream,
+            // maybe_,
+            // maybe_,
+            // maybe_,
+            // maybe_,
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
@@ -132,6 +175,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} = ${})"}),
                 &where_query_bind_one_value_token_stream,
@@ -140,6 +184,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &pub_snake_case_token_stream,
                 &comma_serde_deserialize_token_stream,
                 &pub_value_t_token_stream,
+                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -188,6 +233,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         start,
                         end,
                         code_occurence
+                    },
+                }),
+                &generate_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
+                    StartMoreOrEqualToEnd {
+                        start: T,
+                        end: T,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
                     },
                 }),
                 &quote::quote!{
@@ -297,6 +349,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             #maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream
             #maybe_impl_std_fmt_display_for_ident_try_new_error_named_token_stream
             #maybe_ident_try_new_error_named_into_serialize_deserialize_version_token_stream
+            #maybe_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream
             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             #impl_postgresql_type_self_where_filter_token_stream
         }
