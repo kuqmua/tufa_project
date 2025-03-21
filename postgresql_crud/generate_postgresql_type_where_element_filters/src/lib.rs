@@ -50,6 +50,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
+            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+        };
+
         let pub_snake_case_token_stream = {
             let pub_snake_case = naming::PubSnakeCase;
             quote::quote!{#pub_snake_case}
@@ -71,7 +75,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             }
         };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-            value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
         };
         let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
             quote::quote!{
@@ -130,8 +134,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 }),
                 &quote::quote!{
-                    start: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    end: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 },
                 &quote::quote!{
                     match increment.checked_add(1) {
@@ -213,7 +217,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             &{
                 quote::quote!{
                     Self {
-                        logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                        logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                     }
                 }
