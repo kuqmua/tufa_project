@@ -113,7 +113,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
-        let generate_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        let generate_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream = |content_token_stream: &dyn quote::ToTokens|{
             quote::quote!{
                 impl<T: error_occurence_lib::ToStdStringString> error_occurence_lib::ToStdStringString for #ident_try_new_error_named_with_serialize_deserialize<T> {
                     fn to_std_string_string(&self) -> std::string::String {
@@ -122,7 +122,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
-        let generate_try_new_for_ident_token_stream = |
+        let generate_impl_try_new_for_ident_token_stream = |
             generic_requirements_token_stream: &dyn quote::ToTokens,
             additional_input_parameters_token_stream: &dyn quote::ToTokens,
             content_token_stream: &dyn quote::ToTokens,
@@ -435,8 +435,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             maybe_ident_try_new_error_named_into_serialize_deserialize_version_token_stream,
             maybe_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream,
             maybe_impl_std_fmt_display_for_ident_try_new_error_named_with_serialize_deserialize_token_stream,
-            maybe_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream,
-            maybe_generate_try_new_for_ident_token_stream,
+            maybe_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream,
+            maybe_impl_try_new_for_ident_token_stream,
             // maybe_,
             // maybe_,
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
@@ -541,10 +541,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         }
                     )
                 }),
-                &generate_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
+                &generate_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream(&quote::quote!{
                     format!("{self}")
                 }),
-                &generate_try_new_for_ident_token_stream(
+                &generate_impl_try_new_for_ident_token_stream(
                     &quote::quote!{: std::cmp::PartialOrd},
                     &quote::quote!{
                         start: T,
@@ -675,8 +675,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             #maybe_ident_try_new_error_named_into_serialize_deserialize_version_token_stream
             #maybe_enum_ident_try_new_error_named_with_serialize_deserialize_token_stream
             #maybe_impl_std_fmt_display_for_ident_try_new_error_named_with_serialize_deserialize_token_stream
-            #maybe_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream
-            #maybe_generate_try_new_for_ident_token_stream
+            #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_try_new_error_named_with_serialize_deserialize_token_stream
+            #maybe_impl_try_new_for_ident_token_stream
             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             #impl_postgresql_type_self_where_filter_token_stream
         }
