@@ -121,7 +121,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     Self(#content_token_stream)
                 }
             });
-        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
+        let impl_error_occurence_lib_to_std_string_string_for_ident_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+            &proc_macro2::TokenStream::new(),
+            &ident,
+            &proc_macro2::TokenStream::new(),
+            &quote::quote! {format!("{self:#?}")}
+        );
 
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident);

@@ -67,7 +67,12 @@ pub fn generate_postgresql_type_where_element_token_stream(
         },
         &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
-    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
+    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+        &proc_macro2::TokenStream::new(),
+        &ident,
+        &proc_macro2::TokenStream::new(),
+        &quote::quote! {format!("{self:#?}")}
+    );
     let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
         crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {
@@ -163,7 +168,12 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         },
         &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
     );
-    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&ident, &quote::quote! {format!("{self:#?}")});
+    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+        &proc_macro2::TokenStream::new(),
+        &ident,
+        &proc_macro2::TokenStream::new(),
+        &quote::quote! {format!("{self:#?}")}
+    );
     let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
         crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {

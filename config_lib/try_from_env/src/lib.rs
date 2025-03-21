@@ -53,7 +53,9 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         });
         macros_helpers::generate_impl_std_fmt_display_token_stream(
+            &proc_macro2::TokenStream::new(),
             &ident_try_from_env_error_named_upper_camel_case,
+            &proc_macro2::TokenStream::new(),
             &quote::quote!{
                 match self {
                     Self::#dotenv_upper_camel_case {
