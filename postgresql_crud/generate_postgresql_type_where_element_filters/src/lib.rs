@@ -49,7 +49,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let generate_filters_token_stream = |filter: &Filter|{
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-        let ident_try_new_error_named_with_serialize_deserialize = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedWithSerializeDeserializeUpperCamelCase::from_display(&filter);
         let t_token_stream = quote::quote!{T};
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
@@ -194,7 +193,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     #[automatically_derived]
                     impl<'de, T> _serde::Deserialize<'de> for #ident<T>
                     where
-                        T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug,
+                        T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug + Clone,
                     {
                         fn deserialize<__D>(
                             __deserializer: __D,
@@ -284,7 +283,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                             }
                             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
                             where
-                                T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug,
+                                T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug + Clone,
                             {
                                 type Value = #ident<T>;
                                 fn expecting(
@@ -482,7 +481,80 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::In => todo!(),
+            Filter::In => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: std::vec::Vec<T>},
+                &generate_enum_ident_try_new_error_named_token_stream(&quote::quote!{
+                    IsEmpty {
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    NotUnique {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        value: T,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &quote::quote!{: PartialEq + Clone},
+                    &quote::quote!{value: std::vec::Vec<T>},
+                    &quote::quote!{
+                        if value.is_empty() {
+                            return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                        }
+                        {
+                            let mut acc = vec![];
+                            for element in &value {
+                                if !acc.contains(&element) {
+                                    acc.push(element);
+                                } else {
+                                    return Err(#ident_try_new_error_named::NotUnique {
+                                        value: element.clone(),
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                }
+                            }
+                        }
+                        Ok(Self { logical_operator, value })
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(&[
+                    Field {
+                        field_name: &naming::LogicalOperatorSnakeCase,
+                        field_type: &quote::quote! {crate::LogicalOperator},
+                    },
+                    Field {
+                        field_name: &naming::ValueSnakeCase,
+                        field_type: &quote::quote!{std::vec::Vec<T>},
+                    },
+                ]),
+                &quote::quote!{
+                    value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                },
+                &quote::quote!{
+                    let mut acc = std::string::String::default();
+                    for element in &self.value {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                acc.push_str(&format!("${},", value));
+                            }
+                            None => {
+                                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                            }
+                        }
+                    }
+                    let _ = acc.pop();
+                    let in_snake_case = naming::InSnakeCase;
+                    Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                },
+                &quote::quote!{
+                    for element in self.value {
+                        query = query.bind(element);
+                    }
+                    query
+                }
+            ),
             Filter::CaseSensitiveRegularExpression => todo!(),
             Filter::CaseInsensitiveRegularExpression => todo!(),
             Filter::Before => todo!(),
@@ -570,7 +642,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let equal_token_stream = generate_filters_token_stream(&Filter::Equal);
     let greater_than_token_stream = generate_filters_token_stream(&Filter::GreaterThan);
     let between_token_stream = generate_filters_token_stream(&Filter::Between);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let in_token_stream = generate_filters_token_stream(&Filter::In);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -630,7 +702,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #equal_token_stream
         #greater_than_token_stream
         #between_token_stream
-        // #_token_stream
+        #in_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
