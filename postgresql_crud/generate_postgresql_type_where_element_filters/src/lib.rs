@@ -138,11 +138,266 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
-        // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
-        //     quote::quote!{
+        struct Field<'a> {
+            field_name: &'a dyn std::fmt::Display,
+            field_type: &'a dyn quote::ToTokens,
+        }
+        let generate_serde_deserialize_for_ident_token_stream = |fields: &[Field<'_>]|{
+            let (
+                struct_ident_double_quotes_token_stream,
+                struct_ident_with_number_of_elements_double_quotes_token_stream,
+                ident_double_quotes_token_stream
+            ) = postgresql_crud_macros_common::generate_serde_deserialize_double_quotes_token_stream(
+                &ident,
+                fields.len()
+            );
+            let enum_field_fields_token_stream = {
+                let value = fields.iter().enumerate().map(|(index, _)| format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap());
+                quote::quote! {#(#value),*}
+            };
+            let visit_u64_match_variants_token_stream = fields.iter().enumerate().map(|(index, _)| format!("{index}u64 => _serde::__private::Ok(__Field::__field{index})").parse::<proc_macro2::TokenStream>().unwrap());
+            let visit_str_match_variants_token_stream = fields
+                .iter()
+                .enumerate()
+                .map(|(index, element)| format!("{} => _serde::__private::Ok(__Field::__field{index})", generate_quotes::double_quotes_stringified(&element.field_name)).parse::<proc_macro2::TokenStream>().unwrap());
+            let visit_bytes_match_variants_token_stream = fields
+                .iter()
+                .enumerate()
+                .map(|(index, element)| format!("{} => _serde::__private::Ok(__Field::__field{index})", generate_quotes::binary_double_quotes_stringified(&element.field_name)).parse::<proc_macro2::TokenStream>().unwrap());
+            let visit_seq_initialization_token_stream = fields.iter().enumerate().map(|(index, element)| {
+                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                let element_field_type_token_stream = &element.field_type;
+                let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();
+                quote::quote! {
+                    let #field_index_token_stream = match _serde::de::SeqAccess::next_element::<
+                        #element_field_type_token_stream,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    #index_usize_token_stream,
+                                    &#struct_ident_with_number_of_elements_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                    };
+                }
+            });
+            let visit_map_declaration_token_stream = fields.iter().enumerate().map(|(index, element)| {
+                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                let element_field_type_token_stream = &element.field_type;
+                quote::quote! {
+                    let mut #field_index_token_stream: _serde::__private::Option<
+                        #element_field_type_token_stream,
+                    > = _serde::__private::None;
+                }
+            });
+            let visit_map_match_variants_token_stream = fields.iter().enumerate().map(|(index, element)| {
+                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                let element_field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_name);
+                let element_field_type_token_stream = &element.field_type;
+                quote::quote! {
+                    __Field::#field_index_token_stream => {
+                        if _serde::__private::Option::is_some(&#field_index_token_stream) {
+                            return _serde::__private::Err(
+                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                    #element_field_name_double_quotes_token_stream,
+                                ),
+                            );
+                        }
+                        #field_index_token_stream = _serde::__private::Some(
+                            _serde::de::MapAccess::next_value::<
+                                #element_field_type_token_stream,
+                            >(&mut __map)?,
+                        );
+                    }
+                }
+            });
+            let visit_map_initialization_token_stream = fields.iter().enumerate().map(|(index, element)| {
+                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                let element_field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_name);
+                quote::quote! {
+                    let #field_index_token_stream = match #field_index_token_stream {
+                        _serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field(#element_field_name_double_quotes_token_stream)?
+                        }
+                    };
+                }
+            });
+            let field_names_double_quotes_token_stream = fields.iter().map(|element| generate_quotes::double_quotes_token_stream(&element.field_name));
+            let try_new_token_stream = quote::quote! {
+                match #ident::try_new(#enum_field_fields_token_stream) {
+                    Ok(value) => _serde::__private::Ok(value),
+                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                }
+            };
+            quote::quote!{
+                const _: () = {
+                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                    extern crate serde as _serde;
+                    #[automatically_derived]
+                    impl<'de, T> _serde::Deserialize<'de> for #ident<T>
+                    where
+                        T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug,
+                    {
+                        fn deserialize<__D>(
+                            __deserializer: __D,
+                        ) -> _serde::__private::Result<Self, __D::Error>
+                        where
+                            __D: _serde::Deserializer<'de>,
+                        {
+                            #[allow(non_camel_case_types)]
+                            #[doc(hidden)]
+                            enum __Field {
+                                #enum_field_fields_token_stream,
+                                __ignore,
+                            }
+                            #[doc(hidden)]
+                            struct __FieldVisitor;
+                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                type Value = __Field;
+                                fn expecting(
+                                    &self,
+                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                ) -> _serde::__private::fmt::Result {
+                                    _serde::__private::Formatter::write_str(
+                                        __formatter,
+                                        "field identifier",
+                                    )
+                                }
+                                fn visit_u64<__E>(
+                                    self,
+                                    __value: u64,
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        #(#visit_u64_match_variants_token_stream),*,
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                                fn visit_str<__E>(
+                                    self,
+                                    __value: &str,
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        #(#visit_str_match_variants_token_stream),*,
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                                fn visit_bytes<__E>(
+                                    self,
+                                    __value: &[u8],
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        #(#visit_bytes_match_variants_token_stream),*,
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                            }
+                            impl<'de> _serde::Deserialize<'de> for __Field {
+                                #[inline]
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> _serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: _serde::Deserializer<'de>,
+                                {
+                                    _serde::Deserializer::deserialize_identifier(
+                                        __deserializer,
+                                        __FieldVisitor,
+                                    )
+                                }
+                            }
+                            #[doc(hidden)]
+                            struct __Visitor<'de, T>
+                            where
+                                T: _serde::Deserialize<'de>,
+                            {
+                                marker: _serde::__private::PhantomData<
+                                    #ident<T>,
+                                >,
+                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                            }
+                            impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
+                            where
+                                T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug,
+                            {
+                                type Value = #ident<T>;
+                                fn expecting(
+                                    &self,
+                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                ) -> _serde::__private::fmt::Result {
+                                    _serde::__private::Formatter::write_str(
+                                        __formatter,
+                                        #struct_ident_double_quotes_token_stream,
+                                    )
+                                }
+                                #[inline]
+                                fn visit_seq<__A>(
+                                    self,
+                                    mut __seq: __A,
+                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: _serde::de::SeqAccess<'de>,
+                                {
+                                    
+                                    #(#visit_seq_initialization_token_stream)*
+                                    #try_new_token_stream
+                                }
+                                #[inline]
+                                fn visit_map<__A>(
+                                    self,
+                                    mut __map: __A,
+                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: _serde::de::MapAccess<'de>,
+                                {
+                                    #(#visit_map_declaration_token_stream)*
 
-        //     }
-        // };
+                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                        __Field,
+                                    >(&mut __map)? {
+                                        match __key {
+                                            #(#visit_map_match_variants_token_stream)*
+                                            _ => {
+                                                let _ = _serde::de::MapAccess::next_value::<
+                                                    _serde::de::IgnoredAny,
+                                                >(&mut __map)?;
+                                            }
+                                        }
+                                    }
+                                    #(#visit_map_initialization_token_stream)*
+                                    #try_new_token_stream
+                                }
+                            }
+                            #[doc(hidden)]
+                            const FIELDS: &'static [&'static str] = &[#(#field_names_double_quotes_token_stream),*];
+                            _serde::Deserializer::deserialize_struct(
+                                __deserializer,
+                                #ident_double_quotes_token_stream,
+                                FIELDS,
+                                __Visitor {
+                                    marker: _serde::__private::PhantomData::<
+                                        #ident<T>,
+                                    >,
+                                    lifetime: _serde::__private::PhantomData,
+                                },
+                            )
+                        }
+                    }
+                };
+            }
+        };
         // let generate__token_stream = |content_token_stream: &dyn quote::ToTokens|{
         //     quote::quote!{
 

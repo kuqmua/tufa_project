@@ -852,7 +852,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             //deserialize logic starting
-            let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_postgresql_type_where_element_tokens_double_quotes_token_stream(&postgresql_type);
+            let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&postgresql_type);
             let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
 
             let struct_visitor_token_stream = quote::quote! {
@@ -1027,7 +1027,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
 
             let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
-                let error_message_token_stream = postgresql_crud_macros_common::generate_struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream(&postgresql_type, vec_token_stream.len());
+                let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&postgresql_type, vec_token_stream.len());
                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                     let field_index_token_stream = generate_field_index_token_stream(index);
                     let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();

@@ -47,23 +47,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
-    let (
-        generate_struct_tokens_double_quotes_token_stream,
-        generate_struct_tokens_with_2_elements_double_quotes_token_stream
-    ) = {
-        const STRUCT_SPACE_STRINGIFIED: &str = "struct ";
-        let generate_struct_tokens_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
-            generate_quotes::double_quotes_token_stream(&format!("{STRUCT_SPACE_STRINGIFIED}{value}"))
-        };
-        let generate_struct_tokens_with_2_elements_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
-            generate_quotes::double_quotes_token_stream(&format!("{STRUCT_SPACE_STRINGIFIED}{value} with 2 elements"))
-        };
-        (
-            generate_struct_tokens_double_quotes_token_stream,
-            generate_struct_tokens_with_2_elements_double_quotes_token_stream
-        )
-    };
-
     fn generate_supported_generics_template_struct_token_stream(is_pub: std::primitive::bool, struct_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
         let maybe_pub_token_stream = if is_pub {
             quote::quote!{pub}
@@ -2771,6 +2754,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     );
                     let impl_serde_deserialize_for_postgresql_json_type_tokens_select_token_stream = {
                         let field0_field1_token_stream = quote::quote!{__field0, __field1};
+                        let generate_struct_tokens_with_2_elements_double_quotes_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens|{
+                            postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(value, 2)
+                        };
                         match &postgresql_json_type {
                             PostgresqlJsonType::Object => {
                                 let object_ident_select_upper_camel_case = naming::parameter::ObjectSelfSelectUpperCamelCase::from_tokens(&ident);
@@ -2944,7 +2930,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             },
                             PostgresqlJsonType::StdVecVecObjectWithId => {
                                 let postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case = naming::parameter::PostgresqlJsonTypeStdVecVecObjectWithIdSelfSelectUpperCamelCase::from_tokens(&ident);
-                                let struct_postgresql_json_type_std_vec_vec_object_with_id_ident_select_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case);
+                                let struct_postgresql_json_type_std_vec_vec_object_with_id_ident_select_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case);
                                 let struct_postgresql_json_type_std_vec_vec_object_with_id_ident_select_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case);
                                 let postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                                     &postgresql_json_type_std_vec_vec_object_with_id_ident_select_upper_camel_case
@@ -3171,7 +3157,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             },
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => {
-                                let struct_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_select_double_quotes_token_stream = generate_struct_tokens_double_quotes_token_stream(&tokens_select_upper_camel_case);
+                                let struct_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_select_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&tokens_select_upper_camel_case);
                                 let struct_postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_select_with_2_elements_double_quotes_token_stream = generate_struct_tokens_with_2_elements_double_quotes_token_stream(&tokens_select_upper_camel_case);
                                 let postgresql_json_type_std_option_option_std_vec_vec_object_with_id_ident_select_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                                     &tokens_select_upper_camel_case
