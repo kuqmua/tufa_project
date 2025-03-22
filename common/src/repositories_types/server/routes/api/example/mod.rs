@@ -88,11 +88,11 @@ pub struct Example {
     pub std_string_string_as_char_n_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCharNNotNull,
     pub std_string_string_as_char_n_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCharNNullable,
 
-    // pub std_string_string_as_varchar_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull,
-    // pub std_string_string_as_varchar_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlVarcharNullable,
+    pub std_string_string_as_varchar_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlVarcharNotNull,
+    pub std_string_string_as_varchar_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlVarcharNullable,
 
-    // pub std_string_string_as_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNotNull,
-    // pub std_string_string_as_text_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNullable,
+    pub std_string_string_as_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNotNull,
+    pub std_string_string_as_text_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNullable,
 
     // // todo need to install postgresql extension
     // // pub std_string_string_as_ci_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCiTextNotNull,
