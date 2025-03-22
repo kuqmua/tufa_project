@@ -3387,8 +3387,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let std_primitive_i16_as_postgresql_int2_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
     let std_primitive_i32_as_postgresql_int4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
     let std_primitive_i64_as_postgresql_int8_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
-    // let std_primitive_f32_as_postgresql_float4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
-    // let std_primitive_f64_as_postgresql_float8_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
+    let std_primitive_f32_as_postgresql_float4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
+    let std_primitive_f64_as_postgresql_float8_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
     // let std_primitive_i16_as_postgresql_small_serial_initialized_by_postgresql_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql);
     // let std_primitive_i32_as_postgresql_serial_initialized_by_postgresql_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql);
     let std_primitive_i64_as_postgresql_big_serial_initialized_by_postgresql_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql);
@@ -3438,8 +3438,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #std_primitive_i16_as_postgresql_int2_token_stream
         #std_primitive_i32_as_postgresql_int4_token_stream
         #std_primitive_i64_as_postgresql_int8_token_stream
-        // #std_primitive_f32_as_postgresql_float4_token_stream
-        // #std_primitive_f64_as_postgresql_float8_token_stream
+        #std_primitive_f32_as_postgresql_float4_token_stream
+        #std_primitive_f64_as_postgresql_float8_token_stream
         // #std_primitive_i16_as_postgresql_small_serial_initialized_by_postgresql_token_stream
         // #std_primitive_i32_as_postgresql_serial_initialized_by_postgresql_token_stream
         #std_primitive_i64_as_postgresql_big_serial_initialized_by_postgresql_token_stream
