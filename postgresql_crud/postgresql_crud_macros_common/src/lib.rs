@@ -112,8 +112,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             let type_token_stream = if 
             "Equal" == &element_upper_camel_case.to_string() ||
             "GreaterThan" == &element_upper_camel_case.to_string() ||
-            "Between" == &element_upper_camel_case.to_string()
-            
+            "Between" == &element_upper_camel_case.to_string() ||
+            "In" == &element_upper_camel_case.to_string()
             {
                 quote::quote! {crate::where_element_filters::PostgresqlTypeWhereElementBetween<#postgresql_type_not_null_upper_camel_case>}
             }
