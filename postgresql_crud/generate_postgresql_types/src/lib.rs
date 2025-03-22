@@ -366,7 +366,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => &partial_ord_comma_token_stream,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => &proc_macro2_token_stream_new,
@@ -3539,7 +3539,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
         #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
         #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
-        // #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
+        #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
         // #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
         // #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
         // #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
