@@ -3540,8 +3540,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
         #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
         #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
-        // #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
-        // #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
+        #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
+        #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
         // #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
         // #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
         // #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
