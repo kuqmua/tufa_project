@@ -64,12 +64,12 @@ pub struct Example {
     pub std_primitive_f64_as_float8_not_null: postgresql_crud::postgresql_type::StdPrimitiveF64AsPostgresqlFloat8NotNull,
     pub std_primitive_f64_as_float8_nullable: postgresql_crud::postgresql_type::StdPrimitiveF64AsPostgresqlFloat8Nullable,
 
-    // // // #[generate_postgresql_crud_primary_key]
-    // pub std_primitive_i16_as_small_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresqlNotNull,
-    // // // #[generate_postgresql_crud_primary_key]
-    // pub std_primitive_i32_as_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresqlNotNull,
-    // // // #[generate_postgresql_crud_primary_key]
-    // pub std_primitive_i64_as_big_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull,
+    // // #[generate_postgresql_crud_primary_key]
+    pub std_primitive_i16_as_small_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresqlNotNull,
+    // // #[generate_postgresql_crud_primary_key]
+    pub std_primitive_i32_as_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresqlNotNull,
+    // // #[generate_postgresql_crud_primary_key]
+    pub std_primitive_i64_as_big_serial_init_by_postgres_not_null: postgresql_crud::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull,
     #[generate_postgresql_crud_primary_key]
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull,
 
