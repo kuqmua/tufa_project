@@ -1622,7 +1622,7 @@ impl EqualToEncodedStringRepresentation {
             &WhereOperatorName::upper_camel_case(self),
             ShouldWhereElementFieldsBePublic::True,
             &quote::quote! {
-                pub encode_format: crate::postgresql_type::postgresql_type::EncodeFormat,
+                pub encode_format: crate::postgresql_type::EncodeFormat,
                 pub encoded_string_representation: std::string::String,
             },
             &{

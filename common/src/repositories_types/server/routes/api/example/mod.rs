@@ -94,16 +94,16 @@ pub struct Example {
     pub std_string_string_as_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNotNull,
     pub std_string_string_as_text_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlTextNullable,
 
-    // // todo need to install postgresql extension
-    // // pub std_string_string_as_ci_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCiTextNotNull,
-    // // pub std_string_string_as_ci_text_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCiTextNullable,
+    // todo need to install postgresql extension
+    // pub std_string_string_as_ci_text_not_null: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCiTextNotNull,
+    // pub std_string_string_as_ci_text_nullable: postgresql_crud::postgresql_type::StdStringStringAsPostgresqlCiTextNullable,
 
-    // // todo need to install postgresql extension
-    // // pub sqlx_postgres_types_pg_ci_text_as_ci_text_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull,
-    // // pub sqlx_postgres_types_pg_ci_text_as_ci_text_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNullable,
+    // todo need to install postgresql extension
+    // pub sqlx_postgres_types_pg_ci_text_as_ci_text_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull,
+    // pub sqlx_postgres_types_pg_ci_text_as_ci_text_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNullable,
 
-    // pub std_vec_vec_std_primitive_u8_as_bytea_not_null: postgresql_crud::postgresql_type::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull,
-    // pub std_vec_vec_std_primitive_u8_as_bytea_nullable: postgresql_crud::postgresql_type::StdVecVecStdPrimitiveU8AsPostgresqlByteaNullable,
+    pub std_vec_vec_std_primitive_u8_as_bytea_not_null: postgresql_crud::postgresql_type::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull,
+    pub std_vec_vec_std_primitive_u8_as_bytea_nullable: postgresql_crud::postgresql_type::StdVecVecStdPrimitiveU8AsPostgresqlByteaNullable,
 
     // pub sqlx_types_chrono_naive_time_as_time_not_null: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
     // pub sqlx_types_chrono_naive_time_as_time_nullable: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNullable,
