@@ -3456,7 +3456,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let std_string_string_as_postgresql_text_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlText);
     let std_vec_vec_std_primitive_u8_as_postgresql_bytea_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea);
     let sqlx_types_chrono_naive_time_as_postgresql_time_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime);
-    // let sqlx_types_time_time_as_postgresql_time_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime);
+    let sqlx_types_time_time_as_postgresql_time_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime);
     // let sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval);
     // let sqlx_types_time_date_as_postgresql_date_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate);
     // let sqlx_types_chrono_naive_date_as_postgresql_date_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
@@ -3507,7 +3507,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #std_string_string_as_postgresql_text_token_stream
         #std_vec_vec_std_primitive_u8_as_postgresql_bytea_token_stream
         #sqlx_types_chrono_naive_time_as_postgresql_time_token_stream
-        // #sqlx_types_time_time_as_postgresql_time_token_stream
+        #sqlx_types_time_time_as_postgresql_time_token_stream
         // #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
         // #sqlx_types_time_date_as_postgresql_date_token_stream
         // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
