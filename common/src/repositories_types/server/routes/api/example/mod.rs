@@ -136,53 +136,53 @@ pub struct Example {
     // #[generate_postgresql_crud_primary_key] //todo maybe later support something else but now i think uuid v4 and v7 is enough
     pub uuid_uuid_as_uuid_v4_init_by_postgres_not_null_prime: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresqlNotNull,
 
-    // pub uuid_uuid_as_uuid_init_by_client_not_null: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClientNotNull,
-    // pub uuid_uuid_as_uuid_init_by_client_nullable: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClientNullable,
+    pub uuid_uuid_as_uuid_init_by_client_not_null: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClientNotNull,
+    pub uuid_uuid_as_uuid_init_by_client_nullable: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClientNullable,
 
-    // pub sqlx_types_ipnetwork_ip_network_as_inet_not_null: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
-    // pub sqlx_types_ipnetwork_ip_network_as_inet_nullable: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNullable,
+    pub sqlx_types_ipnetwork_ip_network_as_inet_not_null: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
+    pub sqlx_types_ipnetwork_ip_network_as_inet_nullable: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNullable,
 
-    // pub sqlx_types_ipnetwork_ip_network_as_cidr_not_null: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
-    // pub sqlx_types_ipnetwork_ip_network_as_cidr_nullable: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNullable,
+    pub sqlx_types_ipnetwork_ip_network_as_cidr_not_null: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
+    pub sqlx_types_ipnetwork_ip_network_as_cidr_nullable: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNullable,
 
-    // pub mac_address_mac_address_as_mac_addr_not_null: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull,
-    // pub mac_address_mac_address_as_mac_addr_nullable: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNullable,
+    pub mac_address_mac_address_as_mac_addr_not_null: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull,
+    pub mac_address_mac_address_as_mac_addr_nullable: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNullable,
 
-    // pub sqlx_types_bit_vec_as_bit_not_null: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNotNull,
-    // pub sqlx_types_bit_vec_as_bit_nullable: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNullable,
+    pub sqlx_types_bit_vec_as_bit_not_null: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNotNull,
+    pub sqlx_types_bit_vec_as_bit_nullable: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlBitNullable,
 
-    // pub sqlx_types_bit_vec_as_varbit_not_null: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull,
-    // pub sqlx_types_bit_vec_as_varbit_nullable: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable,
+    pub sqlx_types_bit_vec_as_varbit_not_null: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNotNull,
+    pub sqlx_types_bit_vec_as_varbit_nullable: postgresql_crud::postgresql_type::SqlxTypesBitVecAsPostgresqlVarbitNullable,
 
-    // pub pg_range_std_primitive_i32_as_int4_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull,
-    // pub pg_range_std_primitive_i32_as_int4_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNullable,
+    pub pg_range_std_primitive_i32_as_int4_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull,
+    pub pg_range_std_primitive_i32_as_int4_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNullable,
 
-    // pub pg_range_std_primitive_i64_as_int8_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull,
-    // pub pg_range_std_primitive_i64_as_int8_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNullable,
+    pub pg_range_std_primitive_i64_as_int8_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull,
+    pub pg_range_std_primitive_i64_as_int8_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNullable,
 
-    // pub pg_range_decimal_as_num_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull,
-    // pub pg_range_decimal_as_num_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNullable,
+    pub pg_range_decimal_as_num_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull,
+    pub pg_range_decimal_as_num_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNullable,
 
-    // pub pg_range_sqlx_types_big_decimal_as_num_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull,
-    // pub pg_range_sqlx_types_big_decimal_as_num_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNullable,
+    pub pg_range_sqlx_types_big_decimal_as_num_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull,
+    pub pg_range_sqlx_types_big_decimal_as_num_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNullable,
 
-    // pub pg_range_sqlx_types_time_date_as_date_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull,
-    // pub pg_range_sqlx_types_time_date_as_date_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNullable,
+    pub pg_range_sqlx_types_time_date_as_date_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull,
+    pub pg_range_sqlx_types_time_date_as_date_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNullable,
 
-    // pub pg_range_chrono_naive_date_as_date_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
-    // pub pg_range_chrono_naive_date_as_date_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNullable,
+    pub pg_range_chrono_naive_date_as_date_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
+    pub pg_range_chrono_naive_date_as_date_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNullable,
 
-    // pub pg_range_naive_date_time_as_timestamp_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNotNull,
-    // pub pg_range_naive_date_time_as_timestamp_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNullable,
+    pub pg_range_naive_date_time_as_timestamp_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNotNull,
+    pub pg_range_naive_date_time_as_timestamp_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRangeNullable,
 
-    // pub pg_range_time_primitive_date_time_as_timestamp_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNotNull,
-    // pub pg_range_time_primitive_date_time_as_timestamp_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNullable,
+    pub pg_range_time_primitive_date_time_as_timestamp_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNotNull,
+    pub pg_range_time_primitive_date_time_as_timestamp_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRangeNullable,
 
-    // pub pg_range_date_time_utc_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNotNull,
-    // pub pg_range_date_time_utc_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNullable,
+    pub pg_range_date_time_utc_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNotNull,
+    pub pg_range_date_time_utc_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRangeNullable,
 
-    // pub pg_range_date_time_local_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull,
-    // pub pg_range_date_time_local_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable,
+    pub pg_range_date_time_local_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull,
+    pub pg_range_date_time_local_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable,
     
     pub object_animal_as_jsonb_not_null: ObjectAnimalAsPostgresqlJsonbNotNull,
     // pub object_animal_as_jsonb_nullable: ObjectAnimalAsPostgresqlJsonbNullable,
