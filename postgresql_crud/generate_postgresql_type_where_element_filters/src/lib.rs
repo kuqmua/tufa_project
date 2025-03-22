@@ -784,7 +784,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let generated = quote::quote! {
         // #(#filter_array_token_stream)*
 
-        // #equal_token_stream
+        #equal_token_stream
         // #greater_than_token_stream
         // #between_token_stream
         // #in_token_stream

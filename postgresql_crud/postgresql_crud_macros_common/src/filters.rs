@@ -589,15 +589,15 @@ impl Equal {
     fn dimension() -> Dimension {
         Dimension::First
     }
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens, postgresql_type_not_null_or_nullable: &crate::PostgresqlTypeNotNullOrNullable, where_operator_type: &crate::WhereOperatorType) -> proc_macro2::TokenStream {
-        generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
-            WhereOperatorName::upper_camel_case(self),
-            ident,
-            postgresql_type_not_null_or_nullable,
-            where_operator_type,
-            &Self::dimension()
-        )
-    }
+    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens, postgresql_type_not_null_or_nullable: &crate::PostgresqlTypeNotNullOrNullable, where_operator_type: &crate::WhereOperatorType) -> proc_macro2::TokenStream {
+    //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
+    //         WhereOperatorName::upper_camel_case(self),
+    //         ident,
+    //         postgresql_type_not_null_or_nullable,
+    //         where_operator_type,
+    //         &Self::dimension()
+    //     )
+    // }
     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &Self::dimension())
     }

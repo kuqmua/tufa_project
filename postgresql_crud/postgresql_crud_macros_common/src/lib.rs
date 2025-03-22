@@ -114,17 +114,18 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
-            let type_token_stream = 
-            // if 
-            // "Equal" == &element_upper_camel_case.to_string() ||
+            let type_token_stream = if 
+            "Equal" == &element_upper_camel_case.to_string() 
+            // ||
             // "GreaterThan" == &element_upper_camel_case.to_string() ||
             // "Between" == &element_upper_camel_case.to_string() ||
             // "In" == &element_upper_camel_case.to_string() ||
             // "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()
-            // {
-            //     quote::quote! {crate::where_element_filters::PostgresqlTypeWhereElementBetween<#postgresql_type_not_null_upper_camel_case>}
-            // }
-            // else 
+            {
+                let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
+                quote::quote! {crate::where_element_filters::#postgresql_type_where_element_self_upper_camel_case<#postgresql_type_not_null_upper_camel_case>}
+            }
+            else 
             {
                 let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote! {#element_upper_camel_case});
                 value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
