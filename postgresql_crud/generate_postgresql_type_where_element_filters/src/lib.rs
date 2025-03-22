@@ -605,11 +605,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &proc_macro2_token_stream_new,
+                    &quote::quote!{: IsEmpty},
                     &quote::quote!{value: T},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                     &quote::quote!{
-                        if !value.is_empty() {
+                        if !IsEmpty::is_empty(&value) {
                             Ok(Self { logical_operator, value })
                         } else {
                             Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
@@ -617,7 +617,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(
-                    &quote::quote!{},
+                    &quote::quote!{+ IsEmpty},
                     &[
                         &Field {
                             field_name: &naming::ValueSnakeCase,
@@ -728,7 +728,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let between_token_stream = generate_filters_token_stream(&Filter::Between);
     let in_token_stream = generate_filters_token_stream(&Filter::In);
     let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
-    // println!("{case_sensitive_regular_expression_token_stream}");
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -788,7 +787,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #greater_than_token_stream
         #between_token_stream
         #in_token_stream
-        // #case_sensitive_regular_expression_token_stream
+        #case_sensitive_regular_expression_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream

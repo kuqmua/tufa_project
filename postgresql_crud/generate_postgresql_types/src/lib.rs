@@ -2558,11 +2558,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
-                let where_operator_type_field_type_default = postgresql_crud_macros_common::WhereOperatorType::FieldType {
-                    field_type: &postgresql_type_not_null_or_nullable_upper_camel_case,
-                    default_initialization_token_stream: &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                };
-                let where_operator_type_ident = postgresql_crud_macros_common::WhereOperatorType::Ident(&postgresql_type_not_null_upper_camel_case);
+                // let where_operator_type_field_type_default = postgresql_crud_macros_common::WhereOperatorType::FieldType {
+                //     field_type: &postgresql_type_not_null_or_nullable_upper_camel_case,
+                //     default_initialization_token_stream: &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                // };
+                // let where_operator_type_ident = postgresql_crud_macros_common::WhereOperatorType::Ident(&postgresql_type_not_null_upper_camel_case);
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName>| {
                     postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_token_stream(
                         variants,
@@ -2720,10 +2720,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_std_string_string_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                                // #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
@@ -3081,10 +3081,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_uuid_uuid_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                                // #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
@@ -3108,11 +3108,11 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_mac_address_mac_address_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
-                                #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
+                                // #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
                                 #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
                             }
                         },
