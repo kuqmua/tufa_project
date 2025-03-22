@@ -75,7 +75,7 @@ unnameable_types = { level = "deny", priority = 0 } #effective visibility of a t
 unreachable_pub = { level = "deny", priority = 0 } #`pub` items not reachable from crate root
 unsafe_op_in_unsafe_fn = { level = "deny", priority = 0 } #unsafe operations in unsafe functions without an explicit unsafe block are deprecated
 unstable_features = { level = "deny", priority = 0 } #enabling unstable features (deprecated. do not use)
-unused_crate_dependencies = { level = "deny", priority = 0 } #crate dependencies that are never used
+unused_crate_dependencies = { level = "warn", priority = 0 } #crate dependencies that are never used
 unused_extern_crates = { level = "deny", priority = 0 } #extern crates that are never used
 unused_import_braces = { level = "deny", priority = 0 } #unnecessary braces around an imported item
 unused_lifetimes = { level = "deny", priority = 0 } #detects lifetime parameters that are never used

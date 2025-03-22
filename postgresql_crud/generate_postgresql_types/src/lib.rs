@@ -522,7 +522,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &proc_macro2_token_stream_new,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &quote::quote!{
+                        impl ::core::cmp::PartialOrd for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                            #[inline]
+                            fn partial_cmp(&self, other: &#postgresql_type_not_null_or_nullable_upper_camel_case) -> ::core::option::Option<std::cmp::Ordering> {
+                                //todo impl PartialOrd for sqlx::postgres::types::PgInterval wrapper
+                                todo!()
+                                // ::core::cmp::PartialOrd::partial_cmp(&self.0.0, &other.0.0)
+                            }
+                        }
+                    },
                     PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
@@ -2668,16 +2677,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_number_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
                         },
@@ -2693,15 +2702,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_postgres_types_pg_money_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd, &postgresql_crud_macros_common::ShouldAddDotZero::True
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd, &postgresql_crud_macros_common::ShouldAddDotZero::True
+                            // );
                             let postgresql_type_tokens_where_element_in_token_stream = in_handle.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_in_token_stream
                             }
                         },
@@ -2717,15 +2726,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_decimal_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
@@ -2740,15 +2749,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_big_decimal_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False
+                            // );
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
@@ -2808,17 +2817,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_time_date_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False
+                            // );
                             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_date_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
                             }
@@ -2835,17 +2844,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_chrono_naive_date_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_current_date_token_stream = current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_date_token_stream = greater_than_current_date.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_date_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_date_token_stream
                             }
@@ -2862,17 +2871,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_chrono_naive_time_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_time_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
                             }
@@ -2891,17 +2900,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             // let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_current_time_token_stream = current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_time_token_stream = greater_than_current_time.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_time_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_time_token_stream
                             }
@@ -2918,20 +2927,24 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_postgres_types_pg_interval_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartIsEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartIsEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False
+                            // );
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
                     };
-                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between]);
+                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![
+                        &equal,
+                        &greater_than,
+                        &between,
+                    ]);
                     quote::quote! {
                         // #postgresql_type_tokens_where_element_equal_where_operator_type_ident_token_stream
                         #maybe_filters_token_stream
@@ -3043,17 +3056,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_chrono_naive_date_time_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_timestamp_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
                             }
@@ -3072,17 +3085,17 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             // let postgresql_type_tokens_where_element_greater_than_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_field_type_default);
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_field_type_default,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False,
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_field_type_default,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False,
+                            // );
                             let postgresql_type_tokens_where_element_current_timestamp_token_stream = current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream = greater_than_current_timestamp.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_greater_than_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                                 #postgresql_type_tokens_where_element_current_timestamp_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_current_timestamp_token_stream
                             }
@@ -3100,15 +3113,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False
+                            // );
                             quote::quote! {
                                 #postgresql_type_tokens_where_element_before_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
@@ -3124,15 +3137,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             let postgresql_type_tokens_where_element_before_token_stream = before.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &where_operator_type_ident,
-                                &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
-                                &postgresql_crud_macros_common::ShouldAddDotZero::False
-                            );
+                            // let postgresql_type_tokens_where_element_between_token_stream = between.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &where_operator_type_ident,
+                            //     &postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd,
+                            //     &postgresql_crud_macros_common::ShouldAddDotZero::False
+                            // );
                             quote::quote! {
                                 #postgresql_type_tokens_where_element_before_token_stream
-                                #postgresql_type_tokens_where_element_between_token_stream
+                                // #postgresql_type_tokens_where_element_between_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
@@ -3496,7 +3509,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &std_vec_vec_std_primitive_u8_as_postgresql_bytea_token_stream,
+    //     &sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream,
     // );
 
     let generated = quote::quote! {
@@ -3521,29 +3534,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_chrono_naive_time_as_postgresql_time_token_stream
         #sqlx_types_time_time_as_postgresql_time_token_stream
         #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
-        #sqlx_types_time_date_as_postgresql_date_token_stream
-        #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
-        #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
-        #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
-        #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
-        #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
-        #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
-        #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
-        #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
-        #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
-        #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
-        #sqlx_types_bit_vec_as_postgresql_bit_token_stream
-        #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
-        #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
-        #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
+        // #sqlx_types_time_date_as_postgresql_date_token_stream
+        // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
+        // #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
+        // #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
+        // #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
+        // #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
+        // #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
+        // #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
+        // #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
+        // #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
+        // #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
+        // #sqlx_types_bit_vec_as_postgresql_bit_token_stream
+        // #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
+        // #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
+        // #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",

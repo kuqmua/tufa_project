@@ -116,9 +116,9 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             //todo temp if - need to remove it later
             let type_token_stream = if 
             "Equal" == &element_upper_camel_case.to_string() ||
-            "GreaterThan" == &element_upper_camel_case.to_string()
-            //  ||
-            // "Between" == &element_upper_camel_case.to_string() ||
+            "GreaterThan" == &element_upper_camel_case.to_string() ||
+            "Between" == &element_upper_camel_case.to_string()
+            // ||
             // "In" == &element_upper_camel_case.to_string() ||
             // "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()
             {
