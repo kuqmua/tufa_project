@@ -115,7 +115,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_name: &naming::LogicalOperatorSnakeCase,
             field_type: &quote::quote! {crate::LogicalOperator},
         };
-        let generate_impl_serde_deserialize_for_ident_token_stream = |fields: &[&Field<'_>]|{
+        let generate_impl_serde_deserialize_for_ident_token_stream = |
+            additional_traits_annotations_token_stream: &dyn quote::ToTokens,
+            fields: &[&Field<'_>]
+        |{
             let (
                 struct_ident_double_quotes_token_stream,
                 struct_ident_with_number_of_elements_double_quotes_token_stream,
@@ -213,7 +216,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     #[automatically_derived]
                     impl<'de, T> _serde::Deserialize<'de> for #ident<T>
                     where
-                        T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug + Clone,
+                        T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
                     {
                         fn deserialize<__D>(
                             __deserializer: __D,
@@ -303,7 +306,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                             }
                             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
                             where
-                                T: _serde::Deserialize<'de> + std::cmp::PartialOrd + std::fmt::Debug + Clone,
+                                T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
                             {
                                 type Value = #ident<T>;
                                 fn expecting(
@@ -464,17 +467,20 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         }
                     },
                 ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(&[
-                    &logical_operator_field,
-                    &Field {
-                        field_name: &naming::StartSnakeCase,
-                        field_type: &t_token_stream,
-                    },
-                    &Field {
-                        field_name: &naming::EndSnakeCase,
-                        field_type: &t_token_stream,
-                    },
-                ]),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    &quote::quote!{+ std::cmp::PartialOrd},
+                    &[
+                        &logical_operator_field,
+                        &Field {
+                            field_name: &naming::StartSnakeCase,
+                            field_type: &t_token_stream,
+                        },
+                        &Field {
+                            field_name: &naming::EndSnakeCase,
+                            field_type: &t_token_stream,
+                        },
+                    ]
+                ),
                 &quote::quote!{
                     start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -543,13 +549,16 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         Ok(Self { logical_operator, value })
                     },
                 ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(&[
-                    &logical_operator_field,
-                    &Field {
-                        field_name: &naming::ValueSnakeCase,
-                        field_type: &quote::quote!{std::vec::Vec<T>},
-                    },
-                ]),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    &quote::quote!{+ std::cmp::PartialOrd + Clone},
+                    &[
+                        &logical_operator_field,
+                        &Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &quote::quote!{std::vec::Vec<T>},
+                        },
+                    ]
+                ),
                 &quote::quote!{
                     value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
                 },
@@ -602,13 +611,16 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         }
                     },
                 ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(&[
-                    &logical_operator_field,
-                    &Field {
-                        field_name: &naming::ValueSnakeCase,
-                        field_type: &t_token_stream,
-                    },
-                ]),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    &quote::quote!{},
+                    &[
+                        &logical_operator_field,
+                        &Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &t_token_stream,
+                        },
+                    ]
+                ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &quote::quote!{
                     match increment.checked_add(1) {
