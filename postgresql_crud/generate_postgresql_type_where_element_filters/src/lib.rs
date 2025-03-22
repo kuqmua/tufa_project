@@ -788,7 +788,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #greater_than_token_stream
         #between_token_stream
         #in_token_stream
-        // #case_sensitive_regular_expression_token_stream
+        #case_sensitive_regular_expression_token_stream
 
         // #_token_stream
         // #_token_stream
