@@ -95,7 +95,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_name: &'a dyn std::fmt::Display,
             field_type: &'a dyn quote::ToTokens,
         }
-        let generate_impl_serde_deserialize_for_ident_token_stream = |fields: &[Field<'_>]|{
+        let logical_operator_field = Field {
+            field_name: &naming::LogicalOperatorSnakeCase,
+            field_type: &quote::quote! {crate::LogicalOperator},
+        };
+        let generate_impl_serde_deserialize_for_ident_token_stream = |fields: &[&Field<'_>]|{
             let (
                 struct_ident_double_quotes_token_stream,
                 struct_ident_with_number_of_elements_double_quotes_token_stream,
@@ -441,15 +445,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(&[
-                    Field {
-                        field_name: &naming::LogicalOperatorSnakeCase,
-                        field_type: &quote::quote! {crate::LogicalOperator},
-                    },
-                    Field {
+                    &logical_operator_field,
+                    &Field {
                         field_name: &naming::StartSnakeCase,
                         field_type: &t_token_stream,
                     },
-                    Field {
+                    &Field {
                         field_name: &naming::EndSnakeCase,
                         field_type: &t_token_stream,
                     },
@@ -519,11 +520,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(&[
-                    Field {
-                        field_name: &naming::LogicalOperatorSnakeCase,
-                        field_type: &quote::quote! {crate::LogicalOperator},
-                    },
-                    Field {
+                    &logical_operator_field,
+                    &Field {
                         field_name: &naming::ValueSnakeCase,
                         field_type: &quote::quote!{std::vec::Vec<T>},
                     },
