@@ -2,6 +2,11 @@ mod filters;
 
 pub use filters::*;
 
+pub enum PostgresqlTypeNotNullOrNullable {
+    NotNull,
+    Nullable,
+}
+
 pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::WhereOperatorName>,
     ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -109,16 +114,18 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
-            let type_token_stream = if 
-            "Equal" == &element_upper_camel_case.to_string() ||
-            "GreaterThan" == &element_upper_camel_case.to_string() ||
-            "Between" == &element_upper_camel_case.to_string() ||
-            "In" == &element_upper_camel_case.to_string() ||
-            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()
+            let type_token_stream = 
+            // if 
+            // "Equal" == &element_upper_camel_case.to_string() ||
+            // "GreaterThan" == &element_upper_camel_case.to_string() ||
+            // "Between" == &element_upper_camel_case.to_string() ||
+            // "In" == &element_upper_camel_case.to_string() ||
+            // "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()
+            // {
+            //     quote::quote! {crate::where_element_filters::PostgresqlTypeWhereElementBetween<#postgresql_type_not_null_upper_camel_case>}
+            // }
+            // else 
             {
-                quote::quote! {crate::where_element_filters::PostgresqlTypeWhereElementBetween<#postgresql_type_not_null_upper_camel_case>}
-            }
-            else {
                 let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote! {#element_upper_camel_case});
                 value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -489,12 +496,12 @@ impl WhereOperatorType<'_> {
             WhereOperatorType::FieldType { field_type, .. } => quote::quote! {#field_type},
         }
     }
-    // fn std_option_option_type_token_stream(&self) -> proc_macro2::TokenStream {
-    //     match &self {
-    //         WhereOperatorType::Ident(value) => quote::quote! {std::option::Option<#value>},
-    //         WhereOperatorType::FieldType { field_type, .. } => quote::quote! {std::option::Option<#field_type>},
-    //     }
-    // }
+    fn std_option_option_type_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            WhereOperatorType::Ident(value) => quote::quote! {std::option::Option<#value>},
+            WhereOperatorType::FieldType { field_type, .. } => quote::quote! {std::option::Option<#field_type>},
+        }
+    }
     fn additional_bind_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
             WhereOperatorType::Ident(_) => quote::quote! {.0},
@@ -511,16 +518,16 @@ impl WhereOperatorType<'_> {
             WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {#default_initialization_token_stream},
         }
     }
-    // fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-    //     match &self {
-    //         WhereOperatorType::Ident(_) => {
-    //             let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-    //                 token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-    //             quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
-    //         }
-    //         WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
-    //     }
-    // }
+    fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        match &self {
+            WhereOperatorType::Ident(_) => {
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
+            }
+            WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
+        }
+    }
 }
 
 pub enum ShouldDeriveSchemarsJsonSchema {
