@@ -60,7 +60,22 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         let comma_serde_deserialize_token_stream = quote::quote!{, serde::Deserialize};
         let pub_value_t_token_stream = quote::quote!{pub value: T};
-        let generate_enum_ident_try_new_error_named_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+        enum ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
+            True,
+            False,
+        }
+        impl quote::ToTokens for ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                match &self {
+                    Self::True => quote::quote! {<T>},
+                    Self::False => proc_macro2::TokenStream::new()
+                }.to_tokens(tokens)
+            }
+        }
+        let generate_enum_ident_try_new_error_named_token_stream = |
+            should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
+            content_token_stream: &dyn quote::ToTokens
+        |{
             quote::quote!{
                 #[derive(
                     Debug,
@@ -70,7 +85,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     thiserror::Error,
                     error_occurence_lib::ErrorOccurence,
                 )]
-                pub enum #ident_try_new_error_named<T> {
+                pub enum #ident_try_new_error_named #should_add_declaration_of_generic_parameter_to_ident_try_new_error_named {
                     #content_token_stream
                 }
             }
@@ -78,6 +93,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let generate_impl_try_new_for_ident_token_stream = |
             generic_requirements_token_stream: &dyn quote::ToTokens,
             additional_input_parameters_token_stream: &dyn quote::ToTokens,
+            should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
             content_token_stream: &dyn quote::ToTokens,
         |{
             quote::quote!{
@@ -85,7 +101,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     fn try_new(
                         logical_operator: crate::LogicalOperator,
                         #additional_input_parameters_token_stream
-                    ) -> Result<Self, #ident_try_new_error_named<T>> {
+                    ) -> Result<Self, #ident_try_new_error_named #should_add_declaration_of_generic_parameter_to_ident_try_new_error_named> {
                         #content_token_stream
                     }
                 }
@@ -413,21 +429,25 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     start: T,
                     end: T,
                 },
-                &generate_enum_ident_try_new_error_named_token_stream(&quote::quote!{
-                    StartMoreOrEqualToEnd {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        start: T,
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        end: T,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                }),
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                    &quote::quote!{
+                        StartMoreOrEqualToEnd {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            start: T,
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            end: T,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
                 &generate_impl_try_new_for_ident_token_stream(
                     &quote::quote!{: std::cmp::PartialOrd},
                     &quote::quote!{
                         start: T,
                         end: T,
                     },
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                     &quote::quote!{
                         if start < end {//removed .0
                             Ok(Self {
@@ -486,19 +506,23 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &quote::quote!{value: std::vec::Vec<T>},
-                &generate_enum_ident_try_new_error_named_token_stream(&quote::quote!{
-                    IsEmpty {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                    NotUnique {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        value: T,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                }),
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                    &quote::quote!{
+                        IsEmpty {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        NotUnique {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            value: T,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
                 &generate_impl_try_new_for_ident_token_stream(
                     &quote::quote!{: PartialEq + Clone},
                     &quote::quote!{value: std::vec::Vec<T>},
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                     &quote::quote!{
                         if value.is_empty() {
                             return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
@@ -553,7 +577,53 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::CaseSensitiveRegularExpression => todo!(),
+            Filter::CaseSensitiveRegularExpression => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: T},
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        //todo
+                        IsEmpty {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &proc_macro2_token_stream_new,
+                    &quote::quote!{value: T},
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        if !value.is_empty() {
+                            Ok(Self { logical_operator, value })
+                        } else {
+                            Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
+                        }
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(&[
+                    &logical_operator_field,
+                    &Field {
+                        field_name: &naming::ValueSnakeCase,
+                        field_type: &t_token_stream,
+                    },
+                ]),
+                &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}({} ~ ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            ),
             Filter::CaseInsensitiveRegularExpression => todo!(),
             Filter::Before => todo!(),
             Filter::CurrentDate => todo!(),
@@ -641,7 +711,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let greater_than_token_stream = generate_filters_token_stream(&Filter::GreaterThan);
     let between_token_stream = generate_filters_token_stream(&Filter::Between);
     let in_token_stream = generate_filters_token_stream(&Filter::In);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
+    // println!("{case_sensitive_regular_expression_token_stream}");
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -701,7 +772,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #greater_than_token_stream
         #between_token_stream
         #in_token_stream
-        // #_token_stream
+        // #case_sensitive_regular_expression_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
