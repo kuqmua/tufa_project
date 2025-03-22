@@ -357,7 +357,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &partial_ord_comma_token_stream,
-                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &proc_macro2_token_stream_new,
+                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &partial_ord_comma_token_stream,
                         PostgresqlType::StdStringStringAsPostgresqlCharN => &proc_macro2_token_stream_new,
                         PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
                         PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
@@ -3450,7 +3450,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let sqlx_postgres_types_pg_money_as_postgresql_money_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney);
     let sqlx_types_decimal_as_postgresql_numeric_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric);
     let sqlx_types_big_decimal_as_postgresql_numeric_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric);
-    // let std_primitive_bool_as_postgresql_bool_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
+    let std_primitive_bool_as_postgresql_bool_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveBoolAsPostgresqlBool);
     // let std_string_string_as_postgresql_char_n_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlCharN);
     // let std_string_string_as_postgresql_varchar_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlVarchar);
     // let std_string_string_as_postgresql_text_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdStringStringAsPostgresqlText);
@@ -3501,7 +3501,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_postgres_types_pg_money_as_postgresql_money_token_stream
         #sqlx_types_decimal_as_postgresql_numeric_token_stream
         #sqlx_types_big_decimal_as_postgresql_numeric_token_stream
-        // #std_primitive_bool_as_postgresql_bool_token_stream
+        #std_primitive_bool_as_postgresql_bool_token_stream
         // #std_string_string_as_postgresql_char_n_token_stream
         // #std_string_string_as_postgresql_varchar_token_stream
         // #std_string_string_as_postgresql_text_token_stream
