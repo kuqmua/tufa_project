@@ -111,8 +111,8 @@ pub struct Example {
     pub sqlx_types_time_time_as_time_not_null: postgresql_crud::postgresql_type::SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
     pub sqlx_types_time_time_as_time_nullable: postgresql_crud::postgresql_type::SqlxTypesTimeTimeAsPostgresqlTimeNullable,
 
-    // pub sqlx_postgres_types_pg_interval_as_interval_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull,
-    // pub sqlx_postgres_types_pg_interval_as_interval_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNullable,
+    pub sqlx_postgres_types_pg_interval_as_interval_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull,
+    pub sqlx_postgres_types_pg_interval_as_interval_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNullable,
 
     // pub sqlx_types_time_date_as_date_not_null: postgresql_crud::postgresql_type::SqlxTypesTimeDateAsPostgresqlDateNotNull,
     // pub sqlx_types_time_date_as_date_nullable: postgresql_crud::postgresql_type::SqlxTypesTimeDateAsPostgresqlDateNullable,
@@ -183,6 +183,7 @@ pub struct Example {
 
     // pub pg_range_date_time_local_as_timestamp_tz_range_not_null: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNotNull,
     // pub pg_range_date_time_local_as_timestamp_tz_range_nullable: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRangeNullable,
+    
     pub object_animal_as_jsonb_not_null: ObjectAnimalAsPostgresqlJsonbNotNull,
     // pub object_animal_as_jsonb_nullable: ObjectAnimalAsPostgresqlJsonbNullable,
 
