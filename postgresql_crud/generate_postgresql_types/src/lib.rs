@@ -3535,8 +3535,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_time_time_as_postgresql_time_token_stream
         #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
         #sqlx_types_time_date_as_postgresql_date_token_stream
-        // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
-        // #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
+        #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
+        #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
         // #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
         // #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
         // #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
