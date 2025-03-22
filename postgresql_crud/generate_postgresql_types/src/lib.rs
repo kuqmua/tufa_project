@@ -361,7 +361,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &proc_macro2_token_stream_new,
-                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &proc_macro2_token_stream_new,
+                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &partial_ord_comma_token_stream,
                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => &partial_ord_comma_token_stream,
@@ -3534,7 +3534,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_chrono_naive_time_as_postgresql_time_token_stream
         #sqlx_types_time_time_as_postgresql_time_token_stream
         #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
-        // #sqlx_types_time_date_as_postgresql_date_token_stream
+        #sqlx_types_time_date_as_postgresql_date_token_stream
         // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
         // #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
         // #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
