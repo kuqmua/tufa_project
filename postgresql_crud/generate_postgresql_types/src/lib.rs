@@ -3385,7 +3385,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     // let postgresql_type_array = PostgresqlType::into_array().map(|element|generate_postgresql_type_token_stream(element));
 
     let std_primitive_i16_as_postgresql_int2_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI16AsPostgresqlInt2);
-    // let std_primitive_i32_as_postgresql_int4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
+    let std_primitive_i32_as_postgresql_int4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI32AsPostgresqlInt4);
     // let std_primitive_i64_as_postgresql_int8_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveI64AsPostgresqlInt8);
     // let std_primitive_f32_as_postgresql_float4_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4);
     // let std_primitive_f64_as_postgresql_float8_token_stream = generate_postgresql_type_token_stream(PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8);
@@ -3436,7 +3436,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         // #(#postgresql_type_array)*
 
         #std_primitive_i16_as_postgresql_int2_token_stream
-        // #std_primitive_i32_as_postgresql_int4_token_stream
+        #std_primitive_i32_as_postgresql_int4_token_stream
         // #std_primitive_i64_as_postgresql_int8_token_stream
         // #std_primitive_f32_as_postgresql_float4_token_stream
         // #std_primitive_f64_as_postgresql_float8_token_stream
