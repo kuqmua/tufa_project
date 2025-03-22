@@ -3471,28 +3471,28 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
     let sqlx_types_time_time_as_postgresql_time_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime);
     let sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval);
     let sqlx_types_time_date_as_postgresql_date_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate);
-    // let sqlx_types_chrono_naive_date_as_postgresql_date_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
-    // let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp);
-    // let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp);
-    // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz);
-    // let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz);
-    // let sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
-    // let sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
-    // let sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
-    // let sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
-    // let sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
-    // let sqlx_types_bit_vec_as_postgresql_bit_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
-    // let sqlx_types_bit_vec_as_postgresql_varbit_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
-    // let sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
-    // let sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
-    // let sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange);
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange);
+    let sqlx_types_chrono_naive_date_as_postgresql_date_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate);
+    let sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp);
+    let sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp);
+    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz);
+    let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz);
+    let sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql);
+    let sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient);
+    let sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet);
+    let sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr);
+    let sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr);
+    let sqlx_types_bit_vec_as_postgresql_bit_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlBit);
+    let sqlx_types_bit_vec_as_postgresql_varbit_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit);
+    let sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range);
+    let sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range);
+    let sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange);
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream = generate_postgresql_type_token_stream(PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange);
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
@@ -3522,28 +3522,28 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         #sqlx_types_time_time_as_postgresql_time_token_stream
         #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
         #sqlx_types_time_date_as_postgresql_date_token_stream
-        // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
-        // #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
-        // #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
-        // #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
-        // #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
-        // #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
-        // #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
-        // #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
-        // #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
-        // #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
-        // #sqlx_types_bit_vec_as_postgresql_bit_token_stream
-        // #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
-        // #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
-        // #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
-        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
+        #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
+        #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
+        #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
+        #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
+        #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
+        #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
+        #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
+        #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
+        #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
+        #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
+        #sqlx_types_bit_vec_as_postgresql_bit_token_stream
+        #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
+        #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
+        #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
+        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
