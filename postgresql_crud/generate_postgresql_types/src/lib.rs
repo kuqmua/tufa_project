@@ -3037,12 +3037,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             let dot_zero_token_stream = quote::quote! {.0};
-                            let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &range_type,
-                                &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                &dot_zero_token_stream,
-                            );
+                            // let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &range_type,
+                            //     &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                            //     &dot_zero_token_stream,
+                            // );
                             let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
@@ -3066,7 +3066,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 ShouldImplRangeLength::False => &proc_macro2_token_stream_new,
                             };
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
+                                // #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
                                 #postgresql_type_tokens_where_element_contains_another_range_token_stream
                                 #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
                                 #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
