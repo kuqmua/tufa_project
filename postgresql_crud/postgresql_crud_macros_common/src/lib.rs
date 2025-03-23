@@ -128,7 +128,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
             "CurrentTime" == &element_upper_camel_case.to_string() ||
             "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
-            "LengthMoreThan" == &element_upper_camel_case.to_string()
+            "LengthMoreThan" == &element_upper_camel_case.to_string() ||
+            "EqualToEncodedStringRepresentation" == &element_upper_camel_case.to_string()
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better

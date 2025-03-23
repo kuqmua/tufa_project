@@ -2861,10 +2861,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
                             // let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_length_more_than_token_stream
-                                #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
+                                // #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
                             }
                         },
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,

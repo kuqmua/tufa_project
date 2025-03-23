@@ -1615,57 +1615,57 @@ impl WhereOperatorName for EqualToEncodedStringRepresentation {
         &naming::EqualToEncodedStringRepresentationUpperCamelCase
     }
 }
-impl EqualToEncodedStringRepresentation {
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &WhereOperatorName::upper_camel_case(self),
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote! {
-                pub encode_format: crate::postgresql_type::EncodeFormat,
-                pub encoded_string_representation: std::string::String,
-            },
-            &{
-                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote! {
-                    encode_format: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    encoded_string_representation: #core_default_default_default,
-                }
-            },
-            &{
-                let column_snake_case = naming::ColumnSnakeCase;
-                let value_snake_case = naming::ValueSnakeCase;
-                let increment_snake_case = naming::IncrementSnakeCase;
-                let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-                let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-                quote::quote! {
-                    match #increment_snake_case.checked_add(1) {
-                        Some(#value_snake_case) => {
-                            *#increment_snake_case = #value_snake_case;
-                            Ok(format!(
-                                "{}(encode({}, '{}') = ${})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
-                                &self.encode_format,
-                                #increment_snake_case
-                            ))
-                        }
-                        None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                }
-            },
-            &{
-                let query_snake_case = naming::QuerySnakeCase;
-                quote::quote! {
-                    #query_snake_case = #query_snake_case.bind(self.encoded_string_representation);
-                    #query_snake_case
-                }
-            },
-        )
-    }
-}
+// impl EqualToEncodedStringRepresentation {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             &WhereOperatorName::upper_camel_case(self),
+//             ShouldWhereElementFieldsBePublic::True,
+//             &quote::quote! {
+//                 pub encode_format: crate::postgresql_type::EncodeFormat,
+//                 pub encoded_string_representation: std::string::String,
+//             },
+//             &{
+//                 let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+//                     token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+//                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+//                 quote::quote! {
+//                     encode_format: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+//                     encoded_string_representation: #core_default_default_default,
+//                 }
+//             },
+//             &{
+//                 let column_snake_case = naming::ColumnSnakeCase;
+//                 let value_snake_case = naming::ValueSnakeCase;
+//                 let increment_snake_case = naming::IncrementSnakeCase;
+//                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+//                 let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+//                 quote::quote! {
+//                     match #increment_snake_case.checked_add(1) {
+//                         Some(#value_snake_case) => {
+//                             *#increment_snake_case = #value_snake_case;
+//                             Ok(format!(
+//                                 "{}(encode({}, '{}') = ${})",
+//                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                                 #column_snake_case,
+//                                 &self.encode_format,
+//                                 #increment_snake_case
+//                             ))
+//                         }
+//                         None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+//                     }
+//                 }
+//             },
+//             &{
+//                 let query_snake_case = naming::QuerySnakeCase;
+//                 quote::quote! {
+//                     #query_snake_case = #query_snake_case.bind(self.encoded_string_representation);
+//                     #query_snake_case
+//                 }
+//             },
+//         )
+//     }
+// }
 
 pub struct ValueIsContainedWithinRange;
 impl WhereOperatorName for ValueIsContainedWithinRange {

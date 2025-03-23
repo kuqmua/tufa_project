@@ -987,7 +987,39 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::EqualToEncodedStringRepresentation => todo!(),
+            Filter::EqualToEncodedStringRepresentation => (
+                &pub_snake_case_token_stream,
+                &comma_serde_deserialize_token_stream,
+                &t_annotation_generic_token_stream,
+                &quote::quote!{
+                    pub encode_format: crate::postgresql_type::EncodeFormat,
+                    pub encoded_string_representation: T,
+                },
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &t_default_but_option_is_always_some_and_vec_always_contains_one_element_annotation_generic_token_stream,
+                &t_annotation_generic_token_stream,
+                &quote::quote!{
+                    encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                },
+                &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
+                &t_annotation_generic_token_stream,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, &self.encode_format, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.encoded_string_representation);
+                    query
+                }
+            ),
             Filter::ValueIsContainedWithinRange => todo!(),
             Filter::ContainsAnotherRange => todo!(),
             Filter::StrictlyToLeftOfRange => todo!(),
@@ -1077,7 +1109,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
     let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
     let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&Filter::EqualToEncodedStringRepresentation);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -1137,7 +1169,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #current_time_token_stream
         #greater_than_current_time_token_stream
         #length_more_than_token_stream
-        // #_token_stream
+        #equal_to_encoded_string_representation_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
