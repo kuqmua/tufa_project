@@ -122,11 +122,15 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             "Before" == &element_upper_camel_case.to_string() ||
-            "CurrentDate" == &element_upper_camel_case.to_string()
+            "CurrentDate" == &element_upper_camel_case.to_string() ||
+            "GreaterThanCurrentDate" == &element_upper_camel_case.to_string()
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
-                let maybe_generic_token_stream = if "CurrentDate" == &element_upper_camel_case.to_string() {
+                let maybe_generic_token_stream = if
+                    "CurrentDate" == &element_upper_camel_case.to_string() ||
+                    "GreaterThanCurrentDate" == &element_upper_camel_case.to_string()
+                {
                     proc_macro2::TokenStream::new()
                 }
                 else {
