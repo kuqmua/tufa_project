@@ -3044,7 +3044,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             //     &dot_zero_token_stream,
                             // );
                             // let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
@@ -3068,7 +3068,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             quote::quote! {
                                 // #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
                                 // #postgresql_type_tokens_where_element_contains_another_range_token_stream
-                                #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
+                                // #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
                                 #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
                                 #postgresql_type_tokens_where_element_included_lower_bound_token_stream
                                 #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream

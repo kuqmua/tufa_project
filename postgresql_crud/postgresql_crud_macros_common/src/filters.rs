@@ -1724,19 +1724,19 @@ impl WhereOperatorName for StrictlyToLeftOfRange {
         &naming::StrictlyToLeftOfRangeUpperCamelCase
     }
 }
-impl StrictlyToLeftOfRange {
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            WhereOperatorName::upper_camel_case(self),
-            ShouldWhereElementFieldsBePublic::True,
-            &generate_pub_value_ident_token_stream(&ident),
-            &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
-            &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} &< ${})"}),
-            &generate_query_equals_query_bind_self_value_zero_token_stream(),
-        )
-    }
-}
+// impl StrictlyToLeftOfRange {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             WhereOperatorName::upper_camel_case(self),
+//             ShouldWhereElementFieldsBePublic::True,
+//             &generate_pub_value_ident_token_stream(&ident),
+//             &generate_value_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(),
+//             &generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}({} &< ${})"}),
+//             &generate_query_equals_query_bind_self_value_zero_token_stream(),
+//         )
+//     }
+// }
 
 pub struct StrictlyToRightOfRange;
 impl WhereOperatorName for StrictlyToRightOfRange {
