@@ -783,7 +783,26 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 },
             ),
-            Filter::CurrentTimestamp => todo!(),
+            Filter::CurrentTimestamp => (
+                &pub_snake_case_token_stream,
+                &comma_serde_deserialize_token_stream,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{
+                    Ok(format!("{}({} = current_timestamp)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
+                },
+                &quote::quote!{
+                    query
+                },
+            ),
             Filter::GreaterThanCurrentTimestamp => todo!(),
             Filter::CurrentTime => todo!(),
             Filter::GreaterThanCurrentTime => todo!(),
@@ -874,7 +893,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let before_token_stream = generate_filters_token_stream(&Filter::Before);
     let current_date_token_stream = generate_filters_token_stream(&Filter::CurrentDate);
     let greater_than_current_date_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentDate);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let current_timestamp_token_stream = generate_filters_token_stream(&Filter::CurrentTimestamp);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -935,7 +954,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #before_token_stream
         #current_date_token_stream
         #greater_than_current_date_token_stream
-        // #_token_stream
+        #current_timestamp_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
