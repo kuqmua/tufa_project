@@ -127,7 +127,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
             "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
             "CurrentTime" == &element_upper_camel_case.to_string() ||
-            "GreaterThanCurrentTime" == &element_upper_camel_case.to_string()
+            "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+            "LengthMoreThan" == &element_upper_camel_case.to_string()
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
@@ -137,7 +138,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
                     "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
                     "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
                     "CurrentTime" == &element_upper_camel_case.to_string() ||
-                    "GreaterThanCurrentTime" == &element_upper_camel_case.to_string()
+                    "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+                    "LengthMoreThan" == &element_upper_camel_case.to_string()
                 {
                     proc_macro2::TokenStream::new()
                 }

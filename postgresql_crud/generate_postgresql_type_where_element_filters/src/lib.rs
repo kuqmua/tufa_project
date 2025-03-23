@@ -16,7 +16,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         GreaterThanCurrentTimestamp,
         CurrentTime,
         GreaterThanCurrentTime,
-        LengthEqual,
+        // LengthEqual,
         LengthMoreThan,
         EqualToEncodedStringRepresentation,
         ValueIsContainedWithinRange,
@@ -93,14 +93,27 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
+        enum IsNeedDeclareGenericForImplTryNew {
+            True,
+            False,
+        }
         let generate_impl_try_new_for_ident_token_stream = |
+            is_need_declare_generic_for_impl_try_new: &IsNeedDeclareGenericForImplTryNew,
             generic_requirements_token_stream: &dyn quote::ToTokens,
             additional_input_parameters_token_stream: &dyn quote::ToTokens,
             should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
             content_token_stream: &dyn quote::ToTokens,
         |{
+            let impl_generic_token_stream: &dyn quote::ToTokens = match &is_need_declare_generic_for_impl_try_new {
+                IsNeedDeclareGenericForImplTryNew::True => &quote::quote!{<T #generic_requirements_token_stream>},
+                IsNeedDeclareGenericForImplTryNew::False => &proc_macro2_token_stream_new,
+            };
+            let ident_generic_token_stream: &dyn quote::ToTokens = match &is_need_declare_generic_for_impl_try_new {
+                IsNeedDeclareGenericForImplTryNew::True => &quote::quote!{<T>},
+                IsNeedDeclareGenericForImplTryNew::False => &proc_macro2_token_stream_new,
+            };
             quote::quote!{
-                impl<T #generic_requirements_token_stream> #ident<T> {
+                impl #impl_generic_token_stream #ident #ident_generic_token_stream {
                     fn try_new(
                         logical_operator: crate::LogicalOperator,
                         #additional_input_parameters_token_stream
@@ -115,9 +128,47 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_type: &'a dyn quote::ToTokens,
         }
         let generate_impl_serde_deserialize_for_ident_token_stream = |
+            impl_generic_option: std::option::Option<&dyn quote::ToTokens>,//, T
+            ident_generic_option: std::option::Option<&dyn quote::ToTokens>,//<T>
             additional_traits_annotations_token_stream: &dyn quote::ToTokens,
             additional_fields: &[&Field<'_>]
         |{
+            let maybe_impl_generic_token_stream = match &impl_generic_option {
+                Some(value) => quote::quote!{#value},
+                None => proc_macro2::TokenStream::new(),
+            };
+            let maybe_ident_generic_token_stream = match &ident_generic_option {
+                Some(value) => quote::quote!{#value},
+                None => proc_macro2::TokenStream::new(),
+            };
+            let maybe_ident_where_generic_trait_annotation_token_stream = if ident_generic_option.is_some() {
+                quote::quote!{
+                    where
+                        T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
+            let maybe_struct_visitor_where_generic_trait_annotation_token_stream = if ident_generic_option.is_some() {
+                quote::quote!{
+                    where
+                        T: _serde::Deserialize<'de>,
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
+            let maybe_impl_visitor_where_generic_trait_annotation_token_stream = if ident_generic_option.is_some() {
+                quote::quote!{
+                    where
+                        T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
+      
             let logical_operator_field = Field {
                 field_name: &naming::LogicalOperatorSnakeCase,
                 field_type: &quote::quote! {crate::LogicalOperator},
@@ -224,9 +275,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
                     extern crate serde as _serde;
                     #[automatically_derived]
-                    impl<'de, T> _serde::Deserialize<'de> for #ident<T>
-                    where
-                        T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
+                    impl<'de #maybe_impl_generic_token_stream> _serde::Deserialize<'de> for #ident #maybe_ident_generic_token_stream
+                    #maybe_ident_where_generic_trait_annotation_token_stream
                     {
                         fn deserialize<__D>(
                             __deserializer: __D,
@@ -305,20 +355,18 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                                 }
                             }
                             #[doc(hidden)]
-                            struct __Visitor<'de, T>
-                            where
-                                T: _serde::Deserialize<'de>,
+                            struct __Visitor<'de #maybe_impl_generic_token_stream>
+                            #maybe_struct_visitor_where_generic_trait_annotation_token_stream
                             {
                                 marker: _serde::__private::PhantomData<
-                                    #ident<T>,
+                                    #ident #maybe_ident_generic_token_stream,
                                 >,
                                 lifetime: _serde::__private::PhantomData<&'de ()>,
                             }
-                            impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
-                            where
-                                T: std::fmt::Debug + _serde::Deserialize<'de> #additional_traits_annotations_token_stream,
+                            impl<'de #maybe_impl_generic_token_stream> _serde::de::Visitor<'de> for __Visitor<'de #maybe_impl_generic_token_stream>
+                            #maybe_impl_visitor_where_generic_trait_annotation_token_stream
                             {
-                                type Value = #ident<T>;
+                                type Value = #ident #maybe_ident_generic_token_stream;
                                 fn expecting(
                                     &self,
                                     __formatter: &mut _serde::__private::Formatter<'_>,
@@ -374,7 +422,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                                 FIELDS,
                                 __Visitor {
                                     marker: _serde::__private::PhantomData::<
-                                        #ident<T>,
+                                        #ident #maybe_ident_generic_token_stream,
                                     >,
                                     lifetime: _serde::__private::PhantomData,
                                 },
@@ -471,6 +519,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::True,
                     &quote::quote!{: std::cmp::PartialOrd},
                     &quote::quote!{
                         start: T,
@@ -494,6 +543,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(
+                    Some(&quote::quote!{, T}),
+                    Some(&quote::quote!{<T>}),
                     &quote::quote!{+ std::cmp::PartialOrd},
                     &[
                         &Field {
@@ -556,6 +607,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::True,
                     &quote::quote!{: PartialEq + Clone},
                     &quote::quote!{value: std::vec::Vec<T>},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
@@ -580,6 +632,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(
+                    Some(&quote::quote!{, T}),
+                    Some(&quote::quote!{<T>}),
                     &quote::quote!{+ std::cmp::PartialOrd + Clone},
                     &[
                         &Field {
@@ -634,6 +688,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::True,
                     &quote::quote!{: IsEmpty},
                     &quote::quote!{value: T},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -646,6 +701,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(
+                    Some(&quote::quote!{, T}),
+                    Some(&quote::quote!{<T>}),
                     &quote::quote!{+ IsEmpty},
                     &[
                         &Field {
@@ -688,6 +745,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::True,
                     &quote::quote!{: IsEmpty},
                     &quote::quote!{value: T},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -700,6 +758,8 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     },
                 ),
                 &generate_impl_serde_deserialize_for_ident_token_stream(
+                    Some(&quote::quote!{, T}),
+                    Some(&quote::quote!{<T>}),
                     &quote::quote!{+ IsEmpty},
                     &[
                         &Field {
@@ -863,8 +923,70 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 },
             ),
-            Filter::LengthEqual => todo!(),
-            Filter::LengthMoreThan => todo!(),
+            // Filter::LengthEqual => todo!(),
+            Filter::LengthMoreThan => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: std::primitive::i64},
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        LengthIsNegative {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            value: std::primitive::i64,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::False,
+                    &proc_macro2_token_stream_new,
+                    &quote::quote!{value: std::primitive::i64},
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        if value >= 0 {
+                            Ok(Self { logical_operator, value })
+                        } else {
+                            Err(#ident_try_new_error_named::LengthIsNegative {
+                                value,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    None,
+                    None,
+                    &proc_macro2_token_stream_new,
+                    &[
+                        &Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &quote::quote!{std::primitive::i64},
+                        },
+                    ]
+                ),
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{
+                    value: ::core::default::Default::default()
+                },
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            ),
             Filter::EqualToEncodedStringRepresentation => todo!(),
             Filter::ValueIsContainedWithinRange => todo!(),
             Filter::ContainsAnotherRange => todo!(),
@@ -954,8 +1076,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTimestamp);
     let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
     let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -1015,7 +1136,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #greater_than_current_timestamp_token_stream
         #current_time_token_stream
         #greater_than_current_time_token_stream
-        // #_token_stream
+        #length_more_than_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream

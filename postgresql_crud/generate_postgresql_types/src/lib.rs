@@ -519,7 +519,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdStringStringAsPostgresqlCharN => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlVarchar => &proc_macro2_token_stream_new,
                     PostgresqlType::StdStringStringAsPostgresqlText => &proc_macro2_token_stream_new,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &proc_macro2_token_stream_new,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => &&quote::quote!{
+                        // impl ::core::cmp::PartialOrd for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                        //     #[inline]
+                        //     fn partial_cmp(&self, other: &#postgresql_type_not_null_or_nullable_upper_camel_case) -> ::core::option::Option<std::cmp::Ordering> {
+                        //         ::core::cmp::PartialOrd::partial_cmp(&self.0.0, &other.0.0)
+                        //     }
+                        // }
+                    },
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &quote::quote!{
@@ -2853,10 +2860,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_std_vec_vec_std_primitive_u8_token_stream = {
                     let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                         postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
+                            // let postgresql_type_tokens_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             let postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream = equal_to_encoded_string_representation.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             quote::quote! {
-                                #postgresql_type_tokens_where_element_length_more_than_token_stream
+                                // #postgresql_type_tokens_where_element_length_more_than_token_stream
                                 #postgresql_type_tokens_where_element_equal_to_encoded_string_representation_token_stream
                             }
                         },
