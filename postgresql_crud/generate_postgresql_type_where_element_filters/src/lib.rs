@@ -689,7 +689,17 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::Before => todo!(),
+            Filter::Before => (
+                &pub_snake_case_token_stream,
+                &comma_serde_deserialize_token_stream,
+                &pub_value_t_token_stream,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} < ${})"}),
+                &where_query_bind_one_value_token_stream,
+            ),
             Filter::CurrentDate => todo!(),
             Filter::GreaterThanCurrentDate => todo!(),
             Filter::CurrentTimestamp => todo!(),
@@ -777,7 +787,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let in_token_stream = generate_filters_token_stream(&Filter::In);
     let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
     let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseInsensitiveRegularExpression);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let before_token_stream = generate_filters_token_stream(&Filter::Before);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -838,7 +848,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #in_token_stream
         #case_sensitive_regular_expression_token_stream
         #case_insensitive_regular_expression_token_stream
-        // #_token_stream
+        #before_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
