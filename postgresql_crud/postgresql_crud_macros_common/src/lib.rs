@@ -119,7 +119,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "GreaterThan" == &element_upper_camel_case.to_string() ||
             "Between" == &element_upper_camel_case.to_string() ||
             "In" == &element_upper_camel_case.to_string() ||
-            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()
+            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string()
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 quote::quote! {crate::where_element_filters::#postgresql_type_where_element_self_upper_camel_case<#postgresql_type_not_null_upper_camel_case>}

@@ -640,7 +640,55 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::CaseInsensitiveRegularExpression => todo!(),
+            Filter::CaseInsensitiveRegularExpression => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: T},
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        //todo
+                        IsEmpty {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &quote::quote!{: IsEmpty},
+                    &quote::quote!{value: T},
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        if !IsEmpty::is_empty(&value) {
+                            Ok(Self { logical_operator, value })
+                        } else {
+                            Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
+                        }
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    &quote::quote!{+ IsEmpty},
+                    &[
+                        &Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &t_token_stream,
+                        },
+                    ]
+                ),
+                &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}({} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            ),
             Filter::Before => todo!(),
             Filter::CurrentDate => todo!(),
             Filter::GreaterThanCurrentDate => todo!(),
@@ -728,7 +776,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let between_token_stream = generate_filters_token_stream(&Filter::Between);
     let in_token_stream = generate_filters_token_stream(&Filter::In);
     let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseInsensitiveRegularExpression);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -789,7 +837,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #between_token_stream
         #in_token_stream
         #case_sensitive_regular_expression_token_stream
-
+        #case_insensitive_regular_expression_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
