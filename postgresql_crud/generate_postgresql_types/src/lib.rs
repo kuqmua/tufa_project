@@ -3046,12 +3046,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             // let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             // let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
                             // let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                                &postgresql_type_not_null_upper_camel_case,
-                                &range_type,
-                                &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                &dot_zero_token_stream,
-                            );
+                            // let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
+                            //     &postgresql_type_not_null_upper_camel_case,
+                            //     &range_type,
+                            //     &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                            //     &dot_zero_token_stream,
+                            // );
                             let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                                 &postgresql_type_not_null_upper_camel_case,
                                 &range_type,
@@ -3070,7 +3070,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 // #postgresql_type_tokens_where_element_contains_another_range_token_stream
                                 // #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
                                 // #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-                                #postgresql_type_tokens_where_element_included_lower_bound_token_stream
+                                // #postgresql_type_tokens_where_element_included_lower_bound_token_stream
                                 #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
                                 #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
                                 #postgresql_type_tokens_where_element_overlap_with_range_token_stream
