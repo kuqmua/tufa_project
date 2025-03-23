@@ -1033,18 +1033,18 @@ impl In {
     }
 }
 
-enum RegularExpression {
+pub enum RegularExpression {
     CaseSensitive,
     CaseInsensitive,
 }
 impl RegularExpression {
-    fn name_upper_camel_case(&self) -> &'static str {
+    pub fn name_upper_camel_case(&self) -> &'static str {
         match &self {
             RegularExpression::CaseSensitive => "CaseSensitiveRegularExpression",
             RegularExpression::CaseInsensitive => "CaseInsensitiveRegularExpression",
         }
     }
-    fn stringified(&self) -> &'static str {
+    pub fn stringified(&self) -> &'static str {
         match &self {
             RegularExpression::CaseSensitive => "",
             RegularExpression::CaseInsensitive => "*",
