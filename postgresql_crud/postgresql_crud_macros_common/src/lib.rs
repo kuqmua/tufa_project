@@ -124,14 +124,16 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "Before" == &element_upper_camel_case.to_string() ||
             "CurrentDate" == &element_upper_camel_case.to_string() ||
             "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
-            "CurrentTimestamp" == &element_upper_camel_case.to_string()
+            "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
+            "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() 
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
                 let maybe_generic_token_stream = if
                     "CurrentDate" == &element_upper_camel_case.to_string() ||
                     "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
-                    "CurrentTimestamp" == &element_upper_camel_case.to_string()
+                    "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
+                    "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string()
                 {
                     proc_macro2::TokenStream::new()
                 }
