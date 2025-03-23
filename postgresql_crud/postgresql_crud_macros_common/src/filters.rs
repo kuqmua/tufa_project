@@ -1398,26 +1398,26 @@ impl WhereOperatorName for GreaterThanCurrentTime {
         &naming::GreaterThanCurrentTimeUpperCamelCase
     }
 }
-impl GreaterThanCurrentTime {
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            WhereOperatorName::upper_camel_case(self),
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote! {},
-            &quote::quote! {},
-            &quote::quote! {
-                Ok(format!(
-                    "{}({} > current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &naming::QuerySnakeCase,
-        )
-    }
-}
+// impl GreaterThanCurrentTime {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         let column_snake_case = naming::ColumnSnakeCase;
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             WhereOperatorName::upper_camel_case(self),
+//             ShouldWhereElementFieldsBePublic::True,
+//             &quote::quote! {},
+//             &quote::quote! {},
+//             &quote::quote! {
+//                 Ok(format!(
+//                     "{}({} > current_time)",
+//                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                     #column_snake_case,
+//                 ))
+//             },
+//             &naming::QuerySnakeCase,
+//         )
+//     }
+// }
 
 fn generate_try_new_error_named_variants_token_stream_e2eea6c9_aaf9_486b_852b_d0ae24c7f519() -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
