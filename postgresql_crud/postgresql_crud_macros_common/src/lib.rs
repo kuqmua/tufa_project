@@ -137,7 +137,8 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "IncludedLowerBound" == &element_upper_camel_case.to_string() ||
             "ExcludedUpperBound" == &element_upper_camel_case.to_string() ||
             "GreaterThanLowerBound" == &element_upper_camel_case.to_string() ||
-            "OverlapWithRange" == &element_upper_camel_case.to_string()
+            "OverlapWithRange" == &element_upper_camel_case.to_string() ||
+            "AdjacentWithRange" == &element_upper_camel_case.to_string()
             {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
