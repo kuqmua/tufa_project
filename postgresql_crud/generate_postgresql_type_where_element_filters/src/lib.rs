@@ -1101,7 +1101,33 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::StrictlyToRightOfRange => todo!(),
+            Filter::StrictlyToRightOfRange => (
+                &pub_snake_case_token_stream,
+                &comma_serde_deserialize_token_stream,
+                &t_annotation_generic_token_stream,
+                &pub_value_t_token_stream,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &t_default_but_option_is_always_some_and_vec_always_contains_one_element_annotation_generic_token_stream,
+                &t_annotation_generic_token_stream,
+                &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
+                &t_annotation_generic_token_stream,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}({} &> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            ),
             Filter::IncludedLowerBound => todo!(),
             Filter::ExcludedUpperBound => todo!(),
             Filter::GreaterThanLowerBound => todo!(),
@@ -1191,7 +1217,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let value_is_contained_within_range_token_stream = generate_filters_token_stream(&Filter::ValueIsContainedWithinRange);
     let contains_another_range_token_stream = generate_filters_token_stream(&Filter::ContainsAnotherRange);
     let strictly_to_left_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToLeftOfRange);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let strictly_to_right_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToRightOfRange);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -1251,6 +1277,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #value_is_contained_within_range_token_stream
         #contains_another_range_token_stream
         #strictly_to_left_of_range_token_stream
+        #strictly_to_right_of_range_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
