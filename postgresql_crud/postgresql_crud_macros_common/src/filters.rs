@@ -1371,26 +1371,26 @@ impl WhereOperatorName for CurrentTime {
         &naming::CurrentTimeUpperCamelCase
     }
 }
-impl CurrentTime {
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            WhereOperatorName::upper_camel_case(self),
-            ShouldWhereElementFieldsBePublic::True,
-            &quote::quote! {},
-            &quote::quote! {},
-            &quote::quote! {
-                Ok(format!(
-                    "{}({} = current_time)",
-                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                    #column_snake_case,
-                ))
-            },
-            &naming::QuerySnakeCase,
-        )
-    }
-}
+// impl CurrentTime {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         let column_snake_case = naming::ColumnSnakeCase;
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             WhereOperatorName::upper_camel_case(self),
+//             ShouldWhereElementFieldsBePublic::True,
+//             &quote::quote! {},
+//             &quote::quote! {},
+//             &quote::quote! {
+//                 Ok(format!(
+//                     "{}({} = current_time)",
+//                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                     #column_snake_case,
+//                 ))
+//             },
+//             &naming::QuerySnakeCase,
+//         )
+//     }
+// }
 
 pub struct GreaterThanCurrentTime;
 impl WhereOperatorName for GreaterThanCurrentTime {
