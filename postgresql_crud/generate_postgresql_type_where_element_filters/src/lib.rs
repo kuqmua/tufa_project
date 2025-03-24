@@ -96,6 +96,9 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let std_vec_vec_t_token_stream = &quote::quote!{std::vec::Vec<T>};
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+        let core_default_default_default_token_stream = quote::quote!{
+            ::core::default::Default::default()
+        };
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
         };
@@ -112,7 +115,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_type: &'a dyn quote::ToTokens,
         }
         let value_code_default_token_stream = quote::quote!{
-            value: ::core::default::Default::default()
+            value: #core_default_default_default_token_stream
         };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
