@@ -92,28 +92,28 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
+        enum ShouldAddDeriveSerdeSerializeForIdentStruct {
+            True,
+            False,
+        }
         enum ShouldAddDeclarationOfStructIdentGeneric {
             True,
             False,
         }
-        enum IsNeedDeclareGenericForImplTryNew {
-            True,
-            False,
-        }
         let generate_impl_try_new_for_ident_token_stream = |
-            is_need_declare_generic_for_impl_try_new: &IsNeedDeclareGenericForImplTryNew,
+            should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
             generic_requirements_token_stream: &dyn quote::ToTokens,
             additional_input_parameters_token_stream: &dyn quote::ToTokens,
             should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
             content_token_stream: &dyn quote::ToTokens,
         |{
-            let impl_generic_token_stream: &dyn quote::ToTokens = match &is_need_declare_generic_for_impl_try_new {
-                IsNeedDeclareGenericForImplTryNew::True => &quote::quote!{<T #generic_requirements_token_stream>},
-                IsNeedDeclareGenericForImplTryNew::False => &proc_macro2_token_stream_new,
+            let impl_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{<T #generic_requirements_token_stream>},
+                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             };
-            let ident_generic_token_stream: &dyn quote::ToTokens = match &is_need_declare_generic_for_impl_try_new {
-                IsNeedDeclareGenericForImplTryNew::True => &t_annotation_generic_token_stream,
-                IsNeedDeclareGenericForImplTryNew::False => &proc_macro2_token_stream_new,
+            let ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             };
             let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(
                 &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named
@@ -458,10 +458,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             query = query.bind(self.value);
             query
         };
-        enum ShouldAddDeriveSerdeSerializeForIdentStruct {
-            True,
-            False,
-        }
         let (
             should_add_derive_serde_serialize_for_ident_struct,
             should_add_declaration_of_struct_ident_generic,
@@ -515,7 +511,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::True,
+                    &ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{: std::cmp::PartialOrd},
                     &quote::quote!{
                         start: T,
@@ -596,7 +592,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::True,
+                    &ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{: PartialEq + Clone},
                     &quote::quote!{value: std::vec::Vec<T>},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
@@ -670,7 +666,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::True,
+                    &ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{: IsEmpty},
                     &quote::quote!{value: T},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -709,7 +705,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::True,
+                    &ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{: IsEmpty},
                     &quote::quote!{value: T},
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -827,7 +823,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::False,
+                    &ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &value_std_primitive_i32_token_stream,
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -992,7 +988,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 ),
                 &generate_impl_try_new_for_ident_token_stream(
-                    &IsNeedDeclareGenericForImplTryNew::False,
+                    &ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &value_std_primitive_i32_token_stream,
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
