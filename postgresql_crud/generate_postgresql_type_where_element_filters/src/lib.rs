@@ -725,10 +725,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::CaseInsensitiveRegularExpression => (
                 &proc_macro2_token_stream_new,
@@ -782,10 +779,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::Before => (
                 &pub_snake_case_token_stream,
@@ -982,10 +976,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::EqualToEncodedStringRepresentation => (
                 &pub_snake_case_token_stream,
@@ -1042,10 +1033,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::ContainsAnotherRange => (
                 &pub_snake_case_token_stream,
@@ -1069,10 +1057,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToLeftOfRange => (
                 &pub_snake_case_token_stream,
@@ -1096,10 +1081,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToRightOfRange => (
                 &pub_snake_case_token_stream,
@@ -1123,10 +1105,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::IncludedLowerBound => (
                 &pub_snake_case_token_stream,
@@ -1150,10 +1129,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::ExcludedUpperBound => (
                 &pub_snake_case_token_stream,
@@ -1177,10 +1153,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::GreaterThanLowerBound => (
                 &pub_snake_case_token_stream,
@@ -1204,10 +1177,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::OverlapWithRange => (
                 &pub_snake_case_token_stream,
@@ -1231,10 +1201,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::AdjacentWithRange => (
                 &pub_snake_case_token_stream,
@@ -1258,10 +1225,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             Filter::RangeLength => (
                 &proc_macro2_token_stream_new,
@@ -1319,10 +1283,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                         None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 },
-                &quote::quote!{
-                    query = query.bind(self.value);
-                    query
-                }
+                &where_query_bind_one_value_token_stream
             ),
             // Filter:://BitVecPositionEqual => todo!(),
             // Filter::PositionEqual => todo!(),
