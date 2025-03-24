@@ -506,11 +506,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             should_add_derive_serde_serialize_for_ident_struct,
             should_add_declaration_of_struct_ident_generic,
             struct_additional_fields_token_stream,
-
-            maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
-            maybe_impl_try_new_for_ident_token_stream,
-            maybe_impl_serde_deserialize_for_ident_token_stream,
-
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
@@ -519,9 +514,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                 &where_query_bind_one_value_token_stream,
@@ -530,9 +522,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                 &where_query_bind_one_value_token_stream,
@@ -544,55 +533,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     start: T,
                     end: T,
                 },
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                    &quote::quote!{
-                        StartMoreOrEqualToEnd {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            start: T,
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            end: T,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &quote::quote!{: std::cmp::PartialOrd},
-                    &quote::quote!{
-                        start: T,
-                        end: T,
-                    },
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                    &quote::quote!{
-                        if start < end {//removed .0
-                            Ok(Self {
-                                logical_operator,
-                                start,
-                                end
-                            })
-                        } else {
-                            Err(#ident_try_new_error_named::StartMoreOrEqualToEnd {
-                                start,
-                                end,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    Some(&quote::quote!{+ std::cmp::PartialOrd}),
-                    &[
-                        &Field {
-                            field_name: &naming::StartSnakeCase,
-                            field_type: &t_token_stream,
-                        },
-                        &Field {
-                            field_name: &naming::EndSnakeCase,
-                            field_type: &t_token_stream,
-                        },
-                    ]
-                ),
                 &quote::quote!{
                     start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -624,53 +564,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &quote::quote!{value: std::vec::Vec<T>},
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                    &quote::quote!{
-                        IsEmpty {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        NotUnique {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            value: T,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &quote::quote!{: PartialEq + Clone},
-                    &quote::quote!{value: std::vec::Vec<T>},
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                    &quote::quote!{
-                        if value.is_empty() {
-                            return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                        }
-                        {
-                            let mut acc = vec![];
-                            for element in &value {
-                                if !acc.contains(&element) {
-                                    acc.push(element);
-                                } else {
-                                    return Err(#ident_try_new_error_named::NotUnique {
-                                        value: element.clone(),
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    });
-                                }
-                            }
-                        }
-                        Ok(Self { logical_operator, value })
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    Some(&quote::quote!{+ std::cmp::PartialOrd + Clone}),
-                    &[
-                        &Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &quote::quote!{std::vec::Vec<T>},
-                        },
-                    ]
-                ),
                 &quote::quote!{
                     value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
                 },
@@ -702,37 +595,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &quote::quote!{value: T},
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        //todo
-                        IsEmpty {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &quote::quote!{: IsEmpty},
-                    &quote::quote!{value: T},
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        if !IsEmpty::is_empty(&value) {
-                            Ok(Self { logical_operator, value })
-                        } else {
-                            Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                        }
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    Some(&quote::quote!{+ IsEmpty}),
-                    &[
-                        &Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &t_token_stream,
-                        },
-                    ]
-                ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
                 &where_query_bind_one_value_token_stream
@@ -741,37 +603,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &quote::quote!{value: T},
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        //todo
-                        IsEmpty {
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &quote::quote!{: IsEmpty},
-                    &quote::quote!{value: T},
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        if !IsEmpty::is_empty(&value) {
-                            Ok(Self { logical_operator, value })
-                        } else {
-                            Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                        }
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    Some(&quote::quote!{+ IsEmpty}),
-                    &[
-                        &Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &t_token_stream,
-                        },
-                    ]
-                ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
                 &where_query_bind_one_value_token_stream
@@ -780,9 +611,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
                 &where_query_bind_one_value_token_stream,
@@ -790,9 +618,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             Filter::CurrentDate => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
@@ -803,18 +628,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeclarationOfStructIdentGeneric::False,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTimestamp => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
@@ -825,18 +644,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeclarationOfStructIdentGeneric::False,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTime => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
@@ -847,9 +660,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeclarationOfStructIdentGeneric::False,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                 &quote::quote!{#query_snake_case},
             ),
@@ -858,36 +668,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
                 &value_std_primitive_i32_token_stream,
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        LengthIsNegative {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            value: #std_primitive_i32_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &value_std_primitive_i32_token_stream,
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        if value >= 0 {
-                            Ok(Self { logical_operator, value })
-                        } else {
-                            Err(#ident_try_new_error_named::LengthIsNegative {
-                                value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    None,
-                    &[&value_std_primitive_i32_field]
-                ),
                 &value_code_default_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
                 &where_query_bind_one_value_token_stream
@@ -899,9 +679,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     pub encode_format: crate::postgresql_type::EncodeFormat,
                     pub encoded_string_representation: T,
                 },
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &quote::quote!{
                     encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -924,9 +701,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                 &where_query_bind_one_value_token_stream
@@ -935,9 +709,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                 &where_query_bind_one_value_token_stream
@@ -946,9 +717,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                 &where_query_bind_one_value_token_stream
@@ -957,9 +725,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                 &where_query_bind_one_value_token_stream
@@ -968,9 +733,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
@@ -979,9 +741,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
@@ -990,9 +749,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                 &where_query_bind_one_value_token_stream
@@ -1001,9 +757,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                 &where_query_bind_one_value_token_stream
@@ -1012,9 +765,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::True,
                 &pub_value_t_token_stream,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
                 &where_query_bind_one_value_token_stream
@@ -1023,36 +773,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
                 &value_std_primitive_i32_token_stream,
-                &generate_enum_ident_try_new_error_named_token_stream(
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        LengthIsNegativeOrZero {
-                            #[eo_to_std_string_string_serialize_deserialize]
-                            value: #std_primitive_i32_token_stream,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                    }
-                ),
-                &generate_impl_try_new_for_ident_token_stream(
-                    &ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &value_std_primitive_i32_token_stream,
-                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                    &quote::quote!{
-                        if value > 0 {
-                            Ok(Self { logical_operator, value })
-                        } else {
-                            Err(#ident_try_new_error_named::LengthIsNegativeOrZero {
-                                value,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    },
-                ),
-                &generate_impl_serde_deserialize_for_ident_token_stream(
-                    None,
-                    &[&value_std_primitive_i32_field]
-                ),
                 &value_code_default_token_stream,
                 &quote::quote!{
                     match increment.checked_add(1) {
