@@ -160,7 +160,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
                 else {
                     quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 };
-                quote::quote! {crate::where_element_filters::#postgresql_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
+                quote::quote! {crate::postgresql_type_where_element_filters::#postgresql_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
             }
             else 
             {
