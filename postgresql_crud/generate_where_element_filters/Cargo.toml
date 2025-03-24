@@ -1,5 +1,5 @@
 [package]
-name = "generate_postgresql_type_where_element_filters"
+name = "generate_where_element_filters"
 version = "0.1.0"
 edition = "2024"
 

@@ -1,3 +1,10 @@
+generate_where_element_filters::generate_where_element_filters!();
+
+//todo ExactSizeIterator now is not a solution. error[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
+pub trait IsEmpty {
+    fn is_empty(&self) -> std::primitive::bool;
+}
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeWhereElementEqual<T> {
     pub logical_operator: crate::LogicalOperator,

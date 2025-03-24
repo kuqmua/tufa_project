@@ -1,7 +1,6 @@
 pub mod pagination;
 pub mod value;
-pub mod postgresql_type_where_element_filters;
-pub mod postgresql_json_type_where_element_filters;
+pub mod where_element_filters;
 pub mod postgresql_json_type;
 pub mod postgresql_json_type_trait;
 pub mod postgresql_type;

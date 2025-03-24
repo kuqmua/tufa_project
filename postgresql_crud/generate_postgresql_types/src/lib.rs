@@ -566,7 +566,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
             };
             let impl_is_empty_for_postgresql_type_not_null_or_nullable_token_stream = quote::quote!{
-                impl crate::postgresql_type_where_element_filters::IsEmpty for #postgresql_type_not_null_or_nullable_upper_camel_case {
+                impl crate::where_element_filters::IsEmpty for #postgresql_type_not_null_or_nullable_upper_camel_case {
                     fn is_empty(&self) -> std::primitive::bool {
                         //todo refactor it
                         self.0.to_string().is_empty()
