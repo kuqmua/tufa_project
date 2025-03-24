@@ -62,7 +62,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             let pub_snake_case = naming::PubSnakeCase;
             quote::quote!{#pub_snake_case}
         };
-        let comma_serde_deserialize_token_stream = quote::quote!{, serde::Deserialize};
         let pub_value_t_token_stream = quote::quote!{pub value: T};
         let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
         enum ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
@@ -455,9 +454,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             query = query.bind(self.value);
             query
         };
+        enum ShouldAddDeriveSerdeSerializeForIdentStruct {
+            True,
+            False,
+        }
         let (
             maybe_pub_token_stream,
-            maybe_serde_deserialize_token_stream,
+            should_add_derive_serde_serialize_for_ident_struct,
             maybe_struct_generics_annotations_token_stream,
             struct_additional_fields_token_stream,
             maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
@@ -473,7 +476,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         ) = match &filter {
             Filter::Equal => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -489,7 +492,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::GreaterThan => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -505,7 +508,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::Between => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &t_annotation_generic_token_stream,
                 &quote::quote!{
                     start: T,
@@ -593,7 +596,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::In => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &t_annotation_generic_token_stream,
                 &quote::quote!{value: std::vec::Vec<T>},
                 &generate_enum_ident_try_new_error_named_token_stream(
@@ -676,7 +679,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::CaseSensitiveRegularExpression => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &t_annotation_generic_token_stream,
                 &quote::quote!{value: T},
                 &generate_enum_ident_try_new_error_named_token_stream(
@@ -720,7 +723,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::CaseInsensitiveRegularExpression => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &t_annotation_generic_token_stream,
                 &quote::quote!{value: T},
                 &generate_enum_ident_try_new_error_named_token_stream(
@@ -764,7 +767,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::Before => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -780,7 +783,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::CurrentDate => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -800,7 +803,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::GreaterThanCurrentDate => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -820,7 +823,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::CurrentTimestamp => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -840,7 +843,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::GreaterThanCurrentTimestamp => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -860,7 +863,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::CurrentTime => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -880,7 +883,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::GreaterThanCurrentTime => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -901,7 +904,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             // Filter::LengthEqual => todo!(),
             Filter::LengthMoreThan => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &proc_macro2_token_stream_new,
                 &value_std_primitive_i32_token_stream,
                 &generate_enum_ident_try_new_error_named_token_stream(
@@ -944,7 +947,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::EqualToEncodedStringRepresentation => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &quote::quote!{
                     pub encode_format: crate::postgresql_type::EncodeFormat,
@@ -977,7 +980,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::ValueIsContainedWithinRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -993,7 +996,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::ContainsAnotherRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1009,7 +1012,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::StrictlyToLeftOfRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1025,7 +1028,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::StrictlyToRightOfRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1041,7 +1044,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::IncludedLowerBound => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1057,7 +1060,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::ExcludedUpperBound => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1073,7 +1076,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::GreaterThanLowerBound => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1089,7 +1092,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::OverlapWithRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1105,7 +1108,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::AdjacentWithRange => (
                 &pub_snake_case_token_stream,
-                &comma_serde_deserialize_token_stream,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 &t_annotation_generic_token_stream,
                 &pub_value_t_token_stream,
                 &proc_macro2_token_stream_new,
@@ -1121,7 +1124,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             ),
             Filter::RangeLength => (
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False,
                 &proc_macro2_token_stream_new,
                 &value_std_primitive_i32_token_stream,
                 &generate_enum_ident_try_new_error_named_token_stream(
@@ -1188,8 +1191,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             // Filter::EqualSecondDimension => todo!(),
         };
         let struct_token_stream = {
+            let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = match &should_add_derive_serde_serialize_for_ident_struct {
+                ShouldAddDeriveSerdeSerializeForIdentStruct::True => &quote::quote!{, serde::Deserialize},
+                ShouldAddDeriveSerdeSerializeForIdentStruct::False => &proc_macro2_token_stream_new
+            };
             quote::quote! {
-                #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_serde_deserialize_token_stream )]
+                #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_derive_serde_serialize_for_ident_struct_token_stream )]
                 pub struct #ident #maybe_struct_generics_annotations_token_stream {
                     #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
                     #struct_additional_fields_token_stream
