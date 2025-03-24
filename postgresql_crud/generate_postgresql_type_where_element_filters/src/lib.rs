@@ -69,18 +69,21 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             True,
             False,
         }
-        impl quote::ToTokens for ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
-            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                match &self {
-                    Self::True => quote::quote! {<T>},
-                    Self::False => proc_macro2::TokenStream::new()
-                }.to_tokens(tokens)
+        let generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = |
+            should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed
+        |-> &dyn quote::ToTokens{
+            match &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named {
+                ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False => &proc_macro2_token_stream_new
             }
-        }
+        };
         let generate_enum_ident_try_new_error_named_token_stream = |
             should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
             content_token_stream: &dyn quote::ToTokens
         |{
+            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(
+                &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named
+            );
             quote::quote!{
                 #[derive(
                     Debug,
@@ -90,7 +93,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     thiserror::Error,
                     error_occurence_lib::ErrorOccurence,
                 )]
-                pub enum #ident_try_new_error_named #should_add_declaration_of_generic_parameter_to_ident_try_new_error_named {
+                pub enum #ident_try_new_error_named #maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream {
                     #content_token_stream
                 }
             }
@@ -114,12 +117,15 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 IsNeedDeclareGenericForImplTryNew::True => &t_annotation_generic_token_stream,
                 IsNeedDeclareGenericForImplTryNew::False => &proc_macro2_token_stream_new,
             };
+            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(
+                &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named
+            );
             quote::quote!{
                 impl #impl_generic_token_stream #ident #ident_generic_token_stream {
                     fn try_new(
                         logical_operator: crate::LogicalOperator,
                         #additional_input_parameters_token_stream
-                    ) -> Result<Self, #ident_try_new_error_named #should_add_declaration_of_generic_parameter_to_ident_try_new_error_named> {
+                    ) -> Result<Self, #ident_try_new_error_named #maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream> {
                         #content_token_stream
                     }
                 }
