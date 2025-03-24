@@ -112,10 +112,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_name: &'a dyn std::fmt::Display,
             field_type: &'a dyn quote::ToTokens,
         }
-        let value_std_primitive_i32_field = Field {
-            field_name: &naming::ValueSnakeCase,
-            field_type: &std_primitive_i32_token_stream,//todo i32 or i64 or something between? or more? or less?
-        };
         let value_code_default_token_stream = quote::quote!{
             value: ::core::default::Default::default()
         };
@@ -468,6 +464,14 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         let maybe_try_new_logic_token_stream = match FilterInitializedWithTryNew::try_from(filter) {
             Ok(value) => {
+                let value_std_primitive_i32_field = Field {
+                    field_name: &naming::ValueSnakeCase,
+                    field_type: &std_primitive_i32_token_stream,//todo i32 or i64 or something between? or more? or less?
+                };
+                let value_t_field = Field {
+                    field_name: &naming::ValueSnakeCase,
+                    field_type: &t_token_stream,
+                };
                 let std_vec_vec_t_token_stream = &quote::quote!{std::vec::Vec<T>};
                 enum ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
                     True,
@@ -596,12 +600,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                             }
                         },
                         Some(quote::quote!{+ IsEmpty}),
-                        &vec![
-                            Field {
-                                field_name: &naming::ValueSnakeCase,
-                                field_type: &t_token_stream,
-                            },
-                        ]
+                        &vec![value_t_field]
                     ),
                     FilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
                         &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -622,12 +621,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                             }
                         },
                         Some(quote::quote!{+ IsEmpty}),
-                        &vec![
-                            Field {
-                                field_name: &naming::ValueSnakeCase,
-                                field_type: &t_token_stream,
-                            },
-                        ]
+                        &vec![value_t_field]
                     ),
                     FilterInitializedWithTryNew::LengthMoreThan => (
                         &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
