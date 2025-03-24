@@ -46,6 +46,47 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         // AllElementsCaseInsensitiveRegularExpression,
         // EqualSecondDimension,
     }
+    #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    enum FilterInitializedWithTryNew {
+        Between,
+        In,
+        CaseSensitiveRegularExpression,
+        CaseInsensitiveRegularExpression,
+        LengthMoreThan,
+        RangeLength,
+    }
+    impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
+        type Error = ();
+        fn try_from(value: &Filter) -> Result<Self, Self::Error> {
+            match &value {
+                Filter::Equal => Err(()),
+                Filter::GreaterThan => Err(()),
+                Filter::Between => Ok(Self::Between),
+                Filter::In => Ok(Self::In),
+                Filter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
+                Filter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+                Filter::Before => Err(()),
+                Filter::CurrentDate => Err(()),
+                Filter::GreaterThanCurrentDate => Err(()),
+                Filter::CurrentTimestamp => Err(()),
+                Filter::GreaterThanCurrentTimestamp => Err(()),
+                Filter::CurrentTime => Err(()),
+                Filter::GreaterThanCurrentTime => Err(()),
+                Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
+                Filter::EqualToEncodedStringRepresentation => Err(()),
+                Filter::ValueIsContainedWithinRange => Err(()),
+                Filter::ContainsAnotherRange => Err(()),
+                Filter::StrictlyToLeftOfRange => Err(()),
+                Filter::StrictlyToRightOfRange => Err(()),
+                Filter::IncludedLowerBound => Err(()),
+                Filter::ExcludedUpperBound => Err(()),
+                Filter::GreaterThanLowerBound => Err(()),
+                Filter::OverlapWithRange => Err(()),
+                Filter::AdjacentWithRange => Err(()),
+                Filter::RangeLength => Ok(Self::RangeLength),
+            }
+        }
+    }
     let generate_filters_token_stream = |filter: &Filter|{
         let query_snake_case = naming::QuerySnakeCase;
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
@@ -465,9 +506,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             should_add_derive_serde_serialize_for_ident_struct,
             should_add_declaration_of_struct_ident_generic,
             struct_additional_fields_token_stream,
+
             maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
             maybe_impl_try_new_for_ident_token_stream,
             maybe_impl_serde_deserialize_for_ident_token_stream,
+
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
@@ -1060,6 +1103,252 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
+        let maybe_try_new_logic_token_stream = match FilterInitializedWithTryNew::try_from(filter) {
+            Ok(value) => {
+                let (
+                    enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
+                    impl_try_new_for_ident_token_stream,
+                    impl_serde_deserialize_for_ident_token_stream,
+                ) = match &value {
+                    FilterInitializedWithTryNew::Between => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote!{
+                                StartMoreOrEqualToEnd {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    start: T,
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    end: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: std::cmp::PartialOrd},
+                            &quote::quote!{
+                                start: T,
+                                end: T,
+                            },
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote!{
+                                if start < end {//removed .0
+                                    Ok(Self {
+                                        logical_operator,
+                                        start,
+                                        end
+                                    })
+                                } else {
+                                    Err(#ident_try_new_error_named::StartMoreOrEqualToEnd {
+                                        start,
+                                        end,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            Some(&quote::quote!{+ std::cmp::PartialOrd}),
+                            &[
+                                &Field {
+                                    field_name: &naming::StartSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                                &Field {
+                                    field_name: &naming::EndSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                            ]
+                        )
+                    ),
+                    FilterInitializedWithTryNew::In => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote!{
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: PartialEq + Clone},
+                            &quote::quote!{value: std::vec::Vec<T>},
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote!{
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            Some(&quote::quote!{+ std::cmp::PartialOrd + Clone}),
+                            &[
+                                &Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &quote::quote!{std::vec::Vec<T>},
+                                },
+                            ]
+                        )
+                    ),
+                    FilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                //todo
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: IsEmpty},
+                            &quote::quote!{value: T},
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                if !IsEmpty::is_empty(&value) {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
+                                }
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            Some(&quote::quote!{+ IsEmpty}),
+                            &[
+                                &Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                            ]
+                        )
+                    ),
+                    FilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                //todo
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: IsEmpty},
+                            &quote::quote!{value: T},
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                if !IsEmpty::is_empty(&value) {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
+                                }
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            Some(&quote::quote!{+ IsEmpty}),
+                            &[
+                                &Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                            ]
+                        )
+                    ),
+                    FilterInitializedWithTryNew::LengthMoreThan => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                LengthIsNegative {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: #std_primitive_i32_token_stream,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::False,
+                            &proc_macro2_token_stream_new,
+                            &value_std_primitive_i32_token_stream,
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                if value >= 0 {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::LengthIsNegative {
+                                        value,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            None,
+                            &[&value_std_primitive_i32_field]
+                        )
+                    ),
+                    FilterInitializedWithTryNew::RangeLength => (
+                        &generate_enum_ident_try_new_error_named_token_stream(
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                LengthIsNegativeOrZero {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: #std_primitive_i32_token_stream,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        ),
+                        &generate_impl_try_new_for_ident_token_stream(
+                            &ShouldAddDeclarationOfStructIdentGeneric::False,
+                            &proc_macro2_token_stream_new,
+                            &value_std_primitive_i32_token_stream,
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                if value > 0 {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::LengthIsNegativeOrZero {
+                                        value,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                        ),
+                        &generate_impl_serde_deserialize_for_ident_token_stream(
+                            None,
+                            &[&value_std_primitive_i32_field]
+                        )
+                    )
+                };
+                quote::quote!{
+                    #enum_postgresql_type_where_element_filter_try_new_error_named_token_stream
+                    #impl_try_new_for_ident_token_stream
+                    #impl_serde_deserialize_for_ident_token_stream
+                }
+            },
+            Err(_) => proc_macro2::TokenStream::new()
+        };
         let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
@@ -1106,9 +1395,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         quote::quote! {
             #struct_token_stream
-            #maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream
-            #maybe_impl_try_new_for_ident_token_stream
-            #maybe_impl_serde_deserialize_for_ident_token_stream
+            #maybe_try_new_logic_token_stream
             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             #impl_postgresql_type_self_where_filter_token_stream
         }
