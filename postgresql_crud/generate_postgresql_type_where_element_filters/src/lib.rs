@@ -47,6 +47,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         // EqualSecondDimension,
     }
     let generate_filters_token_stream = |filter: &Filter|{
+        let query_snake_case = naming::QuerySnakeCase;
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
         let t_token_stream = quote::quote!{T};
@@ -788,9 +789,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} = current_date)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentDate => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
@@ -807,9 +806,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} > current_date)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTimestamp => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
@@ -826,9 +823,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} = current_timestamp)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentTimestamp => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
@@ -845,9 +840,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} > current_timestamp)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTime => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
@@ -864,9 +857,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} = current_time)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentTime => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
@@ -883,9 +874,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     Ok(format!("{}({} > current_time)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                 },
-                &quote::quote!{
-                    query
-                },
+                &quote::quote!{#query_snake_case},
             ),
             // Filter::LengthEqual => todo!(),
             Filter::LengthMoreThan => (
