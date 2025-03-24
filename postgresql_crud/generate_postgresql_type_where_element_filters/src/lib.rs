@@ -466,15 +466,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             should_add_derive_serde_serialize_for_ident_struct,
             should_add_declaration_of_struct_ident_generic,
             struct_additional_fields_token_stream,
-
             maybe_enum_postgresql_type_where_element_filter_try_new_error_named_token_stream,
             maybe_impl_try_new_for_ident_token_stream,
             maybe_impl_serde_deserialize_for_ident_token_stream,
-
             impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
-
-            maybe_impl_postgresql_type_self_where_filter_generic_annotations_token_stream,
-
             where_query_part_content_token_stream,
             where_query_bind_content_token_stream,
         ) = match &filter {
@@ -486,7 +481,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} = ${})"}),
                 &where_query_bind_one_value_token_stream,
             ),
@@ -498,7 +492,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
                 &where_query_bind_one_value_token_stream,
             ),
@@ -562,7 +555,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 },
-                &t_annotation_generic_token_stream,
                 &quote::quote!{
                     match increment.checked_add(1) {
                         Some(first_value) => {
@@ -640,7 +632,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &quote::quote!{
                     value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
                 },
-                &t_annotation_generic_token_stream,
                 &quote::quote!{
                     let mut acc = std::string::String::default();
                     for element in &self.value {
@@ -701,7 +692,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     ]
                 ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~ ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -741,7 +731,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     ]
                 ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~* ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -753,14 +742,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} < ${})"}),
                 &where_query_bind_one_value_token_stream,
             ),
             Filter::CurrentDate => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -777,14 +764,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTimestamp => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -801,7 +786,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
                 &quote::quote!{#query_snake_case},
             ),
@@ -813,14 +797,12 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentTime => (
                 ShouldAddDeriveSerdeSerializeForIdentStruct::True,
                 ShouldAddDeclarationOfStructIdentGeneric::False,
-                &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
@@ -865,7 +847,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     &[&value_std_primitive_i32_field]
                 ),
                 &value_code_default_token_stream,
-                &proc_macro2_token_stream_new,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -883,7 +864,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 },
-                &t_annotation_generic_token_stream,
                 &quote::quote!{
                     match increment.checked_add(1) {
                         Some(value) => {
@@ -906,7 +886,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -918,7 +897,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -930,7 +908,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &< ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -942,7 +919,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -954,7 +930,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -966,7 +941,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -978,7 +952,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -990,7 +963,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} && ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -1002,7 +974,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &t_annotation_generic_token_stream,
                 &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} -|- ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
@@ -1041,7 +1012,6 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     &[&value_std_primitive_i32_field]
                 ),
                 &value_code_default_token_stream,
-                &proc_macro2_token_stream_new,
                 &quote::quote!{
                     match increment.checked_add(1) {
                         Some(value) => {
@@ -1115,6 +1085,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let impl_postgresql_type_self_where_filter_token_stream = {
             let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
+                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
+            };
+            let maybe_impl_postgresql_type_self_where_filter_generic_annotations_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
             };
             quote::quote! {
