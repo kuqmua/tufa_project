@@ -725,15 +725,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} ~ ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~ ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::CaseInsensitiveRegularExpression => (
@@ -779,15 +771,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~* ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::Before => (
@@ -969,15 +953,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_code_default_token_stream,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}(length({}) > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::EqualToEncodedStringRepresentation => (
@@ -1026,15 +1002,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} @> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::ContainsAnotherRange => (
@@ -1050,15 +1018,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} @> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToLeftOfRange => (
@@ -1074,15 +1034,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} &< ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &< ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToRightOfRange => (
@@ -1098,15 +1050,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} &> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &> ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::IncludedLowerBound => (
@@ -1122,15 +1066,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}(lower({}) = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::ExcludedUpperBound => (
@@ -1146,15 +1082,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}(upper({}) = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::GreaterThanLowerBound => (
@@ -1170,15 +1098,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::OverlapWithRange => (
@@ -1194,15 +1114,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} && ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} && ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::AdjacentWithRange => (
@@ -1218,15 +1130,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 &t_additional_traits_for_postgresql_type_self_where_filter_token_stream,
                 &t_annotation_generic_token_stream,
-                &quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("{}({} -|- ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                },
+                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} -|- ${})"}),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::RangeLength => (
