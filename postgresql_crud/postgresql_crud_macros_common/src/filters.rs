@@ -1886,93 +1886,93 @@ impl WhereOperatorName for RangeLength {
         &naming::RangeLengthUpperCamelCase
     }
 }
-impl RangeLength {
-    pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
-        let array_position_type_token_stream = array_position_type_token_stream();
-        generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
-            &ident,
-            &self_upper_camel_case,
-            ShouldWhereElementFieldsBePublic::False {
-                ident: &ident,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &quote::quote! {
-                    #length_is_negative_or_zero_upper_camel_case {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        #value_snake_case: #array_position_type_token_stream,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                },
-                try_new_additional_input_parameters_token_stream: &quote::quote! {
-                    #value_snake_case: #array_position_type_token_stream
-                },
-                try_new_content_token_stream: &{
-                    let ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
-                    quote::quote! {
-                        if #value_snake_case > 0 {
-                            Ok(Self {
-                                logical_operator,
-                                #value_snake_case,
-                            })
-                        }
-                        else {
-                            Err(#ident_where_element_range_length_try_new_error_named_upper_camel_case::#length_is_negative_or_zero_upper_camel_case {
-                                #value_snake_case,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            })
-                        }
-                    }
-                },
-                impl_deserialize_token_stream: &generate_impl_deserialize_with_try_new_token_stream(
-                    &naming::parameter::SelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident),
-                    &[
-                        Field {
-                            field_name: &naming::LogicalOperatorSnakeCase,
-                            field_type: &quote::quote! {crate::LogicalOperator},
-                        },
-                        Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &array_position_type_token_stream,
-                        },
-                    ],
-                ),
-            },
-            &quote::quote! {#value_snake_case: #array_position_type_token_stream}, //todo try_new - check length > 0
-            &{
-                let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote! {#value_snake_case: #core_default_default_default}
-            },
-            &quote::quote! {
-                match #increment_snake_case.checked_add(1) {
-                    Some(#value_snake_case) => {
-                        *#increment_snake_case = #value_snake_case;
-                        Ok(format!(
-                            "{}(upper({}) - lower({}) = ${})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            #column_snake_case,
-                            #column_snake_case,
-                            #increment_snake_case
-                        ))
-                    },
-                    None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
-            },
-            &quote::quote! {
-                #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
-                #query_snake_case
-            },
-        )
-    }
-}
+// impl RangeLength {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         let column_snake_case = naming::ColumnSnakeCase;
+//         let query_snake_case = naming::QuerySnakeCase;
+//         let value_snake_case = naming::ValueSnakeCase;
+//         let increment_snake_case = naming::IncrementSnakeCase;
+//         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+//         let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+//         let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+//         let length_is_negative_or_zero_upper_camel_case = naming::LengthIsNegativeOrZeroUpperCamelCase;
+//         let array_position_type_token_stream = array_position_type_token_stream();
+//         generate_maybe_nullable_postgresql_type_tokens_where_element_variant_token_stream(
+//             &ident,
+//             &self_upper_camel_case,
+//             ShouldWhereElementFieldsBePublic::False {
+//                 ident: &ident,
+//                 postfix: &self_upper_camel_case,
+//                 try_new_error_named_variants_token_stream: &quote::quote! {
+//                     #length_is_negative_or_zero_upper_camel_case {
+//                         #[eo_to_std_string_string_serialize_deserialize]
+//                         #value_snake_case: #array_position_type_token_stream,
+//                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//                     },
+//                 },
+//                 try_new_additional_input_parameters_token_stream: &quote::quote! {
+//                     #value_snake_case: #array_position_type_token_stream
+//                 },
+//                 try_new_content_token_stream: &{
+//                     let ident_where_element_range_length_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereElementRangeLengthTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+//                     quote::quote! {
+//                         if #value_snake_case > 0 {
+//                             Ok(Self {
+//                                 logical_operator,
+//                                 #value_snake_case,
+//                             })
+//                         }
+//                         else {
+//                             Err(#ident_where_element_range_length_try_new_error_named_upper_camel_case::#length_is_negative_or_zero_upper_camel_case {
+//                                 #value_snake_case,
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             })
+//                         }
+//                     }
+//                 },
+//                 impl_deserialize_token_stream: &generate_impl_deserialize_with_try_new_token_stream(
+//                     &naming::parameter::SelfWhereElementRangeLengthUpperCamelCase::from_tokens(&ident),
+//                     &[
+//                         Field {
+//                             field_name: &naming::LogicalOperatorSnakeCase,
+//                             field_type: &quote::quote! {crate::LogicalOperator},
+//                         },
+//                         Field {
+//                             field_name: &naming::ValueSnakeCase,
+//                             field_type: &array_position_type_token_stream,
+//                         },
+//                     ],
+//                 ),
+//             },
+//             &quote::quote! {#value_snake_case: #array_position_type_token_stream}, //todo try_new - check length > 0
+//             &{
+//                 let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
+//                 quote::quote! {#value_snake_case: #core_default_default_default}
+//             },
+//             &quote::quote! {
+//                 match #increment_snake_case.checked_add(1) {
+//                     Some(#value_snake_case) => {
+//                         *#increment_snake_case = #value_snake_case;
+//                         Ok(format!(
+//                             "{}(upper({}) - lower({}) = ${})",
+//                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+//                             #column_snake_case,
+//                             #column_snake_case,
+//                             #increment_snake_case
+//                         ))
+//                     },
+//                     None => Err(crate::#try_generate_bind_increments_error_named_upper_camel_case::#checked_add_upper_camel_case {
+//                         code_occurence: error_occurence_lib::code_occurence!(),
+//                     })
+//                 }
+//             },
+//             &quote::quote! {
+//                 #query_snake_case = #query_snake_case.bind(self.#value_snake_case);
+//                 #query_snake_case
+//             },
+//         )
+//     }
+// }
 
 fn generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08() -> proc_macro2::TokenStream {
     let position_snake_case = naming::PositionSnakeCase;

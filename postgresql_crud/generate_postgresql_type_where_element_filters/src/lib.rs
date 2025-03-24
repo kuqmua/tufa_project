@@ -1263,7 +1263,67 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     query
                 }
             ),
-            Filter::RangeLength => todo!(),
+            Filter::RangeLength => (
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: std::primitive::i32},
+                &generate_enum_ident_try_new_error_named_token_stream(
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        LengthIsNegativeOrZero {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            value: std::primitive::i32,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                ),
+                &generate_impl_try_new_for_ident_token_stream(
+                    &IsNeedDeclareGenericForImplTryNew::False,
+                    &proc_macro2_token_stream_new,
+                    &quote::quote!{value: std::primitive::i32},
+                    &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                    &quote::quote!{
+                        if value > 0 {
+                            Ok(Self { logical_operator, value })
+                        } else {
+                            Err(#ident_try_new_error_named::LengthIsNegativeOrZero {
+                                value,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            })
+                        }
+                    },
+                ),
+                &generate_impl_serde_deserialize_for_ident_token_stream(
+                    None,
+                    None,
+                    &proc_macro2_token_stream_new,
+                    &[
+                        &Field {
+                            field_name: &naming::ValueSnakeCase,
+                            field_type: &quote::quote!{std::primitive::i32},//todo i32 or i64 or something between? or more? or less?
+                        },
+                    ]
+                ),
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{value: ::core::default::Default::default()},
+                &proc_macro2_token_stream_new,
+                &proc_macro2_token_stream_new,
+                &quote::quote!{
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            Ok(format!("{}(upper({}) - lower({}) = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, column, increment))
+                        }
+                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                    }
+                },
+                &quote::quote!{
+                    query = query.bind(self.value);
+                    query
+                }
+            ),
             // Filter:://BitVecPositionEqual => todo!(),
             Filter::PositionEqual => todo!(),
             Filter::PositionGreaterThan => todo!(),
@@ -1353,7 +1413,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
     let greater_than_lower_bound_token_stream = generate_filters_token_stream(&Filter::GreaterThanLowerBound);
     let overlap_with_range_token_stream = generate_filters_token_stream(&Filter::OverlapWithRange);
     let adjacent_with_range_token_stream = generate_filters_token_stream(&Filter::AdjacentWithRange);
-    // let _token_stream = generate_filters_token_stream(&Filter::);
+    let range_length_token_stream = generate_filters_token_stream(&Filter::RangeLength);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
     // let _token_stream = generate_filters_token_stream(&Filter::);
@@ -1413,7 +1473,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         #greater_than_lower_bound_token_stream
         #overlap_with_range_token_stream
         #adjacent_with_range_token_stream
-        // #_token_stream
+        #range_length_token_stream
         // #_token_stream
         // #_token_stream
         // #_token_stream
