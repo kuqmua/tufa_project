@@ -454,6 +454,9 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             }
         };
+        let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str|{
+            generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
+        };
         let where_query_bind_one_value_token_stream = quote::quote!{
             query = query.bind(self.value);
             query
@@ -477,7 +480,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} = ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                 &where_query_bind_one_value_token_stream,
             ),
             Filter::GreaterThan => (
@@ -488,7 +491,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
+                &generate_where_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                 &where_query_bind_one_value_token_stream,
             ),
             Filter::Between => (
@@ -688,7 +691,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     ]
                 ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~ ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::CaseInsensitiveRegularExpression => (
@@ -727,7 +730,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     ]
                 ),
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} ~* ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::Before => (
@@ -738,7 +741,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} < ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
                 &where_query_bind_one_value_token_stream,
             ),
             Filter::CurrentDate => (
@@ -882,7 +885,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::ContainsAnotherRange => (
@@ -893,7 +896,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} @> ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToLeftOfRange => (
@@ -904,7 +907,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &< ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::StrictlyToRightOfRange => (
@@ -915,7 +918,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} &> ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::IncludedLowerBound => (
@@ -948,7 +951,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} > ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::OverlapWithRange => (
@@ -959,7 +962,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} && ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::AdjacentWithRange => (
@@ -970,7 +973,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}({} -|- ${})"}),
+                &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
                 &where_query_bind_one_value_token_stream
             ),
             Filter::RangeLength => (
