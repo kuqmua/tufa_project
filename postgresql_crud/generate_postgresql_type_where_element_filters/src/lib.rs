@@ -54,6 +54,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let t_default_but_option_is_always_some_and_vec_always_contains_one_element_annotation_generic_token_stream = quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>};
         let t_additional_traits_for_postgresql_type_self_where_filter_token_stream = quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send};
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+        let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
         };
@@ -63,6 +64,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         };
         let comma_serde_deserialize_token_stream = quote::quote!{, serde::Deserialize};
         let pub_value_t_token_stream = quote::quote!{pub value: T};
+        let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
         enum ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
             True,
             False,
@@ -127,6 +129,10 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
             field_name: &'a dyn std::fmt::Display,
             field_type: &'a dyn quote::ToTokens,
         }
+        let value_std_primitive_i32_field = Field {
+            field_name: &naming::ValueSnakeCase,
+            field_type: &std_primitive_i32_token_stream,//todo i32 or i64 or something between? or more? or less?
+        };
         let generate_impl_serde_deserialize_for_ident_token_stream = |
             impl_generic_option: std::option::Option<&dyn quote::ToTokens>,//, T
             ident_generic_option: std::option::Option<&dyn quote::ToTokens>,//<T>
@@ -431,6 +437,9 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     }
                 };
             }
+        };
+        let value_code_default_token_stream = quote::quote!{
+            value: ::core::default::Default::default()
         };
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -922,13 +931,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{value: std::primitive::i64},
+                &value_std_primitive_i32_token_stream,
                 &generate_enum_ident_try_new_error_named_token_stream(
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                     &quote::quote!{
                         LengthIsNegative {
                             #[eo_to_std_string_string_serialize_deserialize]
-                            value: std::primitive::i64,
+                            value: #std_primitive_i32_token_stream,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                     }
@@ -936,7 +945,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &generate_impl_try_new_for_ident_token_stream(
                     &IsNeedDeclareGenericForImplTryNew::False,
                     &proc_macro2_token_stream_new,
-                    &quote::quote!{value: std::primitive::i64},
+                    &value_std_primitive_i32_token_stream,
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                     &quote::quote!{
                         if value >= 0 {
@@ -953,18 +962,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     None,
                     None,
                     &proc_macro2_token_stream_new,
-                    &[
-                        &Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &quote::quote!{std::primitive::i64},
-                        },
-                    ]
+                    &[&value_std_primitive_i32_field]
                 ),
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    value: ::core::default::Default::default()
-                },
+                &value_code_default_token_stream,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &quote::quote!{
@@ -1231,13 +1233,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{value: std::primitive::i32},
+                &value_std_primitive_i32_token_stream,
                 &generate_enum_ident_try_new_error_named_token_stream(
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                     &quote::quote!{
                         LengthIsNegativeOrZero {
                             #[eo_to_std_string_string_serialize_deserialize]
-                            value: std::primitive::i32,
+                            value: #std_primitive_i32_token_stream,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                     }
@@ -1245,7 +1247,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &generate_impl_try_new_for_ident_token_stream(
                     &IsNeedDeclareGenericForImplTryNew::False,
                     &proc_macro2_token_stream_new,
-                    &quote::quote!{value: std::primitive::i32},
+                    &value_std_primitive_i32_token_stream,
                     &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                     &quote::quote!{
                         if value > 0 {
@@ -1262,16 +1264,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                     None,
                     None,
                     &proc_macro2_token_stream_new,
-                    &[
-                        &Field {
-                            field_name: &naming::ValueSnakeCase,
-                            field_type: &quote::quote!{std::primitive::i32},//todo i32 or i64 or something between? or more? or less?
-                        },
-                    ]
+                    &[&value_std_primitive_i32_field]
                 ),
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{value: ::core::default::Default::default()},
+                &value_code_default_token_stream,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &quote::quote!{
