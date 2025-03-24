@@ -174,7 +174,9 @@ fn generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stre
             },
         );
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_ident_where_element_tokens_token_stream = crate::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+        &quote::quote!{<'a>},
         &postgresql_type_or_postgresql_json_type_ident_where_element_filter_upper_camel_case,
+        &proc_macro2::TokenStream::new(),
         &postgresql_type_self_where_try_generate_bind_increments_token_stream,
         &postgresql_type_self_where_bind_value_to_query_token_stream,
         &crate::PostgresqlTypeSelfWhereFilterPath::Crate,

@@ -35,7 +35,9 @@ pub fn generate_postgresql_type_where_element_token_stream(
         }
     };
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = crate::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+        &quote::quote!{<'a>},
         &ident,
+        &proc_macro2::TokenStream::new(),
         &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
@@ -175,7 +177,9 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         }
     };
     let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = crate::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+        &quote::quote!{<'a>},
         &ident,
+        &proc_macro2::TokenStream::new(),
         &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
@@ -790,7 +794,9 @@ impl quote::ToTokens for PostgresqlTypeSelfWhereFilterPath  {
     }
 }
 pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
+    impl_generic_token_stream: &dyn quote::ToTokens,
     ident_token_stream: &dyn quote::ToTokens,
+    ident_generic_token_stream: &dyn quote::ToTokens,
     where_query_part_content_token_stream: &dyn quote::ToTokens,
     where_query_bind_content_token_stream: &dyn quote::ToTokens,
     postgresql_type_self_where_filter_path: &PostgresqlTypeSelfWhereFilterPath,
@@ -807,7 +813,7 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
     let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
     let postgresql_type_self_where_filter_upper_camel_case = naming::PostgresqlTypeSelfWhereFilterUpperCamelCase;
     quote::quote!{
-        impl #postgresql_type_self_where_filter_path ::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'_> for #ident_token_stream {
+        impl #impl_generic_token_stream #postgresql_type_self_where_filter_path ::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
             fn #where_query_part_snake_case(
                 &self,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,
@@ -816,7 +822,7 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
             ) -> Result<#std_string_string_token_stream, #postgresql_type_self_where_filter_path::#query_part_error_named_upper_camel_case> {
                 #where_query_part_content_token_stream
             }
-            fn #where_query_bind_snake_case<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn #where_query_bind_snake_case(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #where_query_bind_content_token_stream
             }
         }

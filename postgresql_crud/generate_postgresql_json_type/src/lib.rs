@@ -3421,7 +3421,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+                            &quote::quote!{<'a>},
                             &tokens_where_element_upper_camel_case,
+                            &proc_macro2::TokenStream::new(),
                             &{
                                 let where_query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                     let field_ident_stringified = element
@@ -4962,7 +4964,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let impl_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_tokens_as_type_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+                            &quote::quote!{<'a>},
                             &tokens_as_type_where_element_upper_camel_case,
+                            &proc_macro2::TokenStream::new(),
                             &{
                                 let variants_token_stream = vec_syn_field.iter().map(|element| {
                                     let field_ident_stringified = element

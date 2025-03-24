@@ -92,13 +92,13 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
         let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
         let t_token_stream = quote::quote!{T};
-        let t_annotation_generic_token_stream = quote::quote!{<T>};
+        let t_annotation_generic_token_stream = quote::quote!{<#t_token_stream>};
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
         };
-        let pub_value_t_token_stream = quote::quote!{pub value: T};
+        let pub_value_t_token_stream = quote::quote!{pub value: #t_token_stream};
         let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
         enum ShouldAddDeriveSerdeSerializeForIdentStruct {
             True,
@@ -1035,30 +1035,23 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 }
             },
         );
-        //todo reuse from lib
-        let impl_postgresql_type_self_where_filter_token_stream = {
-            let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
-                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-            };
-            let maybe_impl_postgresql_type_self_where_filter_generic_annotations_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+        let impl_postgresql_type_self_where_filter_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+            &{
+                let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                    ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
+                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
+                };
+                quote::quote!{<'a #maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream>}
+            },
+            &ident,
+            &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-            };
-            quote::quote! {
-                impl<'a #maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream>
-                    crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter<'a>
-                    for #ident #maybe_impl_postgresql_type_self_where_filter_generic_annotations_token_stream
-                {
-                    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-                        #where_query_part_content_token_stream
-                    }
-                    fn where_query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        #where_query_bind_content_token_stream
-                    }
-                }
-            }
-        };
+            },
+            &where_query_part_content_token_stream,
+            &where_query_bind_content_token_stream,
+            &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
+        );
         quote::quote! {
             #struct_token_stream
             #maybe_try_new_logic_token_stream
