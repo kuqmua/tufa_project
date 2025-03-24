@@ -440,6 +440,11 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
         let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
         };
+        let generate_where_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+            quote::quote!{
+                Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
+            }
+        };
         let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
             quote::quote!{
                 match increment.checked_add(1) {
@@ -786,9 +791,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} = current_date)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentDate => (
@@ -803,9 +806,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} > current_date)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTimestamp => (
@@ -820,9 +821,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} = current_timestamp)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentTimestamp => (
@@ -837,9 +836,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} > current_timestamp)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::CurrentTime => (
@@ -854,9 +851,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} = current_time)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
                 &quote::quote!{#query_snake_case},
             ),
             Filter::GreaterThanCurrentTime => (
@@ -871,9 +866,7 @@ pub fn generate_postgresql_type_where_element_filters(_input_token_stream: proc_
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
                 &proc_macro2_token_stream_new,
-                &quote::quote!{
-                    Ok(format!("{}({} > current_time)", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                },
+                &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                 &quote::quote!{#query_snake_case},
             ),
             // Filter::LengthEqual => todo!(),
