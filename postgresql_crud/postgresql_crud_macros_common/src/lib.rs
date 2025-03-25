@@ -262,9 +262,9 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             "GreaterThan" == &element_upper_camel_case.to_string() ||
             "Between" == &element_upper_camel_case.to_string() ||
             "In" == &element_upper_camel_case.to_string() ||
-            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() 
+            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() 
             // ||
-            // "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "Before" == &element_upper_camel_case.to_string() ||
             // "CurrentDate" == &element_upper_camel_case.to_string() ||
             // "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||

@@ -514,7 +514,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let case_sensitive_regular_expression = postgresql_crud_macros_common::CaseSensitiveRegularExpression;
                 // let postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream = case_sensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&ident);
                 let case_insensitive_regular_expression = postgresql_crud_macros_common::CaseInsensitiveRegularExpression;
-                let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&ident);
+                // let postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream = case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&ident);
 
                 let postgresql_json_type_ident_where_element_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_json_token_stream(
                     &{
@@ -532,7 +532,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     #(#common_postgresql_json_type_filters_token_stream)*
 
                     // #postgresql_type_tokens_where_element_case_sensitive_regular_expression_token_stream
-                    #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
+                    // #postgresql_type_tokens_where_element_case_insensitive_regular_expression_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
