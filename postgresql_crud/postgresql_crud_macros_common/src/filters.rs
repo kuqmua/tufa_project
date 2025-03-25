@@ -1196,14 +1196,14 @@ impl WhereOperatorName for CaseSensitiveRegularExpression {
         &naming::CaseSensitiveRegularExpressionUpperCamelCase
     }
 }
-impl CaseSensitiveRegularExpression {
-    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(&ident, &RegularExpression::CaseSensitive, WhereOperatorName::upper_camel_case(self))
-    // }
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_8b498c22_facc_478f_9fef_2d155c68b6fa(&ident, &RegularExpression::CaseSensitive, WhereOperatorName::upper_camel_case(self))
-    }
-}
+// impl CaseSensitiveRegularExpression {
+//     pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         generate_postgresql_type_tokens_where_element_variant_handle_token_stream_daf5b604_4dcd_4c10_b1cb_aebeb4f4011f(&ident, &RegularExpression::CaseSensitive, WhereOperatorName::upper_camel_case(self))
+//     }
+//     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+//         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_8b498c22_facc_478f_9fef_2d155c68b6fa(&ident, &RegularExpression::CaseSensitive, WhereOperatorName::upper_camel_case(self))
+//     }
+// }
 pub struct CaseInsensitiveRegularExpression;
 impl WhereOperatorName for CaseInsensitiveRegularExpression {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
