@@ -1238,7 +1238,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
             };
             let where_query_bind_one_value_token_stream = quote::quote!{
-                query = query.bind(self.value);
+                query = query.bind(sqlx::types::Json(self.value));
                 query
             };
             let (
@@ -1252,21 +1252,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    // &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
-                    // &where_query_bind_one_value_token_stream,
-                    &quote::quote!{
-                        query = query.bind(sqlx::types::Json(self.value));
-                        query
-                    }
+                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
+                    &where_query_bind_one_value_token_stream,
                 ),
                 Filter::GreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1303,8 +1290,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote!{
-                        query = query.bind(self.start);//here change
-                        query = query.bind(self.end);//here change
+                        query = query.bind(sqlx::types::Json(self.start));//here change
+                        query = query.bind(sqlx::types::Json(self.end));//here change
                         query
                     }
                 ),
@@ -1333,7 +1320,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     &quote::quote!{
                         for element in self.value {
-                            query = query.bind(element);
+                            query = query.bind(sqlx::types::Json(element));
                         }
                         query
                     }
@@ -1429,7 +1416,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote!{
-                        query = query.bind(self.encoded_string_representation);
+                        query = query.bind(sqlx::types::Json(self.encoded_string_representation));
                         query
                     }
                 ),
@@ -2181,30 +2168,30 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             //#(#filter_array_token_stream)*
 
             #equal_token_stream
-            // #greater_than_token_stream
-            // #between_token_stream
-            // #in_token_stream
-            // #case_sensitive_regular_expression_token_stream
-            // #case_insensitive_regular_expression_token_stream
-            // #before_token_stream
-            // #current_date_token_stream
-            // #greater_than_current_date_token_stream
-            // #current_timestamp_token_stream
-            // #greater_than_current_timestamp_token_stream
-            // #current_time_token_stream
-            // #greater_than_current_time_token_stream
-            // #length_more_than_token_stream
-            // #equal_to_encoded_string_representation_token_stream
-            // #value_is_contained_within_range_token_stream
-            // #contains_another_range_token_stream
-            // #strictly_to_left_of_range_token_stream
-            // #strictly_to_right_of_range_token_stream
-            // #included_lower_bound_token_stream
-            // #excluded_upper_bound_token_stream
-            // #greater_than_lower_bound_token_stream
-            // #overlap_with_range_token_stream
-            // #adjacent_with_range_token_stream
-            // #range_length_token_stream
+            #greater_than_token_stream
+            #between_token_stream
+            #in_token_stream
+            #case_sensitive_regular_expression_token_stream
+            #case_insensitive_regular_expression_token_stream
+            #before_token_stream
+            #current_date_token_stream
+            #greater_than_current_date_token_stream
+            #current_timestamp_token_stream
+            #greater_than_current_timestamp_token_stream
+            #current_time_token_stream
+            #greater_than_current_time_token_stream
+            #length_more_than_token_stream
+            #equal_to_encoded_string_representation_token_stream
+            #value_is_contained_within_range_token_stream
+            #contains_another_range_token_stream
+            #strictly_to_left_of_range_token_stream
+            #strictly_to_right_of_range_token_stream
+            #included_lower_bound_token_stream
+            #excluded_upper_bound_token_stream
+            #greater_than_lower_bound_token_stream
+            #overlap_with_range_token_stream
+            #adjacent_with_range_token_stream
+            #range_length_token_stream
             //#_token_stream
         }
     };

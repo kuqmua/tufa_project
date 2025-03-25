@@ -1,6 +1,6 @@
 generate_postgresql_types::generate_postgresql_types!();
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum EncodeFormat {
     Base64,
     Hex,

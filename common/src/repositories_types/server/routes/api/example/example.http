@@ -38,14 +38,13 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "std_primitive_i16_as_small_int2_not_null": 9,
+    "std_primitive_i16_as_small_int2_not_null": 0,
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
     "object_animal_as_jsonb_not_null": {
-      "std_vec_vec_std_vec_vec_uuid_uuid": [
-        [
-          "01b0b6b2-61ff-4351-b334-1ff06e054c71"
-        ]
-      ]
+      "std_vec_vec_uuid_uuid": [
+        "09202352-399f-4942-974d-72c700a860a9"
+      ],
+      "std_primitive_i8": 3
     }
   }
 ]
@@ -80,40 +79,38 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i16_as_small_int2_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # }
-      # ,
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
-      {
-        "Between": {
-          "logical_operator": "Or",
-          "start": 4,
-          "end": 8
-        }
-      }
-      # ,
-      # {
-      #   "In": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
-    ]
-  },
+  # "std_primitive_i16_as_small_int2_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   # "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -146,38 +143,149 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "object_animal_as_jsonb_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "StdVecVecStdVecVecUuidUuid": {
-  #         "logical_operator": "Or",
-  #         "dimension_1": [
-  #           {
-  #             "Equal": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 [
-  #                   "b40da887-061c-499e-860e-e23d8ca41728"
-  #                 ]
-  #               ]
-  #             }
-  #           }
-  #         ],
-  #         "dimension_2": [
-  #           {
-  #             "EqualSecondDimension": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 "477e069d-4d05-447e-bd04-025e82874819"
-  #               ]
-  #             }
-  #           }
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
+  "object_animal_as_jsonb_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "StdVecVecUuidUuid": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             "9822de6d-6888-4094-90c1-50b0fecee0b7"
+      #           ]
+      #         }
+      #       }
+      #       # ,
+      #       # {
+      #       #   "LengthEqual": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "LengthMoreThan": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "PositionEqual": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       "2f6f7715-dac0-4ea4-baf5-cfb5e107d11e"
+      #       #     ],
+      #       #     "position": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "ContainsAllElementsOfArray": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       [
+      #       #         "49674e87-c439-4d82-8c6e-d14a92f5ba5e"
+      #       #       ]
+      #       #     ]
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "OverlapsWithArray": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       [
+      #       #         "47d6d3f2-1a62-490f-9f87-3c714b9796a8"
+      #       #       ]
+      #       #     ]
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "AllElementsEqual": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": [
+      #       #       "828958f4-17a4-4cc6-afd0-7cb2819ff827"
+      #       #     ]
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "PositionCaseSensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": "",
+      #       #     "position": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "PositionCaseInsensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": "",
+      #       #     "position": 0
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "ContainsElementCaseSensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": ""
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "ContainsElementCaseInsensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": ""
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "AllElementsCaseSensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": ""
+      #       #   }
+      #       # },
+      #       # {
+      #       #   "AllElementsCaseInsensitiveRegularExpression": {
+      #       #     "logical_operator": "Or",
+      #       #     "value": ""
+      #       #   }
+      #       # }
+      #     ]
+      #   }
+      # },
+      {
+        "StdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 3
+              }
+            }
+            # ,
+            # {
+            #   "GreaterThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
+            # {
+            #   "Between": {
+            #     "logical_operator": "Or",
+            #     "start": 0,
+            #     "end": 0
+            #   }
+            # },
+            # {
+            #   "In": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # }
+          ]
+        }
+      }
+    ]
+  },
   "select": [
     {
       "std_primitive_i16_as_small_int2_not_null": null
@@ -188,12 +296,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_vec_vec_std_vec_vec_uuid_uuid": {
+          "std_vec_vec_uuid_uuid": {
             "pagination": {
               "limit": 3,
               "offset": 0
             }
           }
+        },
+        {
+          "std_primitive_i8": {}
         }
       ]
     }
@@ -209,7 +320,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
   }
 }
-
 ###
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1

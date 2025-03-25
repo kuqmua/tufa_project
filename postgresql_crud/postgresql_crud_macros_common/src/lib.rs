@@ -258,10 +258,10 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
             let type_token_stream = if 
-            "Equal" == &element_upper_camel_case.to_string() 
+            "Equal" == &element_upper_camel_case.to_string() ||
+            "GreaterThan" == &element_upper_camel_case.to_string() ||
+            "Between" == &element_upper_camel_case.to_string()
             // ||
-            // "GreaterThan" == &element_upper_camel_case.to_string() ||
-            // "Between" == &element_upper_camel_case.to_string() ||
             // "In" == &element_upper_camel_case.to_string() ||
             // "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
