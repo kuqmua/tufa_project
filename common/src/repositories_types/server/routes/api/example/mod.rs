@@ -202,14 +202,14 @@ pub struct Example {
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud::GeneratePostgresqlJsonType)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema,postgresql_crud::GeneratePostgresqlJsonType)] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
-    // pub std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecUuidUuid,
-    pub std_vec_vec_std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecStdVecVecUuidUuid,
+    pub std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecUuidUuid,
+    // pub std_vec_vec_std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecStdVecVecUuidUuid,
     //todo check field max length in postgresql
-    // pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
+    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
     // pub std_primitive_i16: postgresql_crud::postgresql_json_type::StdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::postgresql_json_type::StdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::postgresql_json_type::StdPrimitiveI64,
