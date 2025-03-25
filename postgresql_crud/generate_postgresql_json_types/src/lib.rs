@@ -304,7 +304,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             ];
 
             let length_equal = postgresql_crud_macros_common::LengthEqual;
-            let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
+            // let postgresql_json_type_ident_where_element_length_equal_token_stream = length_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
             let length_more_than = postgresql_crud_macros_common::LengthMoreThan;
             let postgresql_json_type_ident_where_element_length_more_than_token_stream = length_more_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
 
@@ -427,7 +427,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             };
             let mut common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = {
                 let mut vec: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
-                vec.push(postgresql_json_type_ident_where_element_length_equal_token_stream);
+                // vec.push(postgresql_json_type_ident_where_element_length_equal_token_stream);
                 vec.push(postgresql_json_type_ident_where_element_length_more_than_token_stream);
                 vec
             };

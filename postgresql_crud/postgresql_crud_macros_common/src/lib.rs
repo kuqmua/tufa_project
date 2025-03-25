@@ -130,6 +130,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
             "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
             "CurrentTime" == &element_upper_camel_case.to_string() ||
             "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+            "LengthEqual" == &element_upper_camel_case.to_string() ||
             "LengthMoreThan" == &element_upper_camel_case.to_string() ||
             "EqualToEncodedStringRepresentation" == &element_upper_camel_case.to_string() ||
             "ValueIsContainedWithinRange" == &element_upper_camel_case.to_string() ||
@@ -152,6 +153,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
                     "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
                     "CurrentTime" == &element_upper_camel_case.to_string() ||
                     "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+                    "LengthEqual" == &element_upper_camel_case.to_string() ||
                     "LengthMoreThan" == &element_upper_camel_case.to_string() ||
                     "RangeLength" == &element_upper_camel_case.to_string()
                 {
@@ -263,8 +265,8 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             "Between" == &element_upper_camel_case.to_string() ||
             "In" == &element_upper_camel_case.to_string() ||
             "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() 
-            // ||
+            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            // not planning to add it yet
             // "Before" == &element_upper_camel_case.to_string() ||
             // "CurrentDate" == &element_upper_camel_case.to_string() ||
             // "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
@@ -272,7 +274,11 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             // "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
             // "CurrentTime" == &element_upper_camel_case.to_string() ||
             // "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
-            // "LengthMoreThan" == &element_upper_camel_case.to_string() ||
+
+
+            "LengthEqual" == &element_upper_camel_case.to_string() ||
+            "LengthMoreThan" == &element_upper_camel_case.to_string()
+            //  ||
             // "EqualToEncodedStringRepresentation" == &element_upper_camel_case.to_string() ||
             // "ValueIsContainedWithinRange" == &element_upper_camel_case.to_string() ||
             // "ContainsAnotherRange" == &element_upper_camel_case.to_string() ||
@@ -288,14 +294,17 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
                 let postgresql_json_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
                 let maybe_generic_token_stream = if
-                    false
+                    // false
                     // "CurrentDate" == &element_upper_camel_case.to_string() ||
                     // "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
                     // "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
                     // "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
                     // "CurrentTime" == &element_upper_camel_case.to_string() ||
                     // "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
-                    // "LengthMoreThan" == &element_upper_camel_case.to_string() ||
+
+                    "LengthEqual" == &element_upper_camel_case.to_string() ||
+                    "LengthMoreThan" == &element_upper_camel_case.to_string() 
+                    // ||
                     // "RangeLength" == &element_upper_camel_case.to_string()
                 {
                     proc_macro2::TokenStream::new()

@@ -17,7 +17,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             GreaterThanCurrentTimestamp,
             CurrentTime,
             GreaterThanCurrentTime,
-            //LengthEqual,
+            LengthEqual,
             LengthMoreThan,
             EqualToEncodedStringRepresentation,
             ValueIsContainedWithinRange,
@@ -53,6 +53,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             In,
             CaseSensitiveRegularExpression,
             CaseInsensitiveRegularExpression,
+            LengthEqual,
             LengthMoreThan,
             RangeLength,
         }
@@ -73,6 +74,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::GreaterThanCurrentTimestamp => Err(()),
                     Filter::CurrentTime => Err(()),
                     Filter::GreaterThanCurrentTime => Err(()),
+                    Filter::LengthEqual => Ok(Self::LengthEqual),
                     Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     Filter::EqualToEncodedStringRepresentation => Err(()),
                     Filter::ValueIsContainedWithinRange => Err(()),
@@ -291,7 +293,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                //Filter::LengthEqual => todo!(),
+                Filter::LengthEqual => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &value_std_primitive_i32_token_stream,
+                    &value_code_default_token_stream,
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
+                    &where_query_bind_one_value_token_stream
+                ),
                 Filter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
@@ -603,6 +611,31 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             Some(quote::quote!{+ IsEmpty}),
                             &vec![value_t_field]
+                        ),
+                        FilterInitializedWithTryNew::LengthEqual => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                LengthIsNegative {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: #std_primitive_i32_token_stream,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &ShouldAddDeclarationOfStructIdentGeneric::False,
+                            &proc_macro2_token_stream_new,
+                            &value_std_primitive_i32_token_stream,
+                            &quote::quote!{
+                                if value >= 0 {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::LengthIsNegative {
+                                        value,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                            None,
+                            &vec![value_std_primitive_i32_field]
                         ),
                         FilterInitializedWithTryNew::LengthMoreThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -1054,6 +1087,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTimestamp);
         let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
         let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
+        let length_equal_token_stream = generate_filters_token_stream(&Filter::LengthEqual);
         let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
         let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&Filter::EqualToEncodedStringRepresentation);
         let value_is_contained_within_range_token_stream = generate_filters_token_stream(&Filter::ValueIsContainedWithinRange);
@@ -1083,6 +1117,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #greater_than_current_timestamp_token_stream
             #current_time_token_stream
             #greater_than_current_time_token_stream
+            #length_equal_token_stream
             #length_more_than_token_stream
             #equal_to_encoded_string_representation_token_stream
             #value_is_contained_within_range_token_stream
@@ -1114,7 +1149,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             GreaterThanCurrentTimestamp,
             CurrentTime,
             GreaterThanCurrentTime,
-            //LengthEqual,
+            LengthEqual,
             LengthMoreThan,
             EqualToEncodedStringRepresentation,
             ValueIsContainedWithinRange,
@@ -1150,6 +1185,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             In,
             CaseSensitiveRegularExpression,
             CaseInsensitiveRegularExpression,
+            LengthEqual,
             LengthMoreThan,
             RangeLength,
         }
@@ -1170,6 +1206,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::GreaterThanCurrentTimestamp => Err(()),
                     Filter::CurrentTime => Err(()),
                     Filter::GreaterThanCurrentTime => Err(()),
+                    Filter::LengthEqual => Ok(Self::LengthEqual),
                     Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     Filter::EqualToEncodedStringRepresentation => Err(()),
                     Filter::ValueIsContainedWithinRange => Err(()),
@@ -1388,7 +1425,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                //Filter::LengthEqual => todo!(),
+                Filter::LengthEqual => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &value_std_primitive_i32_token_stream,
+                    &value_code_default_token_stream,
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
+                    &where_query_bind_one_value_token_stream
+                ),
                 Filter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
@@ -1700,6 +1743,31 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             Some(quote::quote!{+ IsEmpty}),
                             &vec![value_t_field]
+                        ),
+                        FilterInitializedWithTryNew::LengthEqual => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                LengthIsNegative {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: #std_primitive_i32_token_stream,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &ShouldAddDeclarationOfStructIdentGeneric::False,
+                            &proc_macro2_token_stream_new,
+                            &value_std_primitive_i32_token_stream,
+                            &quote::quote!{
+                                if value >= 0 {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::LengthIsNegative {
+                                        value,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                            None,
+                            &vec![value_std_primitive_i32_field]
                         ),
                         FilterInitializedWithTryNew::LengthMoreThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -2151,6 +2219,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTimestamp);
         let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
         let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
+        let length_equal_than_token_stream = generate_filters_token_stream(&Filter::LengthEqual);
         let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
         let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&Filter::EqualToEncodedStringRepresentation);
         let value_is_contained_within_range_token_stream = generate_filters_token_stream(&Filter::ValueIsContainedWithinRange);
@@ -2173,13 +2242,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #in_token_stream
             #case_sensitive_regular_expression_token_stream
             #case_insensitive_regular_expression_token_stream
-            #before_token_stream
-            #current_date_token_stream
-            #greater_than_current_date_token_stream
-            #current_timestamp_token_stream
-            #greater_than_current_timestamp_token_stream
-            #current_time_token_stream
-            #greater_than_current_time_token_stream
+
+            // #before_token_stream
+            // #current_date_token_stream
+            // #greater_than_current_date_token_stream
+            // #current_timestamp_token_stream
+            // #greater_than_current_timestamp_token_stream
+            // #current_time_token_stream
+            // #greater_than_current_time_token_stream
+
+            #length_equal_than_token_stream
             #length_more_than_token_stream
             #equal_to_encoded_string_representation_token_stream
             #value_is_contained_within_range_token_stream
