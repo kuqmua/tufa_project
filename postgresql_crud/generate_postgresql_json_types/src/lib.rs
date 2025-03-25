@@ -389,7 +389,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let between = postgresql_crud_macros_common::Between;
                 // let postgresql_json_type_ident_where_element_between_token_stream = between.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&postgresql_crud_macros_common::BetweenTryNewErrorType::StartMoreOrEqualToEnd, postgresql_json_type_variant);
                 let in_handle = postgresql_crud_macros_common::In;
-                let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
+                // let postgresql_json_type_ident_where_element_in_token_stream = in_handle.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant);
                 //todo write wrapper around it with reuse parameters
                 let postgresql_json_type_ident_where_element_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_json_token_stream(
                     &{
@@ -409,7 +409,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
                     // #postgresql_json_type_ident_where_element_greater_than_token_stream
                     // #postgresql_json_type_ident_where_element_between_token_stream
-                    #postgresql_json_type_ident_where_element_in_token_stream
+                    // #postgresql_json_type_ident_where_element_in_token_stream
 
                     #postgresql_json_type_ident_where_element_token_stream
                 };
