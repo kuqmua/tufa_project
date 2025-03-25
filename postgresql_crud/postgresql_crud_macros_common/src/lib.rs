@@ -241,6 +241,149 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         #impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
 }
+pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
+    variants: &std::vec::Vec<&dyn crate::WhereOperatorName>,
+    postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    variant_type_prefix_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
+) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+    let postgresql_type_tokens_where_element_token_stream = {
+        let variants_token_stream = variants.iter().map(|element| {
+            let element_upper_camel_case = element.upper_camel_case();
+            //todo temp if - need to remove it later
+            let type_token_stream = if 
+            "Equal" == &element_upper_camel_case.to_string() 
+            // ||
+            // "GreaterThan" == &element_upper_camel_case.to_string() ||
+            // "Between" == &element_upper_camel_case.to_string() ||
+            // "In" == &element_upper_camel_case.to_string() ||
+            // "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            // "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            // "Before" == &element_upper_camel_case.to_string() ||
+            // "CurrentDate" == &element_upper_camel_case.to_string() ||
+            // "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
+            // "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
+            // "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
+            // "CurrentTime" == &element_upper_camel_case.to_string() ||
+            // "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+            // "LengthMoreThan" == &element_upper_camel_case.to_string() ||
+            // "EqualToEncodedStringRepresentation" == &element_upper_camel_case.to_string() ||
+            // "ValueIsContainedWithinRange" == &element_upper_camel_case.to_string() ||
+            // "ContainsAnotherRange" == &element_upper_camel_case.to_string() ||
+            // "StrictlyToLeftOfRange" == &element_upper_camel_case.to_string() ||
+            // "StrictlyToRightOfRange" == &element_upper_camel_case.to_string() ||
+            // "IncludedLowerBound" == &element_upper_camel_case.to_string() ||
+            // "ExcludedUpperBound" == &element_upper_camel_case.to_string() ||
+            // "GreaterThanLowerBound" == &element_upper_camel_case.to_string() ||
+            // "OverlapWithRange" == &element_upper_camel_case.to_string() ||
+            // "AdjacentWithRange" == &element_upper_camel_case.to_string() ||
+            // "RangeLength" == &element_upper_camel_case.to_string()
+            {
+                let postgresql_json_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
+                //todo rewrite it better
+                let maybe_generic_token_stream = if
+                    false
+                    // "CurrentDate" == &element_upper_camel_case.to_string() ||
+                    // "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
+                    // "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
+                    // "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
+                    // "CurrentTime" == &element_upper_camel_case.to_string() ||
+                    // "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
+                    // "LengthMoreThan" == &element_upper_camel_case.to_string() ||
+                    // "RangeLength" == &element_upper_camel_case.to_string()
+                {
+                    proc_macro2::TokenStream::new()
+                }
+                else {
+                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
+                };
+                quote::quote! {crate::where_element_filters::#postgresql_json_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
+            }
+            else 
+            {
+                let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote! {#element_upper_camel_case});
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote! {#element_upper_camel_case(#type_token_stream)}
+        });
+        quote::quote! {
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_implement_schemars_json_schema)]
+            pub enum #ident {
+                #(#variants_token_stream),*
+            }
+        }
+    };
+    let impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream = crate::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+        &quote::quote!{<'a>},
+        &ident,
+        &proc_macro2::TokenStream::new(),
+        &{
+            let variants_token_stream = variants.iter().map(|element| {
+                let element_upper_camel_case = element.upper_camel_case();
+                quote::quote! {
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part(
+                        #value_snake_case,
+                        #increment_snake_case,
+                        #column_snake_case,
+                        #is_need_to_add_logical_operator_snake_case,
+                    )
+                }
+            });
+            quote::quote! {
+                match &self {
+                    #(#variants_token_stream),*
+                }
+            }
+        },
+        &{
+            let variants_token_stream = variants.iter().map(|element| {
+                let element_upper_camel_case = element.upper_camel_case();
+                quote::quote! {
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind(
+                        #value_snake_case,
+                        #query_snake_case
+                    )
+                }
+            });
+            quote::quote! {
+                match self {
+                    #(#variants_token_stream),*
+                }
+            }
+        },
+        &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
+    );
+    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+        &proc_macro2::TokenStream::new(),
+        &ident,
+        &proc_macro2::TokenStream::new(),
+        &quote::quote! {format!("{self:#?}")}
+    );
+    let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
+        crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
+            let variants_token_stream = variants.iter().map(|element| {
+                let element_upper_camel_case = element.upper_camel_case();
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
+                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                quote::quote! {
+                    Self::#element_upper_camel_case(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                }
+            });
+            quote::quote! {vec![#(#variants_token_stream),*]}
+        });
+    quote::quote! {
+        #postgresql_type_tokens_where_element_token_stream
+        #impl_crate_postgresql_type_postgresql_type_trait_postgresql_type_self_where_filter_for_postgresql_type_tokens_where_element_token_stream
+        #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
+        #impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+    }
+}
 
 pub fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_macro2::TokenStream {
     let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
