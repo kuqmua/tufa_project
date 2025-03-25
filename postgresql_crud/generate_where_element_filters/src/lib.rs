@@ -30,22 +30,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             OverlapWithRange,
             AdjacentWithRange,
             RangeLength,
-            //BitVecPositionEqual,
-            //PositionEqual,
-            //PositionGreaterThan,
-            //PositionCaseSensitiveRegularExpression,
-            //PositionCaseInsensitiveRegularExpression,
-            //ContainsAllElementsOfArray,
-            //ContainedInArray,
-            //OverlapsWithArray,
-            //AllElementsEqual,
-            //ContainsElementGreaterThan,
-            //AllElementsGreaterThan,
-            //ContainsElementCaseSensitiveRegularExpression,
-            //ContainsElementCaseInsensitiveRegularExpression,
-            //AllElementsCaseSensitiveRegularExpression,
-            //AllElementsCaseInsensitiveRegularExpression,
-            //EqualSecondDimension,
+            //BitVecPositionEqual,//currently deactivated
+            //EqualSecondDimension,//currently deactivated
         }
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum FilterInitializedWithTryNew {
@@ -105,7 +91,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
                 crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
             };
-            let value_t_token_stream = quote::quote!{value: T};
+            let value_t_token_stream = quote::quote!{value: #t_token_stream};
             let pub_value_t_token_stream = quote::quote!{pub value: #t_token_stream};
             let value_std_vec_vec_t_token_stream = quote::quote!{value: #std_vec_vec_t_token_stream};
             let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
@@ -1142,42 +1128,23 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             In,
             CaseSensitiveRegularExpression,
             CaseInsensitiveRegularExpression,
-            Before,
-            CurrentDate,
-            GreaterThanCurrentDate,
-            CurrentTimestamp,
-            GreaterThanCurrentTimestamp,
-            CurrentTime,
-            GreaterThanCurrentTime,
             LengthEqual,
             LengthMoreThan,
-            EqualToEncodedStringRepresentation,
-            ValueIsContainedWithinRange,
-            ContainsAnotherRange,
-            StrictlyToLeftOfRange,
-            StrictlyToRightOfRange,
-            IncludedLowerBound,
-            ExcludedUpperBound,
-            GreaterThanLowerBound,
-            OverlapWithRange,
-            AdjacentWithRange,
-            RangeLength,
-            //BitVecPositionEqual,
-            //PositionEqual,
-            //PositionGreaterThan,
-            //PositionCaseSensitiveRegularExpression,
-            //PositionCaseInsensitiveRegularExpression,
-            //ContainsAllElementsOfArray,
-            //ContainedInArray,
-            //OverlapsWithArray,
-            //AllElementsEqual,
-            //ContainsElementGreaterThan,
-            //AllElementsGreaterThan,
-            //ContainsElementCaseSensitiveRegularExpression,
-            //ContainsElementCaseInsensitiveRegularExpression,
-            //AllElementsCaseSensitiveRegularExpression,
-            //AllElementsCaseInsensitiveRegularExpression,
-            //EqualSecondDimension,
+            PositionEqual,
+            PositionGreaterThan,
+            PositionCaseSensitiveRegularExpression,
+            PositionCaseInsensitiveRegularExpression,
+            ContainsAllElementsOfArray,
+            ContainedInArray,
+            OverlapsWithArray,
+            AllElementsEqual,
+            ContainsElementGreaterThan,
+            AllElementsGreaterThan,
+            ContainsElementCaseSensitiveRegularExpression,
+            ContainsElementCaseInsensitiveRegularExpression,
+            AllElementsCaseSensitiveRegularExpression,
+            AllElementsCaseInsensitiveRegularExpression,
+            EqualSecondDimension,
         }
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum FilterInitializedWithTryNew {
@@ -1187,7 +1154,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             CaseInsensitiveRegularExpression,
             LengthEqual,
             LengthMoreThan,
-            RangeLength,
         }
         impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
             type Error = ();
@@ -1199,26 +1165,23 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::In => Ok(Self::In),
                     Filter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
                     Filter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
-                    Filter::Before => Err(()),
-                    Filter::CurrentDate => Err(()),
-                    Filter::GreaterThanCurrentDate => Err(()),
-                    Filter::CurrentTimestamp => Err(()),
-                    Filter::GreaterThanCurrentTimestamp => Err(()),
-                    Filter::CurrentTime => Err(()),
-                    Filter::GreaterThanCurrentTime => Err(()),
                     Filter::LengthEqual => Ok(Self::LengthEqual),
                     Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
-                    Filter::EqualToEncodedStringRepresentation => Err(()),
-                    Filter::ValueIsContainedWithinRange => Err(()),
-                    Filter::ContainsAnotherRange => Err(()),
-                    Filter::StrictlyToLeftOfRange => Err(()),
-                    Filter::StrictlyToRightOfRange => Err(()),
-                    Filter::IncludedLowerBound => Err(()),
-                    Filter::ExcludedUpperBound => Err(()),
-                    Filter::GreaterThanLowerBound => Err(()),
-                    Filter::OverlapWithRange => Err(()),
-                    Filter::AdjacentWithRange => Err(()),
-                    Filter::RangeLength => Ok(Self::RangeLength),
+                    Filter::PositionEqual => todo!(),
+                    Filter::PositionGreaterThan => todo!(),
+                    Filter::PositionCaseSensitiveRegularExpression => todo!(),
+                    Filter::PositionCaseInsensitiveRegularExpression => todo!(),
+                    Filter::ContainsAllElementsOfArray => todo!(),
+                    Filter::ContainedInArray => todo!(),
+                    Filter::OverlapsWithArray => todo!(),
+                    Filter::AllElementsEqual => todo!(),
+                    Filter::ContainsElementGreaterThan => todo!(),
+                    Filter::AllElementsGreaterThan => todo!(),
+                    Filter::ContainsElementCaseSensitiveRegularExpression => todo!(),
+                    Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
+                    Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
+                    Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
+                    Filter::EqualSecondDimension => todo!(),
                 }
             }
         }
@@ -1287,7 +1250,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) = match &filter {
                 Filter::Equal => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
+                    &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                     &where_query_bind_one_value_token_stream,
@@ -1376,55 +1339,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::Before => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
-                    &where_query_bind_one_value_token_stream,
-                ),
-                Filter::CurrentDate => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
-                Filter::GreaterThanCurrentDate => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
-                Filter::CurrentTimestamp => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
-                Filter::GreaterThanCurrentTimestamp => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
-                Filter::CurrentTime => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
-                Filter::GreaterThanCurrentTime => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &proc_macro2_token_stream_new,
-                    &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
-                    &quote::quote!{#query_snake_case},
-                ),
                 Filter::LengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
@@ -1439,124 +1353,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::EqualToEncodedStringRepresentation => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &quote::quote!{
-                        pub encode_format: crate::postgresql_type::EncodeFormat,
-                        pub encoded_string_representation: T,
-                    },
-                    &quote::quote!{
-                        encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, &self.encode_format, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
-                    &quote::quote!{
-                        query = query.bind(sqlx::types::Json(self.encoded_string_representation));
-                        query
-                    }
-                ),
-                Filter::ValueIsContainedWithinRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::ContainsAnotherRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::StrictlyToLeftOfRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::StrictlyToRightOfRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::IncludedLowerBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::ExcludedUpperBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::GreaterThanLowerBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::OverlapWithRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::AdjacentWithRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
-                    &where_query_bind_one_value_token_stream
-                ),
-                Filter::RangeLength => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &value_std_primitive_i32_token_stream,
-                    &value_code_default_token_stream,
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(upper({}) - lower({}) = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
-                    &where_query_bind_one_value_token_stream
-                ),
-                //Filter:://BitVecPositionEqual => todo!(),
-                //Filter::PositionEqual => todo!(),
-                //Filter::PositionGreaterThan => todo!(),
-                //Filter::PositionCaseSensitiveRegularExpression => todo!(),
-                //Filter::PositionCaseInsensitiveRegularExpression => todo!(),
-                //Filter::ContainsAllElementsOfArray => todo!(),
-                //Filter::ContainedInArray => todo!(),
-                //Filter::OverlapsWithArray => todo!(),
-                //Filter::AllElementsEqual => todo!(),
-                //Filter::ContainsElementGreaterThan => todo!(),
-                //Filter::AllElementsGreaterThan => todo!(),
-                //Filter::ContainsElementCaseSensitiveRegularExpression => todo!(),
-                //Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
-                //Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
-                //Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
-                //Filter::EqualSecondDimension => todo!(),
+                Filter::PositionEqual => todo!(),
+                Filter::PositionGreaterThan => todo!(),
+                Filter::PositionCaseSensitiveRegularExpression => todo!(),
+                Filter::PositionCaseInsensitiveRegularExpression => todo!(),
+                Filter::ContainsAllElementsOfArray => todo!(),
+                Filter::ContainedInArray => todo!(),
+                Filter::OverlapsWithArray => todo!(),
+                Filter::AllElementsEqual => todo!(),
+                Filter::ContainsElementGreaterThan => todo!(),
+                Filter::AllElementsGreaterThan => todo!(),
+                Filter::ContainsElementCaseSensitiveRegularExpression => todo!(),
+                Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
+                Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
+                Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
+                Filter::EqualSecondDimension => todo!(),
             };
             let filter_initialized_with_try_new_result = FilterInitializedWithTryNew::try_from(filter);
             let struct_token_stream = {
@@ -1606,6 +1417,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False => &proc_macro2_token_stream_new
                         }
                     };
+
                     let (
                         should_add_declaration_of_generic_parameter_to_ident_try_new_error_named,
                         enum_ident_try_new_error_named_content_token_stream,
@@ -1794,31 +1606,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None,
                             &vec![value_std_primitive_i32_field]
                         ),
-                        FilterInitializedWithTryNew::RangeLength => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote!{
-                                LengthIsNegativeOrZero {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &ShouldAddDeclarationOfStructIdentGeneric::False,
-                            &proc_macro2_token_stream_new,
-                            &value_std_primitive_i32_token_stream,
-                            &quote::quote!{
-                                if value > 0 {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::LengthIsNegativeOrZero {
-                                        value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None,
-                            &vec![value_std_primitive_i32_field]
-                        )
                     };
                     let enum_ident_try_new_error_named_token_stream = {
                         let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(
@@ -1991,6 +1778,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                             }
                         };
+
                         quote::quote!{
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2212,27 +2000,23 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let in_token_stream = generate_filters_token_stream(&Filter::In);
         let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
         let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseInsensitiveRegularExpression);
-        let before_token_stream = generate_filters_token_stream(&Filter::Before);
-        let current_date_token_stream = generate_filters_token_stream(&Filter::CurrentDate);
-        let greater_than_current_date_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentDate);
-        let current_timestamp_token_stream = generate_filters_token_stream(&Filter::CurrentTimestamp);
-        let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTimestamp);
-        let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
-        let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
-        let length_equal_than_token_stream = generate_filters_token_stream(&Filter::LengthEqual);
+        let length_equal_token_stream = generate_filters_token_stream(&Filter::LengthEqual);
         let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
-        let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&Filter::EqualToEncodedStringRepresentation);
-        let value_is_contained_within_range_token_stream = generate_filters_token_stream(&Filter::ValueIsContainedWithinRange);
-        let contains_another_range_token_stream = generate_filters_token_stream(&Filter::ContainsAnotherRange);
-        let strictly_to_left_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToLeftOfRange);
-        let strictly_to_right_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToRightOfRange);
-        let included_lower_bound_token_stream = generate_filters_token_stream(&Filter::IncludedLowerBound);
-        let excluded_upper_bound_token_stream = generate_filters_token_stream(&Filter::ExcludedUpperBound);
-        let greater_than_lower_bound_token_stream = generate_filters_token_stream(&Filter::GreaterThanLowerBound);
-        let overlap_with_range_token_stream = generate_filters_token_stream(&Filter::OverlapWithRange);
-        let adjacent_with_range_token_stream = generate_filters_token_stream(&Filter::AdjacentWithRange);
-        let range_length_token_stream = generate_filters_token_stream(&Filter::RangeLength);
-        // let _token_stream = generate_filters_token_stream(&Filter::);
+        // let position_equal_token_stream = generate_filters_token_stream(&Filter::PositionEqual);
+        // let position_greater_than_token_stream = generate_filters_token_stream(&Filter::PositionGreaterThan);
+        // let position_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseSensitiveRegularExpression);
+        // let position_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseInsensitiveRegularExpression);
+        // let contains_all_elements_of_array_token_stream = generate_filters_token_stream(&Filter::ContainsAllElementsOfArray);
+        // let contained_in_array_token_stream = generate_filters_token_stream(&Filter::ContainedInArray);
+        // let overlaps_with_array_token_stream = generate_filters_token_stream(&Filter::OverlapsWithArray);
+        // let all_elements_equal_token_stream = generate_filters_token_stream(&Filter::AllElementsEqual);
+        // let contains_element_greater_than_token_stream = generate_filters_token_stream(&Filter::ContainsElementGreaterThan);
+        // let all_elements_greater_than_token_stream = generate_filters_token_stream(&Filter::AllElementsGreaterThan);
+        // let contains_element_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseSensitiveRegularExpression);
+        // let contains_element_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseInsensitiveRegularExpression);
+        // let all_elements_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::AllElementsCaseSensitiveRegularExpression);
+        // let all_elements_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::AllElementsCaseInsensitiveRegularExpression);
+        // let equal_second_dimension_token_stream = generate_filters_token_stream(&Filter::EqualSecondDimension);
         quote::quote! {
             //#(#filter_array_token_stream)*
 
@@ -2242,29 +2026,24 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #in_token_stream
             #case_sensitive_regular_expression_token_stream
             #case_insensitive_regular_expression_token_stream
-
-            // #before_token_stream
-            // #current_date_token_stream
-            // #greater_than_current_date_token_stream
-            // #current_timestamp_token_stream
-            // #greater_than_current_timestamp_token_stream
-            // #current_time_token_stream
-            // #greater_than_current_time_token_stream
-
-            #length_equal_than_token_stream
+            #length_equal_token_stream
             #length_more_than_token_stream
-            #equal_to_encoded_string_representation_token_stream
-            #value_is_contained_within_range_token_stream
-            #contains_another_range_token_stream
-            #strictly_to_left_of_range_token_stream
-            #strictly_to_right_of_range_token_stream
-            #included_lower_bound_token_stream
-            #excluded_upper_bound_token_stream
-            #greater_than_lower_bound_token_stream
-            #overlap_with_range_token_stream
-            #adjacent_with_range_token_stream
-            #range_length_token_stream
-            //#_token_stream
+
+            // #position_equal_token_stream
+            // #position_greater_than_token_stream
+            // #position_case_sensitive_regular_expression_token_stream
+            // #position_case_insensitive_regular_expression_token_stream
+            // #contains_all_elements_of_array_token_stream
+            // #contained_in_array_token_stream
+            // #overlaps_with_array_token_stream
+            // #all_elements_equal_token_stream
+            // #contains_element_greater_than_token_stream
+            // #all_elements_greater_than_token_stream
+            // #contains_element_case_sensitive_regular_expression_token_stream
+            // #contains_element_case_insensitive_regular_expression_token_stream
+            // #all_elements_case_sensitive_regular_expression_token_stream
+            // #all_elements_case_insensitive_regular_expression_token_stream
+            // #equal_second_dimension_token_stream
         }
     };
     let generated = quote::quote!{
