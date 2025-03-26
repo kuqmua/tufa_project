@@ -2523,14 +2523,14 @@ impl ContainsElementGreaterThan {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"})
     }
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
-            WhereOperatorName::upper_camel_case(self),
-            postgresql_json_type_variant,
-            postgresql_json_type_variant_array_element,
-            &Self::generate_try_generate_bind_increments_token_stream(),
-        )
-    }
+    // pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
+    //     generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_bfbb3569_a7a1_4ea4_b2b3_7764fbebae95(
+    //         WhereOperatorName::upper_camel_case(self),
+    //         postgresql_json_type_variant,
+    //         postgresql_json_type_variant_array_element,
+    //         &Self::generate_try_generate_bind_increments_token_stream(),
+    //     )
+    // }
 }
 
 pub struct AllElementsGreaterThan;
