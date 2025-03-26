@@ -107,6 +107,38 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             },
         )
     };
+    enum FilterType {
+        PostgresqlType,
+        PostgresqlJsonType
+    }
+    let generate_impl_postgresql_type_self_where_filter_token_stream = |
+        filter_type: &FilterType,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        where_query_part_content_token_stream: &dyn quote::ToTokens,
+        where_query_bind_content_token_stream: &dyn quote::ToTokens,
+    |{
+        postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+            &{
+                let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                    ShouldAddDeclarationOfStructIdentGeneric::True => match &filter_type {
+                        FilterType::PostgresqlType => &quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
+                        FilterType::PostgresqlJsonType => &quote::quote!{, T: std::marker::Send + serde::Serialize + 'a},
+                    },
+                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
+                };
+                quote::quote!{<'a #maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream>}
+            },
+            &ident,
+            &match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
+            },
+            &where_query_part_content_token_stream,
+            &where_query_bind_content_token_stream,
+            &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
+        )
+    };
 
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -1012,22 +1044,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &ident,
                 &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             );
-            let impl_postgresql_type_self_where_filter_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
-                &{
-                    let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                        ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
-                        ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                    };
-                    quote::quote!{<'a #maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream>}
-                },
+            let impl_postgresql_type_self_where_filter_token_stream = generate_impl_postgresql_type_self_where_filter_token_stream(
+                &FilterType::PostgresqlType,
+                &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                },
                 &where_query_part_content_token_stream,
                 &where_query_bind_content_token_stream,
-                &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
             );
             quote::quote! {
                 #struct_token_stream
@@ -2349,22 +2371,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &ident,
                 &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             );
-            let impl_postgresql_type_self_where_filter_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
-                &{
-                    let maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                        ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote!{, T: std::marker::Send + serde::Serialize + 'a},
-                        ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                    };
-                    quote::quote!{<'a #maybe_t_additional_traits_for_postgresql_type_self_where_filter_token_stream>}
-                },
+            let impl_postgresql_type_self_where_filter_token_stream = generate_impl_postgresql_type_self_where_filter_token_stream(
+                &FilterType::PostgresqlJsonType,
+                &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                },
                 &where_query_part_content_token_stream,
                 &where_query_bind_content_token_stream,
-                &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
             );
             quote::quote! {
                 #struct_token_stream
