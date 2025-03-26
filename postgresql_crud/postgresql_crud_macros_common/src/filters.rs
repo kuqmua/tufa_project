@@ -2422,11 +2422,11 @@ impl WhereOperatorName for ContainsAllElementsOfArray {
         &naming::ContainsAllElementsOfArrayUpperCamelCase
     }
 }
-impl ContainsAllElementsOfArray {
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, postgresql_json_type_variant_array_element, &quote::quote! {"{}({} @> ${})"})
-    }
-}
+// impl ContainsAllElementsOfArray {
+//     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
+//         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_4b900587_aaed_486e_ab9c_e686ae58e5f8(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, postgresql_json_type_variant_array_element, &quote::quote! {"{}({} @> ${})"})
+//     }
+// }
 
 pub struct ContainedInArray;
 impl WhereOperatorName for ContainedInArray {

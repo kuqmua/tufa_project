@@ -1158,6 +1158,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             PositionGreaterThan,
             PositionCaseSensitiveRegularExpression,
             PositionCaseInsensitiveRegularExpression,
+            ContainsAllElementsOfArray,
         }
         impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
             type Error = ();
@@ -1175,7 +1176,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::PositionGreaterThan => Ok(Self::PositionGreaterThan),
                     Filter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
                     Filter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
-                    Filter::ContainsAllElementsOfArray => todo!(),
+                    Filter::ContainsAllElementsOfArray => Ok(Self::ContainsAllElementsOfArray),
                     Filter::ContainedInArray => todo!(),
                     Filter::OverlapsWithArray => todo!(),
                     Filter::AllElementsEqual => todo!(),
@@ -1481,7 +1482,26 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::ContainsAllElementsOfArray => todo!(),
+                Filter::ContainsAllElementsOfArray => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &quote::quote!{value: std::vec::Vec<T>},
+                    &quote::quote!{
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    &quote::quote!{
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!("{}({} @> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                            }
+                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
+                    },
+                    &quote::quote!{
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    }
+                ),
                 Filter::ContainedInArray => todo!(),
                 Filter::OverlapsWithArray => todo!(),
                 Filter::AllElementsEqual => todo!(),
@@ -1875,6 +1895,48 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 Field {
                                     field_name: &naming::PositionSnakeCase,
                                     field_type: &std_primitive_i32_token_stream
+                                },
+                            ]
+                        ),
+                        FilterInitializedWithTryNew::ContainsAllElementsOfArray => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote!{
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: std::cmp::PartialEq + Clone},
+                            &quote::quote!{value: std::vec::Vec<T>},
+                            &quote::quote!{
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote!{+ std::cmp::PartialEq + Clone}),
+                            &vec![
+                                Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &std_vec_vec_t_token_stream,
                                 },
                             ]
                         ),
@@ -2278,7 +2340,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let position_greater_than_token_stream = generate_filters_token_stream(&Filter::PositionGreaterThan);
         let position_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseSensitiveRegularExpression);
         let position_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseInsensitiveRegularExpression);
-        // let contains_all_elements_of_array_token_stream = generate_filters_token_stream(&Filter::ContainsAllElementsOfArray);
+        let contains_all_elements_of_array_token_stream = generate_filters_token_stream(&Filter::ContainsAllElementsOfArray);
         // let contained_in_array_token_stream = generate_filters_token_stream(&Filter::ContainedInArray);
         // let overlaps_with_array_token_stream = generate_filters_token_stream(&Filter::OverlapsWithArray);
         // let all_elements_equal_token_stream = generate_filters_token_stream(&Filter::AllElementsEqual);
@@ -2305,7 +2367,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #position_greater_than_token_stream
             #position_case_sensitive_regular_expression_token_stream
             #position_case_insensitive_regular_expression_token_stream
-            // #contains_all_elements_of_array_token_stream
+            #contains_all_elements_of_array_token_stream
             // #contained_in_array_token_stream
             // #overlaps_with_array_token_stream
             // #all_elements_equal_token_stream
