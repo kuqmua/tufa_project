@@ -1370,15 +1370,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}({} @> ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1391,20 +1383,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    increment
-                                ))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1416,15 +1395,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1436,15 +1407,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1456,15 +1419,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1474,20 +1429,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    increment
-                                ))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1497,20 +1439,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~* ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    increment
-                                ))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~* ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1520,20 +1449,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~ ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    increment
-                                ))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~ ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
@@ -1543,20 +1459,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &quote::quote!{
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~* ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    increment
-                                ))
-                            }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                        }
-                    },
+                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~* ${}))"}),
                     &quote::quote!{
                         query = query.bind(sqlx::types::Json(self.value));
                         query
