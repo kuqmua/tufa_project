@@ -270,9 +270,9 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             "LengthMoreThan" == &element_upper_camel_case.to_string() ||
             "PositionEqual" == &element_upper_camel_case.to_string() ||
             "PositionGreaterThan" == &element_upper_camel_case.to_string() ||
-            "PositionCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() 
+            "PositionCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()  ||
+            "PositionCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string()
             // ||
-            // "PositionCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "ContainsAllElementsOfArray" == &element_upper_camel_case.to_string() ||
             // "ContainedInArray" == &element_upper_camel_case.to_string() ||
             // "OverlapsWithArray" == &element_upper_camel_case.to_string() ||

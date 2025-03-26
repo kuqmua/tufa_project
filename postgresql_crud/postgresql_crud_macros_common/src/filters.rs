@@ -2352,11 +2352,11 @@ impl WhereOperatorName for PositionCaseInsensitiveRegularExpression {
         &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase
     }
 }
-impl PositionCaseInsensitiveRegularExpression {
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(&WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &RegularExpression::CaseInsensitive)
-    }
-}
+// impl PositionCaseInsensitiveRegularExpression {
+//     pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
+//         generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_929ea142_c901_49f1_9334_a57db5aa4b50(&WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &RegularExpression::CaseInsensitive)
+//     }
+// }
 
 fn generate_try_generate_bind_increments_token_stream_cc8c69fa_8d39_425e_8875_201168042b0a(format_handle_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
