@@ -3,38 +3,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     panic_location::panic_location();
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-        enum Filter {
-            Equal,
-            GreaterThan,
-            Between,
-            In,
-            CaseSensitiveRegularExpression,
-            CaseInsensitiveRegularExpression,
-            Before,
-            CurrentDate,
-            GreaterThanCurrentDate,
-            CurrentTimestamp,
-            GreaterThanCurrentTimestamp,
-            CurrentTime,
-            GreaterThanCurrentTime,
-            LengthEqual,
-            LengthMoreThan,
-            EqualToEncodedStringRepresentation,
-            ValueIsContainedWithinRange,
-            ContainsAnotherRange,
-            StrictlyToLeftOfRange,
-            StrictlyToRightOfRange,
-            IncludedLowerBound,
-            ExcludedUpperBound,
-            GreaterThanLowerBound,
-            OverlapWithRange,
-            AdjacentWithRange,
-            RangeLength,
-            //BitVecPositionEqual,//currently deactivated
-            //EqualSecondDimension,//currently deactivated
-        }
-        #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-        enum FilterInitializedWithTryNew {
+        enum PostgresqlTypeFilterInitializedWithTryNew {
             Between,
             In,
             CaseSensitiveRegularExpression,
@@ -43,40 +12,40 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             LengthMoreThan,
             RangeLength,
         }
-        impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
+        impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlTypeFilter> for PostgresqlTypeFilterInitializedWithTryNew {
             type Error = ();
-            fn try_from(value: &Filter) -> Result<Self, Self::Error> {
+            fn try_from(value: &postgresql_crud_macros_common::PostgresqlTypeFilter) -> Result<Self, Self::Error> {
                 match &value {
-                    Filter::Equal => Err(()),
-                    Filter::GreaterThan => Err(()),
-                    Filter::Between => Ok(Self::Between),
-                    Filter::In => Ok(Self::In),
-                    Filter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
-                    Filter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
-                    Filter::Before => Err(()),
-                    Filter::CurrentDate => Err(()),
-                    Filter::GreaterThanCurrentDate => Err(()),
-                    Filter::CurrentTimestamp => Err(()),
-                    Filter::GreaterThanCurrentTimestamp => Err(()),
-                    Filter::CurrentTime => Err(()),
-                    Filter::GreaterThanCurrentTime => Err(()),
-                    Filter::LengthEqual => Ok(Self::LengthEqual),
-                    Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
-                    Filter::EqualToEncodedStringRepresentation => Err(()),
-                    Filter::ValueIsContainedWithinRange => Err(()),
-                    Filter::ContainsAnotherRange => Err(()),
-                    Filter::StrictlyToLeftOfRange => Err(()),
-                    Filter::StrictlyToRightOfRange => Err(()),
-                    Filter::IncludedLowerBound => Err(()),
-                    Filter::ExcludedUpperBound => Err(()),
-                    Filter::GreaterThanLowerBound => Err(()),
-                    Filter::OverlapWithRange => Err(()),
-                    Filter::AdjacentWithRange => Err(()),
-                    Filter::RangeLength => Ok(Self::RangeLength),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Between => Ok(Self::Between),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::In => Ok(Self::In),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Before => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual => Ok(Self::LengthEqual),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => Ok(Self::RangeLength),
                 }
             }
         }
-        let generate_filters_token_stream = |filter: &Filter|{
+        let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter|{
             let query_snake_case = naming::QuerySnakeCase;
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
@@ -139,21 +108,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 where_query_part_content_token_stream,
                 where_query_bind_content_token_stream,
             ) = match &filter {
-                Filter::Equal => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                     &where_query_bind_one_value_token_stream,
                 ),
-                Filter::GreaterThan => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                     &where_query_bind_one_value_token_stream,
                 ),
-                Filter::Between => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Between => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{
                         start: T,
@@ -186,7 +155,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::In => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::In => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_std_vec_vec_t_token_stream,
                     &quote::quote!{
@@ -216,84 +185,84 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::CaseSensitiveRegularExpression => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::CaseInsensitiveRegularExpression => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::Before => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
                     &where_query_bind_one_value_token_stream,
                 ),
-                Filter::CurrentDate => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::GreaterThanCurrentDate => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::CurrentTimestamp => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::GreaterThanCurrentTimestamp => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::CurrentTime => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::GreaterThanCurrentTime => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
                     &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                Filter::LengthEqual => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
                     &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::LengthMoreThan => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
                     &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::EqualToEncodedStringRepresentation => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote!{
                         pub encode_format: crate::postgresql_type::EncodeFormat,
@@ -317,70 +286,70 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::ValueIsContainedWithinRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::ContainsAnotherRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::StrictlyToLeftOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::StrictlyToRightOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::IncludedLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::ExcludedUpperBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::GreaterThanLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::OverlapWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::AdjacentWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
                     &where_query_bind_one_value_token_stream
                 ),
-                Filter::RangeLength => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
@@ -396,7 +365,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &where_query_bind_one_value_token_stream
                 ),
             };
-            let filter_initialized_with_try_new_result = FilterInitializedWithTryNew::try_from(filter);
+            let filter_initialized_with_try_new_result = PostgresqlTypeFilterInitializedWithTryNew::try_from(filter);
             let struct_token_stream = {
                 let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result.is_ok() {
                     &proc_macro2_token_stream_new
@@ -454,7 +423,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         option_additional_traits_annotations_token_stream,
                         additional_fields
                     ) = match &value {
-                        FilterInitializedWithTryNew::Between => (
+                        PostgresqlTypeFilterInitializedWithTryNew::Between => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote!{
                                 StartMoreOrEqualToEnd {
@@ -498,7 +467,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             ]
                         ),
-                        FilterInitializedWithTryNew::In => (
+                        PostgresqlTypeFilterInitializedWithTryNew::In => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote!{
                                 IsEmpty {
@@ -540,7 +509,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             ]
                         ),
-                        FilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
+                        PostgresqlTypeFilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 //todo
@@ -561,7 +530,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote!{+ IsEmpty}),
                             &vec![value_t_field]
                         ),
-                        FilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
+                        PostgresqlTypeFilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 //todo
@@ -582,7 +551,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote!{+ IsEmpty}),
                             &vec![value_t_field]
                         ),
-                        FilterInitializedWithTryNew::LengthEqual => (
+                        PostgresqlTypeFilterInitializedWithTryNew::LengthEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 LengthIsNegative {
@@ -607,7 +576,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None,
                             &vec![value_std_primitive_i32_field]
                         ),
-                        FilterInitializedWithTryNew::LengthMoreThan => (
+                        PostgresqlTypeFilterInitializedWithTryNew::LengthMoreThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 LengthIsNegative {
@@ -632,7 +601,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None,
                             &vec![value_std_primitive_i32_field]
                         ),
-                        FilterInitializedWithTryNew::RangeLength => (
+                        PostgresqlTypeFilterInitializedWithTryNew::RangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 LengthIsNegativeOrZero {
@@ -1044,33 +1013,33 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         };
         // let filter_array_token_stream = Filter::into_array().map(|element|generate_filters_token_stream(&element));
-        let equal_token_stream = generate_filters_token_stream(&Filter::Equal);
-        let greater_than_token_stream = generate_filters_token_stream(&Filter::GreaterThan);
-        let between_token_stream = generate_filters_token_stream(&Filter::Between);
-        let in_token_stream = generate_filters_token_stream(&Filter::In);
-        let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseSensitiveRegularExpression);
-        let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::CaseInsensitiveRegularExpression);
-        let before_token_stream = generate_filters_token_stream(&Filter::Before);
-        let current_date_token_stream = generate_filters_token_stream(&Filter::CurrentDate);
-        let greater_than_current_date_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentDate);
-        let current_timestamp_token_stream = generate_filters_token_stream(&Filter::CurrentTimestamp);
-        let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTimestamp);
-        let current_time_token_stream = generate_filters_token_stream(&Filter::CurrentTime);
-        let greater_than_current_time_token_stream = generate_filters_token_stream(&Filter::GreaterThanCurrentTime);
-        let length_equal_token_stream = generate_filters_token_stream(&Filter::LengthEqual);
-        let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
-        let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&Filter::EqualToEncodedStringRepresentation);
-        let value_is_contained_within_range_token_stream = generate_filters_token_stream(&Filter::ValueIsContainedWithinRange);
-        let contains_another_range_token_stream = generate_filters_token_stream(&Filter::ContainsAnotherRange);
-        let strictly_to_left_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToLeftOfRange);
-        let strictly_to_right_of_range_token_stream = generate_filters_token_stream(&Filter::StrictlyToRightOfRange);
-        let included_lower_bound_token_stream = generate_filters_token_stream(&Filter::IncludedLowerBound);
-        let excluded_upper_bound_token_stream = generate_filters_token_stream(&Filter::ExcludedUpperBound);
-        let greater_than_lower_bound_token_stream = generate_filters_token_stream(&Filter::GreaterThanLowerBound);
-        let overlap_with_range_token_stream = generate_filters_token_stream(&Filter::OverlapWithRange);
-        let adjacent_with_range_token_stream = generate_filters_token_stream(&Filter::AdjacentWithRange);
-        let range_length_token_stream = generate_filters_token_stream(&Filter::RangeLength);
-        // let _token_stream = generate_filters_token_stream(&Filter::);
+        let equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Equal);
+        let greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan);
+        let between_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Between);
+        let in_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::In);
+        let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression);
+        let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression);
+        let before_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Before);
+        let current_date_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate);
+        let greater_than_current_date_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate);
+        let current_timestamp_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp);
+        let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp);
+        let current_time_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime);
+        let greater_than_current_time_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime);
+        let length_equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual);
+        let length_more_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan);
+        let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation);
+        let value_is_contained_within_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange);
+        let contains_another_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange);
+        let strictly_to_left_of_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange);
+        let strictly_to_right_of_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange);
+        let included_lower_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound);
+        let excluded_upper_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound);
+        let greater_than_lower_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound);
+        let overlap_with_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange);
+        let adjacent_with_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange);
+        let range_length_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
+        // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::);
         quote::quote! {
             //#(#filter_array_token_stream)*
 

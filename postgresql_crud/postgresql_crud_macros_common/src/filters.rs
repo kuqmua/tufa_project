@@ -1,3 +1,36 @@
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+pub enum PostgresqlTypeFilter {
+    Equal,
+    GreaterThan,
+    Between,
+    In,
+    CaseSensitiveRegularExpression,
+    CaseInsensitiveRegularExpression,
+    Before,
+    CurrentDate,
+    GreaterThanCurrentDate,
+    CurrentTimestamp,
+    GreaterThanCurrentTimestamp,
+    CurrentTime,
+    GreaterThanCurrentTime,
+    LengthEqual,
+    LengthMoreThan,
+    EqualToEncodedStringRepresentation,
+    ValueIsContainedWithinRange,
+    ContainsAnotherRange,
+    StrictlyToLeftOfRange,
+    StrictlyToRightOfRange,
+    IncludedLowerBound,
+    ExcludedUpperBound,
+    GreaterThanLowerBound,
+    OverlapWithRange,
+    AdjacentWithRange,
+    RangeLength,
+    //BitVecPositionEqual,//currently deactivated
+    //EqualSecondDimension,//currently deactivated
+}
+
+
 pub trait WhereOperatorName {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }
