@@ -2665,31 +2665,3 @@ impl AllElementsCaseInsensitiveRegularExpression {
     //     generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &Self::generate_try_generate_bind_increments_token_stream())
     // }
 }
-
-////////////////////second dimension
-pub struct EqualSecondDimension;
-impl WhereOperatorName for EqualSecondDimension {
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        &naming::EqualSecondDimensionUpperCamelCase
-    }
-}
-impl EqualSecondDimension {
-    fn dimension() -> Dimension {
-        Dimension::Second
-    }
-    // pub fn generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-    //     &self,
-    //     ident: &dyn quote::ToTokens,
-    //     where_operator_type: &crate::WhereOperatorType,
-    // ) -> proc_macro2::TokenStream {
-    //     generate_postgresql_type_tokens_where_element_variant_handle_token_stream_817a2973_b62c_4100_9a40_b3ee40f01e04(
-    //         WhereOperatorName::upper_camel_case(self),
-    //         ident,
-    //         where_operator_type,
-    //         &Self::dimension(),
-    //     )
-    // }
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_94ce15d6_0735_4407_af5b_4a82e434f91a(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &Self::dimension())
-    }
-}
