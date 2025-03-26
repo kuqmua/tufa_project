@@ -1058,63 +1058,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_self_where_filter_token_stream
             }
         };
-        // let filter_array_token_stream = Filter::into_array().map(|element|generate_filters_token_stream(&element));
-        let equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Equal);
-        let greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan);
-        let between_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Between);
-        let in_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::In);
-        let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression);
-        let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression);
-        let before_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::Before);
-        let current_date_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate);
-        let greater_than_current_date_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate);
-        let current_timestamp_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp);
-        let greater_than_current_timestamp_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp);
-        let current_time_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime);
-        let greater_than_current_time_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime);
-        let length_equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual);
-        let length_more_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan);
-        let equal_to_encoded_string_representation_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation);
-        let value_is_contained_within_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange);
-        let contains_another_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange);
-        let strictly_to_left_of_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange);
-        let strictly_to_right_of_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange);
-        let included_lower_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound);
-        let excluded_upper_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound);
-        let greater_than_lower_bound_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound);
-        let overlap_with_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange);
-        let adjacent_with_range_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange);
-        let range_length_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
+        let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlTypeFilter::into_array().map(|element|generate_filters_token_stream(&element));
         // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::);
         quote::quote! {
-            //#(#filter_array_token_stream)*
-
-            #equal_token_stream
-            #greater_than_token_stream
-            #between_token_stream
-            #in_token_stream
-            #case_sensitive_regular_expression_token_stream
-            #case_insensitive_regular_expression_token_stream
-            #before_token_stream
-            #current_date_token_stream
-            #greater_than_current_date_token_stream
-            #current_timestamp_token_stream
-            #greater_than_current_timestamp_token_stream
-            #current_time_token_stream
-            #greater_than_current_time_token_stream
-            #length_equal_token_stream
-            #length_more_than_token_stream
-            #equal_to_encoded_string_representation_token_stream
-            #value_is_contained_within_range_token_stream
-            #contains_another_range_token_stream
-            #strictly_to_left_of_range_token_stream
-            #strictly_to_right_of_range_token_stream
-            #included_lower_bound_token_stream
-            #excluded_upper_bound_token_stream
-            #greater_than_lower_bound_token_stream
-            #overlap_with_range_token_stream
-            #adjacent_with_range_token_stream
-            #range_length_token_stream
+            #(#filter_array_token_stream)*
             //#_token_stream
         }
     };
@@ -2385,56 +2332,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_self_where_filter_token_stream
             }
         };
-        // let filter_array_token_stream = Filter::into_array().map(|element|generate_filters_token_stream(&element));
-        let equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal);
-        let greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan);
-        let between_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between);
-        let in_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In);
-        let case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression);
-        let case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression);
-        let length_equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
-        let length_more_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
-        let position_equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual);
-        let position_greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan);
-        let position_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
-        let position_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
-        let contains_all_elements_of_array_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray);
-        // let contained_in_array_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray);
-        let overlaps_with_array_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray);
-        let all_elements_equal_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual);
-        let contains_element_greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
-        let all_elements_greater_than_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
-        let contains_element_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
-        let contains_element_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-        let all_elements_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
-        let all_elements_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
+        let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array().map(|element|generate_filters_token_stream(&element));
+        // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::);
         quote::quote! {
-            //#(#filter_array_token_stream)*
-
-            #equal_token_stream
-            #greater_than_token_stream
-            #between_token_stream
-            #in_token_stream
-            #case_sensitive_regular_expression_token_stream
-            #case_insensitive_regular_expression_token_stream
-            #length_equal_token_stream
-            #length_more_than_token_stream
-
-            #position_equal_token_stream
-            #position_greater_than_token_stream
-            #position_case_sensitive_regular_expression_token_stream
-            #position_case_insensitive_regular_expression_token_stream
-            #contains_all_elements_of_array_token_stream
-            // #contained_in_array_token_stream
-            #overlaps_with_array_token_stream
-            #all_elements_equal_token_stream
-            #contains_element_greater_than_token_stream
-            #all_elements_greater_than_token_stream
-            #contains_element_case_sensitive_regular_expression_token_stream
-            #contains_element_case_insensitive_regular_expression_token_stream
-            #all_elements_case_sensitive_regular_expression_token_stream
-            #all_elements_case_insensitive_regular_expression_token_stream
-            // #equal_second_dimension_token_stream
+            #(#filter_array_token_stream)*
+            // #_token_stream
         }
     };
     let generated = quote::quote!{
