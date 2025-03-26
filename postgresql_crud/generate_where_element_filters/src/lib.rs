@@ -50,6 +50,38 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str|{
         generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
     };
+
+    let generate_struct_token_stream = |
+        filter_initialized_with_try_new_result_is_ok: std::primitive::bool,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        struct_additional_fields_token_stream: &dyn quote::ToTokens,
+    |{
+        let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok {
+            &proc_macro2_token_stream_new
+        }
+        else {
+            &naming::PubSnakeCase
+        };
+        let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok {
+            &proc_macro2_token_stream_new
+        }
+        else {
+            &quote::quote!{, serde::Deserialize}
+        };
+        let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+            ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+            ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
+        };
+        quote::quote! {
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema #maybe_derive_serde_serialize_for_ident_struct_token_stream)]
+            pub struct #ident #maybe_declaration_of_struct_ident_generic_token_stream {
+                #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
+                #struct_additional_fields_token_stream
+            }
+        }
+    };
+
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
@@ -366,31 +398,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlTypeFilterInitializedWithTryNew::try_from(filter);
-            let struct_token_stream = {
-                let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result.is_ok() {
-                    &proc_macro2_token_stream_new
-                }
-                else {
-                    &naming::PubSnakeCase
-                };
-                let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result.is_ok() {
-                    &proc_macro2_token_stream_new
-                }
-                else {
-                    &quote::quote!{, serde::Deserialize}
-                };
-                let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
-                };
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize #maybe_derive_serde_serialize_for_ident_struct_token_stream )]
-                    pub struct #ident #maybe_declaration_of_struct_ident_generic_token_stream {
-                        #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
-                        #struct_additional_fields_token_stream
-                    }
-                }
-            };
+            let struct_token_stream = generate_struct_token_stream(
+                filter_initialized_with_try_new_result.is_ok(),
+                &should_add_declaration_of_struct_ident_generic,
+                &ident,
+                &struct_additional_fields_token_stream,
+            );
             let maybe_try_new_logic_token_stream = match filter_initialized_with_try_new_result {
                 Ok(value) => {
                     let value_std_primitive_i32_field = Field {
@@ -1440,31 +1453,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlJsonTypeFilterInitializedWithTryNew::try_from(filter);
-            let struct_token_stream = {
-                let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result.is_ok() {
-                    &proc_macro2_token_stream_new
-                }
-                else {
-                    &naming::PubSnakeCase
-                };
-                let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result.is_ok() {
-                    &proc_macro2_token_stream_new
-                }
-                else {
-                    &quote::quote!{, serde::Deserialize}
-                };
-                let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
-                };
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema #maybe_derive_serde_serialize_for_ident_struct_token_stream)]
-                    pub struct #ident #maybe_declaration_of_struct_ident_generic_token_stream {
-                        #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
-                        #struct_additional_fields_token_stream
-                    }
-                }
-            };
+            let struct_token_stream = generate_struct_token_stream(
+                filter_initialized_with_try_new_result.is_ok(),
+                &should_add_declaration_of_struct_ident_generic,
+                &ident,
+                &struct_additional_fields_token_stream,
+            );
             let maybe_try_new_logic_token_stream = match filter_initialized_with_try_new_result {
                 Ok(value) => {
                     let value_std_primitive_i32_field = Field {
