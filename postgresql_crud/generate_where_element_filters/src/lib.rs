@@ -1156,6 +1156,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             LengthMoreThan,
             PositionEqual,
             PositionGreaterThan,
+            PositionCaseSensitiveRegularExpression,
         }
         impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
             type Error = ();
@@ -1171,7 +1172,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     Filter::PositionEqual => Ok(Self::PositionEqual),
                     Filter::PositionGreaterThan => Ok(Self::PositionGreaterThan),
-                    Filter::PositionCaseSensitiveRegularExpression => todo!(),
+                    Filter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
                     Filter::PositionCaseInsensitiveRegularExpression => todo!(),
                     Filter::ContainsAllElementsOfArray => todo!(),
                     Filter::ContainedInArray => todo!(),
@@ -1417,7 +1418,37 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::PositionCaseSensitiveRegularExpression => todo!(),
+                Filter::PositionCaseSensitiveRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &quote::quote!{
+                        value: T,
+                        position: #std_primitive_i32_token_stream,
+                    },
+                    &quote::quote!{
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        position: #core_default_default_default_token_stream,
+                    },
+                    &quote::quote!{
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!("{}({}->>${} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                    }
+                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                }
+                            }
+                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
+                    },
+                    &quote::quote!{
+                        query = query.bind(self.position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    }
+                ),
                 Filter::PositionCaseInsensitiveRegularExpression => todo!(),
                 Filter::ContainsAllElementsOfArray => todo!(),
                 Filter::ContainedInArray => todo!(),
@@ -1706,6 +1737,43 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ]
                         ),
                         FilterInitializedWithTryNew::PositionGreaterThan => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                PositionIsLessThanZero {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    position: #std_primitive_i32_token_stream,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: std::cmp::PartialOrd},
+                            &quote::quote!{
+                                value: T,
+                                position: #std_primitive_i32_token_stream
+                            },
+                            &quote::quote!{
+                                if position >= 0 {
+                                    Ok(Self { logical_operator, value, position })
+                                } else {
+                                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
+                                        position,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    })
+                                }
+                            },
+                            Some(quote::quote!{+ std::cmp::PartialOrd}),
+                            &vec![
+                                Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                                Field {
+                                    field_name: &naming::PositionSnakeCase,
+                                    field_type: &std_primitive_i32_token_stream
+                                },
+                            ]
+                        ),
+                        FilterInitializedWithTryNew::PositionCaseSensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 PositionIsLessThanZero {
@@ -2140,7 +2208,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let length_more_than_token_stream = generate_filters_token_stream(&Filter::LengthMoreThan);
         let position_equal_token_stream = generate_filters_token_stream(&Filter::PositionEqual);
         let position_greater_than_token_stream = generate_filters_token_stream(&Filter::PositionGreaterThan);
-        // let position_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseSensitiveRegularExpression);
+        let position_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseSensitiveRegularExpression);
         // let position_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::PositionCaseInsensitiveRegularExpression);
         // let contains_all_elements_of_array_token_stream = generate_filters_token_stream(&Filter::ContainsAllElementsOfArray);
         // let contained_in_array_token_stream = generate_filters_token_stream(&Filter::ContainedInArray);
@@ -2167,7 +2235,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
 
             #position_equal_token_stream
             #position_greater_than_token_stream
-            // #position_case_sensitive_regular_expression_token_stream
+            #position_case_sensitive_regular_expression_token_stream
             // #position_case_insensitive_regular_expression_token_stream
             // #contains_all_elements_of_array_token_stream
             // #contained_in_array_token_stream
