@@ -81,6 +81,32 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         }
     };
+    let generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream: &dyn quote::ToTokens,
+    |{
+        postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            &match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
+                ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new()
+            },
+            &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+            &ident,
+            match &should_add_declaration_of_struct_ident_generic {
+                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
+            },
+            &{
+                quote::quote!{
+                    Self {
+                        logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                    }
+                }
+            },
+        )
+    };
 
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -981,25 +1007,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 },
                 Err(_) => proc_macro2::TokenStream::new()
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                &match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
-                    ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new()
-                },
-                &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                },
-                &{
-                    quote::quote!{
-                        Self {
-                            logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                        }
-                    }
-                },
+                &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             );
             let impl_postgresql_type_self_where_filter_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
                 &{
@@ -2333,25 +2344,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 },
                 Err(_) => proc_macro2::TokenStream::new()
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                &match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
-                    ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new()
-                },
-                &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
-                    ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
-                },
-                &{
-                    quote::quote!{
-                        Self {
-                            logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                        }
-                    }
-                },
+                &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
             );
             let impl_postgresql_type_self_where_filter_token_stream = postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
                 &{
