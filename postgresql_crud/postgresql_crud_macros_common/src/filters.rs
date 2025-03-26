@@ -2661,9 +2661,9 @@ impl AllElementsCaseInsensitiveRegularExpression {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_d857da83_71f2_4b4d_b1eb_a496e6cfb9ba(&Self::regular_expression())
     }
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &Self::generate_try_generate_bind_increments_token_stream())
-    }
+    // pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
+    //     generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream_5d8e8b34_33ec_476c_a50b_19e0b8d5da69(WhereOperatorName::upper_camel_case(self), postgresql_json_type_variant, &Self::generate_try_generate_bind_increments_token_stream())
+    // }
 }
 
 ////////////////////second dimension

@@ -280,9 +280,9 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             "AllElementsGreaterThan" == &element_upper_camel_case.to_string() ||
             "ContainsElementCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             "ContainsElementCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "AllElementsCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() 
-            // ||
-            // "AllElementsCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            "AllElementsCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
+            "AllElementsCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string()
+            //  ||
             // "EqualSecondDimension" == &element_upper_camel_case.to_string() ||
             {
                 let postgresql_json_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);

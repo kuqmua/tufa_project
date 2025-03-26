@@ -439,7 +439,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &all_elements_case_insensitive_regular_expression,
-                        token_stream: all_elements_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant),
+                        token_stream: proc_macro2::TokenStream::new(),
+                        // all_elements_case_insensitive_regular_expression.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant),
                     },
                 ),
                 Err(_) => (
