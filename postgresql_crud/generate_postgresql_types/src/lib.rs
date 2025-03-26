@@ -2694,32 +2694,32 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )
                 };
 
-                let equal = postgresql_crud_macros_common::Equal;
-                let greater_than = postgresql_crud_macros_common::GreaterThan;
-                let between = postgresql_crud_macros_common::Between;
-                let in_handle = postgresql_crud_macros_common::In;
-                let case_sensitive_regular_expression = postgresql_crud_macros_common::CaseSensitiveRegularExpression;
-                let case_insensitive_regular_expression = postgresql_crud_macros_common::CaseInsensitiveRegularExpression;
-                let length_more_than = postgresql_crud_macros_common::LengthMoreThan;
-                let equal_to_encoded_string_representation = postgresql_crud_macros_common::EqualToEncodedStringRepresentation;
-                let current_date = postgresql_crud_macros_common::CurrentDate;
-                let greater_than_current_date = postgresql_crud_macros_common::GreaterThanCurrentDate;
-                let current_time = postgresql_crud_macros_common::CurrentTime;
-                let greater_than_current_time = postgresql_crud_macros_common::GreaterThanCurrentTime;
-                let value_is_contained_within_range = postgresql_crud_macros_common::ValueIsContainedWithinRange;
-                let contains_another_range = postgresql_crud_macros_common::ContainsAnotherRange;
-                let strictly_to_left_of_range = postgresql_crud_macros_common::StrictlyToLeftOfRange;
-                let strictly_to_right_of_range = postgresql_crud_macros_common::StrictlyToRightOfRange;
-                let included_lower_bound = postgresql_crud_macros_common::IncludedLowerBound;
-                let excluded_upper_bound = postgresql_crud_macros_common::ExcludedUpperBound;
-                let greater_than_lower_bound = postgresql_crud_macros_common::GreaterThanLowerBound;
-                let overlap_with_range = postgresql_crud_macros_common::OverlapWithRange;
-                let adjacent_with_range = postgresql_crud_macros_common::AdjacentWithRange;
-                let range_length = postgresql_crud_macros_common::RangeLength;
-                let current_timestamp = postgresql_crud_macros_common::CurrentTimestamp;
-                let greater_than_current_timestamp = postgresql_crud_macros_common::GreaterThanCurrentTimestamp;
-                let before = postgresql_crud_macros_common::Before;
-                // let bit_vec_position_equal = postgresql_crud_macros_common::BitVecPositionEqual;
+                let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal;
+                let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan;
+                let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between;
+                let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In;
+                let case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression;
+                let case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression;
+                let length_more_than = postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan;
+                let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;
+                let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
+                let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
+                let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
+                let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
+                let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange;
+                let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange;
+                let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange;
+                let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange;
+                let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound;
+                let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound;
+                let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound;
+                let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange;
+                let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange;
+                let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
+                let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
+                let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
+                let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
+                // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
 
                 // let postgresql_type_tokens_where_element_equal_where_operator_type_field_type_default_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
                 //     &postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable,
