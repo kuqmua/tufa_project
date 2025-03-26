@@ -27,7 +27,31 @@ pub enum PostgresqlTypeFilter {
     AdjacentWithRange,
     RangeLength,
     //BitVecPositionEqual,//currently deactivated
-    //EqualSecondDimension,//currently deactivated
+}
+#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+pub enum PostgresqlJsonTypeFilter {
+    Equal,
+    GreaterThan,
+    Between,
+    In,
+    CaseSensitiveRegularExpression,
+    CaseInsensitiveRegularExpression,
+    LengthEqual,
+    LengthMoreThan,
+    PositionEqual,
+    PositionGreaterThan,
+    PositionCaseSensitiveRegularExpression,
+    PositionCaseInsensitiveRegularExpression,
+    ContainsAllElementsOfArray,
+    // ContainedInArray,
+    OverlapsWithArray,
+    AllElementsEqual,
+    ContainsElementGreaterThan,
+    AllElementsGreaterThan,
+    ContainsElementCaseSensitiveRegularExpression,
+    ContainsElementCaseInsensitiveRegularExpression,
+    AllElementsCaseSensitiveRegularExpression,
+    AllElementsCaseInsensitiveRegularExpression,
 }
 
 
