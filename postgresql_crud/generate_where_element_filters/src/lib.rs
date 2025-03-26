@@ -1166,7 +1166,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::OverlapsWithArray => Ok(Self::OverlapsWithArray),
                     Filter::AllElementsEqual => Err(()),
                     Filter::ContainsElementGreaterThan => Err(()),
-                    Filter::AllElementsGreaterThan => todo!(),
+                    Filter::AllElementsGreaterThan => Err(()),
                     Filter::ContainsElementCaseSensitiveRegularExpression => todo!(),
                     Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
                     Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
@@ -1553,7 +1553,26 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::AllElementsGreaterThan => todo!(),
+                Filter::AllElementsGreaterThan => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &quote::quote!{pub value: std::vec::Vec<T>},
+                    &quote::quote!{
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    &quote::quote!{
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!("{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                            }
+                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
+                    },
+                    &quote::quote!{
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    }
+                ),
                 Filter::ContainsElementCaseSensitiveRegularExpression => todo!(),
                 Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
                 Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
@@ -2434,7 +2453,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let overlaps_with_array_token_stream = generate_filters_token_stream(&Filter::OverlapsWithArray);
         let all_elements_equal_token_stream = generate_filters_token_stream(&Filter::AllElementsEqual);
         let contains_element_greater_than_token_stream = generate_filters_token_stream(&Filter::ContainsElementGreaterThan);
-        // let all_elements_greater_than_token_stream = generate_filters_token_stream(&Filter::AllElementsGreaterThan);
+        let all_elements_greater_than_token_stream = generate_filters_token_stream(&Filter::AllElementsGreaterThan);
         // let contains_element_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseSensitiveRegularExpression);
         // let contains_element_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseInsensitiveRegularExpression);
         // let all_elements_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::AllElementsCaseSensitiveRegularExpression);
@@ -2461,7 +2480,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #overlaps_with_array_token_stream
             #all_elements_equal_token_stream
             #contains_element_greater_than_token_stream
-            // #all_elements_greater_than_token_stream
+            #all_elements_greater_than_token_stream
             // #contains_element_case_sensitive_regular_expression_token_stream
             // #contains_element_case_insensitive_regular_expression_token_stream
             // #all_elements_case_sensitive_regular_expression_token_stream
