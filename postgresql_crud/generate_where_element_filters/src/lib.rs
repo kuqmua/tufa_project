@@ -1,6 +1,55 @@
 #[proc_macro]
 pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
+    let query_snake_case = naming::QuerySnakeCase;
+    let t_token_stream = quote::quote!{T};
+    let t_annotation_generic_token_stream = quote::quote!{<#t_token_stream>};
+    let std_vec_vec_t_token_stream = &quote::quote!{std::vec::Vec<T>};
+    let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+    let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    let core_default_default_default_token_stream = quote::quote!{
+        ::core::default::Default::default()
+    };
+    let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
+        crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+    };
+    let value_t_token_stream = quote::quote!{value: T};
+    let pub_value_t_token_stream = quote::quote!{pub value: #t_token_stream};
+    let value_std_vec_vec_t_token_stream = quote::quote!{value: #std_vec_vec_t_token_stream};
+    let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
+    enum ShouldAddDeclarationOfStructIdentGeneric {
+        True,
+        False,
+    }
+    struct Field<'a> {
+        field_name: &'a dyn std::fmt::Display,
+        field_type: &'a dyn quote::ToTokens,
+    }
+    let value_code_default_token_stream = quote::quote!{
+        value: #core_default_default_default_token_stream
+    };
+    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
+        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+    };
+    let generate_where_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{
+            Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
+        }
+    };
+    let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{
+            match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                }
+                None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            }
+        }
+    };
+    let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str|{
+        generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
+    };
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
@@ -46,57 +95,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         }
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter|{
-            let query_snake_case = naming::QuerySnakeCase;
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-            let t_token_stream = quote::quote!{T};
-            let t_annotation_generic_token_stream = quote::quote!{<#t_token_stream>};
-            let std_vec_vec_t_token_stream = &quote::quote!{std::vec::Vec<T>};
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-            let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
-            let core_default_default_default_token_stream = quote::quote!{
-                ::core::default::Default::default()
-            };
-            let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-                crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-            };
-            let value_t_token_stream = quote::quote!{value: #t_token_stream};
-            let pub_value_t_token_stream = quote::quote!{pub value: #t_token_stream};
-            let value_std_vec_vec_t_token_stream = quote::quote!{value: #std_vec_vec_t_token_stream};
-            let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
-            enum ShouldAddDeclarationOfStructIdentGeneric {
-                True,
-                False,
-            }
-            struct Field<'a> {
-                field_name: &'a dyn std::fmt::Display,
-                field_type: &'a dyn quote::ToTokens,
-            }
-            let value_code_default_token_stream = quote::quote!{
-                value: #core_default_default_default_token_stream
-            };
-            let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-                value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-            };
-            let generate_where_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{
-                    Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                }
-            };
-            let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                }
-            };
-            let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str|{
-                generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
-            };
             let where_query_bind_one_value_token_stream = quote::quote!{
                 query = query.bind(self.value);
                 query
@@ -1122,57 +1122,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         }
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter|{
-            let query_snake_case = naming::QuerySnakeCase;
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlJsonTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-            let t_token_stream = quote::quote!{T};
-            let t_annotation_generic_token_stream = quote::quote!{<#t_token_stream>};
-            let std_vec_vec_t_token_stream = &quote::quote!{std::vec::Vec<T>};
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-            let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
-            let core_default_default_default_token_stream = quote::quote!{
-                ::core::default::Default::default()
-            };
-            let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-                crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-            };
-            let value_t_token_stream = quote::quote!{value: T};
-            let pub_value_t_token_stream = quote::quote!{pub value: #t_token_stream};
-            let value_std_vec_vec_t_token_stream = quote::quote!{value: #std_vec_vec_t_token_stream};
-            let value_std_primitive_i32_token_stream = quote::quote!{value: #std_primitive_i32_token_stream};
-            enum ShouldAddDeclarationOfStructIdentGeneric {
-                True,
-                False,
-            }
-            struct Field<'a> {
-                field_name: &'a dyn std::fmt::Display,
-                field_type: &'a dyn quote::ToTokens,
-            }
-            let value_code_default_token_stream = quote::quote!{
-                value: #core_default_default_default_token_stream
-            };
-            let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-                value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-            };
-            let generate_where_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{
-                    Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
-                }
-            };
-            let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                    }
-                }
-            };
-            let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str|{
-                generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"))
-            };
             let where_query_bind_one_value_token_stream = quote::quote!{
                 query = query.bind(sqlx::types::Json(self.value));
                 query
