@@ -322,9 +322,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let contains_element_case_insensitive_regular_expression = postgresql_crud_macros_common::ContainsElementCaseInsensitiveRegularExpression;
             let all_elements_case_sensitive_regular_expression = postgresql_crud_macros_common::AllElementsCaseSensitiveRegularExpression;
             let all_elements_case_insensitive_regular_expression = postgresql_crud_macros_common::AllElementsCaseInsensitiveRegularExpression;
-
             let (
-                maybe_postgresql_json_type_ident_where_element_position_equal,
+                // maybe_postgresql_json_type_ident_where_element_position_equal,
                 maybe_postgresql_json_type_ident_where_element_position_greater_than,
                 maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
@@ -341,10 +340,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             ) = match postgresql_json_type_variant.try_to_vec_element_type() {
                 Ok(value) => (
                     //todo maybe should use value type in regular expression
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
-                        where_operator_name: &position_equal,
-                        token_stream: position_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant, &value),
-                    },
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
+                    //     where_operator_name: &position_equal,
+                    //     token_stream: position_equal.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant, &value),
+                    // },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &position_greater_than,
                         token_stream: position_greater_than.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant, &value),
@@ -402,7 +401,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 Err(_) => (
-                    MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
+                    // MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::None,
@@ -432,10 +431,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 vec
             };
 
-            if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_equal {
-                common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
-                common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
-            }
+            // if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_position_equal {
+            //     common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
+            //     common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
+            // }
             if let MaybePostgresqlJsonTypeIdentWhereElementFilter::Some { where_operator_name, token_stream } = maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array {
                 common_postgresql_json_type_vec_filters_variants.push(where_operator_name);
                 common_postgresql_json_type_vec_filters_token_stream.push(token_stream);
@@ -866,13 +865,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
-        //     },
-        // },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
+            },
+        },
         // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
         //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
         //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {

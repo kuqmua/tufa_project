@@ -2192,29 +2192,29 @@ impl PositionEqual {
     fn generate_try_generate_bind_increments_token_stream() -> proc_macro2::TokenStream {
         generate_try_generate_bind_increments_token_stream_f50ed702_349c_491f_9f15_cf799072747d(&quote::quote! {"{}({}->${} = ${})"})
     }
-    pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
-        let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
-        let postgresql_json_type_ident_wrapper_array_element = postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper();
+    // pub fn generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(&self, postgresql_json_type_variant: &crate::PostgresqlJsonTypeVariant, postgresql_json_type_variant_array_element: &crate::PostgresqlJsonTypeVariant) -> proc_macro2::TokenStream {
+    //     let postgresql_json_type_ident_wrapper = postgresql_json_type_variant.postgresql_json_type_ident_wrapper();
+    //     let postgresql_json_type_ident_wrapper_array_element = postgresql_json_type_variant_array_element.postgresql_json_type_ident_wrapper();
 
-        let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
-        let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_type_ident_wrapper_array_element);
-        generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
-            &generate_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
-            ShouldWhereElementFieldsBePublic::False {
-                ident: &postgresql_json_type_ident_wrapper,
-                postfix: &self_upper_camel_case,
-                try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
-                try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
-                try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(&postgresql_json_type_ident_wrapper, &self_upper_camel_case),
-                impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(&postgresql_json_type_ident_wrapper, &postgresql_json_type_ident_wrapper_array_element, &self_upper_camel_case),
-            },
-            &crate::ShouldDeriveSchemarsJsonSchema::True,
-            &additional_type_declaration_token_stream,
-            &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
-            &Self::generate_try_generate_bind_increments_token_stream(),
-            &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2(),
-        )
-    }
+    //     let self_upper_camel_case = WhereOperatorName::upper_camel_case(self);
+    //     let additional_type_declaration_token_stream = generate_additional_type_declaration_token_stream_34095bbb_d306_4a44_92e9_4df1a7354bc1(&postgresql_json_type_ident_wrapper_array_element);
+    //     generate_postgresql_type_or_json_type_tokens_where_element_variant_token_stream(
+    //         &generate_ident_where_element_filter_upper_camel_case(&postgresql_json_type_ident_wrapper, self_upper_camel_case),
+    //         ShouldWhereElementFieldsBePublic::False {
+    //             ident: &postgresql_json_type_ident_wrapper,
+    //             postfix: &self_upper_camel_case,
+    //             try_new_error_named_variants_token_stream: &generate_try_new_error_named_variants_token_stream_06af1515_1384_4d10_a4cf_aaf07284fd08(),
+    //             try_new_additional_input_parameters_token_stream: &additional_type_declaration_token_stream,
+    //             try_new_content_token_stream: &generate_try_new_content_token_stream_9a677220_67b3_4d4d_a7b7_92314cce8e40(&postgresql_json_type_ident_wrapper, &self_upper_camel_case),
+    //             impl_deserialize_token_stream: &generate_impl_deserialize_token_stream_4b33e130_e350_4911_a82e_0b77a3c433da(&postgresql_json_type_ident_wrapper, &postgresql_json_type_ident_wrapper_array_element, &self_upper_camel_case),
+    //         },
+    //         &crate::ShouldDeriveSchemarsJsonSchema::True,
+    //         &additional_type_declaration_token_stream,
+    //         &generate_additional_default_initialization_token_stream_cd86231b_5ff2_4e91_9906_29b822838309(&token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall),
+    //         &Self::generate_try_generate_bind_increments_token_stream(),
+    //         &generate_bind_value_to_query_token_stream_1026d141_062b_43c0_bbbf_a45d6dfe68a2(),
+    //     )
+    // }
 }
 
 pub struct PositionGreaterThan;
