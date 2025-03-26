@@ -1145,6 +1145,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ContainsAllElementsOfArray,
             OverlapsWithArray,
             ContainsElementCaseSensitiveRegularExpression,
+            ContainsElementCaseInsensitiveRegularExpression,
         }
         impl std::convert::TryFrom<&Filter> for FilterInitializedWithTryNew {
             type Error = ();
@@ -1169,7 +1170,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     Filter::ContainsElementGreaterThan => Err(()),
                     Filter::AllElementsGreaterThan => Err(()),
                     Filter::ContainsElementCaseSensitiveRegularExpression => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
-                    Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
+                    Filter::ContainsElementCaseInsensitiveRegularExpression => Ok(Self::ContainsElementCaseInsensitiveRegularExpression),
                     Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
                     Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
                     Filter::EqualSecondDimension => todo!(),
@@ -1597,7 +1598,29 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     }
                 ),
-                Filter::ContainsElementCaseInsensitiveRegularExpression => todo!(),
+                Filter::ContainsElementCaseInsensitiveRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &value_t_token_stream,
+                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    &quote::quote!{
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!(
+                                    "{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~* ${}))",
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    increment
+                                ))
+                            }
+                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
+                    },
+                    &quote::quote!{
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    }
+                ),
                 Filter::AllElementsCaseSensitiveRegularExpression => todo!(),
                 Filter::AllElementsCaseInsensitiveRegularExpression => todo!(),
                 Filter::EqualSecondDimension => todo!(),
@@ -2071,7 +2094,34 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             ]
                         ),
+                        //todo remove this checks coz T must check it in constructor
                         FilterInitializedWithTryNew::ContainsElementCaseSensitiveRegularExpression => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &quote::quote!{
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &quote::quote!{: IsEmpty},
+                            &value_t_token_stream,
+                            &quote::quote!{
+                                //todo check on empry is wrong. T generic initialization must check it. not here
+                                if !IsEmpty::is_empty(&value) {
+                                    Ok(Self { logical_operator, value })
+                                } else {
+                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
+                                }
+                            },
+                            Some(quote::quote!{+ IsEmpty}),
+                            &vec![
+                                Field {
+                                    field_name: &naming::ValueSnakeCase,
+                                    field_type: &t_token_stream,
+                                },
+                            ]
+                        ),
+                        FilterInitializedWithTryNew::ContainsElementCaseInsensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 IsEmpty {
@@ -2504,7 +2554,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let contains_element_greater_than_token_stream = generate_filters_token_stream(&Filter::ContainsElementGreaterThan);
         let all_elements_greater_than_token_stream = generate_filters_token_stream(&Filter::AllElementsGreaterThan);
         let contains_element_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseSensitiveRegularExpression);
-        // let contains_element_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseInsensitiveRegularExpression);
+        let contains_element_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::ContainsElementCaseInsensitiveRegularExpression);
         // let all_elements_case_sensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::AllElementsCaseSensitiveRegularExpression);
         // let all_elements_case_insensitive_regular_expression_token_stream = generate_filters_token_stream(&Filter::AllElementsCaseInsensitiveRegularExpression);
         // let equal_second_dimension_token_stream = generate_filters_token_stream(&Filter::EqualSecondDimension);
@@ -2531,7 +2581,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #contains_element_greater_than_token_stream
             #all_elements_greater_than_token_stream
             #contains_element_case_sensitive_regular_expression_token_stream
-            // #contains_element_case_insensitive_regular_expression_token_stream
+            #contains_element_case_insensitive_regular_expression_token_stream
             // #all_elements_case_sensitive_regular_expression_token_stream
             // #all_elements_case_insensitive_regular_expression_token_stream
             // #equal_second_dimension_token_stream
