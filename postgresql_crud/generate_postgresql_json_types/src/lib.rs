@@ -374,7 +374,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     // },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &overlaps_with_array,
-                        token_stream: overlaps_with_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant, &value),
+                        token_stream: proc_macro2::TokenStream::new(),
+                        // overlaps_with_array.generate_postgresql_json_type_tokens_where_element_variant_handle_token_stream(postgresql_json_type_variant, &value),
                     },
                     MaybePostgresqlJsonTypeIdentWhereElementFilter::Some {
                         where_operator_name: &all_elements_equal,
