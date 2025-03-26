@@ -276,10 +276,10 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             // "ContainedInArray" == &element_upper_camel_case.to_string() ||
             "OverlapsWithArray" == &element_upper_camel_case.to_string() ||
             "AllElementsEqual" == &element_upper_camel_case.to_string() ||
-            "ContainsElementGreaterThan" == &element_upper_camel_case.to_string()
+            "ContainsElementGreaterThan" == &element_upper_camel_case.to_string() ||
+            "AllElementsGreaterThan" == &element_upper_camel_case.to_string() ||
+            "ContainsElementCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() 
             // ||
-            // "AllElementsGreaterThan" == &element_upper_camel_case.to_string() ||
-            // "ContainsElementCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "ContainsElementCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "AllElementsCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             // "AllElementsCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
