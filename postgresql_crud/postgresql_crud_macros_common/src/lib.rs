@@ -274,9 +274,9 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
             "PositionCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
             "ContainsAllElementsOfArray" == &element_upper_camel_case.to_string() ||
             // "ContainedInArray" == &element_upper_camel_case.to_string() ||
-            "OverlapsWithArray" == &element_upper_camel_case.to_string()
+            "OverlapsWithArray" == &element_upper_camel_case.to_string() ||
+            "AllElementsEqual" == &element_upper_camel_case.to_string()
             // ||
-            // "AllElementsEqual" == &element_upper_camel_case.to_string() ||
             // "ContainsElementGreaterThan" == &element_upper_camel_case.to_string() ||
             // "AllElementsGreaterThan" == &element_upper_camel_case.to_string() ||
             // "ContainsElementCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
