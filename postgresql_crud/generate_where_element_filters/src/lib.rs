@@ -1664,7 +1664,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     let (
                         should_add_declaration_of_generic_parameter_to_ident_try_new_error_named,
                         enum_ident_try_new_error_named_content_token_stream,
-                        should_add_declaration_of_struct_ident_generic,
                         generic_requirements_token_stream,
                         additional_input_parameters_token_stream,
                         impl_try_new_for_ident_content_token_stream,
@@ -1682,7 +1681,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialOrd},
                             &quote::quote!{
                                 start: T,
@@ -1727,7 +1725,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: PartialEq + Clone},
                             &value_std_vec_vec_t_token_stream,
                             &quote::quote!{
@@ -1765,7 +1762,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
@@ -1786,7 +1782,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
@@ -1808,7 +1803,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
                             &value_std_primitive_i32_token_stream,
                             &quote::quote!{
@@ -1833,7 +1827,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
                             &value_std_primitive_i32_token_stream,
                             &quote::quote!{
@@ -1858,7 +1851,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialOrd},
                             &quote::quote!{
                                 value: T,
@@ -1895,7 +1887,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialOrd},
                             &quote::quote!{
                                 value: T,
@@ -1932,7 +1923,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialOrd},
                             &quote::quote!{
                                 value: T,
@@ -1969,7 +1959,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialOrd},
                             &quote::quote!{
                                 value: T,
@@ -2009,7 +1998,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialEq + Clone},
                             &quote::quote!{value: std::vec::Vec<T>},
                             &quote::quote!{
@@ -2051,7 +2039,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: std::cmp::PartialEq + Clone},
                             &quote::quote!{value: std::vec::Vec<T>},
                             &quote::quote!{
@@ -2089,7 +2076,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
@@ -2115,7 +2101,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
@@ -2141,7 +2126,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
@@ -2167,7 +2151,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
                             &quote::quote!{: IsEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
