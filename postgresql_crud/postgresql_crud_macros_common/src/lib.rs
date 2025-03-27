@@ -11,7 +11,6 @@ pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::WhereOperatorName>,
     postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    variant_type_prefix_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;

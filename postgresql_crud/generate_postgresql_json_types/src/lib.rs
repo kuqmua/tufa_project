@@ -342,13 +342,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
                 &postgresql_json_type_ident_wrapper,
                 &ident_where_element_upper_camel_case,
-                &ident_where_element_upper_camel_case,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
             let postgresql_json_type_where_element_bool_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &common_postgresql_json_type_filters_variants,
                 &postgresql_json_type_ident_wrapper,
-                &ident_where_element_upper_camel_case,
                 &ident_where_element_upper_camel_case,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
@@ -360,7 +358,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     vec
                 },
                 &postgresql_json_type_ident_wrapper,
-                &ident_where_element_upper_camel_case,
                 &ident_where_element_upper_camel_case,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
@@ -376,7 +373,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &filters_variants,
                     &postgresql_json_type_ident_wrapper,
                     &ident_where_element_upper_camel_case,
-                    &ident_where_element_upper_camel_case,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
             };
@@ -385,7 +381,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
                     &postgresql_json_type_ident_wrapper,
-                    &ident_where_element_upper_camel_case,
                     &ident_where_element_upper_camel_case,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
@@ -403,7 +398,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
                     &postgresql_json_type_ident_wrapper,
-                    &ident_where_element_upper_camel_case,
                     &ident_where_element_upper_camel_case,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
@@ -449,7 +443,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //             &filters_variants,
         //             &postgresql_json_type_ident_wrapper,
         //             &ident_where_element_second_dimension_upper_camel_case,
-        //             &ident_where_element_upper_camel_case,
         //             &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
         //         );
         //         let generated = quote::quote! {
