@@ -550,14 +550,12 @@ impl PostgresqlJsonTypeVariant {
     //     }
     //     acc
     // }
-    pub fn try_to_vec_element_type(&self) -> Result<Self, ()> {
+    pub fn is_vec_element_type(&self) -> std::primitive::bool {
         match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-            PostgresqlJsonTypePatternType::FullTypePath => Err(()),
+            PostgresqlJsonTypePatternType::FullTypePath => false,
             //todo maybe wrong
-            PostgresqlJsonTypePatternType::StdVecVecFullTypePath | PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => Ok(Self {
-                postgresql_json_type_handle: self.postgresql_json_type_handle.clone(),
-                postgresql_json_type_pattern: self.postgresql_json_type_pattern.clone(),
-            }),
+            PostgresqlJsonTypePatternType::StdVecVecFullTypePath |
+            PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => true,
         }
     }
     pub fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {

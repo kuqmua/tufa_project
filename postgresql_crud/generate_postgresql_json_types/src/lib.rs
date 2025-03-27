@@ -349,8 +349,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression,
                 maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression,
-            ) = match postgresql_json_type_variant.try_to_vec_element_type() {
-                Ok(value) => (
+            ) = if postgresql_json_type_variant.is_vec_element_type() {
+                (
                     //todo maybe should use value type in regular expression
                     Some(&position_equal),
                     Some(&position_greater_than),
@@ -366,8 +366,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     Some(&contains_element_case_insensitive_regular_expression),
                     Some(&all_elements_case_sensitive_regular_expression),
                     Some(&all_elements_case_insensitive_regular_expression),
-                ),
-                Err(_) => (
+                )
+            }
+            else {
+                (
                     None,
                     None,
                     None,
@@ -382,7 +384,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     None,
                     None,
                     None,
-                ),
+                )
             };
 
             let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
