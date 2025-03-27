@@ -2716,21 +2716,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
                 // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
 
-                // let postgresql_type_tokens_where_element_equal_where_operator_type_field_type_default_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                //     &postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable,
-                //     &where_operator_type_field_type_default
-                // );
-                // let postgresql_type_tokens_where_element_equal_where_operator_type_ident_token_stream = equal.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                //     &postgresql_type_not_null_upper_camel_case, postgresql_type_not_null_or_nullable,
-                //     &where_operator_type_ident
-                // );
-
-                // let postgresql_type_tokens_where_element_greater_than_where_operator_type_field_type_default_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                //     &postgresql_type_not_null_upper_camel_case,
-                //     &where_operator_type_field_type_default
-                // );
-                // let postgresql_type_tokens_where_element_greater_than_where_operator_type_ident_token_stream = greater_than.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case, &where_operator_type_ident);
-
                 let where_element_number_token_stream = {
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
                     quote::quote! {
