@@ -2715,12 +2715,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
                 // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
 
-                let where_element_number_token_stream = {
-                    let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
-                    quote::quote! {
-                        #postgresql_type_tokens_where_element_token_stream
-                    }
-                };
+                let where_element_number_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![
+                    &equal,
+                    &greater_than,
+                    &between,
+                    &in_handle
+                ]);
                 let where_element_sqlx_postgres_types_pg_money_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![
                     &equal,
                     &greater_than,
