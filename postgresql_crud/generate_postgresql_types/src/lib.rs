@@ -2679,11 +2679,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
             let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
-                let where_operator_type_field_type_default = postgresql_crud_macros_common::WhereOperatorType::FieldType {
-                    field_type: &postgresql_type_not_null_or_nullable_upper_camel_case,
-                    default_initialization_token_stream: &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                };
-                let where_operator_type_ident = postgresql_crud_macros_common::WhereOperatorType::Ident(&postgresql_type_not_null_upper_camel_case);
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName>| {
                     postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_token_stream(
                         variants,
@@ -3034,52 +3029,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => should_impl_range_length_false,
                         }
                     };
-                    let maybe_filters_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
-                        postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &{
-                            let dot_zero_token_stream = quote::quote! {.0};
-                            // let postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream = value_is_contained_within_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                            //     &postgresql_type_not_null_upper_camel_case,
-                            //     &range_type,
-                            //     &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            //     &dot_zero_token_stream,
-                            // );
-                            // let postgresql_type_tokens_where_element_contains_another_range_token_stream = contains_another_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream = strictly_to_left_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream = strictly_to_right_of_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let postgresql_type_tokens_where_element_included_lower_bound_token_stream = included_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                            //     &postgresql_type_not_null_upper_camel_case,
-                            //     &range_type,
-                            //     &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            //     &dot_zero_token_stream,
-                            // );
-                            // let postgresql_type_tokens_where_element_excluded_upper_bound_token_stream = excluded_upper_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(
-                            //     &postgresql_type_not_null_upper_camel_case,
-                            //     &range_type,
-                            //     &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            //     &dot_zero_token_stream,
-                            // );
-                            // let postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream = greater_than_lower_bound.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let postgresql_type_tokens_where_element_overlap_with_range_token_stream = overlap_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let postgresql_type_tokens_where_element_adjacent_with_range_token_stream = adjacent_with_range.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case);
-                            // let maybe_postgresql_type_tokens_where_element_range_length_token_stream: &dyn quote::ToTokens = match &range_type_should_impl_range_length {
-                            //     ShouldImplRangeLength::True => &range_length.generate_postgresql_type_tokens_where_element_variant_handle_token_stream(&postgresql_type_not_null_upper_camel_case),
-                            //     ShouldImplRangeLength::False => &proc_macro2_token_stream_new,
-                            // };
-                            quote::quote! {
-                                // #postgresql_type_tokens_where_element_value_is_contained_within_range_token_stream
-                                // #postgresql_type_tokens_where_element_contains_another_range_token_stream
-                                // #postgresql_type_tokens_where_element_strictly_to_left_of_range_token_stream
-                                // #postgresql_type_tokens_where_element_strictly_to_right_of_range_token_stream
-                                // #postgresql_type_tokens_where_element_included_lower_bound_token_stream
-                                // #postgresql_type_tokens_where_element_excluded_upper_bound_token_stream
-                                // #postgresql_type_tokens_where_element_greater_than_lower_bound_token_stream
-                                // #postgresql_type_tokens_where_element_overlap_with_range_token_stream
-                                // #postgresql_type_tokens_where_element_adjacent_with_range_token_stream
-                                // #maybe_postgresql_type_tokens_where_element_range_length_token_stream
-                            }
-                        },
-                        postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
-                    };
                     let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&{
                         let mut value: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = vec![
                             &equal,
@@ -3099,8 +3048,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         value
                     });
                     quote::quote! {
-                        // #postgresql_type_tokens_where_element_equal_where_operator_type_ident_token_stream
-                        #maybe_filters_token_stream
                         #postgresql_type_tokens_where_element_token_stream
                     }
                 };

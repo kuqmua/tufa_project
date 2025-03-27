@@ -661,51 +661,6 @@ pub fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ide
     )
 }
 
-pub enum WhereOperatorType<'a> {
-    Ident(&'a dyn quote::ToTokens),
-    FieldType { field_type: &'a dyn quote::ToTokens, default_initialization_token_stream: &'a dyn quote::ToTokens },
-}
-impl WhereOperatorType<'_> {
-    fn type_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(value) => quote::quote! {#value},
-            WhereOperatorType::FieldType { field_type, .. } => quote::quote! {#field_type},
-        }
-    }
-    fn std_option_option_type_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(value) => quote::quote! {std::option::Option<#value>},
-            WhereOperatorType::FieldType { field_type, .. } => quote::quote! {std::option::Option<#field_type>},
-        }
-    }
-    fn additional_bind_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(_) => quote::quote! {.0},
-            WhereOperatorType::FieldType { .. } => proc_macro2::TokenStream::new(),
-        }
-    }
-    fn default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(_) => {
-                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
-            }
-            WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {#default_initialization_token_stream},
-        }
-    }
-    fn std_option_option_default_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            WhereOperatorType::Ident(_) => {
-                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
-            }
-            WhereOperatorType::FieldType { field_type: _, default_initialization_token_stream } => quote::quote! {Some(#default_initialization_token_stream)},
-        }
-    }
-}
-
 pub enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,

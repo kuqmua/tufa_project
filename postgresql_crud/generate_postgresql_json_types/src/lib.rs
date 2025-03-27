@@ -337,7 +337,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             
             let is_vec_element_type = postgresql_json_type_variant.is_vec_element_type();
 
-            let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
+            let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
                 let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
                 vec.push(&length_equal);
                 vec.push(&length_more_than);
