@@ -10,9 +10,10 @@ pub enum PostgresqlTypeNotNullOrNullable {
 pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::WhereOperatorName>,
     postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
+    let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_display(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;

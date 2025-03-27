@@ -2683,7 +2683,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         variants,
                         &postgresql_type_not_null_upper_camel_case,
-                        &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
+                        &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
                     )
                 };
