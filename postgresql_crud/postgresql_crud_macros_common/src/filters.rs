@@ -59,6 +59,10 @@ impl WhereOperatorName for PostgresqlTypeFilter {
             Self::RangeLength => &naming::RangeLengthUpperCamelCase,
         }
     }
+    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
+        let value = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
+        quote::quote!{#value}
+    }
     fn has_generic(&self) -> std::primitive::bool {
         match &self {
             Self::Equal => true,
@@ -141,6 +145,10 @@ impl WhereOperatorName for PostgresqlJsonTypeFilter {
             Self::AllElementsCaseInsensitiveRegularExpression => &naming::AllElementsCaseInsensitiveRegularExpressionUpperCamelCase,
         }
     }
+    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
+        let value = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
+        quote::quote!{#value}
+    }
     fn has_generic(&self) -> std::primitive::bool {
         match &self {
             Self::Equal => true,
@@ -170,5 +178,6 @@ impl WhereOperatorName for PostgresqlJsonTypeFilter {
 
 pub trait WhereOperatorName {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
+    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
     fn has_generic(&self) -> std::primitive::bool;
 }

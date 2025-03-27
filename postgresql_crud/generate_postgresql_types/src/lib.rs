@@ -2680,7 +2680,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let postgresql_type_not_null_or_nullable_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_where_element_token_stream = {
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName>| {
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_token_stream(
+                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         variants,
                         &postgresql_type_not_null_upper_camel_case,
                         &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
