@@ -313,63 +313,38 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_ident_where_element_token_stream = {
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
 
-            let equal = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal;
-
-            let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = vec![&equal];
-
-            let length_equal = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual;
-            let length_more_than = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan;
-
-            let position_equal = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual;
-            let position_greater_than = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan;
-            let position_case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression;
-            let position_case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression;
-            let contains_all_elements_of_array = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray;
-            // let contained_in_array = postgresql_crud_macros_common::ContainedInArray;
-            let overlaps_with_array = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray;
-            let all_elements_equal = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual;
-            let contains_element_greater_than = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan;
-            let all_elements_greater_than = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan;
-            let contains_element_case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression;
-            let contains_element_case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression;
-            let all_elements_case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression;
-            let all_elements_case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression;
+            let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = vec![
+                &postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal
+            ];
             
             let is_vec_element_type = postgresql_json_type_variant.is_vec_element_type();
 
             let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
                 let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
-                vec.push(&length_equal);
-                vec.push(&length_more_than);
+                vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
+                vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                 if is_vec_element_type {
-                    vec.push(&position_equal);
-                    vec.push(&contains_all_elements_of_array);
-                    vec.push(&overlaps_with_array);
-                    vec.push(&all_elements_equal);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual);
                 }
                 vec
             };
 
-            let postgresql_json_type_where_element_number_token_stream = {
-                //todo maybe remove ident, field_type from arguments. variant is enough
-                let greater_than = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan;
-                let between = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between;
-                let in_handle = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In;
-                //todo write wrapper around it with reuse parameters
-                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                    &{
-                        let mut vec = common_postgresql_json_type_filters_variants.clone();
-                        vec.push(&greater_than);
-                        vec.push(&between);
-                        vec.push(&in_handle);
-                        vec
-                    },
-                    &postgresql_json_type_ident_wrapper,
-                    &ident_where_element_upper_camel_case,
-                    &ident_where_element_upper_camel_case,
-                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                )
-            };
+            let postgresql_json_type_where_element_number_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                &{
+                    let mut vec = common_postgresql_json_type_filters_variants.clone();
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In);
+                    vec
+                },
+                &postgresql_json_type_ident_wrapper,
+                &ident_where_element_upper_camel_case,
+                &ident_where_element_upper_camel_case,
+                &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+            );
             let postgresql_json_type_where_element_bool_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &common_postgresql_json_type_filters_variants,
                 &postgresql_json_type_ident_wrapper,
@@ -377,29 +352,25 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &ident_where_element_upper_camel_case,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
-            let postgresql_json_type_where_element_string_token_stream = {
-                let case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression;
-                let case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression;
-                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                    &{
-                        let mut vec = common_postgresql_json_type_filters_variants.clone();
-                        vec.push(&case_sensitive_regular_expression);
-                        vec.push(&case_insensitive_regular_expression);
-                        vec
-                    },
-                    &postgresql_json_type_ident_wrapper,
-                    &ident_where_element_upper_camel_case,
-                    &ident_where_element_upper_camel_case,
-                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                )
-            };
+            let postgresql_json_type_where_element_string_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                &{
+                    let mut vec = common_postgresql_json_type_filters_variants.clone();
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression);
+                    vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression);
+                    vec
+                },
+                &postgresql_json_type_ident_wrapper,
+                &ident_where_element_upper_camel_case,
+                &ident_where_element_upper_camel_case,
+                &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+            );
 
             let postgresql_json_type_where_element_vec_number_token_stream = {
                 let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                 if is_vec_element_type {
-                    filters_variants.push(&position_greater_than);
-                    filters_variants.push(&contains_element_greater_than);
-                    filters_variants.push(&all_elements_greater_than);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
@@ -422,12 +393,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_where_element_vec_string_token_stream = {
                 let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                 if is_vec_element_type {
-                    filters_variants.push(&position_case_sensitive_regular_expression);
-                    filters_variants.push(&position_case_insensitive_regular_expression);
-                    filters_variants.push(&contains_element_case_sensitive_regular_expression);
-                    filters_variants.push(&contains_element_case_insensitive_regular_expression);
-                    filters_variants.push(&all_elements_case_sensitive_regular_expression);
-                    filters_variants.push(&all_elements_case_insensitive_regular_expression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
+                    filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
