@@ -116,34 +116,7 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
-            let type_token_stream = if 
-            "Equal" == &element_upper_camel_case.to_string() ||
-            "GreaterThan" == &element_upper_camel_case.to_string() ||
-            "Between" == &element_upper_camel_case.to_string() ||
-            "In" == &element_upper_camel_case.to_string() ||
-            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "Before" == &element_upper_camel_case.to_string() ||
-            "CurrentDate" == &element_upper_camel_case.to_string() ||
-            "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
-            "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
-            "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
-            "CurrentTime" == &element_upper_camel_case.to_string() ||
-            "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
-            "LengthEqual" == &element_upper_camel_case.to_string() ||
-            "LengthMoreThan" == &element_upper_camel_case.to_string() ||
-            "EqualToEncodedStringRepresentation" == &element_upper_camel_case.to_string() ||
-            "ValueIsContainedWithinRange" == &element_upper_camel_case.to_string() ||
-            "ContainsAnotherRange" == &element_upper_camel_case.to_string() ||
-            "StrictlyToLeftOfRange" == &element_upper_camel_case.to_string() ||
-            "StrictlyToRightOfRange" == &element_upper_camel_case.to_string() ||
-            "IncludedLowerBound" == &element_upper_camel_case.to_string() ||
-            "ExcludedUpperBound" == &element_upper_camel_case.to_string() ||
-            "GreaterThanLowerBound" == &element_upper_camel_case.to_string() ||
-            "OverlapWithRange" == &element_upper_camel_case.to_string() ||
-            "AdjacentWithRange" == &element_upper_camel_case.to_string() ||
-            "RangeLength" == &element_upper_camel_case.to_string()
-            {
+            let type_token_stream = {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
                 let maybe_generic_token_stream = if
@@ -163,11 +136,6 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
                     quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 };
                 quote::quote! {crate::where_element_filters::#postgresql_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
-            }
-            else 
-            {
-                let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote! {#element_upper_camel_case});
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {#element_upper_camel_case(#type_token_stream)}
         });
@@ -259,39 +227,12 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             //todo temp if - need to remove it later
-            let type_token_stream = if 
-            "Equal" == &element_upper_camel_case.to_string() ||
-            "GreaterThan" == &element_upper_camel_case.to_string() ||
-            "Between" == &element_upper_camel_case.to_string() ||
-            "In" == &element_upper_camel_case.to_string() ||
-            "CaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "CaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "LengthEqual" == &element_upper_camel_case.to_string() ||
-            "LengthMoreThan" == &element_upper_camel_case.to_string() ||
-            "PositionEqual" == &element_upper_camel_case.to_string() ||
-            "PositionGreaterThan" == &element_upper_camel_case.to_string() ||
-            "PositionCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string()  ||
-            "PositionCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "ContainsAllElementsOfArray" == &element_upper_camel_case.to_string() ||
-            // "ContainedInArray" == &element_upper_camel_case.to_string() ||
-            "OverlapsWithArray" == &element_upper_camel_case.to_string() ||
-            "AllElementsEqual" == &element_upper_camel_case.to_string() ||
-            "ContainsElementGreaterThan" == &element_upper_camel_case.to_string() ||
-            "AllElementsGreaterThan" == &element_upper_camel_case.to_string() ||
-            "ContainsElementCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "ContainsElementCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "AllElementsCaseSensitiveRegularExpression" == &element_upper_camel_case.to_string() ||
-            "AllElementsCaseInsensitiveRegularExpression" == &element_upper_camel_case.to_string()
-            //  ||
-            // "EqualSecondDimension" == &element_upper_camel_case.to_string() ||
-            {
+            let type_token_stream = {
                 let postgresql_json_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
                 //todo rewrite it better
                 let maybe_generic_token_stream = if
                     "LengthEqual" == &element_upper_camel_case.to_string() ||
                     "LengthMoreThan" == &element_upper_camel_case.to_string() 
-                    // ||
-                    //
                 {
                     proc_macro2::TokenStream::new()
                 }
@@ -299,11 +240,6 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
                     quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 };
                 quote::quote! {crate::where_element_filters::#postgresql_json_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
-            }
-            else 
-            {
-                let value = format!("{variant_type_prefix_upper_camel_case}{}", quote::quote! {#element_upper_camel_case});
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             quote::quote! {#element_upper_camel_case(#type_token_stream)}
         });
