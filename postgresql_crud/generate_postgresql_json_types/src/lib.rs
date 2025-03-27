@@ -336,58 +336,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let all_elements_case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression;
             
             let is_vec_element_type = postgresql_json_type_variant.is_vec_element_type();
-            let (
-                // maybe_postgresql_json_type_ident_where_element_position_equal,
-                // maybe_postgresql_json_type_ident_where_element_position_greater_than,
-                // maybe_postgresql_json_type_ident_where_element_position_case_sensitive_regular_expression,
-                // maybe_postgresql_json_type_ident_where_element_position_case_insensitive_regular_expression,
-                // maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array,
-                // maybe_postgresql_json_type_ident_where_element_contained_in_array,
-                maybe_postgresql_json_type_ident_where_element_overlaps_with_array,
-                maybe_postgresql_json_type_ident_where_element_all_elements_equal,
-                maybe_postgresql_json_type_ident_where_element_contains_element_greater_than,
-                maybe_postgresql_json_type_ident_where_element_all_elements_greater_than,
-                maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression,
-                maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression,
-                maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression,
-                maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression,
-            ) = if is_vec_element_type {
-                (
-                    //todo maybe should use value type in regular expression
-                    // Some(&position_equal),
-                    // Some(&position_greater_than),
-                    // Some(&position_case_sensitive_regular_expression),
-                    // Some(&position_case_insensitive_regular_expression),
-                    // Some(&contains_all_elements_of_array),
-                    // Some(&contained_in_array),
-                    Some(&overlaps_with_array),
-                    Some(&all_elements_equal),
-                    Some(&contains_element_greater_than),
-                    Some(&all_elements_greater_than),
-                    Some(&contains_element_case_sensitive_regular_expression),
-                    Some(&contains_element_case_insensitive_regular_expression),
-                    Some(&all_elements_case_sensitive_regular_expression),
-                    Some(&all_elements_case_insensitive_regular_expression),
-                )
-            }
-            else {
-                (
-                    // None,
-                    // None,
-                    // None,
-                    // None,
-                    // None,
-                    // None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                )
-            };
 
             let mut common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
                 let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
@@ -396,26 +344,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 if is_vec_element_type {
                     vec.push(&position_equal);
                     vec.push(&contains_all_elements_of_array);
+                    vec.push(&overlaps_with_array);
+                    vec.push(&all_elements_equal);
                 }
                 vec
             };
-
-            // if let Some(value) = maybe_postgresql_json_type_ident_where_element_position_equal {
-            //     common_postgresql_json_type_vec_filters_variants.push(value);
-            // }
-            // if let Some(value) = maybe_postgresql_json_type_ident_where_element_contains_all_elements_of_array {
-            //     common_postgresql_json_type_vec_filters_variants.push(value);
-            // }
-            //will not use it coz do not understand how it works
-            // if let Some(value) = maybe_postgresql_json_type_ident_where_element_contained_in_array {
-            //     common_postgresql_json_type_vec_filters_variants.push(value);
-            // }
-            if let Some(value) = maybe_postgresql_json_type_ident_where_element_overlaps_with_array {
-                common_postgresql_json_type_vec_filters_variants.push(value);
-            }
-            if let Some(value) = maybe_postgresql_json_type_ident_where_element_all_elements_equal {
-                common_postgresql_json_type_vec_filters_variants.push(value);
-            }
 
             let postgresql_json_type_where_element_number_token_stream = {
                 //todo maybe remove ident, field_type from arguments. variant is enough
@@ -464,13 +397,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let postgresql_json_type_where_element_vec_number_token_stream = {
                 let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
                 if is_vec_element_type {
-                    filters_variants.push(&position_greater_than);//here
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_contains_element_greater_than {
-                    filters_variants.push(value);
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_all_elements_greater_than {
-                    filters_variants.push(value);
+                    filters_variants.push(&position_greater_than);
+                    filters_variants.push(&contains_element_greater_than);
+                    filters_variants.push(&all_elements_greater_than);
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_json_token_stream(
                     &filters_variants,
@@ -495,18 +424,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 if is_vec_element_type {
                     filters_variants.push(&position_case_sensitive_regular_expression);
                     filters_variants.push(&position_case_insensitive_regular_expression);
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_contains_element_case_sensitive_regular_expression {
-                    filters_variants.push(value);
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_contains_element_case_insensitive_regular_expression {
-                    filters_variants.push(value);
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_all_elements_case_sensitive_regular_expression {
-                    filters_variants.push(value);
-                }
-                if let Some(value) = maybe_postgresql_json_type_ident_where_element_all_elements_case_insensitive_regular_expression {
-                    filters_variants.push(value);
+                    filters_variants.push(&contains_element_case_sensitive_regular_expression);
+                    filters_variants.push(&contains_element_case_insensitive_regular_expression);
+                    filters_variants.push(&all_elements_case_sensitive_regular_expression);
+                    filters_variants.push(&all_elements_case_insensitive_regular_expression);
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_refactoring_json_token_stream(
                     &filters_variants,
