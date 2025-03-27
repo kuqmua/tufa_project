@@ -115,25 +115,14 @@ pub fn generate_postgresql_type_where_element_refactoring_token_stream(
     let postgresql_type_tokens_where_element_token_stream = {
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
-            //todo temp if - need to remove it later
             let type_token_stream = {
                 let postgresql_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
-                //todo rewrite it better
-                let maybe_generic_token_stream = if
-                    "CurrentDate" == &element_upper_camel_case.to_string() ||
-                    "GreaterThanCurrentDate" == &element_upper_camel_case.to_string() ||
-                    "CurrentTimestamp" == &element_upper_camel_case.to_string() ||
-                    "GreaterThanCurrentTimestamp" == &element_upper_camel_case.to_string() ||
-                    "CurrentTime" == &element_upper_camel_case.to_string() ||
-                    "GreaterThanCurrentTime" == &element_upper_camel_case.to_string() ||
-                    "LengthEqual" == &element_upper_camel_case.to_string() ||
-                    "LengthMoreThan" == &element_upper_camel_case.to_string() ||
-                    "RangeLength" == &element_upper_camel_case.to_string()
-                {
-                    proc_macro2::TokenStream::new()
+                let maybe_generic_token_stream = if element.has_generic() {
+                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 }
                 else {
-                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
+                    
+                    proc_macro2::TokenStream::new()
                 };
                 quote::quote! {crate::where_element_filters::#postgresql_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
             };
@@ -226,18 +215,13 @@ pub fn generate_postgresql_type_where_element_refactoring_json_token_stream(
     let postgresql_type_tokens_where_element_token_stream = {
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
-            //todo temp if - need to remove it later
             let type_token_stream = {
                 let postgresql_json_type_where_element_self_upper_camel_case = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_tokens(&element_upper_camel_case);
-                //todo rewrite it better
-                let maybe_generic_token_stream = if
-                    "LengthEqual" == &element_upper_camel_case.to_string() ||
-                    "LengthMoreThan" == &element_upper_camel_case.to_string() 
-                {
-                    proc_macro2::TokenStream::new()
+                let maybe_generic_token_stream = if element.has_generic() {
+                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 }
                 else {
-                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
+                    proc_macro2::TokenStream::new()
                 };
                 quote::quote! {crate::where_element_filters::#postgresql_json_type_where_element_self_upper_camel_case #maybe_generic_token_stream}
             };
