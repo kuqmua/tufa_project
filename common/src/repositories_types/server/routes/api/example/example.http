@@ -40,371 +40,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "std_primitive_i16_as_small_int2_not_null": 0,
     "std_primitive_i16_as_small_int2_nullable": 0,
-    "std_primitive_i32_as_int4_not_null": 0,
-    "std_primitive_i32_as_int4_nullable": 0,
-    "std_primitive_i64_as_big_int8_not_null": 0,
-    "std_primitive_i64_as_big_int8_nullable": 0,
-    "std_primitive_f32_as_float4_not_null": 0.0,
-    "std_primitive_f32_as_float4_nullable": 0.0,
-    "std_primitive_f64_as_float8_not_null": 0.0,
-    "std_primitive_f64_as_float8_nullable": 0.0,
-    "std_primitive_i16_as_small_serial_init_by_postgres_not_null": null,
-    "std_primitive_i32_as_serial_init_by_postgres_not_null": null,
-    "std_primitive_i64_as_big_serial_init_by_postgres_not_null": null,
     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null,
-    "sqlx_postgres_types_pg_money_as_money_not_null": 0,
-    "sqlx_postgres_types_pg_money_as_money_nullable": 0,
-    "sqlx_types_decimal_as_numeric_not_null": "0",
-    "sqlx_types_decimal_as_numeric_nullable": "0",
-    "sqlx_types_big_decimal_as_numeric_not_null": {
-      "digits": {
-        "sign": "NoSign",
-        "digits": []
-      },
-      "scale": 0
-    },
-    "sqlx_types_big_decimal_as_numeric_nullable": {
-      "digits": {
-        "sign": "NoSign",
-        "digits": []
-      },
-      "scale": 0
-    },
-    "std_primitive_bool_as_bool_not_null": false,
-    "std_primitive_bool_as_bool_nullable": false,
-    "std_string_string_as_char_n_not_null": "",
-    "std_string_string_as_char_n_nullable": "",
-    "std_string_string_as_varchar_not_null": "",
-    "std_string_string_as_varchar_nullable": "",
-    "std_string_string_as_text_not_null": "",
-    "std_string_string_as_text_nullable": "",
-    "std_vec_vec_std_primitive_u8_as_bytea_not_null": [
-      0
-    ],
-    "std_vec_vec_std_primitive_u8_as_bytea_nullable": [
-      0
-    ],
-    "sqlx_types_chrono_naive_time_as_time_not_null": "00:00:00",
-    "sqlx_types_chrono_naive_time_as_time_nullable": "00:00:00",
-    "sqlx_types_time_time_as_time_not_null": [
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_time_as_time_nullable": [
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_postgres_types_pg_interval_as_interval_not_null": {
-      "months": 0,
-      "days": 0,
-      "microseconds": 0
-    },
-    "sqlx_postgres_types_pg_interval_as_interval_nullable": {
-      "months": 0,
-      "days": 0,
-      "microseconds": 0
-    },
-    "sqlx_types_time_date_as_date_not_null": {
-      "year": 0,
-      "month": 1,
-      "day": 1
-    },
-    "sqlx_types_time_date_as_date_nullable": {
-      "year": 0,
-      "month": 1,
-      "day": 1
-    },
-    "sqlx_types_chrono_naive_date_as_date_not_null": "1970-01-01",
-    "sqlx_types_chrono_naive_date_as_date_nullable": "1970-01-01",
-    "chrono_naive_date_time_as_timestamp_not_null": "1970-01-01T00:00:00",
-    "chrono_naive_date_time_as_timestamp_nullable": "1970-01-01T00:00:00",
-    "sqlx_types_time_primitive_date_time_as_timestamp_not_null": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_time_primitive_date_time_as_timestamp_nullable": [
-      0,
-      1,
-      0,
-      0,
-      0,
-      0
-    ],
-    "chrono_date_time_chrono_utc_as_timestamp_tz_not_null": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_utc_as_timestamp_tz_nullable": "1970-01-01T00:00:00Z",
-    "chrono_date_time_chrono_local_as_timestamp_tz_not_null": "1970-01-01T03:00:00+03:00",
-    "chrono_date_time_chrono_local_as_timestamp_tz_nullable": "1970-01-01T03:00:00+03:00",
-    "uuid_uuid_as_uuid_v4_init_by_postgres_not_null": null,
-    "uuid_uuid_as_uuid_init_by_client_not_null": "00000000-0000-0000-0000-000000000000",
-    "uuid_uuid_as_uuid_init_by_client_nullable": "00000000-0000-0000-0000-000000000000",
-    "sqlx_types_ipnetwork_ip_network_as_inet_not_null": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_inet_nullable": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_cidr_not_null": "0.0.0.0/0",
-    "sqlx_types_ipnetwork_ip_network_as_cidr_nullable": "0.0.0.0/0",
-    "mac_address_mac_address_as_mac_addr_not_null": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "mac_address_mac_address_as_mac_addr_nullable": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "sqlx_types_bit_vec_as_bit_not_null": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_bit_nullable": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_varbit_not_null": [
-      false
-    ],
-    "sqlx_types_bit_vec_as_varbit_nullable": [
-      false
-    ],
-    "pg_range_std_primitive_i32_as_int4_range_not_null": {
-      "start": {
-        "Included": 0
-      },
-      "end": {
-        "Excluded": 0
-      }
-    },
-    "pg_range_std_primitive_i32_as_int4_range_nullable": {
-      "start": {
-        "Included": 0
-      },
-      "end": {
-        "Excluded": 0
-      }
-    },
-    "pg_range_std_primitive_i64_as_int8_range_not_null": {
-      "start": {
-        "Included": 0
-      },
-      "end": {
-        "Excluded": 0
-      }
-    },
-    "pg_range_std_primitive_i64_as_int8_range_nullable": {
-      "start": {
-        "Included": 0
-      },
-      "end": {
-        "Excluded": 0
-      }
-    },
-    "pg_range_decimal_as_num_range_not_null": {
-      "start": {
-        "Included": "0"
-      },
-      "end": {
-        "Excluded": "0"
-      }
-    },
-    "pg_range_decimal_as_num_range_nullable": {
-      "start": {
-        "Included": "0"
-      },
-      "end": {
-        "Excluded": "0"
-      }
-    },
-    "pg_range_sqlx_types_big_decimal_as_num_range_not_null": {
-      "start": {
-        "Included": {
-          "digits": {
-            "sign": "NoSign",
-            "digits": []
-          },
-          "scale": 0
-        }
-      },
-      "end": {
-        "Excluded": {
-          "digits": {
-            "sign": "NoSign",
-            "digits": []
-          },
-          "scale": 0
-        }
-      }
-    },
-    "pg_range_sqlx_types_big_decimal_as_num_range_nullable": {
-      "start": {
-        "Included": {
-          "digits": {
-            "sign": "NoSign",
-            "digits": []
-          },
-          "scale": 0
-        }
-      },
-      "end": {
-        "Excluded": {
-          "digits": {
-            "sign": "NoSign",
-            "digits": []
-          },
-          "scale": 0
-        }
-      }
-    },
-    "pg_range_sqlx_types_time_date_as_date_range_not_null": {
-      "start": {
-        "Included": {
-          "year": 0,
-          "month": 1,
-          "day": 1
-        }
-      },
-      "end": {
-        "Excluded": {
-          "year": 0,
-          "month": 1,
-          "day": 1
-        }
-      }
-    },
-    "pg_range_sqlx_types_time_date_as_date_range_nullable": {
-      "start": {
-        "Included": {
-          "year": 0,
-          "month": 1,
-          "day": 1
-        }
-      },
-      "end": {
-        "Excluded": {
-          "year": 0,
-          "month": 1,
-          "day": 1
-        }
-      }
-    },
-    "pg_range_chrono_naive_date_as_date_range_not_null": {
-      "start": {
-        "Included": "1970-01-01"
-      },
-      "end": {
-        "Excluded": "1970-01-01"
-      }
-    },
-    "pg_range_chrono_naive_date_as_date_range_nullable": {
-      "start": {
-        "Included": "1970-01-01"
-      },
-      "end": {
-        "Excluded": "1970-01-01"
-      }
-    },
-    "pg_range_naive_date_time_as_timestamp_range_not_null": {
-      "start": {
-        "Included": "1970-01-01T00:00:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T00:00:00"
-      }
-    },
-    "pg_range_naive_date_time_as_timestamp_range_nullable": {
-      "start": {
-        "Included": "1970-01-01T00:00:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T00:00:00"
-      }
-    },
-    "pg_range_time_primitive_date_time_as_timestamp_range_not_null": {
-      "start": {
-        "Included": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
-      },
-      "end": {
-        "Excluded": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    "pg_range_time_primitive_date_time_as_timestamp_range_nullable": {
-      "start": {
-        "Included": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
-      },
-      "end": {
-        "Excluded": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    "pg_range_date_time_utc_as_timestamp_tz_range_not_null": {
-      "start": {
-        "Included": "1970-01-01T00:00:00Z"
-      },
-      "end": {
-        "Excluded": "1970-01-01T00:00:00Z"
-      }
-    },
-    "pg_range_date_time_utc_as_timestamp_tz_range_nullable": {
-      "start": {
-        "Included": "1970-01-01T00:00:00Z"
-      },
-      "end": {
-        "Excluded": "1970-01-01T00:00:00Z"
-      }
-    },
-    "pg_range_date_time_local_as_timestamp_tz_range_not_null": {
-      "start": {
-        "Included": "1970-01-01T03:00:00+03:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T03:00:00+03:00"
-      }
-    },
-    "pg_range_date_time_local_as_timestamp_tz_range_nullable": {
-      "start": {
-        "Included": "1970-01-01T03:00:00+03:00"
-      },
-      "end": {
-        "Excluded": "1970-01-01T03:00:00+03:00"
-      }
-    },
     "object_animal_as_jsonb_not_null": {
       "std_primitive_i8": 0
     }
@@ -441,7 +77,40 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  # "std_primitive_i16_as_small_int2_not_null": {
+  "std_primitive_i16_as_small_int2_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
+  # "std_primitive_i16_as_small_int2_nullable": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
@@ -505,166 +174,57 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "object_animal_as_jsonb_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      # {
-      #   "StdVecVecUuidUuid": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             "9822de6d-6888-4094-90c1-50b0fecee0b7"
-      #           ]
-      #         }
-      #       }
-      #       # ,
-      #       # {
-      #       #   "LengthEqual": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "LengthMoreThan": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionEqual": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       "2f6f7715-dac0-4ea4-baf5-cfb5e107d11e"
-      #       #     ],
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "ContainsAllElementsOfArray": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       [
-      #       #         "49674e87-c439-4d82-8c6e-d14a92f5ba5e"
-      #       #       ]
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "OverlapsWithArray": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       [
-      #       #         "47d6d3f2-1a62-490f-9f87-3c714b9796a8"
-      #       #       ]
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "AllElementsEqual": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": [
-      #       #       "828958f4-17a4-4cc6-afd0-7cb2819ff827"
-      #       #     ]
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionCaseSensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": "",
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "PositionCaseInsensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": "",
-      #       #     "position": 0
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "ContainsElementCaseSensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": ""
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "ContainsElementCaseInsensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": ""
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "AllElementsCaseSensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": ""
-      #       #   }
-      #       # },
-      #       # {
-      #       #   "AllElementsCaseInsensitiveRegularExpression": {
-      #       #     "logical_operator": "Or",
-      #       #     "value": ""
-      #       #   }
-      #       # }
-      #     ]
-      #   }
-      # },
-      {
-        "StdPrimitiveI8": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": 3
-              }
-            }
-            # ,
-            # {
-            #   "GreaterThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "Between": {
-            #     "logical_operator": "Or",
-            #     "start": 0,
-            #     "end": 0
-            #   }
-            # },
-            # {
-            #   "In": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       0
-            #     ]
-            #   }
-            # }
-          ]
-        }
-      }
-    ]
-  },
+  # "object_animal_as_jsonb_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "StdPrimitiveI8": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           {
+  #             "Equal": {
+  #               "logical_operator": "Or",
+  #               "value": 0
+  #             }
+  #           },
+  #           {
+  #             "GreaterThan": {
+  #               "logical_operator": "Or",
+  #               "value": 0
+  #             }
+  #           },
+  #           {
+  #             "Between": {
+  #               "logical_operator": "Or",
+  #               "start": 0,
+  #               "end": 0
+  #             }
+  #           },
+  #           {
+  #             "In": {
+  #               "logical_operator": "Or",
+  #               "value": [
+  #                 0
+  #               ]
+  #             }
+  #           }
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   "select": [
     {
       "std_primitive_i16_as_small_int2_not_null": null
+    },
+    {
+      "std_primitive_i16_as_small_int2_nullable": null
     },
     {
       "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": null
     },
     {
       "object_animal_as_jsonb_not_null": [
-        {
-          "std_vec_vec_uuid_uuid": {
-            "pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        },
         {
           "std_primitive_i8": {}
         }
@@ -682,6 +242,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
   }
 }
+
 ###
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
