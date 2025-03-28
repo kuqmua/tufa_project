@@ -330,9 +330,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         let field_type = postgresql_type.field_type_token_stream();
         let generate_postgresql_type_not_null_or_nullable = |postgresql_type_not_null_or_nullable: &postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable| -> proc_macro2::TokenStream {
             let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
+            let postgresql_type_nullable_upper_camel_case = naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &postgresql_type_not_null_upper_camel_case,
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &postgresql_type_nullable_upper_camel_case,
             };
             let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &field_type,
@@ -2688,6 +2689,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             }
                             else {
                                 &postgresql_type_not_null_upper_camel_case
+                                // &postgresql_type_nullable_upper_camel_case //todo
                             }
                         },//todo
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
