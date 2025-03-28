@@ -8,7 +8,7 @@ pub enum PostgresqlTypeNotNullOrNullable {
 }
 
 pub fn generate_postgresql_type_where_element_token_stream(
-    variants: &std::vec::Vec<&dyn crate::WhereOperatorName>,
+    variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
     postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,

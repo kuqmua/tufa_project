@@ -312,11 +312,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_variant.postgresql_json_type_handle);
         let postgresql_json_type_ident_where_element_token_stream = {
             let is_vec_element_type = postgresql_json_type_variant.is_vec_element_type();
-            let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = vec![
+            let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
                 &postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal
             ];
-            let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = {
-                let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
+            let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = {
+                let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
                 vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
                 vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                 if is_vec_element_type {
@@ -358,7 +358,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             );
 
             let postgresql_json_type_where_element_vec_number_token_stream = {
-                let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
                 if is_vec_element_type {
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan);
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
@@ -372,7 +372,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 )
             };
             let postgresql_json_type_where_element_vec_bool_token_stream = {
-                let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
                     &postgresql_json_type_ident_wrapper,
@@ -381,7 +381,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 )
             };
             let postgresql_json_type_where_element_vec_string_token_stream = {
-                let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+                let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
                 if is_vec_element_type {
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
@@ -421,18 +421,18 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
 
         //     let equal_second_dimension = postgresql_crud_macros_common::EqualSecondDimension;
 
-        //     let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = vec![&equal_second_dimension];
+        //     let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![&equal_second_dimension];
         //     let common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![postgresql_json_type_ident_where_element_equal_second_dimension_token_stream];
 
         //     // let length_equal_second_dimension = postgresql_crud_macros_common::LengthEqualSecondDimension;
         //     //     &postgresql_json_type_variant,
         //     // );
 
-        //     let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_filters_variants.clone();
+        //     let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
         //     let common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
 
         //     let generate_where_element_vec_string_second_dimension_token_stream = || {
-        //         let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::WhereOperatorName> = common_postgresql_json_type_vec_filters_variants.clone();
+        //         let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
         //         let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
         //         let ident_where_element_second_dimension_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
         //             &filters_variants,

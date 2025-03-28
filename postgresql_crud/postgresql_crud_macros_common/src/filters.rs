@@ -28,7 +28,7 @@ pub enum PostgresqlTypeFilter {
     RangeLength,
     //BitVecPositionEqual,//currently deactivated
 }
-impl WhereOperatorName for PostgresqlTypeFilter {
+impl PostgresqlFilter for PostgresqlTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Equal => &naming::EqualUpperCamelCase,
@@ -199,7 +199,7 @@ pub enum PostgresqlJsonTypeFilter {
     AllElementsCaseSensitiveRegularExpression,
     AllElementsCaseInsensitiveRegularExpression,
 }
-impl WhereOperatorName for PostgresqlJsonTypeFilter {
+impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Equal => &naming::EqualUpperCamelCase,
@@ -333,7 +333,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
     }
 }
 
-pub trait WhereOperatorName {
+pub trait PostgresqlFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
     fn has_generic(&self) -> std::primitive::bool;
