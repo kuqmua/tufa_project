@@ -328,7 +328,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 vec
             };
             let generate_where_element_variants_types_generic_token_stream = |value: std::primitive::bool|-> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
-                &postgresql_json_type_ident_wrapper
+                if value {
+                    &postgresql_json_type_ident_wrapper
+                }
+                else {
+                    &postgresql_json_type_ident_wrapper
+                }
             };
             let postgresql_json_type_where_element_number_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
