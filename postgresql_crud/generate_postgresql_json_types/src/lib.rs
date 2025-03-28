@@ -327,9 +327,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
                 vec
             };
+            let postgresql_json_type_ident_wrapper_is_not_optional = postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+                postgresql_json_type_handle: postgresql_json_type_variant.postgresql_json_type_handle.clone(),
+                postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                    postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                    postgresql_json_type_pattern_type: postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type.clone(),
+                },
+            }.postgresql_json_type_ident_wrapper();
             let generate_where_element_variants_types_generic_token_stream = |value: std::primitive::bool|-> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
                 if value {
-                    &postgresql_json_type_ident_wrapper
+                    &postgresql_json_type_ident_wrapper_is_not_optional
                 }
                 else {
                     &postgresql_json_type_ident_wrapper
