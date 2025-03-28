@@ -934,7 +934,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                                 Ok(Self { logical_operator, value })
                             },
-                            Some(quote::quote!{+ std::cmp::PartialOrd + Clone}),
+                            Some(quote::quote!{+ PartialEq + Clone}),
                             &vec![&value_std_vec_vec_t_field]
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
