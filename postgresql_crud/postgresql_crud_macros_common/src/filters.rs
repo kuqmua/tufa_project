@@ -64,34 +64,7 @@ impl WhereOperatorName for PostgresqlTypeFilter {
         quote::quote!{#value}
     }
     fn has_generic(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => true,
-            Self::GreaterThan => true,
-            Self::Between => true,
-            Self::In => true,
-            Self::CaseSensitiveRegularExpression => true,
-            Self::CaseInsensitiveRegularExpression => true,
-            Self::Before => true,
-            Self::CurrentDate => false,
-            Self::GreaterThanCurrentDate => false,
-            Self::CurrentTimestamp => false,
-            Self::GreaterThanCurrentTimestamp => false,
-            Self::CurrentTime => false,
-            Self::GreaterThanCurrentTime => false,
-            Self::LengthEqual => false,
-            Self::LengthMoreThan => false,
-            Self::EqualToEncodedStringRepresentation => true,
-            Self::ValueIsContainedWithinRange => true,
-            Self::ContainsAnotherRange => true,
-            Self::StrictlyToLeftOfRange => true,
-            Self::StrictlyToRightOfRange => true,
-            Self::IncludedLowerBound => true,
-            Self::ExcludedUpperBound => true,
-            Self::GreaterThanLowerBound => true,
-            Self::OverlapWithRange => true,
-            Self::AdjacentWithRange => true,
-            Self::RangeLength => false,
-        }
+        PostgresqlTypeFilterHasGeneric::try_from(self).is_ok()
     }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         match &self {
@@ -123,7 +96,84 @@ impl WhereOperatorName for PostgresqlTypeFilter {
             Self::RangeLength => true,
         }
     }
+    
 }
+pub enum PostgresqlTypeFilterHasGeneric {
+    Equal,
+    GreaterThan,
+    Between,
+    In,
+    CaseSensitiveRegularExpression,
+    CaseInsensitiveRegularExpression,
+    Before,
+    EqualToEncodedStringRepresentation,
+    ValueIsContainedWithinRange,
+    ContainsAnotherRange,
+    StrictlyToLeftOfRange,
+    StrictlyToRightOfRange,
+    IncludedLowerBound,
+    ExcludedUpperBound,
+    GreaterThanLowerBound,
+    OverlapWithRange,
+    AdjacentWithRange,
+}
+impl IsRelevantOnlyForNotNull for PostgresqlTypeFilterHasGeneric {
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
+        match &self {
+            Self::Equal => false,
+            Self::GreaterThan => true,
+            Self::Between => true,
+            Self::In => false,
+            Self::CaseSensitiveRegularExpression => true,
+            Self::CaseInsensitiveRegularExpression => true,
+            Self::Before => true,
+            Self::EqualToEncodedStringRepresentation => true,
+            Self::ValueIsContainedWithinRange => true,
+            Self::ContainsAnotherRange => true,
+            Self::StrictlyToLeftOfRange => true,
+            Self::StrictlyToRightOfRange => true,
+            Self::IncludedLowerBound => true,
+            Self::ExcludedUpperBound => true,
+            Self::GreaterThanLowerBound => true,
+            Self::OverlapWithRange => true,
+            Self::AdjacentWithRange => true,
+        }
+    }
+}
+impl std::convert::TryFrom<&PostgresqlTypeFilter> for PostgresqlTypeFilterHasGeneric {
+    type Error = ();
+    fn try_from(value: &PostgresqlTypeFilter) -> Result<Self, Self::Error> {
+        match &value {
+            PostgresqlTypeFilter::Equal => Ok(Self::Equal),
+            PostgresqlTypeFilter::GreaterThan => Ok(Self::GreaterThan),
+            PostgresqlTypeFilter::Between => Ok(Self::Between),
+            PostgresqlTypeFilter::In => Ok(Self::In),
+            PostgresqlTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
+            PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+            PostgresqlTypeFilter::Before => Ok(Self::Before),
+            PostgresqlTypeFilter::CurrentDate => Err(()),
+            PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
+            PostgresqlTypeFilter::CurrentTimestamp => Err(()),
+            PostgresqlTypeFilter::GreaterThanCurrentTimestamp => Err(()),
+            PostgresqlTypeFilter::CurrentTime => Err(()),
+            PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
+            PostgresqlTypeFilter::LengthEqual => Err(()),
+            PostgresqlTypeFilter::LengthMoreThan => Err(()),
+            PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Ok(Self::EqualToEncodedStringRepresentation),
+            PostgresqlTypeFilter::ValueIsContainedWithinRange => Ok(Self::ValueIsContainedWithinRange),
+            PostgresqlTypeFilter::ContainsAnotherRange => Ok(Self::ContainsAnotherRange),
+            PostgresqlTypeFilter::StrictlyToLeftOfRange => Ok(Self::StrictlyToLeftOfRange),
+            PostgresqlTypeFilter::StrictlyToRightOfRange => Ok(Self::StrictlyToRightOfRange),
+            PostgresqlTypeFilter::IncludedLowerBound => Ok(Self::IncludedLowerBound),
+            PostgresqlTypeFilter::ExcludedUpperBound => Ok(Self::ExcludedUpperBound),
+            PostgresqlTypeFilter::GreaterThanLowerBound => Ok(Self::GreaterThanLowerBound),
+            PostgresqlTypeFilter::OverlapWithRange => Ok(Self::OverlapWithRange),
+            PostgresqlTypeFilter::AdjacentWithRange => Ok(Self::AdjacentWithRange),
+            PostgresqlTypeFilter::RangeLength => Err(()),
+        }
+    }
+}
+
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypeFilter {
     Equal,
@@ -180,29 +230,7 @@ impl WhereOperatorName for PostgresqlJsonTypeFilter {
         quote::quote!{#value}
     }
     fn has_generic(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => true,
-            Self::GreaterThan => true,
-            Self::Between => true,
-            Self::In => true,
-            Self::CaseSensitiveRegularExpression => true,
-            Self::CaseInsensitiveRegularExpression => true,
-            Self::LengthEqual => false,
-            Self::LengthMoreThan => false,
-            Self::PositionEqual => true,
-            Self::PositionGreaterThan => true,
-            Self::PositionCaseSensitiveRegularExpression => true,
-            Self::PositionCaseInsensitiveRegularExpression => true,
-            Self::ContainsAllElementsOfArray => true,
-            Self::OverlapsWithArray => true,
-            Self::AllElementsEqual => true,
-            Self::ContainsElementGreaterThan => true,
-            Self::AllElementsGreaterThan => true,
-            Self::ContainsElementCaseSensitiveRegularExpression => true,
-            Self::ContainsElementCaseInsensitiveRegularExpression => true,
-            Self::AllElementsCaseSensitiveRegularExpression => true,
-            Self::AllElementsCaseInsensitiveRegularExpression => true,
-        }
+        PostgresqlJsonTypeFilterHasGeneric::try_from(self).is_ok()
     }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         match &self {
@@ -230,10 +258,87 @@ impl WhereOperatorName for PostgresqlJsonTypeFilter {
         }
     }
 }
+pub enum PostgresqlJsonTypeFilterHasGeneric {
+    Equal,
+    GreaterThan,
+    Between,
+    In,
+    CaseSensitiveRegularExpression,
+    CaseInsensitiveRegularExpression,
+    PositionEqual,
+    PositionGreaterThan,
+    PositionCaseSensitiveRegularExpression,
+    PositionCaseInsensitiveRegularExpression,
+    ContainsAllElementsOfArray,
+    OverlapsWithArray,
+    AllElementsEqual,
+    ContainsElementGreaterThan,
+    AllElementsGreaterThan,
+    ContainsElementCaseSensitiveRegularExpression,
+    ContainsElementCaseInsensitiveRegularExpression,
+    AllElementsCaseSensitiveRegularExpression,
+    AllElementsCaseInsensitiveRegularExpression,
+}
+impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
+        match &self {
+            Self::Equal => false,
+            Self::GreaterThan => true,
+            Self::Between => true,
+            Self::In => false,
+            Self::CaseSensitiveRegularExpression => true,
+            Self::CaseInsensitiveRegularExpression => true,
+            Self::PositionEqual => false,
+            Self::PositionGreaterThan => true,
+            Self::PositionCaseSensitiveRegularExpression => true,
+            Self::PositionCaseInsensitiveRegularExpression => true,
+            Self::ContainsAllElementsOfArray => false,
+            Self::OverlapsWithArray => false,
+            Self::AllElementsEqual => false,
+            Self::ContainsElementGreaterThan => true,
+            Self::AllElementsGreaterThan => true,
+            Self::ContainsElementCaseSensitiveRegularExpression => true,
+            Self::ContainsElementCaseInsensitiveRegularExpression => true,
+            Self::AllElementsCaseSensitiveRegularExpression => true,
+            Self::AllElementsCaseInsensitiveRegularExpression => true,
+        }
+    }
+}
+impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterHasGeneric {
+    type Error = ();
+    fn try_from(value: &PostgresqlJsonTypeFilter) -> Result<Self, Self::Error> {
+        match &value {
+            PostgresqlJsonTypeFilter::Equal => Ok(Self::Equal),
+            PostgresqlJsonTypeFilter::GreaterThan => Ok(Self::GreaterThan),
+            PostgresqlJsonTypeFilter::Between => Ok(Self::Between),
+            PostgresqlJsonTypeFilter::In => Ok(Self::In),
+            PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::LengthEqual => Err(()),
+            PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
+            PostgresqlJsonTypeFilter::PositionEqual => Ok(Self::PositionEqual),
+            PostgresqlJsonTypeFilter::PositionGreaterThan => Ok(Self::PositionGreaterThan),
+            PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::ContainsAllElementsOfArray => Ok(Self::ContainsAllElementsOfArray),
+            PostgresqlJsonTypeFilter::OverlapsWithArray => Ok(Self::OverlapsWithArray),
+            PostgresqlJsonTypeFilter::AllElementsEqual => Ok(Self::AllElementsEqual),
+            PostgresqlJsonTypeFilter::ContainsElementGreaterThan => Ok(Self::ContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::AllElementsGreaterThan => Ok(Self::AllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => Ok(Self::ContainsElementCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Ok(Self::AllElementsCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Ok(Self::AllElementsCaseInsensitiveRegularExpression),
+        }
+    }
+}
 
 pub trait WhereOperatorName {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
     fn has_generic(&self) -> std::primitive::bool;
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
+}
+pub trait IsRelevantOnlyForNotNull {
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
 }
