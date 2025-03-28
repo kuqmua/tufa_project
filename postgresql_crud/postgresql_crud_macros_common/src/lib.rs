@@ -9,7 +9,7 @@ pub enum PostgresqlTypeNotNullOrNullable {
 
 pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTypeTokenStream>(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
-    generate_generic_type_token_stream: GenerateGenericTypeTokenStream,
+    generate_where_element_variants_types_generic_token_stream: GenerateGenericTypeTokenStream,
     prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream 
@@ -28,7 +28,7 @@ where
             let type_token_stream = {
                 let prefix_where_element_self_upper_camel_case = element.prefix_where_element_self_upper_camel_case();
                 let maybe_generic_token_stream = if element.has_generic() {
-                    let type_token_stream = generate_generic_type_token_stream(element.is_relevant_only_for_not_null());
+                    let type_token_stream = generate_where_element_variants_types_generic_token_stream(element.is_relevant_only_for_not_null());
                     quote::quote! {<#type_token_stream>}
                 }
                 else {

@@ -2683,8 +2683,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let generate_postgresql_type_not_null_or_nullable_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter>| {
                     postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         variants,
-                        |value: std::primitive::bool|{
-                            if value {
+                        |is_relevant_only_for_not_null: std::primitive::bool|{
+                            if is_relevant_only_for_not_null {
                                 &postgresql_type_not_null_upper_camel_case
                             }
                             else {
