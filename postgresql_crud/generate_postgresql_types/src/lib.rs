@@ -2253,19 +2253,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     )},
                 ),
             };
-            fn generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-                quote::quote! {
-                    impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
-                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                           <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
-                        }
-                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-                            <#field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                        }
-                    }
-                }
-            }
-            let impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_type_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
+            let impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                &postgresql_type_not_null_or_nullable_upper_camel_case,
+                &field_type_handle
+            );
             let impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = {
                 let self_snake_case = naming::SelfSnakeCase;
                 quote::quote! {

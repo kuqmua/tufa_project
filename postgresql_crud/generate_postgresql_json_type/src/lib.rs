@@ -4878,19 +4878,16 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_select_upper_camel_case(#type_token_stream);
                             }
                         };
-                        let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_select_token_stream = {
-                            let content_token_stream = match &postgresql_type {
-                                PostgresqlType::JsonbNotNull => quote::quote!{<sqlx::types::Json<#tokens_select_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
-                                PostgresqlType::JsonbNullable => quote::quote!{<std::option::Option<sqlx::types::Json<#tokens_select_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
-                            };
-                            quote::quote!{
-                                impl sqlx::Type<sqlx::Postgres> for #tokens_as_type_select_upper_camel_case {
-                                    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                        #content_token_stream
-                                    }
+                        let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                            &tokens_as_type_select_upper_camel_case,
+                            &{
+                                let sqlx_types_json_tokens_select_token_stream = quote::quote!{sqlx::types::Json<#tokens_select_upper_camel_case>};
+                                match &postgresql_type {
+                                    PostgresqlType::JsonbNotNull => sqlx_types_json_tokens_select_token_stream,
+                                    PostgresqlType::JsonbNullable => quote::quote!{std::option::Option<#sqlx_types_json_tokens_select_token_stream>},
                                 }
-                            }
-                        };
+                            },
+                        );
                         let impl_sqlx_decode_sqlx_postgres_for_tokens_as_type_select_token_stream = {
                             let content_token_stream = match &postgresql_type {
                                 PostgresqlType::JsonbNotNull => quote::quote!{
@@ -5071,22 +5068,16 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_read_upper_camel_case(#type_token_stream);
                             }
                         };
-                        let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_read_token_stream = {
-                            let content_token_stream = match &postgresql_type {
-                                PostgresqlType::JsonbNullable
-                                => quote::quote!{<std::option::Option<sqlx::types::Json<#tokens_read_upper_camel_case>> as sqlx::Type<sqlx::Postgres>>::type_info()},
-
-                                PostgresqlType::JsonbNotNull
-                                => quote::quote!{<sqlx::types::Json<#tokens_read_upper_camel_case> as sqlx::Type<sqlx::Postgres>>::type_info()},
-                            };
-                            quote::quote!{
-                                impl sqlx::Type<sqlx::Postgres> for #tokens_as_type_read_upper_camel_case {
-                                    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                        #content_token_stream
-                                    }
+                        let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                            &tokens_as_type_read_upper_camel_case,
+                            &{
+                                let sqlx_types_json_tokens_read_token_stream = quote::quote!{sqlx::types::Json<#tokens_read_upper_camel_case>};
+                                match &postgresql_type {
+                                    PostgresqlType::JsonbNotNull => sqlx_types_json_tokens_read_token_stream,
+                                    PostgresqlType::JsonbNullable => quote::quote!{std::option::Option<#sqlx_types_json_tokens_read_token_stream>},
                                 }
                             }
-                        };
+                        );
                         let impl_sqlx_decode_sqlx_postgres_for_tokens_as_type_read_token_stream = {
                             let content_token_stream = match &postgresql_type {
                                 PostgresqlType::JsonbNullable
