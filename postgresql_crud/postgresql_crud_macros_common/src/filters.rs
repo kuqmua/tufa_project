@@ -93,6 +93,36 @@ impl WhereOperatorName for PostgresqlTypeFilter {
             Self::RangeLength => false,
         }
     }
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
+        match &self {
+            Self::Equal => true,
+            Self::GreaterThan => true,
+            Self::Between => true,
+            Self::In => true,
+            Self::CaseSensitiveRegularExpression => true,
+            Self::CaseInsensitiveRegularExpression => true,
+            Self::Before => true,
+            Self::CurrentDate => true,
+            Self::GreaterThanCurrentDate => true,
+            Self::CurrentTimestamp => true,
+            Self::GreaterThanCurrentTimestamp => true,
+            Self::CurrentTime => true,
+            Self::GreaterThanCurrentTime => true,
+            Self::LengthEqual => true,
+            Self::LengthMoreThan => true,
+            Self::EqualToEncodedStringRepresentation => true,
+            Self::ValueIsContainedWithinRange => true,
+            Self::ContainsAnotherRange => true,
+            Self::StrictlyToLeftOfRange => true,
+            Self::StrictlyToRightOfRange => true,
+            Self::IncludedLowerBound => true,
+            Self::ExcludedUpperBound => true,
+            Self::GreaterThanLowerBound => true,
+            Self::OverlapWithRange => true,
+            Self::AdjacentWithRange => true,
+            Self::RangeLength => true,
+        }
+    }
 }
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypeFilter {
@@ -174,10 +204,36 @@ impl WhereOperatorName for PostgresqlJsonTypeFilter {
             Self::AllElementsCaseInsensitiveRegularExpression => true,
         }
     }
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
+        match &self {
+            Self::Equal => true,
+            Self::GreaterThan => true,
+            Self::Between => true,
+            Self::In => true,
+            Self::CaseSensitiveRegularExpression => true,
+            Self::CaseInsensitiveRegularExpression => true,
+            Self::LengthEqual => true,
+            Self::LengthMoreThan => true,
+            Self::PositionEqual => true,
+            Self::PositionGreaterThan => true,
+            Self::PositionCaseSensitiveRegularExpression => true,
+            Self::PositionCaseInsensitiveRegularExpression => true,
+            Self::ContainsAllElementsOfArray => true,
+            Self::OverlapsWithArray => true,
+            Self::AllElementsEqual => true,
+            Self::ContainsElementGreaterThan => true,
+            Self::AllElementsGreaterThan => true,
+            Self::ContainsElementCaseSensitiveRegularExpression => true,
+            Self::ContainsElementCaseInsensitiveRegularExpression => true,
+            Self::AllElementsCaseSensitiveRegularExpression => true,
+            Self::AllElementsCaseInsensitiveRegularExpression => true,
+        }
+    }
 }
 
 pub trait WhereOperatorName {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
     fn has_generic(&self) -> std::primitive::bool;
+    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
 }
