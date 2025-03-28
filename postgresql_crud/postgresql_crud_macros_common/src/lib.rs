@@ -10,6 +10,7 @@ pub enum PostgresqlTypeNotNullOrNullable {
 pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
     postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    // postgresql_type_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
     prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
 ) -> proc_macro2::TokenStream {
@@ -25,6 +26,12 @@ pub fn generate_postgresql_type_where_element_token_stream(
             let type_token_stream = {
                 let prefix_where_element_self_upper_camel_case = element.prefix_where_element_self_upper_camel_case();
                 let maybe_generic_token_stream = if element.has_generic() {
+                    let type_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = if element.is_relevant_only_for_not_null() {
+                        &postgresql_type_not_null_upper_camel_case
+                    }
+                    else {
+                        &postgresql_type_not_null_upper_camel_case
+                    };
                     quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
                 }
                 else {
@@ -286,7 +293,7 @@ impl PostgresqlJsonTypeVariant {
         }
     }
     pub fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
-        format!("{}{}", self.postgresql_json_type_pattern.prefix_stringified(), self.postgresql_json_type_handle,).parse::<proc_macro2::TokenStream>().unwrap()
+        format!("{}{}", self.postgresql_json_type_pattern.prefix_stringified(), self.postgresql_json_type_handle).parse::<proc_macro2::TokenStream>().unwrap()
     }
 
     pub fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
