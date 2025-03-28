@@ -67,33 +67,11 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
         PostgresqlTypeFilterHasGeneric::try_from(self).is_ok()
     }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => true,
-            Self::GreaterThan => true,
-            Self::Between => true,
-            Self::In => true,
-            Self::CaseSensitiveRegularExpression => true,
-            Self::CaseInsensitiveRegularExpression => true,
-            Self::Before => true,
-            Self::CurrentDate => true,
-            Self::GreaterThanCurrentDate => true,
-            Self::CurrentTimestamp => true,
-            Self::GreaterThanCurrentTimestamp => true,
-            Self::CurrentTime => true,
-            Self::GreaterThanCurrentTime => true,
-            Self::LengthEqual => true,
-            Self::LengthMoreThan => true,
-            Self::EqualToEncodedStringRepresentation => true,
-            Self::ValueIsContainedWithinRange => true,
-            Self::ContainsAnotherRange => true,
-            Self::StrictlyToLeftOfRange => true,
-            Self::StrictlyToRightOfRange => true,
-            Self::IncludedLowerBound => true,
-            Self::ExcludedUpperBound => true,
-            Self::GreaterThanLowerBound => true,
-            Self::OverlapWithRange => true,
-            Self::AdjacentWithRange => true,
-            Self::RangeLength => true,
+        if let Ok(value) = PostgresqlTypeFilterHasGeneric::try_from(self) {
+            IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
+        }
+        else {
+            true //coz to not generate useless copies of generic types for optional types
         }
     }
     
@@ -233,28 +211,11 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
         PostgresqlJsonTypeFilterHasGeneric::try_from(self).is_ok()
     }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => true,
-            Self::GreaterThan => true,
-            Self::Between => true,
-            Self::In => true,
-            Self::CaseSensitiveRegularExpression => true,
-            Self::CaseInsensitiveRegularExpression => true,
-            Self::LengthEqual => true,
-            Self::LengthMoreThan => true,
-            Self::PositionEqual => true,
-            Self::PositionGreaterThan => true,
-            Self::PositionCaseSensitiveRegularExpression => true,
-            Self::PositionCaseInsensitiveRegularExpression => true,
-            Self::ContainsAllElementsOfArray => true,
-            Self::OverlapsWithArray => true,
-            Self::AllElementsEqual => true,
-            Self::ContainsElementGreaterThan => true,
-            Self::AllElementsGreaterThan => true,
-            Self::ContainsElementCaseSensitiveRegularExpression => true,
-            Self::ContainsElementCaseInsensitiveRegularExpression => true,
-            Self::AllElementsCaseSensitiveRegularExpression => true,
-            Self::AllElementsCaseInsensitiveRegularExpression => true,
+        if let Ok(value) = PostgresqlJsonTypeFilterHasGeneric::try_from(self) {
+            IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
+        }
+        else {
+            true //coz to not generate useless copies of generic types for optional types
         }
     }
 }
