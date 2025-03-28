@@ -327,6 +327,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
                 vec
             };
+            let generate_where_element_variants_types_generic_token_stream = |value: std::primitive::bool|-> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+                &postgresql_json_type_ident_wrapper
+            };
             let postgresql_json_type_where_element_number_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
                     let mut vec = common_postgresql_json_type_filters_variants.clone();
@@ -335,13 +338,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In);
                     vec
                 },
-                &postgresql_json_type_ident_wrapper,
+                &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
             let postgresql_json_type_where_element_bool_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &common_postgresql_json_type_filters_variants,
-                &postgresql_json_type_ident_wrapper,
+                &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
@@ -352,7 +355,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression);
                     vec
                 },
-                &postgresql_json_type_ident_wrapper,
+                &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
             );
@@ -366,7 +369,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
-                    &postgresql_json_type_ident_wrapper,
+                    &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
@@ -375,7 +378,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
-                    &postgresql_json_type_ident_wrapper,
+                    &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
@@ -392,7 +395,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                     &filters_variants,
-                    &postgresql_json_type_ident_wrapper,
+                    &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True
                 )
@@ -436,7 +439,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //         let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
         //         let ident_where_element_second_dimension_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
         //             &filters_variants,
-        //             &postgresql_json_type_ident_wrapper,
+        //             &generate_where_element_variants_types_generic_token_stream,
         //             &ident,
         //             &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
         //         );

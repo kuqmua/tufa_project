@@ -7,13 +7,15 @@ pub enum PostgresqlTypeNotNullOrNullable {
     Nullable,
 }
 
-pub fn generate_postgresql_type_where_element_token_stream(
+pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTypeTokenStream>(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
-    postgresql_type_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-    // postgresql_type_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    generate_generic_type_token_stream: GenerateGenericTypeTokenStream,
     prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
-) -> proc_macro2::TokenStream {
+) -> proc_macro2::TokenStream 
+where
+    GenerateGenericTypeTokenStream: Fn(std::primitive::bool) -> &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
+{
     let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_display(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -26,13 +28,8 @@ pub fn generate_postgresql_type_where_element_token_stream(
             let type_token_stream = {
                 let prefix_where_element_self_upper_camel_case = element.prefix_where_element_self_upper_camel_case();
                 let maybe_generic_token_stream = if element.has_generic() {
-                    let type_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = if element.is_relevant_only_for_not_null() {
-                        &postgresql_type_not_null_upper_camel_case
-                    }
-                    else {
-                        &postgresql_type_not_null_upper_camel_case
-                    };
-                    quote::quote! {<#postgresql_type_not_null_upper_camel_case>}
+                    let type_token_stream = generate_generic_type_token_stream(element.is_relevant_only_for_not_null());
+                    quote::quote! {<#type_token_stream>}
                 }
                 else {
                     proc_macro2::TokenStream::new()
