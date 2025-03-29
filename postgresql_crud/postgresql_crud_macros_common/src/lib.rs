@@ -683,3 +683,86 @@ pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
         }
     }
 }
+
+pub fn generate_impl_postgresql_type_for_ident_token_stream(
+    ident: &dyn quote::ToTokens,
+    ident_create_upper_camel_case: &dyn quote::ToTokens,
+    create_query_part_content_token_stream: &dyn quote::ToTokens,
+    create_query_bind_content_token_stream: &dyn quote::ToTokens,
+    ident_select_upper_camel_case: &dyn quote::ToTokens,
+    select_query_part_content_token_stream: &dyn quote::ToTokens,
+    ident_where_element_upper_camel_case: &dyn quote::ToTokens,
+    ident_read_upper_camel_case: &dyn quote::ToTokens,
+    ident_update_upper_camel_case: &dyn quote::ToTokens,
+    update_query_part_content_token_stream: &dyn quote::ToTokens,
+    update_query_bind_content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+    let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
+    let self_upper_camel_case = naming::SelfUpperCamelCase;
+    let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
+    let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
+    let select_upper_camel_case = naming::SelectUpperCamelCase;
+    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
+    let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
+    let crate_try_generate_bind_increments_error_named_token_stream = {
+        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+        quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
+    };
+    let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
+    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
+
+    let value_snake_case = naming::ValueSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let query_snake_case = naming::QuerySnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let std_string_string_token_stream = token_patterns::StdStringString;
+    quote::quote! {
+        impl crate::postgresql_type_trait:: #postgresql_type_upper_camel_case for #ident {
+            type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
+            type #create_upper_camel_case = #ident_create_upper_camel_case;
+            fn #create_query_part_snake_case(
+                #value_snake_case: &Self::#create_upper_camel_case,
+                #increment_snake_case: &mut std::primitive::u64
+            ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
+                #create_query_part_content_token_stream
+            }
+            fn #create_query_bind_snake_case(
+                #value_snake_case: Self::#create_upper_camel_case,
+                #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                #create_query_bind_content_token_stream
+            }
+            type #select_upper_camel_case = #ident_select_upper_camel_case;
+            fn #select_query_part_snake_case(
+                _: &Self::#select_upper_camel_case,
+                #column_snake_case: &std::primitive::str,
+            ) -> #std_string_string_token_stream {
+                #select_query_part_content_token_stream
+            }
+            type #where_element_upper_camel_case = #ident_where_element_upper_camel_case;
+            type #read_upper_camel_case = #ident_read_upper_camel_case;
+            type #update_upper_camel_case = #ident_update_upper_camel_case;
+            type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
+            fn #update_query_part_snake_case(
+                #value_snake_case: &Self::#update_upper_camel_case,
+                _: &std::primitive::str,
+                _: &std::primitive::str,
+                _: &std::primitive::str,
+                #increment_snake_case: &mut std::primitive::u64
+            ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
+                #update_query_part_content_token_stream
+            }
+            fn #update_query_bind_snake_case<'a>(
+                #value_snake_case: Self::#update_upper_camel_case,
+                #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                #update_query_bind_content_token_stream
+            }
+        }
+    }
+}
