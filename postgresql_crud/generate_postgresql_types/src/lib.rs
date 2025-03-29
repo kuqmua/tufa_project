@@ -2269,12 +2269,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &postgresql_type_not_null_or_nullable_upper_camel_case,
-                &quote::quote!{
-                    match <#field_type_handle as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                        Err(error) => Err(error)
-                    }
-                }
+                &field_type_handle,
+                &quote::quote!{Ok(Self(#value_snake_case))}
             );
             let impl_sqlx_postgres_pg_has_array_type_for_token_stream = quote::quote! {
                 impl sqlx::postgres::PgHasArrayType for #postgresql_type_not_null_or_nullable_upper_camel_case {

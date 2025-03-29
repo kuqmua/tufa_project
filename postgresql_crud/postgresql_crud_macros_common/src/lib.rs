@@ -668,13 +668,17 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
 }
 pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens
+    type_token_stream: &dyn quote::ToTokens,
+    ok_value_match_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
             fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                #content_token_stream
+                match <#type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+                    Ok(value) => #ok_value_match_token_stream,
+                    Err(error) => Err(error),
+                }
             }
         }
     }
