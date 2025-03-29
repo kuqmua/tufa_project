@@ -2267,21 +2267,15 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            fn generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, field_type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-                let value_snake_case = naming::ValueSnakeCase;
-                let error_snake_case = naming::ErrorSnakeCase;
-                quote::quote! {
-                    impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                        fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                            match <#field_type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                                Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                                Err(#error_snake_case) => Err(#error_snake_case)
-                            }
-                        }
+            let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                &postgresql_type_not_null_or_nullable_upper_camel_case,
+                &quote::quote!{
+                    match <#field_type_handle as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
+                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                        Err(error) => Err(error)
                     }
                 }
-            }
-            let impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_upper_camel_case, &field_type_handle);
+            );
             let impl_sqlx_postgres_pg_has_array_type_for_token_stream = quote::quote! {
                 impl sqlx::postgres::PgHasArrayType for #postgresql_type_not_null_or_nullable_upper_camel_case {
                     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
