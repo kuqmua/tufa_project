@@ -524,7 +524,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             },
             &where_query_part_content_token_stream,
             &where_query_bind_content_token_stream,
-            &postgresql_crud_macros_common::PostgresqlTypeSelfWhereFilterPath::Crate,
+            &postgresql_crud_macros_common::ImportPath::Crate,
         )
     };
 

@@ -83,7 +83,7 @@ where
                 }
             }
         },
-        &crate::PostgresqlTypeSelfWhereFilterPath::Crate,
+        &crate::ImportPath::Crate,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
         &proc_macro2::TokenStream::new(),
@@ -603,11 +603,11 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud, ident, content_token_stream)
 }
 
-pub enum PostgresqlTypeSelfWhereFilterPath {
+pub enum ImportPath {
     Crate,
     PostgresqlCrud,
 }
-impl quote::ToTokens for PostgresqlTypeSelfWhereFilterPath  {
+impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::Crate => quote::quote!{crate},
@@ -621,7 +621,7 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
     ident_generic_token_stream: &dyn quote::ToTokens,
     where_query_part_content_token_stream: &dyn quote::ToTokens,
     where_query_bind_content_token_stream: &dyn quote::ToTokens,
-    postgresql_type_self_where_filter_path: &PostgresqlTypeSelfWhereFilterPath,
+    import_path: &ImportPath,
 ) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -635,13 +635,13 @@ pub fn impl_postgresql_type_self_where_filter_for_ident_token_stream(
     let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
     let postgresql_type_self_where_filter_upper_camel_case = naming::PostgresqlTypeSelfWhereFilterUpperCamelCase;
     quote::quote!{
-        impl #impl_generic_token_stream #postgresql_type_self_where_filter_path ::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
+        impl #impl_generic_token_stream #import_path ::postgresql_type_trait::#postgresql_type_self_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
             fn #where_query_part_snake_case(
                 &self,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,
                 #column_snake_case: &dyn #std_fmt_display_token_stream,
                 #is_need_to_add_logical_operator_snake_case: #std_primitive_bool_token_stream
-            ) -> Result<#std_string_string_token_stream, #postgresql_type_self_where_filter_path::#query_part_error_named_upper_camel_case> {
+            ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
                 #where_query_part_content_token_stream
             }
             fn #where_query_bind_snake_case(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -685,6 +685,7 @@ pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
 }
 
 pub fn generate_impl_postgresql_type_for_ident_token_stream(
+    import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_create_upper_camel_case: &dyn quote::ToTokens,
     create_query_part_content_token_stream: &dyn quote::ToTokens,
@@ -694,6 +695,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_where_element_upper_camel_case: &dyn quote::ToTokens,
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
+    ident_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -709,12 +711,11 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
-    let crate_try_generate_bind_increments_error_named_token_stream = {
-        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-        quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
-    };
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
+    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
+    let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
+    let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
 
     let value_snake_case = naming::ValueSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -722,13 +723,13 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let column_snake_case = naming::ColumnSnakeCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
     quote::quote! {
-        impl crate::postgresql_type_trait:: #postgresql_type_upper_camel_case for #ident {
+        impl #import_path ::postgresql_type_trait:: #postgresql_type_upper_camel_case for #ident {
             type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
             type #create_upper_camel_case = #ident_create_upper_camel_case;
             fn #create_query_part_snake_case(
                 #value_snake_case: &Self::#create_upper_camel_case,
                 #increment_snake_case: &mut std::primitive::u64
-            ) -> Result<#std_string_string_token_stream, crate::QueryPartErrorNamed> {
+            ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
                 #create_query_part_content_token_stream
             }
             fn #create_query_bind_snake_case(
@@ -739,7 +740,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             type #select_upper_camel_case = #ident_select_upper_camel_case;
             fn #select_query_part_snake_case(
-                _: &Self::#select_upper_camel_case,
+                #value_snake_case: &Self::#select_upper_camel_case,
                 #column_snake_case: &std::primitive::str,
             ) -> #std_string_string_token_stream {
                 #select_query_part_content_token_stream
@@ -747,12 +748,12 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             type #where_element_upper_camel_case = #ident_where_element_upper_camel_case;
             type #read_upper_camel_case = #ident_read_upper_camel_case;
             type #update_upper_camel_case = #ident_update_upper_camel_case;
-            type #update_query_part_error_named_upper_camel_case = #crate_try_generate_bind_increments_error_named_token_stream;
+            type #update_query_part_error_named_upper_camel_case = #ident_update_query_part_error_named_upper_camel_case;
             fn #update_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case,
-                _: &std::primitive::str,
-                _: &std::primitive::str,
-                _: &std::primitive::str,
+                #jsonb_set_accumulator_snake_case: &std::primitive::str,
+                #jsonb_set_target_snake_case: &std::primitive::str,
+                #jsonb_set_path_snake_case: &std::primitive::str,
                 #increment_snake_case: &mut std::primitive::u64
             ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
                 #update_query_part_content_token_stream
