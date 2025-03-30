@@ -271,13 +271,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                             }
                         }
                     }
-                    postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => {
-                        quote::quote! {
-                            Self {
-                                pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            }
-                        }
-                    }
+                    postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => todo!()
                 }
             });
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
