@@ -1624,10 +1624,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ],
     );
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
-    //todo reuse BindQuery path
-    let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
+
+
+    let postgresql_crud_postgresql_type_trait_postgresql_type_primary_key_read_query_part_token_stream = quote::quote! {#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypePrimaryKey::read_query_part};
+    let postgresql_crud_postgresql_type_trait_postgresql_type_primary_key_read_query_bind_token_stream = quote::quote! {#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypePrimaryKey::read_query_bind};
     //todo rename
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
+    //todo reuse BindQuery path
+    let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
     let increment_snake_case = naming::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
     let and_snake_case = naming::AndSnakeCase;
@@ -4108,7 +4112,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = quote::quote! {
-                        let #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, #query_snake_case);
+                        let #query_snake_case = #postgresql_crud_postgresql_type_trait_postgresql_type_primary_key_read_query_bind_token_stream(#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, #query_snake_case);
                     };
                     quote::quote! {
                         let #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
