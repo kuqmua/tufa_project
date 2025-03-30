@@ -543,7 +543,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["std", "vec", "vec", "std", "vec", "vec"],
     ["uuid", "uuid"],
     ["fixed", "length"],
-    ["postgresql", "type", "self", "where", "filter"]
+    ["postgresql", "type", "self", "where", "filter"],
+    ["is", "primary", "key"],
+    ["create", "table", "column", "query", "part"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

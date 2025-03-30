@@ -767,3 +767,25 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
         }
     }
 }
+
+pub fn generate_create_table_column_query_part_token_stream(
+    ident: &dyn quote::ToTokens,
+    maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
+    let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
+    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
+    quote::quote! {
+        impl #ident {
+            pub fn #create_table_column_query_part_snake_case(
+                #column_snake_case: &dyn #std_fmt_display_token_stream,
+                #is_primary_key_snake_case: #std_primitive_bool_token_stream #maybe_fixed_length_parameter_token_stream
+            ) -> impl #std_fmt_display_token_stream {
+                #content_token_stream
+            }
+        }
+    }
+}

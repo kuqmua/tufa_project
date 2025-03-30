@@ -4720,28 +4720,28 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             &proc_macro2::TokenStream::new(),
                             &quote::quote! {format!("{self}")}
                         );
-                        let impl_postgresql_crud_create_table_column_query_part_for_tokens_as_type_token_stream = {
-                            let jsonb = "jsonb";
-                            let type_stringified: &dyn std::fmt::Display = match &postgresql_type {
-                                PostgresqlType::JsonbNotNull => &format!("{jsonb} not null"),
-                                PostgresqlType::JsonbNullable => &jsonb,
-                            };
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                &format!("{{column}} {type_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
-                            );
-                            quote::quote!{
-                                impl #tokens_as_type_upper_camel_case {
-                                    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
-                                        format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#tokens_as_type_upper_camel_case)).unwrap())
-                                    }
+                        let impl_create_table_column_query_part_for_tokens_as_type_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
+                            &tokens_as_type_upper_camel_case,
+                            &proc_macro2::TokenStream::new(),
+                            &{
+                                let jsonb = "jsonb";
+                                let type_stringified: &dyn std::fmt::Display = match &postgresql_type {
+                                    PostgresqlType::JsonbNotNull => &format!("{jsonb} not null"),
+                                    PostgresqlType::JsonbNullable => &jsonb,
+                                };
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                                    &format!("{{column}} {type_stringified} check (jsonb_matches_schema('{{}}', {{column}}))")
+                                );
+                                quote::quote!{
+                                    format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#tokens_as_type_upper_camel_case)).unwrap())
                                 }
-                            }
-                        };
+                            },
+                        );
                         quote::quote!{
                             #tokens_as_type_token_stream
                             #impl_std_fmt_display_for_tokens_as_type_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream
-                            #impl_postgresql_crud_create_table_column_query_part_for_tokens_as_type_token_stream
+                            #impl_create_table_column_query_part_for_tokens_as_type_token_stream
                         }
                     };
                     let tokens_as_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
