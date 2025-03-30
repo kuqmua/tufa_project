@@ -2377,6 +2377,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
             };
+            let maybe_impl_postgresql_type_primary_key_token_stream = if let (
+                CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+            ) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
+                quote::quote!{
+                    impl crate::postgresql_type_trait::PostgresqlTypePrimaryKey for #postgresql_type_not_null_upper_camel_case {
+                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+                            todo!()
+                        }
+                        fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            todo!()
+                        }
+                    }
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             let impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream = {
                 let fixed_length_snake_case = naming::FixedLengthSnakeCase;
                 let fixed_length_parameter_token_stream = {
@@ -3072,6 +3089,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_postgres_pg_has_array_type_for_token_stream
                 #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream
+                #maybe_impl_postgresql_type_primary_key_token_stream
                 #impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
                 #postgresql_type_not_null_or_nullable_to_create_token_stream
                 #postgresql_type_not_null_or_nullable_select_token_stream
