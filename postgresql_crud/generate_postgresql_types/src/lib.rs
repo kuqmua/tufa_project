@@ -2921,36 +2921,32 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 }
             };
-            let impl_postgresql_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
-                &postgresql_crud_macros_common::ImportPath::Crate,
-                &postgresql_type_not_null_or_nullable_upper_camel_case,
-                &postgresql_type_not_null_or_nullable_create_upper_camel_case,
-                &quote::quote!{
-                    //todo
-                    crate::BindQuery::#try_generate_bind_increments_snake_case(value, increment)
-                },
-                &quote::quote!{
-                    //todo
-                    crate::BindQuery::bind_value_to_query(value, query)
-                },
-                &postgresql_type_not_null_or_nullable_select_upper_camel_case,
-                &quote::quote!{
-                    #column_snake_case.to_string()
-                },
-                &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
-                &postgresql_type_not_null_or_nullable_read_upper_camel_case,
-                &postgresql_type_not_null_or_nullable_update_upper_camel_case,
-                &{
-                    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-                    quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
-                },
-                &quote::quote!{
+            let impl_postgresql_type_for_ident_token_stream = {
+                let try_generate_bind_increments_token_stream = quote::quote!{
                     #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#value_snake_case, #increment_snake_case)
-                },
-                &quote::quote!{
+                };
+                let bind_value_to_query_token_stream = quote::quote!{
                     #crate_bind_query_token_stream #bind_value_to_query_snake_case(#value_snake_case, #query_snake_case)
-                }
-            );
+                };
+                postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
+                    &postgresql_crud_macros_common::ImportPath::Crate,
+                    &postgresql_type_not_null_or_nullable_upper_camel_case,
+                    &postgresql_type_not_null_or_nullable_create_upper_camel_case,
+                    &try_generate_bind_increments_token_stream,
+                    &bind_value_to_query_token_stream,
+                    &postgresql_type_not_null_or_nullable_select_upper_camel_case,
+                    &quote::quote!{#column_snake_case.to_string()},
+                    &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
+                    &postgresql_type_not_null_or_nullable_read_upper_camel_case,
+                    &postgresql_type_not_null_or_nullable_update_upper_camel_case,
+                    &{
+                        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+                        quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
+                    },
+                    &try_generate_bind_increments_token_stream,
+                    &bind_value_to_query_token_stream
+                )
+            };
             ////////////////////////////////////////
             // let vec_postgresql_type_array_not_null_upper_camel_case = naming::parameter::VecSelfArrayNotNullUpperCamelCase::from_tokens(&postgresql_type);
             // let vec_postgresql_type_array_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
