@@ -2377,16 +2377,54 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
             };
+            //todo rename as query_part and query_bind
+            let typical_try_generate_bind_increments_token_stream = {
+                let increment_snake_case = naming::IncrementSnakeCase;
+                let acc_snake_case = naming::AccSnakeCase;
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                quote::quote! {
+                    let mut #acc_snake_case = std::string::String::default();
+                    match #increment_snake_case.checked_add(1) {
+                        Some(#value_snake_case) => {
+                            *#increment_snake_case = #value_snake_case;
+                            #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                        }
+                        None => {
+                            return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                    }
+                    Ok(#acc_snake_case)
+                }
+            };
+            let typical_bind_value_to_query_token_stream = match &postgresql_type_not_null_or_nullable {
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
+                    #query_snake_case = #query_snake_case.bind(#value_snake_case);
+                    #query_snake_case
+                },
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
+                    #query_snake_case = #query_snake_case.bind(match #value_snake_case .0 {
+                        Some(#value_snake_case) => Some(#value_snake_case),
+                        None => None
+                    });
+                    #query_snake_case
+                },
+            };
             let maybe_impl_postgresql_type_primary_key_token_stream = if let (
                 CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
             ) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
+                let read_query_part_snake_case = naming::ReadQueryPartSnakeCase;
+                let read_query_bind_snake_case = naming::ReadQueryBindSnakeCase;
                 quote::quote!{
                     impl crate::postgresql_type_trait::PostgresqlTypePrimaryKey for #postgresql_type_not_null_upper_camel_case {
-                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-                            todo!()
+                        fn #read_query_part_snake_case(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+                            let value = &self;//todo refactor?
+                            #typical_try_generate_bind_increments_token_stream
                         }
-                        fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            todo!()
+                        fn #read_query_bind_snake_case(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            let value = self;//todo refactor?
+                            #typical_bind_value_to_query_token_stream
                         }
                     }
                 }
@@ -2554,9 +2592,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-            let crate_bind_query_token_stream = postgresql_crud_macros_common::crate_bind_query_token_stream();
-            let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                 let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
                     let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
@@ -2942,39 +2977,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let impl_postgresql_type_for_ident_token_stream = {
-                let typical_try_generate_bind_increments_token_stream = {
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    quote::quote! {
-                        let mut #acc_snake_case = std::string::String::default();
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                            }
-                            None => {
-                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                        Ok(#acc_snake_case)
-                    }
-                };
-                let typical_bind_value_to_query_token_stream = match &postgresql_type_not_null_or_nullable {
-                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
-                        #query_snake_case = #query_snake_case.bind(#value_snake_case);
-                        #query_snake_case
-                    },
-                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
-                        #query_snake_case = #query_snake_case.bind(match #value_snake_case .0 {
-                            Some(#value_snake_case) => Some(#value_snake_case),
-                            None => None
-                        });
-                        #query_snake_case
-                    },
-                };
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                     quote::quote!{Ok(#std_string_string_token_stream::from(#content_token_stream))}
                 };
