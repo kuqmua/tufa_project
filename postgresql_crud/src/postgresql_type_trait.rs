@@ -1,8 +1,3 @@
-pub trait PostgresqlTypePrimaryKey {
-    fn read_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
-    fn read_query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
-}
-
 //maybe put analog\copy of BindQuery inside this trait?
 pub trait PostgresqlType {
     type PostgresqlTypeSelf: std::fmt::Debug;

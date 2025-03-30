@@ -2414,20 +2414,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             let maybe_impl_postgresql_type_primary_key_token_stream = if let (
                 CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
             ) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
-                let read_query_part_snake_case = naming::ReadQueryPartSnakeCase;
-                let read_query_bind_snake_case = naming::ReadQueryBindSnakeCase;
-                quote::quote!{
-                    impl crate::postgresql_type_trait::PostgresqlTypePrimaryKey for #postgresql_type_not_null_upper_camel_case {
-                        fn #read_query_part_snake_case(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-                            let value = &self;//todo refactor?
-                            #typical_try_generate_bind_increments_token_stream
-                        }
-                        fn #read_query_bind_snake_case(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            let value = self;//todo refactor?
-                            #typical_bind_value_to_query_token_stream
-                        }
-                    }
-                }
+                postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+                    &quote::quote!{<'a>},
+                    &postgresql_type_not_null_upper_camel_case,
+                    &proc_macro2::TokenStream::new(),
+                    &quote::quote!{
+                        let value = &self;//todo refactor?
+                        #typical_try_generate_bind_increments_token_stream
+                    },
+                    &quote::quote!{
+                        let value = self;//todo refactor?
+                        #typical_bind_value_to_query_token_stream
+                    },
+                    &postgresql_crud_macros_common::ImportPath::Crate,//todo reuse it
+                )
             }
             else {
                 proc_macro2::TokenStream::new()
