@@ -2561,7 +2561,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 };
                 let default_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"DEFAULT"});
                 let uuid_generate_v4_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"uuid_generate_v4()"});
-                let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
+                let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                    &postgresql_type_not_null_or_nullable_create_upper_camel_case,
+                    &postgresql_type_not_null_or_nullable_upper_camel_case
+                );
                 match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => alias_token_stream,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => alias_token_stream,
@@ -2922,18 +2925,114 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let impl_postgresql_type_for_ident_token_stream = {
-                let try_generate_bind_increments_token_stream = quote::quote!{
-                    #crate_bind_query_token_stream #try_generate_bind_increments_snake_case(#value_snake_case, #increment_snake_case)
+                let typical_try_generate_bind_increments_token_stream = {
+                    let increment_snake_case = naming::IncrementSnakeCase;
+                    let acc_snake_case = naming::AccSnakeCase;
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                    quote::quote! {
+                        let mut #acc_snake_case = std::string::String::default();
+                        match #increment_snake_case.checked_add(1) {
+                            Some(#value_snake_case) => {
+                                *#increment_snake_case = #value_snake_case;
+                                #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                            }
+                            None => {
+                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                        Ok(#acc_snake_case)
+                    }
                 };
-                let bind_value_to_query_token_stream = quote::quote!{
-                    #crate_bind_query_token_stream #bind_value_to_query_snake_case(#value_snake_case, #query_snake_case)
+                let typical_bind_value_to_query_token_stream = match &postgresql_type_not_null_or_nullable {
+                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
+                        #query_snake_case = #query_snake_case.bind(#value_snake_case);
+                        #query_snake_case
+                    },
+                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
+                        #query_snake_case = #query_snake_case.bind(match #value_snake_case .0 {
+                            Some(#value_snake_case) => Some(#value_snake_case),
+                            None => None
+                        });
+                        #query_snake_case
+                    },
+                };
+                let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{Ok(#std_string_string_token_stream::from(#content_token_stream))}
+                };
+                let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote!{"DEFAULT"});
+                let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote!{"uuid_generate_v4()"});
+                type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
+                let (
+                    try_generate_bind_increments_create_token_stream,
+                    bind_value_to_query_create_token_stream,
+                ): Handle = {
+                    let typical: Handle = {
+                        (
+                            &typical_try_generate_bind_increments_token_stream,
+                            &typical_bind_value_to_query_token_stream
+                        )
+                    };
+                    let default_initialized_by_postgresql: Handle = (
+                        &ok_std_string_string_from_default_token_stream,
+                        &query_snake_case
+                    );
+                    let uuid_generate_v4_initialized_by_postgresql: Handle = (
+                        &ok_std_string_string_from_uuid_generate_v4_token_stream,
+                        &query_snake_case
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsPostgresqlInt2 => typical,
+                        PostgresqlType::StdPrimitiveI32AsPostgresqlInt4 => typical,
+                        PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => typical,
+                        PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => typical,
+                        PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => typical,
+                        PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => default_initialized_by_postgresql,
+                        PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => default_initialized_by_postgresql,
+                        PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => default_initialized_by_postgresql,
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => typical,
+                        PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => typical,
+                        PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => typical,
+                        PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => typical,
+                        PostgresqlType::StdStringStringAsPostgresqlCharN => typical,
+                        PostgresqlType::StdStringStringAsPostgresqlVarchar => typical,
+                        PostgresqlType::StdStringStringAsPostgresqlText => typical,
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsPostgresqlBytea => typical,
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => typical,
+                        PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => typical,
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => typical,
+                        PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => typical,
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => typical,
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => typical,
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => typical,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => typical,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => typical,
+                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => uuid_generate_v4_initialized_by_postgresql,
+                        PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => typical,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => typical,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => typical,
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => typical,
+                        PostgresqlType::SqlxTypesBitVecAsPostgresqlBit => typical,
+                        PostgresqlType::SqlxTypesBitVecAsPostgresqlVarbit => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => typical,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => typical,
+                    }
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                     &postgresql_crud_macros_common::ImportPath::Crate,
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
-                    &try_generate_bind_increments_token_stream,
-                    &bind_value_to_query_token_stream,
+                    &try_generate_bind_increments_create_token_stream,
+                    &bind_value_to_query_create_token_stream,
                     &postgresql_type_not_null_or_nullable_select_upper_camel_case,
                     &quote::quote!{#column_snake_case.to_string()},
                     &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
@@ -2943,8 +3042,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
                         quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
                     },
-                    &try_generate_bind_increments_token_stream,
-                    &bind_value_to_query_token_stream
+                    &typical_try_generate_bind_increments_token_stream,
+                    &typical_bind_value_to_query_token_stream
                 )
             };
             ////////////////////////////////////////
@@ -3047,54 +3146,54 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
 
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
-    //     &sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream,
+    //     &std_primitive_i64_as_postgresql_big_serial_initialized_by_postgresql_token_stream,
     // );
 
     let generated = quote::quote! {
         // #(#postgresql_type_array)*
 
         #std_primitive_i16_as_postgresql_int2_token_stream
-        #std_primitive_i32_as_postgresql_int4_token_stream
-        #std_primitive_i64_as_postgresql_int8_token_stream
-        #std_primitive_f32_as_postgresql_float4_token_stream
-        #std_primitive_f64_as_postgresql_float8_token_stream
-        #std_primitive_i16_as_postgresql_small_serial_initialized_by_postgresql_token_stream
-        #std_primitive_i32_as_postgresql_serial_initialized_by_postgresql_token_stream
+        // #std_primitive_i32_as_postgresql_int4_token_stream
+        // #std_primitive_i64_as_postgresql_int8_token_stream
+        // #std_primitive_f32_as_postgresql_float4_token_stream
+        // #std_primitive_f64_as_postgresql_float8_token_stream
+        // #std_primitive_i16_as_postgresql_small_serial_initialized_by_postgresql_token_stream
+        // #std_primitive_i32_as_postgresql_serial_initialized_by_postgresql_token_stream
         #std_primitive_i64_as_postgresql_big_serial_initialized_by_postgresql_token_stream
-        #sqlx_postgres_types_pg_money_as_postgresql_money_token_stream
-        #sqlx_types_decimal_as_postgresql_numeric_token_stream
-        #sqlx_types_big_decimal_as_postgresql_numeric_token_stream
-        #std_primitive_bool_as_postgresql_bool_token_stream
-        #std_string_string_as_postgresql_char_n_token_stream
-        #std_string_string_as_postgresql_varchar_token_stream
-        #std_string_string_as_postgresql_text_token_stream
-        #std_vec_vec_std_primitive_u8_as_postgresql_bytea_token_stream
-        #sqlx_types_chrono_naive_time_as_postgresql_time_token_stream
-        #sqlx_types_time_time_as_postgresql_time_token_stream
-        #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
-        #sqlx_types_time_date_as_postgresql_date_token_stream
-        #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
-        #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
-        #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
-        #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
-        #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
-        #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
-        #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
-        #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
-        #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
-        #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
-        #sqlx_types_bit_vec_as_postgresql_bit_token_stream
-        #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
-        #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
-        #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
-        #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
+        // #sqlx_postgres_types_pg_money_as_postgresql_money_token_stream
+        // #sqlx_types_decimal_as_postgresql_numeric_token_stream
+        // #sqlx_types_big_decimal_as_postgresql_numeric_token_stream
+        // #std_primitive_bool_as_postgresql_bool_token_stream
+        // #std_string_string_as_postgresql_char_n_token_stream
+        // #std_string_string_as_postgresql_varchar_token_stream
+        // #std_string_string_as_postgresql_text_token_stream
+        // #std_vec_vec_std_primitive_u8_as_postgresql_bytea_token_stream
+        // #sqlx_types_chrono_naive_time_as_postgresql_time_token_stream
+        // #sqlx_types_time_time_as_postgresql_time_token_stream
+        // #sqlx_postgres_types_pg_interval_as_postgresql_interval_token_stream
+        // #sqlx_types_time_date_as_postgresql_date_token_stream
+        // #sqlx_types_chrono_naive_date_as_postgresql_date_token_stream
+        // #sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_token_stream
+        // #sqlx_types_time_primitive_date_time_as_postgresql_timestamp_token_stream
+        // #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_token_stream
+        // #sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_token_stream
+        // #sqlx_types_uuid_uuid_as_postgresql_uuid_v4_initialized_by_postgresql_token_stream
+        // #sqlx_types_uuid_uuid_as_postgresql_uuid_initialized_by_client_token_stream
+        // #sqlx_types_ipnetwork_ip_network_as_postgresql_inet_token_stream
+        // #sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_token_stream
+        // #sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_token_stream
+        // #sqlx_types_bit_vec_as_postgresql_bit_token_stream
+        // #sqlx_types_bit_vec_as_postgresql_varbit_token_stream
+        // #sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_token_stream
+        // #sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_timestamp_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_range_token_stream
+        // #sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_range_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",

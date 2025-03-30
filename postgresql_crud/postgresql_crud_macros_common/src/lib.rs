@@ -734,7 +734,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             fn #create_query_bind_snake_case(
                 #value_snake_case: Self::#create_upper_camel_case,
-                #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #create_query_bind_content_token_stream
             }
@@ -760,7 +760,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             fn #update_query_bind_snake_case<'a>(
                 #value_snake_case: Self::#update_upper_camel_case,
-                #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #update_query_bind_content_token_stream
             }
