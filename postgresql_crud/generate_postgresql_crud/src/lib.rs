@@ -1625,9 +1625,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
 
-
-    let postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream = quote::quote!{#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part};
-    let postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream = quote::quote!{#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind};
+    let (
+        postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream,
+        postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream
+    ) = {
+        let postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_token_stream = quote::quote!{#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::};
+        (
+            {
+                let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
+                quote::quote!{#postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_token_stream #where_query_part_snake_case}
+            },
+            {
+                let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
+                quote::quote!{#postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_token_stream #where_query_bind_snake_case}
+            }
+        )
+    };
 
     let increment_snake_case = naming::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
@@ -3591,24 +3604,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // #filter_not_unique_column_token_stream
                     }
                 });
-                let generate_where_as_filter_token_stream = |field_type: &dyn quote::ToTokens|{
-                    let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_tokens_token_stream(
-                        field_type,
-                        &naming::WhereElementUpperCamelCase
-                    );
-                    quote::quote! {
-                        <
-                            postgresql_crud::PostgresqlTypeWhere<#as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream>
-                            as 
-                            postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter
-                        >::
-                    }
-                };
                 let query_string_token_stream = {
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let where_as_filter_field_type_token_stream = generate_where_as_filter_token_stream(&element.syn_field.ty);
                         let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
@@ -3619,7 +3618,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                match #where_as_filter_field_type_token_stream #where_query_part_snake_case(
+                                match #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream(
                                     #value_snake_case,
                                     &mut increment,
                                     &#field_ident_double_quotes_token_stream,
@@ -3683,7 +3682,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                     {
                                         #prefix_to_additional_parameters_token_stream
-                                        let #value_snake_case = match postgresql_crud::PostgresqlTypeSelfWhereFilter::where_query_part(
+                                        let #value_snake_case = match #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream(
                                             &#parameters_snake_case.#payload_snake_case.pagination,
                                             &mut #increment_snake_case,
                                             &"",
@@ -3710,11 +3709,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let where_as_filter_field_type_token_stream = generate_where_as_filter_token_stream(&element.syn_field.ty);
+                        // let where_as_filter_field_type_token_stream = generate_where_as_filter_token_stream(&element.syn_field.ty);
                         let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                query = #where_as_filter_field_type_token_stream #where_query_bind_snake_case(
+                                query = #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream(
                                     value,
                                     query
                                 );
@@ -3724,7 +3723,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #(#binded_query_modifications_token_stream)*
-                        #query_snake_case = postgresql_crud::PostgresqlTypeSelfWhereFilter::where_query_bind(
+                        #query_snake_case = #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream(
                             #parameters_snake_case.#payload_snake_case.pagination,
                             #query_snake_case,
                         );
@@ -4056,7 +4055,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             format!(
                                 #query_token_stream,
                                 #query_vec_column_token_stream,
-                                match <#primary_key_field_type_read_upper_camel_case as postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter>::where_query_part(
+                                match #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream(
                                     &parameters.payload.#primary_key_field_ident,
                                     &mut increment,
                                     &#primary_key_field_ident_double_quotes_token_stream,
