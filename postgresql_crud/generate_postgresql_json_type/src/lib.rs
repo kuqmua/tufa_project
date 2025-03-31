@@ -2228,19 +2228,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 },
             );
-            //integration with GeneratePostgresqlCrud
-            let impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream = {
-                quote::quote!{
-                    impl postgresql_crud::BindQuery for #ident_update_upper_camel_case {
-                        fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                            todo!()
-                        }
-                        fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                            todo!()
-                        }
-                    }
-                }
-            };
             quote::quote!{
                 #postgresql_json_type_ident_option_to_update_token_stream
                 #impl_try_new_for_postgresql_json_type_ident_option_to_update_token_stream
@@ -2248,8 +2235,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_option_to_update_token_stream
                 #postgresql_json_type_ident_option_to_update_try_generate_postgresql_json_type_error_named_token_stream
                 #impl_postgresql_json_type_ident_option_to_update_methods_token_stream
-
-                #impl_postgresql_crud_bind_query_second_for_postgresql_json_type_ident_option_to_update_token_stream
             }
         };
         quote::quote!{
