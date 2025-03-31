@@ -1,4 +1,3 @@
-//maybe put analog\copy of BindQuery inside this trait?
 pub trait PostgresqlType {
     type PostgresqlTypeSelf: std::fmt::Debug;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize  + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
