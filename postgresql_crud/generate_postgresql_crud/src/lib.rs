@@ -4097,17 +4097,39 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{parameters_logic_token_stream}");
                 let query_string_token_stream = {
                     let query_token_stream = generate_quotes::double_quotes_token_stream(
-                        &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1")
+                        &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}}")//{primary_key_field_ident} = $1
                     );
                     let query_vec_column_token_stream = generate_query_vec_column_token_stream(
                         // &operation
                     );
                     // println!("{query_vec_column_token_stream}");
+                    let primary_key_field_type_read_upper_camel_case = &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &checked_add_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
                     quote::quote! {
-                        format!(
-                            #query_token_stream,
-                            #query_vec_column_token_stream,
-                        )
+                        {
+                            let mut increment: std::primitive::u64 = 0;
+                            format!(
+                                #query_token_stream,
+                                #query_vec_column_token_stream,
+                                match <#primary_key_field_type_read_upper_camel_case as postgresql_crud::postgresql_type_trait::PostgresqlTypeSelfWhereFilter>::where_query_part(
+                                    &parameters.payload.#primary_key_field_ident,
+                                    &mut increment,
+                                    &#primary_key_field_ident_double_quotes_token_stream,
+                                    false
+                                ) {
+                                    Ok(value) => value,
+                                    Err(#error_0_token_stream) => {
+                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                }
+                            )
+                        }
                     }
                 };
                 // println!("{query_string_token_stream}");
@@ -5533,7 +5555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             #read_many_token_stream
-            // #read_one_token_stream
+            #read_one_token_stream
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
             #update_one_token_stream
