@@ -3113,6 +3113,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
                             &element.syn_field.ty
                         );
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                            &operation,
+                            &checked_add_syn_variant_wrapper,
+                            file!(),
+                            line!(),
+                            column!()
+                        );
                         //todo reuse create_query_part naming
                         quote::quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream create_query_part(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
@@ -3120,8 +3127,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #acc_snake_case.push_str(&format!("{value},"));
                                 },
                                 Err(#error_0_token_stream) => {
-                                    // #bind_query_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    todo!()
+                                    #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
@@ -3384,11 +3390,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
                             &element.syn_field.ty
                         );
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                            &operation,
+                            &checked_add_syn_variant_wrapper,
+                            file!(),
+                            line!(),
+                            column!()
+                        );
                         quote::quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream create_query_part(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
-                                    todo!()
+                                    #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
@@ -3597,6 +3610,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         let where_as_filter_field_type_token_stream = generate_where_as_filter_token_stream(&element.syn_field.ty);
                         let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                            &operation,
+                            &checked_add_syn_variant_wrapper,
+                            file!(),
+                            line!(),
+                            column!()
+                        );
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match #where_as_filter_field_type_token_stream #where_query_part_snake_case(
@@ -3610,7 +3630,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         is_first_push_to_additional_parameters_already_happend = true;
                                     }
                                     Err(#error_0_token_stream) => {
-                                        todo!()
+                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                 }
                             }
@@ -3628,6 +3648,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let query_vec_column_token_stream = generate_query_vec_column_token_stream(
                         // &operation
+                    );
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &checked_add_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
                     );
                     quote::quote! {
                         {
@@ -3664,7 +3691,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ) {
                                             Ok(#value_snake_case) => #value_snake_case,
                                             Err(#error_0_token_stream) => {
-                                                todo!()
+                                                #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             },
                                         };
                                         additional_parameters.push_str(&format!(
