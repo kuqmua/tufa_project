@@ -2377,27 +2377,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
             };
-            //todo rename as query_part and query_bind
-            let typical_try_generate_bind_increments_token_stream = {
-                let increment_snake_case = naming::IncrementSnakeCase;
-                let acc_snake_case = naming::AccSnakeCase;
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                quote::quote! {
-                    let mut #acc_snake_case = std::string::String::default();
-                    match #increment_snake_case.checked_add(1) {
-                        Some(#value_snake_case) => {
-                            *#increment_snake_case = #value_snake_case;
-                            #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                        }
-                        None => {
-                            return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                    }
-                    Ok(#acc_snake_case)
-                }
-            };
+            //todo rename as query_bind
             let typical_bind_value_to_query_token_stream = match &postgresql_type_not_null_or_nullable {
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
                     #query_snake_case = #query_snake_case.bind(#value_snake_case);
@@ -2411,7 +2391,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #query_snake_case
                 },
             };
-            let maybe_impl_postgresql_type_primary_key_token_stream = if let (
+            let maybe_impl_postgresql_type_self_where_filter_for_ident_if_can_be_primary_key_token_stream = if let (
                 CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
             ) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
                 postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
@@ -2419,8 +2399,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type_not_null_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
                     &quote::quote!{
-                        let value = &self;//todo refactor?
-                        #typical_try_generate_bind_increments_token_stream
+                        //todo maybe reuse this code from equal filter ?
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!("({} = ${})", column, increment))
+                            }
+                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
                     },
                     &quote::quote!{
                         let value = self;//todo refactor?
@@ -2983,6 +2969,27 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote!{"DEFAULT"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote!{"uuid_generate_v4()"});
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
+                //todo rename as query_part
+                let typical_try_generate_bind_increments_token_stream = {
+                    let increment_snake_case = naming::IncrementSnakeCase;
+                    let acc_snake_case = naming::AccSnakeCase;
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                    quote::quote! {
+                        let mut #acc_snake_case = std::string::String::default();
+                        match #increment_snake_case.checked_add(1) {
+                            Some(#value_snake_case) => {
+                                *#increment_snake_case = #value_snake_case;
+                                #acc_snake_case.push_str(&format!(#format_handle_token_stream));
+                            }
+                            None => {
+                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                });
+                            }
+                        }
+                        Ok(#acc_snake_case)
+                    }
+                };
                 let (
                     try_generate_bind_increments_create_token_stream,
                     bind_value_to_query_create_token_stream,
@@ -3091,7 +3098,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_postgres_pg_has_array_type_for_token_stream
                 #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream
-                #maybe_impl_postgresql_type_primary_key_token_stream
+                #maybe_impl_postgresql_type_self_where_filter_for_ident_if_can_be_primary_key_token_stream
                 #impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
                 #postgresql_type_not_null_or_nullable_to_create_token_stream
                 #postgresql_type_not_null_or_nullable_select_token_stream
