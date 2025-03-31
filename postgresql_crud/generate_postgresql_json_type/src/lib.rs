@@ -518,22 +518,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             // // )
             // impl_postgresql_crud_bind_query_second_for_ident_to_create_without_generated_id_token_stream
             // = {
-            //     let generate_impl_postgresql_crud_bind_query_for_tokens_token_stream = |
-            //         ident_token_stream: &dyn quote::ToTokens,
-            //         try_generate_bind_increments_token_stream: &dyn quote::ToTokens,
-            //         bind_value_to_query_token_stream: &dyn quote::ToTokens,
-            //     |{
-            //         quote::quote!{
-            //             impl postgresql_crud::BindQuery for #ident_token_stream {
-            //                 fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-            //                     #try_generate_bind_increments_token_stream
-            //                 }
-            //                 fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-            //                     #bind_value_to_query_token_stream
-            //                 }
-            //             }
-            //         }
-            //     };
             //     // (
             //     //     // generate_impl_postgresql_crud_bind_query_for_tokens_token_stream(
             //     //     //     &ident_to_create_with_generated_id_upper_camel_case,
