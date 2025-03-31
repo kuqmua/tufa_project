@@ -1628,12 +1628,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
     let postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_part_token_stream = quote::quote!{#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_part};
     let postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream = quote::quote!{#postgresql_crud_snake_case::postgresql_type_trait::PostgresqlTypeSelfWhereFilter::where_query_bind};
-    //todo rename
-    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::try_generate_bind_increments};
-    //todo reuse BindQuery path
-    let postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_snake_case::BindQuery::bind_value_to_query};
 
-    
     let increment_snake_case = naming::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
     let and_snake_case = naming::AndSnakeCase;
@@ -4761,10 +4756,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     });
                     let binded_query_primary_key_modification_token_stream = quote::quote! {
-                        // #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
-                        //     #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                        //     #query_snake_case,
-                        // );
                         #query_snake_case = <#primary_key_field_type as postgresql_crud::postgresql_type_trait::PostgresqlType>::#update_query_bind_snake_case(
                             #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                             #query_snake_case,
@@ -4954,25 +4945,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 for #element_snake_case in #value_snake_case {
-                                    match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                        #element_snake_case,
-                                        &mut #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => {
-                                            let handle = format!(#handle_token_stream);
-                                            match additional_parameters.is_empty() {
-                                                true => {
-                                                    additional_parameters.push_str(&handle);
-                                                },
-                                                false => {
-                                                    additional_parameters.push_str(&format!(" AND {handle}"));//todo
-                                                },
-                                            }
-                                        },
-                                        Err(#error_0_token_stream) => {
-                                            todo!()
-                                        },
-                                    }
+                                    // match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                    //     #element_snake_case,
+                                    //     &mut #increment_snake_case
+                                    // ) {
+                                    //     Ok(#value_snake_case) => {
+                                    //         let handle = format!(#handle_token_stream);
+                                    //         match additional_parameters.is_empty() {
+                                    //             true => {
+                                    //                 additional_parameters.push_str(&handle);
+                                    //             },
+                                    //             false => {
+                                    //                 additional_parameters.push_str(&format!(" AND {handle}"));//todo
+                                    //             },
+                                    //         }
+                                    //     },
+                                    //     Err(#error_0_token_stream) => {
+                                    //         todo!()
+                                    //     },
+                                    // }
+                                    todo!()
                                 }
                             }
                         }
@@ -4994,17 +4986,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     {
                                         let mut additional_parameters = #std_string_string::default();
                                         for #element_snake_case in #primary_key_field_ident {
-                                            match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
-                                                #element_snake_case,
-                                                &mut #increment_snake_case,
-                                            ) {
-                                                Ok(#value_snake_case) => {
-                                                    additional_parameters.push_str(&format!("{value},"));
-                                                }
-                                                Err(#error_0_token_stream) => {
-                                                    todo!()
-                                                }
-                                            }
+                                            // match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                            //     #element_snake_case,
+                                            //     &mut #increment_snake_case,
+                                            // ) {
+                                            //     Ok(#value_snake_case) => {
+                                            //         additional_parameters.push_str(&format!("{value},"));
+                                            //     }
+                                            //     Err(#error_0_token_stream) => {
+                                            //         todo!()
+                                            //     }
+                                            // }
+                                            todo!()
                                         }
                                         let _ = additional_parameters.pop();
                                         additional_parameters
@@ -5035,17 +5028,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                for #element_snake_case in #value_snake_case {
-                                    #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#element_snake_case, #query_snake_case);
-                                }
+                                // for #element_snake_case in #value_snake_case {
+                                //     #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#element_snake_case, #query_snake_case);
+                                // }
+                                todo!()
                             }
                         }
                     });
                     let binded_query_primary_key_modifications_token_stream = quote::quote! {
                         if let Some(#primary_key_field_ident) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                            for #element_snake_case in #primary_key_field_ident {
-                                #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#element_snake_case, #query_snake_case);
-                            }
+                            // for #element_snake_case in #primary_key_field_ident {
+                            //     #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(#element_snake_case, #query_snake_case);
+                            // }
+                            todo!()
                         }
                     };
                     quote::quote! {
@@ -5227,16 +5222,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    let binded_query_modifications_token_stream = quote::quote! {
-                        #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
-                            #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                            #query_snake_case
-                        );
-                    };
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                        #binded_query_modifications_token_stream
-                        #query_snake_case
+                        // #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
+                        //     #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
+                        //     #query_snake_case
+                        // );
+                        // #query_snake_case
+                        todo!()
                     }
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_one_fetch_token_stream(&operation));

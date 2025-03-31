@@ -291,23 +291,20 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 2,
+    "std_primitive_i16_as_small_int2_not_null": {
+      "value": 0
+    },
+    "std_primitive_i16_as_small_int2_nullable": {
+      "value": 0
+    },
     "object_animal_as_jsonb_not_null": {
       "value": [
         {
-          "std_vec_vec_std_vec_vec_uuid_uuid": {
-            "value": [
-              [
-                "c9079bdd-f24f-45c9-9510-f2aed628a64c"
-              ]
-            ]
+          "std_primitive_i8": {
+            "value": 0
           }
         }
-      ]
-    },
-    "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
-      "value": [
-        2
       ]
     }
   }
