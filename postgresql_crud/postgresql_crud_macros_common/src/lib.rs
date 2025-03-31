@@ -115,9 +115,6 @@ pub fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_mac
     let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
 }
-pub fn crate_bind_query_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {crate::BindQuery::}
-}
 pub fn generate_impl_crate_bind_query_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, try_generate_bind_increments_token_stream: &dyn quote::ToTokens, bind_value_to_query_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let std_string_string_token_stream = token_patterns::StdStringString;
     let self_snake_case = naming::SelfSnakeCase;
