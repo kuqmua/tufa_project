@@ -115,25 +115,6 @@ pub fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_mac
     let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
 }
-pub fn generate_impl_crate_bind_query_for_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, try_generate_bind_increments_token_stream: &dyn quote::ToTokens, bind_value_to_query_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let std_string_string_token_stream = token_patterns::StdStringString;
-    let self_snake_case = naming::SelfSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let try_generate_bind_increments_snake_case = naming::TryGenerateBindIncrementsSnakeCase;
-    let bind_value_to_query_snake_case = naming::BindValueToQuerySnakeCase;
-    let crate_try_generate_bind_increments_error_named_token_stream = crate_try_generate_bind_increments_error_named_token_stream();
-    quote::quote! {
-        impl crate::BindQuery for #ident_token_stream {
-            fn #try_generate_bind_increments_snake_case(&#self_snake_case, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, #crate_try_generate_bind_increments_error_named_token_stream> {
-                #try_generate_bind_increments_token_stream
-            }
-            fn #bind_value_to_query_snake_case(#self_snake_case, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                #bind_value_to_query_token_stream
-            }
-        }
-    }
-}
 
 pub fn generate_struct_ident_double_quotes_token_stream(postgresql_type_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {postgresql_type_where_element_tokens_upper_camel_case}"))
