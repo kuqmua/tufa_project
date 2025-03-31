@@ -2357,10 +2357,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &proc_macro2::TokenStream::new(),
                     &quote::quote!{
                         //todo maybe reuse this code from equal filter ?
-                        match increment.checked_add(1) {
+                        match #increment_snake_case.checked_add(1) {
                             Some(value) => {
-                                *increment = value;
-                                Ok(format!("({} = ${})", column, increment))
+                                *#increment_snake_case = value;
+                                Ok(format!("({} = ${})", column, #increment_snake_case))
                             }
                             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
@@ -2917,7 +2917,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
                 //todo rename as query_part
                 let typical_try_generate_bind_increments_token_stream = {
-                    let increment_snake_case = naming::IncrementSnakeCase;
                     let acc_snake_case = naming::AccSnakeCase;
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     quote::quote! {

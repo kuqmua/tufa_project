@@ -3608,7 +3608,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &checked_add_syn_variant_wrapper,
@@ -3709,8 +3708,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        // let where_as_filter_field_type_token_stream = generate_where_as_filter_token_stream(&element.syn_field.ty);
-                        let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
                                 query = #postgresql_crud_postgresql_type_trait_postgresql_type_self_where_filter_where_query_bind_token_stream(
@@ -4041,7 +4038,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // &operation
                     );
                     // println!("{query_vec_column_token_stream}");
-                    let primary_key_field_type_read_upper_camel_case = &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
                     let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
                         &checked_add_syn_variant_wrapper,
