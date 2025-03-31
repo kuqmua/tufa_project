@@ -3746,9 +3746,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                     {
                                         #prefix_to_additional_parameters_token_stream
-                                        let #value_snake_case = match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
+                                        let #value_snake_case = match postgresql_crud::PostgresqlTypeSelfWhereFilter::where_query_part(
                                             &#parameters_snake_case.#payload_snake_case.pagination,
-                                            &mut #increment_snake_case
+                                            &mut #increment_snake_case,
+                                            &"",
+                                            std::primitive::bool::default()
                                         ) {
                                             Ok(#value_snake_case) => #value_snake_case,
                                             Err(#error_0_token_stream) => {
@@ -3785,7 +3787,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #(#binded_query_modifications_token_stream)*
-                        #query_snake_case = #postgresql_crud_bind_query_bind_query_bind_value_to_query_token_stream(
+                        #query_snake_case = postgresql_crud::PostgresqlTypeSelfWhereFilter::where_query_bind(
                             #parameters_snake_case.#payload_snake_case.pagination,
                             #query_snake_case,
                         );

@@ -271,9 +271,9 @@ impl Pagination {
         self.offset + self.limit
     }
 }
-//for ReadMany in GeneratePostgresqlCrud
-impl crate::BindQuery for Pagination {
-    fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+//for Read in GeneratePostgresqlCrud
+impl<'a> crate::PostgresqlTypeSelfWhereFilter<'a> for Pagination {
+    fn where_query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(limit_increment) => {
                 *increment = limit_increment;
@@ -292,7 +292,7 @@ impl crate::BindQuery for Pagination {
             }),
         }
     }
-    fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn where_query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(self.limit);
         query = query.bind(self.offset);
         query
