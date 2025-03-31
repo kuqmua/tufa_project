@@ -2286,49 +2286,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 }
             };
             let crate_try_generate_bind_increments_error_named_token_stream = postgresql_crud_macros_common::crate_try_generate_bind_increments_error_named_token_stream();
-            let impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream = {
-                let try_generate_bind_increments_token_stream = {
-                    let increment_snake_case = naming::IncrementSnakeCase;
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    quote::quote! {
-                        let mut #acc_snake_case = std::string::String::default();
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                            }
-                            None => {
-                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
-                        }
-                        Ok(#acc_snake_case)
-                    }
-                };
-                match &postgresql_type_not_null_or_nullable {
-                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
-                        &postgresql_type_not_null_or_nullable_upper_camel_case,
-                        &try_generate_bind_increments_token_stream,
-                        &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(#self_snake_case);
-                            #query_snake_case
-                        },
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_bind_query_for_tokens_token_stream(
-                        &postgresql_type_not_null_or_nullable_upper_camel_case,
-                        &try_generate_bind_increments_token_stream,
-                        &quote::quote! {
-                            #query_snake_case = #query_snake_case.bind(match #self_dot_zero_token_stream {
-                                Some(#value_snake_case) => Some(#value_snake_case),
-                                None => None
-                            });
-                            #query_snake_case
-                        },
-                    ),
-                }
-            };
             enum CanBePrimaryKey {
                 True,
                 False,
@@ -3097,7 +3054,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-                #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_token_stream
                 #maybe_impl_postgresql_type_self_where_filter_for_ident_if_can_be_primary_key_token_stream
                 #impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
                 #postgresql_type_not_null_or_nullable_to_create_token_stream
