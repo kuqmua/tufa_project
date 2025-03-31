@@ -1747,12 +1747,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             &proc_macro2::TokenStream::new(),
             &quote::quote!{write!(formatter, "{:?}", &self)}
         );
-        let create_token_stream = {
-            let ident_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
-            quote::quote!{
-                #ident_create_alias_token_stream
-            }
-        };
+        let create_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+            &ident_create_upper_camel_case,
+            &ident_to_create_without_generated_id_upper_camel_case
+        );
         let read_token_stream = {
             let ident_field_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&naming::parameter::SelfFieldToReadUpperCamelCase::from_tokens(&ident), &ident_field_to_read_without_id_upper_camel_case);
 
