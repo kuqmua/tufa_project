@@ -589,7 +589,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     }
     //     contains_generic_json
     // };
-    let postgresql_crud_snake_case_stringified = &naming::PostgresqlCrudSnakeCase.to_string();
     // let primary_key_syn_field_with_additional_info = {
     //     let mut primary_key_field_option = None;
     //     for element in &syn_field_with_additional_info_fields_named {

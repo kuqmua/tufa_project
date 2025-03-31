@@ -2536,7 +2536,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
             let postgresql_type_not_null_or_nullable_to_create_token_stream = {
-                let generate_initialized_by_postgresql_token_stream = |query_part_token_stream: &dyn quote::ToTokens| {
+                let postgresql_type_not_null_or_nullable_to_create_token_stream = {
                     let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
                     let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
                         postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
@@ -2548,8 +2548,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
                     }
                 };
-                let default_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"DEFAULT"});
-                let uuid_generate_v4_initialized_by_postgresql_token_stream = generate_initialized_by_postgresql_token_stream(&quote::quote! {"uuid_generate_v4()"});
                 let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_upper_camel_case
@@ -2560,9 +2558,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => alias_token_stream,
                     PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => alias_token_stream,
                     PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
-                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
-                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => default_initialized_by_postgresql_token_stream,
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => alias_token_stream,
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => alias_token_stream,
                     PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => alias_token_stream,
@@ -2580,7 +2578,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => alias_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => uuid_generate_v4_initialized_by_postgresql_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
                     PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => alias_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => alias_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => alias_token_stream,
