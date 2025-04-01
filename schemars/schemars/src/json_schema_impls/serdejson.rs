@@ -1,6 +1,6 @@
-use crate::SchemaGenerator;
 use crate::_alloc_prelude::*;
-use crate::{json_schema, JsonSchema, Schema};
+use crate::SchemaGenerator;
+use crate::{JsonSchema, Schema, json_schema};
 use alloc::borrow::Cow;
 use alloc::collections::BTreeMap;
 use serde_json::{Map, Number, Value};

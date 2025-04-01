@@ -1,6 +1,6 @@
-use crate::SchemaGenerator;
 use crate::_alloc_prelude::*;
-use crate::{json_schema, JsonSchema, Schema};
+use crate::SchemaGenerator;
+use crate::{JsonSchema, Schema, json_schema};
 use arrayvec07::{ArrayString, ArrayVec};
 
 // Do not set maxLength on the schema as that describes length in characters, but we only

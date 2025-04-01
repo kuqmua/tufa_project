@@ -56,7 +56,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             &proc_macro2::TokenStream::new(),
             &ident_try_from_env_error_named_upper_camel_case,
             &proc_macro2::TokenStream::new(),
-            &quote::quote!{
+            &quote::quote! {
                 match self {
                     Self::#dotenv_upper_camel_case {
                         #dotenv_snake_case
@@ -67,7 +67,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     } => write!(formatter, "{} {}", #std_env_var_error_snake_case, env_var_name),
                     #(#variants_token_stream),*
                 }
-            }
+            },
         )
     };
     let try_from_env_token_stream = {

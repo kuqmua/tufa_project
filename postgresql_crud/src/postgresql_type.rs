@@ -1073,9 +1073,7 @@ impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type_trait::PostgresqlTyp
         query
     }
 }
-impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-    for PostgresqlTypeWhere<PostgresqlTypeWhereElement>
-{
+impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),

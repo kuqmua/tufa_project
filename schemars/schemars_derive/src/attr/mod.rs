@@ -8,7 +8,7 @@ use proc_macro2::TokenStream;
 use quote::ToTokens;
 use serde_derive_internals::Ctxt;
 use syn::Ident;
-use syn::{punctuated::Punctuated, Attribute, Expr, ExprLit, Lit, Meta, Path, Type};
+use syn::{Attribute, Expr, ExprLit, Lit, Meta, Path, Type, punctuated::Punctuated};
 use validation::ValidationAttrs;
 
 use crate::idents::SCHEMA;

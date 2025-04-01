@@ -1,5 +1,5 @@
 mod util;
-use schemars::{transform::RecursiveTransform, JsonSchema, Schema};
+use schemars::{JsonSchema, Schema, transform::RecursiveTransform};
 use serde_json::{Map, Value};
 use util::*;
 

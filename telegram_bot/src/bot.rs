@@ -9,10 +9,7 @@ pub async fn start_bot() {
 }
 
 #[derive(teloxide::utils::command::BotCommands, Clone)]
-#[command(
-    rename_rule = "lowercase",
-    description = "These commands are supported:"
-)]
+#[command(rename_rule = "lowercase", description = "These commands are supported:")]
 enum Command {
     #[command(description = "display this text.")]
     Help,
@@ -24,11 +21,7 @@ enum Command {
     GitInfo,
 }
 
-async fn answer(
-    bot: teloxide::Bot,
-    msg: teloxide::types::Message,
-    cmd: Command,
-) -> teloxide::requests::ResponseResult<()> {
+async fn answer(bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command) -> teloxide::requests::ResponseResult<()> {
     log::info!("answer");
     let _unused = match cmd {
         Command::Help => {
@@ -45,23 +38,15 @@ async fn answer(
         }
         Command::Username(username) => {
             use teloxide::prelude::Requester;
-            bot.send_message(msg.chat.id, format!("Your username is @{username}."))
-                .await?
+            bot.send_message(msg.chat.id, format!("Your username is @{username}.")).await?
         }
         Command::UsernameAndAge { username, age } => {
             use teloxide::prelude::Requester;
-            bot.send_message(
-                msg.chat.id,
-                format!("Your username is @{username} and age is {age}."),
-            )
-            .await?
+            bot.send_message(msg.chat.id, format!("Your username is @{username} and age is {age}.")).await?
         }
         Command::GitInfo => {
             use teloxide::prelude::Requester;
-            bot.send_message(msg.chat.id, {
-                "123message"
-            })
-            .await?
+            bot.send_message(msg.chat.id, { "123message" }).await?
         }
     };
 

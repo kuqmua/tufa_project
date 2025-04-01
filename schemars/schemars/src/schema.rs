@@ -3,7 +3,7 @@ JSON Schema types.
 */
 
 use crate::_alloc_prelude::*;
-use ref_cast::{ref_cast_custom, RefCastCustom};
+use ref_cast::{RefCastCustom, ref_cast_custom};
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 

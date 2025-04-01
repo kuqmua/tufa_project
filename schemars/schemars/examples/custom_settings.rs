@@ -1,4 +1,4 @@
-use schemars::{generate::SchemaSettings, JsonSchema};
+use schemars::{JsonSchema, generate::SchemaSettings};
 
 #[derive(JsonSchema)]
 pub struct MyStruct {

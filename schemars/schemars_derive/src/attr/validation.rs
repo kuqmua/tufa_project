@@ -4,8 +4,8 @@ use syn::{Expr, Meta};
 use crate::idents::SCHEMA;
 
 use super::{
-    parse_meta::{parse_contains, parse_length_or_range, parse_nested_meta, parse_pattern, parse_schemars_regex, parse_validate_regex, require_path_only, LengthOrRange},
     AttrCtxt,
+    parse_meta::{LengthOrRange, parse_contains, parse_length_or_range, parse_nested_meta, parse_pattern, parse_schemars_regex, parse_validate_regex, require_path_only},
 };
 
 #[derive(Debug, Clone, Copy, PartialEq)]

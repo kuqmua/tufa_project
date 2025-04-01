@@ -1,11 +1,11 @@
 use proc_macro2::{TokenStream, TokenTree};
 use syn::{
+    Expr, ExprLit, Lit, LitStr, Meta, MetaList, MetaNameValue,
     parse::{Parse, ParseStream, Parser},
     punctuated::Punctuated,
-    Expr, ExprLit, Lit, LitStr, Meta, MetaList, MetaNameValue,
 };
 
-use super::{path_str, AttrCtxt};
+use super::{AttrCtxt, path_str};
 
 pub fn require_path_only(meta: Meta, cx: &AttrCtxt) -> Result<(), ()> {
     match meta {
@@ -150,11 +150,7 @@ pub fn parse_contains(outer_meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
             // `foo, bar`  => Metas
             // `foo`       => Expr (not Meta::Path)
             // `foo(bar)`  => Expr (not Meta::List)
-            if input.peek2(Token![,]) || input.peek2(Token![=]) {
-                Punctuated::parse_terminated(input).map(Self::Metas)
-            } else {
-                input.parse().map(Self::Expr)
-            }
+            if input.peek2(Token![,]) || input.peek2(Token![=]) { Punctuated::parse_terminated(input).map(Self::Metas) } else { input.parse().map(Self::Expr) }
         }
     }
 
@@ -212,11 +208,7 @@ fn parse_meta_list_with<F: Parser>(meta: &Meta, cx: &AttrCtxt, parser: F) -> Res
 pub fn parse_name_value_expr_handle_lit_str(meta: Meta, cx: &AttrCtxt) -> Result<Expr, ()> {
     let expr = parse_name_value_expr(meta, cx)?;
 
-    if let Expr::Lit(ExprLit { lit: Lit::Str(lit_str), .. }) = expr {
-        parse_lit_str(lit_str, cx)
-    } else {
-        Ok(expr)
-    }
+    if let Expr::Lit(ExprLit { lit: Lit::Str(lit_str), .. }) = expr { parse_lit_str(lit_str, cx) } else { Ok(expr) }
 }
 
 #[derive(Debug, Default)]

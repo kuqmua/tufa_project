@@ -236,7 +236,7 @@ impl quote::ToTokens for Error3 {
 pub struct FieldAttributeSerdeSkipSerializingIfOptionIsNone;
 impl quote::ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote!{#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens)
+        quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens)
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -311,22 +311,22 @@ impl quote::ToTokens for StdFmtDisplay {
 }
 
 fn crate_path_token_stream() -> proc_macro2::TokenStream {
-    quote::quote!{crate::}
+    quote::quote! {crate::}
 }
 fn postgresql_crud() -> proc_macro2::TokenStream {
-    quote::quote!{postgresql_crud::}
+    quote::quote! {postgresql_crud::}
 }
 fn default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case() -> proc_macro2::TokenStream {
-    quote::quote!{DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
+    quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
 }
 fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case() -> proc_macro2::TokenStream {
-    quote::quote!{AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
+    quote::quote! {AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
 }
 fn path_default_but_option_is_always_some_and_vec_always_contains_one_element_call() -> proc_macro2::TokenStream {
-    quote::quote!{::default_but_option_is_always_some_and_vec_always_contains_one_element()}
+    quote::quote! {::default_but_option_is_always_some_and_vec_always_contains_one_element()}
 }
 fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call() -> proc_macro2::TokenStream {
-    quote::quote!{::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()}
+    quote::quote! {::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()}
 }
 pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
 impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
@@ -336,7 +336,8 @@ impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
         quote::quote! {
             #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -349,7 +350,8 @@ impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
             #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
@@ -360,7 +362,8 @@ impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysC
         quote::quote! {
             #postgresql_crud
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -371,7 +374,8 @@ impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysC
         quote::quote! {
             #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
@@ -382,7 +386,8 @@ impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAn
         quote::quote! {
             #crate_path_token_stream
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -393,7 +398,8 @@ impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAn
         quote::quote! {
             #crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
@@ -404,7 +410,8 @@ impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlw
         quote::quote! {
             #postgresql_crud
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }
 pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -415,6 +422,7 @@ impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlw
         quote::quote! {
             #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
-        }.to_tokens(tokens)
+        }
+        .to_tokens(tokens)
     }
 }

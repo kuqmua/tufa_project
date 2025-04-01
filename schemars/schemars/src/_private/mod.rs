@@ -2,7 +2,7 @@ use crate::_alloc_prelude::*;
 use crate::transform::transform_immediate_subschemas;
 use crate::{JsonSchema, Schema, SchemaGenerator};
 use serde::Serialize;
-use serde_json::{json, map::Entry, Map, Value};
+use serde_json::{Map, Value, json, map::Entry};
 
 mod regex_syntax;
 mod rustdoc;

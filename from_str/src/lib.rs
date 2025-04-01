@@ -34,9 +34,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     });
     let error_token_stream = {
         let error_stringified = format!("\"Invalid {ident}, expected one of {error_variants_stringified} found {{value}}\"");
-        error_stringified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{error_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        error_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{error_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let generated = quote::quote! {
         impl std::str::FromStr for #ident {

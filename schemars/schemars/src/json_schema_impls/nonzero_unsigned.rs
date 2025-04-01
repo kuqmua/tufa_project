@@ -1,7 +1,7 @@
+use crate::_alloc_prelude::*;
 use crate::JsonSchema;
 use crate::Schema;
 use crate::SchemaGenerator;
-use crate::_alloc_prelude::*;
 use alloc::borrow::Cow;
 use core::num::*;
 

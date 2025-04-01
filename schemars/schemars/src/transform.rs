@@ -106,10 +106,10 @@ assert_eq!(
 ```
 
 */
-use crate::Schema;
 use crate::_alloc_prelude::*;
+use crate::Schema;
 use alloc::collections::BTreeSet;
-use serde_json::{json, Map, Value};
+use serde_json::{Map, Value, json};
 
 /// Trait used to modify a constructed schema and optionally its subschemas.
 ///

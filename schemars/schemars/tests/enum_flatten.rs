@@ -1,5 +1,5 @@
 mod util;
-use schemars::{generate::SchemaSettings, JsonSchema};
+use schemars::{JsonSchema, generate::SchemaSettings};
 use util::*;
 
 #[allow(dead_code)]

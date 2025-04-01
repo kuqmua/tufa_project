@@ -61,7 +61,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
         let value = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
-        quote::quote!{#value}
+        quote::quote! {#value}
     }
     fn has_generic(&self) -> std::primitive::bool {
         PostgresqlTypeFilterHasGeneric::try_from(self).is_ok()
@@ -69,12 +69,10 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         if let Ok(value) = PostgresqlTypeFilterHasGeneric::try_from(self) {
             IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
-        }
-        else {
+        } else {
             true //coz to not generate useless copies of generic types for optional types
         }
     }
-    
 }
 pub enum PostgresqlTypeFilterHasGeneric {
     Equal,
@@ -205,7 +203,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
         let value = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
-        quote::quote!{#value}
+        quote::quote! {#value}
     }
     fn has_generic(&self) -> std::primitive::bool {
         PostgresqlJsonTypeFilterHasGeneric::try_from(self).is_ok()
@@ -213,8 +211,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         if let Ok(value) = PostgresqlJsonTypeFilterHasGeneric::try_from(self) {
             IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
-        }
-        else {
+        } else {
             true //coz to not generate useless copies of generic types for optional types
         }
     }

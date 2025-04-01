@@ -16,12 +16,15 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let generic_parameters = &syn_derive_input.generics.params.iter().map(|element|{
-        match &element {
+    let generic_parameters = &syn_derive_input
+        .generics
+        .params
+        .iter()
+        .map(|element| match &element {
             syn::GenericParam::Type(value) => &value.ident,
             _ => panic!("does support only syn::GenericParam::Type"),
-        }
-    }).collect::<std::vec::Vec<&syn::Ident>>();
+        })
+        .collect::<std::vec::Vec<&syn::Ident>>();
     let ident_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
     let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
         data_enum
@@ -36,16 +39,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let into_serialize_deserialize_version_snake_case_token_stream = naming::IntoSerializeDeserializeVersionSnakeCase;
     let maybe_generic_parameters_token_stream = if generic_parameters.is_empty() {
         proc_macro2::TokenStream::new()
-    }
-    else {
-        quote::quote!{<#(#generic_parameters),*>}
+    } else {
+        quote::quote! {<#(#generic_parameters),*>}
     };
     let maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream = if generic_parameters.is_empty() {
         proc_macro2::TokenStream::new()
-    }
-    else {
-        let value = generic_parameters.iter().map(|element|quote::quote!{#element: error_occurence_lib::ToStdStringString});
-        quote::quote!{<#(#value),*>}
+    } else {
+        let value = generic_parameters.iter().map(|element| quote::quote! {#element: error_occurence_lib::ToStdStringString});
+        quote::quote! {<#(#value),*>}
     };
     let generate_enum_ident_with_serialize_deserialize_token_stream = |variants_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
@@ -236,7 +237,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream,
                 &ident,
                 &maybe_generic_parameters_token_stream,
-                &impl_std_fmt_display_handle_content_token_stream
+                &impl_std_fmt_display_handle_content_token_stream,
             );
             let impl_ident_into_serialize_deserialize_version_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -325,13 +326,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream,
                 &ident_with_serialize_deserialize_upper_camel_case,
                 &maybe_generic_parameters_token_stream,
-                &impl_std_fmt_display_handle_content_token_stream
+                &impl_std_fmt_display_handle_content_token_stream,
             );
             let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                 &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream,
                 &ident_with_serialize_deserialize_upper_camel_case,
                 &maybe_generic_parameters_token_stream,
-                &quote::quote! {format!("{self}")}
+                &quote::quote! {format!("{self}")},
             );
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
@@ -355,21 +356,16 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 }
             };
-            let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
-                &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream,
-                &ident,
-                &maybe_generic_parameters_token_stream,
-                &{
-                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
-                    quote::quote! {
-                        write!(
-                            formatter,
-                            "{}",
-                            #display_formatter_unnamed_token_stream
-                        )
-                    }
+            let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream, &ident, &maybe_generic_parameters_token_stream, &{
+                let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
+                quote::quote! {
+                    write!(
+                        formatter,
+                        "{}",
+                        #display_formatter_unnamed_token_stream
+                    )
                 }
-            );
+            });
             let impl_ident_into_serialize_deserialize_version_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
@@ -420,7 +416,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             #display_formatter_unnamed_token_stream
                         )
                     }
-                }
+                },
             );
             //todo maybe make a trait?
             quote::quote! {

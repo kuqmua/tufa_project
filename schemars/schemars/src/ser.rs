@@ -1,5 +1,5 @@
 use crate::_alloc_prelude::*;
-use crate::{json_schema, JsonSchema, Schema, SchemaGenerator};
+use crate::{JsonSchema, Schema, SchemaGenerator, json_schema};
 use core::fmt::Display;
 use serde_json::{Error, Map, Value};
 
