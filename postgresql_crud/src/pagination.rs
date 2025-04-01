@@ -201,7 +201,7 @@ impl Pagination {
     }
 }
 //for Read in GeneratePostgresqlCrud
-impl<'a> crate::PostgresqlTypeSelfWhereFilter<'a> for Pagination {
+impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
     fn where_query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(limit_increment) => {

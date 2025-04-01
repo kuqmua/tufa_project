@@ -39,7 +39,7 @@ pub use postgresql_json_type_trait::CreateQueryPartErrorNamedWithSerializeDeseri
 pub use postgresql_json_type_trait::PostgresqlJsonType;
 pub use postgresql_type::PostgresqlTypeWhere;
 pub use postgresql_type_trait::PostgresqlType;
-pub use postgresql_type_trait::PostgresqlTypeSelfWhereFilter;
+pub use postgresql_type_trait::PostgresqlTypeWhereFilter;
 
 pub use naming::CommitSnakeCase;
 pub use naming::CommitUpperCamelCase;

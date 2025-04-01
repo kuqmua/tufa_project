@@ -2330,8 +2330,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #query_snake_case
                 },
             };
-            let maybe_impl_postgresql_type_self_where_filter_for_ident_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
-                postgresql_crud_macros_common::impl_postgresql_type_self_where_filter_for_ident_token_stream(
+            let maybe_impl_postgresql_type_where_filter_for_ident_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
+                postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                     &quote::quote! {<'a>},
                     &postgresql_type_not_null_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
@@ -2905,7 +2905,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #impl_sqlx_encode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_token_stream
                 #impl_sqlx_postgres_pg_has_array_type_for_token_stream
-                #maybe_impl_postgresql_type_self_where_filter_for_ident_if_can_be_primary_key_token_stream
+                #maybe_impl_postgresql_type_where_filter_for_ident_if_can_be_primary_key_token_stream
                 #impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
                 #postgresql_type_not_null_or_nullable_to_create_token_stream
                 #postgresql_type_not_null_or_nullable_select_token_stream
